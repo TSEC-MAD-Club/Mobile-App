@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
 
+import 'utils/themes.dart';
+
 void main() {
-  runApp(const MyApp());
+  runApp(const TSECApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class TSECApp extends StatelessWidget {
+  const TSECApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      title: 'TSEC App',
+      themeMode: ThemeMode.light,
+      theme: theme,
+      darkTheme: darkTheme,
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
@@ -53,6 +55,10 @@ class _MyHomePageState extends State<MyHomePage> {
             Text(
               '$_counter',
               style: Theme.of(context).textTheme.headline4,
+            ),
+            TextButton(
+              onPressed: () {},
+              child: const Text("Delete assignment"),
             ),
           ],
         ),
