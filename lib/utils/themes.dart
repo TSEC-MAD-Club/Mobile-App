@@ -83,11 +83,11 @@ TextButtonThemeData _getTextButtonTheme({
       ),
       backgroundColor: MaterialStateColor.resolveWith((states) {
         if (states.contains(MaterialState.pressed))
-          return Colors.transparent;
+          return darkColor;
         else if (states.contains(MaterialState.disabled))
           return kDisabledBlue;
         else if (states.contains(MaterialState.hovered))
-          return darkColor;
+          return Colors.transparent;
         else
           return lightColor;
       }),
