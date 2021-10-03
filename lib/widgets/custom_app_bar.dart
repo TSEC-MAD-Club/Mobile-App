@@ -16,9 +16,11 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
     return SafeArea(
       child: Container(
         height: 235,
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.only(bottomRight: Radius.circular(40)),
+        decoration: BoxDecoration(
+          color: Theme.of(context).accentColor,
+          borderRadius: const BorderRadius.only(
+            bottomRight: Radius.circular(40),
+          ),
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),

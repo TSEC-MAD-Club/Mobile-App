@@ -14,7 +14,7 @@ class TSECApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'TSEC App',
-      themeMode: ThemeMode.light,
+      themeMode: ThemeMode.dark,
       theme: theme,
       darkTheme: darkTheme,
       home: const CommittessScreen(),
