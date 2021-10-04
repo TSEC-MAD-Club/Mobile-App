@@ -12,6 +12,7 @@ const kDarkModeLightBlue = Color(0xFF4391DE);
 const kDisabledBlue = Color(0x801265B5);
 const kWhite = Color(0xFFE4E6EB);
 const kBlack = Color(0xFF18191A);
+const kLightBlack = Color(0xFF242526);
 
 late final theme = ThemeData(
   scaffoldBackgroundColor: const Color(0xFFF2F5F8),
@@ -24,11 +25,12 @@ late final theme = ThemeData(
     bodyColor: kBlack,
     displayColor: kBlack,
   ),
+  accentColor: Colors.white,
   fontFamily: "SF Pro Text",
 );
 
 late final darkTheme = ThemeData(
-  scaffoldBackgroundColor: const Color(0xFF242526),
+  scaffoldBackgroundColor: const Color(0xFF18191A),
   primaryColor: const Color(0xFF242526),
   textButtonTheme: _getTextButtonTheme(
     darkColor: kDarkModeDarkBlue,
@@ -38,6 +40,7 @@ late final darkTheme = ThemeData(
     bodyColor: kWhite,
     displayColor: kWhite,
   ),
+  accentColor: kLightBlack,
   fontFamily: "SF Pro Text",
 );
 
