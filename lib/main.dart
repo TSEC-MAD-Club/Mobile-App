@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tsec_app/screens/theme_screen/theme_screen.dart';
 
 import 'screens/committees_screen.dart';
 import 'utils/themes.dart';
@@ -14,10 +15,10 @@ class TSECApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'TSEC App',
-      themeMode: ThemeMode.dark,
+      themeMode: ThemeMode.system,
       theme: theme,
       darkTheme: darkTheme,
-      home: const CommittessScreen(),
+      home: const ThemeScreen(),
     );
   }
 }
