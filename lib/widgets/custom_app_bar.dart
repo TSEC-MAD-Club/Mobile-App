@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import '../screens/login_screen.dart';
 import '../utils/image_assets.dart';
 import '../utils/themes.dart';
 
@@ -33,7 +33,13 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
                   _buildNavigation(
                     context,
                     icon: const Icon(Icons.chevron_left_rounded),
-                    onPressed: () => Navigator.pop(context),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const 
+                        LoginScreen()),
+                      );
+                    }
                   ),
                   _buildNavigation(
                     context,
