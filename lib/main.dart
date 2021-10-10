@@ -17,7 +17,7 @@ class TSECApp extends StatelessWidget {
       themeMode: ThemeMode.dark,
       theme: theme,
       darkTheme: darkTheme,
-      home: const CommittessScreen(),
+      home: const CommitteesScreen(),
     );
   }
 }

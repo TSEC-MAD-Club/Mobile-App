@@ -8,14 +8,14 @@ import 'package:tsec_app/models/committee_model/committee_model.dart';
 
 import '../widgets/custom_app_bar.dart';
 
-class CommittessScreen extends StatefulWidget {
-  const CommittessScreen({Key? key}) : super(key: key);
+class CommitteesScreen extends StatefulWidget {
+  const CommitteesScreen({Key? key}) : super(key: key);
 
   @override
-  _CommittessScreenState createState() => _CommittessScreenState();
+  _CommitteesScreenState createState() => _CommitteesScreenState();
 }
 
-class _CommittessScreenState extends State<CommittessScreen> {
+class _CommitteesScreenState extends State<CommitteesScreen> {
   late final PageController _pageController;
   late final Future<List<CommitteeModel>> _committees;
   int _currentPage = 0;
