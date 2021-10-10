@@ -54,7 +54,7 @@ class _CustomToggleButtonState extends State<CustomToggleButton> {
               width: width * 0.7,
               height: width * 0.13,
               decoration: ShapeDecoration(
-                color: widget.backgroundColor,
+                color: Theme.of(context).primaryColorDark,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(width * 0.1),
                 ),

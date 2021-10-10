@@ -21,6 +21,7 @@ late final theme = ThemeData(
     lightColor: kLightModeLightBlue,
   ),
   primaryColor: const Color(0xFFF2F5F8),
+  primaryColorDark: const Color(0xFFD8D5D5),
   textTheme: _textTheme.apply(
     bodyColor: kBlack,
     displayColor: kBlack,
@@ -32,6 +33,7 @@ late final theme = ThemeData(
 late final darkTheme = ThemeData(
   scaffoldBackgroundColor: const Color(0xFF18191A),
   primaryColor: const Color(0xFF242526),
+  primaryColorDark: const Color(0xFFE6E6E6),
   textButtonTheme: _getTextButtonTheme(
     darkColor: kDarkModeDarkBlue,
     lightColor: kDarkModeLightBlue,
