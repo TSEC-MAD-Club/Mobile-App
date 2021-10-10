@@ -67,12 +67,7 @@ class _CustomToggleButtonState extends State<CustomToggleButton> {
                     padding: EdgeInsets.symmetric(horizontal: width * 0.1),
                     child: Text(
                       widget.values[index],
-                      style: TextStyle(
-                        fontFamily: 'Rubik',
-                        fontSize: width * 0.05,
-                        fontWeight: FontWeight.bold,
-                        color: const Color(0xFF918f95),
-                      ),
+                      style: Theme.of(context).textTheme.bodyText2,
                     ),
                   ),
                 ),
@@ -96,12 +91,7 @@ class _CustomToggleButtonState extends State<CustomToggleButton> {
               ),
               child: Text(
                 initialPosition ? widget.values[0] : widget.values[1],
-                style: TextStyle(
-                  fontFamily: 'Rubik',
-                  fontSize: width * 0.045,
-                  color: widget.textColor,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: Theme.of(context).textTheme.bodyText1,
               ),
               alignment: Alignment.center,
             ),

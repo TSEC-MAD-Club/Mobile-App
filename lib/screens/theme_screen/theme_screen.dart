@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'widgets/custom_toggle_button.dart';
 import 'widgets/skip_and_next_row.dart';
+import '../../utils/image_assets.dart';
 
 class ThemeScreen extends StatelessWidget {
   const ThemeScreen({Key? key}) : super(key: key);
@@ -34,7 +35,7 @@ class _BodyState extends State<Body> {
         children: <Widget>[
           const SizedBox(height: 100),
           Image.asset(
-            'assets/images/themes/sun.png',
+            ImageAssets.sun,
             height: 0.25 * size.height,
             width: 0.54 * size.width,
           ),
