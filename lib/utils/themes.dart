@@ -21,6 +21,7 @@ late final theme = ThemeData(
     lightColor: kLightModeLightBlue,
   ),
   primaryColor: const Color(0xFFF2F5F8),
+  primaryColorLight: const Color(0xFFF2F5F8),
   primaryColorDark: const Color(0xFFD8D5D5),
   textTheme: _textTheme.apply(
     bodyColor: kBlack,
@@ -33,7 +34,7 @@ late final theme = ThemeData(
 late final darkTheme = ThemeData(
   scaffoldBackgroundColor: const Color(0xFF18191A),
   primaryColor: const Color(0xFF242526),
-  primaryColorDark: const Color(0xFFE6E6E6),
+  primaryColorLight: const Color(0xFf34323d),
   textButtonTheme: _getTextButtonTheme(
     darkColor: kDarkModeDarkBlue,
     lightColor: kDarkModeLightBlue,
@@ -47,35 +48,42 @@ late final darkTheme = ThemeData(
 );
 
 const _textTheme = TextTheme(
-  headline1: TextStyle(
-    fontSize: 36,
-    fontWeight: FontWeight.w400,
-  ),
-  headline2: TextStyle(
-    fontSize: 28,
-    fontWeight: FontWeight.w400,
-  ),
-  headline3: TextStyle(
-    fontSize: 22,
-    fontWeight: FontWeight.w400,
-  ),
-  headline4: TextStyle(
-    fontSize: 20,
-    fontWeight: FontWeight.w400,
-  ),
-  bodyText1: TextStyle(
-    fontSize: 17,
-    fontWeight: FontWeight.w600,
-  ),
-  bodyText2: TextStyle(
-    fontSize: 17,
-    fontWeight: FontWeight.w400,
-  ),
-  caption: TextStyle(
-    fontSize: 12,
-    fontWeight: FontWeight.w400,
-  ),
-);
+    headline1: TextStyle(
+      fontSize: 36,
+      fontWeight: FontWeight.w400,
+    ),
+    headline2: TextStyle(
+      fontSize: 28,
+      fontWeight: FontWeight.w400,
+    ),
+    headline3: TextStyle(
+      fontSize: 22,
+      fontWeight: FontWeight.w400,
+    ),
+    headline4: TextStyle(
+      fontSize: 20,
+      fontWeight: FontWeight.w400,
+    ),
+    bodyText1: TextStyle(
+      fontSize: 17,
+      fontWeight: FontWeight.w600,
+    ),
+    bodyText2: TextStyle(
+      fontSize: 17,
+      fontWeight: FontWeight.w400,
+    ),
+    caption: TextStyle(
+      fontSize: 12,
+      fontWeight: FontWeight.w400,
+    ),
+    subtitle1: TextStyle(
+      fontSize: 16,
+      fontWeight: FontWeight.w400,
+    ),
+    subtitle2: TextStyle(
+      fontSize: 14,
+      fontWeight: FontWeight.w500,
+    ));
 
 TextButtonThemeData _getTextButtonTheme({
   required Color darkColor,
