@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'screens/committees_screen.dart';
+import 'screens/main_screen.dart';
 import 'utils/themes.dart';
 
 void main() {
@@ -17,7 +17,7 @@ class TSECApp extends StatelessWidget {
       themeMode: ThemeMode.dark,
       theme: theme,
       darkTheme: darkTheme,
-      home: const CommittessScreen(),
+      home: const MainScreen(),
     );
   }
 }

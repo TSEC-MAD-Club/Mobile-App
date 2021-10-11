@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:tsec_app/models/committee_model/committee_model.dart';
 
-import '../utils/image_assets.dart';
 import '../widgets/custom_app_bar.dart';
 
 class CommittessScreen extends StatefulWidget {
@@ -72,7 +71,7 @@ class _CommittessScreenState extends State<CommittessScreen> {
                           return Transform.scale(
                             scale: _getScale(index, currentPage),
                             child: Card(
-                              color: Theme.of(context).accentColor,
+                              color: Theme.of(context).colorScheme.secondary,
                               child: CachedNetworkImage(
                                 imageUrl: data[index].image,
                               ),
