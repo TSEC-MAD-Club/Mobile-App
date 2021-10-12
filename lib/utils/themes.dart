@@ -3,10 +3,31 @@ import 'package:flutter/material.dart';
 // Light mode colors
 const kLightModeDarkBlue = Color(0xFF136ABF);
 const kLightModeLightBlue = Color(0xFF297DCF);
+const kLightModeToggleBtnBg = Color(0xFFD8D5D5);
 
 // Dark mode colors
 const kDarkModeDarkBlue = Color(0xFF297DCF);
 const kDarkModeLightBlue = Color(0xFF4391DE);
+const kDarkModeToggleBtnBg = Color(0xFF242526);
+
+//shadows
+const shadowDarkModeToggleBtn = [
+  BoxShadow(
+  color: Color(0x66000000),
+  spreadRadius: 5,
+  blurRadius: 10,
+  offset: Offset(0, 5),
+  ),
+];
+
+const shadowLightModeToggleBtn = [
+  BoxShadow(
+    color: Color(0xFFd8d7da),
+    spreadRadius: 5,
+    blurRadius: 10,
+    offset: Offset(0, 5),
+  ),
+];
 
 // Common colors
 const kDisabledBlue = Color(0x801265B5);
