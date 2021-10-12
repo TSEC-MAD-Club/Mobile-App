@@ -4,9 +4,8 @@ import 'dart:ui';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:tsec_app/models/committee_model/committee_model.dart';
 
-import '../utils/image_assets.dart';
+import '../models/committee_model/committee_model.dart';
 import '../widgets/custom_app_bar.dart';
 
 class CommittessScreen extends StatefulWidget {
