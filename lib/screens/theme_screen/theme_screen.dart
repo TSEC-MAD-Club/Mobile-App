@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tsec_app/provider/theme_provider.dart';
 
 import 'widgets/custom_toggle_button.dart';
 import 'widgets/skip_and_next_row.dart';
@@ -23,7 +25,6 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  bool isDarkMode = false;
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -34,11 +35,14 @@ class _BodyState extends State<Body> {
       child: Column(
         children: <Widget>[
           const SizedBox(height: 100),
-          Image.asset(
-            ImageAssets.sun,
-            height: 0.25 * size.height,
-            width: 0.54 * size.width,
-          ),
+          Consumer(builder: (context, watch, child) {
+            final themeMode = watch(themeProvider);
+            return Image.asset(
+              themeMode==ThemeMode.dark ? ImageAssets.moon : ImageAssets.sun,
+              height: 0.25 * size.height,
+              width: 0.54 * size.width,
+            );
+          }),
           const SizedBox(height: 40),
           Text(
             "Choose a style",
@@ -53,8 +57,7 @@ class _BodyState extends State<Body> {
           CustomToggleButton(
             values: const ['Light', 'Dark'],
             onToggleCallback: (index) {
-              isDarkMode = !isDarkMode;
-              setState(() {});
+              context.read(themeProvider.notifier).switchTheme();
             },
           ),
           const Spacer(),

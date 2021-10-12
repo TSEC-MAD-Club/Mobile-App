@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/src/provider.dart';
+import 'package:tsec_app/provider/theme_provider.dart';
 
 class CustomToggleButton extends StatefulWidget {
   final List<String> values;
@@ -12,7 +14,7 @@ class CustomToggleButton extends StatefulWidget {
     Key? key,
     required this.values,
     required this.onToggleCallback,
-    this.backgroundColor = const Color(0xFFe7e7e8),
+    this.backgroundColor = const Color(0xFFD8D5D5),
     this.buttonColor = const Color(0xFFFFFFFF),
     this.textColor = const Color(0xFF000000),
     this.shadows = const [
@@ -54,7 +56,7 @@ class _CustomToggleButtonState extends State<CustomToggleButton> {
               width: width * 0.7,
               height: width * 0.13,
               decoration: ShapeDecoration(
-                color: Theme.of(context).primaryColor,
+                color: initialPosition ? widget.backgroundColor : const Color(0xFF242526),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(width * 0.1),
                 ),
@@ -84,7 +86,14 @@ class _CustomToggleButtonState extends State<CustomToggleButton> {
               height: width * 0.13,
               decoration: ShapeDecoration(
                 color: Theme.of(context).primaryColorLight,
-                shadows: widget.shadows,
+                shadows: initialPosition ? widget.shadows : const [
+                  BoxShadow(
+                    color: Color(0x66000000),
+                    spreadRadius: 5,
+                    blurRadius: 10,
+                    offset: Offset(0, 5),
+                  ),
+                ],
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(width * 0.1),
                 ),
