@@ -20,6 +20,10 @@ late final theme = ThemeData(
     darkColor: kLightModeDarkBlue,
     lightColor: kLightModeLightBlue,
   ),
+  elevatedButtonTheme: _getElevatedButtonTheme(
+    darkColor: kLightModeDarkBlue,
+    lightColor: kLightModeDarkBlue,
+  ),
   primaryColor: const Color(0xFFF2F5F8),
   primaryColorLight: const Color(0xFFF2F5F8),
   primaryColorDark: const Color(0xFFD8D5D5),
@@ -35,6 +39,11 @@ late final darkTheme = ThemeData(
   scaffoldBackgroundColor: const Color(0xFF18191A),
   primaryColor: const Color(0xFF242526),
   primaryColorLight: const Color(0xFf34323d),
+  primaryColorDark: const Color(0xFF000000),
+  elevatedButtonTheme: _getElevatedButtonTheme(
+    darkColor: kDarkModeDarkBlue,
+    lightColor: kDarkModeLightBlue,
+  ),
   textButtonTheme: _getTextButtonTheme(
     darkColor: kDarkModeDarkBlue,
     lightColor: kDarkModeLightBlue,
@@ -90,6 +99,40 @@ TextButtonThemeData _getTextButtonTheme({
   required Color lightColor,
 }) {
   return TextButtonThemeData(
+    style: ButtonStyle(
+      padding: MaterialStateProperty.all<EdgeInsets>(
+        const EdgeInsets.symmetric(vertical: 14, horizontal: 29),
+      ),
+      backgroundColor: MaterialStateColor.resolveWith((states) {
+        if (states.contains(MaterialState.pressed))
+          return darkColor;
+        else if (states.contains(MaterialState.disabled))
+          return kDisabledBlue;
+        else if (states.contains(MaterialState.hovered))
+          return Colors.transparent;
+        else
+          return lightColor;
+      }),
+      foregroundColor: MaterialStateColor.resolveWith((states) {
+        if (states.contains(MaterialState.pressed)) return darkColor;
+        return kWhite;
+      }),
+      shape: MaterialStateProperty.all<OutlinedBorder>(
+        RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      ),
+      side: MaterialStateBorderSide.resolveWith((states) {
+        if (states.contains(MaterialState.pressed))
+          return BorderSide(color: darkColor);
+      }),
+    ),
+  );
+}
+
+ElevatedButtonThemeData _getElevatedButtonTheme({
+  required Color darkColor,
+  required Color lightColor,
+}) {
+  return ElevatedButtonThemeData(
     style: ButtonStyle(
       padding: MaterialStateProperty.all<EdgeInsets>(
         const EdgeInsets.symmetric(vertical: 14, horizontal: 29),
