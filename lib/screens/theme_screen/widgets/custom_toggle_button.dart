@@ -43,13 +43,10 @@ class _CustomToggleButtonState extends State<CustomToggleButton> {
         children: <Widget>[
           GestureDetector(
             onTap: () {
-              initialPosition = !initialPosition;
-              var index = 0;
-              if (!initialPosition) {
-                index = 1;
-              }
-              widget.onToggleCallback(index);
-              setState(() {});
+              setState(() {
+                initialPosition = !initialPosition;
+              });
+              widget.onToggleCallback(!initialPosition ? 1 : 0);
             },
             child: Container(
               width: width * 0.7,
