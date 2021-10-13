@@ -11,4 +11,9 @@ class ImageAssets {
   static const madClub = "$_committeeLogo/MAD.png";
   static const csi = "$_committeeLogo/CSI.png";
   static const codecell = "$_committeeLogo/codecell.png";
+
+  //theme screen images
+  static const _themePath = "$_root/themes";
+  static const sun = "$_themePath/sun.png";
+  static const moon = "$_themePath/moon.png";
 }
