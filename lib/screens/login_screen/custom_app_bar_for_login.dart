@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../utils/image_assets.dart';
-import '../utils/themes.dart';
+import '../../utils/image_assets.dart';
+import '../../utils/themes.dart';
 
 class CustomAppBarForLogin extends StatelessWidget {
   const CustomAppBarForLogin({
