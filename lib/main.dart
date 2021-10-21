@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'screens/main_screen.dart';
+import 'screens/main_screen/main_screen.dart';
 import 'utils/themes.dart';
 
 void main() {
