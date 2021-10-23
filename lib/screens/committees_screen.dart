@@ -4,18 +4,18 @@ import 'dart:ui';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:tsec_app/models/committee_model/committee_model.dart';
 
+import '../models/committee_model/committee_model.dart';
 import '../widgets/custom_app_bar.dart';
 
-class CommittessScreen extends StatefulWidget {
-  const CommittessScreen({Key? key}) : super(key: key);
+class CommitteesScreen extends StatefulWidget {
+  const CommitteesScreen({Key? key}) : super(key: key);
 
   @override
-  _CommittessScreenState createState() => _CommittessScreenState();
+  _CommitteesScreenState createState() => _CommitteesScreenState();
 }
 
-class _CommittessScreenState extends State<CommittessScreen> {
+class _CommitteesScreenState extends State<CommitteesScreen> {
   late final PageController _pageController;
   late final Future<List<CommitteeModel>> _committees;
   int _currentPage = 0;

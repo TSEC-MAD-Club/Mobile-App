@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-
+import '../screens/login_screen/login_screen.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../provider/theme_provider.dart';
 import '../utils/image_assets.dart';
 import '../utils/themes.dart';
 
@@ -35,10 +37,19 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
                     icon: const Icon(Icons.chevron_left_rounded),
                     onPressed: () => Navigator.pop(context),
                   ),
-                  _buildNavigation(
-                    context,
-                    icon: const Icon(Icons.dark_mode),
-                    onPressed: () {},
+                  Consumer(
+                    builder: (context, watch, child) {
+                      final theme = watch(themeProvider);
+                      return _buildNavigation(
+                        context,
+                        icon: theme == ThemeMode.dark
+                            ? const Icon(Icons.light_mode)
+                            : const Icon(Icons.dark_mode),
+                        onPressed: () {
+                          context.read(themeProvider.notifier).switchTheme();
+                        },
+                      );
+                    },
                   ),
                 ],
               ),
