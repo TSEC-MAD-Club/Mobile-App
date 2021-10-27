@@ -1,5 +1,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.madclubtsec.tsec_application.tsec_app">
+
+   <uses-permission android:name="android.permission.INTERNET"/>
+   <queries>
+        <intent>
+          <action android:name="android.intent.action.VIEW" />
+          <data android:scheme="https" />
+        </intent>
+   </queries>
    <application
         android:label="tsec_app"
         android:icon="@mipmap/ic_launcher">

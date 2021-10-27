@@ -52,7 +52,9 @@ class _CustomToggleButtonState extends State<CustomToggleButton> {
               width: width * 0.7,
               height: width * 0.13,
               decoration: ShapeDecoration(
-                color: initialPosition? kLightModeToggleBtnBg : kDarkModeToggleBtnBg,
+                color: initialPosition
+                    ? kLightModeToggleBtnBg
+                    : kDarkModeToggleBtnBg,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(width * 0.1),
                 ),
@@ -82,7 +84,9 @@ class _CustomToggleButtonState extends State<CustomToggleButton> {
               height: width * 0.13,
               decoration: ShapeDecoration(
                 color: Theme.of(context).primaryColorLight,
-                shadows: initialPosition ? shadowLightModeToggleBtn : shadowDarkModeToggleBtn,
+                shadows: initialPosition
+                    ? shadowLightModeToggleBtn
+                    : shadowDarkModeToggleBtn,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(width * 0.1),
                 ),

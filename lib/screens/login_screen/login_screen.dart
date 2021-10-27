@@ -1,7 +1,5 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import '../../utils/themes.dart';
+
 import 'custom_app_bar_for_login.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -16,12 +14,14 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).shadowColor,
-      body: ListView(children: <Widget>[
-        const CustomAppBarForLogin(
-          title: "Welcome!",
-          description: "Let's sign you in.",
-        ),
-      ]),
+      body: ListView(
+        children: const <Widget>[
+          CustomAppBarForLogin(
+            title: "Welcome!",
+            description: "Let's sign you in.",
+          ),
+        ],
+      ),
     );
   }
 }

@@ -29,6 +29,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   json_annotation: ^4.0.1
   cached_network_image: ^3.1.0
+  url_launcher: ^6.0.12
   flutter_riverpod: ^0.14.0+3
   shared_preferences: ^2.0.8
 
@@ -52,7 +53,9 @@ flutter:
   assets:
     - assets/images/themes/
     - assets/images/app_bar/
+    - assets/images/branches/
     - assets/data/
+    - assets/images/icons/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
   # For details regarding adding assets from package dependencies, see

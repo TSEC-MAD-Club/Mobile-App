@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../screens/login_screen/login_screen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '../provider/theme_provider.dart';
 import '../utils/image_assets.dart';
 import '../utils/themes.dart';
@@ -19,7 +19,7 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
       child: Container(
         height: 235,
         decoration: BoxDecoration(
-          color: Theme.of(context).accentColor,
+          color: Theme.of(context).colorScheme.secondary,
           borderRadius: const BorderRadius.only(
             bottomRight: Radius.circular(40),
           ),

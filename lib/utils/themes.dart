@@ -52,8 +52,8 @@ late final theme = ThemeData(
     bodyColor: kBlack,
     displayColor: kBlack,
   ),
-  accentColor: Colors.white,
   fontFamily: "SF Pro Text",
+  colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.white),
 );
 
 late final darkTheme = ThemeData(
@@ -73,8 +73,8 @@ late final darkTheme = ThemeData(
     bodyColor: kWhite,
     displayColor: kWhite,
   ),
-  accentColor: kLightBlack,
   fontFamily: "SF Pro Text",
+  colorScheme: ColorScheme.fromSwatch().copyWith(secondary: kLightBlack),
 );
 
 const _textTheme = TextTheme(
