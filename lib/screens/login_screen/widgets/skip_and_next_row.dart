@@ -23,7 +23,7 @@ class SkipAndNextRow extends StatelessWidget {
             height: 50,
             child: ElevatedButton(
               onPressed: () {
-                  Navigator.of(context).push(
+                Navigator.of(context).push(
                   MaterialPageRoute(builder: (context) => LoginScreen()));
               },
               child: IconButton(
