@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
 import '../models/committee_model/committee_model.dart';
 import '../widgets/custom_app_bar.dart';
 
@@ -70,7 +71,7 @@ class _CommitteesScreenState extends State<CommitteesScreen> {
                           return Transform.scale(
                             scale: _getScale(index, currentPage),
                             child: Card(
-                              color: Theme.of(context).accentColor,
+                              color: Theme.of(context).colorScheme.secondary,
                               child: CachedNetworkImage(
                                 imageUrl: data[index].image,
                               ),
