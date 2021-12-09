@@ -25,13 +25,16 @@ class SkipAndNextRow extends StatelessWidget {
             child: ElevatedButton(
               onPressed: () {
                 Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => MainScreen()));
+                  MaterialPageRoute(builder: (context) => const MainScreen()),
+                );
               },
               child: IconButton(
                 icon: const Icon(Icons.arrow_forward),
                 onPressed: () {
                   Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => LoginScreen()));
+                    MaterialPageRoute(
+                        builder: (context) => const LoginScreen()),
+                  );
                 },
               ),
               style: ButtonStyle(

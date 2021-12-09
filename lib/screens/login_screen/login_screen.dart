@@ -16,14 +16,16 @@ class _LoginScreenState extends State<LoginScreen> {
     return GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: Scaffold(
-          body: ListView(children: <Widget>[
-            const CustomAppBarForLogin(
-              title: "Welcome!",
-              description: "Let's sign you in.",
-            ),
-            LoginWidget(),
-            const SkipAndNextRow(),
-          ]),
+          body: ListView(
+            children: const <Widget>[
+              CustomAppBarForLogin(
+                title: "Welcome!",
+                description: "Let's sign you in.",
+              ),
+              LoginWidget(),
+              SkipAndNextRow(),
+            ],
+          ),
         ));
   }
 }
