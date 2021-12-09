@@ -55,7 +55,7 @@ const kBlack = Color(0xFF18191A);
 const kLightBlack = Color(0xFF242526);
 
 late final theme = ThemeData(
-  scaffoldBackgroundColor: const Color(0xFFF2F5F8),  
+  scaffoldBackgroundColor: const Color(0xFFF2F5F8),
   shadowColor: const Color(0x00D3D3D3),
   textButtonTheme: _getTextButtonTheme(
     darkColor: kLightModeDarkBlue,
@@ -202,5 +202,3 @@ ElevatedButtonThemeData _getElevatedButtonTheme({
     ),
   );
 }
-
-
