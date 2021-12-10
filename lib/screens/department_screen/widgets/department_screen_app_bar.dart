@@ -89,8 +89,14 @@ class _DepartmentScreenAppBarState extends State<DepartmentScreenAppBar> {
           icon: Consumer(builder: (context, watch, child) {
             final themeMode = watch(themeProvider);
             return themeMode == ThemeMode.dark
-                ? const Icon(Icons.dark_mode,size: 30,)
-                : const Icon(Icons.light_mode,size: 30,);
+                ? const Icon(
+                    Icons.dark_mode,
+                    size: 30,
+                  )
+                : const Icon(
+                    Icons.light_mode,
+                    size: 30,
+                  );
           }),
         ),
       ],

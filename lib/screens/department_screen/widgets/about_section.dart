@@ -54,7 +54,8 @@ class _AboutSectionState extends State<AboutSection> {
                   ),
                   child: Center(
                     child: ExpandablePanel(
-                      theme: ExpandableThemeData(iconColor: kLightModeLightBlue),
+                      theme:
+                          ExpandableThemeData(iconColor: kLightModeLightBlue),
                       header: const Text(""),
                       collapsed: Text(
                         aboutModel.aboutDepartment,
@@ -102,7 +103,8 @@ class _AboutSectionState extends State<AboutSection> {
                   ),
                   child: Center(
                     child: ExpandablePanel(
-                      theme: ExpandableThemeData(iconColor: kLightModeLightBlue),
+                      theme:
+                          ExpandableThemeData(iconColor: kLightModeLightBlue),
                       header: const Text(""),
                       collapsed: RichText(
                         overflow: TextOverflow.ellipsis,
@@ -112,13 +114,21 @@ class _AboutSectionState extends State<AboutSection> {
                           text: "",
                           style: Theme.of(context).textTheme.bodyText2,
                           children: [
-                            if(true)
-                            for (var i = 1;i <= 2;i++)
-                              i % 2 == 0? TextSpan(text: " " +aboutModel.visionList[i ~/ 2 - 1] +"\n",)
-                                  : const WidgetSpan(child: Icon(Icons.check_box_outlined,size: 20,
-                                        color: kLightModeLightBlue,
+                            if (true)
+                              for (var i = 1; i <= 2; i++)
+                                i % 2 == 0
+                                    ? TextSpan(
+                                        text: " " +
+                                            aboutModel.visionList[i ~/ 2 - 1] +
+                                            "\n",
+                                      )
+                                    : const WidgetSpan(
+                                        child: Icon(
+                                          Icons.check_box_outlined,
+                                          size: 20,
+                                          color: kLightModeLightBlue,
                                         ),
-                                    )
+                                      )
                           ],
                         ),
                       ),
@@ -127,12 +137,21 @@ class _AboutSectionState extends State<AboutSection> {
                           text: "",
                           style: Theme.of(context).textTheme.bodyText2,
                           children: [
-                            for (var i = 1;i <= aboutModel.visionList.length * 2;i++)
-                              i % 2 == 0? TextSpan(text: " " +aboutModel.visionList[i ~/ 2 - 1] +"\n")
-                                  : const WidgetSpan(child: Icon(Icons.check_box_outlined,
-                                      size: 20,
-                                      color: kLightModeLightBlue,
-                                    ),),
+                            for (var i = 1;
+                                i <= aboutModel.visionList.length * 2;
+                                i++)
+                              i % 2 == 0
+                                  ? TextSpan(
+                                      text: " " +
+                                          aboutModel.visionList[i ~/ 2 - 1] +
+                                          "\n")
+                                  : const WidgetSpan(
+                                      child: Icon(
+                                        Icons.check_box_outlined,
+                                        size: 20,
+                                        color: kLightModeLightBlue,
+                                      ),
+                                    ),
                           ],
                         ),
                       ),
@@ -170,7 +189,8 @@ class _AboutSectionState extends State<AboutSection> {
                   ),
                   child: Center(
                     child: ExpandablePanel(
-                      theme: ExpandableThemeData(iconColor: kLightModeLightBlue),
+                      theme:
+                          ExpandableThemeData(iconColor: kLightModeLightBlue),
                       header: const Text(""),
                       collapsed: Text(
                         aboutModel.mission,

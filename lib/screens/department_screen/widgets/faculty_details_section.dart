@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tsec_app/utils/themes.dart';
 
 class FacultyDetailsSection extends StatefulWidget {
-  const FacultyDetailsSection({ Key? key }) : super(key: key);
+  const FacultyDetailsSection({Key? key}) : super(key: key);
 
   @override
   _FacultyDetailsSectionState createState() => _FacultyDetailsSectionState();

@@ -32,9 +32,7 @@ class SkipAndNextRow extends StatelessWidget {
                     borderRadius: BorderRadius.circular(15.0),
                   ),
                 ),
-                padding: MaterialStateProperty.all(
-                  EdgeInsets.zero
-                ),
+                padding: MaterialStateProperty.all(EdgeInsets.zero),
               ),
             ),
           ),

@@ -15,7 +15,9 @@ class DepartmentScreen extends StatefulWidget {
   String selectedItem;
 
   DepartmentScreen(
-      {Key? key, required this.departmentName, this.selectedItem = ABOUT_SECTION})
+      {Key? key,
+      required this.departmentName,
+      this.selectedItem = ABOUT_SECTION})
       : super(key: key);
 
   @override
