@@ -54,6 +54,7 @@ class _AboutSectionState extends State<AboutSection> {
                   ),
                   child: Center(
                     child: ExpandablePanel(
+                      theme: ExpandableThemeData(iconColor: kLightModeLightBlue),
                       header: const Text(""),
                       collapsed: Text(
                         aboutModel.aboutDepartment,
@@ -101,6 +102,7 @@ class _AboutSectionState extends State<AboutSection> {
                   ),
                   child: Center(
                     child: ExpandablePanel(
+                      theme: ExpandableThemeData(iconColor: kLightModeLightBlue),
                       header: const Text(""),
                       collapsed: RichText(
                         overflow: TextOverflow.ellipsis,
@@ -168,6 +170,7 @@ class _AboutSectionState extends State<AboutSection> {
                   ),
                   child: Center(
                     child: ExpandablePanel(
+                      theme: ExpandableThemeData(iconColor: kLightModeLightBlue),
                       header: const Text(""),
                       collapsed: Text(
                         aboutModel.mission,

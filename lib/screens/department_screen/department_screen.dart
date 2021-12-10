@@ -2,8 +2,10 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:tsec_app/screens/department_screen/widgets/about_section.dart';
+import 'package:tsec_app/screens/department_screen/widgets/faculty_details_section.dart';
 import 'package:tsec_app/utils/themes.dart';
 
+import 'department_constants.dart';
 import 'widgets/department_screen_app_bar.dart';
 import 'widgets/drop_down_menu_item.dart';
 
@@ -13,7 +15,7 @@ class DepartmentScreen extends StatefulWidget {
   String selectedItem;
 
   DepartmentScreen(
-      {Key? key, required this.departmentName, this.selectedItem = "About"})
+      {Key? key, required this.departmentName, this.selectedItem = ABOUT_SECTION})
       : super(key: key);
 
   @override
@@ -43,7 +45,7 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
                   title: "About",
                   onTap: () {
                     setState(() {
-                      widget.selectedItem = "About";
+                      widget.selectedItem = ABOUT_SECTION;
                     });
                     overlayEntry!.remove();
                   }),
@@ -51,7 +53,7 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
                   title: "Faculty Details",
                   onTap: () {
                     setState(() {
-                      widget.selectedItem = "Faculty Details";
+                      widget.selectedItem = FACULTY_DETAILS_SECTION;
                     });
                     overlayEntry!.remove();
                   }),
@@ -59,7 +61,7 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
                   title: "Placement Details",
                   onTap: () {
                     setState(() {
-                      widget.selectedItem = "Placement Details";
+                      widget.selectedItem = PLACEMENT_DETAILS_SECTION;
                     });
                     overlayEntry!.remove();
                   }),
@@ -67,7 +69,7 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
                   title: "Result Analysis",
                   onTap: () {
                     setState(() {
-                      widget.selectedItem = "Result Analysis";
+                      widget.selectedItem = RESULT_ANALYSIS_SECTION;
                     });
                     overlayEntry!.remove();
                   }),
@@ -75,7 +77,7 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
                   title: "Curriculum",
                   onTap: () {
                     setState(() {
-                      widget.selectedItem = "Curriculum";
+                      widget.selectedItem = CURRICULUM_SECTION;
                     });
                     overlayEntry!.remove();
                   }),
@@ -83,7 +85,7 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
                   title: "More",
                   onTap: () {
                     setState(() {
-                      widget.selectedItem = "More";
+                      widget.selectedItem = MORE_SECTION;
                     });
                     overlayEntry!.remove();
                   }),
@@ -93,6 +95,17 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
       );
     });
     overlayState.insert(overlayEntry);
+  }
+
+  Widget section(String sectionName) {
+    switch (sectionName) {
+      case ABOUT_SECTION:
+        return AboutSection();
+      case FACULTY_DETAILS_SECTION:
+        return FacultyDetailsSection();
+      default:
+        return AboutSection();
+    }
   }
 
   @override
@@ -146,11 +159,11 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
                           style: Theme.of(context)
                               .textTheme
                               .button!
-                              .copyWith(color: Theme.of(context).primaryColor),
+                              .copyWith(color: Colors.white),
                         ),
                         const Spacer(),
-                        VerticalDivider(
-                          color: Theme.of(context).primaryColorLight,
+                        const VerticalDivider(
+                          color: Colors.white,
                           thickness: 1,
                           indent: 5,
                           endIndent: 5,
@@ -162,10 +175,10 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
                           },
                           child: Transform.rotate(
                             angle: -90 * pi / 180,
-                            child: Icon(
+                            child: const Icon(
                               Icons.chevron_left,
                               size: 30,
-                              color: Theme.of(context).primaryColorLight,
+                              color: Colors.white,
                             ),
                           ),
                         ),
@@ -175,10 +188,17 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
                 ],
               ),
             ),
-            const SizedBox(height: 10,),
-            AboutSection(),
+            const SizedBox(
+              height: 10,
+            ),
+            section(widget.selectedItem)
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        backgroundColor: kLightModeLightBlue,
+        child: Image.asset('assets/images/department/slide_drawer.png'),
       ),
     );
   }

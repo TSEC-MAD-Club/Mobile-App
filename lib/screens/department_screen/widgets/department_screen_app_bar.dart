@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import 'package:tsec_app/provider/theme_provider.dart';
 import 'package:tsec_app/utils/themes.dart';
 
 class DepartmentScreenAppBar extends StatefulWidget with PreferredSizeWidget {
@@ -64,11 +67,32 @@ class _DepartmentScreenAppBarState extends State<DepartmentScreenAppBar> {
       elevation: 0,
       leadingWidth: 60.0,
       toolbarHeight: 65.0,
-      leading: _buildNavigation(context,onPressed: () {},icon: const Icon(Icons.chevron_left_rounded,size: 30,),),
-      title: Text("Department",style: Theme.of(context).textTheme.headline6,),
+      leading: _buildNavigation(
+        context,
+        onPressed: () {},
+        icon: const Icon(
+          Icons.chevron_left_rounded,
+          size: 30,
+        ),
+      ),
+      title: Text(
+        "Department",
+        style: Theme.of(context).textTheme.headline6,
+      ),
       centerTitle: true,
       actions: [
-        _buildThemeSwitcher(context,onPressed: () {},icon: const Icon(Icons.light_mode,size: 30,),),
+        _buildThemeSwitcher(
+          context,
+          onPressed: () {
+            context.read(themeProvider.notifier).switchTheme();
+          },
+          icon: Consumer(builder: (context, watch, child) {
+            final themeMode = watch(themeProvider);
+            return themeMode == ThemeMode.dark
+                ? const Icon(Icons.dark_mode,size: 30,)
+                : const Icon(Icons.light_mode,size: 30,);
+          }),
+        ),
       ],
       backgroundColor: Theme.of(context).accentColor,
     );

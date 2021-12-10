@@ -13,10 +13,10 @@ const kDarkModeToggleBtnBg = Color(0xFF242526);
 //shadows
 const shadowDarkModeToggleBtn = [
   BoxShadow(
-  color: Color(0x66000000),
-  spreadRadius: 5,
-  blurRadius: 10,
-  offset: Offset(0, 5),
+    color: Color(0x66000000),
+    spreadRadius: 5,
+    blurRadius: 10,
+    offset: Offset(0, 5),
   ),
 ];
 
@@ -94,6 +94,8 @@ const _textTheme = TextTheme(
       fontSize: 20,
       fontWeight: FontWeight.w400,
     ),
+    headline5: TextStyle(),
+    headline6: TextStyle(),
     bodyText1: TextStyle(
       fontSize: 17,
       fontWeight: FontWeight.w600,
