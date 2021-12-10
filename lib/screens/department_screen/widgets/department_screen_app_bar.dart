@@ -100,7 +100,7 @@ class _DepartmentScreenAppBarState extends State<DepartmentScreenAppBar> {
           }),
         ),
       ],
-      backgroundColor: Theme.of(context).accentColor,
+      backgroundColor: Theme.of(context).colorScheme.secondary,
     );
   }
 }

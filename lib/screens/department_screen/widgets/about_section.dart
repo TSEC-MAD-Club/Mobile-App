@@ -42,7 +42,7 @@ class _AboutSectionState extends State<AboutSection> {
                   padding: const EdgeInsets.only(
                       left: 15, right: 10, top: 0, bottom: 10),
                   decoration: BoxDecoration(
-                    color: Theme.of(context).accentColor,
+                    color: Theme.of(context).colorScheme.secondary,
                     borderRadius: const BorderRadius.all(Radius.circular(12)),
                     boxShadow: [
                       BoxShadow(
@@ -54,8 +54,8 @@ class _AboutSectionState extends State<AboutSection> {
                   ),
                   child: Center(
                     child: ExpandablePanel(
-                      theme:
-                          ExpandableThemeData(iconColor: kLightModeLightBlue),
+                      theme: const ExpandableThemeData(
+                          iconColor: kLightModeLightBlue),
                       header: const Text(""),
                       collapsed: Text(
                         aboutModel.aboutDepartment,
@@ -91,7 +91,7 @@ class _AboutSectionState extends State<AboutSection> {
                   padding: const EdgeInsets.only(
                       left: 15, right: 10, top: 0, bottom: 10),
                   decoration: BoxDecoration(
-                    color: Theme.of(context).accentColor,
+                    color: Theme.of(context).colorScheme.secondary,
                     borderRadius: const BorderRadius.all(Radius.circular(12)),
                     boxShadow: [
                       BoxShadow(
@@ -103,8 +103,8 @@ class _AboutSectionState extends State<AboutSection> {
                   ),
                   child: Center(
                     child: ExpandablePanel(
-                      theme:
-                          ExpandableThemeData(iconColor: kLightModeLightBlue),
+                      theme: const ExpandableThemeData(
+                          iconColor: kLightModeLightBlue),
                       header: const Text(""),
                       collapsed: RichText(
                         overflow: TextOverflow.ellipsis,
@@ -177,7 +177,7 @@ class _AboutSectionState extends State<AboutSection> {
                   padding: const EdgeInsets.only(
                       left: 15, right: 10, top: 0, bottom: 10),
                   decoration: BoxDecoration(
-                    color: Theme.of(context).accentColor,
+                    color: Theme.of(context).colorScheme.secondary,
                     borderRadius: const BorderRadius.all(Radius.circular(12)),
                     boxShadow: [
                       BoxShadow(
@@ -189,8 +189,8 @@ class _AboutSectionState extends State<AboutSection> {
                   ),
                   child: Center(
                     child: ExpandablePanel(
-                      theme:
-                          ExpandableThemeData(iconColor: kLightModeLightBlue),
+                      theme: const ExpandableThemeData(
+                          iconColor: kLightModeLightBlue),
                       header: const Text(""),
                       collapsed: Text(
                         aboutModel.mission,

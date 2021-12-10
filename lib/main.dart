@@ -31,8 +31,8 @@ class TSECApp extends ConsumerWidget {
       themeMode: _themeMode,
       theme: theme,
       darkTheme: darkTheme,
-      home:
-          DepartmentScreen(departmentName: "Electronics &\nTelecommunication"),
+      home: const DepartmentScreen(
+          departmentName: "Electronics &\nTelecommunication"),
     );
   }
 }

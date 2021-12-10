@@ -10,11 +10,11 @@ import 'widgets/department_screen_app_bar.dart';
 import 'widgets/drop_down_menu_item.dart';
 
 class DepartmentScreen extends StatefulWidget {
-  String departmentName;
+  final String departmentName;
 
-  String selectedItem;
+  final String selectedItem;
 
-  DepartmentScreen(
+  const DepartmentScreen(
       {Key? key,
       required this.departmentName,
       this.selectedItem = ABOUT_SECTION})
@@ -25,6 +25,13 @@ class DepartmentScreen extends StatefulWidget {
 }
 
 class _DepartmentScreenState extends State<DepartmentScreen> {
+  late String selectedItem;
+  @override
+  void initState() {
+    super.initState();
+    selectedItem = widget.selectedItem;
+  }
+
   void _showDropDown(BuildContext context) async {
     Size size = MediaQuery.of(context).size;
     OverlayState overlayState = Overlay.of(context)!;
@@ -37,7 +44,7 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
           padding: const EdgeInsets.symmetric(vertical: 8),
           width: 230,
           decoration: BoxDecoration(
-            color: Theme.of(context).accentColor,
+            color: Theme.of(context).colorScheme.secondary,
             border: Border.all(color: kLightModeLightBlue),
             borderRadius: const BorderRadius.all(Radius.circular(5)),
           ),
@@ -47,7 +54,7 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
                   title: "About",
                   onTap: () {
                     setState(() {
-                      widget.selectedItem = ABOUT_SECTION;
+                      selectedItem = ABOUT_SECTION;
                     });
                     overlayEntry!.remove();
                   }),
@@ -55,7 +62,7 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
                   title: "Faculty Details",
                   onTap: () {
                     setState(() {
-                      widget.selectedItem = FACULTY_DETAILS_SECTION;
+                      selectedItem = FACULTY_DETAILS_SECTION;
                     });
                     overlayEntry!.remove();
                   }),
@@ -63,7 +70,7 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
                   title: "Placement Details",
                   onTap: () {
                     setState(() {
-                      widget.selectedItem = PLACEMENT_DETAILS_SECTION;
+                      selectedItem = PLACEMENT_DETAILS_SECTION;
                     });
                     overlayEntry!.remove();
                   }),
@@ -71,7 +78,7 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
                   title: "Result Analysis",
                   onTap: () {
                     setState(() {
-                      widget.selectedItem = RESULT_ANALYSIS_SECTION;
+                      selectedItem = RESULT_ANALYSIS_SECTION;
                     });
                     overlayEntry!.remove();
                   }),
@@ -79,7 +86,7 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
                   title: "Curriculum",
                   onTap: () {
                     setState(() {
-                      widget.selectedItem = CURRICULUM_SECTION;
+                      selectedItem = CURRICULUM_SECTION;
                     });
                     overlayEntry!.remove();
                   }),
@@ -87,7 +94,7 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
                   title: "More",
                   onTap: () {
                     setState(() {
-                      widget.selectedItem = MORE_SECTION;
+                      selectedItem = MORE_SECTION;
                     });
                     overlayEntry!.remove();
                   }),
@@ -102,11 +109,11 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
   Widget section(String sectionName) {
     switch (sectionName) {
       case ABOUT_SECTION:
-        return AboutSection();
+        return const AboutSection();
       case FACULTY_DETAILS_SECTION:
-        return FacultyDetailsSection();
+        return const FacultyDetailsSection();
       default:
-        return AboutSection();
+        return const AboutSection();
     }
   }
 
@@ -126,7 +133,7 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
               width: size.width,
               height: 0.18 * size.height,
               decoration: BoxDecoration(
-                color: Theme.of(context).accentColor,
+                color: Theme.of(context).colorScheme.secondary,
                 borderRadius:
                     const BorderRadius.only(bottomRight: Radius.circular(30)),
               ),
@@ -193,7 +200,7 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
             const SizedBox(
               height: 10,
             ),
-            section(widget.selectedItem)
+            section(selectedItem),
           ],
         ),
       ),
