@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../utils/image_assets.dart';
+import '../../../utils/image_assets.dart';
 
 class CustomAppBarForLogin extends StatelessWidget {
   const CustomAppBarForLogin({
@@ -15,9 +14,8 @@ class CustomAppBarForLogin extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Container(
+      child: SizedBox(
         height: 260,
-        color: Theme.of(context).shadowColor,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
           child: Column(

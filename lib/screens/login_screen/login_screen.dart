@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-
-import 'custom_app_bar_for_login.dart';
+import 'package:tsec_app/screens/login_screen/widgets/custom_login_widget.dart';
+import 'widgets/custom_app_bar_for_login.dart';
+import 'widgets/skip_and_next_row.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -12,16 +13,19 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Theme.of(context).shadowColor,
-      body: ListView(
-        children: const <Widget>[
-          CustomAppBarForLogin(
-            title: "Welcome!",
-            description: "Let's sign you in.",
+    return GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: Scaffold(
+          body: ListView(
+            children: const <Widget>[
+              CustomAppBarForLogin(
+                title: "Welcome!",
+                description: "Let's sign you in.",
+              ),
+              LoginWidget(),
+              SkipAndNextRow(),
+            ],
           ),
-        ],
-      ),
-    );
+        ));
   }
 }
