@@ -4,13 +4,15 @@ import 'package:flutter/material.dart';
 const kLightModeDarkBlue = Color(0xFF136ABF);
 const kLightModeLightBlue = Color(0xFF297DCF);
 const kLightModeToggleBtnBg = Color(0xFFD8D5D5);
+const kLightModeShadowColor = Color(0x00D3D3D3);
 
 // Dark mode colors
 const kDarkModeDarkBlue = Color(0xFF297DCF);
 const kDarkModeLightBlue = Color(0xFF4391DE);
 const kDarkModeToggleBtnBg = Color(0xFF242526);
+const kDarkModeShadowColor = Color(0x00A9A9A9);
 
-//shadows
+//shadowsForBtn
 const shadowDarkModeToggleBtn = [
   BoxShadow(
     color: Color(0x66000000),
@@ -29,6 +31,23 @@ const shadowLightModeToggleBtn = [
   ),
 ];
 
+//shadowsForTextFields
+const shadowDarkModeTextFields = [
+  BoxShadow(
+    color: Color(0x00A9A9A9),
+    spreadRadius: 2,
+    blurRadius: 1,
+    offset: Offset(2, 2),
+  ),
+];
+const shadowLightModeTextFields = [
+  BoxShadow(
+    color: Color(0x00D3D3D3),
+    spreadRadius: 2,
+    blurRadius: 1,
+    offset: Offset(2, 2),
+  ),
+];
 // Common colors
 const kDisabledBlue = Color(0x801265B5);
 const kWhite = Color(0xFFE4E6EB);
@@ -37,6 +56,7 @@ const kLightBlack = Color(0xFF242526);
 
 late final theme = ThemeData(
   scaffoldBackgroundColor: const Color(0xFFF2F5F8),
+  shadowColor: const Color(0x00D3D3D3),
   textButtonTheme: _getTextButtonTheme(
     darkColor: kLightModeDarkBlue,
     lightColor: kLightModeLightBlue,
@@ -61,6 +81,7 @@ late final darkTheme = ThemeData(
   primaryColor: const Color(0xFF242526),
   primaryColorLight: const Color(0xFf34323d),
   primaryColorDark: const Color(0xFF000000),
+  shadowColor: const Color(0x00A9A9A9),
   elevatedButtonTheme: _getElevatedButtonTheme(
     darkColor: kDarkModeDarkBlue,
     lightColor: kDarkModeLightBlue,
@@ -116,7 +137,6 @@ const _textTheme = TextTheme(
       fontSize: 14,
       fontWeight: FontWeight.w500,
     ));
-
 TextButtonThemeData _getTextButtonTheme({
   required Color darkColor,
   required Color lightColor,
