@@ -5,32 +5,51 @@ import 'package:tsec_app/screens/department_screen/widgets/about_section.dart';
 import 'package:tsec_app/screens/department_screen/widgets/faculty_details_section.dart';
 import 'package:tsec_app/utils/themes.dart';
 
-import 'department_constants.dart';
 import 'widgets/department_screen_app_bar.dart';
 import 'widgets/drop_down_menu_item.dart';
+
+enum Item {
+  About,
+  FacultyDetails,
+  PlacementDetails,
+  ResultAnalysis,
+  Curriculum,
+  More,
+}
+
+extension ItemNameExtension on Item {
+  String get name {
+    switch (this) {
+      case Item.About:
+        return "About";
+      case Item.FacultyDetails:
+        return "Faculty Details";
+      case Item.PlacementDetails:
+        return "Placement Details";
+      case Item.ResultAnalysis:
+        return "Result Analysis";
+      case Item.Curriculum:
+        return "Curriculum";
+      case Item.More:
+        return "More";
+    }
+  }
+}
 
 class DepartmentScreen extends StatefulWidget {
   final String departmentName;
 
-  final String selectedItem;
-
-  const DepartmentScreen(
-      {Key? key,
-      required this.departmentName,
-      this.selectedItem = ABOUT_SECTION})
-      : super(key: key);
+  const DepartmentScreen({
+    Key? key,
+    required this.departmentName,
+  }) : super(key: key);
 
   @override
   _DepartmentScreenState createState() => _DepartmentScreenState();
 }
 
 class _DepartmentScreenState extends State<DepartmentScreen> {
-  late String selectedItem;
-  @override
-  void initState() {
-    super.initState();
-    selectedItem = widget.selectedItem;
-  }
+  Item selectedItem = Item.About;
 
   void _showDropDown(BuildContext context) async {
     Size size = MediaQuery.of(context).size;
@@ -50,54 +69,15 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
           ),
           child: Column(
             children: [
-              DropDownMenuItem(
-                  title: "About",
-                  onTap: () {
-                    setState(() {
-                      selectedItem = ABOUT_SECTION;
-                    });
-                    overlayEntry!.remove();
-                  }),
-              DropDownMenuItem(
-                  title: "Faculty Details",
-                  onTap: () {
-                    setState(() {
-                      selectedItem = FACULTY_DETAILS_SECTION;
-                    });
-                    overlayEntry!.remove();
-                  }),
-              DropDownMenuItem(
-                  title: "Placement Details",
-                  onTap: () {
-                    setState(() {
-                      selectedItem = PLACEMENT_DETAILS_SECTION;
-                    });
-                    overlayEntry!.remove();
-                  }),
-              DropDownMenuItem(
-                  title: "Result Analysis",
-                  onTap: () {
-                    setState(() {
-                      selectedItem = RESULT_ANALYSIS_SECTION;
-                    });
-                    overlayEntry!.remove();
-                  }),
-              DropDownMenuItem(
-                  title: "Curriculum",
-                  onTap: () {
-                    setState(() {
-                      selectedItem = CURRICULUM_SECTION;
-                    });
-                    overlayEntry!.remove();
-                  }),
-              DropDownMenuItem(
-                  title: "More",
-                  onTap: () {
-                    setState(() {
-                      selectedItem = MORE_SECTION;
-                    });
-                    overlayEntry!.remove();
-                  }),
+              for (var item in Item.values)
+                DropDownMenuItem(
+                    title: item.name,
+                    onTap: () {
+                      setState(() {
+                        selectedItem = item;
+                      });
+                      overlayEntry!.remove();
+                    })
             ],
           ),
         ),
@@ -106,11 +86,11 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
     overlayState.insert(overlayEntry);
   }
 
-  Widget section(String sectionName) {
-    switch (sectionName) {
-      case ABOUT_SECTION:
+  Widget section(Item item) {
+    switch (item) {
+      case Item.About:
         return const AboutSection();
-      case FACULTY_DETAILS_SECTION:
+      case Item.FacultyDetails:
         return const FacultyDetailsSection();
       default:
         return const AboutSection();
@@ -164,7 +144,7 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
                     child: Row(
                       children: [
                         Text(
-                          widget.selectedItem,
+                          selectedItem.name,
                           style: Theme.of(context)
                               .textTheme
                               .button!

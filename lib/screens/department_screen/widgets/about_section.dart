@@ -22,7 +22,6 @@ class _AboutSectionState extends State<AboutSection> {
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           child: SizedBox(
             width: size.width,
-            height: null,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
