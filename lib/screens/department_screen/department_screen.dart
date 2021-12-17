@@ -9,28 +9,28 @@ import 'widgets/department_screen_app_bar.dart';
 import 'widgets/drop_down_menu_item.dart';
 
 enum Item {
-  About,
-  FacultyDetails,
-  PlacementDetails,
-  ResultAnalysis,
-  Curriculum,
-  More,
+  about,
+  facultyDetails,
+  placementDetails,
+  resultAnalysis,
+  curriculum,
+  more,
 }
 
 extension ItemNameExtension on Item {
   String get name {
     switch (this) {
-      case Item.About:
+      case Item.about:
         return "About";
-      case Item.FacultyDetails:
+      case Item.facultyDetails:
         return "Faculty Details";
-      case Item.PlacementDetails:
+      case Item.placementDetails:
         return "Placement Details";
-      case Item.ResultAnalysis:
+      case Item.resultAnalysis:
         return "Result Analysis";
-      case Item.Curriculum:
+      case Item.curriculum:
         return "Curriculum";
-      case Item.More:
+      case Item.more:
         return "More";
     }
   }
@@ -49,7 +49,7 @@ class DepartmentScreen extends StatefulWidget {
 }
 
 class _DepartmentScreenState extends State<DepartmentScreen> {
-  Item selectedItem = Item.About;
+  Item selectedItem = Item.about;
 
   void _showDropDown(BuildContext context) async {
     Size size = MediaQuery.of(context).size;
@@ -88,9 +88,9 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
 
   Widget section(Item item) {
     switch (item) {
-      case Item.About:
+      case Item.about:
         return const AboutSection();
-      case Item.FacultyDetails:
+      case Item.facultyDetails:
         return const FacultyDetailsSection();
       default:
         return const AboutSection();
