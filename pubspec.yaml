@@ -32,6 +32,7 @@ dependencies:
   url_launcher: ^6.0.12
   flutter_riverpod: ^0.14.0+3
   shared_preferences: ^2.0.8
+  expandable: ^5.0.1
 
 dev_dependencies:
   flutter_test:
@@ -51,10 +52,11 @@ flutter:
   uses-material-design: true
   # To add assets to your application, add an assets section, like this:
   assets:
+    - assets/data/
     - assets/images/themes/
     - assets/images/app_bar/
+    - assets/images/department/
     - assets/images/branches/
-    - assets/data/
     - assets/images/icons/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

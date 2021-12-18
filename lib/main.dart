@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tsec_app/screens/department_screen/department_screen.dart';
 
-import 'screens/main_screen/main_screen.dart';
 import 'provider/shared_prefs_provider.dart';
 import 'provider/theme_provider.dart';
 import 'utils/themes.dart';
@@ -31,7 +31,8 @@ class TSECApp extends ConsumerWidget {
       themeMode: _themeMode,
       theme: theme,
       darkTheme: darkTheme,
-      home: const MainScreen(),
+      home: const DepartmentScreen(
+          departmentName: "Electronics &\nTelecommunication"),
     );
   }
 }
