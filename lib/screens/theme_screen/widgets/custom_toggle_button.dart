@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tsec_app/utils/themes.dart';
+
+import '../../../utils/themes.dart';
 
 class CustomToggleButton extends StatefulWidget {
   final List<String> values;

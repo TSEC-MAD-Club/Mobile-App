@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:tsec_app/provider/theme_provider.dart';
-import 'package:tsec_app/utils/themes.dart';
+import '../../../provider/theme_provider.dart';
+import '../../../utils/themes.dart';
 
 class DepartmentScreenAppBar extends StatefulWidget with PreferredSizeWidget {
   final String title;

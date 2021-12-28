@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:tsec_app/provider/theme_provider.dart';
-import 'package:tsec_app/widgets/custom_scaffold.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../provider/theme_provider.dart';
 import '../../utils/image_assets.dart';
 import '../../utils/launch_url.dart';
 import '../../utils/themes.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../widgets/custom_scaffold.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({Key? key}) : super(key: key);
