@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 
 import '../models/committee_model/committee_model.dart';
 import '../widgets/custom_app_bar.dart';
+import '../widgets/custom_scaffold.dart';
 
 class CommitteesScreen extends StatefulWidget {
   const CommitteesScreen({Key? key}) : super(key: key);
@@ -40,7 +41,7 @@ class _CommitteesScreenState extends State<CommitteesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return CustomScaffold(
       body: ListView(
         children: <Widget>[
           const CustomAppBar(

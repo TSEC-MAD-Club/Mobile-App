@@ -1,8 +1,8 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
-import 'package:tsec_app/models/department_model/about_model.dart';
 
-import 'package:tsec_app/utils/themes.dart';
+import '../../../models/department_model/about_model.dart';
+import '../../../utils/themes.dart';
 
 class AboutSection extends StatefulWidget {
   const AboutSection({Key? key}) : super(key: key);

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:tsec_app/screens/login_screen/login_screen.dart';
-import 'package:tsec_app/screens/main_screen/main_screen.dart';
+
+import '../../login_screen/login_screen.dart';
+import '../../main_screen/main_screen.dart';
 
 class SkipAndNextRow extends StatelessWidget {
   const SkipAndNextRow({Key? key}) : super(key: key);

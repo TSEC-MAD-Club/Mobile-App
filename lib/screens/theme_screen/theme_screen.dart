@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tsec_app/provider/theme_provider.dart';
 
+import '../../provider/theme_provider.dart';
+import '../../utils/image_assets.dart';
+import '../../widgets/custom_scaffold.dart';
 import 'widgets/custom_toggle_button.dart';
 import 'widgets/skip_and_next_row.dart';
-import '../../utils/image_assets.dart';
 
 class ThemeScreen extends StatefulWidget {
   const ThemeScreen({Key? key}) : super(key: key);
@@ -18,7 +19,7 @@ class _ThemeScreenState extends State<ThemeScreen> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
-    return Scaffold(
+    return CustomScaffold(
       body: SizedBox(
         height: size.height,
         width: size.width,

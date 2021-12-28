@@ -1,12 +1,13 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:tsec_app/screens/department_screen/widgets/about_section.dart';
-import 'package:tsec_app/screens/department_screen/widgets/faculty_details_section.dart';
-import 'package:tsec_app/utils/themes.dart';
 
+import '../../utils/themes.dart';
+import '../../widgets/custom_scaffold.dart';
+import 'widgets/about_section.dart';
 import 'widgets/department_screen_app_bar.dart';
 import 'widgets/drop_down_menu_item.dart';
+import 'widgets/faculty_details_section.dart';
 
 enum Item {
   about,
@@ -100,7 +101,7 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return Scaffold(
+    return CustomScaffold(
       appBar: const DepartmentScreenAppBar(
         title: "Department",
       ),
@@ -183,11 +184,6 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
             section(selectedItem),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        backgroundColor: kLightModeLightBlue,
-        child: Image.asset('assets/images/department/slide_drawer.png'),
       ),
     );
   }
