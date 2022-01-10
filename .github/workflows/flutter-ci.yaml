@@ -35,6 +35,9 @@ jobs:
         echo "APP_VERSION=$(grep -Po '(?<=version: )(.*)(?=\+)' pubspec.yaml)" >> $GITHUB_ENV
 
         flutter pub get
+
+        echo env.FIREBASE_OPTIONS | base64 -d > lib/firebase_options.dart
+
         flutter pub run build_runner build --delete-conflicting-outputs
 
     - name: Lint and Analyze code
