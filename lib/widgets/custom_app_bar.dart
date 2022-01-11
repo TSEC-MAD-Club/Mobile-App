@@ -2,16 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../provider/theme_provider.dart';
-import '../utils/image_assets.dart';
 import '../utils/themes.dart';
 
 class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
   const CustomAppBar({
     Key? key,
     required this.title,
+    required this.image,
   }) : super(key: key);
 
   final String title;
+  final Image image;
 
   @override
   Widget build(BuildContext context) {
@@ -55,17 +56,15 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
               ),
               Row(
                 children: [
-                  Flexible(
+                  Expanded(
                     child: Text(
                       title,
                       style: Theme.of(context).textTheme.headline3,
                     ),
                   ),
-                  Flexible(
-                    child: Image.asset(
-                      ImageAssets.committes,
-                      width: 177,
-                    ),
+                  SizedBox(
+                    width: 177,
+                    child: image,
                   )
                 ],
               ),
