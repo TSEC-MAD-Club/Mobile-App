@@ -128,8 +128,7 @@ class MainScreenAppBar extends ConsumerWidget {
               ),
               Flexible(
                 child: GestureDetector(
-                  onTap: () =>
-                      ref.read(themeProvider.notifier).switchTheme(),
+                  onTap: () => ref.read(themeProvider.notifier).switchTheme(),
                   child: Container(
                     padding: const EdgeInsets.all(5),
                     decoration: BoxDecoration(
