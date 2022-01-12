@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../provider/theme_provider.dart';
 import '../utils/themes.dart';
 
-class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
+class CustomAppBar extends ConsumerWidget with PreferredSizeWidget {
   const CustomAppBar({
     Key? key,
     required this.title,
@@ -15,7 +15,7 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
   final Image image;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return SafeArea(
       child: Container(
         height: 235,
@@ -39,15 +39,15 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
                     onPressed: () => Navigator.pop(context),
                   ),
                   Consumer(
-                    builder: (context, watch, child) {
-                      final theme = watch(themeProvider);
+                    builder: (context, ref, child) {
+                      final theme = ref.watch(themeProvider);
                       return _buildNavigation(
                         context,
                         icon: theme == ThemeMode.dark
                             ? const Icon(Icons.light_mode)
                             : const Icon(Icons.dark_mode),
                         onPressed: () {
-                          context.read(themeProvider.notifier).switchTheme();
+                          ref.read(themeProvider.notifier).switchTheme();
                         },
                       );
                     },

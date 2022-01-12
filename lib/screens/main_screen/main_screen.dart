@@ -101,7 +101,7 @@ class DeptWidget extends StatelessWidget {
   }
 }
 
-class MainScreenAppBar extends StatelessWidget {
+class MainScreenAppBar extends ConsumerWidget {
   const MainScreenAppBar({
     Key? key,
     required EdgeInsets sidePadding,
@@ -111,7 +111,7 @@ class MainScreenAppBar extends StatelessWidget {
   final EdgeInsets _sidePadding;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Padding(
       padding: _sidePadding.copyWith(top: 15),
       child: Column(
@@ -129,7 +129,7 @@ class MainScreenAppBar extends StatelessWidget {
               Flexible(
                 child: GestureDetector(
                   onTap: () =>
-                      context.read(themeProvider.notifier).switchTheme(),
+                      ref.read(themeProvider.notifier).switchTheme(),
                   child: Container(
                     padding: const EdgeInsets.all(5),
                     decoration: BoxDecoration(

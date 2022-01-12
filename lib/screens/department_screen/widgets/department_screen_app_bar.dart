@@ -4,7 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../provider/theme_provider.dart';
 import '../../../utils/themes.dart';
 
-class DepartmentScreenAppBar extends StatefulWidget with PreferredSizeWidget {
+class DepartmentScreenAppBar extends ConsumerStatefulWidget
+    with PreferredSizeWidget {
   final String title;
   const DepartmentScreenAppBar({Key? key, required this.title})
       : super(key: key);
@@ -16,7 +17,8 @@ class DepartmentScreenAppBar extends StatefulWidget with PreferredSizeWidget {
   Size get preferredSize => const Size.fromHeight(56);
 }
 
-class _DepartmentScreenAppBarState extends State<DepartmentScreenAppBar> {
+class _DepartmentScreenAppBarState
+    extends ConsumerState<DepartmentScreenAppBar> {
   Widget _buildNavigation(
     BuildContext context, {
     required VoidCallback onPressed,
@@ -84,10 +86,10 @@ class _DepartmentScreenAppBarState extends State<DepartmentScreenAppBar> {
         _buildThemeSwitcher(
           context,
           onPressed: () {
-            context.read(themeProvider.notifier).switchTheme();
+            ref.read(themeProvider.notifier).switchTheme();
           },
-          icon: Consumer(builder: (context, watch, child) {
-            final themeMode = watch(themeProvider);
+          icon: Consumer(builder: (context, ref, child) {
+            final themeMode = ref.watch(themeProvider);
             return themeMode == ThemeMode.dark
                 ? const Icon(
                     Icons.dark_mode,

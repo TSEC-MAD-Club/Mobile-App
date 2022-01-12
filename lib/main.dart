@@ -35,8 +35,8 @@ class TSECApp extends ConsumerWidget {
   const TSECApp({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
-    final _themeMode = watch(themeProvider);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final _themeMode = ref.watch(themeProvider);
     return MaterialApp(
       title: 'TSEC App',
       themeMode: _themeMode,
