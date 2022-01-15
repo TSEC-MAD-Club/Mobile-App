@@ -1,0 +1,227 @@
+[ {
+    "area_of_specialization" : " Image Processing, Machine Learning, Soft Computing",
+    "designation" : "Professor and Head of Department",
+    "email" : " tanuja.sarode@thadomal.org",
+    "experience" : "19 years",
+    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fcomps%2Ftanujasarode.jpg?alt=media&token=60986cd7-d4a6-44ee-bc68-32823ba03c83",
+    "name" : "Dr. Tanuja K. Sarode",
+    "phd_guide" : "na",
+    "qualification" : "Ph.D. (Engineering)"
+  }, {
+    "area_of_specialization" : "Image Processing, Algorithms, Security",
+    "designation" : "Professor",
+    "email" : "archanabpatankar@gmail.com",
+    "experience" : "19 years",
+    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fcomps%2Farchanapatankar.jpg?alt=media&token=e365c86b-14c8-4c05-bb13-4d4ec097ee23",
+    "name" : "Dr. Archana Bhupendra Patankar",
+    "phd_guide" : "na",
+    "qualification" : "Ph.D. (Engg), M.E.(Computer Engg), B.E.(computer Engg)"
+  }, {
+    "area_of_specialization" : "Web Mining , Data Mining, Information Retrieval, Networking",
+    "designation" : "Dean , “Academic Affairs”, Associate Professor",
+    "email" : "jayantrg@gmail.com",
+    "experience" : "23 Years teaching, 4 years Industry",
+    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fcomps%2Fjayantgadge.jpg?alt=media&token=5ca4359f-219e-4f4d-8226-fa407c2510fd",
+    "name" : "Mr. Jayant Gadge",
+    "phd_guide" : "na",
+    "qualification" : "M.E( Computer) , Ph.D. ( Pursuing)"
+  }, {
+    "area_of_specialization" : "Object Oriented Technology, Software Engineering, Artificial Intelligence, Networking",
+    "designation" : "Associate Professor",
+    "email" : "shilpa.verma@tsec.edu",
+    "experience" : "18.5 years",
+    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fcomps%2Fshilpaverma.jpg?alt=media&token=579ff33e-a4a9-4c99-91e9-e5276cdd35b8",
+    "name" : "Ms. Shilpa Verma",
+    "phd_guide" : "na",
+    "qualification" : "M.E (Computer Engineering), Pursuing Ph.D."
+  }, {
+    "area_of_specialization" : " Data Mining,Image Processing,Digital Forensics Machine Learning",
+    "designation" : "Associate Professor",
+    "email" : "anil171270@gmail.com",
+    "experience" : "24 years",
+    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fcomps%2Fanilchhangani.jpg?alt=media&token=c1dcd2c0-cd00-4b00-aa9d-90481b179587",
+    "name" : "Dr. Anil Z. Chhangani",
+    "phd_guide" : "na",
+    "qualification" : "B.E (Computer Engg), M.E (Comp. Sci. & Engg), Ph.D. (Engineering), M.B.A.(Marketing)"
+  }, {
+    "area_of_specialization" : "Image Processing, Data Warehousing and Mining, Web Technologies",
+    "designation" : "Associate Professor",
+    "email" : "Pallavi.halarnkar@thadomal.org",
+    "experience" : "12 yrs",
+    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fcomps%2Fpallavihalarnkar.jpg?alt=media&token=ad416225-f43e-4d5e-91f6-a7b23553d880",
+    "name" : "Dr. Pallavi N.Halarnkar",
+    "phd_guide" : "na",
+    "qualification" : "Ph.D. (Engineering)"
+  }, {
+    "area_of_specialization" : "Database System, Data Mining, Machine Learning",
+    "designation" : "Assistant Professor",
+    "email" : "kolkur.seema@gmail.com",
+    "experience" : "19 yrs",
+    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fcomps%2Fseemakolkur.jpg?alt=media&token=606eb40d-69c1-40f0-8c11-37700ddd2007",
+    "name" : "Ms. Seema Lingaraj Kolkur",
+    "phd_guide" : "na",
+    "qualification" : "M.E.(Comp), Ph.D. ( Pursuing)"
+  }, {
+    "area_of_specialization" : "Computers",
+    "designation" : "Assistant Professor",
+    "email" : "tmm1207@gmail.com",
+    "experience" : "19 years",
+    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fcomps%2Ftasneemmirza.jpg?alt=media&token=3c68fb48-cbfc-4fa7-a743-419787397b52",
+    "name" : "Ms. Tasneem Mirza",
+    "phd_guide" : "na",
+    "qualification" : "M.E.(Comp), Ph.D. (Pursuing)"
+  }, {
+    "area_of_specialization" : "Multimedia Systems, Theory of Computer science, Distributed Systems, Parallel Computing",
+    "designation" : "Assistant Professor",
+    "email" : "geetams24@rediffmail.com",
+    "experience" : "18  yrs",
+    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fcomps%2Fsakshisurve.jpg?alt=media&token=1ff5facd-e8e1-4802-a854-a24794addabc",
+    "name" : "Ms. Sakshi Manoj Surve",
+    "phd_guide" : "na",
+    "qualification" : "M.E (Computer Engineering)"
+  }, {
+    "area_of_specialization" : "Web Mining, Semantic Technology",
+    "designation" : "Assistant Professor",
+    "email" : "uja_bin@yahoo.com",
+    "experience" : "15 years",
+    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fcomps%2Fujwalabharambe.jpg?alt=media&token=8a736652-71a2-4de9-8a6f-5900ee5c50dd",
+    "name" : "Ms. Ujwala H. Bharambe",
+    "phd_guide" : "na",
+    "qualification" : "M.E(Computer Engineering) ,PhD(Pursuing)"
+  }, {
+    "area_of_specialization" : "Big Data, Data mining, mobile computing ,database security",
+    "designation" : "Assistant Professor",
+    "email" : "anagha.durugkar@gmail.com",
+    "experience" : "22 yrs",
+    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fcomps%2Fanaghadurugkar.jpg?alt=media&token=9b3754df-6ae5-4400-9b51-d6eefd9cfa94",
+    "name" : "Ms. Anagha Durugkar",
+    "phd_guide" : "na",
+    "qualification" : "M.E. computer science"
+  }, {
+    "area_of_specialization" : "Image processing, data compression, cryptography and security",
+    "designation" : "Assistant Professor",
+    "email" : "sonalshroff76@gmail.com",
+    "experience" : "19 yrs",
+    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fcomps%2Fsonalshroff.jpg?alt=media&token=6bd87dee-236f-475b-84ae-9d4c91d787a1",
+    "name" : "Ms. Sonal Shroff",
+    "phd_guide" : "na",
+    "qualification" : "M.E. (Computer Engineering)"
+  }, {
+    "area_of_specialization" : "Algorithms, Image Processin",
+    "designation" : "Assistant Professor",
+    "email" : " vaishali.surya@gmail.com",
+    "experience" : "16 yrs",
+    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fcomps%2Fvaishalisuryawanshi.jpg?alt=media&token=eded9429-b622-4698-9ce3-107fe5ac4a45",
+    "name" : "Ms. Vaishali Suryawanshi",
+    "phd_guide" : "na",
+    "qualification" : "M.E. Computer"
+  }, {
+    "area_of_specialization" : "Mobile Applications, Web Applications, Internet of Things (IoT).",
+    "designation" : "Assistant Professor (Sr. Scale)",
+    "email" : "ruhibajaj2007@gmail.com",
+    "experience" : "16 yrs",
+    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fcomps%2Fruhibajaj.jpg?alt=media&token=e41ef85b-27c9-44f6-b546-91501d3d100a",
+    "name" : "Mrs. Ruhi Kiran Bajaj",
+    "phd_guide" : "na",
+    "qualification" : "M.E. (Computer) , Pursuing PhD (IT)"
+  }, {
+    "area_of_specialization" : "Image processing, Mobile Computing",
+    "designation" : "Assistant Professor",
+    "email" : "mansiddhi@gmail.com",
+    "experience" : "13 yrs",
+    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fcomps%2Fmanishadumbre.jpg?alt=media&token=e2197a74-ebe0-4a10-9d70-73cad5842f58",
+    "name" : "Ms. Manisha Prakash Dumbre",
+    "phd_guide" : "na",
+    "qualification" : "M.E. (Computer Engineering)"
+  }, {
+    "area_of_specialization" : " Programming Languages C,JAVA, Operating System",
+    "designation" : "Assistant Professor",
+    "email" : "rupa.patil48@gmail.com",
+    "experience" : "12 yrs",
+    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fcomps%2Frupalipatil.jpg?alt=media&token=9110c496-ac93-4ca6-8a23-05c4787a8fcd",
+    "name" : "Ms. Rupali V. Patil",
+    "phd_guide" : "na",
+    "qualification" : "M.E. (Computer Engineering)"
+  }, {
+    "area_of_specialization" : "Database systems, Data mining, Semantic web ,Computer Networks.",
+    "designation" : "Assistant Professor",
+    "email" : "vijayapadmadas@gmail.com",
+    "experience" : "18 yrs",
+    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fcomps%2Fvijayapadmadas.jpg?alt=media&token=4990452a-54a5-4c6a-b825-8bd5ab16bd83",
+    "name" : "Ms. Vijaya Padmadas",
+    "phd_guide" : "na",
+    "qualification" : "M.E Computer Engineering, PhD (pursuing)"
+  }, {
+    "area_of_specialization" : "Databases, Data Mining, Business Intelligence, Data warehousing.",
+    "designation" : "Assistant Professor",
+    "email" : "arti.deshpande@thadomal.org",
+    "experience" : "20 years",
+    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fcomps%2Fartideshpande.jpg?alt=media&token=0aac731c-caa3-4525-9ed1-3f3fad191cdc",
+    "name" : "Mrs. Arti Deshpande",
+    "phd_guide" : "na",
+    "qualification" : "B.E., M.E., Ph.D. Pursuing"
+  }, {
+    "area_of_specialization" : "Image Processing, Computer Graphics, Algorithms",
+    "designation" : "Assistant Professor",
+    "email" : "urvikore@gmail.com",
+    "experience" : "12 yrs",
+    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fcomps%2Furvikore.jpg?alt=media&token=120b3ae8-b11d-439a-96b6-7b2a1a704c73",
+    "name" : "Ms. Urvi Kore",
+    "phd_guide" : "na",
+    "qualification" : "M.E. (Computer Engineering)"
+  }, {
+    "area_of_specialization" : "Web apps, OO design, User Interaction, AI, Business Data Intelligence & Project Management",
+    "designation" : "Assistant Professor",
+    "email" : "khan.aejaz@gmail.com",
+    "experience" : "10 years teaching, 17 years IT industry",
+    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fcomps%2Faejazkhan.jpg?alt=media&token=ed466411-9439-4096-ae72-78d894e86305",
+    "name" : "Mr. Aejaz Khan",
+    "phd_guide" : "na",
+    "qualification" : "M.S. (Computers)"
+  }, {
+    "area_of_specialization" : "Network Programming and security, Algorithms.",
+    "designation" : "Assistant Professor",
+    "email" : "Nabanita.mandal@thadomal.org",
+    "experience" : "5.5 yrs",
+    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fcomps%2Fnabanitamandal.jpg?alt=media&token=42c3dccf-d61c-467e-873e-ba6aface4c1a",
+    "name" : "Ms. Nabanita Mandal",
+    "phd_guide" : "na",
+    "qualification" : "M.E. (Computer Engineering)"
+  }, {
+    "area_of_specialization" : "Data Structures, Computer Graphics, Mobile Communication.",
+    "designation" : "Assistant Professor",
+    "email" : "darakshan.khan@thadomal.org",
+    "experience" : "4.5 YEARS",
+    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fcomps%2Fdarakhshankhan.jpg?alt=media&token=13274cc6-d936-473f-8861-15e333afa9fa",
+    "name" : "Ms. Darakhshan R. Khan",
+    "phd_guide" : "na",
+    "qualification" : "M.E. (Computer)"
+  }, {
+    "area_of_specialization" : "C programming, Data Mininig.",
+    "designation" : "Assistant Professor",
+    "email" : "juhi.ganwani@thadomal.org",
+    "experience" : "4 YEARS",
+    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fcomps%2Fjuhiganwani.jpg?alt=media&token=595e3ec6-636a-4ad9-b03e-a393324f4d69",
+    "name" : "Ms. Juhi Ganwani",
+    "phd_guide" : "na",
+    "qualification" : "M.E (Computer Engineering)"
+  }, {
+    "area_of_specialization" : "C Programming, Data Structures and Algorithm, Network Security, Operating System",
+    "designation" : "Assistant Professor",
+    "email" : "vaibhav.ambhire@thadomal.org",
+    "experience" : "8 years",
+    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fcomps%2Fvaibhavambhire.jpg?alt=media&token=6211431a-553c-4919-8172-53cd2bd63432",
+    "name" : "Mr. Vaibhav Ambhire",
+    "phd_guide" : "na",
+    "qualification" : "M.E. (Comp)"
+  }, {
+    "area_of_specialization" : "Operating System,Computer network,OOPM, Soft Computing.",
+    "designation" : "Assistant Professor",
+    "email" : "shilpaingoley1@gmail.com",
+    "experience" : "18years (1yr Degree Engg +17 yrs Diploma Engg)",
+    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fcomps%2Fshilpaingoley.jpg?alt=media&token=969ae091-1b36-4f4d-80be-c7b8a35d11ee",
+    "name" : "Ms. Shilpa Ingoley",
+    "phd_guide" : "na",
+    "qualification" : "M.E ( Computer Engineering)"
+  } ]
+  

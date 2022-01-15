@@ -6,13 +6,12 @@ part of 'committee_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-CommitteeModel _$CommitteeModelFromJson(Map<String, dynamic> json) {
-  return CommitteeModel(
-    json['name'] as String,
-    json['image'] as String,
-    json['description'] as String,
-  );
-}
+CommitteeModel _$CommitteeModelFromJson(Map<String, dynamic> json) =>
+    CommitteeModel(
+      json['name'] as String,
+      json['image'] as String,
+      json['description'] as String,
+    );
 
 Map<String, dynamic> _$CommitteeModelToJson(CommitteeModel instance) =>
     <String, dynamic>{

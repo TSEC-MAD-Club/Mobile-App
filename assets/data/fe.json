@@ -1,0 +1,173 @@
+[ {
+    "area_of_specialization" : "Engineering Mechanics, Engineering Drawing",
+    "designation" : "In-Charge and Associate Professor",
+    "email" : "na",
+    "experience" : "31 years",
+    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fother%2Fmech%2Fmaheshrao.png?alt=media&token=a16d6655-278e-45a9-a3c5-13b2e24db00d",
+    "name" : "Mr. Mahesh Rao",
+    "phd_guide" : "na",
+    "qualification" : "M.Tech(Machine Design)"
+  }, {
+    "area_of_specialization" : "Engineering Mechanics, Engineering Drawing",
+    "designation" : "Associate Professor",
+    "email" : "na",
+    "experience" : "26 years",
+    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fother%2Fmech%2Fumeshkulal.jpg?alt=media&token=aa643828-045e-4b24-a81b-581e68f6af3b",
+    "name" : "Dr. Umesh Kulal",
+    "phd_guide" : "na",
+    "qualification" : "Ph.D(Thermal Engg.)"
+  }, {
+    "area_of_specialization" : "Engineering Mechanics, Engineering Drawing",
+    "designation" : "Assistant Professor and Training & Placements Officer",
+    "email" : "na",
+    "experience" : "22 years",
+    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fother%2Fmech%2Fmuditadixit.png?alt=media&token=18d888b6-c622-4b2b-a4fe-b82dcb9c4986",
+    "name" : "Ms. Mudita Dixit",
+    "phd_guide" : "na",
+    "qualification" : "ME (Machine Design)"
+  }, {
+    "area_of_specialization" : "Engineering Mechanics, Engineering Drawing",
+    "designation" : "Assistant Professor",
+    "email" : "na",
+    "experience" : "22 years",
+    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fother%2Fmech%2Fkiranghadyalji.jpg?alt=media&token=caadfadb-7922-4e7a-bbce-3b4861f9b3e9",
+    "name" : "Mr. Kiran Ghadyalji",
+    "phd_guide" : "na",
+    "qualification" : "ME (Design Engg.)"
+  }, {
+    "area_of_specialization" : "Engineering Mechanics, Engineering Drawing",
+    "designation" : "Assistant Professor",
+    "email" : "na",
+    "experience" : "20 years",
+    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fother%2Fmech%2Fsachitnalaskar.jpg?alt=media&token=aaf11c2a-c923-41dc-a42e-990e1cf78a1e",
+    "name" : "Mr. Sachit Nalaskar",
+    "phd_guide" : "na",
+    "qualification" : "M.Tech(Machine Design)"
+  }, {
+    "area_of_specialization" : "Engineering Mechanics, Engineering Drawing",
+    "designation" : "Assistant Professor",
+    "email" : "na",
+    "experience" : "20 years",
+    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fother%2Fmech%2Fiqbalhusain.png?alt=media&token=d01ed0d8-3aac-4917-8b4d-3c6ae59bc27d",
+    "name" : "Mr. Iqbal Husain",
+    "phd_guide" : "na",
+    "qualification" : "M.Tech(Machine Design)"
+  }, {
+    "area_of_specialization" : "Applied Physics",
+    "designation" : "(In-Charge) and Lecturer(Selection Grade)",
+    "email" : "na",
+    "experience" : "na",
+    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fplaceholder_male.png?alt=media&token=05baa092-88e1-49bf-9b92-22880e467b91",
+    "name" : "D. D. Mulajkar",
+    "phd_guide" : "na",
+    "qualification" : "na"
+  }, {
+    "area_of_specialization" : "Applied Physics",
+    "designation" : "Lecturer(Sr. Scale)",
+    "email" : "na",
+    "experience" : "na",
+    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fplaceholder_male.png?alt=media&token=05baa092-88e1-49bf-9b92-22880e467b91",
+    "name" : "Mr. C.S. Kulkarni",
+    "phd_guide" : "na",
+    "zqualification" : "na"
+  }, {
+    "area_of_specialization" : "Applied Physics",
+    "designation" : "Lecturer(Sr. Scale)",
+    "email" : "na",
+    "experience" : "na",
+    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fplaceholder_female.png?alt=media&token=92b186be-d2c2-4724-8e05-2bd554ce535e",
+    "name" : "Dr. Kumkum Sanyal",
+    "phd_guide" : "na",
+    "qualification" : "na"
+  }, {
+    "area_of_specialization" : "Applied Chemistry",
+    "designation" : "Lecturer(In-Charge)(Sr. Scale)",
+    "email" : "na",
+    "experience" : "na",
+    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fplaceholder_female.png?alt=media&token=92b186be-d2c2-4724-8e05-2bd554ce535e",
+    "name" : "Dr. Anupama Sawant",
+    "phd_guide" : "na",
+    "qualification" : "na"
+  }, {
+    "area_of_specialization" : "Applied Chemistry",
+    "designation" : "Lecturer",
+    "email" : "na",
+    "experience" : "na",
+    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fplaceholder_female.png?alt=media&token=92b186be-d2c2-4724-8e05-2bd554ce535e",
+    "name" : "Ms. Anjali Kirkire",
+    "phd_guide" : "na",
+    "qualification" : "na"
+  }, {
+    "area_of_specialization" : "Applied Chemistry",
+    "designation" : "Lecturer",
+    "email" : "na",
+    "experience" : "na",
+    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fplaceholder_female.png?alt=media&token=92b186be-d2c2-4724-8e05-2bd554ce535e",
+    "name" : "Ms. Vandana Kadam",
+    "phd_guide" : "na",
+    "qualification" : "na"
+  }, {
+    "area_of_specialization" : "Partial Differential Equation, Mathematical Modeling, Integral Transform, Biostatistics",
+    "designation" : "Assistant Professor",
+    "email" : "mansha.kotwani@thadomal.org",
+    "experience" : "10 yrs",
+    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fother%2Fmaths%2Fmanshakotwani.png?alt=media&token=b0b5c07a-87eb-4fe9-9211-07456345b79e",
+    "name" : "Dr Mansha Kotwani",
+    "phd_guide" : "na",
+    "qualification" : "Ph.D"
+  }, {
+    "area_of_specialization" : "Applied Maths",
+    "designation" : "Assistant Professor(Senior Scale)",
+    "email" : "saketkumargupta@rediffmail.com",
+    "experience" : "17 yrs",
+    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fother%2Fmaths%2Fsaketkumar.jpg?alt=media&token=c6357278-8848-4358-8648-459c568b8dfa",
+    "name" : "Mr Saket Kumar",
+    "phd_guide" : "na",
+    "qualification" : "MSc"
+  }, {
+    "area_of_specialization" : "Differential Equations, Mathematical Modeling,Biostatistics,Integral Transforms",
+    "designation" : "Assistant Professor(Selection Grade)",
+    "email" : "sonipoonam3@gmail.com",
+    "experience" : "15 yrs",
+    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fother%2Fmaths%2Fpoonamsoni.jpg?alt=media&token=3700ec8c-99cd-45a3-b78e-8746d082231a",
+    "name" : "Ms Poonam Soni",
+    "phd_guide" : "na",
+    "qualification" : "MSc ,Ph.D (Pursuing)"
+  }, {
+    "area_of_specialization" : "Differential Equations",
+    "designation" : " Assistant Professor (Selection Grade)",
+    "email" : "gmsre.1979@gmail.com",
+    "experience" : "14 yrs",
+    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fother%2Fmaths%2Fgauravmittal.jpg?alt=media&token=fad0e3f1-8820-4a01-b6e7-f9e1ee5a2f8b",
+    "name" : "Mr Gaurav Mittal",
+    "phd_guide" : "na",
+    "qualification" : "MSc ,Ph.D (Pursuing)"
+  }, {
+    "area_of_specialization" : "Communication Skills",
+    "designation" : "Assistant Professor",
+    "email" : "na",
+    "experience" : "na",
+    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fplaceholder_female.png?alt=media&token=92b186be-d2c2-4724-8e05-2bd554ce535e",
+    "name" : "Dr. Rita Sharma",
+    "phd_guide" : "na",
+    "qualification" : "na"
+  }, {
+    "area_of_specialization" : "Communication Skilss",
+    "designation" : "Associate Professor",
+    "email" : "na",
+    "experience" : "na",
+    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fplaceholder_female.png?alt=media&token=92b186be-d2c2-4724-8e05-2bd554ce535e",
+    "name" : "Dr. Kajali Sharma",
+    "phd_guide" : "na",
+    "qualification" : "na"
+  }, {
+    "area_of_specialization" : "Communication Skills",
+    "designation" : "Assistant Professor",
+    "email" : "na",
+    "experience" : "na",
+    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fplaceholder_female.png?alt=media&token=92b186be-d2c2-4724-8e05-2bd554ce535e",
+    "name" : "Dr. Chumki Biswas",
+    "phd_guide" : "na",
+    "qualification" : "na"
+  } ]
+  
