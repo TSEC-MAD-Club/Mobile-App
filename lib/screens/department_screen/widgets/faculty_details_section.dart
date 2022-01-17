@@ -74,9 +74,9 @@ class _FacultyDetailsSectionState extends State<FacultyDetailsSection> {
                   email: faculty.email,
                   experience: faculty.experience,
                   imageUrl: faculty.image,
-                  phdGuide: faculty.phd_guide,
+                  phdGuide: faculty.phdGuide,
                   qualification: faculty.qualification,
-                  specialization: faculty.area_of_specialization,
+                  specialization: faculty.areaOfSpecialization,
                 );
               },
             ),
@@ -344,7 +344,9 @@ class IconWithChipText extends StatelessWidget {
         const SizedBox(
           width: 5,
         ),
-        Flexible(child: ChipStyledText(text: text),),
+        Flexible(
+          child: ChipStyledText(text: text),
+        ),
       ],
     );
   }

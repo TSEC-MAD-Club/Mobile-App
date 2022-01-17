@@ -19,12 +19,12 @@ FacultyModel _$FacultyModelFromJson(Map<String, dynamic> json) => FacultyModel(
 
 Map<String, dynamic> _$FacultyModelToJson(FacultyModel instance) =>
     <String, dynamic>{
-      'area_of_specialization': instance.area_of_specialization,
+      'area_of_specialization': instance.areaOfSpecialization,
       'designation': instance.designation,
       'email': instance.email,
       'experience': instance.experience,
       'image': instance.image,
       'name': instance.name,
-      'phd_guide': instance.phd_guide,
+      'phd_guide': instance.phdGuide,
       'qualification': instance.qualification,
     };
