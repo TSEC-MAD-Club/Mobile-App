@@ -12,7 +12,22 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
   }) : super(key: key);
 
   final String title;
-
+Widget _buildImageChild() {
+  if (title == "Committees & Events") {
+    return Image.asset(
+      ImageAssets.committes,
+      width: 177,
+    );
+  }
+  else if (title == "Training & Placement Cell")
+  {
+    return Image.asset(
+      ImageAssets.tpo,
+      width: 177,
+    );
+  }
+  return const SizedBox(width: 177);
+}
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -62,10 +77,7 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
                     ),
                   ),
                   Flexible(
-                    child: Image.asset(
-                      ImageAssets.committes,
-                      width: 177,
-                    ),
+                    child: _buildImageChild()
                   )
                 ],
               ),
@@ -99,4 +111,5 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
 
   @override
   Size get preferredSize => const Size.fromHeight(235);
+  
 }
