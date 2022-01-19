@@ -35,7 +35,7 @@ class _FacultyDetailsSectionState extends State<FacultyDetailsSection> {
 
     deptFileName = deptMap[widget.department]!;
 
-    final data = await rootBundle.loadString("assets/data/$deptFileName.json");
+    final data = await rootBundle.loadString("assets/data/faculty_details/$deptFileName.json");
     final json = jsonDecode(data) as List;
     return json.map((e) => FacultyModel.fromJson(e)).toList();
   }
