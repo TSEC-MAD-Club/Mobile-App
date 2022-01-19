@@ -5,14 +5,15 @@ part 'faculty_model.g.dart';
 @JsonSerializable()
 class FacultyModel {
   FacultyModel(
-      this.areaOfSpecialization,
-      this.designation,
-      this.email,
-      this.experience,
-      this.image,
-      this.name,
-      this.phdGuide,
-      this.qualification);
+    this.areaOfSpecialization,
+    this.designation,
+    this.email,
+    this.experience,
+    this.image,
+    this.name,
+    this.phdGuide,
+    this.qualification,
+  );
 
   @JsonKey(name: 'area_of_specialization')
   final String areaOfSpecialization;

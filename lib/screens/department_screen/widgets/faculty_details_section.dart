@@ -8,8 +8,10 @@ import 'package:tsec_app/models/faculty_model/faculty_model.dart';
 import 'package:tsec_app/utils/themes.dart';
 
 class FacultyDetailsSection extends StatefulWidget {
-  const FacultyDetailsSection({Key? key, required this.department})
-      : super(key: key);
+  const FacultyDetailsSection({
+    Key? key,
+    required this.department,
+  }) : super(key: key);
   final String department;
   @override
   _FacultyDetailsSectionState createState() => _FacultyDetailsSectionState();
@@ -20,31 +22,19 @@ class _FacultyDetailsSectionState extends State<FacultyDetailsSection> {
 
   Future<List<FacultyModel>> _getFaculties() async {
     String deptFileName;
-    switch (widget.department) {
-      case "Electronics &\nTelecommunication":
-        deptFileName = "extc";
-        break;
-      case "Biomedical":
-        deptFileName = "biomed";
-        break;
-      case "Biochemical":
-        deptFileName = "biochem";
-        break;
-      case "Chemical":
-        deptFileName = "chemical";
-        break;
-      case "Computer":
-        deptFileName = "cs";
-        break;
-      case "Information\nTechnology":
-        deptFileName = "it";
-        break;
-      case "First Year":
-        deptFileName = "fe";
-        break;
-      default:
-        deptFileName = "extc";
-    }
+
+    const Map<String, String> deptMap = {
+      "Electronics &\nTelecommunication": "extc",
+      "Biomedical": "biomed",
+      "Biochemical": "biochem",
+      "Chemical": "chemical",
+      "Computer": "cs",
+      "Information\nTechnology": "it",
+      "First Year": "fe",
+    };
+
+    deptFileName = deptMap[widget.department]!;
+
     final data = await rootBundle.loadString("assets/data/$deptFileName.json");
     final json = jsonDecode(data) as List;
     return json.map((e) => FacultyModel.fromJson(e)).toList();
@@ -301,18 +291,18 @@ class ExpandedFacultyCard extends StatelessWidget {
 
 class ChipStyledText extends StatelessWidget {
   final String text;
-  final double width;
+  final double? width;
   const ChipStyledText({
     Key? key,
     required this.text,
-    this.width = 0.0,
+    this.width,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(8),
-      width: width > 0 ? width : null,
+      width: width,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         color: Theme.of(context).primaryColorLight,
@@ -326,9 +316,11 @@ class ChipStyledText extends StatelessWidget {
 }
 
 class IconWithChipText extends StatelessWidget {
-  const IconWithChipText(
-      {Key? key, required this.assetPath, required this.text})
-      : super(key: key);
+  const IconWithChipText({
+    Key? key,
+    required this.assetPath,
+    required this.text,
+  }) : super(key: key);
   final String assetPath;
   final String text;
   @override
