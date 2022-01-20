@@ -3,12 +3,12 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tsec_app/screens/department_screen/department_screen.dart';
 
 import 'firebase_options.dart';
 import 'models/notification_model/notification_model.dart';
 import 'provider/shared_prefs_provider.dart';
 import 'provider/theme_provider.dart';
-import 'screens/notification_screen/notification_screen.dart';
 import 'screens/notification_screen/widgets/notification_dialog.dart';
 import 'utils/init_get_it.dart';
 import 'utils/notification_type.dart';
@@ -63,7 +63,7 @@ class _TSECAppState extends ConsumerState<TSECApp> {
       themeMode: _themeMode,
       theme: theme,
       darkTheme: darkTheme,
-      home: const NotificationScreen(),
+      home: const DepartmentScreen(departmentName: "Computer"),
     );
   }
 

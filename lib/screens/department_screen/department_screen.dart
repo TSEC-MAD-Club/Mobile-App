@@ -78,7 +78,7 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
                         selectedItem = item;
                       });
                       overlayEntry!.remove();
-                    })
+                    }),
             ],
           ),
         ),
@@ -92,7 +92,7 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
       case Item.about:
         return const AboutSection();
       case Item.facultyDetails:
-        return const FacultyDetailsSection();
+        return FacultyDetailsSection(department: widget.departmentName);
       default:
         return const AboutSection();
     }
