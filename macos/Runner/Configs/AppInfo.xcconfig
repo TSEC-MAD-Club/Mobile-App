@@ -8,7 +8,7 @@
 PRODUCT_NAME = tsec_application
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = com.madclubtsec.tsec_application;
+PRODUCT_BUNDLE_IDENTIFIER = com.madclubtsec.tsecApplication
 
 // The copyright displayed in application information
-PRODUCT_COPYRIGHT = Copyright © 2021 com.madclubtsec.tsec_application. All rights reserved.
+PRODUCT_COPYRIGHT = Copyright © 2022 com.madclubtsec. All rights reserved.
