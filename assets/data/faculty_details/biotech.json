@@ -1,0 +1,65 @@
+[ {
+    "area_of_specialization" : "Heat transfer, mass transfer, bioseparation downstream processing, environmental management.",
+    "designation" : "Professor and  Head",
+    "email" : "rkpathak2k@rediffmail.com",
+    "experience" : "30 years teaching, 1 year industry.",
+    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fbiotech%2Frajkumarkpathak.jpg?alt=media&token=3a8b0c6a-e212-415d-8c8b-19e349c7e0ff",
+    "name" : "Dr. R. K. Pathak",
+    "phd_guide" : "na",
+    "qualification" : "Ph. D (Technology)  IIT Bombay."
+  }, {
+    "area_of_specialization" : "Thermodynamics, Reactor design",
+    "designation" : "Asst. Professor",
+    "email" : "na",
+    "experience" : "Industrial -04 Teaching- 10",
+    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fbiotech%2Fnitinpereira.jpg?alt=media&token=739d5243-4124-4051-b803-87f43efe031c",
+    "name" : "Dr. Nitin Pereira",
+    "phd_guide" : "na",
+    "qualification" : "M.S. in Bioreactor Systems, Ph.D in chemical engineering, PGDSM from MIT"
+  }, {
+    "area_of_specialization" : "Bioinformatics, microbiology.",
+    "designation" : "Asst. Professor",
+    "email" : "na",
+    "experience" : "9 yrs.",
+    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fbiotech%2Fpraseedanambisian.jpg?alt=media&token=b1341e08-b440-403b-8050-0c8aeba540ff",
+    "name" : "Ms. Praseeda Nambisian",
+    "phd_guide" : "na",
+    "qualification" : "BSc. Botany-Biotechnology (Voc.), MSc Bioinformatics ,CSIR-UGC-NET, (Pursuing Ph.D. in Biotechnology, science)"
+  }, {
+    "area_of_specialization" : "Biotechnology",
+    "designation" : "Assistant Professor (Ad-hoc)",
+    "email" : "na",
+    "experience" : "3.5 yrs",
+    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fbiotech%2Fsruthipillai.jpg?alt=media&token=ea12cce7-bbab-4ca4-b14b-c04bf8066b01",
+    "name" : "Ms. Sruthi Pillai",
+    "phd_guide" : "na",
+    "qualification" : "M.Tech Biotechnology"
+  }, {
+    "area_of_specialization" : "na",
+    "designation" : "na",
+    "email" : "na",
+    "experience" : "4 years",
+    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fplaceholder_male.png?alt=media&token=05baa092-88e1-49bf-9b92-22880e467b91",
+    "name" : "Mr. Chandrashekhar S. Kulkarni",
+    "phd_guide" : "na",
+    "qualification" : "M.Tech Biotechnology"
+  }, {
+    "area_of_specialization" : "na",
+    "designation" : "Assistant Professor (Ad-hoc)",
+    "email" : "na",
+    "experience" : "3 years",
+    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fplaceholder_female.png?alt=media&token=92b186be-d2c2-4724-8e05-2bd554ce535e",
+    "name" : "Ms. Reshma Vengalil Kizhakethil",
+    "phd_guide" : "na",
+    "qualification" : "na"
+  }, {
+    "area_of_specialization" : "na",
+    "designation" : "Associate Professor (Ad-hoc)",
+    "email" : "na",
+    "experience" : "4 years",
+    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fplaceholder_female.png?alt=media&token=92b186be-d2c2-4724-8e05-2bd554ce535e",
+    "name" : "Mrs. Manasvee Basanth Dhanesha",
+    "phd_guide" : "na",
+    "qualification" : "na"
+  } ]
+  

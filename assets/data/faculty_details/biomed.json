@@ -1,0 +1,65 @@
+[ {
+    "area_of_specialization" : "Optical Tomography, Medical Imaging, Image Processing, Biomechanics, Rehabilitation Engineering, Biological Modeling and Simulation.",
+    "designation" : "Professor & Head",
+    "email" : "na",
+    "experience" : "26 yrs",
+    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fbiomed%2Fmitabhowmick.jpg?alt=media&token=2d7e0e7b-b46a-4a86-a6eb-112db6db4e93",
+    "name" : "Dr. Mita Bhowmick",
+    "phd_guide" : "na",
+    "qualification" : "PhD, IIT Bombay MS (Biomedical Engg.) University of Akron, Ohio, USA, B.Sc. (Tech) – Electrical Instrumentation, Mumbai University B.Sc. – Mathematics, Mumbai University"
+  }, {
+    "area_of_specialization" : "Biomedical Instrumentation, Signal Processing and Biomedical Sensors.",
+    "designation" : "Assistant Professor",
+    "email" : "na",
+    "experience" : "18 yrs",
+    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fbiomed%2Fbharatiingale.jpg?alt=media&token=06f3efea-b6ca-483e-8a8d-075a03e96531",
+    "name" : "Ms. Bharati Jayesh Ingale",
+    "phd_guide" : "na",
+    "qualification" : "M.Tech. IIT Bombay, B.E. Mumbai University"
+  }, {
+    "area_of_specialization" : "Image Processing, Digital Signal Processing, Control Systems, Robotics in Medicine.",
+    "designation" : "Assistant Professor",
+    "email" : "na",
+    "experience" : "18 yrs",
+    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fbiomed%2Fdhananjaytheckedath.jpg?alt=media&token=5f147a36-bcd2-4a25-8ec6-cda3ee381c7b",
+    "name" : "Mr. Dhananjay K. Theckedath",
+    "phd_guide" : "na",
+    "qualification" : "M.Tech.- IIT Bombay B.Sc. (Tech) – Electrical Instrumentation, Mumbai University B.Sc. – Physics, Mumbai University"
+  }, {
+    "area_of_specialization" : "Biomedical Microsystems, Nuclear Medicine, Biomaterials, Medical Imaging, Biomedical Sensors, Biomedical Instrumentation",
+    "designation" : "Assistant Professor",
+    "email" : "na",
+    "experience" : "16 yrs",
+    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fbiomed%2Fgaurishukla.jpg?alt=media&token=6b3ca099-af36-499f-8371-2db5251060bc",
+    "name" : "Ms. Gauri M. Shukla",
+    "phd_guide" : "na",
+    "qualification" : "M.Tech. IIT Bombay, B.E. Mumbai University"
+  }, {
+    "area_of_specialization" : "Biological Modeling and Simulation, Human Anatomy and Physiology, Biomechanics.",
+    "designation" : "Assistant Professor",
+    "email" : "na",
+    "experience" : "15 yrs",
+    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fbiomed%2Fanuradhamistry.jpg?alt=media&token=30f3e298-7f92-4623-a4fa-18746127d602",
+    "name" : "Ms. Anuradha Mistry",
+    "phd_guide" : "na",
+    "qualification" : "M.Tech. IIT Bombay, B.E. Mumbai University"
+  }, {
+    "area_of_specialization" : "Medical Imaging, Image Processing, Biomedical Sensors, Biomedical Instrumentation, Networking and Information System in Medicine, Human Biology and Anatomy.",
+    "designation" : "Assistant Professor",
+    "email" : "na",
+    "experience" : "Industry : 01 yr Teaching: 15 yrs",
+    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fbiomed%2Fritheshkini.jpg?alt=media&token=d4acb409-bc0b-43ab-989b-b27a06e390fc",
+    "name" : "Mr. Rithesh R. Kini",
+    "phd_guide" : "na",
+    "qualification" : "M.Tech. IIT Bombay, B.E. Mumbai University"
+  }, {
+    "area_of_specialization" : "Biomedical Instrumentation, Signal Processing, Logic Circuits, Analog and Digital Integrated Circuits",
+    "designation" : "Assistant Professor",
+    "email" : "na",
+    "experience" : "15 yrs",
+    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fbiomed%2Ftanvirdaphedar.jpg?alt=media&token=c1363e98-eae0-4cc3-92da-f015487587d6",
+    "name" : "Mr. Tanvir M. Daphedar",
+    "phd_guide" : "na",
+    "qualification" : "M.Tech. IIT Bombay, B.E. Mumbai University"
+  } ]
+  

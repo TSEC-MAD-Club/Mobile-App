@@ -2,16 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../provider/theme_provider.dart';
-import '../utils/image_assets.dart';
 import '../utils/themes.dart';
 
-class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
+class CustomAppBar extends ConsumerWidget with PreferredSizeWidget {
   const CustomAppBar({
     Key? key,
     required this.title,
+    required this.image,
   }) : super(key: key);
 
   final String title;
+<<<<<<< HEAD
 Widget _buildImageChild() {
   if (title == "Committees & Events") {
     return Image.asset(
@@ -28,8 +29,12 @@ Widget _buildImageChild() {
   }
   return const SizedBox(width: 177);
 }
+=======
+  final Image image;
+
+>>>>>>> e3363c82a2d253eb4451effce82d76114702f173
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return SafeArea(
       child: Container(
         height: 235,
@@ -53,15 +58,15 @@ Widget _buildImageChild() {
                     onPressed: () => Navigator.pop(context),
                   ),
                   Consumer(
-                    builder: (context, watch, child) {
-                      final theme = watch(themeProvider);
+                    builder: (context, ref, child) {
+                      final theme = ref.watch(themeProvider);
                       return _buildNavigation(
                         context,
                         icon: theme == ThemeMode.dark
                             ? const Icon(Icons.light_mode)
                             : const Icon(Icons.dark_mode),
                         onPressed: () {
-                          context.read(themeProvider.notifier).switchTheme();
+                          ref.read(themeProvider.notifier).switchTheme();
                         },
                       );
                     },
@@ -70,14 +75,20 @@ Widget _buildImageChild() {
               ),
               Row(
                 children: [
-                  Flexible(
+                  Expanded(
                     child: Text(
                       title,
                       style: Theme.of(context).textTheme.headline3,
                     ),
                   ),
+<<<<<<< HEAD
                   Flexible(
                     child: _buildImageChild()
+=======
+                  SizedBox(
+                    width: 177,
+                    child: image,
+>>>>>>> e3363c82a2d253eb4451effce82d76114702f173
                   )
                 ],
               ),

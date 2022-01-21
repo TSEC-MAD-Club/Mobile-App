@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../provider/theme_provider.dart';
 import '../../utils/image_assets.dart';
 import '../../utils/launch_url.dart';
 import '../../utils/themes.dart';
+import '../../widgets/custom_scaffold.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -11,7 +14,7 @@ class MainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return CustomScaffold(
       body: SafeArea(
         child: CustomScrollView(
           slivers: [
@@ -98,7 +101,7 @@ class DeptWidget extends StatelessWidget {
   }
 }
 
-class MainScreenAppBar extends StatelessWidget {
+class MainScreenAppBar extends ConsumerWidget {
   const MainScreenAppBar({
     Key? key,
     required EdgeInsets sidePadding,
@@ -108,7 +111,7 @@ class MainScreenAppBar extends StatelessWidget {
   final EdgeInsets _sidePadding;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Padding(
       padding: _sidePadding.copyWith(top: 15),
       child: Column(
@@ -125,7 +128,7 @@ class MainScreenAppBar extends StatelessWidget {
               ),
               Flexible(
                 child: GestureDetector(
-                  onTap: () {},
+                  onTap: () => ref.read(themeProvider.notifier).switchTheme(),
                   child: Container(
                     padding: const EdgeInsets.all(5),
                     decoration: BoxDecoration(
