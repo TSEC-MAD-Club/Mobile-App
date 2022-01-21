@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tsec_app/utils/image_assets.dart';
 
 import '../provider/theme_provider.dart';
 import '../utils/themes.dart';
@@ -8,31 +9,25 @@ class CustomAppBar extends ConsumerWidget with PreferredSizeWidget {
   const CustomAppBar({
     Key? key,
     required this.title,
-    required this.image,
   }) : super(key: key);
-
   final String title;
-<<<<<<< HEAD
-Widget _buildImageChild() {
-  if (title == "Committees & Events") {
-    return Image.asset(
-      ImageAssets.committes,
-      width: 177,
-    );
+  Widget _buildImageChild() {
+    if (title == "Committees & Events") {
+      return Image.asset(
+        ImageAssets.committes,
+        width: 177,
+      );
+    } else if (title == "Training & Placement Cell") {
+      return Image.asset(
+        ImageAssets.tpo,
+        width: 177,
+      );
+    } else if (title == "") {
+      return Image.asset(ImageAssets.committes, width: 177);
+    }
+    return const SizedBox(width: 177);
   }
-  else if (title == "Training & Placement Cell")
-  {
-    return Image.asset(
-      ImageAssets.tpo,
-      width: 177,
-    );
-  }
-  return const SizedBox(width: 177);
-}
-=======
-  final Image image;
 
->>>>>>> e3363c82a2d253eb4451effce82d76114702f173
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return SafeArea(
@@ -81,15 +76,7 @@ Widget _buildImageChild() {
                       style: Theme.of(context).textTheme.headline3,
                     ),
                   ),
-<<<<<<< HEAD
-                  Flexible(
-                    child: _buildImageChild()
-=======
-                  SizedBox(
-                    width: 177,
-                    child: image,
->>>>>>> e3363c82a2d253eb4451effce82d76114702f173
-                  )
+                  Flexible(child: _buildImageChild())
                 ],
               ),
             ],
@@ -122,5 +109,4 @@ Widget _buildImageChild() {
 
   @override
   Size get preferredSize => const Size.fromHeight(235);
-  
 }

@@ -3,14 +3,9 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-<<<<<<< HEAD
-import 'package:tsec_app/screens/main_screen/main_screen.dart';
-=======
 import 'package:tsec_app/screens/department_screen/department_screen.dart';
-
 import 'firebase_options.dart';
 import 'models/notification_model/notification_model.dart';
->>>>>>> e3363c82a2d253eb4451effce82d76114702f173
 import 'provider/shared_prefs_provider.dart';
 import 'provider/theme_provider.dart';
 import 'screens/notification_screen/widgets/notification_dialog.dart';

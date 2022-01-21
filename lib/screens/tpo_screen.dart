@@ -32,8 +32,8 @@ class _TPOScreenState extends State<TPOScreen> {
     for (var i = 0; i < _companys.length; i++) {
       list.add(
         Padding(
-          padding: const EdgeInsets.only(top: 10, bottom: 10, left: 1.25, 
-          right: 1.25),
+          padding: const EdgeInsets.only(
+              top: 10, bottom: 10, left: 1.25, right: 1.25),
           child: SizedBox(
             child: Card(
               semanticContainer: true,
@@ -43,8 +43,8 @@ class _TPOScreenState extends State<TPOScreen> {
                 child: Column(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(top: 22.0, left: 15.0, 
-                      right: 15.0, bottom: 20),
+                      padding: const EdgeInsets.only(
+                          top: 22.0, left: 15.0, right: 15.0, bottom: 20),
                       child: CachedNetworkImage(
                         imageUrl: _companys[i].image,
                         height: 40,
@@ -53,8 +53,8 @@ class _TPOScreenState extends State<TPOScreen> {
                     ),
                     Divider(color: Colors.blueAccent.withOpacity(0.7)),
                     Padding(
-                      padding: const EdgeInsets.only(top: 2.0, left: 15.0, 
-                      right: 15.0, bottom: 20),
+                      padding: const EdgeInsets.only(
+                          top: 2.0, left: 15.0, right: 15.0, bottom: 20),
                       child: Text(
                         _companys[i].name,
                         style: TextStyle(color: Colors.black.withOpacity(0.7)),

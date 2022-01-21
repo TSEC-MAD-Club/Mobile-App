@@ -6,7 +6,6 @@ import 'package:tsec_app/services/notification_service.dart';
 import 'package:tsec_app/utils/init_get_it.dart';
 
 import '../../models/notification_model/notification_model.dart';
-import '../../utils/image_assets.dart';
 import '../../widgets/custom_app_bar.dart';
 import '../../widgets/custom_scaffold.dart';
 
@@ -31,10 +30,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
     return CustomScaffold(
       body: NestedScrollView(
         headerSliverBuilder: (context, innerBoxIsScrolled) => [
-          SliverToBoxAdapter(
+          const SliverToBoxAdapter(
             child: CustomAppBar(
               title: "Notifications",
-              image: Image.asset(ImageAssets.committes),
             ),
           )
         ],

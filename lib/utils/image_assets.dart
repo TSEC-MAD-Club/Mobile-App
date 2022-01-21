@@ -24,7 +24,7 @@ class ImageAssets {
   static const madClub = "$_committeeLogo/MAD.png";
   static const csi = "$_committeeLogo/CSI.png";
   static const codecell = "$_committeeLogo/codecell.png";
-  
+
   // company logos
   static const _companyLogo = "$_root/company_logo";
   static const accenture = "$_companyLogo/accenture.png";
