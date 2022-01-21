@@ -18,6 +18,15 @@ class ImageAssets {
   static const madClub = "$_committeeLogo/MAD.png";
   static const csi = "$_committeeLogo/CSI.png";
   static const codecell = "$_committeeLogo/codecell.png";
+  
+  // company logos
+  static const _companyLogo = "$_root/company_logo";
+  static const accenture = "$_companyLogo/accenture.png";
+  static const deutsche_bank = "$_companyLogo/deutsche_bank.png";
+  static const infosys = "$_companyLogo/infosys.png";
+  static const jp_morgan = "$_companyLogo/jp_morgan.png";
+  static const oracle = "$_companyLogo/oracle.png";
+  static const tcs = "$_companyLogo/tcs.png";
 
   //theme screen images
   static const _themePath = "$_root/themes";

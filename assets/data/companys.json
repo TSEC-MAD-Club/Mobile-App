@@ -1,0 +1,26 @@
+[
+    {
+        "name": "Accenture",
+        "image": "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/company%2Faccenture.png?alt=media&token=aefe63e3-40e6-4964-9c12-692397efe719"
+    },
+    {
+        "name": "J.P Morgan",
+        "image": "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/company%2Fjp_morgan.png?alt=media&token=758c9203-8ca3-471b-a144-82f719a98135"
+    },
+    {
+        "name": "Oracle",
+        "image": "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/company%2Foracle.png?alt=media&token=f5fbc5b0-3646-4e47-b284-bf28260f0b9d"
+    },
+    {
+        "name": "Deutsche Bank",
+        "image": "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/company%2Fdeutsche_bank.png?alt=media&token=6d9f9890-ec12-44da-a33c-d7c4fa186a89"
+    },
+    {
+        "name": "Infosys",
+        "image": "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/company%2Finfosys.png?alt=media&token=b2196b65-ba3b-401a-b14d-e963c3f31acb"
+    },
+    {
+        "name": "TCS",
+        "image": "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/company%2Ftcs.png?alt=media&token=0efc6904-6ec1-4086-8f40-8ba0275bb0b2"
+    }
+]
