@@ -34,7 +34,11 @@ class _TPCScreenState extends State<TPCScreen> {
       list.add(
         Padding(
           padding: const EdgeInsets.only(
-              top: 10, bottom: 10, left: 1.25, right: 1.25),
+            top: 10,
+            bottom: 10,
+            left: 1.25,
+            right: 1.25,
+          ),
           child: SizedBox(
             child: Card(
               semanticContainer: true,
@@ -62,7 +66,6 @@ class _TPCScreenState extends State<TPCScreen> {
                         top: 2.0,
                         left: 15.0,
                         right: 15.0,
-                        bottom: 20,
                       ),
                       child: Text(
                         _companys[i].name,
@@ -92,8 +95,9 @@ class _TPCScreenState extends State<TPCScreen> {
       body: ListView(
         children: <Widget>[
           CustomAppBar(
-              title: "Training & Placement Cell",
-              image: Image.asset(ImageAssets.tpo)),
+            title: "Training & Placement Cell",
+            image: Image.asset(ImageAssets.tpo),
+          ),
           const SizedBox(height: 25),
           FutureBuilder<List<CompanyModel>>(
             future: _companys,
@@ -104,6 +108,7 @@ class _TPCScreenState extends State<TPCScreen> {
                   height: MediaQuery.of(context).size.height - 25,
                   width: MediaQuery.of(context).size.width - 25,
                   child: GridView.count(
+                    physics: const NeverScrollableScrollPhysics(),
                     scrollDirection: Axis.vertical,
                     crossAxisCount: 2,
                     children: getCompanyCards(data),
