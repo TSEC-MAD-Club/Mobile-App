@@ -1,163 +1,218 @@
-[ {
-    "name" : "ACCENTURE",
-    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Faccenture.jpg?alt=media&token=b0d932e1-82de-4a92-910f-3b3947366859\\\""
-  }, {
-    "name" : "AMDOCS",
-    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Famdocs.png?alt=media&token=3e7d4867-46f8-43ad-a8e6-1b6d0d1e7242"
-  }, {
-    "name" : "ORACLE",
-    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Foracle.jpg?alt=media&token=e6e89428-798d-4dc7-8cfe-a0ff0fc08e30"
-  }, {
-    "name" : "INFOSYS",
-    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Finfosys.png?alt=media&token=6522795c-fa61-4bce-bb85-91779bdff5b7"
-  }, {
-    "name" : "WORKS APPLICATION",
-    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Fworksapplication.png?alt=media&token=7d7bc3ae-9275-458c-aa30-9362ac623b5d"
-  }, {
-    "name" : "MORGAN STANLEY",
-    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Fmorganstanley.png?alt=media&token=02d51fc0-4e55-479a-aa97-108527c33bd1"
-  }, {
-    "name" : "TECH MAHINDRA",
-    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Ftechmahindra.jpg?alt=media&token=50656a51-eb6d-4ca3-a301-f0cd2494d0fb"
-  }, {
-    "name" : "LARSEN & TOUBRO IT",
-    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Flarsenandtoubro.png?alt=media&token=76dbec75-9f6e-4b00-9e26-47d618bfb901"
-  }, {
-    "name" : "TATA",
-    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Ftata.png?alt=media&token=622d319f-ddcd-418b-b880-8ba57d1d5858"
-  }, {
-    "name" : "CAPGEMINI",
-    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Fcapgemini.jpg?alt=media&token=c2557e60-acb1-41f8-ade9-2e865f8beffe"
-  }, {
-    "name" : "ATOS ORIGIN",
-    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Fatosorigin.png?alt=media&token=83e6a5b1-7250-4817-8488-6bf9dc50ef49"
-  }, {
-    "name" : "SIEMENS",
-    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Fsiemens.png?alt=media&token=2d20031f-86ea-464d-9ac6-e1ff7e5069fe"
-  }, {
-    "name" : "MAESTROS",
-    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Fmaestros.png?alt=media&token=6fc47e0e-002a-4e5d-abbd-0db1b6f52fd1"
-  }, {
-    "name" : "RELIANCE",
-    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Freliance.jpeg?alt=media&token=752bc75e-5ae2-475a-a6aa-1e1b828b13b9"
-  }, {
-    "name" : "PWC",
-    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Fpwc.jpeg?alt=media&token=99d8734f-901b-404c-9df1-760797425aae"
-  }, {
-    "name" : "BYJU'S",
-    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Fbyjus1.png?alt=media&token=90fdbd92-c95c-4213-8888-47b4fb5a54ec"
-  }, {
-    "name" : "VISTAAR",
-    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Fvistaar.png?alt=media&token=b0cd856e-f3c8-433e-8ab0-4399b23c97aa"
-  }, {
-    "name" : "DELOITTE",
-    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Fdeloitte.png?alt=media&token=6c053a28-5eb0-4d64-b392-32764afbac05"
-  }, {
-    "name" : "SAP",
-    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Fsap.png?alt=media&token=e2e734bf-4a6b-407e-aa74-88c86bf1c899"
-  }, {
-    "name" : "BARCLAYS",
-    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Fbarclays.jpeg?alt=media&token=e989563c-05a4-4d45-9c05-19baf7f8711e"
-  }, {
-    "name" : "JACOB'S",
-    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Fjacobs.png?alt=media&token=b953a683-fb26-49c4-b354-77f3644fb201"
-  }, {
-    "name" : "BNP PARIBAS",
-    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Fbnpparibas.png?alt=media&token=367437c3-7253-4e7d-9de0-a32d1080eec0"
-  }, {
-    "name" : "JIO",
-    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Fjio.png?alt=media&token=ceee89d0-6327-494e-8f75-a3ca3cf36f73"
-  }, {
-    "name" : "QUINNOX",
-    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Fquinnox.png?alt=media&token=b3d67add-80b7-423b-83e8-0c57c72797f6"
-  }, {
-    "name" : "MEDITAB",
-    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Fmeditab.png?alt=media&token=c1d969f5-b5ee-4612-b92c-561ad6d249b5"
-  }, {
-    "name" : "MEDTRONIC",
-    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Fmedtronic.png?alt=media&token=57770c36-49da-454b-a5b1-4eaa658ef14f"
-  }, {
-    "name" : "TRANSASIA",
-    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Ftransasia.jpg?alt=media&token=6e6c6ce5-1670-44b0-8f53-1d25c6c4af27"
-  }, {
-    "name" : "JP MORGAN",
-    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Fjpmorgan.png?alt=media&token=a1b0b3be-6c26-465b-84a9-864b71d4cbe3"
-  }, {
-    "name" : "MEDIA.NET",
-    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Fmedianet.png?alt=media&token=dba82f24-5687-4618-bfd0-debbd50d826f"
-  }, {
-    "name" : "DIRECTI",
-    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Fdirecti.png?alt=media&token=8c250b33-de84-4f53-9f06-6796894a41ce"
-  }, {
-    "name" : "EY",
-    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Fey.jpg?alt=media&token=e4cd73aa-0271-426e-8b80-0bc887bb94d8"
-  }, {
-    "name" : "TEACH FOR INDIA",
-    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Fteachforindia.png?alt=media&token=3ba0c73c-0a43-4a73-8b21-b990875b1848"
-  }, {
-    "name" : "SECLORE",
-    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Fseclore.png?alt=media&token=d72dbb7a-064b-4e1e-bfc2-6d191784c6dd"
-  }, {
-    "name" : "AMAZON",
-    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Famazon.png?alt=media&token=5631602f-b05c-4573-ad51-070cabe6695c"
-  }, {
-    "name" : "ACCOLITE",
-    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Faccolite.png?alt=media&token=92b9dfb8-cef9-486d-ac94-eeafdc4e4c41"
-  }, {
-    "name" : "C2L BIZ",
-    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Fc2lbiz.png?alt=media&token=80bc01c3-024c-4a78-a19d-73064ecce365"
-  }, {
-    "name" : "CARWALE",
-    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Fcarwale1.webp?alt=media&token=d819328c-08d1-4402-b78f-f96ae3cbd1f5"
-  }, {
-    "name" : "CLOUDFRONTS",
-    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Fcloudfronts.png?alt=media&token=30d59c24-cffc-4d44-ad16-62886ad664ff"
-  }, {
-    "name" : "DECIMAL POINT ANALYTICS",
-    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Fdecimal.png?alt=media&token=ce111598-e4c9-4475-a7a2-74d948e13362"
-  }, {
-    "name" : "DEUTSCHE BANK",
-    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Fdeutsche.jpg?alt=media&token=1cdda981-d2f8-47f1-9a8a-e546958ac851"
-  }, {
-    "name" : "DOLAT CAPITAL",
-    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Fdolat.png?alt=media&token=60ba2efa-345b-4b01-b6cb-426a1ef7b64c"
-  }, {
-    "name" : "IKSULA",
-    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Fiksula.png?alt=media&token=11afb31f-2278-414f-8081-7b371eb018b5"
-  }, {
-    "name" : "JUST DIAL",
-    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Fjustdial.png?alt=media&token=5c4bc932-aa11-46ff-b08e-4194da6ddfbe"
-  }, {
-    "name" : "LTI",
-    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Flti.png?alt=media&token=0d2fa727-3bc6-47f5-af7b-959640d60f56"
-  }, {
-    "name" : "MAQ SOFTWARE",
-    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Fmaq.png?alt=media&token=c7d0ce08-de91-4959-a7a7-9080a953640e"
-  }, {
-    "name" : "QUANTIPHI",
-    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Fquantiphi.png?alt=media&token=c7d134cf-edb9-42ae-acf7-47d686d7a197"
-  }, {
-    "name" : "QUOSPHERE",
-    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Fquosphere.png?alt=media&token=c3b0f548-a1b9-426e-bdd0-e25e304b6534"
-  }, {
-    "name" : "RELIANCE RETAIL",
-    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2FReliance-Retail.jpg?alt=media&token=6dca734b-463d-43b3-bd47-37ceef0b873c"
-  }, {
-    "name" : "SAVITA OIL",
-    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Fsavita.png?alt=media&token=9d1089d9-4b12-42d5-bbd5-aef81a7824a7"
-  }, {
-    "name" : "TCS",
-    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Ftcs.png?alt=media&token=22390ba0-1632-4624-8909-3456b1694bd1"
-  }, {
-    "name" : "TOPPR",
-    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Ftoppr.jpg?alt=media&token=74d9d96a-ebce-4344-a95a-d9bb4df932a1"
-  }, {
-    "name" : "VISIBLE ALPHA",
-    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Fva.jpg?alt=media&token=5dc987b6-0713-4c56-8e25-ad46fa8869f3"
-  }, {
-    "name" : "BURNS & MCDONNELL",
-    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Fbnm.png?alt=media&token=8727d18c-d25f-4495-b473-3fbdff478e43"
-  }, {
-    "name" : "ZYCUS",
-    "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Fzycus.png?alt=media&token=2ae66179-cf93-484c-9586-a4b6cb172f30"
-  } ]
+[
+  {
+     "name":"ACCENTURE",
+     "image":"https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Faccenture.jpg?alt=media&token=b0d932e1-82de-4a92-910f-3b3947366859"
+  },
+  {
+     "name":"AMDOCS",
+     "image":"https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Famdocs.png?alt=media&token=3e7d4867-46f8-43ad-a8e6-1b6d0d1e7242"
+  },
+  {
+     "name":"ORACLE",
+     "image":"https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Foracle.jpg?alt=media&token=e6e89428-798d-4dc7-8cfe-a0ff0fc08e30"
+  },
+  {
+     "name":"INFOSYS",
+     "image":"https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Finfosys.png?alt=media&token=6522795c-fa61-4bce-bb85-91779bdff5b7"
+  },
+  {
+     "name":"WORKS APPLICATION",
+     "image":"https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Fworksapplication.png?alt=media&token=7d7bc3ae-9275-458c-aa30-9362ac623b5d"
+  },
+  {
+     "name":"MORGAN STANLEY",
+     "image":"https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Fmorganstanley.png?alt=media&token=02d51fc0-4e55-479a-aa97-108527c33bd1"
+  },
+  {
+     "name":"TECH MAHINDRA",
+     "image":"https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Ftechmahindra.jpg?alt=media&token=50656a51-eb6d-4ca3-a301-f0cd2494d0fb"
+  },
+  {
+     "name":"LARSEN & TOUBRO IT",
+     "image":"https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Flarsenandtoubro.png?alt=media&token=76dbec75-9f6e-4b00-9e26-47d618bfb901"
+  },
+  {
+     "name":"TATA",
+     "image":"https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Ftata.png?alt=media&token=622d319f-ddcd-418b-b880-8ba57d1d5858"
+  },
+  {
+     "name":"CAPGEMINI",
+     "image":"https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Fcapgemini.jpg?alt=media&token=c2557e60-acb1-41f8-ade9-2e865f8beffe"
+  },
+  {
+     "name":"ATOS ORIGIN",
+     "image":"https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Fatosorigin.png?alt=media&token=83e6a5b1-7250-4817-8488-6bf9dc50ef49"
+  },
+  {
+     "name":"SIEMENS",
+     "image":"https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Fsiemens.png?alt=media&token=2d20031f-86ea-464d-9ac6-e1ff7e5069fe"
+  },
+  {
+     "name":"MAESTROS",
+     "image":"https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Fmaestros.png?alt=media&token=6fc47e0e-002a-4e5d-abbd-0db1b6f52fd1"
+  },
+  {
+     "name":"RELIANCE",
+     "image":"https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Freliance.jpeg?alt=media&token=752bc75e-5ae2-475a-a6aa-1e1b828b13b9"
+  },
+  {
+     "name":"PWC",
+     "image":"https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Fpwc.jpeg?alt=media&token=99d8734f-901b-404c-9df1-760797425aae"
+  },
+  {
+     "name":"BYJU'S",
+     "image":"https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Fbyjus1.png?alt=media&token=90fdbd92-c95c-4213-8888-47b4fb5a54ec"
+  },
+  {
+     "name":"VISTAAR",
+     "image":"https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Fvistaar.png?alt=media&token=b0cd856e-f3c8-433e-8ab0-4399b23c97aa"
+  },
+  {
+     "name":"DELOITTE",
+     "image":"https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Fdeloitte.png?alt=media&token=6c053a28-5eb0-4d64-b392-32764afbac05"
+  },
+  {
+     "name":"SAP",
+     "image":"https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Fsap.png?alt=media&token=e2e734bf-4a6b-407e-aa74-88c86bf1c899"
+  },
+  {
+     "name":"BARCLAYS",
+     "image":"https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Fbarclays.jpeg?alt=media&token=e989563c-05a4-4d45-9c05-19baf7f8711e"
+  },
+  {
+     "name":"JACOB'S",
+     "image":"https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Fjacobs.png?alt=media&token=b953a683-fb26-49c4-b354-77f3644fb201"
+  },
+  {
+     "name":"BNP PARIBAS",
+     "image":"https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Fbnpparibas.png?alt=media&token=367437c3-7253-4e7d-9de0-a32d1080eec0"
+  },
+  {
+     "name":"JIO",
+     "image":"https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Fjio.png?alt=media&token=ceee89d0-6327-494e-8f75-a3ca3cf36f73"
+  },
+  {
+     "name":"QUINNOX",
+     "image":"https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Fquinnox.png?alt=media&token=b3d67add-80b7-423b-83e8-0c57c72797f6"
+  },
+  {
+     "name":"MEDITAB",
+     "image":"https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Fmeditab.png?alt=media&token=c1d969f5-b5ee-4612-b92c-561ad6d249b5"
+  },
+  {
+     "name":"MEDTRONIC",
+     "image":"https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Fmedtronic.png?alt=media&token=57770c36-49da-454b-a5b1-4eaa658ef14f"
+  },
+  {
+     "name":"TRANSASIA",
+     "image":"https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Ftransasia.jpg?alt=media&token=6e6c6ce5-1670-44b0-8f53-1d25c6c4af27"
+  },
+  {
+     "name":"JP MORGAN",
+     "image":"https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Fjpmorgan.png?alt=media&token=a1b0b3be-6c26-465b-84a9-864b71d4cbe3"
+  },
+  {
+     "name":"MEDIA.NET",
+     "image":"https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Fmedianet.png?alt=media&token=dba82f24-5687-4618-bfd0-debbd50d826f"
+  },
+  {
+     "name":"DIRECTI",
+     "image":"https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Fdirecti.png?alt=media&token=8c250b33-de84-4f53-9f06-6796894a41ce"
+  },
+  {
+     "name":"EY",
+     "image":"https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Fey.jpg?alt=media&token=e4cd73aa-0271-426e-8b80-0bc887bb94d8"
+  },
+  {
+     "name":"TEACH FOR INDIA",
+     "image":"https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Fteachforindia.png?alt=media&token=3ba0c73c-0a43-4a73-8b21-b990875b1848"
+  },
+  {
+     "name":"SECLORE",
+     "image":"https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Fseclore.png?alt=media&token=d72dbb7a-064b-4e1e-bfc2-6d191784c6dd"
+  },
+  {
+     "name":"AMAZON",
+     "image":"https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Famazon.png?alt=media&token=5631602f-b05c-4573-ad51-070cabe6695c"
+  },
+  {
+     "name":"ACCOLITE",
+     "image":"https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Faccolite.png?alt=media&token=92b9dfb8-cef9-486d-ac94-eeafdc4e4c41"
+  },
+  {
+     "name":"C2L BIZ",
+     "image":"https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Fc2lbiz.png?alt=media&token=80bc01c3-024c-4a78-a19d-73064ecce365"
+  },
+  {
+     "name":"CARWALE",
+     "image":"https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Fcarwale1.webp?alt=media&token=d819328c-08d1-4402-b78f-f96ae3cbd1f5"
+  },
+  {
+     "name":"CLOUDFRONTS",
+     "image":"https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Fcloudfronts.png?alt=media&token=30d59c24-cffc-4d44-ad16-62886ad664ff"
+  },
+  {
+     "name":"DECIMAL POINT ANALYTICS",
+     "image":"https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Fdecimal.png?alt=media&token=ce111598-e4c9-4475-a7a2-74d948e13362"
+  },
+  {
+     "name":"DEUTSCHE BANK",
+     "image":"https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Fdeutsche.jpg?alt=media&token=1cdda981-d2f8-47f1-9a8a-e546958ac851"
+  },
+  {
+     "name":"DOLAT CAPITAL",
+     "image":"https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Fdolat.png?alt=media&token=60ba2efa-345b-4b01-b6cb-426a1ef7b64c"
+  },
+  {
+     "name":"IKSULA",
+     "image":"https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Fiksula.png?alt=media&token=11afb31f-2278-414f-8081-7b371eb018b5"
+  },
+  {
+     "name":"JUST DIAL",
+     "image":"https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Fjustdial.png?alt=media&token=5c4bc932-aa11-46ff-b08e-4194da6ddfbe"
+  },
+  {
+     "name":"LTI",
+     "image":"https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Flti.png?alt=media&token=0d2fa727-3bc6-47f5-af7b-959640d60f56"
+  },
+  {
+     "name":"MAQ SOFTWARE",
+     "image":"https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Fmaq.png?alt=media&token=c7d0ce08-de91-4959-a7a7-9080a953640e"
+  },
+  {
+     "name":"QUANTIPHI",
+     "image":"https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Fquantiphi.png?alt=media&token=c7d134cf-edb9-42ae-acf7-47d686d7a197"
+  },
+  {
+     "name":"QUOSPHERE",
+     "image":"https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Fquosphere.png?alt=media&token=c3b0f548-a1b9-426e-bdd0-e25e304b6534"
+  },
+  {
+     "name":"RELIANCE RETAIL",
+     "image":"https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2FReliance-Retail.jpg?alt=media&token=6dca734b-463d-43b3-bd47-37ceef0b873c"
+  },
+  {
+     "name":"SAVITA OIL",
+     "image":"https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Fsavita.png?alt=media&token=9d1089d9-4b12-42d5-bbd5-aef81a7824a7"
+  },
+  {
+     "name":"TCS",
+     "image":"https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Ftcs.png?alt=media&token=22390ba0-1632-4624-8909-3456b1694bd1"
+  },
+  {
+     "name":"TOPPR",
+     "image":"https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Ftoppr.jpg?alt=media&token=74d9d96a-ebce-4344-a95a-d9bb4df932a1"
+  },
+  {
+     "name":"VISIBLE ALPHA",
+     "image":"https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Fva.jpg?alt=media&token=5dc987b6-0713-4c56-8e25-ad46fa8869f3"
+  },
+  {
+     "name":"BURNS & MCDONNELL",
+     "image":"https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Fbnm.png?alt=media&token=8727d18c-d25f-4495-b473-3fbdff478e43"
+  },
+  {
+     "name":"ZYCUS",
+     "image":"https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Recruiters%2Fzycus.png?alt=media&token=2ae66179-cf93-484c-9586-a4b6cb172f30"
+  }
+]
