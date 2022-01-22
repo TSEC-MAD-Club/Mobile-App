@@ -4,6 +4,8 @@ import 'dart:ui';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:tsec_app/utils/image_assets.dart';
+
 import '../models/committee_model/committee_model.dart';
 import '../widgets/custom_app_bar.dart';
 import '../widgets/custom_scaffold.dart';
@@ -43,8 +45,9 @@ class _CommitteesScreenState extends State<CommitteesScreen> {
     return CustomScaffold(
       body: ListView(
         children: <Widget>[
-          const CustomAppBar(
+          CustomAppBar(
             title: "Committees & Events",
+            image: Image.asset(ImageAssets.committes),
           ),
           const SizedBox(height: 25),
           FutureBuilder<List<CommitteeModel>>(

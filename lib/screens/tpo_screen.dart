@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:tsec_app/utils/image_assets.dart';
 import '../models/company_model/company_model.dart';
 import '../widgets/custom_app_bar.dart';
 
@@ -15,7 +16,7 @@ class TPOScreen extends StatefulWidget {
 class _TPOScreenState extends State<TPOScreen> {
   late final Future<List<CompanyModel>> _companys;
   Future<List<CompanyModel>> _getCompanys() async {
-    final data = await rootBundle.loadString("assets/data/companys.json");
+    final data = await rootBundle.loadString("assets/data/companies.json");
     final json = jsonDecode(data) as List;
     return json.map((e) => CompanyModel.fromJson(e)).toList();
   }
@@ -44,7 +45,11 @@ class _TPOScreenState extends State<TPOScreen> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(
-                          top: 22.0, left: 15.0, right: 15.0, bottom: 20),
+                        top: 22.0,
+                        left: 15.0,
+                        right: 15.0,
+                        bottom: 20,
+                      ),
                       child: CachedNetworkImage(
                         imageUrl: _companys[i].image,
                         height: 40,
@@ -54,7 +59,11 @@ class _TPOScreenState extends State<TPOScreen> {
                     Divider(color: Colors.blueAccent.withOpacity(0.7)),
                     Padding(
                       padding: const EdgeInsets.only(
-                          top: 2.0, left: 15.0, right: 15.0, bottom: 20),
+                        top: 2.0,
+                        left: 15.0,
+                        right: 15.0,
+                        bottom: 20,
+                      ),
                       child: Text(
                         _companys[i].name,
                         style: TextStyle(color: Colors.black.withOpacity(0.7)),
@@ -82,9 +91,9 @@ class _TPOScreenState extends State<TPOScreen> {
     return Scaffold(
       body: ListView(
         children: <Widget>[
-          const CustomAppBar(
-            title: "Training & Placement Cell",
-          ),
+          CustomAppBar(
+              title: "Training & Placement Cell",
+              image: Image.asset(ImageAssets.tpo)),
           const SizedBox(height: 25),
           FutureBuilder<List<CompanyModel>>(
             future: _companys,

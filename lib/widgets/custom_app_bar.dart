@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tsec_app/utils/image_assets.dart';
 
 import '../provider/theme_provider.dart';
 import '../utils/themes.dart';
@@ -9,24 +8,11 @@ class CustomAppBar extends ConsumerWidget with PreferredSizeWidget {
   const CustomAppBar({
     Key? key,
     required this.title,
+    required this.image,
   }) : super(key: key);
+
   final String title;
-  Widget _buildImageChild() {
-    if (title == "Committees & Events") {
-      return Image.asset(
-        ImageAssets.committes,
-        width: 177,
-      );
-    } else if (title == "Training & Placement Cell") {
-      return Image.asset(
-        ImageAssets.tpo,
-        width: 177,
-      );
-    } else if (title == "") {
-      return Image.asset(ImageAssets.committes, width: 177);
-    }
-    return const SizedBox(width: 177);
-  }
+  final Image image;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -76,7 +62,10 @@ class CustomAppBar extends ConsumerWidget with PreferredSizeWidget {
                       style: Theme.of(context).textTheme.headline3,
                     ),
                   ),
-                  Flexible(child: _buildImageChild())
+                  SizedBox(
+                    width: 177,
+                    child: image,
+                  )
                 ],
               ),
             ],
