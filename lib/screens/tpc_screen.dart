@@ -6,14 +6,14 @@ import 'package:tsec_app/utils/image_assets.dart';
 import '../models/company_model/company_model.dart';
 import '../widgets/custom_app_bar.dart';
 
-class TPOScreen extends StatefulWidget {
-  const TPOScreen({Key? key}) : super(key: key);
+class TPCScreen extends StatefulWidget {
+  const TPCScreen({Key? key}) : super(key: key);
 
   @override
-  _TPOScreenState createState() => _TPOScreenState();
+  _TPCScreenState createState() => _TPCScreenState();
 }
 
-class _TPOScreenState extends State<TPOScreen> {
+class _TPCScreenState extends State<TPCScreen> {
   late final Future<List<CompanyModel>> _companys;
   Future<List<CompanyModel>> _getCompanys() async {
     final data = await rootBundle.loadString("assets/data/companies.json");
