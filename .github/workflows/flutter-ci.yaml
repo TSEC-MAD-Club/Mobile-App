@@ -37,7 +37,7 @@ jobs:
         run: |
           echo "APP_VERSION=$(grep -Po '(?<=version: )(.*)(?=\+)' pubspec.yaml)" >> $GITHUB_ENV
 
-          mv lib\firebase_options.example.dart lib\firebase_options.dart
+          mv lib/firebase_options.example.dart lib/firebase_options.dart
 
           flutter pub get
 
