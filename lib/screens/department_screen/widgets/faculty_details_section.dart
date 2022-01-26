@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -165,7 +166,7 @@ class CollapsedFacultyCard extends StatelessWidget {
     return Row(
       children: [
         CircleAvatar(
-          backgroundImage: Image.asset('assets/images/branches/extc.png').image,
+          backgroundImage: CachedNetworkImageProvider(imageUrl),
           radius: 30,
         ),
         const SizedBox(
