@@ -1,10 +1,13 @@
 import 'dart:convert';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:tsec_app/utils/image_assets.dart';
+
 import '../models/company_model/company_model.dart';
+import '../utils/image_assets.dart';
 import '../widgets/custom_app_bar.dart';
+import '../widgets/custom_scaffold.dart';
 
 class TPCScreen extends StatefulWidget {
   const TPCScreen({Key? key}) : super(key: key);
@@ -67,10 +70,14 @@ class _TPCScreenState extends State<TPCScreen> {
                         left: 15.0,
                         right: 15.0,
                       ),
-                      child: Text(
-                        _companys[i].name,
-                        style: TextStyle(color: Colors.black.withOpacity(0.7)),
-                        textAlign: TextAlign.center,
+                      child: FittedBox(
+                        child: Text(
+                          _companys[i].name,
+                          style: TextStyle(
+                            color: Colors.black.withOpacity(0.7),
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
                       ),
                     ),
                   ],
@@ -91,36 +98,33 @@ class _TPCScreenState extends State<TPCScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: ListView(
-        children: <Widget>[
-          CustomAppBar(
-            title: "Training & Placement Cell",
-            image: Image.asset(ImageAssets.tpo),
-          ),
-          const SizedBox(height: 25),
-          FutureBuilder<List<CompanyModel>>(
-            future: _companys,
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                final data = snapshot.data!;
-                return SizedBox(
-                  height: MediaQuery.of(context).size.height - 25,
-                  width: MediaQuery.of(context).size.width - 25,
-                  child: GridView.count(
-                    physics: const NeverScrollableScrollPhysics(),
-                    scrollDirection: Axis.vertical,
-                    crossAxisCount: 2,
-                    children: getCompanyCards(data),
-                  ),
-                );
-              }
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            },
-          ),
+    return CustomScaffold(
+      body: NestedScrollView(
+        headerSliverBuilder: (_, __) => [
+          SliverToBoxAdapter(
+            child: CustomAppBar(
+              title: "Training & Placement Cell",
+              image: Image.asset(ImageAssets.tpo),
+            ),
+          )
         ],
+        body: FutureBuilder<List<CompanyModel>>(
+          future: _companys,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              final data = snapshot.data!;
+              return GridView.count(
+                physics: const NeverScrollableScrollPhysics(),
+                scrollDirection: Axis.vertical,
+                crossAxisCount: 2,
+                children: getCompanyCards(data),
+              );
+            }
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          },
+        ),
       ),
     );
   }
