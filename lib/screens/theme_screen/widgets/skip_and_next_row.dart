@@ -1,43 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
-import '../../login_screen/login_screen.dart';
-import '../../main_screen/main_screen.dart';
+import '../../../provider/app_state_provider.dart';
 
-class SkipAndNextRow extends StatelessWidget {
+class SkipAndNextRow extends ConsumerWidget {
   const SkipAndNextRow({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Padding(
       padding: const EdgeInsets.all(25.0),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
-          GestureDetector(
-            onTap: () {},
-            child: Text(
-              "Skip",
-              style: Theme.of(context).textTheme.subtitle1,
-            ),
-          ),
-          const Spacer(),
           SizedBox(
             width: 70,
             height: 50,
             child: ElevatedButton(
               onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => const MainScreen()),
-                );
+                ref.read(appStateProvider.notifier).appOpened().then((_) {
+                  GoRouter.of(context).push("/");
+                });
               },
-              child: IconButton(
-                icon: const Icon(Icons.arrow_forward),
-                onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                        builder: (context) => const LoginScreen()),
-                  );
-                },
-              ),
+              child: const Icon(Icons.arrow_forward),
               style: ButtonStyle(
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tsec_app/provider/theme_provider.dart';
 
 import '../../../utils/themes.dart';
 
-class CustomToggleButton extends StatefulWidget {
+class CustomToggleButton extends ConsumerStatefulWidget {
   final List<String> values;
-  final ValueChanged onToggleCallback;
+  final VoidCallback onToggleCallback;
   final Color backgroundColor;
   final Color buttonColor;
   final Color textColor;
@@ -31,11 +33,11 @@ class CustomToggleButton extends StatefulWidget {
   _CustomToggleButtonState createState() => _CustomToggleButtonState();
 }
 
-class _CustomToggleButtonState extends State<CustomToggleButton> {
-  bool initialPosition = true;
+class _CustomToggleButtonState extends ConsumerState<CustomToggleButton> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
+    final _theme = ref.watch(themeProvider);
     return Container(
       width: width * 0.7,
       height: width * 0.13,
@@ -43,17 +45,12 @@ class _CustomToggleButtonState extends State<CustomToggleButton> {
       child: Stack(
         children: <Widget>[
           GestureDetector(
-            onTap: () {
-              setState(() {
-                initialPosition = !initialPosition;
-              });
-              widget.onToggleCallback(!initialPosition ? 1 : 0);
-            },
+            onTap: widget.onToggleCallback,
             child: Container(
               width: width * 0.7,
               height: width * 0.13,
               decoration: ShapeDecoration(
-                color: initialPosition
+                color: _theme == ThemeMode.light
                     ? kLightModeToggleBtnBg
                     : kDarkModeToggleBtnBg,
                 shape: RoundedRectangleBorder(
@@ -78,14 +75,15 @@ class _CustomToggleButtonState extends State<CustomToggleButton> {
           AnimatedAlign(
             duration: const Duration(milliseconds: 250),
             curve: Curves.decelerate,
-            alignment:
-                initialPosition ? Alignment.centerLeft : Alignment.centerRight,
+            alignment: _theme == ThemeMode.light
+                ? Alignment.centerLeft
+                : Alignment.centerRight,
             child: Container(
               width: width * 0.35,
               height: width * 0.13,
               decoration: ShapeDecoration(
                 color: Theme.of(context).primaryColorLight,
-                shadows: initialPosition
+                shadows: _theme == ThemeMode.light
                     ? shadowLightModeToggleBtn
                     : shadowDarkModeToggleBtn,
                 shape: RoundedRectangleBorder(
@@ -93,7 +91,7 @@ class _CustomToggleButtonState extends State<CustomToggleButton> {
                 ),
               ),
               child: Text(
-                initialPosition ? widget.values[0] : widget.values[1],
+                _theme == ThemeMode.light ? widget.values[0] : widget.values[1],
                 style: Theme.of(context).textTheme.bodyText1,
               ),
               alignment: Alignment.center,

@@ -3,23 +3,16 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../provider/theme_provider.dart';
 import '../../utils/image_assets.dart';
-import '../../widgets/custom_scaffold.dart';
 import 'widgets/custom_toggle_button.dart';
 import 'widgets/skip_and_next_row.dart';
 
-class ThemeScreen extends ConsumerStatefulWidget {
+class ThemeScreen extends StatelessWidget {
   const ThemeScreen({Key? key}) : super(key: key);
-
-  @override
-  _ThemeScreenState createState() => _ThemeScreenState();
-}
-
-class _ThemeScreenState extends ConsumerState<ThemeScreen> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
-    return CustomScaffold(
+    return Scaffold(
       body: SizedBox(
         height: size.height,
         width: size.width,
@@ -47,11 +40,13 @@ class _ThemeScreenState extends ConsumerState<ThemeScreen> {
               style: Theme.of(context).textTheme.subtitle1,
             ),
             SizedBox(height: 0.05 * size.height),
-            CustomToggleButton(
-              values: const ['Light', 'Dark'],
-              onToggleCallback: (index) {
-                ref.read(themeProvider.notifier).switchTheme();
-              },
+            Consumer(
+              builder: (context, ref, child) => CustomToggleButton(
+                values: const ['Light', 'Dark'],
+                onToggleCallback: () {
+                  ref.read(themeProvider.notifier).switchTheme();
+                },
+              ),
             ),
             const Spacer(),
             const SkipAndNextRow(),
