@@ -1,7 +1,11 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:url_launcher/link.dart';
 
+import '../provider/theme_provider.dart';
 import '../utils/image_assets.dart';
 import '../utils/themes.dart';
 
@@ -30,6 +34,7 @@ class _CustomScaffoldState extends State<CustomScaffold>
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 300),
+      reverseDuration: const Duration(milliseconds: 100),
     );
 
     _scaleAnimation = Tween<double>(begin: 1.0, end: .6).animate(
@@ -48,67 +53,69 @@ class _CustomScaffoldState extends State<CustomScaffold>
       child: Stack(
         children: [
           Positioned(
-            top: 75,
+            top: MediaQuery.of(context).padding.top + 15,
+            right: 15,
+            child: Consumer(
+              builder: (context, ref, child) => GestureDetector(
+                onTap: () => ref.read(themeProvider.notifier).switchTheme(),
+                child: Container(
+                  padding: const EdgeInsets.all(5),
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).scaffoldBackgroundColor,
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  child: IconTheme(
+                    data: const IconThemeData(color: kLightModeLightBlue),
+                    child: ref.watch(themeProvider) == ThemeMode.dark
+                        ? const Icon(Icons.light_mode)
+                        : const Icon(Icons.dark_mode),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Positioned(
+            top: 95,
             bottom: 75,
             right: 0,
             width: size.width * 0.6,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const <Widget>[
-                    CircleAvatar(
-                      radius: 23,
-                    ),
-                    SizedBox(width: 10),
-                    Flexible(child: Text("John Doe"))
-                  ],
-                ),
-                Column(
-                  children: <Widget>[
-                    DrawerListItem(
-                      onTap: () {},
-                      icon: Image.asset(
-                        ImageAssets.homeIcon,
-                        width: 24,
-                      ),
-                      title: "Home",
-                    ),
-                    DrawerListItem(
-                      onTap: () {},
-                      icon: Image.asset(
-                        ImageAssets.galleryIcon,
-                        width: 24,
-                      ),
-                      title: "Gallery",
-                    ),
-                    DrawerListItem(
-                      onTap: () {},
-                      icon: Image.asset(
-                        ImageAssets.committeesIcon,
-                        width: 22,
-                      ),
-                      title: "Committees & Events",
-                    ),
-                    DrawerListItem(
-                      onTap: () {},
-                      icon: Image.asset(
-                        ImageAssets.callIcon,
-                        width: 24,
-                      ),
-                      title: "Contact Us",
-                    ),
-                  ],
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                DrawerListItem(
+                  onTap: () => _navigate("/"),
+                  icon: Image.asset(
+                    ImageAssets.homeIcon,
+                    width: 24,
+                  ),
+                  title: "Home",
                 ),
                 DrawerListItem(
-                  onTap: () {},
-                  icon: const Icon(
-                    Icons.exit_to_app_rounded,
-                    size: 24,
-                    color: Color(0xFF22ABE5),
+                  onTap: () => _navigate("/tpc"),
+                  icon: Image.asset(
+                    ImageAssets.meetingIcon,
+                    width: 22,
                   ),
-                  title: "Log out",
+                  title: "TPC",
+                ),
+                DrawerListItem(
+                  onTap: () => _navigate("/committee"),
+                  icon: Image.asset(
+                    ImageAssets.committeesIcon,
+                    width: 22,
+                  ),
+                  title: "Committees & Events",
+                ),
+                Link(
+                  uri: Uri.parse("mailto:darshanrander@gmail.com"),
+                  builder: (context, followLink) => DrawerListItem(
+                    onTap: () => followLink?.call(),
+                    icon: Image.asset(
+                      ImageAssets.callIcon,
+                      width: 24,
+                    ),
+                    title: "Contact Us",
+                  ),
                 ),
               ],
             ),
@@ -205,6 +212,13 @@ class _CustomScaffoldState extends State<CustomScaffold>
         ],
       ),
     );
+  }
+
+  Future<void> _navigate(String path) async {
+    await _controller.reverse();
+
+    final router = GoRouter.of(context);
+    if (router.location != path) router.push(path);
   }
 }
 

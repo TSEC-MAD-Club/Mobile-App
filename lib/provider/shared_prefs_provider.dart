@@ -12,10 +12,15 @@ class SharedPrefsProvider {
   final SharedPreferences _sharedPrefs;
 
   static const _themeKey = "theme";
+  static const _isFirstOpen = "isFirstOpen";
 
   int get theme => _sharedPrefs.getInt(_themeKey) ?? ThemeMode.light.index;
 
   set theme(int theme) {
     _sharedPrefs.setInt(_themeKey, theme);
   }
+
+  bool get isFirstOpen => _sharedPrefs.getBool(_isFirstOpen) ?? true;
+
+  Future<bool> appOpened() => _sharedPrefs.setBool(_isFirstOpen, false);
 }
