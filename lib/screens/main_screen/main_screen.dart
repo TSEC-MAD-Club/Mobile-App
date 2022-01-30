@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../provider/theme_provider.dart';
 import '../../utils/image_assets.dart';
@@ -76,25 +77,28 @@ class DeptWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-      ),
-      margin: EdgeInsets.zero,
-      color: Theme.of(context).colorScheme.secondary,
-      child: Padding(
-        padding: const EdgeInsets.all(15),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Image.asset(
-                "assets/images/branches/$image.png",
+    return GestureDetector(
+      onTap: () => GoRouter.of(context).push("/department?department=$name"),
+      child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+        margin: EdgeInsets.zero,
+        color: Theme.of(context).colorScheme.secondary,
+        child: Padding(
+          padding: const EdgeInsets.all(15),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Image.asset(
+                  "assets/images/branches/$image.png",
+                ),
               ),
-            ),
-            Text(name),
-          ],
+              Text(name),
+            ],
+          ),
         ),
       ),
     );
