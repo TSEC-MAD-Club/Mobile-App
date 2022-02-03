@@ -1,9 +1,12 @@
+import 'dart:convert';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tsec_app/screens/main_screen/main_screen.dart';
 
 import 'firebase_options.dart';
 import 'models/notification_model/notification_model.dart';
@@ -36,7 +39,6 @@ Future<void> main() async {
 
   initGetIt();
 
-  WidgetsFlutterBinding.ensureInitialized();
   final _sharedPrefs = await SharedPreferences.getInstance();
   runApp(
     ProviderScope(
@@ -163,7 +165,7 @@ class _TSECAppState extends ConsumerState<TSECApp> {
             notificationTime: DateTime.parse(
               message.data["notificationTime"] ?? DateTime.now().toString(),
             ),
-            attachments: (message.data["attachments"] as List?)
+            attachments: (jsonDecode(message.data["attachments"]) as List?)
                 ?.map((e) => e as String)
                 .toList(),
           ),
