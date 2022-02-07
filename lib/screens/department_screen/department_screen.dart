@@ -114,7 +114,6 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
 
     return WillPopScope(
       onWillPop: () async {
-        print("back btn press");
         if (overlayEntry != null) {
           overlayEntry!.remove();
           overlayEntry = null;
