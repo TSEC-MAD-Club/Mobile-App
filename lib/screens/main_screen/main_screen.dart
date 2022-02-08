@@ -55,6 +55,18 @@ class MainScreen extends StatelessWidget {
                     image: "it",
                     name: "Information Technology",
                   ),
+                  DeptWidget(
+                    image: "biomed",
+                    name: "Biomedical Engineering",
+                  ),
+                  DeptWidget(
+                    image: "biotech",
+                    name: "Bio-Tech Engineering",
+                  ),
+                  DeptWidget(
+                    image: "chem",
+                    name: "Chemical Engineering",
+                  ),
                 ],
               ),
             )
@@ -94,6 +106,7 @@ class DeptWidget extends StatelessWidget {
                 padding: const EdgeInsets.all(20.0),
                 child: Image.asset(
                   "assets/images/branches/$image.png",
+                  height: 100,
                 ),
               ),
               Text(name),
