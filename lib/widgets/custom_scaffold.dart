@@ -267,8 +267,8 @@ class _MenuIconPainter extends CustomPainter {
       ..color = const Color(0xffF2F5F8)
       ..strokeCap = StrokeCap.round;
 
-    canvas.drawLine(Offset(size.width * 0.06296800, size.height * 0.09358714),
-        Offset(size.width * 0.5478167, size.height * 0.09358714), paint);
+    canvas.drawLine(Offset(size.width * 0.4478167, size.height * 0.09358714),
+        Offset(size.width * 0.9595000, size.height * 0.09358714), paint);
 
     canvas.drawLine(Offset(size.width * 0.06296800, size.height * 0.5221571),
         Offset(size.width * 0.9595000, size.height * 0.5221571), paint);
