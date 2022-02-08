@@ -78,6 +78,7 @@ class _TSECAppState extends ConsumerState<TSECApp> {
           builder: (context, state) => const MainScreen(),
           redirect: (_) {
             if (ref.read(appStateProvider).isFirstOpen) return "/theme";
+            return null;
           },
         ),
         GoRoute(
