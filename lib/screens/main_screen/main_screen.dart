@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:tsec_app/utils/department_enum.dart';
 
 import '../../provider/theme_provider.dart';
 import '../../utils/image_assets.dart';
@@ -41,31 +42,31 @@ class MainScreen extends StatelessWidget {
                 children: const [
                   DeptWidget(
                     image: "aids",
-                    name: "AI & DS",
+                    department: DepartmentEnum.aids,
                   ),
                   DeptWidget(
                     image: "extc",
-                    name: "Electronics & Telecomm",
+                    department: DepartmentEnum.extc,
                   ),
                   DeptWidget(
                     image: "cs",
-                    name: "Computer Engineering",
+                    department: DepartmentEnum.cs,
                   ),
                   DeptWidget(
                     image: "it",
-                    name: "Information Technology",
+                    department: DepartmentEnum.it,
                   ),
                   DeptWidget(
                     image: "biomed",
-                    name: "Biomedical Engineering",
+                    department: DepartmentEnum.biomed,
                   ),
                   DeptWidget(
                     image: "biotech",
-                    name: "Bio-Tech Engineering",
+                    department: DepartmentEnum.biotech,
                   ),
                   DeptWidget(
                     image: "chem",
-                    name: "Chemical Engineering",
+                    department: DepartmentEnum.chem,
                   ),
                 ],
               ),
@@ -81,16 +82,18 @@ class DeptWidget extends StatelessWidget {
   const DeptWidget({
     Key? key,
     required this.image,
-    required this.name,
+    required this.department,
   }) : super(key: key);
 
   final String image;
-  final String name;
+  final DepartmentEnum department;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => GoRouter.of(context).push("/department?department=$name"),
+      onTap: () => GoRouter.of(context).push(
+        "/department?department=${department.index}",
+      ),
       child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
@@ -109,7 +112,7 @@ class DeptWidget extends StatelessWidget {
                   height: 100,
                 ),
               ),
-              Text(name),
+              Text(department.getName),
             ],
           ),
         ),

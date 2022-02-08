@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:tsec_app/utils/department_enum.dart';
 
 import '../../utils/themes.dart';
 import '../../widgets/custom_scaffold.dart';
@@ -38,11 +39,11 @@ extension ItemNameExtension on Item {
 }
 
 class DepartmentScreen extends StatefulWidget {
-  final String departmentName;
+  final DepartmentEnum department;
 
   const DepartmentScreen({
     Key? key,
-    required this.departmentName,
+    required this.department,
   }) : super(key: key);
 
   @override
@@ -94,7 +95,7 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
       case Item.about:
         return const AboutSection();
       case Item.facultyDetails:
-        return FacultyDetailsSection(department: widget.departmentName);
+        return FacultyDetailsSection(department: widget.department);
       default:
         return const AboutSection();
     }
@@ -106,6 +107,13 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
     final rowHeight = rowRenderBox.size.height;
     final rowOffsetTop = rowRenderBox.localToGlobal(Offset.zero).dy;
     return rowHeight + rowOffsetTop + 10;
+  }
+
+  @override
+  void dispose() {
+    overlayEntry!.remove();
+    overlayEntry = null;
+    super.dispose();
   }
 
   @override
@@ -122,9 +130,7 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
         return true;
       },
       child: CustomScaffold(
-        appBar: const DepartmentScreenAppBar(
-          title: "Department",
-        ),
+        appBar: const DepartmentScreenAppBar(title: "Department"),
         body: SizedBox(
           width: size.width,
           child: Column(
@@ -143,7 +149,7 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      widget.departmentName,
+                      widget.department.getName,
                       style: Theme.of(context)
                           .textTheme
                           .headline5!
