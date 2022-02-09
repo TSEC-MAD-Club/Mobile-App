@@ -1,17 +1,20 @@
 import 'dart:convert';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:tsec_app/models/faculty_model/faculty_model.dart';
-import 'package:tsec_app/utils/themes.dart';
+
+import '../../../models/faculty_model/faculty_model.dart';
+import '../../../utils/department_enum.dart';
+import '../../../utils/themes.dart';
 
 class FacultyDetailsSection extends StatefulWidget {
   const FacultyDetailsSection({
     Key? key,
     required this.department,
   }) : super(key: key);
-  final String department;
+  final DepartmentEnum department;
   @override
   _FacultyDetailsSectionState createState() => _FacultyDetailsSectionState();
 }
@@ -22,14 +25,15 @@ class _FacultyDetailsSectionState extends State<FacultyDetailsSection> {
   Future<List<FacultyModel>> _getFaculties() async {
     String deptFileName;
 
-    const Map<String, String> deptMap = {
-      "Electronics &\nTelecommunication": "extc",
-      "Biomedical": "biomed",
-      "Biochemical": "biochem",
-      "Chemical": "chemical",
-      "Computer": "cs",
-      "Information\nTechnology": "it",
-      "First Year": "fe",
+    const Map<DepartmentEnum, String> deptMap = {
+      DepartmentEnum.aids: "aids",
+      DepartmentEnum.extc: "extc",
+      DepartmentEnum.biomed: "biomed",
+      DepartmentEnum.biotech: "biochem",
+      DepartmentEnum.chem: "chemical",
+      DepartmentEnum.cs: "cs",
+      DepartmentEnum.it: "it",
+      DepartmentEnum.fe: "fe",
     };
 
     deptFileName = deptMap[widget.department]!;

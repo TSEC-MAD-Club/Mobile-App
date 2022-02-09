@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../provider/theme_provider.dart';
 import '../../../utils/themes.dart';
@@ -71,7 +72,7 @@ class _DepartmentScreenAppBarState
       toolbarHeight: 65.0,
       leading: _buildNavigation(
         context,
-        onPressed: () {},
+        onPressed: () => GoRouter.of(context).pop(),
         icon: const Icon(
           Icons.chevron_left_rounded,
           size: 30,
