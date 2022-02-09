@@ -1,0 +1,34 @@
+[
+    {
+        "department":"Biomedical",
+        "aboutDepartment": "The NBA Accreditated Department of Biomedical Engineering, one of the first nationally, was established in 1983 to provide an undergraduate program in Biomedical Engineering (BME).  The comprehensive, interdisciplinary curriculum provides a solid foundation with critical understanding of engineering principles and focuses on closely integrated laboratory experiences. The strength of our department is well equipped laboratories and sophisticated biomedical equipments, demonstration equipments, trainer kits which help in simplifying the basic working and design principles."
+    },
+    {
+        "department":"Biochemical",
+        "aboutDepartment":"Thadomal Shahani Engineering College (TSEC) is one of the prestigious engineering institutes under University of Mumbai. TSEC took an early note of importance of Biotechnology in future industrial and social development and hence was first college in Mumbai to start with B.E Biotechnology Degree course in year 2004 approved by AICTE, India."
+    },
+    {
+        "department":"Chemical",
+        "aboutDepartment":"Department of Chemical Engineering, TSEC was established in 1983. It has a long and distinguished history of successfully educating leaders for a wide variety of industries. Ever since its inception in 1983, the Institute has established itself as a premier institution engaged in imparting quality technological education. The Department of Chemical Engineering, TSEC is NBA accredited for three years (2019-2022)."
+    },
+    {
+        "department":"Computer",
+        "aboutDepartment":"The computer engineering department of Thadomal Shahani Engineering College was established in the year 1984 and has grown over the years into a competent department with state of the art computing facilities and a dedicated faculty. The goal of the department is to establish state of the art computing environment to develop competent computer engineers imbibed with the spirit of professionalism and responsible citizenship. The department emphasizes the vision of the Thadomal Shahani Engineering College for excellence in education. Highly qualified, dedicated faculty and good infrastructure facilities make this dream realizable."
+    },
+    {
+        "department":"Electronics &\nTelecommunication",
+        "aboutDepartment":"Department of Electronics and Telecommunication was established in year 2002 with a clear view of a forerunner in the field of Telecommunications, the Department seeks to evolve towards excellence and adapt itself to the rapid advancements in specialized communication related fields. This Department earlier had nomenclature of Electronics Engineering from 1983 to 2001 with student intake of 120. From 2002 Student intake is 60.  At the desktop of achievements of the department, lies the award of accreditation given by the National Board of Accreditation during 2008 – 2011 and re accreditation from 2016 to 2019. The department has also started PhD. with an intake of 10 students from the academic year 2014-15."
+    },
+    {
+        "department":"Information\nTechnology",
+        "aboutDepartment":"Department of Information Technology was established in year 1998 with a clear view of a forerunner in the field of Information Technology, the Department seeks to evolve towards excellence and adapt itself to the rapid advancements in specialized fields. The Departments first batch started with thirty (30) students and the intake from 2002 to till date is one hundred twenty (120) per batch. The campus placement is nearly 100% every year."
+    },
+    {
+        "department":"First Year",
+        "aboutDepartment":"Not Available"
+    },
+    {
+        "department":"Artificial Intelligence &\nData Science",
+        "aboutDepartment":"The literature and practices of Artificial Intelligence is getting revamped dramatically and reacting a point where it gets reinvented. The global marketplace is looking forward for complete restructuring of digital solutions to business/industrial process at large by building intelligent systems. The industries and businesses all over the world has been undertaking massive projects to radically modify their enterprise software systems by integrating Artificial Intelligence techniques and coupled with Data Analytics."
+    }
+]

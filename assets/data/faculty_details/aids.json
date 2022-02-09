@@ -1,0 +1,52 @@
+[
+    {
+        "area_of_specialization" : "Accreditation and Quality Initiatives, Project Management, SAS Platform, Python Programming and Machine Learning.",
+        "designation" : "Professor Emeritus",
+        "email" : "vichareoffice@yahoo.com",
+        "experience" : "35 Years in Teaching, 10+ in Industry",
+        "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Faids%2Fshirish_vichare.png?alt=media&token=d777ce1c-8bfd-43c8-96ff-c7001c8a9772",
+        "name" : "Dr. Shirish Vichare",
+        "phd_guide" : "na",
+        "qualification" : "B.Tech (IITB), M.S (USA), PhD (IITB)"
+      },
+      {
+        "area_of_specialization" : "Big Data Analytics, Software Project Management, Data Warehousing Mining and Business Intelligence, Software Engineering, Database technologies, Parallel Computer Architecture, Management Information System, Machine Learning",
+        "designation" : "Professor and Head of Department",
+        "email" : "Madhuri.rao@thadomal.org",
+        "experience" : "25 years",
+        "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Faids%2Fmadhuri-rao.png?alt=media&token=6174dbf7-78bf-4f36-a06f-1b7cc1768d4b",
+        "name" : "Dr. Madhuri Rao",
+        "phd_guide" : "na",
+        "qualification" : "Ph.D. , M.E (Comp. Engineering) , B.E (Computer)"
+      },
+      {
+        "area_of_specialization" : "Artificial Intelligence and Data science, Python programming, R Programming, Big data analytics, Cloud Computing and DevOPs.",
+        "designation" : "Assistant Professor",
+        "email" : "bhushan.jadhav@tsec.edu",
+        "experience" : "13 years",
+        "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Faids%2Fbhushan.jpg?alt=media&token=fbe34e2b-b5bd-439f-a67a-8882e4b81917",
+        "name" : "Dr. Bhushan Jadhav",
+        "phd_guide" : "na",
+        "qualification" : "Ph.D. (Technology) , M.E. (Computer Engg.) , B.E. (Computer Engg.)"
+      },
+      {
+        "area_of_specialization" : "Biomedical Engineering, Digital Logic Design.",
+        "designation" : "Assistant Professor",
+        "email" : "bharatijingale@gmail.com",
+        "experience" : "21 years",
+        "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Faids%2Fbharati_ingale.jpg?alt=media&token=12ce7b39-7836-4556-bc0e-6c81dca39687",
+        "name" : "Ms. Bharati Jayesh Ingale",
+        "phd_guide" : "na",
+        "qualification" : "Ph.D (Pursuing) M.Tech. IIT Bombay B.E (Biomedical Engg)"
+      },
+      {
+        "area_of_specialization" : "Computer Graphics, Data structures.",
+        "designation" : "Assistant Professor",
+        "email" : "meenu.bhatia@thadomal.org",
+        "experience" : "2.5 years",
+        "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Faids%2Fmeenu_bhatia.jpg?alt=media&token=c555d65d-75e5-4330-aedd-5a360436933b",
+        "name" : "Ms. Meenu Bhatia",
+        "phd_guide" : "na",
+        "qualification" : "M.E (Computer Engg.)"
+      }
+]

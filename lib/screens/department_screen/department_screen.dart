@@ -92,11 +92,11 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
   Widget section(Item item) {
     switch (item) {
       case Item.about:
-        return const AboutSection();
+        return AboutSection(department: widget.departmentName);
       case Item.facultyDetails:
         return FacultyDetailsSection(department: widget.departmentName);
       default:
-        return const AboutSection();
+        return AboutSection(department: widget.departmentName);
     }
   }
 
