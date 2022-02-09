@@ -16,23 +16,18 @@ class AboutSection extends StatefulWidget {
 }
 
 class _AboutSectionState extends State<AboutSection> {
-  late final Future<List<AboutDepartmentModel>> _aboutDepartment;
+  late final Future<String> _aboutDepartment;
 
-  Future<List<AboutDepartmentModel>> _getAboutDepartment() async {
-    const Map<String, String> deptMap = {
-      "Electronics &\nTelecommunication": "extc",
-      "Biomedical": "biomed",
-      "Biochemical": "biochem",
-      "Chemical": "chemical",
-      "Computer": "cs",
-      "Information\nTechnology": "it",
-      "First Year": "fe",
-    };
-
+  Future<String> _getAboutDepartment() async {
     final data =
         await rootBundle.loadString("assets/data/about_department/about.json");
     final json = jsonDecode(data) as List;
-    return json.map((e) => AboutDepartmentModel.fromJson(e)).toList();
+    Map<String, String> deptAboutMap = {
+      for (var item in json)
+        AboutDepartmentModel.fromJson(item).department:
+            AboutDepartmentModel.fromJson(item).aboutDepartment
+    };
+    return deptAboutMap[widget.department]!;
   }
 
   @override
@@ -50,8 +45,8 @@ class _AboutSectionState extends State<AboutSection> {
       builder: (context, snapshot) {
         print(snapshot);
         if (snapshot.hasData) {
-          var aboutList = snapshot.data;
-          print(aboutList);
+          var about = snapshot.data.toString();
+          print(about);
           return Expanded(
             child: SingleChildScrollView(
               child: Padding(
@@ -93,14 +88,14 @@ class _AboutSectionState extends State<AboutSection> {
                                 iconColor: kLightModeLightBlue),
                             header: const Text(""),
                             collapsed: Text(
-                              aboutModel.aboutDepartment,
+                              about,
                               softWrap: true,
                               maxLines: 3,
                               overflow: TextOverflow.ellipsis,
                               style: Theme.of(context).textTheme.bodyText2,
                             ),
                             expanded: Text(
-                              aboutModel.aboutDepartment,
+                              about,
                               softWrap: true,
                               style: Theme.of(context).textTheme.bodyText2,
                             ),
@@ -242,7 +237,7 @@ class _AboutSectionState extends State<AboutSection> {
                           ),
                         ),
                       ),
-                    ],
+                    ]//pointtt,
                   ),
                 ),
               ),

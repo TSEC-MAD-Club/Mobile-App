@@ -93,11 +93,11 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
   Widget section(Item item) {
     switch (item) {
       case Item.about:
-        return AboutSection(department: widget.departmentName);
+        return AboutSection(department: widget.department.getName);
       case Item.facultyDetails:
         return FacultyDetailsSection(department: widget.department);
       default:
-        return AboutSection(department: widget.departmentName);
+        return AboutSection(department: widget.department.getName);
     }
   }
 
@@ -111,7 +111,10 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
 
   @override
   void dispose() {
-    overlayEntry!.remove();
+    if (overlayEntry != null) {
+      overlayEntry!.remove();
+    }
+
     overlayEntry = null;
     super.dispose();
   }
