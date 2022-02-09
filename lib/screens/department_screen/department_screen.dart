@@ -192,7 +192,12 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
                           ),
                           GestureDetector(
                             onTap: () {
-                              _showDropDown(context);
+                              if (overlayEntry == null) {
+                                _showDropDown(context);
+                              } else {
+                                overlayEntry!.remove();
+                                overlayEntry = null;
+                              }
                             },
                             child: Transform.rotate(
                               angle: -90 * pi / 180,
