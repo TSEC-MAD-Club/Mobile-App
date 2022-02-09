@@ -168,6 +168,7 @@ TextButtonThemeData _getTextButtonTheme({
       side: MaterialStateBorderSide.resolveWith((states) {
         if (states.contains(MaterialState.pressed))
           return BorderSide(color: darkColor);
+        return null;
       }),
     ),
   );
@@ -202,6 +203,7 @@ ElevatedButtonThemeData _getElevatedButtonTheme({
       side: MaterialStateBorderSide.resolveWith((states) {
         if (states.contains(MaterialState.pressed))
           return BorderSide(color: darkColor);
+        return null;
       }),
     ),
   );
