@@ -11,6 +11,8 @@ AboutDepartmentModel _$AboutDepartmentModelFromJson(
     AboutDepartmentModel(
       json['department'] as String,
       json['aboutDepartment'] as String,
+      json['vision'] as String,
+      json['mission'] as String,
     );
 
 Map<String, dynamic> _$AboutDepartmentModelToJson(
@@ -18,4 +20,6 @@ Map<String, dynamic> _$AboutDepartmentModelToJson(
     <String, dynamic>{
       'department': instance.department,
       'aboutDepartment': instance.aboutDepartment,
+      'vision': instance.vision,
+      'mission': instance.mission,
     };

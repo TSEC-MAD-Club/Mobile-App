@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:tsec_app/models/about_department_model/about_department_model.dart';
 
-import '../../../models/department_model/about_model.dart';
 import '../../../utils/themes.dart';
 
 class AboutSection extends StatefulWidget {
@@ -16,16 +15,19 @@ class AboutSection extends StatefulWidget {
 }
 
 class _AboutSectionState extends State<AboutSection> {
-  late final Future<String> _aboutDepartment;
+  late final Future<List<String>> _aboutDepartment;
 
-  Future<String> _getAboutDepartment() async {
+  Future<List<String>> _getAboutDepartment() async {
     final data =
         await rootBundle.loadString("assets/data/about_department/about.json");
     final json = jsonDecode(data) as List;
-    Map<String, String> deptAboutMap = {
+    Map<String, List<String>> deptAboutMap = {
       for (var item in json)
-        AboutDepartmentModel.fromJson(item).department:
-            AboutDepartmentModel.fromJson(item).aboutDepartment
+        AboutDepartmentModel.fromJson(item).department: [
+          AboutDepartmentModel.fromJson(item).aboutDepartment,
+          AboutDepartmentModel.fromJson(item).vision,
+          AboutDepartmentModel.fromJson(item).mission
+        ]
     };
     return deptAboutMap[widget.department]!;
   }
@@ -38,15 +40,15 @@ class _AboutSectionState extends State<AboutSection> {
 
   @override
   Widget build(BuildContext context) {
-    AboutModel aboutModel = AboutModel();
     Size size = MediaQuery.of(context).size;
     return FutureBuilder(
       future: _aboutDepartment,
       builder: (context, snapshot) {
-        print(snapshot);
         if (snapshot.hasData) {
-          var about = snapshot.data.toString();
-          print(about);
+          var aboutList = snapshot.data as List<String>;
+          var about = aboutList[0];
+          var vision = aboutList[1];
+          var mission = aboutList[2] != "na" ? aboutList[2].split('|') : [];
           return Expanded(
             child: SingleChildScrollView(
               child: Padding(
@@ -102,142 +104,150 @@ class _AboutSectionState extends State<AboutSection> {
                           ),
                         ),
                       ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        "Vision",
-                        style: Theme.of(context).textTheme.headline6!.copyWith(
-                            fontSize: 20, fontWeight: FontWeight.w500),
-                        textAlign: TextAlign.left,
-                      ),
-                      const SizedBox(
-                        height: 8,
-                      ),
-                      Container(
-                        width: size.width,
-                        padding: const EdgeInsets.only(
-                            left: 15, right: 10, top: 0, bottom: 10),
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).colorScheme.secondary,
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(12)),
-                          boxShadow: [
-                            BoxShadow(
-                              offset: const Offset(0, 3),
-                              blurRadius: 7,
-                              color: kLightModeLightBlue.withOpacity(0.23),
-                            ),
-                          ],
+                      if (vision != "na") ...[
+                        const SizedBox(
+                          height: 10,
                         ),
-                        child: Center(
-                          child: ExpandablePanel(
-                            theme: const ExpandableThemeData(
-                                iconColor: kLightModeLightBlue),
-                            header: const Text(""),
-                            collapsed: RichText(
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2,
-                              softWrap: true,
-                              text: TextSpan(
-                                text: "",
+                        Text(
+                          "Vision",
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline6!
+                              .copyWith(
+                                  fontSize: 20, fontWeight: FontWeight.w500),
+                          textAlign: TextAlign.left,
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        Container(
+                          width: size.width,
+                          padding: const EdgeInsets.only(
+                              left: 15, right: 10, top: 0, bottom: 10),
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).colorScheme.secondary,
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(12)),
+                            boxShadow: [
+                              BoxShadow(
+                                offset: const Offset(0, 3),
+                                blurRadius: 7,
+                                color: kLightModeLightBlue.withOpacity(0.23),
+                              ),
+                            ],
+                          ),
+                          child: Center(
+                            child: ExpandablePanel(
+                              theme: const ExpandableThemeData(
+                                  iconColor: kLightModeLightBlue),
+                              header: const Text(""),
+                              collapsed: Text(
+                                vision,
+                                softWrap: true,
+                                maxLines: 4,
+                                overflow: TextOverflow.ellipsis,
                                 style: Theme.of(context).textTheme.bodyText2,
-                                children: [
-                                  if (true)
-                                    for (var i = 1; i <= 2; i++)
+                              ),
+                              expanded: Text(
+                                vision,
+                                softWrap: true,
+                                style: Theme.of(context).textTheme.bodyText2,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                      if (mission.isNotEmpty) ...[
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          "Mission",
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline6!
+                              .copyWith(
+                                  fontSize: 20, fontWeight: FontWeight.w500),
+                          textAlign: TextAlign.left,
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        Container(
+                          width: size.width,
+                          padding: const EdgeInsets.only(
+                              left: 15, right: 10, top: 0, bottom: 10),
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).colorScheme.secondary,
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(12)),
+                            boxShadow: [
+                              BoxShadow(
+                                offset: const Offset(0, 3),
+                                blurRadius: 7,
+                                color: kLightModeLightBlue.withOpacity(0.23),
+                              ),
+                            ],
+                          ),
+                          child: Center(
+                            child: ExpandablePanel(
+                              theme: const ExpandableThemeData(
+                                  iconColor: kLightModeLightBlue),
+                              header: const Text(""),
+                              collapsed: RichText(
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 2,
+                                softWrap: true,
+                                text: TextSpan(
+                                  text: "",
+                                  style: Theme.of(context).textTheme.bodyText2,
+                                  children: [
+                                    if (true)
+                                      for (var i = 1; i <= 2; i++)
+                                        i % 2 == 0
+                                            ? TextSpan(
+                                                text: " " +
+                                                    mission[i ~/ 2 - 1] +
+                                                    "\n",
+                                              )
+                                            : const WidgetSpan(
+                                                child: Icon(
+                                                  Icons.check_box_outlined,
+                                                  size: 20,
+                                                  color: kLightModeLightBlue,
+                                                ),
+                                              ),
+                                  ],
+                                ),
+                              ),
+                              expanded: RichText(
+                                text: TextSpan(
+                                  text: "",
+                                  style: Theme.of(context).textTheme.bodyText2,
+                                  children: [
+                                    for (var i = 1;
+                                        i <= mission.length * 2;
+                                        i++)
                                       i % 2 == 0
                                           ? TextSpan(
                                               text: " " +
-                                                  aboutModel
-                                                      .visionList[i ~/ 2 - 1] +
-                                                  "\n",
-                                            )
+                                                  mission[i ~/ 2 - 1] +
+                                                  "\n")
                                           : const WidgetSpan(
                                               child: Icon(
                                                 Icons.check_box_outlined,
                                                 size: 20,
                                                 color: kLightModeLightBlue,
                                               ),
-                                            )
-                                ],
-                              ),
-                            ),
-                            expanded: RichText(
-                              text: TextSpan(
-                                text: "",
-                                style: Theme.of(context).textTheme.bodyText2,
-                                children: [
-                                  for (var i = 1;
-                                      i <= aboutModel.visionList.length * 2;
-                                      i++)
-                                    i % 2 == 0
-                                        ? TextSpan(
-                                            text: " " +
-                                                aboutModel
-                                                    .visionList[i ~/ 2 - 1] +
-                                                "\n")
-                                        : const WidgetSpan(
-                                            child: Icon(
-                                              Icons.check_box_outlined,
-                                              size: 20,
-                                              color: kLightModeLightBlue,
                                             ),
-                                          ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        "Mission",
-                        style: Theme.of(context).textTheme.headline6!.copyWith(
-                            fontSize: 20, fontWeight: FontWeight.w500),
-                        textAlign: TextAlign.left,
-                      ),
-                      const SizedBox(
-                        height: 8,
-                      ),
-                      Container(
-                        width: size.width,
-                        padding: const EdgeInsets.only(
-                            left: 15, right: 10, top: 0, bottom: 10),
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).colorScheme.secondary,
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(12)),
-                          boxShadow: [
-                            BoxShadow(
-                              offset: const Offset(0, 3),
-                              blurRadius: 7,
-                              color: kLightModeLightBlue.withOpacity(0.23),
-                            ),
-                          ],
-                        ),
-                        child: Center(
-                          child: ExpandablePanel(
-                            theme: const ExpandableThemeData(
-                                iconColor: kLightModeLightBlue),
-                            header: const Text(""),
-                            collapsed: Text(
-                              aboutModel.mission,
-                              softWrap: true,
-                              maxLines: 4,
-                              overflow: TextOverflow.ellipsis,
-                              style: Theme.of(context).textTheme.bodyText2,
-                            ),
-                            expanded: Text(
-                              aboutModel.mission,
-                              softWrap: true,
-                              style: Theme.of(context).textTheme.bodyText2,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ]//pointtt,
+                      ],
+                    ],
                   ),
                 ),
               ),
