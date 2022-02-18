@@ -3,13 +3,17 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import 'package:url_launcher/link.dart';
 
+import '../models/notification_model/notification_model.dart';
+import '../provider/notification_provider.dart';
 import '../provider/theme_provider.dart';
+import '../screens/notification_screen/widgets/notification_dialog.dart';
 import '../utils/image_assets.dart';
 import '../utils/themes.dart';
 
-class CustomScaffold extends StatefulWidget {
+class CustomScaffold extends ConsumerStatefulWidget {
   const CustomScaffold({
     Key? key,
     this.appBar,
@@ -20,10 +24,10 @@ class CustomScaffold extends StatefulWidget {
   final Widget? body;
 
   @override
-  State<CustomScaffold> createState() => _CustomScaffoldState();
+  ConsumerState<CustomScaffold> createState() => _CustomScaffoldState();
 }
 
-class _CustomScaffoldState extends State<CustomScaffold>
+class _CustomScaffoldState extends ConsumerState<CustomScaffold>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
   late final Animation<double> _scaleAnimation;
@@ -47,6 +51,29 @@ class _CustomScaffoldState extends State<CustomScaffold>
 
   @override
   Widget build(BuildContext context) {
+    ref.listen<NotificationProvider?>(
+      notificationProvider,
+      (previous, next) {
+        if (previous != next && next != null) {
+          if (next.isForeground)
+            showTopSnackBar(
+              context,
+              _ForegroundNotificationSnackBar(
+                notificationModel: next.notificationModel!,
+              ),
+              onTap: () => GoRouter.of(context).push("/notifications"),
+            );
+          else
+            showDialog(
+              context: context,
+              builder: (context) => NotificationDialog(
+                notificationModel: next.notificationModel!,
+              ),
+            );
+        }
+      },
+    );
+
     final size = MediaQuery.of(context).size;
     return Material(
       color: Theme.of(context).scaffoldBackgroundColor,
@@ -219,6 +246,70 @@ class _CustomScaffoldState extends State<CustomScaffold>
 
     final router = GoRouter.of(context);
     if (router.location != path) router.push(path);
+  }
+}
+
+class _ForegroundNotificationSnackBar extends StatelessWidget {
+  const _ForegroundNotificationSnackBar({
+    Key? key,
+    required this.notificationModel,
+  }) : super(key: key);
+
+  final NotificationModel notificationModel;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      shape: RoundedRectangleBorder(
+        side: const BorderSide(color: kDarkModeDarkBlue),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      color: Theme.of(context).scaffoldBackgroundColor,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Row(
+          children: [
+            const SizedBox(width: 10),
+            const Icon(
+              Icons.notifications_active,
+              color: kDarkModeDarkBlue,
+            ),
+            const SizedBox(width: 10),
+            Flexible(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          notificationModel.title,
+                          style: Theme.of(context).textTheme.bodyText1,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      if (notificationModel.attachments != null)
+                        const Icon(
+                          Icons.attach_file,
+                          size: 15,
+                        ),
+                    ],
+                  ),
+                  const SizedBox(height: 5),
+                  Text(
+                    notificationModel.message,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
 
