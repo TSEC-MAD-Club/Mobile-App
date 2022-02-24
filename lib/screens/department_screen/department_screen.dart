@@ -79,7 +79,7 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
                       setState(() {
                         selectedItem = item;
                       });
-                      overlayEntry!.remove();
+                      overlayEntry?.remove();
                       overlayEntry = null;
                     }),
             ],
@@ -112,7 +112,7 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
   @override
   void dispose() {
     if (overlayEntry != null) {
-      overlayEntry!.remove();
+      overlayEntry?.remove();
     }
 
     overlayEntry = null;
@@ -126,7 +126,7 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
     return WillPopScope(
       onWillPop: () async {
         if (overlayEntry != null) {
-          overlayEntry!.remove();
+          overlayEntry?.remove();
           overlayEntry = null;
           return false;
         }
@@ -195,7 +195,7 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
                               if (overlayEntry == null) {
                                 _showDropDown(context);
                               } else {
-                                overlayEntry!.remove();
+                                overlayEntry?.remove();
                                 overlayEntry = null;
                               }
                             },
