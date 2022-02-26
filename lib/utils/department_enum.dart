@@ -6,7 +6,7 @@ const _departmentName = {
   DepartmentEnum.biotech: "Bio-Tech Engineering",
   DepartmentEnum.chem: "Chemical Engineering",
   DepartmentEnum.cs: "Computer Engineering",
-  DepartmentEnum.extc: "Electronics & Telecomm",
+  DepartmentEnum.extc: "EXTC",
   DepartmentEnum.fe: "First Year",
   DepartmentEnum.it: "Information Technology",
 };
