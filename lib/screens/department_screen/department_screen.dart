@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:tsec_app/screens/department_screen/widgets/curriculum_section.dart';
 import 'package:tsec_app/utils/department_enum.dart';
 
 import '../../utils/themes.dart';
@@ -96,7 +97,11 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
         return AboutSection(department: widget.department.getName);
       case Item.facultyDetails:
         return FacultyDetailsSection(department: widget.department);
-      default:
+      case Item.curriculum:
+        return const CurriculumSection();
+      case Item.placementDetails:
+      case Item.resultAnalysis:
+      case Item.more:
         return AboutSection(department: widget.department.getName);
     }
   }
