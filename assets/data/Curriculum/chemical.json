@@ -1,0 +1,89 @@
+[
+    {
+        "1": {
+            "url": "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/syllabus%2Ffe_sem1-sem2_rev.pdf?alt=media&token=c733390d-7414-415f-be56-6b5af1f1dfb9",
+            "subjects": [
+                "Engineering Mathematics-I",
+                "Engineering Physics-I",
+                "Engineering Chemistry-I",
+                "Engineering Mechanics",
+                "Basic Electrical Engineering"
+            ]
+        },
+        "2": {
+            "url": "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/syllabus%2Ffe_sem1-sem2_rev.pdf?alt=media&token=c733390d-7414-415f-be56-6b5af1f1dfb9",
+            "subjects": [
+                "Engineering Mathematics-II",
+                "Engineering Physics-II",
+                "Engineering Chemistry-II",
+                "Engineering Graphics",
+                "C Programming",
+                "Professional Communication and Ethics-I"
+            ]
+        },
+        "3":{
+            "url":"https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/syllabus%2Fchemical_sem3_rev.pdf?alt=media&token=1a11ddb3-9884-42d8-931a-5cc7d84f72b4",
+            "subjects": [
+                "Engineering Mathematics-III ",
+                "Industrial and Engineering Chemistry I ",
+                "Fluid Flow Operations ",
+                "Chemical Engineering Thermodynamics I",
+                "Process Calculations"
+            ]
+        },
+        "4":{
+            "url":"https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/syllabus%2Fchemical_sem4_rev.pdf?alt=media&token=65a3ba7a-c123-4405-9581-e5990e39f943",
+            "subjects": [
+                "Engineering Mathematics-IV ",
+                "Industrial and Engineering Chemistry II",
+                "Numerical Method in Chemical Engineering ",
+                "Solid Fluid Mechanical Operations ",
+                "Chemical Engineering Thermodynamics II"
+            ]
+        },
+        "5":{
+            "url":"https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/syllabus%2Fchemical_sem5_sem6_rev.pdf?alt=media&token=3c027231-bc5c-40af-9e64-fbf438646a20",
+            "subjects": [
+                "Mass transfer Operations-I",
+                "Heat transfer Operations ",
+                "Chemical Reaction Engineering-I ",
+                "Transport Phenomena",
+                "Food Technology",
+                "Advanced Material Sciences",
+                "Total Quality Management"
+            ]
+        },
+        "6":{
+            "url":"https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/syllabus%2Fchemical_sem5_sem6_rev.pdf?alt=media&token=3c027231-bc5c-40af-9e64-fbf438646a20",
+            "subjects": [
+                "Mass Transfer Operation II",
+                "Chemical Reaction Engineering II",
+                "Pollution Control Technology",
+                "Process Engineering and Economics ",
+                "Piping Engineering",
+                "Polymer Technology",
+                "Industrial Organization and Management"
+            ]
+        },
+        "7":{
+            "url":"https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/syllabus%2Fchem_sem3_sem8.pdf?alt=media&token=43b70738-b540-4f38-b356-d9dbf7a360f8",
+            "subjects": [
+                "Process Equipment Design. ",
+                "Process Engineering ",
+                "Process Dynamics and Control ",
+                "Department Elective III ",
+                "Institute Elective I "
+            ]
+        },
+        "8":{
+            "url":"",
+            "subjects": [
+                "Modeling, Simulation & Optimization",
+                "Project Engineering & Entrepreneurship Management ",
+                "Energy System Design",
+                "Department Elective IV ",
+                "Institute Elective II"
+            ]
+        }
+    }
+]

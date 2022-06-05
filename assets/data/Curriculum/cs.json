@@ -1,0 +1,89 @@
+[
+    {
+        "1": {
+            "url": "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/syllabus%2Ffe_sem1-sem2_rev.pdf?alt=media&token=c733390d-7414-415f-be56-6b5af1f1dfb9",
+            "subjects": [
+                "Engineering Mathematics-I",
+                "Engineering Physics-I",
+                "Engineering Chemistry-I",
+                "Engineering Mechanics",
+                "Basic Electrical Engineering"
+            ]
+        },
+        "2": {
+            "url": "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/syllabus%2Ffe_sem1-sem2_rev.pdf?alt=media&token=c733390d-7414-415f-be56-6b5af1f1dfb9",
+            "subjects": [
+                "Engineering Mathematics-II",
+                "Engineering Physics-II",
+                "Engineering Chemistry-II",
+                "Engineering Graphics",
+                "C Programming",
+                "Professional Communication and Ethics-I"
+            ]
+        },
+        "3": {
+            "url": "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/syllabus%2Fcomputer_sem3_sem4_rev.pdf?alt=media&token=964d424d-c3b2-4a66-81e9-e54ad151ff2c",
+            "subjects": [
+                "Engineering Mathematics-III",
+                "Discrete Structures and Graph Theory",
+                "Data Structure",
+                "Digital Logic & Computer Architecture",
+                "Computer Graphics"
+            ]
+        },
+        "4": {
+            "url": "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/syllabus%2Fcomputer_sem3_sem4_rev.pdf?alt=media&token=964d424d-c3b2-4a66-81e9-e54ad151ff2c",
+            "subjects": [
+                "Engineering Mathematics-IV",
+                "Analysis of Algorithm",
+                "Database Management System",
+                "Operating System",
+                "Microprocessor"
+            ]
+        },
+        "5": {
+            "url": "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/syllabus%2Fcomputer_sem5_rev.pdf?alt=media&token=26ca1b57-6c32-4a29-b89a-3780767f2faa",
+            "subjects": [
+                "Theoretical Computer Science",
+                "Software Engineering",
+                "Computer Network",
+                "Data Warehousing & Mining",
+                "Probabilistic Graphical Models",
+                "Internet Programming",
+                "Advance Database Management System"
+            ]
+        },
+        "6": {
+            "url": "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/syllabus%2Fcomputer_sem6_rev.pdf?alt=media&token=1e8ff3b7-e6e8-46d5-8c68-f2b8c75832d5",
+            "subjects": [
+                "System Programming & Compiler Construction",
+                "Cryptography & System Security",
+                "Mobile Computing",
+                "Artificial Intelligence",
+                "Internet of Things",
+                "Digital Signal & Image Processing",
+                "Quantitative Analysis"
+            ]
+        },
+        "7": {
+            "url": "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/syllabus%2Fcomps_sem7_sem8.pdf?alt=media&token=85fb96b3-c205-4085-9dc2-695824fd34ca",
+            "subjects": [
+                "Digital Signal Processing",
+                "Cryptography and System Security",
+                "Artificial Intelligence",
+                "Network Threats and Attacks Laboratory",
+                "Elective II"
+            ]
+        },
+        "8": {
+            "url": "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/syllabus%2Fcomps_sem7_sem8.pdf?alt=media&token=85fb96b3-c205-4085-9dc2-695824fd34ca",
+            "subjects": [
+                "Data Warehouse and Mining",
+                "Human Machine Interaction",
+                "Parallel and distributed Systems ",
+                "Cloud Computing Laboratory",
+                "Elective III"
+            ]
+        }
+    }
+]
