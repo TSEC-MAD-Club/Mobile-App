@@ -62,7 +62,7 @@ class _DownloadButtonState extends State<_DownloadButton> {
   @override
   void initState() {
     super.initState();
-    SchedulerBinding.instance?.addPostFrameCallback((_) {
+    SchedulerBinding.instance.addPostFrameCallback((_) {
       _storage = locator<StorageUtil>();
       _storage
           .getResult(widget.url)

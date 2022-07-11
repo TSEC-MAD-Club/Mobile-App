@@ -105,14 +105,16 @@ class DeptWidget extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Image.asset(
-                  "assets/images/branches/$image.png",
-                  height: 100,
+              Flexible(
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Image.asset(
+                    "assets/images/branches/$image.png",
+                    height: 100,
+                  ),
                 ),
               ),
-              Text(department.getName),
+              Text(department.name),
             ],
           ),
         ),
