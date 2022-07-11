@@ -1,6 +1,6 @@
 # TSEC App
 
-This official app of [TSEC](https://tsec.edu) maintained by TSEC MAD Club.
+This official app of [TSEC](https://tsec.edu) maintained by TSEC Developer's Club.
 
 ## Contributing
 

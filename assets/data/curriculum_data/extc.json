@@ -1,0 +1,115 @@
+[{
+    "1": {
+        "url": "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/syllabus%2Ffe_sem1-sem2_rev.pdf?alt=media&token=c733390d-7414-415f-be56-6b5af1f1dfb9",
+        "subjects": [
+            "Engineering Mathematics-I",
+            "Engineering Physics-I",
+            "Engineering Chemistry-I",
+            "Engineering Mechanics",
+            "Basic Electrical Engineering"
+        ]
+    },
+    "2": {
+        "url": "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/syllabus%2Ffe_sem1-sem2_rev.pdf?alt=media&token=c733390d-7414-415f-be56-6b5af1f1dfb9",
+        "subjects": [
+            "Engineering Mathematics-II",
+            "Engineering Physics-II",
+            "Engineering Chemistry-II",
+            "Engineering Graphics",
+            "C Programming",
+            "Professional Communication and Ethics-I"
+        ]
+    },
+    "3":{
+        "url": "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/syllabus%2FEXTC%20SEM%203.pdf?alt=media&token=5677d7ee-9025-4a63-9fdc-36d2b3db37b2",
+        "subjects": [
+            "Engineering Mathematics- III",
+            "Electronic Devices & Circuits",
+            "Digital System Design",
+            "Network Theory",
+            "Electronic Insturmentation & Control Systems"
+        ]
+    },
+    "4":{
+        "url": "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/syllabus%2FEXTC%20SEM%204.pdf?alt=media&token=127a7d9e-378d-4131-b614-eae916d3ad9b",
+        "subjects": [
+            "Engineering Mathematics- IV",
+            "Microcontrollers",
+            "Linear Integrated Circuits",
+            "Signals & Systems",
+            "Principles of Communication Engineering"
+        ]
+    },
+    "5":{
+        "url":"https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/syllabus%2FEXTC%20SEM%205.pdf?alt=media&token=b378f55c-497a-470d-b410-36f3f8d6c0a3",
+        "subjects": [
+            "Digital Communication",
+            "Discrete Time Signal Processing",
+            "Digital VSLI",
+            "Random Signal Analysis",
+            "Digital and IPTV Engineering",
+            "Data Compression and Cryptography",
+            "IT Infra and Security",
+            "Data Structures and Algorithm",
+            "Sensor Technology"
+            
+        ]
+    },
+    "6":{
+        "url": "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/syllabus%2FEXTC%20SEM%206.pdf?alt=media&token=28530dcd-afb3-46cf-ab89-5091ea6cbca5",
+        "subjects": [
+            "Electromagnetics and Antenna",
+            "Computer Communication Networks",
+            "Image Processing and Machine Vision",
+            "Artificial Neural Network and Fuzzy Logic",
+            "Mixed Signal VLSI",
+            "Computer Organization and Architecture",
+            "Digital Forensic",
+            "Database Management System",
+            "IoT and Industry 4.0",
+            "Radar Engineering"
+        ]
+    },
+    "7":{
+        "url": "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/syllabus%2FEXTC%20SEM%207.pdf?alt=media&token=5151767b-913d-4fea-ba1a-ead0a6b9c4e1",
+        "subjects": [
+            "Mircrowave Engineering",
+            "Mobile Communication System",
+            "Optical Communication",
+            "Neural Networks and Fuzzy Logic",
+            "Big Data Analytics",
+            "Internet Communication Engineering",
+            "CMOS Mixed Signal VLSI",
+            "Embedded System",
+            "Product Lifecycle Management",
+            "Reliability Engineering",
+            "Management Information System",
+            "Design of Experiments",
+            "Operation Research",
+            "Cyber Security and Laws",
+            "Disaster Management and Mitigation Measures",
+            "Energy Audit and Management",
+            "Development Engineering"
+        ]
+    },
+    "8":{
+        "url": "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/syllabus%2FEXTC%20SEM%208.pdf?alt=media&token=7ef1d0b9-48eb-49c8-b4d0-5c72c74c86f8",
+        "subjects": [
+            "RF Design",
+            "Wireless Networks",
+            "Optical Networks",
+            "Advanced Data Signal Processing",
+            "Satellite Communication",
+            "Network Management in Telecommunication",
+            "Project Management",
+            "Finance Management",
+            "Entrepreneurship Development and Management",
+            "Human Resource Management",
+            "Professional Ethics and Corporate Social Responsibility",
+            "Research Methodology",
+            "IPR and Patenting",
+            "Digital Business Management",
+            "Environmental Management"
+        ]
+    }
+}]
