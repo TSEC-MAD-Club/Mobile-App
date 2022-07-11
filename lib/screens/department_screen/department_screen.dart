@@ -94,15 +94,15 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
   Widget section(Item item) {
     switch (item) {
       case Item.about:
-        return AboutSection(department: widget.department.getName);
+        return AboutSection(department: widget.department.name);
       case Item.facultyDetails:
         return FacultyDetailsSection(department: widget.department);
       case Item.curriculum:
-        return const CurriculumSection();
+        return CurriculumSection(department: widget.department);
       case Item.placementDetails:
       case Item.resultAnalysis:
       case Item.more:
-        return AboutSection(department: widget.department.getName);
+        return AboutSection(department: widget.department.name);
     }
   }
 
@@ -157,7 +157,7 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      widget.department.getName,
+                      widget.department.name,
                       style: Theme.of(context)
                           .textTheme
                           .headline5!

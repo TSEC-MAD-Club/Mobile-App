@@ -114,7 +114,7 @@ class DeptWidget extends StatelessWidget {
                   ),
                 ),
               ),
-              Text(department.getName),
+              Text(department.name),
             ],
           ),
         ),

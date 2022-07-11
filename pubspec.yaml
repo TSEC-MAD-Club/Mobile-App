@@ -66,6 +66,7 @@ flutter:
     - assets/data/
     - assets/data/faculty_details/
     - assets/data/about_department/
+    - assets/data/curriculum_data/
     - assets/images/themes/
     - assets/images/app_bar/
     - assets/images/branches/

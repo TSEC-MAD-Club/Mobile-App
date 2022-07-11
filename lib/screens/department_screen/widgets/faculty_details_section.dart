@@ -23,23 +23,8 @@ class _FacultyDetailsSectionState extends State<FacultyDetailsSection> {
   late final Future<List<FacultyModel>> _faculties;
 
   Future<List<FacultyModel>> _getFaculties() async {
-    String deptFileName;
-
-    const Map<DepartmentEnum, String> deptMap = {
-      DepartmentEnum.aids: "aids",
-      DepartmentEnum.extc: "extc",
-      DepartmentEnum.biomed: "biomed",
-      DepartmentEnum.biotech: "biochem",
-      DepartmentEnum.chem: "chemical",
-      DepartmentEnum.cs: "cs",
-      DepartmentEnum.it: "it",
-      DepartmentEnum.fe: "fe",
-    };
-
-    deptFileName = deptMap[widget.department]!;
-
-    final data = await rootBundle
-        .loadString("assets/data/faculty_details/$deptFileName.json");
+    final data = await rootBundle.loadString(
+        "assets/data/faculty_details/${widget.department.fileName}.json");
     final json = jsonDecode(data) as List;
     return json.map((e) => FacultyModel.fromJson(e)).toList();
   }
