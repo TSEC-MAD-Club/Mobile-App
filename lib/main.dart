@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tsec_app/screens/eventDetail_screen/eventDetail.dart';
 
 import 'firebase_options.dart';
 import 'models/notification_model/notification_model.dart';
@@ -99,6 +100,10 @@ class _TSECAppState extends ConsumerState<TSECApp> {
         GoRoute(
           path: "/tpc",
           builder: (context, state) => const TPCScreen(),
+        ),
+        GoRoute(
+          path: "/eventDetails",
+          builder: (context, state) => const detailsPage(),
         ),
         GoRoute(
           path: "/department",
