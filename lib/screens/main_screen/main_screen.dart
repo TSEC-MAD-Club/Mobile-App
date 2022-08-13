@@ -192,31 +192,27 @@ class MainScreenAppBar extends ConsumerWidget {
               ],
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 5,
           ),
-          Container(
-            child: CarouselSlider(
-              items: imgList
-                  .map(
-                    (item) => Container(
-                        child: GestureDetector(
-                            child: ClipRRect(
-                                borderRadius: BorderRadius.circular(20.0),
-                                child: Image.network(
-                                  item,
-                                  fit: BoxFit.cover,
-                                )),
-                            onTap: () =>
-                                GoRouter.of(context).push("/eventDetails"))),
-                  )
-                  .toList(),
-              options: CarouselOptions(
-                  autoPlay: true,
-                  aspectRatio: 2.0,
-                  enlargeCenterPage: true,
-                  viewportFraction: 1),
-            ),
+          CarouselSlider(
+            items: imgList
+                .map(
+                  (item) => GestureDetector(
+                      child: ClipRRect(
+                          borderRadius: BorderRadius.circular(20.0),
+                          child: Image.network(
+                            item,
+                            fit: BoxFit.cover,
+                          )),
+                      onTap: () => GoRouter.of(context).push("/event_detail")),
+                )
+                .toList(),
+            options: CarouselOptions(
+                autoPlay: true,
+                aspectRatio: 2.0,
+                enlargeCenterPage: true,
+                viewportFraction: 1),
           ),
         ],
       ),
