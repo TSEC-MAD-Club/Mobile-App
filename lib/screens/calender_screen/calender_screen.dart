@@ -113,7 +113,7 @@ class CalenderScreen extends ConsumerWidget {
                                 style: _theme.textTheme.headline1,
                               ),
                               Text(
-                                'Here is a list of schedlue you need to check...',
+                                'List of schedlue you need to check...',
                                 style: _theme.textTheme.subtitle1,
                               ),
                             ],
@@ -197,7 +197,7 @@ class CalenderScreen extends ConsumerWidget {
                 horizontal: 20.0,
                 vertical: 15.0,
               ),
-              child: Container(
+              child: SizedBox(
                 height: _size.height * 0.6,
                 width: _size.width,
                 child: ListView.builder(

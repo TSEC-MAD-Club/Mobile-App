@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 class CustomCard extends StatelessWidget {
   const CustomCard(this._color, this._opacityColor, {Key? key})
       : super(key: key);
-  final _color;
-  final _opacityColor;
+  final Color? _color;
+  final Color? _opacityColor;
 
   @override
   Widget build(BuildContext context) {
