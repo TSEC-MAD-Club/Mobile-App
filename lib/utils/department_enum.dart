@@ -14,12 +14,13 @@ const _departmentName = {
 extension GetDepartmentName on DepartmentEnum {
   String get getName {
     assert(
-    DepartmentEnum.values.length == 8,
-    "Add department name in the map as well",
+      DepartmentEnum.values.length == 8,
+      "Add department name in the map as well",
     );
 
     return _departmentName[this]!;
   }
+
   String get fileName {
     switch (this) {
       case DepartmentEnum.aids:
@@ -41,4 +42,3 @@ extension GetDepartmentName on DepartmentEnum {
     }
   }
 }
-

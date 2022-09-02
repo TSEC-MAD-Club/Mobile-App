@@ -1,174 +1,166 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class details_page extends StatefulWidget {
-  const details_page({Key? key}) : super(key: key);
+class EventDetail extends StatefulWidget {
+  const EventDetail({Key? key}) : super(key: key);
 
   @override
-  State<details_page> createState() => _details_pageState();
+  State<EventDetail> createState() => _EventDetailState();
 }
 
-class _details_pageState extends State<details_page> {
+class _EventDetailState extends State<EventDetail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: NestedScrollView(
-        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled){
-          return<Widget>[
-            SliverAppBar(
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(20.0),
-                  bottomRight: Radius.circular(20.0), ), ),
-
-              expandedHeight: 300,
-              floating: true,
-              pinned: true,
-              flexibleSpace:
-
-              FlexibleSpaceBar(
-
-                centerTitle: true,
-
-                stretchModes: const <StretchMode>[
-                  StretchMode.zoomBackground,
-                  StretchMode.blurBackground,
-                  StretchMode.fadeTitle,
-                ],
-                // ClipRRect added here for rounded corners
-                background: ClipRRect(
-
-                  borderRadius: const BorderRadius.only(
-                    bottomLeft: Radius.circular(20.0),
-                    bottomRight: Radius.circular(20.0),
-                  ),
-                  child: CachedNetworkImage(
-                    imageUrl: "https://assets.devfolio.co/hackathons/d2e152245d8146898efc542304ef6653/assets/cover/694.png",
-                    fit: BoxFit.fill,
-                  ),
-                ),
-              ),
-            ),
-
-
-
-          ];
-        },
-        body: SingleChildScrollView(
-          child: Container(
-            child: Padding(
-              padding: const EdgeInsets.all(30.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-
-                  Align(
-                    child: Container(
-                      width: 150,
-                      height: 7,
-                      decoration: BoxDecoration(
-                          color: Colors.red[50],
-                          borderRadius: BorderRadius.circular(10)),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  const Text(
-                    "TSEC HACKS 2022 \n    --Let's get hacking",
-                    style: TextStyle(
-                        fontSize: 20,
-                        height: 1.2,
-                        color: Colors.black),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Row(
-                    children: <Widget>[
-                      Container(
-                        width: 40,
-                        height: 40,
-                        decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                            image: DecorationImage(
-                              //committee logo
-                                image: NetworkImage(
-                                    "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=934&q=80"),
-                                fit: BoxFit.cover)),
-                      ),
-                      const SizedBox(
-                        width: 20,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const <Widget>[
-                          Text(
-                            "TSEC Codecell",
-                            style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold,color: Colors.black,),
+      body: Stack(
+        children: [
+          CachedNetworkImage(
+            imageUrl:
+                "https://assets.devfolio.co/hackathons/d2e152245d8146898efc542304ef6653/assets/cover/694.png",
+            fit: BoxFit.cover,
+            height: 220,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 200),
+            child: Container(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(40),
+                    topRight: Radius.circular(40),
+                  )),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Padding(
+                      padding:
+                          const EdgeInsets.only(top: 20, left: 20, right: 20),
+                      child: Row(
+                        children: [
+                          const Text(
+                            "TSEC HACKS 2022",
+                            style: TextStyle(fontSize: 20, color: Colors.black),
                           ),
-                          SizedBox(
-                            height: 3,
+                          Expanded(
+                            child: Container(),
                           ),
-                          Text(
-                            "Extra line",
-                            style: TextStyle(
-                                fontSize: 13,
-                                color: Colors.black
+                          ElevatedButton(
+                            onPressed: () {},
+                            child: const Text("Register"),
+                            style: ElevatedButton.styleFrom(
+                              padding: const EdgeInsets.only(
+                                  top: 0, bottom: 0, right: 20, left: 20),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(5)),
                             ),
                           )
                         ],
-                      )
-                    ],
-                  ),
-                  const SizedBox(height: 20,),
-                  const SizedBox(height: 20,),
-                  const Text("Nobody wants to stare at a blank wall all day long, which is why wall art is such a crucial step in the decorating process. And once you start brainstorming, the rest is easy. From gallery walls to DIY pieces like framing your accessories and large-scale photography, we've got plenty of wall art ideas to spark your creativity. And where better to look for inspiration that interior designer-decorated walls",style: TextStyle(
-                      height: 1.6,
-                      color: Colors.black
-                  ),),
-                  const SizedBox(height: 20,),
-                  const Text("Details:",style: TextStyle(
-                    fontSize: 24,
-                    color: Colors.black,
-                  ),),
-                  const SizedBox(height: 20,),
-
-                  const Text(
-                    "🗓 Date: 4 July 2022",
-                    style: TextStyle(fontSize: 16,height: 1,color: Colors.black,),
-                  ),
-                  const Text(
-                    "⌚ Time: 8:00 PM",
-                    style: TextStyle(fontSize: 16,height: 1.5,color: Colors.black,),
-                  ),
-                  const Text(
-                    "🏢 Venue: TSEC New Building, Lab 208",
-                    style: TextStyle(fontSize: 16,height: 1.5,color: Colors.black,),
-                  ),
-                  const Text(
-                    "💵 Free of cost",
-                    style: TextStyle(fontSize: 16,height: 1.5,color: Colors.black,),
-                  ),
-
-                  const SizedBox(height: 20,),
-
-                  ElevatedButton(onPressed: (){},
-                      child: const Text(
-                          "Register Now !!!"
-                      )
-                  )
-                ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10, left: 20),
+                      child: Row(
+                        children: const [
+                          Icon(Icons.location_on),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Text(
+                            "302, Old Building",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.w400,
+                                fontSize: 16),
+                          )
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10, left: 20),
+                      child: Row(
+                        children: const [
+                          Icon(Icons.calendar_month),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Text(
+                            "3:00 PM, 11th july 2022",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.w400,
+                                fontSize: 16),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 20, left: 20),
+                      child: Row(
+                        children: const [
+                          Text(
+                            "About",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                                color: Colors.black),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.only(left: 20, top: 10, right: 20),
+                      child: Text(
+                        "Nobody wants to stare at a blank wall all day long, which is why wall art is such a crucial step in the decorating process. And once you start brainstorming, the rest is easy. From gallery walls to DIY pieces like framing your accessories and large-scale photography, we've got plenty of wall art ideas to spark your creativity. And where better to look for inspiration that interior designer-decorated walls",
+                        style: TextStyle(
+                            height: 1.6, color: Colors.black, fontSize: 14),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 20, left: 20),
+                      child: Row(
+                        children: const [
+                          Text(
+                            "Organisers",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                                color: Colors.black),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10, left: 20),
+                      child: Row(
+                        children: [
+                          CircleAvatar(
+                            backgroundImage: const NetworkImage(
+                                'https://cdn.pixabay.com/photo/2013/05/11/08/28/sunset-110305_1280.jpg'),
+                            backgroundColor: Colors.red.shade800,
+                            radius: 20,
+                          ),
+                          const SizedBox(
+                            width: 5,
+                          ),
+                          const Text(
+                            "TSEC CodeCell",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.w400,
+                                fontSize: 16),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }
 }
-
-

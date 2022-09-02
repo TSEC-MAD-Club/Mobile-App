@@ -80,7 +80,7 @@ class _TSECAppState extends ConsumerState<TSECApp> {
       routes: [
         GoRoute(
           path: "/",
-          builder: (context, state) => MainScreen(),
+          builder: (context, state) => const MainScreen(),
           redirect: (_) {
             if (ref.read(appStateProvider).isFirstOpen) return "/theme";
             return null;
@@ -104,7 +104,7 @@ class _TSECAppState extends ConsumerState<TSECApp> {
         ),
         GoRoute(
           path: "/details_page",
-          builder: (context, state) => const details_page(),
+          builder: (context, state) => const EventDetail(),
         ),
         GoRoute(
           path: "/department",

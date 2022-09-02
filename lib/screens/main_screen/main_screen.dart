@@ -11,15 +11,10 @@ import '../../utils/themes.dart';
 import '../../widgets/custom_scaffold.dart';
 
 class MainScreen extends StatelessWidget {
-
-  MainScreen({Key? key}) : super(key: key);
+  const MainScreen({Key? key}) : super(key: key);
   static const _sidePadding = EdgeInsets.symmetric(horizontal: 15);
 
-
-
-
   @override
-
   Widget build(BuildContext context) {
     return CustomScaffold(
       body: SafeArea(
@@ -197,31 +192,27 @@ class MainScreenAppBar extends ConsumerWidget {
               ],
             ),
           ),
-
-
-          const SizedBox(height: 5,),
-
-          Container(
-            child: CarouselSlider(
-              items: imgList
-                  .map((item) => Container(
-                  child:
-                  GestureDetector(
+          const SizedBox(
+            height: 5,
+          ),
+          CarouselSlider(
+            items: imgList
+                .map(
+                  (item) => GestureDetector(
                       child: ClipRRect(
                           borderRadius: BorderRadius.circular(20.0),
-                          child: Image.network(item, fit: BoxFit.cover,)),
-                      onTap: () => GoRouter.of(context).push("/details_page")
-                  )
-              ),
-              )
-                  .toList(),
-              options: CarouselOptions(
-                  autoPlay: true,
-                  aspectRatio: 2.0,
-                  enlargeCenterPage: true,
-                  viewportFraction: 1
-              ),
-            ),
+                          child: Image.network(
+                            item,
+                            fit: BoxFit.cover,
+                          )),
+                      onTap: () => GoRouter.of(context).push("/details_page")),
+                )
+                .toList(),
+            options: CarouselOptions(
+                autoPlay: true,
+                aspectRatio: 2.0,
+                enlargeCenterPage: true,
+                viewportFraction: 1),
           ),
         ],
       ),
