@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:tsec_app/screens/event_detail/event_detail.dart';
+import 'package:tsec_app/screens/event_detail_screen/event_detail.dart';
 
 import 'firebase_options.dart';
 import 'models/notification_model/notification_model.dart';
