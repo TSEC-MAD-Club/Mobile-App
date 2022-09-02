@@ -1,4 +1,3 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -12,6 +11,7 @@ import '../../widgets/custom_scaffold.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({Key? key}) : super(key: key);
+
   static const _sidePadding = EdgeInsets.symmetric(horizontal: 15);
 
   @override
@@ -20,7 +20,7 @@ class MainScreen extends StatelessWidget {
       body: SafeArea(
         child: CustomScrollView(
           slivers: [
-            SliverToBoxAdapter(
+            const SliverToBoxAdapter(
               child: MainScreenAppBar(sidePadding: _sidePadding),
             ),
             SliverToBoxAdapter(
@@ -105,11 +105,13 @@ class DeptWidget extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Image.asset(
-                  "assets/images/branches/$image.png",
-                  height: 100,
+              Flexible(
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Image.asset(
+                    "assets/images/branches/$image.png",
+                    height: 100,
+                  ),
                 ),
               ),
               Text(department.name),
@@ -122,19 +124,13 @@ class DeptWidget extends StatelessWidget {
 }
 
 class MainScreenAppBar extends ConsumerWidget {
-  MainScreenAppBar({
+  const MainScreenAppBar({
     Key? key,
     required EdgeInsets sidePadding,
   })  : _sidePadding = sidePadding,
         super(key: key);
 
   final EdgeInsets _sidePadding;
-  final List<String> imgList = [
-    'https://assets.devfolio.co/hackathons/d2e152245d8146898efc542304ef6653/assets/cover/694.png',
-    'https://assets.devfolio.co/hackathons/d2e152245d8146898efc542304ef6653/assets/cover/694.png',
-    'https://assets.devfolio.co/hackathons/d2e152245d8146898efc542304ef6653/assets/cover/694.png',
-    'https://assets.devfolio.co/hackathons/d2e152245d8146898efc542304ef6653/assets/cover/694.png'
-  ];
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -192,28 +188,20 @@ class MainScreenAppBar extends ConsumerWidget {
               ],
             ),
           ),
-          const SizedBox(
-            height: 5,
-          ),
-          CarouselSlider(
-            items: imgList
-                .map(
-                  (item) => GestureDetector(
-                      child: ClipRRect(
-                          borderRadius: BorderRadius.circular(20.0),
-                          child: Image.network(
-                            item,
-                            fit: BoxFit.cover,
-                          )),
-                      onTap: () => GoRouter.of(context).push("/event_detail")),
-                )
-                .toList(),
-            options: CarouselOptions(
-                autoPlay: true,
-                aspectRatio: 2.0,
-                enlargeCenterPage: true,
-                viewportFraction: 1),
-          ),
+          Container(
+            height: 160,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16),
+              boxShadow: [
+                BoxShadow(
+                  offset: const Offset(0, 12),
+                  color: kLightModeDarkBlue.withOpacity(.2),
+                  blurRadius: 24,
+                ),
+              ],
+            ),
+            child: Image.asset(ImageAssets.tsecImg),
+          )
         ],
       ),
     );
