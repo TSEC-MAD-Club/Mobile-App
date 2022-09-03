@@ -150,7 +150,7 @@ class MainScreenAppBar extends ConsumerWidget {
               ),
               Flexible(
                 child: GestureDetector(
-                  onTap: () => ref.read(themeProvider.notifier).switchTheme(),
+                  onTap: () => GoRouter.of(context).push("/notifications"),
                   child: Container(
                     padding: const EdgeInsets.all(5),
                     decoration: BoxDecoration(
@@ -159,7 +159,7 @@ class MainScreenAppBar extends ConsumerWidget {
                     ),
                     child: const IconTheme(
                       data: IconThemeData(color: kLightModeLightBlue),
-                      child: Icon(Icons.dark_mode),
+                      child: Icon(Icons.notifications),
                     ),
                   ),
                 ),
