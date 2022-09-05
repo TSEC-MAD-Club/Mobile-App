@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-
-import '../../../provider/theme_provider.dart';
 import '../../../utils/themes.dart';
 
 class DepartmentScreenAppBar extends ConsumerStatefulWidget
@@ -84,24 +82,9 @@ class _DepartmentScreenAppBarState
       ),
       centerTitle: true,
       actions: [
-        _buildThemeSwitcher(
-          context,
-          onPressed: () {
-            ref.read(themeProvider.notifier).switchTheme();
-          },
-          icon: Consumer(builder: (context, ref, child) {
-            final themeMode = ref.watch(themeProvider);
-            return themeMode == ThemeMode.dark
-                ? const Icon(
-                    Icons.dark_mode,
-                    size: 30,
-                  )
-                : const Icon(
-                    Icons.light_mode,
-                    size: 30,
-                  );
-          }),
-        ),
+        _buildThemeSwitcher(context, onPressed: () {
+          GoRouter.of(context).push('/notifications');
+        }, icon: const Icon(Icons.notifications)),
       ],
       backgroundColor: Theme.of(context).colorScheme.secondary,
     );
