@@ -101,7 +101,8 @@ class _CurriculumSectionState extends State<CurriculumSection> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      primary: Theme.of(context).textTheme.bodyText2!.color,
+                      foregroundColor:
+                          Theme.of(context).textTheme.bodyText2!.color,
                       textStyle: Theme.of(context).textTheme.bodyText2,
                       backgroundColor: Theme.of(context).colorScheme.secondary,
                     ),
