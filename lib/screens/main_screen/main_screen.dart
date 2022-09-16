@@ -10,6 +10,7 @@ import '../../widgets/custom_scaffold.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({Key? key}) : super(key: key);
+
   static const _sidePadding = EdgeInsets.symmetric(horizontal: 15);
 
   @override
@@ -18,7 +19,7 @@ class MainScreen extends StatelessWidget {
       body: SafeArea(
         child: CustomScrollView(
           slivers: [
-            SliverToBoxAdapter(
+            const SliverToBoxAdapter(
               child: MainScreenAppBar(sidePadding: _sidePadding),
             ),
             SliverToBoxAdapter(
@@ -103,14 +104,16 @@ class DeptWidget extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Image.asset(
-                  "assets/images/branches/$image.png",
-                  height: 100,
+              Flexible(
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Image.asset(
+                    "assets/images/branches/$image.png",
+                    height: 100,
+                  ),
                 ),
               ),
-              Text(department.getName),
+              Text(department.name),
             ],
           ),
         ),
@@ -120,14 +123,14 @@ class DeptWidget extends StatelessWidget {
 }
 
 class MainScreenAppBar extends ConsumerWidget {
-  MainScreenAppBar({
+  const MainScreenAppBar({
     Key? key,
     required EdgeInsets sidePadding,
   })  : _sidePadding = sidePadding,
         super(key: key);
 
   final EdgeInsets _sidePadding;
-  final List<String> imgList = [
+  static const List<String> imgList = [
     'https://assets.devfolio.co/hackathons/d2e152245d8146898efc542304ef6653/assets/cover/694.png',
     'https://assets.devfolio.co/hackathons/d2e152245d8146898efc542304ef6653/assets/cover/694.png',
     'https://assets.devfolio.co/hackathons/d2e152245d8146898efc542304ef6653/assets/cover/694.png',
