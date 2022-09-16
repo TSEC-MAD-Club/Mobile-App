@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
@@ -11,6 +9,9 @@ class EventDetail extends StatefulWidget {
 }
 
 class _EventDetailState extends State<EventDetail> {
+  final String discription =
+      "Nobody wants to stare at a blank wall all day long";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -111,11 +112,12 @@ class _EventDetailState extends State<EventDetail> {
                         ],
                       ),
                     ),
-                    const Padding(
-                      padding: EdgeInsets.only(left: 20, top: 10, right: 20),
+                    Padding(
+                      padding:
+                          const EdgeInsets.only(left: 20, top: 10, right: 20),
                       child: Text(
-                        "Nobody wants to stare at a blank wall all day long, which is why wall art is such a crucial step in the decorating process. And once you start brainstorming, the rest is easy. From gallery walls to DIY pieces like framing your accessories and large-scale photography, we've got plenty of wall art ideas to spark your creativity. And where better to look for inspiration that interior designer-decorated walls",
-                        style: TextStyle(
+                        discription,
+                        style: const TextStyle(
                             height: 1.6, color: Colors.black, fontSize: 14),
                       ),
                     ),
