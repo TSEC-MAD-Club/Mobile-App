@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -129,6 +130,12 @@ class MainScreenAppBar extends ConsumerWidget {
         super(key: key);
 
   final EdgeInsets _sidePadding;
+  static const List<String> imgList = [
+    'https://assets.devfolio.co/hackathons/d2e152245d8146898efc542304ef6653/assets/cover/694.png',
+    'https://assets.devfolio.co/hackathons/d2e152245d8146898efc542304ef6653/assets/cover/694.png',
+    'https://assets.devfolio.co/hackathons/d2e152245d8146898efc542304ef6653/assets/cover/694.png',
+    'https://assets.devfolio.co/hackathons/d2e152245d8146898efc542304ef6653/assets/cover/694.png'
+  ];
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -186,20 +193,28 @@ class MainScreenAppBar extends ConsumerWidget {
               ],
             ),
           ),
-          Container(
-            height: 160,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16),
-              boxShadow: [
-                BoxShadow(
-                  offset: const Offset(0, 12),
-                  color: kLightModeDarkBlue.withOpacity(.2),
-                  blurRadius: 24,
-                ),
-              ],
-            ),
-            child: Image.asset(ImageAssets.tsecImg),
-          )
+          const SizedBox(
+            height: 5,
+          ),
+          CarouselSlider(
+            items: imgList
+                .map(
+                  (item) => GestureDetector(
+                      child: ClipRRect(
+                          borderRadius: BorderRadius.circular(20.0),
+                          child: Image.network(
+                            item,
+                            fit: BoxFit.cover,
+                          )),
+                      onTap: () => GoRouter.of(context).push("/details_page")),
+                )
+                .toList(),
+            options: CarouselOptions(
+                autoPlay: true,
+                aspectRatio: 2.0,
+                enlargeCenterPage: true,
+                viewportFraction: 1),
+          ),
         ],
       ),
     );
