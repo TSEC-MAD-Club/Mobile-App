@@ -1,21 +1,14 @@
 import 'package:flutter/material.dart';
 
 class CustomCard extends StatelessWidget {
-  const CustomCard(this._color, this._opacityColor, {Key? key})
-      : super(key: key);
-  final Color? _color;
-  final Color? _opacityColor;
+  const CustomCard(this.color, this.opacityColor, {Key? key}) : super(key: key);
+  final Color? color;
+  final Color? opacityColor;
 
   @override
   Widget build(BuildContext context) {
     var _size = MediaQuery.of(context).size;
     var _theme = Theme.of(context);
-    var _boxshadow = BoxShadow(
-      color: _theme.primaryColorDark,
-      spreadRadius: 2,
-      blurRadius: 8,
-      offset: const Offset(0, 1),
-    );
     return Card(
       margin: const EdgeInsets.only(
         bottom: 30.0,
@@ -30,14 +23,13 @@ class CustomCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(
               15.0,
             ),
-            boxShadow: [_boxshadow],
           ),
           child: Row(
             children: [
               Container(
-                width: 13.0,
+                width: 12.0,
                 decoration: BoxDecoration(
-                  color: _color,
+                  color: color,
                   borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(15.0),
                     bottomLeft: Radius.circular(
@@ -49,7 +41,7 @@ class CustomCard extends StatelessWidget {
               Container(
                 width: 85.0,
                 decoration: BoxDecoration(
-                  color: _opacityColor,
+                  color: opacityColor,
                 ),
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -78,7 +70,7 @@ class CustomCard extends StatelessWidget {
                     ]),
               ),
               Container(
-                width: _size.width * 0.55,
+                width: _size.width * 0.56,
                 padding: const EdgeInsets.only(
                   left: 12.0,
                   right: 8.0,

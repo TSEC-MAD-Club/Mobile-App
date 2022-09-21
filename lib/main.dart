@@ -15,6 +15,7 @@ import 'provider/notification_provider.dart';
 import 'provider/shared_prefs_provider.dart';
 import 'provider/theme_provider.dart';
 import 'screens/committees_screen.dart';
+import 'screens/department_list_screen/department_list.dart';
 import 'screens/department_screen/department_screen.dart';
 import 'screens/main_screen/main_screen.dart';
 import 'screens/notification_screen/notification_screen.dart';
@@ -78,7 +79,7 @@ class _TSECAppState extends ConsumerState<TSECApp> {
       routes: [
         GoRoute(
           path: "/",
-          builder: (context, state) => const MainScreen(),
+          builder: (context, state) => MainScreen(),
           redirect: (_) {
             if (ref.read(appStateProvider).isFirstOpen) return "/theme";
             return null;
@@ -107,6 +108,10 @@ class _TSECAppState extends ConsumerState<TSECApp> {
                 .values[int.parse(state.queryParams["department"] as String)];
             return DepartmentScreen(department: department);
           },
+        ),
+        GoRoute(
+          path: "/department-list",
+          builder: (context, state) => const DepartmentListScreen(),
         ),
       ],
       refreshListenable: ref.watch(appStateProvider),
