@@ -1,11 +1,7 @@
-// ignore_for_file: unnecessary_const
-
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-
-import '../../provider/theme_provider.dart';
-import '../../utils/department_enum.dart';
 import '../../utils/image_assets.dart';
 import '../../utils/launch_url.dart';
 import '../../utils/themes.dart';
@@ -40,15 +36,6 @@ class MainScreen extends StatelessWidget {
           slivers: [
             const SliverToBoxAdapter(
               child: MainScreenAppBar(sidePadding: _sidePadding),
-            ),
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: _sidePadding.copyWith(top: 15),
-                child: Text(
-                  "Departments",
-                  style: Theme.of(context).textTheme.headline3,
-                ),
-              ),
             ),
             SliverPadding(
               padding: const EdgeInsets.all(20),
@@ -89,16 +76,17 @@ class MainScreen extends StatelessWidget {
                         height: _size.height * 0.6,
                         width: _size.width,
                         child: ListView.builder(
-                            physics: const BouncingScrollPhysics(),
-                            itemCount: 3,
-                            itemBuilder: (context, value) {
-                              var color = colorList[value];
-                              var opacity = opacityList[value];
-                              return CustomCard(
-                                color,
-                                opacity,
-                              );
-                            }),
+                          physics: const BouncingScrollPhysics(),
+                          itemCount: 3,
+                          itemBuilder: (context, value) {
+                            var color = colorList[value];
+                            var opacity = opacityList[value];
+                            return CustomCard(
+                              color,
+                              opacity,
+                            );
+                          },
+                        ),
                       ),
                     ),
                   ],
@@ -110,59 +98,7 @@ class MainScreen extends StatelessWidget {
       ),
     );
   }
-
-  //
-
-  // @override
-  // Widget build(BuildContext context) {
-
-  // }
 }
-
-// class DeptWidget extends StatelessWidget {
-//   const DeptWidget({
-//     Key? key,
-//     required this.image,
-//     required this.department,
-//   }) : super(key: key);
-
-//   final String image;
-//   final DepartmentEnum department;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return GestureDetector(
-//       onTap: () => GoRouter.of(context).push(
-//         "/department?department=${department.index}",
-//       ),
-//       child: Card(
-//         shape: RoundedRectangleBorder(
-//           borderRadius: BorderRadius.circular(12),
-//         ),
-//         margin: EdgeInsets.zero,
-//         color: Theme.of(context).colorScheme.secondary,
-//         child: Padding(
-//           padding: const EdgeInsets.all(15),
-//           child: Column(
-//             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//             children: [
-//               Flexible(
-//                 child: Padding(
-//                   padding: const EdgeInsets.all(20.0),
-//                   child: Image.asset(
-//                     "assets/images/branches/$image.png",
-//                     height: 100,
-//                   ),
-//                 ),
-//               ),
-//               Text(department.name),
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
 
 class MainScreenAppBar extends ConsumerWidget {
   const MainScreenAppBar({
@@ -172,6 +108,12 @@ class MainScreenAppBar extends ConsumerWidget {
         super(key: key);
 
   final EdgeInsets _sidePadding;
+  static const List<String> imgList = [
+    'https://assets.devfolio.co/hackathons/d2e152245d8146898efc542304ef6653/assets/cover/694.png',
+    'https://assets.devfolio.co/hackathons/d2e152245d8146898efc542304ef6653/assets/cover/694.png',
+    'https://assets.devfolio.co/hackathons/d2e152245d8146898efc542304ef6653/assets/cover/694.png',
+    'https://assets.devfolio.co/hackathons/d2e152245d8146898efc542304ef6653/assets/cover/694.png'
+  ];
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -191,7 +133,7 @@ class MainScreenAppBar extends ConsumerWidget {
               ),
               Flexible(
                 child: GestureDetector(
-                  onTap: () => ref.read(themeProvider.notifier).switchTheme(),
+                  onTap: () => GoRouter.of(context).push("/notifications"),
                   child: Container(
                     padding: const EdgeInsets.all(5),
                     decoration: BoxDecoration(
@@ -200,7 +142,7 @@ class MainScreenAppBar extends ConsumerWidget {
                     ),
                     child: const IconTheme(
                       data: IconThemeData(color: kLightModeLightBlue),
-                      child: Icon(Icons.dark_mode),
+                      child: Icon(Icons.notifications),
                     ),
                   ),
                 ),
@@ -229,20 +171,28 @@ class MainScreenAppBar extends ConsumerWidget {
               ],
             ),
           ),
-          Container(
-            height: 160,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16),
-              boxShadow: [
-                BoxShadow(
-                  offset: const Offset(0, 12),
-                  color: kLightModeDarkBlue.withOpacity(.2),
-                  blurRadius: 24,
-                ),
-              ],
-            ),
-            child: Image.asset(ImageAssets.tsecImg),
-          )
+          const SizedBox(
+            height: 5,
+          ),
+          CarouselSlider(
+            items: imgList
+                .map(
+                  (item) => GestureDetector(
+                      child: ClipRRect(
+                          borderRadius: BorderRadius.circular(20.0),
+                          child: Image.network(
+                            item,
+                            fit: BoxFit.cover,
+                          )),
+                      onTap: () => GoRouter.of(context).push("/details_page")),
+                )
+                .toList(),
+            options: CarouselOptions(
+                autoPlay: true,
+                aspectRatio: 2.0,
+                enlargeCenterPage: true,
+                viewportFraction: 1),
+          ),
         ],
       ),
     );

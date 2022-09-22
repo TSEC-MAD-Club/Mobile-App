@@ -75,7 +75,7 @@ class _DownloadButtonState extends State<_DownloadButton> {
     return Padding(
       padding: const EdgeInsets.only(top: 5),
       child: ElevatedButton(
-        style: ElevatedButton.styleFrom(onPrimary: Colors.white),
+        style: ElevatedButton.styleFrom(foregroundColor: Colors.white),
         onPressed: _storageResult == null ? null : _onButtonClick,
         child: _storageResult == null || _storageResult!.isDownloadInProgress
             ? SizedBox(
