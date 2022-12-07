@@ -133,6 +133,14 @@ class _CustomScaffoldState extends ConsumerState<CustomScaffold>
                   ),
                   title: "Committees & Events",
                 ),
+                DrawerListItem(
+                  onTap: () => _navigate("/department-list"),
+                  icon: Image.asset(
+                    ImageAssets.meetingIcon,
+                    width: 22,
+                  ),
+                  title: "Departments",
+                ),
                 Link(
                   uri: Uri.parse("mailto:darshanrander@gmail.com"),
                   builder: (context, followLink) => DrawerListItem(
