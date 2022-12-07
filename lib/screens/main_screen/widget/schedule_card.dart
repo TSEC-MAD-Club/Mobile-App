@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-class CustomCard extends StatelessWidget {
-  const CustomCard(this.color, this.opacityColor, {Key? key}) : super(key: key);
+class ScheduleCard extends StatelessWidget {
+  const ScheduleCard(this.color, this.opacityColor, {Key? key})
+      : super(key: key);
   final Color? color;
   final Color? opacityColor;
 

@@ -2,18 +2,18 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:tsec_app/screens/main_screen/widget/schedule_card.dart';
 import '../../utils/image_assets.dart';
 import '../../utils/launch_url.dart';
 import '../../utils/themes.dart';
 import '../../widgets/custom_scaffold.dart';
-import 'widget/custom_card.dart';
 import 'package:date_picker_timeline/date_picker_timeline.dart';
 
 class MainScreen extends StatelessWidget {
-  MainScreen({Key? key}) : super(key: key);
+  const MainScreen({Key? key}) : super(key: key);
 
-  final colorList = [Colors.red, Colors.teal, Colors.blue];
-  final opacityList = const [
+  static const colorList = [Colors.red, Colors.teal, Colors.blue];
+  static const opacityList = [
     Color.fromRGBO(255, 0, 0, 0.2),
     Color.fromARGB(51, 0, 255, 225),
     Color.fromARGB(51, 0, 153, 255),
@@ -25,8 +25,8 @@ class MainScreen extends StatelessWidget {
     var _theme = Theme.of(context);
     var _boxshadow = BoxShadow(
       color: _theme.primaryColorDark,
-      spreadRadius: 2,
-      blurRadius: 8,
+      spreadRadius: 1,
+      blurRadius: 2,
       offset: const Offset(0, 1),
     );
 
@@ -39,60 +39,50 @@ class MainScreen extends StatelessWidget {
             ),
             SliverPadding(
               padding: const EdgeInsets.all(20),
-              sliver: SliverList(
-                delegate: SliverChildListDelegate(
-                  [
-                    Container(
-                      width: _size.width * 0.9,
-                      decoration: BoxDecoration(
-                        color: _theme.primaryColor,
-                        borderRadius: BorderRadius.circular(15.0),
-                        border: Border.all(
-                          color: _theme.primaryColorLight,
-                          width: 1,
-                          style: BorderStyle.solid,
-                        ),
-                        boxShadow: [_boxshadow],
-                      ),
-                      child: DatePicker(
-                        DateTime.now(),
-                        monthTextStyle: _theme.textTheme.subtitle2!,
-                        dayTextStyle: _theme.textTheme.subtitle2!,
-                        dateTextStyle: _theme.textTheme.subtitle2!,
-                        initialSelectedDate: DateTime.now(),
-                        selectionColor: Colors.blue,
-                        daysCount: 7,
-                      ),
+              sliver: SliverToBoxAdapter(
+                child: Container(
+                  width: _size.width * 0.9,
+                  decoration: BoxDecoration(
+                    color: _theme.primaryColor,
+                    borderRadius: BorderRadius.circular(15.0),
+                    border: Border.all(
+                      color: _theme.primaryColorLight,
+                      width: 1,
+                      style: BorderStyle.solid,
                     ),
-                    const SizedBox(
-                      height: 20.0,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 4.0,
-                        vertical: 15.0,
-                      ),
-                      child: SizedBox(
-                        height: _size.height * 0.6,
-                        width: _size.width,
-                        child: ListView.builder(
-                          physics: const BouncingScrollPhysics(),
-                          itemCount: 3,
-                          itemBuilder: (context, value) {
-                            var color = colorList[value];
-                            var opacity = opacityList[value];
-                            return CustomCard(
-                              color,
-                              opacity,
-                            );
-                          },
-                        ),
-                      ),
-                    ),
-                  ],
+                    boxShadow: [_boxshadow],
+                  ),
+                  child: DatePicker(
+                    DateTime.now(),
+                    monthTextStyle: _theme.textTheme.subtitle2!,
+                    dayTextStyle: _theme.textTheme.subtitle2!,
+                    dateTextStyle: _theme.textTheme.subtitle2!,
+                    initialSelectedDate: DateTime.now(),
+                    selectionColor: Colors.blue,
+                    daysCount: 7,
+                  ),
                 ),
               ),
-            )
+            ),
+            SliverPadding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 20.0,
+                vertical: 2.0,
+              ),
+              sliver: SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  childCount: 3,
+                  (context, index) {
+                    var color = colorList[index];
+                    var opacity = opacityList[index];
+                    return ScheduleCard(
+                      color,
+                      opacity,
+                    );
+                  },
+                ),
+              ),
+            ),
           ],
         ),
       ),
