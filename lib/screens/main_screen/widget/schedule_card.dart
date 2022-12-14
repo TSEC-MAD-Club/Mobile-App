@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 
 class ScheduleCard extends StatelessWidget {
-   const ScheduleCard(this.color, this.opacityColor, {Key? key, 
-  required this.lectureStartTime, required this.lectureEndTime, 
-  required this.lectureName, required this.facultyName,
-   required this.facultyImageurl})
+  const ScheduleCard(this.color, this.opacityColor,
+      {Key? key,
+      required this.lectureStartTime,
+      required this.lectureEndTime,
+      required this.lectureName,
+      required this.facultyName,
+      required this.facultyImageurl})
       : super(key: key);
   final Color? color;
   final Color? opacityColor;
@@ -116,7 +119,7 @@ class ScheduleCard extends StatelessWidget {
                           radius: 14.0,
                           backgroundImage: NetworkImage(facultyImageurl),
                         ),
-                       const SizedBox(
+                        const SizedBox(
                           width: 12.0,
                         ),
                         Text(

@@ -45,8 +45,6 @@ dependencies:
   top_snackbar_flutter: ^1.1.1
   url_launcher: ^6.1.4
   date_picker_timeline: ^1.2.3
-  carousel_slider: ^4.1.1
-
 dev_dependencies:
   build_runner: null
   flutter_lints: ^1.0.3

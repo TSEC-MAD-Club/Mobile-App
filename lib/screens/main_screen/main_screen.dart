@@ -71,9 +71,10 @@ class MainScreen extends ConsumerWidget {
                     onDateChange: ((selectedDate) {
                       data.when(
                           data: ((data) {
-                              ref.read(flagprovider.notifier)
-                              .update((state) => true);
-  
+                            ref
+                                .read(flagprovider.notifier)
+                                .update((state) => true);
+
                             List<TimetableModel> timeTableDay = [];
                             var daylist = data['Monday'];
                             for (var item in daylist) {
@@ -89,7 +90,6 @@ class MainScreen extends ConsumerWidget {
                 ),
               ),
             ),
-            
             _flag ? const CardDisplay() : const SliverToBoxAdapter(),
           ],
         ),

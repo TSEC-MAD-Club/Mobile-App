@@ -8,7 +8,7 @@ class TimetableModel {
   final String lectureEndTime;
   final String lectureFacultyImageurl;
   final String lectureFacultyName;
-  final String lectureBatch; 
+  final String lectureBatch;
 
   TimetableModel({
     required this.lectureName,
@@ -21,6 +21,6 @@ class TimetableModel {
 
   factory TimetableModel.fromJson(Map<String, dynamic> json) =>
       _$TimetableModelFromJson(json);
-    
+
   Map<String, dynamic> toJson() => _$TimetableModelToJson(this);
 }
