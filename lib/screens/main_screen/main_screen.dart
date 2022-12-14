@@ -1,15 +1,20 @@
+import 'dart:developer';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:tsec_app/screens/main_screen/widget/schedule_card.dart';
+import 'package:tsec_app/models/timetable_model/timetable_model.dart';
+import 'package:tsec_app/provider/timetable_provider.dart';
+import 'package:tsec_app/screens/main_screen/widget/card_display.dart';
 import '../../utils/image_assets.dart';
 import '../../utils/launch_url.dart';
 import '../../utils/themes.dart';
 import '../../widgets/custom_scaffold.dart';
 import 'package:date_picker_timeline/date_picker_timeline.dart';
 
-class MainScreen extends StatelessWidget {
+final flagprovider = StateProvider<bool>((ref) => false);
+
+class MainScreen extends ConsumerWidget {
   const MainScreen({Key? key}) : super(key: key);
 
   static const colorList = [Colors.red, Colors.teal, Colors.blue];
@@ -18,9 +23,12 @@ class MainScreen extends StatelessWidget {
     Color.fromARGB(51, 0, 255, 225),
     Color.fromARGB(51, 0, 153, 255),
   ];
+
   static const _sidePadding = EdgeInsets.symmetric(horizontal: 15);
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    bool _flag = ref.watch(flagprovider);
+    var data = ref.watch(weekTimetableProvider);
     final _size = MediaQuery.of(context).size;
     var _theme = Theme.of(context);
     var _boxshadow = BoxShadow(
@@ -60,29 +68,29 @@ class MainScreen extends StatelessWidget {
                     initialSelectedDate: DateTime.now(),
                     selectionColor: Colors.blue,
                     daysCount: 7,
+                    onDateChange: ((selectedDate) {
+                      data.when(
+                          data: ((data) {
+                              ref.read(flagprovider.notifier)
+                              .update((state) => true);
+  
+                            List<TimetableModel> timeTableDay = [];
+                            var daylist = data['Monday'];
+                            for (var item in daylist) {
+                              timeTableDay.add(TimetableModel.fromJson(item));
+                            }
+                          }),
+                          error: ((error, stackTrace) => log(error.toString())),
+                          loading: () {
+                            const CircularProgressIndicator();
+                          });
+                    }),
                   ),
                 ),
               ),
             ),
-            SliverPadding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 20.0,
-                vertical: 2.0,
-              ),
-              sliver: SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  childCount: 3,
-                  (context, index) {
-                    var color = colorList[index];
-                    var opacity = opacityList[index];
-                    return ScheduleCard(
-                      color,
-                      opacity,
-                    );
-                  },
-                ),
-              ),
-            ),
+            
+            _flag ? const CardDisplay() : const SliverToBoxAdapter(),
           ],
         ),
       ),
@@ -168,13 +176,15 @@ class MainScreenAppBar extends ConsumerWidget {
             items: imgList
                 .map(
                   (item) => GestureDetector(
-                      child: ClipRRect(
-                          borderRadius: BorderRadius.circular(20.0),
-                          child: Image.network(
-                            item,
-                            fit: BoxFit.cover,
-                          )),
-                      onTap: () => GoRouter.of(context).push("/details_page")),
+                    child: ClipRRect(
+                        borderRadius: BorderRadius.circular(20.0),
+                        child: Image.network(
+                          item,
+                          fit: BoxFit.cover,
+                        )),
+                    // onTap: () => GoRouter.of(context).push("/details_page")
+                    onTap: () {},
+                  ),
                 )
                 .toList(),
             options: CarouselOptions(

@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
 
 class ScheduleCard extends StatelessWidget {
-  const ScheduleCard(this.color, this.opacityColor, {Key? key})
+   const ScheduleCard(this.color, this.opacityColor, {Key? key, 
+  required this.lectureStartTime, required this.lectureEndTime, 
+  required this.lectureName, required this.facultyName,
+   required this.facultyImageurl})
       : super(key: key);
   final Color? color;
   final Color? opacityColor;
+  final String lectureStartTime;
+  final String lectureEndTime;
+  final String lectureName;
+  final String facultyName;
+  final String facultyImageurl;
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +56,7 @@ class ScheduleCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Text(
-                        '09:45 AM',
+                        lectureStartTime,
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: _theme.textTheme.headline1!.color,
@@ -59,7 +67,7 @@ class ScheduleCard extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        '24/06/2022 Thursday',
+                        lectureEndTime,
                         style: TextStyle(
                           color: _theme.textTheme.headline1!.color,
                           fontWeight: FontWeight.w400,
@@ -82,7 +90,7 @@ class ScheduleCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Lorem Ipsum',
+                      lectureName,
                       style: TextStyle(
                         color: _theme.textTheme.headline1!.color,
                         fontWeight: FontWeight.w400,
@@ -90,31 +98,30 @@ class ScheduleCard extends StatelessWidget {
                         letterSpacing: 1.0,
                       ),
                     ),
-                    Text(
-                      'Lorem ipsum is placeholder text commonly used ,...',
-                      style: TextStyle(
-                        color: _theme.textTheme.headline1!.color,
-                        fontSize: 13.5,
-                        letterSpacing: 1.0,
-                        fontWeight: FontWeight.w300,
-                      ),
-                    ),
+                    // Text(
+                    //   'Lorem ipsum is placeholder text commonly used ,...',
+                    //   style: TextStyle(
+                    //     color: _theme.textTheme.headline1!.color,
+                    //     fontSize: 13.5,
+                    //     letterSpacing: 1.0,
+                    //     fontWeight: FontWeight.w300,
+                    //   ),
+                    //),
                     const SizedBox(
                       height: 6.0,
                     ),
                     Row(
-                      children: const [
+                      children: [
                         CircleAvatar(
                           radius: 14.0,
-                          backgroundImage: NetworkImage(
-                              'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.0l7k5zqRUVQ5Yq9eTpW2LgHaLJ%26pid%3DApi&f=1'),
+                          backgroundImage: NetworkImage(facultyImageurl),
                         ),
-                        SizedBox(
+                       const SizedBox(
                           width: 12.0,
                         ),
                         Text(
-                          'Dr. Ashwin Kunte',
-                          style: TextStyle(
+                          facultyName,
+                          style: const TextStyle(
                             color: Colors.blue,
                             fontSize: 12.0,
                             fontWeight: FontWeight.w300,

@@ -2,13 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tsec_app/screens/event_detail_screen/event_details.dart';
-
 import 'firebase_options.dart';
 import 'models/notification_model/notification_model.dart';
 import 'provider/app_state_provider.dart';
@@ -42,7 +40,7 @@ Future<void> main() async {
 
   initGetIt();
 
-  if (kDebugMode) _setupEmulators();
+  // if (kDebugMode) _setupEmulators();
 
   final _sharedPrefs = await SharedPreferences.getInstance();
   runApp(
