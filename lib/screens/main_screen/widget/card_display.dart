@@ -1,6 +1,15 @@
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tsec_app/screens/main_screen/widget/schedule_card.dart';
+
+import '../../../models/timetable_model/timetable_model.dart';
+
+
+final timetableProvider =
+    Provider<List<TimetableModel>>((ref) {
+  return [];
+});
 
 class CardDisplay extends ConsumerStatefulWidget {
   const CardDisplay({super.key});
@@ -19,6 +28,7 @@ class _CardDisplayState extends ConsumerState<CardDisplay> {
 
   @override
   Widget build(BuildContext context) {
+    var timeTableDay = ref.watch(timetableProvider);
     return SliverPadding(
       padding: const EdgeInsets.symmetric(
         horizontal: 20.0,
@@ -26,19 +36,19 @@ class _CardDisplayState extends ConsumerState<CardDisplay> {
       ),
       sliver: SliverList(
         delegate: SliverChildBuilderDelegate(
-          childCount: 3,
+          childCount: timeTableDay.length,
           (context, index) {
             var color = colorList[index];
             var opacity = opacityList[index];
             return ScheduleCard(
               color,
               opacity,
-              lectureEndTime: "8:45am",
-              lectureName: "PCE",
-              lectureStartTime: "9:45pm",
+              lectureEndTime: timeTableDay[index].lectureEndTime,
+              lectureName: timeTableDay[index].lectureName,
+              lectureStartTime: timeTableDay[index].lectureStartTime,
               facultyImageurl:
                   "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fcomps%2Fdarakhshankhan.jpg?alt=media&token=18e920bc-a67c-4208-b838-45d9a7845a85",
-              facultyName: "Krishana dave",
+              facultyName: timeTableDay[index].lectureFacultyName,
             );
           },
         ),

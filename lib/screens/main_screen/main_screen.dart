@@ -74,11 +74,10 @@ class MainScreen extends ConsumerWidget {
                             ref
                                 .read(flagprovider.notifier)
                                 .update((state) => true);
-
-                            List<TimetableModel> timeTableDay = [];
                             var daylist = data['Monday'];
                             for (var item in daylist) {
-                              timeTableDay.add(TimetableModel.fromJson(item));
+                              var a = TimetableModel.fromJson(item);
+                              ref.read(timetableProvider).add(a); 
                             }
                           }),
                           error: ((error, stackTrace) => log(error.toString())),
@@ -90,7 +89,9 @@ class MainScreen extends ConsumerWidget {
                 ),
               ),
             ),
-            _flag ? const CardDisplay() : const SliverToBoxAdapter(),
+            _flag ? const CardDisplay() : const SliverToBoxAdapter(
+              
+            ),
           ],
         ),
       ),
