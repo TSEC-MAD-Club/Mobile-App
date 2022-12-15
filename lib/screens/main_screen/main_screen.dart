@@ -1,12 +1,34 @@
+import 'dart:developer';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:tsec_app/models/event_model/event_model.dart';
+import '../../provider/event_provider.dart';
 import '../../utils/department_enum.dart';
 import '../../utils/image_assets.dart';
 import '../../utils/launch_url.dart';
 import '../../utils/themes.dart';
 import '../../widgets/custom_scaffold.dart';
+
+// class MainScreen extends ConsumerStatefulWidget {
+//   const MainScreen({super.key});
+
+//   @override
+//   ConsumerState<ConsumerStatefulWidget> createState() {
+//     // TODO: implement createState
+//     throw UnimplementedError();
+//   }
+
+// }
+
+// class _MainScreenState extends ConsumerState<MainScreen> {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container();
+//   }
+// }
 
 class MainScreen extends StatelessWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -122,23 +144,64 @@ class DeptWidget extends StatelessWidget {
   }
 }
 
-class MainScreenAppBar extends ConsumerWidget {
+class MainScreenAppBar extends ConsumerStatefulWidget {
+  final EdgeInsets _sidePadding;
+
   const MainScreenAppBar({
     Key? key,
     required EdgeInsets sidePadding,
   })  : _sidePadding = sidePadding,
         super(key: key);
 
-  final EdgeInsets _sidePadding;
-  static const List<String> imgList = [
+  @override
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _MainScreenAppBarState();
+}
+
+class _MainScreenAppBarState extends ConsumerState<MainScreenAppBar> {
+  List<EventModel> eventList = [];
+
+  List<String> imgList = [
     'https://assets.devfolio.co/hackathons/d2e152245d8146898efc542304ef6653/assets/cover/694.png',
     'https://assets.devfolio.co/hackathons/d2e152245d8146898efc542304ef6653/assets/cover/694.png',
     'https://assets.devfolio.co/hackathons/d2e152245d8146898efc542304ef6653/assets/cover/694.png',
     'https://assets.devfolio.co/hackathons/d2e152245d8146898efc542304ef6653/assets/cover/694.png'
   ];
 
+  void fetchEventDetails() {
+    ref.watch(eventListProvider).when(
+        data: ((data) {
+          //log(data.toString());
+          eventList.addAll(data ?? []);
+
+          imgList.clear();
+          for (var data in eventList) {
+            log(data.toString());
+            imgList.add(data.imageUrl);
+          }
+
+          //log("Here " + eventList.toString());
+
+          // log(imgList.toString());
+        }),
+        error: ((error, stackTrace) => log(error.toString())),
+        loading: (() {
+          log("loading");
+        }));
+  }
+
+  // @override
+  // void initState() {
+  //   super.initState();
+
+  //   fetchEventDetails();
+  // }
+
+  static const _sidePadding = EdgeInsets.symmetric(horizontal: 15);
+
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
+    fetchEventDetails();
     return Padding(
       padding: _sidePadding.copyWith(top: 15),
       child: Column(
@@ -204,7 +267,7 @@ class MainScreenAppBar extends ConsumerWidget {
                           borderRadius: BorderRadius.circular(20.0),
                           child: Image.network(
                             item,
-                            fit: BoxFit.cover,
+                            fit: BoxFit.contain,
                           )),
                       onTap: () => GoRouter.of(context).push("/details_page")),
                 )
@@ -220,3 +283,17 @@ class MainScreenAppBar extends ConsumerWidget {
     );
   }
 }
+
+// class MainScreenAppBar extends ConsumerStatefulWidget {
+
+//   @override
+//   Widget build(BuildContext context, WidgetRef ref) {
+
+//   }
+
+//   @override
+//   ConsumerState<ConsumerStatefulWidget> createState() {
+//     // TODO: implement createState
+//     throw UnimplementedError();
+//   }
+// }

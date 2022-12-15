@@ -42,7 +42,7 @@ Future<void> main() async {
 
   initGetIt();
 
-  if (kDebugMode) _setupEmulators();
+  // if (kDebugMode) _setupEmulators();
 
   final _sharedPrefs = await SharedPreferences.getInstance();
   runApp(

@@ -1,14 +1,42 @@
+import 'dart:developer';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tsec_app/models/event_model/event_model.dart';
+import 'package:tsec_app/provider/event_provider.dart';
 
-class EventDetail extends StatefulWidget {
+class EventDetail extends ConsumerStatefulWidget {
   const EventDetail({Key? key}) : super(key: key);
 
   @override
-  State<EventDetail> createState() => _EventDetailState();
+  ConsumerState<EventDetail> createState() => _EventDetailState();
 }
 
-class _EventDetailState extends State<EventDetail> {
+class _EventDetailState extends ConsumerState<EventDetail> {
+  List<EventModel> eventList = [];
+
+  void fetchEventDetails() {
+    ref.read(eventListProvider).when(
+        data: ((data) {
+          log(data.toString());
+          eventList.addAll(data ?? []);
+
+          // for (var data in eventList) {
+          //   imgList.add(data.eventImageUrl);
+          // }
+
+          log("Here " + eventList.toString());
+
+          // log(imgList.toString());
+        }),
+        error: ((error, stackTrace) => log(error.toString())),
+        loading: (() {
+          log("loading");
+          return CircularProgressIndicator();
+        }));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,7 +75,9 @@ class _EventDetailState extends State<EventDetail> {
                             child: Container(),
                           ),
                           ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              fetchEventDetails();
+                            },
                             child: const Text("Register"),
                             style: ElevatedButton.styleFrom(
                               padding: const EdgeInsets.only(
