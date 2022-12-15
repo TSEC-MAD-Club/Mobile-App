@@ -77,7 +77,7 @@ class MainScreen extends ConsumerWidget {
                             var daylist = data['Monday'];
                             for (var item in daylist) {
                               var a = TimetableModel.fromJson(item);
-                              ref.read(timetableProvider).add(a); 
+                              ref.read(timetableProvider).add(a);
                             }
                           }),
                           error: ((error, stackTrace) => log(error.toString())),
@@ -89,9 +89,7 @@ class MainScreen extends ConsumerWidget {
                 ),
               ),
             ),
-            _flag ? const CardDisplay() : const SliverToBoxAdapter(
-              
-            ),
+            _flag ? const CardDisplay() : const SliverToBoxAdapter(),
           ],
         ),
       ),

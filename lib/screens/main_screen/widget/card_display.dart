@@ -1,14 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tsec_app/screens/main_screen/widget/schedule_card.dart';
-
-import '../../../models/timetable_model/timetable_model.dart';
-
-
-final timetableProvider =
-    Provider<List<TimetableModel>>((ref) {
-  return [];
-});
+import '../../../provider/timetable_provider.dart';
 
 class CardDisplay extends ConsumerStatefulWidget {
   const CardDisplay({super.key});
