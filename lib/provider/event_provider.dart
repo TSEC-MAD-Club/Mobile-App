@@ -21,8 +21,4 @@ class EventProvider {
   Stream<List<EventModel>?> getEventDetails() {
     return _eventServices.getEventDetails();
   }
-
-
-
-  
 }

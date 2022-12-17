@@ -5,8 +5,14 @@ part 'event_model.g.dart';
 
 @JsonSerializable()
 class EventModel {
-  EventModel(this.eventName, this.eventTime, this.eventDate,
-      this.eventDescription, this.eventRegistrationUrl, this.imageUrl);
+  EventModel(
+      this.eventName,
+      this.eventTime,
+      this.eventDate,
+      this.eventDescription,
+      this.eventRegistrationUrl,
+      this.imageUrl,
+      this.eventLocation);
 
   @JsonKey(name: 'Event Name')
   final String eventName;
@@ -20,6 +26,8 @@ class EventModel {
   final String eventRegistrationUrl;
   @JsonKey(name: 'Image url ')
   final String imageUrl;
+  @JsonKey(name: 'Event Location')
+  final String eventLocation;
 
   factory EventModel.fromJson(Map<String, dynamic> json) =>
       _$EventModelFromJson(json);
@@ -28,6 +36,6 @@ class EventModel {
 
   @override
   String toString() {
-    return 'EventModel(eventName: $eventName, eventTime: $eventTime, eventDate: $eventDate, eventDescription: $eventDescription, eventRegistrationUrl: $eventRegistrationUrl, imageUrl: $imageUrl)';
+    return 'EventModel(eventName: $eventName, eventTime: $eventTime, eventDate: $eventDate, eventDescription: $eventDescription, eventRegistrationUrl: $eventRegistrationUrl, imageUrl: $imageUrl, eventLocation:$eventLocation)';
   }
 }

@@ -27,7 +27,5 @@ class EventServices {
 
       return eventsDetails;
     });
-
-    // print(eventsDetails.asMap());
   }
 }

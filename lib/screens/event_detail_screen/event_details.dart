@@ -5,9 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tsec_app/models/event_model/event_model.dart';
 import 'package:tsec_app/provider/event_provider.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class EventDetail extends ConsumerStatefulWidget {
-  const EventDetail({Key? key}) : super(key: key);
+  final EventModel eventModel;
+  const EventDetail({Key? key, required this.eventModel}) : super(key: key);
 
   @override
   ConsumerState<EventDetail> createState() => _EventDetailState();
@@ -16,25 +19,13 @@ class EventDetail extends ConsumerStatefulWidget {
 class _EventDetailState extends ConsumerState<EventDetail> {
   List<EventModel> eventList = [];
 
-  void fetchEventDetails() {
-    ref.read(eventListProvider).when(
-        data: ((data) {
-          log(data.toString());
-          eventList.addAll(data ?? []);
+  void launchUrl() async {
+    var url = widget.eventModel.eventRegistrationUrl;
 
-          // for (var data in eventList) {
-          //   imgList.add(data.eventImageUrl);
-          // }
-
-          log("Here " + eventList.toString());
-
-          // log(imgList.toString());
-        }),
-        error: ((error, stackTrace) => log(error.toString())),
-        loading: (() {
-          log("loading");
-          return CircularProgressIndicator();
-        }));
+    if (await canLaunchUrlString(url)) {
+      await launchUrlString(url);
+    } else
+      throw "Could not launch url";
   }
 
   @override
@@ -43,9 +34,9 @@ class _EventDetailState extends ConsumerState<EventDetail> {
       body: Stack(
         children: [
           CachedNetworkImage(
-            imageUrl:
-                "https://assets.devfolio.co/hackathons/d2e152245d8146898efc542304ef6653/assets/cover/694.png",
+            imageUrl: widget.eventModel.imageUrl,
             fit: BoxFit.cover,
+            alignment: Alignment.center,
             height: 220,
           ),
           Padding(
@@ -67,16 +58,22 @@ class _EventDetailState extends ConsumerState<EventDetail> {
                           const EdgeInsets.only(top: 20, left: 20, right: 20),
                       child: Row(
                         children: [
-                          const Text(
-                            "TSEC HACKS 2022",
-                            style: TextStyle(fontSize: 20, color: Colors.black),
+                          Expanded(
+                            flex: 10,
+                            child: Text(
+                              widget.eventModel.eventName,
+                              style:
+                                  TextStyle(fontSize: 20, color: Colors.black),
+                            ),
                           ),
                           Expanded(
                             child: Container(),
                           ),
                           ElevatedButton(
                             onPressed: () {
-                              fetchEventDetails();
+                              String registerUri = widget.eventModel.imageUrl;
+
+                              launchUrl();
                             },
                             child: const Text("Register"),
                             style: ElevatedButton.styleFrom(
@@ -92,13 +89,13 @@ class _EventDetailState extends ConsumerState<EventDetail> {
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 20),
                       child: Row(
-                        children: const [
+                        children: [
                           Icon(Icons.location_on),
                           SizedBox(
                             width: 5,
                           ),
                           Text(
-                            "302, Old Building",
+                            widget.eventModel.eventLocation,
                             style: TextStyle(
                                 color: Colors.black,
                                 fontWeight: FontWeight.w400,
@@ -110,13 +107,15 @@ class _EventDetailState extends ConsumerState<EventDetail> {
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 20),
                       child: Row(
-                        children: const [
+                        children: [
                           Icon(Icons.calendar_month),
                           SizedBox(
                             width: 5,
                           ),
                           Text(
-                            "3:00 PM, 11th july 2022",
+                            widget.eventModel.eventTime +
+                                " " +
+                                widget.eventModel.eventDate,
                             style: TextStyle(
                                 color: Colors.black,
                                 fontWeight: FontWeight.w400,
@@ -139,10 +138,10 @@ class _EventDetailState extends ConsumerState<EventDetail> {
                         ],
                       ),
                     ),
-                    const Padding(
+                    Padding(
                       padding: EdgeInsets.only(left: 20, top: 10, right: 20),
                       child: Text(
-                        "Nobody wants to stare at a blank wall all day long.",
+                        widget.eventModel.eventDescription,
                         style: TextStyle(
                             height: 1.6, color: Colors.black, fontSize: 14),
                       ),

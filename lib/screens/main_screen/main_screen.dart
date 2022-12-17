@@ -17,24 +17,6 @@ import '../../utils/themes.dart';
 import '../../widgets/custom_scaffold.dart';
 import 'package:date_picker_timeline/date_picker_timeline.dart';
 
-// class MainScreen extends ConsumerStatefulWidget {
-//   const MainScreen({super.key});
-
-//   @override
-//   ConsumerState<ConsumerStatefulWidget> createState() {
-//     // TODO: implement createState
-//     throw UnimplementedError();
-//   }
-
-// }
-
-// class _MainScreenState extends ConsumerState<MainScreen> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container();
-//   }
-// }
-
 class MainScreen extends StatelessWidget {
   const MainScreen({Key? key}) : super(key: key);
 
@@ -143,18 +125,14 @@ class _MainScreenAppBarState extends ConsumerState<MainScreenAppBar> {
   void fetchEventDetails() {
     ref.watch(eventListProvider).when(
         data: ((data) {
-          //log(data.toString());
           eventList.addAll(data ?? []);
+
+          log(eventList[0].toString());
 
           imgList.clear();
           for (var data in eventList) {
-            log(data.toString());
             imgList.add(data.imageUrl);
           }
-
-          //log("Here " + eventList.toString());
-
-          // log(imgList.toString());
         }),
         error: ((error, stackTrace) => log(error.toString())),
         loading: (() {
@@ -162,15 +140,8 @@ class _MainScreenAppBarState extends ConsumerState<MainScreenAppBar> {
         }));
   }
 
-  // @override
-  // void initState() {
-  //   super.initState();
-
-  //   fetchEventDetails();
-  // }
-
   static const _sidePadding = EdgeInsets.symmetric(horizontal: 15);
-
+  static int _currentIndex = 0;
   @override
   Widget build(BuildContext context) {
     fetchEventDetails();
@@ -241,31 +212,35 @@ class _MainScreenAppBarState extends ConsumerState<MainScreenAppBar> {
                             item,
                             fit: BoxFit.contain,
                           )),
-                      onTap: () => GoRouter.of(context).push("/details_page")),
+                      onTap: () => GoRouter.of(context)
+                              .pushNamed("details_page", queryParams: {
+                            "Event Name": eventList[_currentIndex].eventName,
+                            "Event Time": eventList[_currentIndex].eventTime,
+                            "Event Date": eventList[_currentIndex].eventDate,
+                            "Event decription":
+                                eventList[_currentIndex].eventDescription,
+                            "Event registration url":
+                                eventList[_currentIndex].eventRegistrationUrl,
+                            "Event Image Url": item,
+                            "Event Location":
+                                eventList[_currentIndex].eventLocation
+                          })),
                 )
                 .toList(),
             options: CarouselOptions(
-                autoPlay: true,
-                aspectRatio: 2.0,
-                enlargeCenterPage: true,
-                viewportFraction: 1),
+              autoPlay: true,
+              aspectRatio: 2.0,
+              enlargeCenterPage: true,
+              viewportFraction: 1,
+              onPageChanged: (index, reason) {
+                setState(() {
+                  _currentIndex = index;
+                });
+              },
+            ),
           ),
         ],
       ),
     );
   }
 }
-
-// class MainScreenAppBar extends ConsumerStatefulWidget {
-
-//   @override
-//   Widget build(BuildContext context, WidgetRef ref) {
-
-//   }
-
-//   @override
-//   ConsumerState<ConsumerStatefulWidget> createState() {
-//     // TODO: implement createState
-//     throw UnimplementedError();
-//   }
-// }
