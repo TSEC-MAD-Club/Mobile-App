@@ -10,9 +10,6 @@ import '../../utils/themes.dart';
 import '../../widgets/custom_scaffold.dart';
 import 'package:date_picker_timeline/date_picker_timeline.dart';
 
-
-
-
 class MainScreen extends ConsumerWidget {
   const MainScreen({Key? key}) : super(key: key);
 

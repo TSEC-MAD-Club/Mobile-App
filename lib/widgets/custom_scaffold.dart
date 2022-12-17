@@ -36,12 +36,11 @@ class _CustomScaffoldState extends ConsumerState<CustomScaffold>
   @override
   void initState() {
     super.initState();
-   
+
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 300),
       reverseDuration: const Duration(milliseconds: 100),
-      
     );
 
     _scaleAnimation = Tween<double>(begin: 1.0, end: .6).animate(
@@ -209,15 +208,14 @@ class _CustomScaffoldState extends ConsumerState<CustomScaffold>
                 onTap: () {
                   if (_controller.isCompleted) {
                     _controller.reverse();
-                     ref
-        .read(dayProvider.notifier)
-        .update((state) => getweekday(DateTime.now().weekday));
-
+                    ref
+                        .read(dayProvider.notifier)
+                        .update((state) => getweekday(DateTime.now().weekday));
                   } else {
                     _controller.forward();
-                     ref
-        .read(dayProvider.notifier)
-        .update((state) => getweekday(DateTime.now().weekday));
+                    ref
+                        .read(dayProvider.notifier)
+                        .update((state) => getweekday(DateTime.now().weekday));
                   }
                 },
                 borderRadius: BorderRadius.circular(50),
