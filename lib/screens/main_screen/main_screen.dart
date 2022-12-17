@@ -7,7 +7,6 @@ import 'package:go_router/go_router.dart';
 
 import 'package:tsec_app/models/event_model/event_model.dart';
 import '../../provider/event_provider.dart';
-import '../../utils/department_enum.dart';
 
 import 'package:tsec_app/screens/main_screen/widget/schedule_card.dart';
 
@@ -26,7 +25,7 @@ class MainScreen extends StatelessWidget {
     Color.fromARGB(51, 0, 255, 225),
     Color.fromARGB(51, 0, 153, 255),
   ];
-  static const _sidePadding = EdgeInsets.symmetric(horizontal: 15);
+
   @override
   Widget build(BuildContext context) {
     final _size = MediaQuery.of(context).size;
@@ -43,7 +42,7 @@ class MainScreen extends StatelessWidget {
         child: CustomScrollView(
           slivers: [
             const SliverToBoxAdapter(
-              child: MainScreenAppBar(sidePadding: _sidePadding),
+              child: MainScreenAppBar(),
             ),
             SliverPadding(
               padding: const EdgeInsets.all(20),
@@ -99,13 +98,9 @@ class MainScreen extends StatelessWidget {
 }
 
 class MainScreenAppBar extends ConsumerStatefulWidget {
-  final EdgeInsets _sidePadding;
-
   const MainScreenAppBar({
     Key? key,
-    required EdgeInsets sidePadding,
-  })  : _sidePadding = sidePadding,
-        super(key: key);
+  }) : super(key: key);
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>

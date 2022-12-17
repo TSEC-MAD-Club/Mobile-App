@@ -1,9 +1,6 @@
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tsec_app/models/event_model/event_model.dart';
-import 'package:tsec_app/screens/event_detail_screen/event_details.dart';
 
 final eventServicesProvider = Provider((ref) {
   return EventServices(firebaseFirestore: FirebaseFirestore.instance);

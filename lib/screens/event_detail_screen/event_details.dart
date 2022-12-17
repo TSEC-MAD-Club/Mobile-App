@@ -1,11 +1,8 @@
-import 'dart:developer';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tsec_app/models/event_model/event_model.dart';
-import 'package:tsec_app/provider/event_provider.dart';
-import 'package:url_launcher/url_launcher.dart';
+
 import 'package:url_launcher/url_launcher_string.dart';
 
 class EventDetail extends ConsumerStatefulWidget {
@@ -62,8 +59,8 @@ class _EventDetailState extends ConsumerState<EventDetail> {
                             flex: 10,
                             child: Text(
                               widget.eventModel.eventName,
-                              style:
-                                  TextStyle(fontSize: 20, color: Colors.black),
+                              style: const TextStyle(
+                                  fontSize: 20, color: Colors.black),
                             ),
                           ),
                           Expanded(
@@ -71,8 +68,6 @@ class _EventDetailState extends ConsumerState<EventDetail> {
                           ),
                           ElevatedButton(
                             onPressed: () {
-                              String registerUri = widget.eventModel.imageUrl;
-
                               launchUrl();
                             },
                             child: const Text("Register"),
@@ -90,13 +85,13 @@ class _EventDetailState extends ConsumerState<EventDetail> {
                       padding: const EdgeInsets.only(top: 10, left: 20),
                       child: Row(
                         children: [
-                          Icon(Icons.location_on),
-                          SizedBox(
+                          const Icon(Icons.location_on),
+                          const SizedBox(
                             width: 5,
                           ),
                           Text(
                             widget.eventModel.eventLocation,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 color: Colors.black,
                                 fontWeight: FontWeight.w400,
                                 fontSize: 16),
@@ -108,15 +103,15 @@ class _EventDetailState extends ConsumerState<EventDetail> {
                       padding: const EdgeInsets.only(top: 10, left: 20),
                       child: Row(
                         children: [
-                          Icon(Icons.calendar_month),
-                          SizedBox(
+                          const Icon(Icons.calendar_month),
+                          const SizedBox(
                             width: 5,
                           ),
                           Text(
                             widget.eventModel.eventTime +
                                 " " +
                                 widget.eventModel.eventDate,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 color: Colors.black,
                                 fontWeight: FontWeight.w400,
                                 fontSize: 16),
@@ -139,10 +134,11 @@ class _EventDetailState extends ConsumerState<EventDetail> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(left: 20, top: 10, right: 20),
+                      padding:
+                          const EdgeInsets.only(left: 20, top: 10, right: 20),
                       child: Text(
                         widget.eventModel.eventDescription,
-                        style: TextStyle(
+                        style: const TextStyle(
                             height: 1.6, color: Colors.black, fontSize: 14),
                       ),
                     ),

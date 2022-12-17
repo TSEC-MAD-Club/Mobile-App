@@ -33,9 +33,4 @@ class EventModel {
       _$EventModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$EventModelToJson(this);
-
-  @override
-  String toString() {
-    return 'EventModel(eventName: $eventName, eventTime: $eventTime, eventDate: $eventDate, eventDescription: $eventDescription, eventRegistrationUrl: $eventRegistrationUrl, imageUrl: $imageUrl, eventLocation:$eventLocation)';
-  }
 }
