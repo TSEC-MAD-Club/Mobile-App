@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
+import 'package:tsec_app/screens/main_screen/main_screen.dart';
+import 'package:tsec_app/screens/main_screen/widget/card_display.dart';
+import 'package:tsec_app/utils/timetable_util.dart';
 import 'package:url_launcher/link.dart';
-
 import '../models/notification_model/notification_model.dart';
 import '../provider/notification_provider.dart';
 import '../provider/theme_provider.dart';
@@ -35,10 +37,12 @@ class _CustomScaffoldState extends ConsumerState<CustomScaffold>
   @override
   void initState() {
     super.initState();
+   
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 300),
       reverseDuration: const Duration(milliseconds: 100),
+      
     );
 
     _scaleAnimation = Tween<double>(begin: 1.0, end: .6).animate(
@@ -204,10 +208,18 @@ class _CustomScaffoldState extends ConsumerState<CustomScaffold>
               padding: const EdgeInsets.all(20),
               child: InkWell(
                 onTap: () {
-                  if (_controller.isCompleted)
+                  if (_controller.isCompleted) {
                     _controller.reverse();
-                  else
+                     ref
+        .read(dayProvider.notifier)
+        .update((state) => getweekday(DateTime.now().weekday));
+
+                  } else {
                     _controller.forward();
+                     ref
+        .read(dayProvider.notifier)
+        .update((state) => getweekday(DateTime.now().weekday));
+                  }
                 },
                 borderRadius: BorderRadius.circular(50),
                 child: Container(

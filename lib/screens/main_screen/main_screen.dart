@@ -3,11 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tsec_app/screens/main_screen/widget/card_display.dart';
+import 'package:tsec_app/utils/timetable_util.dart';
 import '../../utils/image_assets.dart';
 import '../../utils/launch_url.dart';
 import '../../utils/themes.dart';
 import '../../widgets/custom_scaffold.dart';
 import 'package:date_picker_timeline/date_picker_timeline.dart';
+
+
+
 
 class MainScreen extends ConsumerWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -18,8 +22,6 @@ class MainScreen extends ConsumerWidget {
     Color.fromARGB(51, 0, 255, 225),
     Color.fromARGB(51, 0, 153, 255),
   ];
-  
- 
 
   static const _sidePadding = EdgeInsets.symmetric(horizontal: 15);
   @override
@@ -66,7 +68,7 @@ class MainScreen extends ConsumerWidget {
                   onDateChange: ((selectedDate) {
                     ref
                         .read(dayProvider.notifier)
-                        .update((state) => 'Wednesday');
+                        .update((state) => getweekday(selectedDate.weekday));
                   }),
                 ),
               ),
