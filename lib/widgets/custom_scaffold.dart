@@ -208,8 +208,14 @@ class _CustomScaffoldState extends ConsumerState<CustomScaffold>
                 onTap: () {
                   if (_controller.isCompleted) {
                     _controller.reverse();
+                    ref
+                        .read(dayProvider.notifier)
+                        .update((state) => getweekday(DateTime.now().weekday));
                   } else {
                     _controller.forward();
+                    ref
+                        .read(dayProvider.notifier)
+                        .update((state) => getweekday(DateTime.now().weekday));
                   }
                 },
                 borderRadius: BorderRadius.circular(50),
@@ -254,9 +260,7 @@ class _CustomScaffoldState extends ConsumerState<CustomScaffold>
 
   Future<void> _navigate(String path) async {
     await _controller.reverse();
-    ref
-        .read(dayProvider.notifier)
-        .update((state) => getweekday(DateTime.now().weekday));
+
     final router = GoRouter.of(context);
     if (router.location != path) router.push(path);
   }
