@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tsec_app/provider/firebase_provider.dart';
 
-final timetableserviceProvider = Provider<TimeTableService>((ref) {
+final timetableServiceProvider = Provider<TimeTableService>((ref) {
   return TimeTableService(ref.watch(firestoreProvider));
 });
 

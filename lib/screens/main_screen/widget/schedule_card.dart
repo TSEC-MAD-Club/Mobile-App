@@ -101,15 +101,6 @@ class ScheduleCard extends StatelessWidget {
                         letterSpacing: 1.0,
                       ),
                     ),
-                    // Text(
-                    //   'Lorem ipsum is placeholder text commonly used ,...',
-                    //   style: TextStyle(
-                    //     color: _theme.textTheme.headline1!.color,
-                    //     fontSize: 13.5,
-                    //     letterSpacing: 1.0,
-                    //     fontWeight: FontWeight.w300,
-                    //   ),
-                    //),
                     const SizedBox(
                       height: 6.0,
                     ),
