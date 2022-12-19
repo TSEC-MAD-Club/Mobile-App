@@ -124,7 +124,7 @@ class ScheduleCard extends StatelessWidget {
                       height: 8.0,
                     ),
                     Text(
-                      'Batch : ',
+                      'Batch : C13',
                       style: TextStyle(
                         color: _theme.textTheme.headline2!.color,
                         fontWeight: FontWeight.w300,
