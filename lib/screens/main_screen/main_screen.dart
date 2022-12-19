@@ -84,6 +84,7 @@ class MainScreen extends ConsumerWidget {
 }
 
 class MainScreenAppBar extends ConsumerStatefulWidget {
+  final EdgeInsets _sidePadding;
   const MainScreenAppBar({
     Key? key,
     required EdgeInsets sidePadding,
