@@ -65,7 +65,7 @@ class ScheduleCard extends StatelessWidget {
                   color: opacityColor,
                 ),
                 child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Text(
                         lectureStartTime,
@@ -79,11 +79,21 @@ class ScheduleCard extends StatelessWidget {
                         ),
                       ),
                       Text(
+                        'to',
+                        style: TextStyle(
+                          color: _theme.textTheme.headline1!.color,
+                          fontWeight: FontWeight.w300,
+                          fontSize: 16.0,
+                          letterSpacing: 1.0,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      Text(
                         lectureEndTime,
                         style: TextStyle(
                           color: _theme.textTheme.headline1!.color,
                           fontWeight: FontWeight.w400,
-                          fontSize: 12.0,
+                          fontSize: 16.0,
                           letterSpacing: 1.0,
                         ),
                         textAlign: TextAlign.center,
@@ -111,7 +121,19 @@ class ScheduleCard extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(
-                      height: 6.0,
+                      height: 8.0,
+                    ),
+                    Text(
+                      'Batch : ',
+                      style: TextStyle(
+                        color: _theme.textTheme.headline2!.color,
+                        fontWeight: FontWeight.w300,
+                        fontSize: 17.0,
+                        letterSpacing: 1.0,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10.0,
                     ),
                     Row(
                       children: [
