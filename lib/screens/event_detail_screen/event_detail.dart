@@ -9,29 +9,22 @@ class EventDetail extends StatefulWidget {
 }
 
 class _EventDetailState extends State<EventDetail> {
+  final String discription =
+      "Nobody wants to stare at a blank wall all day long";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
-        alignment: Alignment.topCenter,
         children: [
           CachedNetworkImage(
             imageUrl:
-                "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/events%2FWhatsApp%20Image%202022-12-13%20at%2019.16.12.jpeg?alt=media&token=fcb02f10-a68f-4a59-aa13-11e3b99134c2",
-            color: Colors.white.withOpacity(0.4),
-            colorBlendMode: BlendMode.modulate,
-            fit: BoxFit.fill,
-            height: MediaQuery.of(context).size.height * 0.5,
-          ),
-          CachedNetworkImage(
-            imageUrl:
-                "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/events%2FWhatsApp%20Image%202022-12-13%20at%2019.16.12.jpeg?alt=media&token=fcb02f10-a68f-4a59-aa13-11e3b99134c2",
+                "https://assets.devfolio.co/hackathons/d2e152245d8146898efc542304ef6653/assets/cover/694.png",
             fit: BoxFit.cover,
-            height: MediaQuery.of(context).size.height * 0.3,
+            height: 220,
           ),
           Padding(
-            padding:
-                EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.29),
+            padding: const EdgeInsets.only(top: 200),
             child: Container(
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
@@ -119,11 +112,12 @@ class _EventDetailState extends State<EventDetail> {
                         ],
                       ),
                     ),
-                    const Padding(
-                      padding: EdgeInsets.only(left: 20, top: 10, right: 20),
+                    Padding(
+                      padding:
+                          const EdgeInsets.only(left: 20, top: 10, right: 20),
                       child: Text(
-                        "Nobody wants to stare at a blank wall all day long.",
-                        style: TextStyle(
+                        discription,
+                        style: const TextStyle(
                             height: 1.6, color: Colors.black, fontSize: 14),
                       ),
                     ),

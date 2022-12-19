@@ -1,8 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -41,8 +38,6 @@ Future<void> main() async {
   FirebaseMessaging.onBackgroundMessage(_handleBackgroundMessage);
 
   initGetIt();
-
-  if (kDebugMode) _setupEmulators();
 
   final _sharedPrefs = await SharedPreferences.getInstance();
   runApp(
@@ -191,9 +186,4 @@ class _TSECAppState extends ConsumerState<TSECApp> {
       );
     }
   }
-}
-
-void _setupEmulators() {
-  FirebaseFirestore.instance.useFirestoreEmulator("localhost", 8080);
-  FirebaseStorage.instance.useStorageEmulator("localhost", 9199);
 }

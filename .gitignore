@@ -51,6 +51,5 @@ lib/firebase_options.dart
 # iOS/MacOS
 ./macos/flutter/GeneratedPluginRegistrant.swift
 
-
-#google-services
+#google-service
 /android/app/google-services.json
