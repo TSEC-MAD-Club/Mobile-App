@@ -4,19 +4,17 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-
-import 'package:tsec_app/models/event_model/event_model.dart';
+import 'package:tsec_app/screens/main_screen/widget/card_display.dart';
+import 'package:tsec_app/utils/timetable_util.dart';
+import '../../models/event_model/event_model.dart';
 import '../../provider/event_provider.dart';
-
-import 'package:tsec_app/screens/main_screen/widget/schedule_card.dart';
-
 import '../../utils/image_assets.dart';
 import '../../utils/launch_url.dart';
 import '../../utils/themes.dart';
 import '../../widgets/custom_scaffold.dart';
 import 'package:date_picker_timeline/date_picker_timeline.dart';
 
-class MainScreen extends StatelessWidget {
+class MainScreen extends ConsumerWidget {
   const MainScreen({Key? key}) : super(key: key);
 
   static const colorList = [Colors.red, Colors.teal, Colors.blue];
@@ -26,8 +24,10 @@ class MainScreen extends StatelessWidget {
     Color.fromARGB(51, 0, 153, 255),
   ];
 
+  static const _sidePadding = EdgeInsets.symmetric(horizontal: 15);
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final _size = MediaQuery.of(context).size;
     var _theme = Theme.of(context);
     var _boxshadow = BoxShadow(
@@ -39,60 +39,46 @@ class MainScreen extends StatelessWidget {
 
     return CustomScaffold(
       body: SafeArea(
-        child: CustomScrollView(
-          slivers: [
-            const SliverToBoxAdapter(
-              child: MainScreenAppBar(),
-            ),
-            SliverPadding(
-              padding: const EdgeInsets.all(20),
-              sliver: SliverToBoxAdapter(
-                child: Container(
-                  width: _size.width * 0.9,
-                  decoration: BoxDecoration(
-                    color: _theme.primaryColor,
-                    borderRadius: BorderRadius.circular(15.0),
-                    border: Border.all(
-                      color: _theme.primaryColorLight,
-                      width: 1,
-                      style: BorderStyle.solid,
-                    ),
-                    boxShadow: [_boxshadow],
+          child: CustomScrollView(
+        slivers: [
+          const SliverToBoxAdapter(
+            child: MainScreenAppBar(sidePadding: _sidePadding),
+          ),
+          SliverPadding(
+            padding: const EdgeInsets.all(20),
+            sliver: SliverToBoxAdapter(
+              child: Container(
+                width: _size.width * 0.9,
+                decoration: BoxDecoration(
+                  color: _theme.primaryColor,
+                  borderRadius: BorderRadius.circular(15.0),
+                  border: Border.all(
+                    color: _theme.primaryColorLight,
+                    width: 1,
+                    style: BorderStyle.solid,
                   ),
-                  child: DatePicker(
-                    DateTime.now(),
-                    monthTextStyle: _theme.textTheme.subtitle2!,
-                    dayTextStyle: _theme.textTheme.subtitle2!,
-                    dateTextStyle: _theme.textTheme.subtitle2!,
-                    initialSelectedDate: DateTime.now(),
-                    selectionColor: Colors.blue,
-                    daysCount: 7,
-                  ),
+                  boxShadow: [_boxshadow],
+                ),
+                child: DatePicker(
+                  DateTime.now(),
+                  monthTextStyle: _theme.textTheme.subtitle2!,
+                  dayTextStyle: _theme.textTheme.subtitle2!,
+                  dateTextStyle: _theme.textTheme.subtitle2!,
+                  initialSelectedDate: DateTime.now(),
+                  selectionColor: Colors.blue,
+                  daysCount: 7,
+                  onDateChange: ((selectedDate) {
+                    ref
+                        .read(dayProvider.notifier)
+                        .update((state) => getweekday(selectedDate.weekday));
+                  }),
                 ),
               ),
             ),
-            SliverPadding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 20.0,
-                vertical: 2.0,
-              ),
-              sliver: SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  childCount: 3,
-                  (context, index) {
-                    var color = colorList[index];
-                    var opacity = opacityList[index];
-                    return ScheduleCard(
-                      color,
-                      opacity,
-                    );
-                  },
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
+          ),
+          const CardDisplay()
+        ],
+      )),
     );
   }
 }
@@ -100,8 +86,9 @@ class MainScreen extends StatelessWidget {
 class MainScreenAppBar extends ConsumerStatefulWidget {
   const MainScreenAppBar({
     Key? key,
-  }) : super(key: key);
-
+    required EdgeInsets sidePadding,
+  })  : _sidePadding = sidePadding,
+        super(key: key);
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
       _MainScreenAppBarState();
