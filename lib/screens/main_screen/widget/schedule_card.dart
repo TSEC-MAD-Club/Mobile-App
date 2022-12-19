@@ -21,6 +21,12 @@ class ScheduleCard extends StatelessWidget {
   Widget build(BuildContext context) {
     var _size = MediaQuery.of(context).size;
     var _theme = Theme.of(context);
+    var _boxshadow = BoxShadow(
+      color: _theme.primaryColorDark,
+      spreadRadius: 1,
+      blurRadius: 2,
+      offset: const Offset(0, 1),
+    );
     return Card(
       margin: const EdgeInsets.only(
         bottom: 30.0,
@@ -35,6 +41,9 @@ class ScheduleCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(
               15.0,
             ),
+            boxShadow: [
+              _boxshadow,
+            ],
           ),
           child: Row(
             children: [
