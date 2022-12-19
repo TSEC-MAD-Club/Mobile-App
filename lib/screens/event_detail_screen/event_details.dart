@@ -13,15 +13,25 @@ class _EventDetailState extends State<EventDetail> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
+        alignment: Alignment.topCenter,
         children: [
           CachedNetworkImage(
             imageUrl:
-                "https://assets.devfolio.co/hackathons/d2e152245d8146898efc542304ef6653/assets/cover/694.png",
+                "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/events%2FWhatsApp%20Image%202022-12-13%20at%2019.16.12.jpeg?alt=media&token=fcb02f10-a68f-4a59-aa13-11e3b99134c2",
+            color: Colors.white.withOpacity(0.4),
+            colorBlendMode: BlendMode.modulate,
+            fit: BoxFit.fill,
+            height: MediaQuery.of(context).size.height * 0.5,
+          ),
+          CachedNetworkImage(
+            imageUrl:
+                "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/events%2FWhatsApp%20Image%202022-12-13%20at%2019.16.12.jpeg?alt=media&token=fcb02f10-a68f-4a59-aa13-11e3b99134c2",
             fit: BoxFit.cover,
-            height: 220,
+            height: MediaQuery.of(context).size.height * 0.3,
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 200),
+            padding:
+                EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.29),
             child: Container(
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
