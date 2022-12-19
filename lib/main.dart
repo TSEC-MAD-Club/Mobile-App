@@ -187,5 +187,3 @@ class _TSECAppState extends ConsumerState<TSECApp> {
     }
   }
 }
-
-
