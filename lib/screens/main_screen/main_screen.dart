@@ -1,122 +1,78 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import '../../utils/department_enum.dart';
+import 'package:tsec_app/screens/main_screen/widget/card_display.dart';
+import 'package:tsec_app/utils/timetable_util.dart';
 import '../../utils/image_assets.dart';
 import '../../utils/launch_url.dart';
 import '../../utils/themes.dart';
 import '../../widgets/custom_scaffold.dart';
+import 'package:date_picker_timeline/date_picker_timeline.dart';
 
-class MainScreen extends StatelessWidget {
+class MainScreen extends ConsumerWidget {
   const MainScreen({Key? key}) : super(key: key);
 
-  static const _sidePadding = EdgeInsets.symmetric(horizontal: 15);
+  static const colorList = [Colors.red, Colors.teal, Colors.blue];
+  static const opacityList = [
+    Color.fromRGBO(255, 0, 0, 0.2),
+    Color.fromARGB(51, 0, 255, 225),
+    Color.fromARGB(51, 0, 153, 255),
+  ];
 
+  static const _sidePadding = EdgeInsets.symmetric(horizontal: 15);
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final _size = MediaQuery.of(context).size;
+    var _theme = Theme.of(context);
+    var _boxshadow = BoxShadow(
+      color: _theme.primaryColorDark,
+      spreadRadius: 1,
+      blurRadius: 2,
+      offset: const Offset(0, 1),
+    );
+
     return CustomScaffold(
       body: SafeArea(
-        child: CustomScrollView(
-          slivers: [
-            const SliverToBoxAdapter(
-              child: MainScreenAppBar(sidePadding: _sidePadding),
-            ),
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: _sidePadding.copyWith(top: 15),
-                child: Text(
-                  "Departments",
-                  style: Theme.of(context).textTheme.headline3,
-                ),
-              ),
-            ),
-            SliverPadding(
-              padding: const EdgeInsets.all(20),
-              sliver: SliverGrid.count(
-                crossAxisCount: 2,
-                childAspectRatio: 173 / 224,
-                crossAxisSpacing: 20,
-                mainAxisSpacing: 20,
-                children: const [
-                  DeptWidget(
-                    image: "aids",
-                    department: DepartmentEnum.aids,
-                  ),
-                  DeptWidget(
-                    image: "extc",
-                    department: DepartmentEnum.extc,
-                  ),
-                  DeptWidget(
-                    image: "cs",
-                    department: DepartmentEnum.cs,
-                  ),
-                  DeptWidget(
-                    image: "it",
-                    department: DepartmentEnum.it,
-                  ),
-                  DeptWidget(
-                    image: "biomed",
-                    department: DepartmentEnum.biomed,
-                  ),
-                  DeptWidget(
-                    image: "biotech",
-                    department: DepartmentEnum.biotech,
-                  ),
-                  DeptWidget(
-                    image: "chem",
-                    department: DepartmentEnum.chem,
-                  ),
-                ],
-              ),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class DeptWidget extends StatelessWidget {
-  const DeptWidget({
-    Key? key,
-    required this.image,
-    required this.department,
-  }) : super(key: key);
-
-  final String image;
-  final DepartmentEnum department;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => GoRouter.of(context).push(
-        "/department?department=${department.index}",
-      ),
-      child: Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
-        margin: EdgeInsets.zero,
-        color: Theme.of(context).colorScheme.secondary,
-        child: Padding(
-          padding: const EdgeInsets.all(15),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Flexible(
-                child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Image.asset(
-                    "assets/images/branches/$image.png",
-                    height: 100,
-                  ),
-                ),
-              ),
-              Text(department.name),
-            ],
+          child: CustomScrollView(
+        slivers: [
+          const SliverToBoxAdapter(
+            child: MainScreenAppBar(sidePadding: _sidePadding),
           ),
-        ),
-      ),
+          SliverPadding(
+            padding: const EdgeInsets.all(20),
+            sliver: SliverToBoxAdapter(
+              child: Container(
+                width: _size.width * 0.9,
+                decoration: BoxDecoration(
+                  color: _theme.primaryColor,
+                  borderRadius: BorderRadius.circular(15.0),
+                  border: Border.all(
+                    color: _theme.primaryColorLight,
+                    width: 1,
+                    style: BorderStyle.solid,
+                  ),
+                  boxShadow: [_boxshadow],
+                ),
+                child: DatePicker(
+                  DateTime.now(),
+                  monthTextStyle: _theme.textTheme.subtitle2!,
+                  dayTextStyle: _theme.textTheme.subtitle2!,
+                  dateTextStyle: _theme.textTheme.subtitle2!,
+                  initialSelectedDate: DateTime.now(),
+                  selectionColor: Colors.blue,
+                  daysCount: 7,
+                  onDateChange: ((selectedDate) {
+                    ref
+                        .read(dayProvider.notifier)
+                        .update((state) => getweekday(selectedDate.weekday));
+                  }),
+                ),
+              ),
+            ),
+          ),
+          const CardDisplay()
+        ],
+      )),
     );
   }
 }
@@ -129,6 +85,12 @@ class MainScreenAppBar extends ConsumerWidget {
         super(key: key);
 
   final EdgeInsets _sidePadding;
+  static const List<String> imgList = [
+    'https://assets.devfolio.co/hackathons/d2e152245d8146898efc542304ef6653/assets/cover/694.png',
+    'https://assets.devfolio.co/hackathons/d2e152245d8146898efc542304ef6653/assets/cover/694.png',
+    'https://assets.devfolio.co/hackathons/d2e152245d8146898efc542304ef6653/assets/cover/694.png',
+    'https://assets.devfolio.co/hackathons/d2e152245d8146898efc542304ef6653/assets/cover/694.png'
+  ];
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -186,20 +148,28 @@ class MainScreenAppBar extends ConsumerWidget {
               ],
             ),
           ),
-          Container(
-            height: 160,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16),
-              boxShadow: [
-                BoxShadow(
-                  offset: const Offset(0, 12),
-                  color: kLightModeDarkBlue.withOpacity(.2),
-                  blurRadius: 24,
-                ),
-              ],
-            ),
-            child: Image.asset(ImageAssets.tsecImg),
-          )
+          const SizedBox(
+            height: 5,
+          ),
+          CarouselSlider(
+            items: imgList
+                .map(
+                  (item) => GestureDetector(
+                      child: ClipRRect(
+                          borderRadius: BorderRadius.circular(20.0),
+                          child: Image.network(
+                            item,
+                            fit: BoxFit.cover,
+                          )),
+                      onTap: () => GoRouter.of(context).push("/details_page")),
+                )
+                .toList(),
+            options: CarouselOptions(
+                autoPlay: true,
+                aspectRatio: 2.0,
+                enlargeCenterPage: true,
+                viewportFraction: 1),
+          ),
         ],
       ),
     );

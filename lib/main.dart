@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:tsec_app/screens/event_detail_screen/event_details.dart';
 import 'firebase_options.dart';
 import 'models/notification_model/notification_model.dart';
 import 'provider/app_state_provider.dart';
@@ -15,6 +15,7 @@ import 'provider/notification_provider.dart';
 import 'provider/shared_prefs_provider.dart';
 import 'provider/theme_provider.dart';
 import 'screens/committees_screen.dart';
+import 'screens/departmentlist_screen/department_list.dart';
 import 'screens/department_screen/department_screen.dart';
 import 'screens/main_screen/main_screen.dart';
 import 'screens/notification_screen/notification_screen.dart';
@@ -101,12 +102,20 @@ class _TSECAppState extends ConsumerState<TSECApp> {
           builder: (context, state) => const TPCScreen(),
         ),
         GoRoute(
+          path: "/details_page",
+          builder: (context, state) => const EventDetail(),
+        ),
+        GoRoute(
           path: "/department",
           builder: (context, state) {
             final department = DepartmentEnum
                 .values[int.parse(state.queryParams["department"] as String)];
             return DepartmentScreen(department: department);
           },
+        ),
+        GoRoute(
+          path: "/department-list",
+          builder: (context, state) => const DepartmentListScreen(),
         ),
       ],
       refreshListenable: ref.watch(appStateProvider),
