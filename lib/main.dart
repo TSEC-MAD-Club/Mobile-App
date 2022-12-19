@@ -39,8 +39,6 @@ Future<void> main() async {
 
   initGetIt();
 
-  //if (kDebugMode) _setupEmulators();
-
   final _sharedPrefs = await SharedPreferences.getInstance();
   runApp(
     ProviderScope(
@@ -190,7 +188,4 @@ class _TSECAppState extends ConsumerState<TSECApp> {
   }
 }
 
-// void _setupEmulators() {
-//   FirebaseFirestore.instance.useFirestoreEmulator("localhost", 8080);
-//   FirebaseStorage.instance.useStorageEmulator("localhost", 9199);
-// }
+
