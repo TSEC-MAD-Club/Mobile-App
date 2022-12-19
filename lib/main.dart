@@ -9,7 +9,6 @@ import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tsec_app/models/event_model/event_model.dart';
 import 'package:tsec_app/screens/event_detail_screen/event_details.dart';
-
 import 'firebase_options.dart';
 import 'models/notification_model/notification_model.dart';
 import 'provider/app_state_provider.dart';
