@@ -21,6 +21,12 @@ class ScheduleCard extends StatelessWidget {
   Widget build(BuildContext context) {
     var _size = MediaQuery.of(context).size;
     var _theme = Theme.of(context);
+    var _boxshadow = BoxShadow(
+      color: _theme.primaryColorDark,
+      spreadRadius: 1,
+      blurRadius: 2,
+      offset: const Offset(0, 1),
+    );
     return Card(
       margin: const EdgeInsets.only(
         bottom: 30.0,
@@ -35,6 +41,9 @@ class ScheduleCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(
               15.0,
             ),
+            boxShadow: [
+              _boxshadow,
+            ],
           ),
           child: Row(
             children: [
@@ -56,7 +65,7 @@ class ScheduleCard extends StatelessWidget {
                   color: opacityColor,
                 ),
                 child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Text(
                         lectureStartTime,
@@ -70,11 +79,21 @@ class ScheduleCard extends StatelessWidget {
                         ),
                       ),
                       Text(
+                        'to',
+                        style: TextStyle(
+                          color: _theme.textTheme.headline1!.color,
+                          fontWeight: FontWeight.w300,
+                          fontSize: 16.0,
+                          letterSpacing: 1.0,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      Text(
                         lectureEndTime,
                         style: TextStyle(
                           color: _theme.textTheme.headline1!.color,
                           fontWeight: FontWeight.w400,
-                          fontSize: 12.0,
+                          fontSize: 16.0,
                           letterSpacing: 1.0,
                         ),
                         textAlign: TextAlign.center,
@@ -102,7 +121,19 @@ class ScheduleCard extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(
-                      height: 6.0,
+                      height: 8.0,
+                    ),
+                    Text(
+                      'Batch : C13',
+                      style: TextStyle(
+                        color: _theme.textTheme.headline2!.color,
+                        fontWeight: FontWeight.w300,
+                        fontSize: 17.0,
+                        letterSpacing: 1.0,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10.0,
                     ),
                     Row(
                       children: [
