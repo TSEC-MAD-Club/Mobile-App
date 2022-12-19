@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 
 import '../utils/image_assets.dart';
 
-
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
