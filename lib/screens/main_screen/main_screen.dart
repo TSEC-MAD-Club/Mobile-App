@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -160,7 +161,7 @@ class MainScreenAppBar extends ConsumerWidget {
                       width: MediaQuery.of(context).size.width * 0.9,
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                          image: NetworkImage(item),
+                          image: CachedNetworkImageProvider(item),
                           fit: BoxFit.cover,
                           colorFilter: ColorFilter.mode(
                             Colors.white.withOpacity(1),
