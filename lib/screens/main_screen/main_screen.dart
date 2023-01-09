@@ -87,9 +87,9 @@ class MainScreenAppBar extends ConsumerWidget {
 
   final EdgeInsets _sidePadding;
   static const List<String> imgList = [
+    'https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/events%2FWhatsApp%20Image%202022-12-13%20at%2019.16.12.jpeg?alt=media&token=fcb02f10-a68f-4a59-aa13-11e3b99134c2',
     'https://assets.devfolio.co/hackathons/d2e152245d8146898efc542304ef6653/assets/cover/694.png',
-    'https://assets.devfolio.co/hackathons/d2e152245d8146898efc542304ef6653/assets/cover/694.png',
-    'https://assets.devfolio.co/hackathons/d2e152245d8146898efc542304ef6653/assets/cover/694.png',
+    'https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/events%2FWhatsApp%20Image%202022-12-13%20at%2019.16.12.jpeg?alt=media&token=fcb02f10-a68f-4a59-aa13-11e3b99134c2',
     'https://assets.devfolio.co/hackathons/d2e152245d8146898efc542304ef6653/assets/cover/694.png'
   ];
 
@@ -156,20 +156,33 @@ class MainScreenAppBar extends ConsumerWidget {
             items: imgList
                 .map(
                   (item) => GestureDetector(
-                      child: ClipRRect(
-                          borderRadius: BorderRadius.circular(20.0),
-                          child: Image.network(
-                            item,
-                            fit: BoxFit.cover,
-                          )),
-                      onTap: () => GoRouter.of(context).push("/details_page")),
+                    child: Container(
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: NetworkImage(item),
+                          fit: BoxFit.cover,
+                          colorFilter: ColorFilter.mode(
+                            Colors.white.withOpacity(1),
+                            BlendMode.modulate,
+                          ),
+                        ),
+                        color: Colors.white,
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(20),
+                        ),
+                      ),
+                    ),
+                    onTap: () => GoRouter.of(context).push("/details_page"),
+                  ),
                 )
                 .toList(),
             options: CarouselOptions(
-                autoPlay: true,
-                aspectRatio: 2.0,
-                enlargeCenterPage: true,
-                viewportFraction: 1),
+              autoPlay: true,
+              aspectRatio: 2,
+              enlargeCenterPage: true,
+              viewportFraction: 1,
+            ),
           ),
         ],
       ),

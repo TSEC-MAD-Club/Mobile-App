@@ -10,6 +10,7 @@ class ImageAssets {
 
   // icons
   static const _iconRoot = "$_root/icons";
+
   static const locationIcon = "$_iconRoot/location.png";
   static const login = "$_root/app_bar/login.png";
   static const callIcon = "$_iconRoot/call.png";
@@ -18,6 +19,7 @@ class ImageAssets {
   static const committeesIcon = "$_iconRoot/committees.png";
   static const meetingIcon = "$_iconRoot/meeting.png";
   static const settingIcon = "$_iconRoot/setting.png";
+  static const tsecapplogo = "$_iconRoot/tsecapplogo.png";
 
   // committee logos
   static const _committeeLogo = "$_root/committee_logo";
