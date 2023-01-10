@@ -112,7 +112,7 @@ class _CustomScaffoldState extends ConsumerState<CustomScaffold>
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 DrawerListItem(
-                  onTap: () => _navigate("/"),
+                  onTap: () => _navigate("/main"),
                   icon: Image.asset(
                     ImageAssets.homeIcon,
                     width: 24,
