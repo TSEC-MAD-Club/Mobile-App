@@ -1,7 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -9,6 +7,7 @@ import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tsec_app/models/event_model/event_model.dart';
 import 'package:tsec_app/screens/event_detail_screen/event_details.dart';
+import 'package:tsec_app/screens/splash_screen.dart';
 import 'firebase_options.dart';
 import 'models/notification_model/notification_model.dart';
 import 'provider/app_state_provider.dart';
@@ -41,8 +40,6 @@ Future<void> main() async {
   FirebaseMessaging.onBackgroundMessage(_handleBackgroundMessage);
 
   initGetIt();
-
-  // if (kDebugMode) _setupEmulators();
 
   final _sharedPrefs = await SharedPreferences.getInstance();
   runApp(
@@ -80,11 +77,15 @@ class _TSECAppState extends ConsumerState<TSECApp> {
       routes: [
         GoRoute(
           path: "/",
-          builder: (context, state) => const MainScreen(),
+          builder: (context, state) => const SplashScreen(),
           redirect: (_) {
             if (ref.read(appStateProvider).isFirstOpen) return "/theme";
             return null;
           },
+        ),
+        GoRoute(
+          path: "/main",
+          builder: (context, state) => const MainScreen(),
         ),
         GoRoute(
           path: "/notifications",
@@ -201,9 +202,4 @@ class _TSECAppState extends ConsumerState<TSECApp> {
       );
     }
   }
-}
-
-void _setupEmulators() {
-  FirebaseFirestore.instance.useFirestoreEmulator("localhost", 8080);
-  FirebaseStorage.instance.useStorageEmulator("localhost", 9199);
 }

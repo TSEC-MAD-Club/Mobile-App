@@ -49,7 +49,7 @@ class _CommitteesScreenState extends State<CommitteesScreen> {
             title: "Committees & Events",
             image: Image.asset(ImageAssets.committes),
           ),
-          const SizedBox(height: 25),
+          SizedBox(height: MediaQuery.of(context).size.height * 0.03),
           FutureBuilder<List<CommitteeModel>>(
             future: _committees,
             builder: (context, snapshot) {
@@ -58,7 +58,7 @@ class _CommitteesScreenState extends State<CommitteesScreen> {
                 return Column(
                   children: <Widget>[
                     SizedBox(
-                      height: 200,
+                      height: MediaQuery.of(context).size.height * 0.2,
                       child: PageView.builder(
                         onPageChanged: (page) {
                           _currentPage = page;
@@ -84,25 +84,27 @@ class _CommitteesScreenState extends State<CommitteesScreen> {
                       ),
                     ),
                     SizedBox(
-                      height: 600,
+                      height: MediaQuery.of(context).size.height * 0.55,
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
                           horizontal: 50,
                           vertical: 50,
                         ),
-                        child: Column(
-                          children: [
-                            Text(
-                              data[_currentPage].name,
-                              style: Theme.of(context).textTheme.headline4,
-                              textAlign: TextAlign.center,
-                            ),
-                            const SizedBox(height: 15),
-                            Text(
-                              data[_currentPage].description,
-                              textAlign: TextAlign.justify,
-                            ),
-                          ],
+                        child: SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              Text(
+                                data[_currentPage].name,
+                                style: Theme.of(context).textTheme.headline4,
+                                textAlign: TextAlign.center,
+                              ),
+                              const SizedBox(height: 15),
+                              Text(
+                                data[_currentPage].description,
+                                textAlign: TextAlign.justify,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),

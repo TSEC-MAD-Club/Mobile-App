@@ -98,10 +98,10 @@ class MainScreenAppBar extends ConsumerStatefulWidget {
 class _MainScreenAppBarState extends ConsumerState<MainScreenAppBar> {
   List<EventModel> eventList = [];
 
-  List<String> imgList = [
+  static List<String> imgList = [
+    'https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/events%2FWhatsApp%20Image%202022-12-13%20at%2019.16.12.jpeg?alt=media&token=fcb02f10-a68f-4a59-aa13-11e3b99134c2',
     'https://assets.devfolio.co/hackathons/d2e152245d8146898efc542304ef6653/assets/cover/694.png',
-    'https://assets.devfolio.co/hackathons/d2e152245d8146898efc542304ef6653/assets/cover/694.png',
-    'https://assets.devfolio.co/hackathons/d2e152245d8146898efc542304ef6653/assets/cover/694.png',
+    'https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/events%2FWhatsApp%20Image%202022-12-13%20at%2019.16.12.jpeg?alt=media&token=fcb02f10-a68f-4a59-aa13-11e3b99134c2',
     'https://assets.devfolio.co/hackathons/d2e152245d8146898efc542304ef6653/assets/cover/694.png'
   ];
 
@@ -123,13 +123,13 @@ class _MainScreenAppBarState extends ConsumerState<MainScreenAppBar> {
         }));
   }
 
-  static const _sidePadding = EdgeInsets.symmetric(horizontal: 15);
+  //static const _sidePadding = EdgeInsets.symmetric(horizontal: 15);
   static int _currentIndex = 0;
   @override
   Widget build(BuildContext context) {
     fetchEventDetails();
     return Padding(
-      padding: _sidePadding.copyWith(top: 15),
+      padding: widget._sidePadding.copyWith(top: 15),
       child: Column(
         children: [
           Row(
@@ -193,7 +193,7 @@ class _MainScreenAppBarState extends ConsumerState<MainScreenAppBar> {
                           borderRadius: BorderRadius.circular(20.0),
                           child: Image.network(
                             item,
-                            fit: BoxFit.contain,
+                            fit: BoxFit.cover,
                           )),
                       onTap: () => GoRouter.of(context)
                               .pushNamed("details_page", queryParams: {

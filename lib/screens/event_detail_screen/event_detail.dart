@@ -1,53 +1,30 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tsec_app/models/event_model/event_model.dart';
 
-import 'package:url_launcher/url_launcher_string.dart';
-
-class EventDetail extends ConsumerStatefulWidget {
-  final EventModel eventModel;
-  const EventDetail({Key? key, required this.eventModel}) : super(key: key);
+class EventDetail extends StatefulWidget {
+  const EventDetail({Key? key}) : super(key: key);
 
   @override
-  ConsumerState<EventDetail> createState() => _EventDetailState();
+  State<EventDetail> createState() => _EventDetailState();
 }
 
-class _EventDetailState extends ConsumerState<EventDetail> {
-  List<EventModel> eventList = [];
-
-  void launchUrl() async {
-    var url = widget.eventModel.eventRegistrationUrl;
-
-    if (await canLaunchUrlString(url)) {
-      await launchUrlString(url);
-    } else
-      throw "Could not launch url";
-  }
+class _EventDetailState extends State<EventDetail> {
+  final String discription =
+      "Nobody wants to stare at a blank wall all day long";
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
-        alignment: Alignment.topCenter,
         children: [
           CachedNetworkImage(
-            imageUrl: widget.eventModel.imageUrl,
-            alignment: Alignment.center,
-            color: Colors.white.withOpacity(0.4),
-            colorBlendMode: BlendMode.modulate,
-            fit: BoxFit.fill,
-            height: MediaQuery.of(context).size.height * 0.5,
-          ),
-          CachedNetworkImage(
-            imageUrl: widget.eventModel.imageUrl,
+            imageUrl:
+                "https://assets.devfolio.co/hackathons/d2e152245d8146898efc542304ef6653/assets/cover/694.png",
             fit: BoxFit.cover,
-            alignment: Alignment.center,
-            height: MediaQuery.of(context).size.height * 0.3,
+            height: 220,
           ),
           Padding(
-            padding:
-                EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.29),
+            padding: const EdgeInsets.only(top: 200),
             child: Container(
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
@@ -65,21 +42,15 @@ class _EventDetailState extends ConsumerState<EventDetail> {
                           const EdgeInsets.only(top: 20, left: 20, right: 20),
                       child: Row(
                         children: [
-                          Expanded(
-                            flex: 10,
-                            child: Text(
-                              widget.eventModel.eventName,
-                              style: const TextStyle(
-                                  fontSize: 20, color: Colors.black),
-                            ),
+                          const Text(
+                            "TSEC HACKS 2022",
+                            style: TextStyle(fontSize: 20, color: Colors.black),
                           ),
                           Expanded(
                             child: Container(),
                           ),
                           ElevatedButton(
-                            onPressed: () {
-                              launchUrl();
-                            },
+                            onPressed: () {},
                             child: const Text("Register"),
                             style: ElevatedButton.styleFrom(
                               padding: const EdgeInsets.only(
@@ -94,14 +65,14 @@ class _EventDetailState extends ConsumerState<EventDetail> {
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 20),
                       child: Row(
-                        children: [
-                          const Icon(Icons.location_on),
-                          const SizedBox(
+                        children: const [
+                          Icon(Icons.location_on),
+                          SizedBox(
                             width: 5,
                           ),
                           Text(
-                            widget.eventModel.eventLocation,
-                            style: const TextStyle(
+                            "302, Old Building",
+                            style: TextStyle(
                                 color: Colors.black,
                                 fontWeight: FontWeight.w400,
                                 fontSize: 16),
@@ -112,16 +83,14 @@ class _EventDetailState extends ConsumerState<EventDetail> {
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 20),
                       child: Row(
-                        children: [
-                          const Icon(Icons.calendar_month),
-                          const SizedBox(
+                        children: const [
+                          Icon(Icons.calendar_month),
+                          SizedBox(
                             width: 5,
                           ),
                           Text(
-                            widget.eventModel.eventTime +
-                                " " +
-                                widget.eventModel.eventDate,
-                            style: const TextStyle(
+                            "3:00 PM, 11th july 2022",
+                            style: TextStyle(
                                 color: Colors.black,
                                 fontWeight: FontWeight.w400,
                                 fontSize: 16),
@@ -147,7 +116,7 @@ class _EventDetailState extends ConsumerState<EventDetail> {
                       padding:
                           const EdgeInsets.only(left: 20, top: 10, right: 20),
                       child: Text(
-                        widget.eventModel.eventDescription,
+                        discription,
                         style: const TextStyle(
                             height: 1.6, color: Colors.black, fontSize: 14),
                       ),
