@@ -1,14 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../utils/themes.dart';
 
-class LoginWidget extends StatefulWidget {
+final emailTextProvider = StateProvider(((ref) {
+  return "username";
+}));
+
+final passwordTextProvider = StateProvider(((ref) {
+  return "passoword";
+}));
+
+class LoginWidget extends ConsumerStatefulWidget {
   const LoginWidget({Key? key}) : super(key: key);
   @override
   _LoginWidgetState createState() => _LoginWidgetState();
 }
 
-class _LoginWidgetState extends State<LoginWidget> {
+class _LoginWidgetState extends ConsumerState<LoginWidget> {
+  final TextEditingController _emailTextEditingController =
+      TextEditingController();
+  final TextEditingController _passwordTextEditingController =
+      TextEditingController();
   @override
   Widget build(BuildContext context) {
     final brightness = Theme.of(context).brightness;
@@ -31,6 +44,12 @@ class _LoginWidgetState extends State<LoginWidget> {
                           ? shadowLightModeTextFields
                           : shadowDarkModeTextFields),
                   child: TextField(
+                    controller: _emailTextEditingController,
+                    onSubmitted: (value) {
+                      ref
+                          .watch(emailTextProvider.notifier)
+                          .update((state) => value);
+                    },
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(18.0),
@@ -56,6 +75,12 @@ class _LoginWidgetState extends State<LoginWidget> {
                         : shadowDarkModeTextFields,
                   ),
                   child: TextField(
+                    controller: _passwordTextEditingController,
+                    onSubmitted: (value) {
+                      ref
+                          .watch(passwordTextProvider.notifier)
+                          .update((state) => value);
+                    },
                     obscureText: true,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(

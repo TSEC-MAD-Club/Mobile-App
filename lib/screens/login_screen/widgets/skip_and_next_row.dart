@@ -29,15 +29,7 @@ class SkipAndNextRow extends StatelessWidget {
                   MaterialPageRoute(builder: (context) => const MainScreen()),
                 );
               },
-              child: IconButton(
-                icon: const Icon(Icons.arrow_forward),
-                onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                        builder: (context) => const LoginScreen()),
-                  );
-                },
-              ),
+              child: const Icon(Icons.arrow_forward),
               style: ButtonStyle(
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
