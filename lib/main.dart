@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tsec_app/screens/event_detail_screen/event_details.dart';
+import 'package:tsec_app/screens/login_screen/login_screen.dart';
 import 'package:tsec_app/screens/splash_screen.dart';
 import 'firebase_options.dart';
 import 'models/notification_model/notification_model.dart';
@@ -76,15 +77,19 @@ class _TSECAppState extends ConsumerState<TSECApp> {
         GoRoute(
           path: "/",
           builder: (context, state) => const SplashScreen(),
-          redirect: (_) {
-            if (ref.read(appStateProvider).isFirstOpen) return "/theme";
-            return null;
-          },
         ),
         GoRoute(
           path: "/main",
           builder: (context, state) => const MainScreen(),
         ),
+        GoRoute(
+          path: '/login', 
+          builder: (context, state) => const LoginScreen(),
+          ), 
+        GoRoute(
+          path: "/splash",
+          builder: (context, state) => const SplashScreen(), 
+          ), 
         GoRoute(
           path: "/notifications",
           builder: (context, state) => const NotificationScreen(),
