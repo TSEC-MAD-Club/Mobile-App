@@ -1,7 +1,12 @@
+import 'dart:developer';
+
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:tsec_app/provider/firebase_provider.dart';
 import 'package:tsec_app/screens/main_screen/widget/card_display.dart';
 import 'package:tsec_app/utils/timetable_util.dart';
 import '../../utils/image_assets.dart';
@@ -61,8 +66,18 @@ class MainScreen extends ConsumerWidget {
                   dateTextStyle: _theme.textTheme.subtitle2!,
                   initialSelectedDate: DateTime.now(),
                   selectionColor: Colors.blue,
-                  daysCount: 7,
-                  onDateChange: ((selectedDate) {
+                  onDateChange: ((selectedDate) async {
+                    // final date = selectedDate.day.toString() +"/" +
+                    //     selectedDate.month.toString() + "/" +
+                    //     selectedDate.year.toString();
+                    // log(date.toString()); 
+                    // final db = ref.watch(firestoreProvider);
+                    // final data = await db
+                    //     .collection("Holidays")
+                    //     .where("date", isEqualTo: date)
+                    //     .get().then((value) => print(value.docs
+                    //     .map((e) => e.data()['Day'])));
+                    
                     ref
                         .read(dayProvider.notifier)
                         .update((state) => getweekday(selectedDate.weekday));
@@ -90,7 +105,8 @@ class MainScreenAppBar extends ConsumerWidget {
     'https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/events%2FWhatsApp%20Image%202022-12-13%20at%2019.16.12.jpeg?alt=media&token=fcb02f10-a68f-4a59-aa13-11e3b99134c2',
     'https://assets.devfolio.co/hackathons/d2e152245d8146898efc542304ef6653/assets/cover/694.png',
     'https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/events%2FWhatsApp%20Image%202022-12-13%20at%2019.16.12.jpeg?alt=media&token=fcb02f10-a68f-4a59-aa13-11e3b99134c2',
-    'https://assets.devfolio.co/hackathons/d2e152245d8146898efc542304ef6653/assets/cover/694.png'
+    'https://assets.devfolio.co/hackathons/d2e152245d8146898efc542304ef6653/assets/cover/694.png',
+    'https://tsec-hacks-2023.devfolio.co/_next/image?url=https%3A%2F%2Fassets.devfolio.co%2Fhackathons%2F93fcebe58ecd49a597963853eb7deb66%2Fassets%2Fcover%2F129.png&w=1440&q=100'
   ];
 
   @override

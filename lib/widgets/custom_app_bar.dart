@@ -37,15 +37,6 @@ class CustomAppBar extends ConsumerWidget with PreferredSizeWidget {
                     icon: const Icon(Icons.chevron_left_rounded),
                     onPressed: () => Navigator.pop(context),
                   ),
-                  _buildNavigation(
-                    context,
-                    icon: const Icon(Icons.notifications),
-                    onPressed: () {
-                      GoRouter.of(context).push(
-                        '/notifications',
-                      );
-                    },
-                  ),
                 ],
               ),
               Row(
