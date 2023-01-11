@@ -145,9 +145,8 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
             children: <Widget>[
               Container(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 width: size.width,
-                height: 0.18 * size.height,
                 decoration: BoxDecoration(
                   color: Theme.of(context).colorScheme.secondary,
                   borderRadius:

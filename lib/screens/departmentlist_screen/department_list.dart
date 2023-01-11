@@ -19,7 +19,8 @@ class DepartmentListScreen extends StatelessWidget {
               padding: const EdgeInsets.all(20),
               sliver: SliverGrid.count(
                 crossAxisCount: 2,
-                childAspectRatio: 173 / 224,
+                childAspectRatio:
+                    (MediaQuery.of(context).size.width > 400) ? 1.5 : 173 / 224,
                 crossAxisSpacing: 20,
                 mainAxisSpacing: 20,
                 children: const [
