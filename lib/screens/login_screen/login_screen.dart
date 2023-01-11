@@ -24,7 +24,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 description: "Let's sign you in.",
               ),
               LoginWidget(),
-              SkipAndNextRow(),
             ],
           ),
         ));
