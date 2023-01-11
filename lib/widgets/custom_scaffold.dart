@@ -144,7 +144,7 @@ class _CustomScaffoldState extends ConsumerState<CustomScaffold>
                   title: "Departments",
                 ),
                 Link(
-                  uri: Uri.parse("mailto:darshanrander@gmail.com"),
+                  uri: Uri.parse("mailto:krishnadave671@gmail.com"),
                   builder: (context, followLink) => DrawerListItem(
                     onTap: () => followLink?.call(),
                     icon: Image.asset(
