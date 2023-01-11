@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tsec_app/provider/firebase_provider.dart';
 import 'package:tsec_app/screens/main_screen/widget/schedule_card.dart';
 import '../../../models/timetable_model/timetable_model.dart';
 import '../../../provider/timetable_provider.dart';
@@ -27,7 +28,7 @@ class _CardDisplayState extends ConsumerState<CardDisplay> {
 
   @override
   Widget build(BuildContext context) {
-    var data = ref.watch(weekTimetableProvider);
+    final data = ref.watch(weekTimetableProvider);
     String day = ref.watch(dayProvider);
     return data.when(
         data: ((data) {
@@ -54,8 +55,8 @@ class _CardDisplayState extends ConsumerState<CardDisplay> {
                       lectureEndTime: timeTableDay[index].lectureEndTime,
                       lectureName: timeTableDay[index].lectureName,
                       lectureStartTime: timeTableDay[index].lectureStartTime,
-                      facultyImageurl:
-                          "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fcomps%2Fdarakhshankhan.jpg?alt=media&token=18e920bc-a67c-4208-b838-45d9a7845a85",
+                      facultyImageurl: 
+                      timeTableDay[index].lectureFacultyImageurl,
                       facultyName: timeTableDay[index].lectureFacultyName,
                     );
                   },
