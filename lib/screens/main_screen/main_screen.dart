@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -189,13 +190,24 @@ class _MainScreenAppBarState extends ConsumerState<MainScreenAppBar> {
             items: imgList
                 .map(
                   (item) => GestureDetector(
-                      child: ClipRRect(
-                          borderRadius: BorderRadius.circular(20.0),
-                          child: Image.network(
-                            item,
-                            fit: BoxFit.cover,
-                          )),
-                      onTap: () => GoRouter.of(context)
+                       child: Container(
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: CachedNetworkImageProvider(item),
+                          fit: BoxFit.cover,
+                          colorFilter: ColorFilter.mode(
+                            Colors.white.withOpacity(1),
+                            BlendMode.modulate,
+                          ),
+                        ),
+                        color: Colors.white,
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(20),
+                        ),
+                      ),
+                    ),
+                    onTap: () => GoRouter.of(context)
                               .pushNamed("details_page", queryParams: {
                             "Event Name": eventList[_currentIndex].eventName,
                             "Event Time": eventList[_currentIndex].eventTime,
@@ -207,7 +219,8 @@ class _MainScreenAppBarState extends ConsumerState<MainScreenAppBar> {
                             "Event Image Url": item,
                             "Event Location":
                                 eventList[_currentIndex].eventLocation
-                          })),
+                          }),
+                  ),
                 )
                 .toList(),
             options: CarouselOptions(
