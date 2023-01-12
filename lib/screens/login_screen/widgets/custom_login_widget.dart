@@ -134,21 +134,21 @@ class _LoginWidgetState extends ConsumerState<LoginWidget> {
                 child: ElevatedButton(
                   onPressed: () {
                     ref.watch(authProvider).signInUser(
-                        _emailTextEditingController.text,
-                        _passwordTextEditingController.text);
+                        _emailTextEditingController.text.trim(),
+                        _passwordTextEditingController.text.trim());
 
                     ref.watch(authProvider).fetchStudentDetails(
                         _emailTextEditingController.text.trim());
 
-                    log(ref
-                        .watch(studentModelProvider.notifier)
-                        .state
-                        .toString());
+                    // log(ref
+                    //     .watch(studentModelProvider.notifier)
+                    //     .state
+                    //     .toString());
 
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                          builder: (context) => const MainScreen()),
-                    );
+                    // Navigator.of(context).push(
+                    //   MaterialPageRoute(
+                    //       builder: (context) => const MainScreen()),
+                    // );
                   },
                   child: const Icon(Icons.arrow_forward),
                   style: ButtonStyle(

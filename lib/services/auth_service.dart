@@ -34,21 +34,25 @@ class AuthService {
   Future<StudentModel?> fetchStudentDetails(String email) async {
     StudentModel? studentModel;
 
-    firebaseFirestore
-        .collection("Students")
-        .where("email", isEqualTo: email)
-        .get()
-        .then(
-      (res) {
-        log(res.docs.toString());
-        var a = res.docs.map((e) {
-          return e.data()["email"];
-        });
+    try {
+      firebaseFirestore
+          .collection("Students ")
+          .where("email", isEqualTo: email)
+          .get()
+          .then(
+        (res) {
+          log(res.docs.length.toString());
+          var a = res.docs.map((e) {
+            return e.data();
+          });
 
-        log(a.toString());
-      },
-      onError: (e) => print("Error completing: $e"),
-    );
+          log(a.toString());
+        },
+        onError: (e) => print("Error completing: $e"),
+      );
+    } on FirebaseException catch (e) {
+      log(e.stackTrace.toString() + " " + e.message.toString());
+    }
 
     return studentModel;
   }
