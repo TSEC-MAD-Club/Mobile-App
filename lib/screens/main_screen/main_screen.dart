@@ -99,12 +99,7 @@ class MainScreenAppBar extends ConsumerStatefulWidget {
 class _MainScreenAppBarState extends ConsumerState<MainScreenAppBar> {
   List<EventModel> eventList = [];
 
-  static List<String> imgList = [
-    'https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/events%2FWhatsApp%20Image%202022-12-13%20at%2019.16.12.jpeg?alt=media&token=fcb02f10-a68f-4a59-aa13-11e3b99134c2',
-    'https://assets.devfolio.co/hackathons/d2e152245d8146898efc542304ef6653/assets/cover/694.png',
-    'https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/events%2FWhatsApp%20Image%202022-12-13%20at%2019.16.12.jpeg?alt=media&token=fcb02f10-a68f-4a59-aa13-11e3b99134c2',
-    'https://assets.devfolio.co/hackathons/d2e152245d8146898efc542304ef6653/assets/cover/694.png'
-  ];
+  static List<String> imgList = [];
 
   void fetchEventDetails() {
     ref.watch(eventListProvider).when(
@@ -117,6 +112,8 @@ class _MainScreenAppBarState extends ConsumerState<MainScreenAppBar> {
           for (var data in eventList) {
             imgList.add(data.imageUrl);
           }
+
+          log(imgList.toString());
         }),
         error: ((error, stackTrace) => log(error.toString())),
         loading: (() {
