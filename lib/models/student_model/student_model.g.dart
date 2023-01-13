@@ -11,7 +11,7 @@ StudentModel _$StudentModelFromJson(Map<String, dynamic> json) => StudentModel(
       branch: json['Branch'] as String,
       name: json['Name'] as String,
       email: json['email'] as String,
-      gradyear: json['gradyear'] as int,
+      gradyear: json['gradyear'] as String,
       phoneNum: json['phoneNo'] as String,
     );
 

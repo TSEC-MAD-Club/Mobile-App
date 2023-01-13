@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tsec_app/models/student_model/student_model.dart';
 import 'package:tsec_app/services/auth_service.dart';
@@ -23,6 +25,7 @@ class AuthProvider {
 
   void fetchStudentDetails(String email) async {
     StudentModel? studentModel = await _authService.fetchStudentDetails(email);
+    log("model " + studentModel.toString());
     _ref.watch(studentModelProvider.notifier).update((state) => studentModel);
   }
 }

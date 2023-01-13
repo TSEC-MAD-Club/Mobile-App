@@ -140,10 +140,10 @@ class _LoginWidgetState extends ConsumerState<LoginWidget> {
                     ref.watch(authProvider).fetchStudentDetails(
                         _emailTextEditingController.text.trim());
 
-                    // log(ref
-                    //     .watch(studentModelProvider.notifier)
-                    //     .state
-                    //     .toString());
+                    log(ref
+                        .watch(studentModelProvider.notifier)
+                        .state
+                        .toString());
 
                     // Navigator.of(context).push(
                     //   MaterialPageRoute(

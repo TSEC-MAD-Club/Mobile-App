@@ -35,21 +35,18 @@ class AuthService {
     StudentModel? studentModel;
 
     try {
-      firebaseFirestore
+      var studentSnap = await firebaseFirestore
           .collection("Students ")
           .where("email", isEqualTo: email)
-          .get()
-          .then(
-        (res) {
-          log(res.docs.length.toString());
-          var a = res.docs.map((e) {
-            return e.data();
-          });
+          .get();
 
-          log(a.toString());
-        },
-        onError: (e) => print("Error completing: $e"),
-      );
+      var studentDoc = studentSnap.docs.map((e) {
+        return e.data();
+      });
+
+      for (var element in studentDoc) {
+        studentModel = StudentModel.fromJson(element);
+      }
     } on FirebaseException catch (e) {
       log(e.stackTrace.toString() + " " + e.message.toString());
     }

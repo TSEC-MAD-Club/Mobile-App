@@ -14,7 +14,7 @@ class StudentModel {
   @JsonKey(name: "email")
   final String email;
   @JsonKey(name: "gradyear")
-  final int gradyear;
+  final String gradyear;
   @JsonKey(name: "phoneNo")
   final String phoneNum;
   StudentModel({
