@@ -8,49 +8,63 @@ import 'widgets/skip_and_next_row.dart';
 
 class ThemeScreen extends StatelessWidget {
   const ThemeScreen({Key? key}) : super(key: key);
+  Widget content(double _height, double _width, BuildContext context) {
+    return Column(
+      children: <Widget>[
+        Consumer(builder: (context, ref, child) {
+          final themeMode = ref.watch(themeProvider);
+          return Image.asset(
+            themeMode == ThemeMode.dark ? ImageAssets.moon : ImageAssets.sun,
+            height: 0.25 * _height,
+            width: 0.54 * _width,
+          );
+        }),
+        const SizedBox(height: 40),
+        Text(
+          "Choose a style",
+          style: Theme.of(context).textTheme.headline3,
+        ),
+        const SizedBox(height: 15),
+        Text(
+          "Pop or subtle. Day or night. \n Customize your interface.",
+          style: Theme.of(context).textTheme.subtitle1,
+        ),
+        SizedBox(height: 0.05 * _height),
+        Consumer(
+          builder: (context, ref, child) => CustomToggleButton(
+            values: const ['Light', 'Dark'],
+            onToggleCallback: () {
+              ref.read(themeProvider.notifier).switchTheme();
+            },
+          ),
+        ),
+        (_height > _width)
+            ? const Spacer()
+            : const SizedBox(
+                height: 50,
+              ),
+        //const Spacer(),
+        const SkipAndNextRow(),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
 
     return Scaffold(
       body: SizedBox(
-        height: size.height,
-        width: size.width,
-        child: Column(
-          children: <Widget>[
-            const SizedBox(height: 100),
-            Consumer(builder: (context, ref, child) {
-              final themeMode = ref.watch(themeProvider);
-              return Image.asset(
-                themeMode == ThemeMode.dark
-                    ? ImageAssets.moon
-                    : ImageAssets.sun,
-                height: 0.25 * size.height,
-                width: 0.54 * size.width,
-              );
-            }),
-            const SizedBox(height: 40),
-            Text(
-              "Choose a style",
-              style: Theme.of(context).textTheme.headline3,
-            ),
-            const SizedBox(height: 15),
-            Text(
-              "Pop or subtle. Day or night. \n Customize your interface.",
-              style: Theme.of(context).textTheme.subtitle1,
-            ),
-            SizedBox(height: 0.05 * size.height),
-            Consumer(
-              builder: (context, ref, child) => CustomToggleButton(
-                values: const ['Light', 'Dark'],
-                onToggleCallback: () {
-                  ref.read(themeProvider.notifier).switchTheme();
-                },
-              ),
-            ),
-            const Spacer(),
-            const SkipAndNextRow(),
-          ],
+        height: height,
+        width: width,
+        child: Padding(
+          padding: const EdgeInsets.only(top: 100.0),
+          child: (height > width)
+              ? content(height, width, context)
+              : SingleChildScrollView(
+                  child: content(height, width, context),
+                ),
         ),
       ),
     );
