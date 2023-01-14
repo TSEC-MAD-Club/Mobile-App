@@ -1,14 +1,30 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tsec_app/models/event_model/event_model.dart';
 
-class EventDetail extends StatefulWidget {
-  const EventDetail({Key? key}) : super(key: key);
+import 'package:url_launcher/url_launcher_string.dart';
+
+class EventDetail extends ConsumerStatefulWidget {
+  final EventModel eventModel;
+  const EventDetail({Key? key, required this.eventModel}) : super(key: key);
 
   @override
-  State<EventDetail> createState() => _EventDetailState();
+  ConsumerState<EventDetail> createState() => _EventDetailState();
 }
 
-class _EventDetailState extends State<EventDetail> {
+class _EventDetailState extends ConsumerState<EventDetail> {
+  List<EventModel> eventList = [];
+
+  void launchUrl() async {
+    var url = widget.eventModel.eventRegistrationUrl;
+
+    if (await canLaunchUrlString(url)) {
+      await launchUrlString(url);
+    } else
+      throw "Could not launch url";
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,17 +32,17 @@ class _EventDetailState extends State<EventDetail> {
         alignment: Alignment.topCenter,
         children: [
           CachedNetworkImage(
-            imageUrl:
-                "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/events%2FWhatsApp%20Image%202022-12-13%20at%2019.16.12.jpeg?alt=media&token=fcb02f10-a68f-4a59-aa13-11e3b99134c2",
+            imageUrl: widget.eventModel.imageUrl,
+            alignment: Alignment.center,
             color: Colors.white.withOpacity(0.4),
             colorBlendMode: BlendMode.modulate,
             fit: BoxFit.fill,
             height: MediaQuery.of(context).size.height * 0.5,
           ),
           CachedNetworkImage(
-            imageUrl:
-                "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/events%2FWhatsApp%20Image%202022-12-13%20at%2019.16.12.jpeg?alt=media&token=fcb02f10-a68f-4a59-aa13-11e3b99134c2",
+            imageUrl: widget.eventModel.imageUrl,
             fit: BoxFit.cover,
+            alignment: Alignment.center,
             height: MediaQuery.of(context).size.height * 0.3,
           ),
           Padding(
@@ -35,12 +51,13 @@ class _EventDetailState extends State<EventDetail> {
             child: Container(
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
-              decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(40),
-                    topRight: Radius.circular(40),
-                  )),
+              decoration: BoxDecoration(
+                color: Theme.of(context).primaryColor,
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(40),
+                  topRight: Radius.circular(40),
+                ),
+              ),
               child: SingleChildScrollView(
                 child: Column(
                   children: [
@@ -49,21 +66,27 @@ class _EventDetailState extends State<EventDetail> {
                           const EdgeInsets.only(top: 20, left: 20, right: 20),
                       child: Row(
                         children: [
-                          const Text(
-                            "TSEC HACKS 2022",
-                            style: TextStyle(fontSize: 20, color: Colors.black),
+                          Expanded(
+                            flex: 10,
+                            child: Text(
+                              widget.eventModel.eventName,
+                              style: Theme.of(context).textTheme.bodyLarge,
+                            ),
                           ),
                           Expanded(
                             child: Container(),
                           ),
                           ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              launchUrl();
+                            },
                             child: const Text("Register"),
                             style: ElevatedButton.styleFrom(
                               padding: const EdgeInsets.only(
                                   top: 0, bottom: 0, right: 20, left: 20),
                               shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(5)),
+                                borderRadius: BorderRadius.circular(5),
+                              ),
                             ),
                           )
                         ],
@@ -72,17 +95,17 @@ class _EventDetailState extends State<EventDetail> {
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 20),
                       child: Row(
-                        children: const [
-                          Icon(Icons.location_on),
-                          SizedBox(
+                        children: [
+                          Icon(
+                            Icons.location_on,
+                            color: Theme.of(context).backgroundColor,
+                          ),
+                          const SizedBox(
                             width: 5,
                           ),
                           Text(
-                            "302, Old Building",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.w400,
-                                fontSize: 16),
+                            widget.eventModel.eventLocation,
+                            style: Theme.of(context).textTheme.bodyText2,
                           )
                         ],
                       ),
@@ -90,17 +113,19 @@ class _EventDetailState extends State<EventDetail> {
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 20),
                       child: Row(
-                        children: const [
-                          Icon(Icons.calendar_month),
-                          SizedBox(
+                        children: [
+                          Icon(
+                            Icons.calendar_month,
+                            color: Theme.of(context).backgroundColor,
+                          ),
+                          const SizedBox(
                             width: 5,
                           ),
                           Text(
-                            "3:00 PM, 11th july 2022",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.w400,
-                                fontSize: 16),
+                            widget.eventModel.eventTime +
+                                " " +
+                                widget.eventModel.eventDate,
+                            style: Theme.of(context).textTheme.bodyText2,
                           ),
                         ],
                       ),
@@ -108,35 +133,32 @@ class _EventDetailState extends State<EventDetail> {
                     Padding(
                       padding: const EdgeInsets.only(top: 20, left: 20),
                       child: Row(
-                        children: const [
+                        children: [
                           Text(
                             "About",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                                color: Colors.black),
+                            style: Theme.of(context).textTheme.headline5,
                           ),
                         ],
                       ),
                     ),
-                    const Padding(
-                      padding: EdgeInsets.only(left: 20, top: 10, right: 20),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        left: 20,
+                        top: 10,
+                        right: 20,
+                      ),
                       child: Text(
-                        "Nobody wants to stare at a blank wall all day long.",
-                        style: TextStyle(
-                            height: 1.6, color: Colors.black, fontSize: 14),
+                        widget.eventModel.eventDescription,
+                        style: Theme.of(context).textTheme.subtitle2,
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 20, left: 20),
                       child: Row(
-                        children: const [
+                        children: [
                           Text(
                             "Organisers",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                                color: Colors.black),
+                            style: Theme.of(context).textTheme.headline5,
                           ),
                         ],
                       ),
@@ -147,19 +169,17 @@ class _EventDetailState extends State<EventDetail> {
                         children: [
                           CircleAvatar(
                             backgroundImage: const NetworkImage(
-                                'https://cdn.pixabay.com/photo/2013/05/11/08/28/sunset-110305_1280.jpg'),
+                              'https://cdn.pixabay.com/photo/2013/05/11/08/28/sunset-110305_1280.jpg',
+                            ),
                             backgroundColor: Colors.red.shade800,
                             radius: 20,
                           ),
                           const SizedBox(
                             width: 5,
                           ),
-                          const Text(
+                          Text(
                             "TSEC CodeCell",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.w400,
-                                fontSize: 16),
+                            style: Theme.of(context).textTheme.subtitle1,
                           ),
                         ],
                       ),

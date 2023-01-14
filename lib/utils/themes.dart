@@ -115,7 +115,10 @@ const _textTheme = TextTheme(
     fontSize: 20,
     fontWeight: FontWeight.w400,
   ),
-  headline5: TextStyle(),
+  headline5: TextStyle(
+    fontSize: 14,
+    fontWeight: FontWeight.bold,
+  ),
   headline6: TextStyle(),
   bodyText1: TextStyle(
     fontSize: 17,

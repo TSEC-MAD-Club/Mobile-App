@@ -35,7 +35,8 @@ class ScheduleCard extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
       child: InkWell(
         child: Container(
-          height: _size.height * 0.16,
+          height:
+              _size.height > 412 ? _size.height * 0.16 : _size.height * 0.27,
           decoration: BoxDecoration(
             color: _theme.primaryColor,
             borderRadius: BorderRadius.circular(
