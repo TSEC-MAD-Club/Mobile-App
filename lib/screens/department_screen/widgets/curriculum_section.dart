@@ -60,59 +60,64 @@ class _CurriculumSectionState extends State<CurriculumSection> {
             .getResult(url)
             .then((value) => setState(() => _storageResult = value));
 
-        return ListView(
-          shrinkWrap: true,
-          children: [
-            SizedBox(
-              height: 100,
-              child: ListView.separated(
-                shrinkWrap: true,
-                scrollDirection: Axis.horizontal,
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                physics: const BouncingScrollPhysics(),
-                itemBuilder: (context, index) {
-                  return _buildButton(sem: "${index + 1}");
-                },
-                separatorBuilder: (_, __) => const SizedBox(width: 20),
-                itemCount: 8,
-              ),
-            ),
-            IconTheme(
-              data: const IconThemeData(color: kLightModeLightBlue),
-              child: Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: List.generate(
-                    subjects.length,
-                    (index) => _buildSubjects(subjects[index]),
-                  ),
+        return Flexible(
+          flex: 1,
+          child: ListView(
+            physics: const BouncingScrollPhysics(),
+            shrinkWrap: true,
+            children: [
+              SizedBox(
+                height: 100,
+                child: ListView.separated(
+                  shrinkWrap: true,
+                  scrollDirection: Axis.horizontal,
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  physics: const BouncingScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    return _buildButton(sem: "${index + 1}");
+                  },
+                  separatorBuilder: (_, __) => const SizedBox(width: 20),
+                  itemCount: 8,
                 ),
               ),
-            ),
-            // Added row to make sure that it wont take whole
-            // width because of ListView
-            Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 15),
-                  child: TextButton(
-                    style: TextButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      foregroundColor:
-                          Theme.of(context).textTheme.bodyText2!.color,
-                      textStyle: Theme.of(context).textTheme.bodyText2,
-                      backgroundColor: Theme.of(context).colorScheme.secondary,
+              IconTheme(
+                data: const IconThemeData(color: kLightModeLightBlue),
+                child: Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: List.generate(
+                      subjects.length,
+                      (index) => _buildSubjects(subjects[index]),
                     ),
-                    onPressed: _onButtonClick,
-                    child: const Text("Download full syllabus"),
                   ),
                 ),
-              ],
-            ),
-          ],
+              ),
+              // Added row to make sure that it wont take whole
+              // width because of ListView
+              Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15),
+                    child: TextButton(
+                      style: TextButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        foregroundColor:
+                            Theme.of(context).textTheme.bodyText2!.color,
+                        textStyle: Theme.of(context).textTheme.bodyText2,
+                        backgroundColor:
+                            Theme.of(context).colorScheme.secondary,
+                      ),
+                      onPressed: _onButtonClick,
+                      child: const Text("Download full syllabus"),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         );
       },
     );
