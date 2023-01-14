@@ -1,9 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tsec_app/models/event_model/event_model.dart';
 import 'package:tsec_app/screens/event_detail_screen/event_details.dart';
 import 'package:tsec_app/screens/splash_screen.dart';
 import 'firebase_options.dart';
@@ -102,8 +104,22 @@ class _TSECAppState extends ConsumerState<TSECApp> {
           builder: (context, state) => const TPCScreen(),
         ),
         GoRoute(
+          name: "details_page",
           path: "/details_page",
-          builder: (context, state) => const EventDetail(),
+          builder: (context, state) {
+            EventModel eventModel = EventModel(
+                state.queryParams["Event Name"]!,
+                state.queryParams["Event Time"]!,
+                state.queryParams["Event Date"]!,
+                state.queryParams["Event decription"]!,
+                state.queryParams["Event registration url"]!,
+                state.queryParams["Event Image Url"]!,
+                state.queryParams["Event Location"]!);
+
+            return EventDetail(
+              eventModel: eventModel,
+            );
+          },
         ),
         GoRoute(
           path: "/department",

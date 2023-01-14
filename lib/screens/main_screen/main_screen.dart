@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -5,6 +7,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tsec_app/screens/main_screen/widget/card_display.dart';
 import 'package:tsec_app/utils/timetable_util.dart';
+import '../../models/event_model/event_model.dart';
+import '../../provider/event_provider.dart';
 import '../../utils/image_assets.dart';
 import '../../utils/launch_url.dart';
 import '../../utils/themes.dart';
@@ -22,6 +26,7 @@ class MainScreen extends ConsumerWidget {
   ];
 
   static const _sidePadding = EdgeInsets.symmetric(horizontal: 15);
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final _size = MediaQuery.of(context).size;
@@ -79,25 +84,47 @@ class MainScreen extends ConsumerWidget {
   }
 }
 
-class MainScreenAppBar extends ConsumerWidget {
+class MainScreenAppBar extends ConsumerStatefulWidget {
+  final EdgeInsets _sidePadding;
   const MainScreenAppBar({
     Key? key,
     required EdgeInsets sidePadding,
   })  : _sidePadding = sidePadding,
         super(key: key);
-
-  final EdgeInsets _sidePadding;
-  static const List<String> imgList = [
-    'https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/events%2FWhatsApp%20Image%202022-12-13%20at%2019.16.12.jpeg?alt=media&token=fcb02f10-a68f-4a59-aa13-11e3b99134c2',
-    'https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/events%2FWhatsApp%20Image%202022-12-13%20at%2019.16.12.jpeg?alt=media&token=fcb02f10-a68f-4a59-aa13-11e3b99134c2',
-    'https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/events%2FWhatsApp%20Image%202022-12-14%20at%205.12.48%20PM.jpeg?alt=media&token=1a8c0a8a-3a00-4619-91db-927a37c830f7',
-    'https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/events%2FWhatsApp%20Image%202023-01-02%20at%207.11.19%20PM.jpeg?alt=media&token=48bddc2e-7fff-4f1d-a36d-f1d1de098c97'
-  ];
-
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _MainScreenAppBarState();
+}
+
+class _MainScreenAppBarState extends ConsumerState<MainScreenAppBar> {
+  List<EventModel> eventList = [];
+
+  void fetchEventDetails() {
+    ref.watch(eventListProvider).when(data: ((data) {
+      eventList.addAll(data ?? []);
+
+      log(eventList[0].toString());
+
+      imgList.clear();
+      for (var data in eventList) {
+        imgList.add(data.imageUrl);
+      }
+    }), loading: () {
+      log("loading");
+    }, error: (Object error, StackTrace? stackTrace) {
+      log(error.toString());
+    });
+  }
+
+  static List<String> imgList = [];
+
+  //static const _sidePadding = EdgeInsets.symmetric(horizontal: 15);
+  static int _currentIndex = 0;
+  @override
+  Widget build(BuildContext context) {
+    fetchEventDetails();
     return Padding(
-      padding: _sidePadding.copyWith(top: 15),
+      padding: widget._sidePadding.copyWith(top: 15),
       child: Column(
         children: [
           Row(
@@ -189,7 +216,18 @@ class MainScreenAppBar extends ConsumerWidget {
                         ),
                       ),
                     ),
-                    onTap: () => GoRouter.of(context).push("/details_page"),
+                    onTap: () => GoRouter.of(context)
+                        .pushNamed("details_page", queryParams: {
+                      "Event Name": eventList[_currentIndex].eventName,
+                      "Event Time": eventList[_currentIndex].eventTime,
+                      "Event Date": eventList[_currentIndex].eventDate,
+                      "Event decription":
+                          eventList[_currentIndex].eventDescription,
+                      "Event registration url":
+                          eventList[_currentIndex].eventRegistrationUrl,
+                      "Event Image Url": item,
+                      "Event Location": eventList[_currentIndex].eventLocation
+                    }),
                   ),
                 )
                 .toList(),
@@ -197,6 +235,11 @@ class MainScreenAppBar extends ConsumerWidget {
               autoPlay: true,
               enlargeCenterPage: true,
               viewportFraction: .7,
+              onPageChanged: (index, reason) {
+                setState(() {
+                  _currentIndex = index;
+                });
+              },
             ),
           ),
           const SizedBox(
