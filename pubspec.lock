@@ -176,7 +176,6 @@ packages:
       name: cloud_firestore_web
       url: "https://pub.dartlang.org"
     source: hosted
-
     version: "3.2.1"
 
   code_builder:
@@ -359,7 +358,6 @@ packages:
     source: hosted
 
     version: "5.0.11"
-
   firebase_dynamic_links_platform_interface:
     dependency: transitive
     description:

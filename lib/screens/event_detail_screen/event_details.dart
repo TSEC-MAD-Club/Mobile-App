@@ -51,12 +51,13 @@ class _EventDetailState extends ConsumerState<EventDetail> {
             child: Container(
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
-              decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(40),
-                    topRight: Radius.circular(40),
-                  )),
+              decoration: BoxDecoration(
+                color: Theme.of(context).primaryColor,
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(40),
+                  topRight: Radius.circular(40),
+                ),
+              ),
               child: SingleChildScrollView(
                 child: Column(
                   children: [
@@ -65,13 +66,9 @@ class _EventDetailState extends ConsumerState<EventDetail> {
                           const EdgeInsets.only(top: 20, left: 20, right: 20),
                       child: Row(
                         children: [
-                          Expanded(
-                            flex: 10,
-                            child: Text(
-                              widget.eventModel.eventName,
-                              style: const TextStyle(
-                                  fontSize: 20, color: Colors.black),
-                            ),
+                          Text(
+                            widget.eventModel.eventName,
+                            style: Theme.of(context).textTheme.bodyLarge,
                           ),
                           Expanded(
                             child: Container(),
@@ -85,7 +82,8 @@ class _EventDetailState extends ConsumerState<EventDetail> {
                               padding: const EdgeInsets.only(
                                   top: 0, bottom: 0, right: 20, left: 20),
                               shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(5)),
+                                borderRadius: BorderRadius.circular(5),
+                              ),
                             ),
                           )
                         ],
@@ -95,16 +93,16 @@ class _EventDetailState extends ConsumerState<EventDetail> {
                       padding: const EdgeInsets.only(top: 10, left: 20),
                       child: Row(
                         children: [
-                          const Icon(Icons.location_on),
+                          Icon(
+                            Icons.location_on,
+                            color: Theme.of(context).backgroundColor,
+                          ),
                           const SizedBox(
                             width: 5,
                           ),
                           Text(
                             widget.eventModel.eventLocation,
-                            style: const TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.w400,
-                                fontSize: 16),
+                            style: Theme.of(context).textTheme.bodyText2,
                           )
                         ],
                       ),
@@ -113,7 +111,10 @@ class _EventDetailState extends ConsumerState<EventDetail> {
                       padding: const EdgeInsets.only(top: 10, left: 20),
                       child: Row(
                         children: [
-                          const Icon(Icons.calendar_month),
+                          Icon(
+                            Icons.calendar_month,
+                            color: Theme.of(context).backgroundColor,
+                          ),
                           const SizedBox(
                             width: 5,
                           ),
@@ -121,10 +122,7 @@ class _EventDetailState extends ConsumerState<EventDetail> {
                             widget.eventModel.eventTime +
                                 " " +
                                 widget.eventModel.eventDate,
-                            style: const TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.w400,
-                                fontSize: 16),
+                            style: Theme.of(context).textTheme.bodyText2,
                           ),
                         ],
                       ),
@@ -132,36 +130,32 @@ class _EventDetailState extends ConsumerState<EventDetail> {
                     Padding(
                       padding: const EdgeInsets.only(top: 20, left: 20),
                       child: Row(
-                        children: const [
+                        children: [
                           Text(
                             "About",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                                color: Colors.black),
+                            style: Theme.of(context).textTheme.headline5,
                           ),
                         ],
                       ),
                     ),
                     Padding(
-                      padding:
-                          const EdgeInsets.only(left: 20, top: 10, right: 20),
+                      padding: const EdgeInsets.only(
+                        left: 20,
+                        top: 10,
+                        right: 20,
+                      ),
                       child: Text(
                         widget.eventModel.eventDescription,
-                        style: const TextStyle(
-                            height: 1.6, color: Colors.black, fontSize: 14),
+                        style: Theme.of(context).textTheme.subtitle2,
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 20, left: 20),
                       child: Row(
-                        children: const [
+                        children: [
                           Text(
                             "Organisers",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                                color: Colors.black),
+                            style: Theme.of(context).textTheme.headline5,
                           ),
                         ],
                       ),
@@ -172,19 +166,17 @@ class _EventDetailState extends ConsumerState<EventDetail> {
                         children: [
                           CircleAvatar(
                             backgroundImage: const NetworkImage(
-                                'https://cdn.pixabay.com/photo/2013/05/11/08/28/sunset-110305_1280.jpg'),
+                              'https://cdn.pixabay.com/photo/2013/05/11/08/28/sunset-110305_1280.jpg',
+                            ),
                             backgroundColor: Colors.red.shade800,
                             radius: 20,
                           ),
                           const SizedBox(
                             width: 5,
                           ),
-                          const Text(
+                          Text(
                             "TSEC CodeCell",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.w400,
-                                fontSize: 16),
+                            style: Theme.of(context).textTheme.subtitle1,
                           ),
                         ],
                       ),

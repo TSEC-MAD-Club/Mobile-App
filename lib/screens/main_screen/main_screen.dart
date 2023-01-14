@@ -99,27 +99,30 @@ class MainScreenAppBar extends ConsumerStatefulWidget {
 class _MainScreenAppBarState extends ConsumerState<MainScreenAppBar> {
   List<EventModel> eventList = [];
 
-  static List<String> imgList = [];
-
   void fetchEventDetails() {
-    ref.watch(eventListProvider).when(
-        data: ((data) {
-          eventList.addAll(data ?? []);
+    ref.watch(eventListProvider).when(data: ((data) {
+      eventList.addAll(data ?? []);
 
-          log(eventList[0].toString());
+      log(eventList[0].toString());
 
-          imgList.clear();
-          for (var data in eventList) {
-            imgList.add(data.imageUrl);
-          }
-
-          log(imgList.toString());
-        }),
-        error: ((error, stackTrace) => log(error.toString())),
-        loading: (() {
-          log("loading");
-        }));
+      imgList.clear();
+      for (var data in eventList) {
+        imgList.add(data.imageUrl);
+      }
+    }), loading: () {
+      log("loading");
+    }, error: (Object error, StackTrace? stackTrace) {
+      log(error.toString());
+    });
   }
+
+  final EdgeInsets _sidePadding;
+  static const List<String> imgList = [
+    'https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/events%2FWhatsApp%20Image%202022-12-13%20at%2019.16.12.jpeg?alt=media&token=fcb02f10-a68f-4a59-aa13-11e3b99134c2',
+    'https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/events%2FWhatsApp%20Image%202022-12-13%20at%2019.16.12.jpeg?alt=media&token=fcb02f10-a68f-4a59-aa13-11e3b99134c2',
+    'https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/events%2FWhatsApp%20Image%202022-12-14%20at%205.12.48%20PM.jpeg?alt=media&token=1a8c0a8a-3a00-4619-91db-927a37c830f7',
+    'https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/events%2FWhatsApp%20Image%202023-01-02%20at%207.11.19%20PM.jpeg?alt=media&token=48bddc2e-7fff-4f1d-a36d-f1d1de098c97'
+  ];
 
   //static const _sidePadding = EdgeInsets.symmetric(horizontal: 15);
   static int _currentIndex = 0;
@@ -181,26 +184,41 @@ class _MainScreenAppBarState extends ConsumerState<MainScreenAppBar> {
             ),
           ),
           const SizedBox(
-            height: 5,
+            height: 15,
+          ),
+          Row(
+            children: [
+              Text(
+                "Upcoming Events",
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
+            ],
+          ),
+          const SizedBox(
+            height: 15,
           ),
           CarouselSlider(
             items: imgList
                 .map(
                   (item) => GestureDetector(
-                    child: Container(
-                      width: MediaQuery.of(context).size.width * 0.9,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: CachedNetworkImageProvider(item),
-                          fit: BoxFit.cover,
-                          colorFilter: ColorFilter.mode(
-                            Colors.white.withOpacity(1),
-                            BlendMode.modulate,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Container(
+                        width: MediaQuery.of(context).size.width * 0.6,
+                        height: MediaQuery.of(context).size.width * 0.4,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: CachedNetworkImageProvider(item),
+                            fit: BoxFit.fill,
+                            colorFilter: ColorFilter.mode(
+                              Colors.white.withOpacity(1),
+                              BlendMode.modulate,
+                            ),
                           ),
-                        ),
-                        color: Colors.white,
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(20),
+                          color: Colors.white,
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(20),
+                          ),
                         ),
                       ),
                     ),
@@ -221,15 +239,25 @@ class _MainScreenAppBarState extends ConsumerState<MainScreenAppBar> {
                 .toList(),
             options: CarouselOptions(
               autoPlay: true,
-              aspectRatio: 2.0,
               enlargeCenterPage: true,
-              viewportFraction: 1,
+              viewportFraction: .7,
               onPageChanged: (index, reason) {
                 setState(() {
                   _currentIndex = index;
                 });
               },
             ),
+          ),
+          const SizedBox(
+            height: 30,
+          ),
+          Row(
+            children: [
+              Text(
+                "Time Table",
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
+            ],
           ),
         ],
       ),
