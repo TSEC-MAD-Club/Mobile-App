@@ -1,30 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tsec_app/models/event_model/event_model.dart';
 
-import 'package:url_launcher/url_launcher_string.dart';
-
-class EventDetail extends ConsumerStatefulWidget {
-  final EventModel eventModel;
-  const EventDetail({Key? key, required this.eventModel}) : super(key: key);
+class EventDetail extends StatefulWidget {
+  const EventDetail({Key? key}) : super(key: key);
 
   @override
-  ConsumerState<EventDetail> createState() => _EventDetailState();
+  State<EventDetail> createState() => _EventDetailState();
 }
 
-class _EventDetailState extends ConsumerState<EventDetail> {
-  List<EventModel> eventList = [];
-
-  void launchUrl() async {
-    var url = widget.eventModel.eventRegistrationUrl;
-
-    if (await canLaunchUrlString(url)) {
-      await launchUrlString(url);
-    } else
-      throw "Could not launch url";
-  }
-
+class _EventDetailState extends State<EventDetail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,17 +16,17 @@ class _EventDetailState extends ConsumerState<EventDetail> {
         alignment: Alignment.topCenter,
         children: [
           CachedNetworkImage(
-            imageUrl: widget.eventModel.imageUrl,
-            alignment: Alignment.center,
+            imageUrl:
+                "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/events%2FWhatsApp%20Image%202022-12-13%20at%2019.16.12.jpeg?alt=media&token=fcb02f10-a68f-4a59-aa13-11e3b99134c2",
             color: Colors.white.withOpacity(0.4),
             colorBlendMode: BlendMode.modulate,
             fit: BoxFit.fill,
             height: MediaQuery.of(context).size.height * 0.5,
           ),
           CachedNetworkImage(
-            imageUrl: widget.eventModel.imageUrl,
+            imageUrl:
+                "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/events%2FWhatsApp%20Image%202022-12-13%20at%2019.16.12.jpeg?alt=media&token=fcb02f10-a68f-4a59-aa13-11e3b99134c2",
             fit: BoxFit.cover,
-            alignment: Alignment.center,
             height: MediaQuery.of(context).size.height * 0.3,
           ),
           Padding(
@@ -66,20 +50,15 @@ class _EventDetailState extends ConsumerState<EventDetail> {
                           const EdgeInsets.only(top: 20, left: 20, right: 20),
                       child: Row(
                         children: [
-                          Expanded(
-                            flex: 10,
-                            child: Text(
-                              widget.eventModel.eventName,
-                              style: Theme.of(context).textTheme.bodyLarge,
-                            ),
+                          Text(
+                            "TSEC HACKS 2022",
+                            style: Theme.of(context).textTheme.bodyLarge,
                           ),
                           Expanded(
                             child: Container(),
                           ),
                           ElevatedButton(
-                            onPressed: () {
-                              launchUrl();
-                            },
+                            onPressed: () {},
                             child: const Text("Register"),
                             style: ElevatedButton.styleFrom(
                               padding: const EdgeInsets.only(
@@ -104,7 +83,7 @@ class _EventDetailState extends ConsumerState<EventDetail> {
                             width: 5,
                           ),
                           Text(
-                            widget.eventModel.eventLocation,
+                            "302, Old Building",
                             style: Theme.of(context).textTheme.bodyText2,
                           )
                         ],
@@ -122,9 +101,7 @@ class _EventDetailState extends ConsumerState<EventDetail> {
                             width: 5,
                           ),
                           Text(
-                            widget.eventModel.eventTime +
-                                " " +
-                                widget.eventModel.eventDate,
+                            "3:00 PM, 11th july 2022",
                             style: Theme.of(context).textTheme.bodyText2,
                           ),
                         ],
@@ -148,7 +125,7 @@ class _EventDetailState extends ConsumerState<EventDetail> {
                         right: 20,
                       ),
                       child: Text(
-                        widget.eventModel.eventDescription,
+                        "Nobody wants to stare at a blank wall all day long.",
                         style: Theme.of(context).textTheme.subtitle2,
                       ),
                     ),
