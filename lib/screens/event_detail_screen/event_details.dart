@@ -66,9 +66,12 @@ class _EventDetailState extends ConsumerState<EventDetail> {
                           const EdgeInsets.only(top: 20, left: 20, right: 20),
                       child: Row(
                         children: [
-                          Text(
-                            widget.eventModel.eventName,
-                            style: Theme.of(context).textTheme.bodyLarge,
+                          Expanded(
+                            flex: 10,
+                            child: Text(
+                              widget.eventModel.eventName,
+                              style: Theme.of(context).textTheme.bodyLarge,
+                            ),
                           ),
                           Expanded(
                             child: Container(),

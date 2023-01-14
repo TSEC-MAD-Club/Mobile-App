@@ -116,12 +116,7 @@ class _MainScreenAppBarState extends ConsumerState<MainScreenAppBar> {
     });
   }
 
-  static const List<String> imgList = [
-    'https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/events%2FWhatsApp%20Image%202022-12-13%20at%2019.16.12.jpeg?alt=media&token=fcb02f10-a68f-4a59-aa13-11e3b99134c2',
-    'https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/events%2FWhatsApp%20Image%202022-12-13%20at%2019.16.12.jpeg?alt=media&token=fcb02f10-a68f-4a59-aa13-11e3b99134c2',
-    'https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/events%2FWhatsApp%20Image%202022-12-14%20at%205.12.48%20PM.jpeg?alt=media&token=1a8c0a8a-3a00-4619-91db-927a37c830f7',
-    'https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/events%2FWhatsApp%20Image%202023-01-02%20at%207.11.19%20PM.jpeg?alt=media&token=48bddc2e-7fff-4f1d-a36d-f1d1de098c97'
-  ];
+  static List<String> imgList = [];
 
   //static const _sidePadding = EdgeInsets.symmetric(horizontal: 15);
   static int _currentIndex = 0;
