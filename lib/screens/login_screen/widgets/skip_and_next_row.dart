@@ -23,7 +23,7 @@ class SkipAndNextRow extends StatelessWidget {
             height: 50,
             child: ElevatedButton(
               onPressed: () {
-                GoRouter.of(context).push('/main'); 
+                GoRouter.of(context).push('/main');
               },
               child: const Icon(Icons.arrow_forward),
               style: ButtonStyle(

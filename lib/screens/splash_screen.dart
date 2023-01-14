@@ -21,7 +21,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
       if (ref.read(appStateProvider).isFirstOpen) {
         GoRouter.of(context).push('/theme');
       } else {
-        GoRouter.of(context).push('/main'); 
+        GoRouter.of(context).push('/main');
       }
     });
   }

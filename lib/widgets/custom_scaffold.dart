@@ -113,7 +113,6 @@ class _CustomScaffoldState extends ConsumerState<CustomScaffold>
               children: <Widget>[
                 DrawerListItem(
                   onTap: () => _navigate("/main"),
-    
                   icon: Image.asset(
                     ImageAssets.homeIcon,
                     width: 24,

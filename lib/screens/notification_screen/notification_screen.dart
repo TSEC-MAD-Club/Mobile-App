@@ -45,7 +45,6 @@ class _NotificationScreenState extends State<NotificationScreen> {
           itemBuilder: (context, doc) {
             final data = doc.data();
 
-
             final listTile = NotificationListItem(notificationModel: data);
 
             if (_lastDate.isSameDate(data.notificationTime)) return listTile;

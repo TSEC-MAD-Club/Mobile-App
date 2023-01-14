@@ -15,7 +15,6 @@ enum Item {
   about,
   facultyDetails,
   curriculum,
-
 }
 
 extension ItemNameExtension on Item {

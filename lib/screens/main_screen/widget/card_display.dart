@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tsec_app/provider/firebase_provider.dart';
 import 'package:tsec_app/screens/main_screen/widget/schedule_card.dart';
 import '../../../models/timetable_model/timetable_model.dart';
 import '../../../provider/timetable_provider.dart';
@@ -55,8 +54,8 @@ class _CardDisplayState extends ConsumerState<CardDisplay> {
                       lectureEndTime: timeTableDay[index].lectureEndTime,
                       lectureName: timeTableDay[index].lectureName,
                       lectureStartTime: timeTableDay[index].lectureStartTime,
-                      facultyImageurl: 
-                      timeTableDay[index].lectureFacultyImageurl,
+                      facultyImageurl:
+                          timeTableDay[index].lectureFacultyImageurl,
                       facultyName: timeTableDay[index].lectureFacultyName,
                     );
                   },

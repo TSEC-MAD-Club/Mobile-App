@@ -29,9 +29,7 @@ import 'utils/themes.dart';
 
 // To handle all the background messages
 // Currently not used but wont work if not present
-Future<void> _handleBackgroundMessage(RemoteMessage message) async {
-  
-}
+Future<void> _handleBackgroundMessage(RemoteMessage message) async {}
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -87,13 +85,13 @@ class _TSECAppState extends ConsumerState<TSECApp> {
           builder: (context, state) => const MainScreen(),
         ),
         GoRoute(
-          path: '/login', 
+          path: '/login',
           builder: (context, state) => const LoginScreen(),
-          ), 
+        ),
         GoRoute(
           path: "/splash",
-          builder: (context, state) => const SplashScreen(), 
-          ), 
+          builder: (context, state) => const SplashScreen(),
+        ),
         GoRoute(
           path: "/notifications",
           builder: (context, state) => const NotificationScreen(),

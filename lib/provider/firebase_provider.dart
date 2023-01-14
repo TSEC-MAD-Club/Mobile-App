@@ -12,5 +12,5 @@ final authStateChangesProvider = StreamProvider<User?>(
 final firestoreProvider =
     Provider<FirebaseFirestore>((ref) => FirebaseFirestore.instance);
 
-final firebaseStorageProvider  =
- Provider<FirebaseStorage>(((ref) => FirebaseStorage.instance)); 
+final firebaseStorageProvider =
+    Provider<FirebaseStorage>(((ref) => FirebaseStorage.instance));

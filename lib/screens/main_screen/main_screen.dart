@@ -57,9 +57,9 @@ class MainScreen extends ConsumerWidget {
                     color: _theme.primaryColorLight,
                     width: 1,
                     style: BorderStyle.solid,
-                  ), boxShadow: [_boxshadow],
+                  ),
+                  boxShadow: [_boxshadow],
                 ),
-                
                 child: DatePicker(
                   DateTime.now(),
                   monthTextStyle: _theme.textTheme.subtitle2!,
@@ -68,17 +68,6 @@ class MainScreen extends ConsumerWidget {
                   initialSelectedDate: DateTime.now(),
                   selectionColor: Colors.blue,
                   onDateChange: ((selectedDate) async {
-                    // final date = selectedDate.day.toString() +"/" +
-                    //     selectedDate.month.toString() + "/" +
-                    //     selectedDate.year.toString();
-                    // log(date.toString()); 
-                    // final db = ref.watch(firestoreProvider);
-                    // final data = await db
-                    //     .collection("Holidays")
-                    //     .where("date", isEqualTo: date)
-                    //     .get().then((value) => print(value.docs
-                    //     .map((e) => e.data()['Day'])));
-                    
                     ref
                         .read(dayProvider.notifier)
                         .update((state) => getweekday(selectedDate.weekday));
