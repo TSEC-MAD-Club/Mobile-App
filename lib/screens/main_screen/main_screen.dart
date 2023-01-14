@@ -67,8 +67,7 @@ class MainScreen extends ConsumerWidget {
                   dateTextStyle: _theme.textTheme.subtitle2!,
                   initialSelectedDate: DateTime.now(),
                   selectionColor: Colors.blue,
-                  daysCount: 7,
-                  onDateChange: ((selectedDate) {
+                  onDateChange: ((selectedDate) async {
                     ref
                         .read(dayProvider.notifier)
                         .update((state) => getweekday(selectedDate.weekday));

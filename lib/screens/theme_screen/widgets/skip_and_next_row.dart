@@ -20,7 +20,7 @@ class SkipAndNextRow extends ConsumerWidget {
             child: ElevatedButton(
               onPressed: () {
                 ref.read(appStateProvider.notifier).appOpened().then((_) {
-                  GoRouter.of(context).push("/");
+                  GoRouter.of(context).push("/login");
                 });
               },
               child: const Icon(Icons.arrow_forward),

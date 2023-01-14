@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../main_screen/main_screen.dart';
-import '../login_screen.dart';
+import 'package:go_router/go_router.dart';
 
 class SkipAndNextRow extends StatelessWidget {
   const SkipAndNextRow({Key? key}) : super(key: key);
@@ -25,19 +23,9 @@ class SkipAndNextRow extends StatelessWidget {
             height: 50,
             child: ElevatedButton(
               onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => const MainScreen()),
-                );
+                GoRouter.of(context).push('/main');
               },
-              child: IconButton(
-                icon: const Icon(Icons.arrow_forward),
-                onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                        builder: (context) => const LoginScreen()),
-                  );
-                },
-              ),
+              child: const Icon(Icons.arrow_forward),
               style: ButtonStyle(
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
