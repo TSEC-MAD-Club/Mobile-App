@@ -27,7 +27,9 @@ import 'utils/themes.dart';
 
 // To handle all the background messages
 // Currently not used but wont work if not present
-Future<void> _handleBackgroundMessage(RemoteMessage message) async {}
+Future<void> _handleBackgroundMessage(RemoteMessage message) async {
+  
+}
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
