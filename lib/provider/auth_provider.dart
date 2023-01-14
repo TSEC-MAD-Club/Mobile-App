@@ -25,7 +25,7 @@ class AuthProvider {
 
   void fetchStudentDetails(String email) async {
     StudentModel? studentModel = await _authService.fetchStudentDetails(email);
-    log("model " + studentModel.toString());
+    
     _ref.watch(studentModelProvider.notifier).update((state) => studentModel);
   }
 }
