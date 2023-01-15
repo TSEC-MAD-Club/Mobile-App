@@ -14,10 +14,7 @@ import 'widgets/faculty_details_section.dart';
 enum Item {
   about,
   facultyDetails,
-  placementDetails,
-  resultAnalysis,
   curriculum,
-  more,
 }
 
 extension ItemNameExtension on Item {
@@ -27,14 +24,8 @@ extension ItemNameExtension on Item {
         return "About";
       case Item.facultyDetails:
         return "Faculty Details";
-      case Item.placementDetails:
-        return "Placement Details";
-      case Item.resultAnalysis:
-        return "Result Analysis";
       case Item.curriculum:
         return "Curriculum";
-      case Item.more:
-        return "More";
     }
   }
 }
@@ -99,10 +90,6 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
         return FacultyDetailsSection(department: widget.department);
       case Item.curriculum:
         return CurriculumSection(department: widget.department);
-      case Item.placementDetails:
-      case Item.resultAnalysis:
-      case Item.more:
-        return AboutSection(department: widget.department.name);
     }
   }
 
@@ -145,9 +132,8 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
             children: <Widget>[
               Container(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 width: size.width,
-                height: 0.18 * size.height,
                 decoration: BoxDecoration(
                   color: Theme.of(context).colorScheme.secondary,
                   borderRadius:

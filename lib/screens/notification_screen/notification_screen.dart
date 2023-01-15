@@ -41,7 +41,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
         body: FirestoreListView<NotificationModel>(
           query: locator<NotificationService>()
               .notificationQuery
-              .orderBy("notificationTime"),
+              .orderBy("notificationTime", descending: true),
           itemBuilder: (context, doc) {
             final data = doc.data();
 

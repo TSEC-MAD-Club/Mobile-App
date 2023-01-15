@@ -14,7 +14,6 @@ exports.sendGeneralNotification = functions
         if (notificationData.attachments) {
             attachments = notificationData.attachments;
         }
-
         const message = {
             notification: {
                 title: notificationData.title,
@@ -24,7 +23,7 @@ exports.sendGeneralNotification = functions
                 ...(attachments ? { attachments: JSON.stringify(attachments) } : {}),
                 createdTime: notificationData.notificationTime.toDate().toUTCString(),
             },
-            topic: "test-notification",
+            topic: notificationData.topic
         };
 
         return fcm

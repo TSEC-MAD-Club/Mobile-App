@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import '../utils/themes.dart';
 
 class CustomAppBar extends ConsumerWidget with PreferredSizeWidget {
@@ -36,15 +35,6 @@ class CustomAppBar extends ConsumerWidget with PreferredSizeWidget {
                     context,
                     icon: const Icon(Icons.chevron_left_rounded),
                     onPressed: () => Navigator.pop(context),
-                  ),
-                  _buildNavigation(
-                    context,
-                    icon: const Icon(Icons.notifications),
-                    onPressed: () {
-                      GoRouter.of(context).push(
-                        '/notifications',
-                      );
-                    },
                   ),
                 ],
               ),

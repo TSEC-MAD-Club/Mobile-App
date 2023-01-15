@@ -112,7 +112,7 @@ class _CustomScaffoldState extends ConsumerState<CustomScaffold>
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 DrawerListItem(
-                  onTap: () => _navigate("/"),
+                  onTap: () => _navigate("/main"),
                   icon: Image.asset(
                     ImageAssets.homeIcon,
                     width: 24,
@@ -144,7 +144,7 @@ class _CustomScaffoldState extends ConsumerState<CustomScaffold>
                   title: "Departments",
                 ),
                 Link(
-                  uri: Uri.parse("mailto:darshanrander@gmail.com"),
+                  uri: Uri.parse("mailto:krishnadave671@gmail.com"),
                   builder: (context, followLink) => DrawerListItem(
                     onTap: () => followLink?.call(),
                     icon: Image.asset(
