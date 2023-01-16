@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -7,7 +5,7 @@ import 'package:tsec_app/models/student_model/student_model.dart';
 import 'package:tsec_app/services/auth_service.dart';
 
 final authProvider = StateNotifierProvider<AuthProvider, bool>(((ref) {
-  return AuthProvider(ref.watch(authServiceProvider), ref);
+  return AuthProvider(ref.watch(authServiceProvider));
 }));
 
 final studentModelProvider = StateProvider<StudentModel?>((ref) {
@@ -20,10 +18,9 @@ final signedUserProvider = StateProvider<User?>((ref) {
 
 class AuthProvider extends StateNotifier<bool> {
   final AuthService _authService;
-  final Ref _ref;
-  AuthProvider(AuthService authService, Ref ref)
+
+  AuthProvider(AuthService authService)
       : _authService = authService,
-        _ref = ref,
         super(false);
 
   void signInUser(String email, String password, BuildContext context) {

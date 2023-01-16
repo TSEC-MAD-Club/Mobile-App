@@ -6,7 +6,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tsec_app/models/student_model/student_model.dart';
 import 'package:tsec_app/provider/auth_provider.dart';
 import 'package:tsec_app/screens/login_screen/widgets/custom_dialog_box.dart';
-import 'package:tsec_app/screens/main_screen/main_screen.dart';
 
 import '../../../utils/themes.dart';
 

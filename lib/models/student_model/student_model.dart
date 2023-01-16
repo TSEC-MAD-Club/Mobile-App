@@ -30,9 +30,4 @@ class StudentModel {
       _$StudentModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$StudentModelToJson(this);
-
-  @override
-  String toString() {
-    return 'StudentModel(batch: $batch, branch: $branch, name: $name, email: $email, gradyear: $gradyear, phoneNum: $phoneNum)';
-  }
 }
