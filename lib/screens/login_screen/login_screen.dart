@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'widgets/custom_app_bar_for_login.dart';
 import 'widgets/custom_login_widget.dart';
-import 'widgets/skip_and_next_row.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);

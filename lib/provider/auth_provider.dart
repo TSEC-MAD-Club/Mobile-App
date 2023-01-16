@@ -1,10 +1,12 @@
 import 'dart:developer';
 
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tsec_app/models/student_model/student_model.dart';
 import 'package:tsec_app/services/auth_service.dart';
 
-final authProvider = Provider(((ref) {
+final authProvider = StateNotifierProvider<AuthProvider, bool>(((ref) {
   return AuthProvider(ref.watch(authServiceProvider), ref);
 }));
 
@@ -12,20 +14,35 @@ final studentModelProvider = StateProvider<StudentModel?>((ref) {
   return null;
 });
 
-class AuthProvider {
+final signedUserProvider = StateProvider<User?>((ref) {
+  return null;
+});
+
+class AuthProvider extends StateNotifier<bool> {
   final AuthService _authService;
   final Ref _ref;
   AuthProvider(AuthService authService, Ref ref)
       : _authService = authService,
-        _ref = ref;
+        _ref = ref,
+        super(false);
 
-  void signInUser(String email, String password) {
-    _authService.signInUser(email, password);
+  void signInUser(String email, String password, BuildContext context) {
+    _authService.signInUser(email, password, context);
   }
 
-  void fetchStudentDetails(String email) async {
-    StudentModel? studentModel = await _authService.fetchStudentDetails(email);
-    
-    _ref.watch(studentModelProvider.notifier).update((state) => studentModel);
+  Future<User?> getUser() async {
+    state = false;
+    User? user = await _authService.userCurrentState.first;
+    state = true;
+    return user;
+  }
+
+  Future<StudentModel?> fetchStudentDetails(
+      String email, BuildContext context) async {
+    return await _authService.fetchStudentDetails(email, context);
+  }
+
+  void changePassword(String password, BuildContext context) {
+    _authService.updatePassword(password, context);
   }
 }

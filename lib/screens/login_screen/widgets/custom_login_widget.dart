@@ -1,8 +1,11 @@
 import 'dart:developer';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tsec_app/models/student_model/student_model.dart';
 import 'package:tsec_app/provider/auth_provider.dart';
+import 'package:tsec_app/screens/login_screen/widgets/custom_dialog_box.dart';
 import 'package:tsec_app/screens/main_screen/main_screen.dart';
 
 import '../../../utils/themes.dart';
@@ -132,15 +135,37 @@ class _LoginWidgetState extends ConsumerState<LoginWidget> {
                 width: 70,
                 height: 50,
                 child: ElevatedButton(
-                  onPressed: () {
-                    ref.watch(authProvider).signInUser(
+                  onPressed: () async {
+                    ref.watch(authProvider.notifier).signInUser(
                         _emailTextEditingController.text.trim(),
-                        _passwordTextEditingController.text.trim());
+                        _passwordTextEditingController.text.trim(),
+                        context);
 
-                    ref.watch(authProvider).fetchStudentDetails(
-                        _emailTextEditingController.text.trim());
+                    StudentModel? studentModel = await ref
+                        .watch(authProvider.notifier)
+                        .fetchStudentDetails(
+                            _emailTextEditingController.text.trim(), context);
 
-                   
+                    ref
+                        .watch(studentModelProvider.notifier)
+                        .update((state) => studentModel);
+
+                    log(ref
+                        .watch(studentModelProvider.notifier)
+                        .state
+                        .toString());
+
+                    User? user =
+                        await ref.watch(authProvider.notifier).getUser();
+
+                    ref
+                        .watch(signedUserProvider.notifier)
+                        .update((state) => user);
+
+                    if (user != null)
+                      showDialog(
+                          context: context,
+                          builder: ((context) => const ChangePasswordDialog()));
 
                     // Navigator.of(context).push(
                     //   MaterialPageRoute(
