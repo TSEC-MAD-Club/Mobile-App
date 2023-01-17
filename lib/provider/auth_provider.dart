@@ -16,6 +16,11 @@ final signedUserProvider = StateProvider<User?>((ref) {
   return null;
 });
 
+final signedUser = StreamProvider((ref) {
+  AuthService authService = ref.watch(authServiceProvider);
+  return authService.userCurrentState;
+});
+
 class AuthProvider extends StateNotifier<bool> {
   final AuthService _authService;
 

@@ -161,7 +161,7 @@ class _LoginWidgetState extends ConsumerState<LoginWidget> {
                         .watch(signedUserProvider.notifier)
                         .update((state) => user);
 
-                    if (user != null)
+                    if (ref.watch(signedUserProvider.notifier).state != null)
                       showDialog(
                           context: context,
                           builder: ((context) => const ChangePasswordDialog()));

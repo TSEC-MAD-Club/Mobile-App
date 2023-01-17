@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
@@ -6,9 +9,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tsec_app/models/event_model/event_model.dart';
+import 'package:tsec_app/provider/auth_provider.dart';
 import 'package:tsec_app/screens/event_detail_screen/event_details.dart';
 import 'package:tsec_app/screens/login_screen/login_screen.dart';
 import 'package:tsec_app/screens/splash_screen.dart';
+import 'package:tsec_app/services/auth_service.dart';
 import 'firebase_options.dart';
 import 'models/notification_model/notification_model.dart';
 import 'provider/app_state_provider.dart';
@@ -80,11 +85,20 @@ class _TSECAppState extends ConsumerState<TSECApp> {
           path: "/",
           builder: (context, state) => const LoginScreen(),
           redirect: (_) {
-            if (ref.read(appStateProvider).isFirstOpen) return "/theme";
+            //log(ref.watch(signedUserProvider.notifier).state.toString());
+            ref.watch(signedUser).when(
+                data: (data) {
+                  if (data != null) {
+                    return "/main";
+                  }
+                },
+                error: (error, stackTrace) => CircularProgressIndicator(),
+                loading: () {});
             return null;
           },
         ),
         GoRoute(
+          name: "main",
           path: "/main",
           builder: (context, state) => const MainScreen(),
         ),
