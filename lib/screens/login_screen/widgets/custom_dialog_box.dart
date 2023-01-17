@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tsec_app/provider/auth_provider.dart';
-import 'package:tsec_app/screens/main_screen/main_screen.dart';
 
 class ChangePasswordDialog extends ConsumerStatefulWidget {
   const ChangePasswordDialog({super.key});
