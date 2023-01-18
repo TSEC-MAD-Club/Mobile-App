@@ -13,7 +13,7 @@ import firebase_database
 import firebase_messaging
 import firebase_storage
 import path_provider_macos
-import shared_preferences_foundation
+import shared_preferences_macos
 import sign_in_with_apple
 import sqflite
 import url_launcher_macos
