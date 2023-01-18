@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:open_file/open_file.dart';
 
@@ -24,16 +23,13 @@ class _CurriculumSectionState extends State<CurriculumSection> {
   String _selectedSem = "1";
 
   late final Future<Map<String, dynamic>> _curriculumDetails;
-  late final StorageUtil _storage;
+  final StorageUtil _storage = locator<StorageUtil>();
   StorageResult? _storageResult;
   double _downloadPrecent = 0;
 
   @override
   void initState() {
     super.initState();
-    SchedulerBinding.instance.addPostFrameCallback((_) {
-      _storage = locator<StorageUtil>();
-    });
 
     _curriculumDetails = rootBundle.loadStructuredData(
       "assets/data/curriculum_data/${widget.department.fileName}.json",
@@ -56,9 +52,10 @@ class _CurriculumSectionState extends State<CurriculumSection> {
             .toList();
         final url = semData["url"] as String;
 
-        _storage
-            .getResult(url)
-            .then((value) => setState(() => _storageResult = value));
+        _storage.getResult(url).then((value) {
+          if (!mounted) return;
+          setState(() => _storageResult = value);
+        });
 
         return Flexible(
           flex: 1,
