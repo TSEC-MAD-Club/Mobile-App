@@ -31,7 +31,7 @@ class _CardDisplayState extends ConsumerState<CardDisplay> {
     String day = ref.watch(dayProvider);
     return data.when(
         data: ((data) {
-          if (day == 'Saturday' || day == 'Sunday') {
+          if (data[day] == null) {
             return const SliverToBoxAdapter(
               child: Center(child: Text("No lectures Today ! ")),
             );
