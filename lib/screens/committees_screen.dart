@@ -42,6 +42,8 @@ class _CommitteesScreenState extends State<CommitteesScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double _height = MediaQuery.of(context).size.height;
+    double _width = MediaQuery.of(context).size.width;
     return CustomScaffold(
       body: ListView(
         children: <Widget>[
@@ -49,7 +51,9 @@ class _CommitteesScreenState extends State<CommitteesScreen> {
             title: "Committees & Events",
             image: Image.asset(ImageAssets.committes),
           ),
-          SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+          SizedBox(
+            height: _height * 0.03,
+          ),
           FutureBuilder<List<CommitteeModel>>(
             future: _committees,
             builder: (context, snapshot) {
@@ -58,7 +62,8 @@ class _CommitteesScreenState extends State<CommitteesScreen> {
                 return Column(
                   children: <Widget>[
                     SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.2,
+                      height:
+                          (_height > _width) ? _height * 0.25 : _height * 0.5,
                       child: PageView.builder(
                         onPageChanged: (page) {
                           _currentPage = page;
@@ -74,9 +79,10 @@ class _CommitteesScreenState extends State<CommitteesScreen> {
                           return Transform.scale(
                             scale: _getScale(index, currentPage),
                             child: Card(
-                              color: Theme.of(context).colorScheme.secondary,
+                              color: Colors.transparent,
                               child: CachedNetworkImage(
                                 imageUrl: data[index].image,
+                                fit: BoxFit.scaleDown,
                               ),
                             ),
                           );
@@ -101,8 +107,9 @@ class _CommitteesScreenState extends State<CommitteesScreen> {
                               const SizedBox(height: 15),
                               Text(
                                 data[_currentPage].description,
-                                textAlign: TextAlign.justify,
+                                textAlign: TextAlign.center,
                               ),
+                              const SizedBox(height: 10),
                             ],
                           ),
                         ),
