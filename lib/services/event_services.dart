@@ -18,7 +18,7 @@ class EventServices {
     final docRef = _firebaseFirestore.collection("Events");
 
     return docRef.snapshots().map((event) {
-      for (var doc in event.docs) {
+      for (final doc in event.docs) {
         eventsDetails.add(EventModel.fromJson(doc.data()));
       }
 

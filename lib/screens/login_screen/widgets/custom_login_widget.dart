@@ -1,14 +1,33 @@
+import 'dart:developer';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tsec_app/models/student_model/student_model.dart';
+import 'package:tsec_app/provider/auth_provider.dart';
+import 'package:tsec_app/screens/login_screen/widgets/custom_dialog_box.dart';
 
 import '../../../utils/themes.dart';
 
-class LoginWidget extends StatefulWidget {
+final emailTextProvider = StateProvider(((ref) {
+  return "username";
+}));
+
+final passwordTextProvider = StateProvider(((ref) {
+  return "passoword";
+}));
+
+class LoginWidget extends ConsumerStatefulWidget {
   const LoginWidget({Key? key}) : super(key: key);
   @override
   _LoginWidgetState createState() => _LoginWidgetState();
 }
 
-class _LoginWidgetState extends State<LoginWidget> {
+class _LoginWidgetState extends ConsumerState<LoginWidget> {
+  final TextEditingController _emailTextEditingController =
+      TextEditingController();
+  final TextEditingController _passwordTextEditingController =
+      TextEditingController();
   @override
   Widget build(BuildContext context) {
     final brightness = Theme.of(context).brightness;
@@ -31,6 +50,12 @@ class _LoginWidgetState extends State<LoginWidget> {
                           ? shadowLightModeTextFields
                           : shadowDarkModeTextFields),
                   child: TextField(
+                    controller: _emailTextEditingController,
+                    onSubmitted: (value) {
+                      ref
+                          .watch(emailTextProvider.notifier)
+                          .update((state) => value);
+                    },
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(18.0),
@@ -56,6 +81,12 @@ class _LoginWidgetState extends State<LoginWidget> {
                         : shadowDarkModeTextFields,
                   ),
                   child: TextField(
+                    controller: _passwordTextEditingController,
+                    onSubmitted: (value) {
+                      ref
+                          .watch(passwordTextProvider.notifier)
+                          .update((state) => value);
+                    },
                     obscureText: true,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
@@ -87,6 +118,73 @@ class _LoginWidgetState extends State<LoginWidget> {
             ),
           ],
         ),
+        Padding(
+          padding: const EdgeInsets.all(25.0),
+          child: Row(
+            children: <Widget>[
+              GestureDetector(
+                onTap: () {},
+                child: Text(
+                  "Skip",
+                  style: Theme.of(context).textTheme.subtitle1,
+                ),
+              ),
+              const Spacer(),
+              SizedBox(
+                width: 70,
+                height: 50,
+                child: ElevatedButton(
+                  onPressed: () async {
+                    ref.watch(authProvider.notifier).signInUser(
+                        _emailTextEditingController.text.trim(),
+                        _passwordTextEditingController.text.trim(),
+                        context);
+
+                    StudentModel? studentModel = await ref
+                        .watch(authProvider.notifier)
+                        .fetchStudentDetails(
+                            _emailTextEditingController.text.trim(), context);
+
+                    ref
+                        .watch(studentModelProvider.notifier)
+                        .update((state) => studentModel);
+
+                    log(ref
+                        .watch(studentModelProvider.notifier)
+                        .state
+                        .toString());
+
+                    User? user =
+                        await ref.watch(authProvider.notifier).getUser();
+
+                    ref
+                        .watch(signedUserProvider.notifier)
+                        .update((state) => user);
+
+                    if (ref.watch(signedUserProvider.notifier).state != null)
+                      showDialog(
+                          context: context,
+                          builder: ((context) => const ChangePasswordDialog()));
+
+                    // Navigator.of(context).push(
+                    //   MaterialPageRoute(
+                    //       builder: (context) => const MainScreen()),
+                    // );
+                  },
+                  child: const Icon(Icons.arrow_forward),
+                  style: ButtonStyle(
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
+                    ),
+                    padding: MaterialStateProperty.all(EdgeInsets.zero),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        )
       ],
     );
   }
