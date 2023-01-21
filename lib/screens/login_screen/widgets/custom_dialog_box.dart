@@ -85,12 +85,7 @@ class _ChangePasswordDialogState extends ConsumerState<ChangePasswordDialog> {
                           ref.watch(authProvider.notifier).changePassword(
                               _passwordTextEditingController.text.trim(),
                               context);
-
-                          if (ref.watch(authProvider)) {
-                            Router.neglect(context, () {
-                              context.goNamed("main");
-                            });
-                          }
+                          GoRouter.of(context).go('/main');
                         }
                       },
                       child: const Text("Submit"),
