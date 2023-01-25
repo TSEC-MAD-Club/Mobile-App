@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -8,14 +6,6 @@ import 'package:tsec_app/provider/auth_provider.dart';
 import 'package:tsec_app/screens/login_screen/widgets/custom_dialog_box.dart';
 
 import '../../../utils/themes.dart';
-
-final emailTextProvider = StateProvider(((ref) {
-  return "username";
-}));
-
-final passwordTextProvider = StateProvider(((ref) {
-  return "passoword";
-}));
 
 class LoginWidget extends ConsumerStatefulWidget {
   const LoginWidget({Key? key}) : super(key: key);
@@ -51,11 +41,6 @@ class _LoginWidgetState extends ConsumerState<LoginWidget> {
                           : shadowDarkModeTextFields),
                   child: TextField(
                     controller: _emailTextEditingController,
-                    onSubmitted: (value) {
-                      ref
-                          .watch(emailTextProvider.notifier)
-                          .update((state) => value);
-                    },
                     decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
@@ -97,11 +82,6 @@ class _LoginWidgetState extends ConsumerState<LoginWidget> {
                   ),
                   child: TextField(
                     controller: _passwordTextEditingController,
-                    onSubmitted: (value) {
-                      ref
-                          .watch(passwordTextProvider.notifier)
-                          .update((state) => value);
-                    },
                     obscureText: true,
                     decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
@@ -165,41 +145,26 @@ class _LoginWidgetState extends ConsumerState<LoginWidget> {
                 height: 50,
                 child: ElevatedButton(
                   onPressed: () async {
-                    ref.watch(authProvider.notifier).signInUser(
-                        _emailTextEditingController.text.trim(),
-                        _passwordTextEditingController.text.trim(),
-                        context);
+                    UserCredential? userCredential = await ref
+                        .watch(authProvider.notifier)
+                        .signInUser(
+                            _emailTextEditingController.text.trim(),
+                            _passwordTextEditingController.text.trim(),
+                            context);
 
+                    if (userCredential == null) {
+                      return;
+                    }
                     StudentModel? studentModel = await ref
                         .watch(authProvider.notifier)
                         .fetchStudentDetails(
                             _emailTextEditingController.text.trim(), context);
-
                     ref
                         .watch(studentModelProvider.notifier)
                         .update((state) => studentModel);
-
-                    log(ref
-                        .watch(studentModelProvider.notifier)
-                        .state
-                        .toString());
-
-                    User? user =
-                        await ref.watch(authProvider.notifier).getUser();
-
-                    ref
-                        .watch(signedUserProvider.notifier)
-                        .update((state) => user);
-
-                    if (ref.watch(signedUserProvider.notifier).state != null)
-                      showDialog(
-                          context: context,
-                          builder: ((context) => const ChangePasswordDialog()));
-
-                    // Navigator.of(context).push(
-                    //   MaterialPageRoute(
-                    //       builder: (context) => const MainScreen()),
-                    // );
+                    showDialog(
+                        context: context,
+                        builder: ((context) => const ChangePasswordDialog()));
                   },
                   child: const Icon(Icons.arrow_forward),
                   style: ButtonStyle(
