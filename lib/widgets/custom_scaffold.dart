@@ -1,5 +1,6 @@
 import 'dart:math' as math;
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -153,6 +154,18 @@ class _CustomScaffoldState extends ConsumerState<CustomScaffold>
                     ),
                     title: "Contact Us",
                   ),
+                ),
+                DrawerListItem(
+                  onTap: () async {
+                    await FirebaseAuth.instance.signOut();
+                    _navigate('/login');
+                  },
+                  icon: const Icon(
+                    Icons.logout_rounded,
+                    size: 22.0,
+                    color: Colors.blue,
+                  ),
+                  title: "Logout",
                 ),
               ],
             ),

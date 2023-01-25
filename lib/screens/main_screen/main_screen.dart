@@ -5,10 +5,12 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:tsec_app/screens/departmentlist_screen/department_list.dart';
 import 'package:tsec_app/screens/main_screen/widget/card_display.dart';
 import 'package:tsec_app/utils/timetable_util.dart';
 import '../../models/event_model/event_model.dart';
 import '../../provider/event_provider.dart';
+import '../../provider/firebase_provider.dart';
 import '../../utils/image_assets.dart';
 import '../../utils/launch_url.dart';
 import '../../utils/themes.dart';
@@ -40,45 +42,49 @@ class MainScreen extends ConsumerWidget {
 
     return CustomScaffold(
       body: SafeArea(
-          child: CustomScrollView(
-        slivers: [
-          const SliverToBoxAdapter(
-            child: MainScreenAppBar(sidePadding: _sidePadding),
-          ),
-          SliverPadding(
-            padding: const EdgeInsets.all(20),
-            sliver: SliverToBoxAdapter(
-              child: Container(
-                width: _size.width * 0.9,
-                decoration: BoxDecoration(
-                  color: _theme.primaryColor,
-                  borderRadius: BorderRadius.circular(15.0),
-                  border: Border.all(
-                    color: _theme.primaryColorLight,
-                    width: 1,
-                    style: BorderStyle.solid,
-                  ),
-                  boxShadow: [_boxshadow],
-                ),
-                child: DatePicker(
-                  DateTime.now(),
-                  monthTextStyle: _theme.textTheme.subtitle2!,
-                  dayTextStyle: _theme.textTheme.subtitle2!,
-                  dateTextStyle: _theme.textTheme.subtitle2!,
-                  initialSelectedDate: DateTime.now(),
-                  selectionColor: Colors.blue,
-                  onDateChange: ((selectedDate) async {
-                    ref
-                        .read(dayProvider.notifier)
-                        .update((state) => getweekday(selectedDate.weekday));
-                  }),
-                ),
-              ),
+        child: CustomScrollView(
+          slivers: [
+            const SliverToBoxAdapter(
+              child: MainScreenAppBar(sidePadding: _sidePadding),
             ),
-          ),
-          const CardDisplay()
-        ],
-      )),
+            ref.watch(firebaseAuthProvider).currentUser?.uid == null
+                ? const DepartmentList()
+                : SliverPadding(
+                    padding: const EdgeInsets.all(20),
+                    sliver: SliverToBoxAdapter(
+                      child: Container(
+                        width: _size.width * 0.9,
+                        decoration: BoxDecoration(
+                          color: _theme.primaryColor,
+                          borderRadius: BorderRadius.circular(15.0),
+                          border: Border.all(
+                            color: _theme.primaryColorLight,
+                            width: 1,
+                            style: BorderStyle.solid,
+                          ),
+                          boxShadow: [_boxshadow],
+                        ),
+                        child: DatePicker(
+                          DateTime.now(),
+                          monthTextStyle: _theme.textTheme.subtitle2!,
+                          dayTextStyle: _theme.textTheme.subtitle2!,
+                          dateTextStyle: _theme.textTheme.subtitle2!,
+                          initialSelectedDate: DateTime.now(),
+                          selectionColor: Colors.blue,
+                          onDateChange: ((selectedDate) async {
+                            ref.read(dayProvider.notifier).update(
+                                (state) => getweekday(selectedDate.weekday));
+                          }),
+                        ),
+                      ),
+                    ),
+                  ),
+            ref.watch(firebaseAuthProvider).currentUser?.uid == null
+                ? const SliverToBoxAdapter()
+                : const CardDisplay(),
+          ],
+        ),
+      ),
     );
   }
 }

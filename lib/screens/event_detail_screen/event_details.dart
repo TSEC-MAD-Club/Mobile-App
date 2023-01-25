@@ -5,6 +5,8 @@ import 'package:tsec_app/models/event_model/event_model.dart';
 
 import 'package:url_launcher/url_launcher_string.dart';
 
+import '../../provider/firebase_provider.dart';
+
 class EventDetail extends ConsumerStatefulWidget {
   final EventModel eventModel;
   const EventDetail({Key? key, required this.eventModel}) : super(key: key);
@@ -76,19 +78,22 @@ class _EventDetailState extends ConsumerState<EventDetail> {
                           Expanded(
                             child: Container(),
                           ),
-                          ElevatedButton(
-                            onPressed: () {
-                              launchUrl();
-                            },
-                            child: const Text("Register"),
-                            style: ElevatedButton.styleFrom(
-                              padding: const EdgeInsets.only(
-                                  top: 0, bottom: 0, right: 20, left: 20),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                            ),
-                          )
+                          ref.watch(firebaseAuthProvider).currentUser?.uid ==
+                                  null
+                              ? const SizedBox()
+                              : ElevatedButton(
+                                  onPressed: () {
+                                    launchUrl();
+                                  },
+                                  child: const Text("Register"),
+                                  style: ElevatedButton.styleFrom(
+                                    padding: const EdgeInsets.only(
+                                        top: 0, bottom: 0, right: 20, left: 20),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                  ),
+                                ),
                         ],
                       ),
                     ),

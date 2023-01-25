@@ -10,53 +10,62 @@ class DepartmentListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomScaffold(
-      appBar: const DepartmentScreenAppBar(title: 'Department'),
+    return const CustomScaffold(
+      appBar: DepartmentScreenAppBar(title: 'Department'),
       body: SafeArea(
         child: CustomScrollView(
           slivers: [
-            SliverPadding(
-              padding: const EdgeInsets.all(20),
-              sliver: SliverGrid.count(
-                crossAxisCount: 2,
-                childAspectRatio:
-                    (MediaQuery.of(context).size.width > 400) ? 1.5 : 173 / 224,
-                crossAxisSpacing: 20,
-                mainAxisSpacing: 20,
-                children: const [
-                  DeptWidget(
-                    image: "aids",
-                    department: DepartmentEnum.aids,
-                  ),
-                  DeptWidget(
-                    image: "extc",
-                    department: DepartmentEnum.extc,
-                  ),
-                  DeptWidget(
-                    image: "cs",
-                    department: DepartmentEnum.cs,
-                  ),
-                  DeptWidget(
-                    image: "it",
-                    department: DepartmentEnum.it,
-                  ),
-                  DeptWidget(
-                    image: "biomed",
-                    department: DepartmentEnum.biomed,
-                  ),
-                  DeptWidget(
-                    image: "biotech",
-                    department: DepartmentEnum.biotech,
-                  ),
-                  DeptWidget(
-                    image: "chem",
-                    department: DepartmentEnum.chem,
-                  ),
-                ],
-              ),
-            )
+            DepartmentList(),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class DepartmentList extends StatelessWidget {
+  const DepartmentList({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverPadding(
+      padding: const EdgeInsets.all(20),
+      sliver: SliverGrid.count(
+        crossAxisCount: 2,
+        childAspectRatio:
+            (MediaQuery.of(context).size.width > 400) ? 1.5 : 173 / 224,
+        crossAxisSpacing: 20,
+        mainAxisSpacing: 20,
+        children: const [
+          DeptWidget(
+            image: "aids",
+            department: DepartmentEnum.aids,
+          ),
+          DeptWidget(
+            image: "extc",
+            department: DepartmentEnum.extc,
+          ),
+          DeptWidget(
+            image: "cs",
+            department: DepartmentEnum.cs,
+          ),
+          DeptWidget(
+            image: "it",
+            department: DepartmentEnum.it,
+          ),
+          DeptWidget(
+            image: "biomed",
+            department: DepartmentEnum.biomed,
+          ),
+          DeptWidget(
+            image: "biotech",
+            department: DepartmentEnum.biotech,
+          ),
+          DeptWidget(
+            image: "chem",
+            department: DepartmentEnum.chem,
+          ),
+        ],
       ),
     );
   }
