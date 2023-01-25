@@ -12,45 +12,59 @@ class NotificationListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () => showDialog(
-        context: context,
-        builder: (context) => NotificationDialog(
-          notificationModel: notificationModel,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      child: InkWell(
+        onTap: () => showDialog(
+          context: context,
+          builder: (context) => NotificationDialog(
+            notificationModel: notificationModel,
+          ),
         ),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 16,
-          vertical: 10,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    notificationModel.title,
-                    style: Theme.of(context).textTheme.bodyText1,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: 5,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      notificationModel.title,
+                      style: Theme.of(context).textTheme.bodyText1,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
-                ),
-                if (notificationModel.attachments != null)
-                  const Icon(
-                    Icons.attach_file,
-                    size: 15,
-                  ),
-              ],
-            ),
-            const SizedBox(height: 5),
-            Text(
-              notificationModel.message,
-              maxLines: 3,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ],
+                  if (notificationModel.attachments != null)
+                    Icon(
+                      Icons.attach_file,
+                      size: 20,
+                      color: (Theme.of(context).primaryColor ==
+                              const Color(0xFFF2F5F8))
+                          ? Colors.black12
+                          : Colors.white12,
+                    ),
+                ],
+              ),
+              const SizedBox(height: 10),
+              Text(
+                notificationModel.message,
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
+              ),
+              Divider(
+                color:
+                    (Theme.of(context).primaryColor == const Color(0xFFF2F5F8))
+                        ? Colors.black12
+                        : Colors.white12,
+                thickness: 1,
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -79,7 +79,7 @@ class _TSECAppState extends ConsumerState<TSECApp> {
       routes: [
         GoRoute(
           path: "/",
-          builder: (context, state) => const LoginScreen(),
+          builder: (context, state) => const NotificationScreen(),
           redirect: (_) {
             ref.watch(signedUser).when(
                 data: (data) {

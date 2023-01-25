@@ -23,11 +23,20 @@ class NotificationDialog extends StatelessWidget {
         children: [
           Text(
             notificationModel.title,
-            style: Theme.of(context).textTheme.headline5,
+            style: const TextStyle(
+              color: Colors.black,
+              fontSize: 14,
+              fontWeight: FontWeight.bold,
+            ),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 15),
-          Text(notificationModel.message),
+          Text(
+            notificationModel.message,
+            style: const TextStyle(
+              color: Colors.black,
+            ),
+          ),
           if (notificationModel.attachments != null) ...[
             const SizedBox(height: 20),
             ..._buildDownloadButtons(notificationModel.attachments!),
@@ -73,9 +82,10 @@ class _DownloadButtonState extends State<_DownloadButton> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 5),
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(foregroundColor: Colors.white),
+      padding: const EdgeInsets.only(top: 0),
+      child: TextButton(
+        style: ElevatedButton.styleFrom(
+            foregroundColor: Colors.white, backgroundColor: Colors.transparent),
         onPressed: _storageResult == null ? null : _onButtonClick,
         child: _storageResult == null || _storageResult!.isDownloadInProgress
             ? SizedBox(
@@ -88,15 +98,27 @@ class _DownloadButtonState extends State<_DownloadButton> {
             : Row(
                 children: <Widget>[
                   _storageResult!.path != null
-                      ? const Icon(Icons.open_in_new)
-                      : const Icon(Icons.download),
-                  Expanded(
-                    child: Text(
-                      _storageResult!.name,
-                      textAlign: TextAlign.center,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
+                      ? const Icon(
+                          Icons.open_in_new,
+                          color: Colors.blue,
+                        )
+                      : const Icon(
+                          Icons.download,
+                          color: Colors.blue,
+                        ),
+                  const SizedBox(
+                    width: 15,
+                  ),
+                  Text(
+                    _storageResult!.name,
+                    style: TextStyle(
+                        decoration: TextDecoration.underline,
+                        color: Colors.blue.shade400,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.center,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ],
               ),
