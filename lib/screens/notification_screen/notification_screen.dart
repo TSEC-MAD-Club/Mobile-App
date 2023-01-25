@@ -54,7 +54,6 @@ class _NotificationScreenState extends State<NotificationScreen> {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                
                 _buildDateHeader(data.notificationTime),
                 listTile,
               ],
