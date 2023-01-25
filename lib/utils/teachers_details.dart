@@ -3,6 +3,6 @@ String getTeacherImagebyName(String facultyName) {
     case "Darakhshan Khan":
       return " ";
     default:
-      return ""; 
+      return "";
   }
 }

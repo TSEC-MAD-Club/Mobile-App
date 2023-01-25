@@ -3,6 +3,6 @@ String getCommitteeImagebyName(String committeeName) {
     case "Tsec Codecell":
       return " ";
     default:
-      return ""; 
+      return "";
   }
 }
