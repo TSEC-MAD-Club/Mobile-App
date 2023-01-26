@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
+import 'package:tsec_app/provider/auth_provider.dart';
+import 'package:tsec_app/provider/firebase_provider.dart';
 import 'package:tsec_app/screens/main_screen/widget/card_display.dart';
 import 'package:tsec_app/utils/timetable_util.dart';
 import 'package:url_launcher/link.dart';
@@ -157,7 +159,7 @@ class _CustomScaffoldState extends ConsumerState<CustomScaffold>
                 ),
                 DrawerListItem(
                   onTap: () async {
-                    await FirebaseAuth.instance.signOut();
+                    await ref.watch(firebaseAuthProvider).signOut();
                     _navigate('/login');
                   },
                   icon: const Icon(
@@ -315,7 +317,7 @@ class _ForegroundNotificationSnackBar extends StatelessWidget {
                       Expanded(
                         child: Text(
                           notificationModel.title,
-                          style: Theme.of(context).textTheme.bodyText1,
+                          style: Theme.of(context).textTheme.bodyMedium,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -368,7 +370,7 @@ class DrawerListItem extends StatelessWidget {
             Flexible(
               child: Text(
                 title,
-                style: Theme.of(context).textTheme.headline4,
+                style: Theme.of(context).textTheme.headlineLarge,
               ),
             ),
           ],

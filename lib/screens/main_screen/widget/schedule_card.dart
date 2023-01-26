@@ -72,7 +72,7 @@ class ScheduleCard extends StatelessWidget {
                         lectureStartTime,
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          color: _theme.textTheme.headline1!.color,
+                          color: _theme.textTheme.titleLarge!.color,
                           fontWeight: FontWeight.w400,
                           fontSize: 16.0,
                           letterSpacing: 1.0,
@@ -82,7 +82,7 @@ class ScheduleCard extends StatelessWidget {
                       Text(
                         'to',
                         style: TextStyle(
-                          color: _theme.textTheme.headline1!.color,
+                          color: _theme.textTheme.titleLarge!.color,
                           fontWeight: FontWeight.w300,
                           fontSize: 16.0,
                           letterSpacing: 1.0,
@@ -92,7 +92,7 @@ class ScheduleCard extends StatelessWidget {
                       Text(
                         lectureEndTime,
                         style: TextStyle(
-                          color: _theme.textTheme.headline1!.color,
+                          color: _theme.textTheme.titleLarge!.color,
                           fontWeight: FontWeight.w400,
                           fontSize: 16.0,
                           letterSpacing: 1.0,
@@ -115,7 +115,7 @@ class ScheduleCard extends StatelessWidget {
                     Text(
                       lectureName,
                       style: TextStyle(
-                        color: _theme.textTheme.headline1!.color,
+                        color: _theme.textTheme.titleLarge!.color,
                         fontWeight: FontWeight.w400,
                         fontSize: 20.0,
                         letterSpacing: 1.0,
@@ -127,7 +127,7 @@ class ScheduleCard extends StatelessWidget {
                     Text(
                       'Batch : C13',
                       style: TextStyle(
-                        color: _theme.textTheme.headline2!.color,
+                        color: _theme.textTheme.titleMedium!.color,
                         fontWeight: FontWeight.w300,
                         fontSize: 17.0,
                         letterSpacing: 1.0,

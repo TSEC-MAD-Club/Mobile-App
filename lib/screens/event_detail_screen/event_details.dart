@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tsec_app/models/event_model/event_model.dart';
+import 'package:tsec_app/screens/department_screen/widgets/department_screen_app_bar.dart';
 
 import 'package:url_launcher/url_launcher_string.dart';
 
@@ -30,6 +31,7 @@ class _EventDetailState extends ConsumerState<EventDetail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: const DepartmentScreenAppBar(title: "Event"),
       body: Stack(
         alignment: Alignment.topCenter,
         children: [
@@ -110,7 +112,7 @@ class _EventDetailState extends ConsumerState<EventDetail> {
                           ),
                           Text(
                             widget.eventModel.eventLocation,
-                            style: Theme.of(context).textTheme.bodyText2,
+                            style: Theme.of(context).textTheme.bodySmall,
                           )
                         ],
                       ),
@@ -130,7 +132,7 @@ class _EventDetailState extends ConsumerState<EventDetail> {
                             widget.eventModel.eventTime +
                                 " " +
                                 widget.eventModel.eventDate,
-                            style: Theme.of(context).textTheme.bodyText2,
+                            style: Theme.of(context).textTheme.bodySmall,
                           ),
                         ],
                       ),
@@ -141,7 +143,7 @@ class _EventDetailState extends ConsumerState<EventDetail> {
                         children: [
                           Text(
                             "About",
-                            style: Theme.of(context).textTheme.headline5,
+                            style: Theme.of(context).textTheme.headlineMedium,
                           ),
                         ],
                       ),
@@ -154,7 +156,7 @@ class _EventDetailState extends ConsumerState<EventDetail> {
                       ),
                       child: Text(
                         widget.eventModel.eventDescription,
-                        style: Theme.of(context).textTheme.subtitle2,
+                        style: Theme.of(context).textTheme.displayMedium,
                       ),
                     ),
                     Padding(
@@ -163,7 +165,7 @@ class _EventDetailState extends ConsumerState<EventDetail> {
                         children: [
                           Text(
                             "Organisers",
-                            style: Theme.of(context).textTheme.headline5,
+                            style: Theme.of(context).textTheme.headlineMedium,
                           ),
                         ],
                       ),
@@ -184,7 +186,7 @@ class _EventDetailState extends ConsumerState<EventDetail> {
                           ),
                           Text(
                             "TSEC CodeCell",
-                            style: Theme.of(context).textTheme.subtitle1,
+                            style: Theme.of(context).textTheme.displayLarge,
                           ),
                         ],
                       ),

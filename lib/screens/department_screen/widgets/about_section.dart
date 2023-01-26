@@ -61,8 +61,11 @@ class _AboutSectionState extends State<AboutSection> {
                     children: [
                       Text(
                         "About Department",
-                        style: Theme.of(context).textTheme.headline6!.copyWith(
-                            fontSize: 20, fontWeight: FontWeight.w500),
+                        style: Theme.of(context)
+                            .textTheme
+                            .headlineSmall!
+                            .copyWith(
+                                fontSize: 20, fontWeight: FontWeight.w500),
                         textAlign: TextAlign.left,
                       ),
                       const SizedBox(
@@ -94,12 +97,12 @@ class _AboutSectionState extends State<AboutSection> {
                               softWrap: true,
                               maxLines: 3,
                               overflow: TextOverflow.ellipsis,
-                              style: Theme.of(context).textTheme.bodyText2,
+                              style: Theme.of(context).textTheme.bodySmall,
                             ),
                             expanded: Text(
                               about,
                               softWrap: true,
-                              style: Theme.of(context).textTheme.bodyText2,
+                              style: Theme.of(context).textTheme.bodySmall,
                             ),
                           ),
                         ),
@@ -112,7 +115,7 @@ class _AboutSectionState extends State<AboutSection> {
                           "Vision",
                           style: Theme.of(context)
                               .textTheme
-                              .headline6!
+                              .headlineSmall!
                               .copyWith(
                                   fontSize: 20, fontWeight: FontWeight.w500),
                           textAlign: TextAlign.left,
@@ -146,12 +149,12 @@ class _AboutSectionState extends State<AboutSection> {
                                 softWrap: true,
                                 maxLines: 4,
                                 overflow: TextOverflow.ellipsis,
-                                style: Theme.of(context).textTheme.bodyText2,
+                                style: Theme.of(context).textTheme.bodySmall,
                               ),
                               expanded: Text(
                                 vision,
                                 softWrap: true,
-                                style: Theme.of(context).textTheme.bodyText2,
+                                style: Theme.of(context).textTheme.bodySmall,
                               ),
                             ),
                           ),
@@ -165,7 +168,7 @@ class _AboutSectionState extends State<AboutSection> {
                           "Mission",
                           style: Theme.of(context)
                               .textTheme
-                              .headline6!
+                              .headlineSmall!
                               .copyWith(
                                   fontSize: 20, fontWeight: FontWeight.w500),
                           textAlign: TextAlign.left,
@@ -200,7 +203,7 @@ class _AboutSectionState extends State<AboutSection> {
                                 softWrap: true,
                                 text: TextSpan(
                                   text: "",
-                                  style: Theme.of(context).textTheme.bodyText2,
+                                  style: Theme.of(context).textTheme.bodySmall,
                                   children: [
                                     if (true)
                                       for (var i = 1; i <= 2; i++)
@@ -223,7 +226,7 @@ class _AboutSectionState extends State<AboutSection> {
                               expanded: RichText(
                                 text: TextSpan(
                                   text: "",
-                                  style: Theme.of(context).textTheme.bodyText2,
+                                  style: Theme.of(context).textTheme.bodySmall,
                                   children: [
                                     for (var i = 1;
                                         i <= mission.length * 2;

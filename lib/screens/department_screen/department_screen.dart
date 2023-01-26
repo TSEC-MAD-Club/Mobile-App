@@ -48,7 +48,7 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
   final GlobalKey _dropDownKey = GlobalKey();
 
   void _showDropDown(BuildContext context) async {
-    OverlayState overlayState = Overlay.of(context)!;
+    OverlayState overlayState = Overlay.of(context);
 
     overlayEntry = OverlayEntry(builder: (context) {
       return Positioned(
@@ -146,7 +146,7 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
                       widget.department.name,
                       style: Theme.of(context)
                           .textTheme
-                          .headline5!
+                          .headlineMedium!
                           .copyWith(fontSize: 22),
                     ),
                     const SizedBox(
@@ -170,7 +170,7 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
                             selectedItem.name,
                             style: Theme.of(context)
                                 .textTheme
-                                .button!
+                                .labelLarge!
                                 .copyWith(color: Colors.white),
                           ),
                           const Spacer(),

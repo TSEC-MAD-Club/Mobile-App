@@ -168,14 +168,14 @@ class CollapsedFacultyCard extends StatelessWidget {
               text: name,
               style: Theme.of(context)
                   .textTheme
-                  .headline3!
+                  .titleSmall!
                   .copyWith(fontWeight: FontWeight.w600, fontSize: 22),
               children: [
                 TextSpan(
                   text: designation,
                   style: Theme.of(context)
                       .textTheme
-                      .bodyText1!
+                      .bodyMedium!
                       .copyWith(fontWeight: FontWeight.normal, fontSize: 16),
                 ),
               ],
@@ -263,7 +263,7 @@ class ExpandedFacultyCard extends StatelessWidget {
           "Area of Specialization",
           style: Theme.of(context)
               .textTheme
-              .headline3!
+              .titleSmall!
               .copyWith(fontWeight: FontWeight.w600, fontSize: 17),
         ),
         const SizedBox(
@@ -298,7 +298,7 @@ class ChipStyledText extends StatelessWidget {
       ),
       child: Text(
         text,
-        style: Theme.of(context).textTheme.button,
+        style: Theme.of(context).textTheme.labelLarge,
       ),
     );
   }

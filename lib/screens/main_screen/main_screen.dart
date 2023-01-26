@@ -17,6 +17,11 @@ import '../../utils/themes.dart';
 import '../../widgets/custom_scaffold.dart';
 import 'package:date_picker_timeline/date_picker_timeline.dart';
 
+final isLoggedInProvider = StateProvider.autoDispose<bool>((ref) {
+  var isLoggedIn = ref.watch(firebaseAuthProvider).currentUser?.uid == null;
+  return isLoggedIn;
+});
+
 class MainScreen extends ConsumerWidget {
   const MainScreen({Key? key}) : super(key: key);
 
@@ -47,7 +52,7 @@ class MainScreen extends ConsumerWidget {
             const SliverToBoxAdapter(
               child: MainScreenAppBar(sidePadding: _sidePadding),
             ),
-            ref.watch(firebaseAuthProvider).currentUser?.uid == null
+            ref.watch(isLoggedInProvider)
                 ? const DepartmentList()
                 : SliverPadding(
                     padding: const EdgeInsets.all(20),
@@ -66,9 +71,9 @@ class MainScreen extends ConsumerWidget {
                         ),
                         child: DatePicker(
                           DateTime.now(),
-                          monthTextStyle: _theme.textTheme.subtitle2!,
-                          dayTextStyle: _theme.textTheme.subtitle2!,
-                          dateTextStyle: _theme.textTheme.subtitle2!,
+                          monthTextStyle: _theme.textTheme.displayMedium!,
+                          dayTextStyle: _theme.textTheme.displayMedium!,
+                          dateTextStyle: _theme.textTheme.displayMedium!,
                           initialSelectedDate: DateTime.now(),
                           selectionColor: Colors.blue,
                           onDateChange: ((selectedDate) async {
@@ -79,7 +84,7 @@ class MainScreen extends ConsumerWidget {
                       ),
                     ),
                   ),
-            ref.watch(firebaseAuthProvider).currentUser?.uid == null
+            ref.watch(isLoggedInProvider)
                 ? const SliverToBoxAdapter()
                 : const CardDisplay(),
           ],
@@ -139,25 +144,28 @@ class _MainScreenAppBarState extends ConsumerState<MainScreenAppBar> {
                 flex: 2,
                 child: Text(
                   "Thadomal Shahani Engineering College",
-                  style: Theme.of(context).textTheme.headline3,
+                  style: Theme.of(context).textTheme.titleSmall,
                 ),
               ),
               Flexible(
-                child: GestureDetector(
-                  onTap: () => GoRouter.of(context).push("/notifications"),
-                  child: Container(
-                    padding: const EdgeInsets.all(5),
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.secondary,
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    child: const IconTheme(
-                      data: IconThemeData(color: kLightModeLightBlue),
-                      child: Icon(Icons.notifications),
-                    ),
-                  ),
-                ),
-              )
+                child: ref.watch(firebaseAuthProvider).currentUser?.uid == null
+                    ? const SizedBox()
+                    : GestureDetector(
+                        onTap: () =>
+                            GoRouter.of(context).push("/notifications"),
+                        child: Container(
+                          padding: const EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).colorScheme.secondary,
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          child: const IconTheme(
+                            data: IconThemeData(color: kLightModeLightBlue),
+                            child: Icon(Icons.notifications),
+                          ),
+                        ),
+                      ),
+              ),
             ],
           ),
           const SizedBox(height: 10),
@@ -176,7 +184,7 @@ class _MainScreenAppBarState extends ConsumerState<MainScreenAppBar> {
                   "Bandra, Mumbai",
                   style: Theme.of(context)
                       .primaryTextTheme
-                      .bodyText1!
+                      .bodyMedium!
                       .copyWith(color: kLightModeDarkBlue),
                 ),
               ],
@@ -253,7 +261,7 @@ class _MainScreenAppBarState extends ConsumerState<MainScreenAppBar> {
           Row(
             children: [
               Text(
-                "Time Table",
+                ref.watch(isLoggedInProvider) ? "Departments" : "Time Table",
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
             ],

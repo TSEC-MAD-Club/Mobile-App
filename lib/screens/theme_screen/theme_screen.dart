@@ -22,12 +22,12 @@ class ThemeScreen extends StatelessWidget {
         const SizedBox(height: 40),
         Text(
           "Choose a style",
-          style: Theme.of(context).textTheme.headline3,
+          style: Theme.of(context).textTheme.titleSmall,
         ),
         const SizedBox(height: 15),
         Text(
           "Pop or subtle. Day or night. \n Customize your interface.",
-          style: Theme.of(context).textTheme.subtitle1,
+          style: Theme.of(context).textTheme.displayLarge,
         ),
         SizedBox(height: 0.05 * _height),
         Consumer(

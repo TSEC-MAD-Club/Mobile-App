@@ -23,7 +23,7 @@ class NotificationDialog extends StatelessWidget {
         children: [
           Text(
             notificationModel.title,
-            style: Theme.of(context).textTheme.headline5,
+            style: Theme.of(context).textTheme.headlineMedium,
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 15),

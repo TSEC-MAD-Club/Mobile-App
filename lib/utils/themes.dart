@@ -98,49 +98,49 @@ late final darkTheme = ThemeData(
   colorScheme: ColorScheme.fromSwatch().copyWith(secondary: kLightBlack),
 );
 
-const _textTheme = TextTheme(
-  headline1: TextStyle(
+var _textTheme = const TextTheme(
+  titleLarge: TextStyle(
     fontSize: 36,
     fontWeight: FontWeight.w400,
   ),
-  headline2: TextStyle(
+  titleMedium: TextStyle(
     fontSize: 28,
     fontWeight: FontWeight.w400,
   ),
-  headline3: TextStyle(
+  titleSmall: TextStyle(
     fontSize: 22,
     fontWeight: FontWeight.w400,
   ),
-  headline4: TextStyle(
+  headlineLarge: TextStyle(
     fontSize: 20,
     fontWeight: FontWeight.w400,
   ),
-  headline5: TextStyle(
+  headlineMedium: TextStyle(
     fontSize: 14,
     fontWeight: FontWeight.bold,
   ),
-  headline6: TextStyle(),
-  bodyText1: TextStyle(
+  headlineSmall: TextStyle(),
+  bodyMedium: TextStyle(
     fontSize: 17,
     fontWeight: FontWeight.w600,
   ),
-  bodyText2: TextStyle(
+  bodySmall: TextStyle(
     fontSize: 17,
     fontWeight: FontWeight.w400,
   ),
-  caption: TextStyle(
+  displaySmall: TextStyle(
     fontSize: 12,
     fontWeight: FontWeight.w400,
   ),
-  subtitle1: TextStyle(
+  displayLarge: TextStyle(
     fontSize: 16,
     fontWeight: FontWeight.w400,
   ),
-  subtitle2: TextStyle(
+  displayMedium: TextStyle(
     fontSize: 14,
     fontWeight: FontWeight.w500,
   ),
-  button: TextStyle(),
+  labelLarge: TextStyle(),
 );
 TextButtonThemeData _getTextButtonTheme({
   required Color darkColor,

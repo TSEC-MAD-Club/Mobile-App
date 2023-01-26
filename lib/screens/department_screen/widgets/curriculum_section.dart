@@ -102,8 +102,8 @@ class _CurriculumSectionState extends State<CurriculumSection> {
                           borderRadius: BorderRadius.circular(10),
                         ),
                         foregroundColor:
-                            Theme.of(context).textTheme.bodyText2!.color,
-                        textStyle: Theme.of(context).textTheme.bodyText2,
+                            Theme.of(context).textTheme.bodySmall!.color,
+                        textStyle: Theme.of(context).textTheme.bodySmall,
                         backgroundColor:
                             Theme.of(context).colorScheme.secondary,
                       ),

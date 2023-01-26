@@ -77,8 +77,8 @@ class _DepartmentScreenAppBarState
         ),
       ),
       title: Text(
-        "Department",
-        style: Theme.of(context).textTheme.headline6,
+        widget.title,
+        style: Theme.of(context).textTheme.headlineSmall,
       ),
       centerTitle: true,
       actions: [

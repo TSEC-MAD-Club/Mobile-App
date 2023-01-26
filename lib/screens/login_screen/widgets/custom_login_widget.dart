@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tsec_app/models/student_model/student_model.dart';
 import 'package:tsec_app/provider/auth_provider.dart';
 import 'package:tsec_app/screens/login_screen/widgets/custom_dialog_box.dart';
@@ -30,7 +31,7 @@ class _LoginWidgetState extends ConsumerState<LoginWidget> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text("Email", style: Theme.of(context).textTheme.subtitle1),
+              Text("Email", style: Theme.of(context).textTheme.displayLarge),
               Padding(
                 padding: const EdgeInsets.only(top: 5, bottom: 10),
                 child: DecoratedBox(
@@ -55,7 +56,7 @@ class _LoginWidgetState extends ConsumerState<LoginWidget> {
                   ),
                 ),
               ),
-              Text("Password", style: Theme.of(context).textTheme.subtitle1),
+              Text("Password", style: Theme.of(context).textTheme.displayLarge),
               Padding(
                 padding: const EdgeInsets.only(top: 5, bottom: 10),
                 child: DecoratedBox(
@@ -103,10 +104,12 @@ class _LoginWidgetState extends ConsumerState<LoginWidget> {
           child: Row(
             children: <Widget>[
               GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  GoRouter.of(context).go('/main');
+                },
                 child: Text(
                   "Skip",
-                  style: Theme.of(context).textTheme.subtitle1,
+                  style: Theme.of(context).textTheme.headlineMedium,
                 ),
               ),
               const Spacer(),

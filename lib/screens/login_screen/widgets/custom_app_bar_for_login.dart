@@ -25,13 +25,13 @@ class CustomAppBarForLogin extends StatelessWidget {
               Flexible(
                 child: Text(
                   title,
-                  style: Theme.of(context).textTheme.headline1,
+                  style: Theme.of(context).textTheme.titleLarge,
                 ),
               ),
               Flexible(
                 child: Text(
                   description,
-                  style: Theme.of(context).textTheme.headline4,
+                  style: Theme.of(context).textTheme.headlineLarge,
                 ),
               ),
               Flexible(

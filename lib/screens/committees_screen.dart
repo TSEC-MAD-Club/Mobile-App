@@ -95,7 +95,8 @@ class _CommitteesScreenState extends State<CommitteesScreen> {
                             children: [
                               Text(
                                 data[_currentPage].name,
-                                style: Theme.of(context).textTheme.headline4,
+                                style:
+                                    Theme.of(context).textTheme.headlineLarge,
                                 textAlign: TextAlign.center,
                               ),
                               const SizedBox(height: 15),
