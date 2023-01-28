@@ -1,7 +1,12 @@
+import 'dart:developer';
+
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tsec_app/models/student_model/student_model.dart';
+import 'package:tsec_app/provider/auth_provider.dart';
 import 'package:tsec_app/screens/main_screen/widget/schedule_card.dart';
+import 'package:tsec_app/utils/faculty_details.dart';
 import '../../../models/timetable_model/timetable_model.dart';
 import '../../../provider/timetable_provider.dart';
 import '../../../utils/timetable_util.dart';
@@ -33,7 +38,6 @@ class _CardDisplayState extends ConsumerState<CardDisplay> {
     return url;
   }
 
-  
   @override
   Widget build(BuildContext context) {
     final data = ref.watch(weekTimetableProvider);
@@ -46,6 +50,7 @@ class _CardDisplayState extends ConsumerState<CardDisplay> {
             );
           } else {
             List<TimetableModel> timeTableDay = getTimetablebyDay(data, day);
+            log(timeTableDay.length.toString()); 
             return SliverPadding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 20.0,
@@ -53,30 +58,23 @@ class _CardDisplayState extends ConsumerState<CardDisplay> {
                 ),
                 sliver: SliverList(
                     delegate: SliverChildBuilderDelegate(
-                        childCount: timeTableDay.length, (context, index) {
-                  var color = colorList[index];
-                  var opacity = opacityList[index];
-                  return FutureBuilder(
-                      future: getFacultyImageUrl(
+                  childCount: timeTableDay.length ,
+                  (context, index) {
+                    var color = colorList[index%2];
+                    var opacity = opacityList[index%2];
+                    return ScheduleCard(
+                      color,
+                      opacity,
+                      lectureEndTime: timeTableDay[index].lectureEndTime,
+                      lectureName: timeTableDay[index].lectureName,
+                      lectureStartTime: timeTableDay[index].lectureStartTime,
+                      facultyImageurl: getFacultyImagebyName(
                           timeTableDay[index].lectureFacultyName),
-                      builder: (context, snapshot) {
-                        if (snapshot.hasData) {
-                          return ScheduleCard(
-                            color,
-                            opacity,
-                            lectureEndTime: timeTableDay[index].lectureEndTime,
-                            lectureName: timeTableDay[index].lectureName,
-                            lectureStartTime:
-                                timeTableDay[index].lectureStartTime,
-                            facultyImageurl: snapshot.data as String,
-                            facultyName: timeTableDay[index].lectureFacultyName,
-                          );
-                        }
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        ); 
-                      });
-                })));
+                      facultyName: timeTableDay[index].lectureFacultyName,
+                       lectureBatch: timeTableDay[index].lectureBatch,
+                    );
+                  },
+                )));
           }
         }),
         error: ((error, stackTrace) => const SliverToBoxAdapter(
@@ -91,9 +89,15 @@ class _CardDisplayState extends ConsumerState<CardDisplay> {
       Map<String, dynamic> data, String day) {
     List<TimetableModel> timeTableDay = [];
     final daylist = data[day];
+
     for (final item in daylist) {
+      StudentModel? studentModel = ref.watch(studentModelProvider); 
+      if(item['lectureBatch'] == studentModel!.batch.toString() 
+     || item['lectureBatch'] == 'All'
+      )
       timeTableDay.add(TimetableModel.fromJson(item));
     }
+    log(timeTableDay.length.toString());
     return timeTableDay;
   }
 }

@@ -7,7 +7,8 @@ class ScheduleCard extends StatelessWidget {
       required this.lectureEndTime,
       required this.lectureName,
       required this.facultyName,
-      required this.facultyImageurl})
+      required this.facultyImageurl,
+      required this.lectureBatch})
       : super(key: key);
   final Color? color;
   final Color? opacityColor;
@@ -16,6 +17,7 @@ class ScheduleCard extends StatelessWidget {
   final String lectureName;
   final String facultyName;
   final String facultyImageurl;
+  final String lectureBatch; 
 
   @override
   Widget build(BuildContext context) {
@@ -138,7 +140,7 @@ class ScheduleCard extends StatelessWidget {
                     FittedBox(
                       fit: BoxFit.scaleDown,
                       child: Text(
-                        'Batch : C13',
+                        'Batch : $lectureBatch',
                         style: TextStyle(
                           color: _theme.textTheme.headline2!.color,
                           fontWeight: FontWeight.w300,

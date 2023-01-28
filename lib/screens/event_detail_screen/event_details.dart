@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tsec_app/models/event_model/event_model.dart';
 import 'package:tsec_app/models/student_model/student_model.dart';
 import 'package:tsec_app/provider/auth_provider.dart';
+import 'package:tsec_app/utils/committee_details.dart';
 
 import 'package:url_launcher/url_launcher_string.dart';
 
@@ -176,8 +177,9 @@ class _EventDetailState extends ConsumerState<EventDetail> {
                       child: Row(
                         children: [
                           CircleAvatar(
-                            backgroundImage: const NetworkImage(
-                              'https://cdn.pixabay.com/photo/2013/05/11/08/28/sunset-110305_1280.jpg',
+                            backgroundImage: NetworkImage(
+                              getCommitteeImageByName
+                              (widget.eventModel.committeeName),
                             ),
                             backgroundColor: Colors.red.shade800,
                             radius: 20,
