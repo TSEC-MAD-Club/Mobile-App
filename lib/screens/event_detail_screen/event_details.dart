@@ -186,7 +186,7 @@ class _EventDetailState extends ConsumerState<EventDetail> {
                             width: 5,
                           ),
                           Text(
-                            "TSEC CodeCell",
+                            widget.eventModel.committeeName,
                             style: Theme.of(context).textTheme.subtitle1,
                           ),
                         ],

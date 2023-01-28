@@ -27,7 +27,7 @@ abstract class NotificationType {
       yearTopic = studentYear;
       yearBranchTopic = "$studentYear-$studentBranch";
       yearBranchDivTopic =
-          "$studentYear-$studentBranch-$studentDiv-$studentBatch";
+          "$studentYear-$studentBranch-$studentDiv";
       yearBranchDivBatchTopic = 
       "$studentYear-$studentBranch-$studentDiv-$studentBatch";
     }
