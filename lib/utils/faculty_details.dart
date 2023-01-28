@@ -150,12 +150,6 @@ String getFacultyImagebyName(String facultyName) {
     case "Bharati Ingale":
       return "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Faids%2Fbharati_ingale.jpg?alt=media&token=12ce7b39-7836-4556-bc0e-6c81dca39687";
 
-    case "Bhushan Jadhav":
-      return "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Faids%2Fbhushan.jpg?alt=media&token=fbe34e2b-b5bd-439f-a67a-8882e4b81917";
-
-    case "Madhuri Rao":
-      return "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Faids%2Fmadhuri-rao.png?alt=media&token=6174dbf7-78bf-4f36-a06f-1b7cc1768d4b";
-
     case "Meenu Bhatia":
       return "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Faids%2Fmeenu_bhatia.jpg?alt=media&token=c555d65d-75e5-4330-aedd-5a360436933b";
 
