@@ -49,12 +49,27 @@ class _LoginWidgetState extends ConsumerState<LoginWidget> {
                   child: TextField(
                     controller: _emailTextEditingController,
                     decoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: (Theme.of(context).primaryColor ==
+                                  const Color(0xFFF2F5F8))
+                              ? Colors.black54
+                              : Colors.white38,
+                          width: 1.0,
+                        ),
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(18),
+                        ),
+                      ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(18.0),
                       ),
                       filled: true,
                       hintStyle: TextStyle(
-                        color: Colors.grey[800],
+                        color: (Theme.of(context).primaryColor ==
+                                const Color(0xFFF2F5F8))
+                            ? Colors.grey[500]
+                            : Colors.white60,
                       ),
                       hintText: "Enter Your E-Mail ID",
                       fillColor: Theme.of(context).primaryColor,
@@ -76,12 +91,27 @@ class _LoginWidgetState extends ConsumerState<LoginWidget> {
                     controller: _passwordTextEditingController,
                     obscureText: true,
                     decoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: (Theme.of(context).primaryColor ==
+                                  const Color(0xFFF2F5F8))
+                              ? Colors.black54
+                              : Colors.white38,
+                          width: 1.0,
+                        ),
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(18),
+                        ),
+                      ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(18.0),
                       ),
                       filled: true,
                       hintStyle: TextStyle(
-                        color: Colors.grey[800],
+                        color: (Theme.of(context).primaryColor ==
+                                const Color(0xFFF2F5F8))
+                            ? Colors.grey[500]
+                            : Colors.white60,
                       ),
                       hintText: "Enter Your Password",
                       fillColor: Theme.of(context).primaryColor,

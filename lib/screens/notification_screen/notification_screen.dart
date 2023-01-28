@@ -48,8 +48,10 @@ class _NotificationScreenState extends State<NotificationScreen> {
               .orderBy("notificationTime", descending: true),
           itemBuilder: (context, doc) {
             final data = doc.data();
-            log(data.toString());
-            final listTile = NotificationListItem(notificationModel: data);
+
+            final listTile = NotificationListItem(
+              notificationModel: data,
+            );
 
             if (_lastDate.isSameDate(data.notificationTime)) return listTile;
 

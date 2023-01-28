@@ -30,6 +30,8 @@ class _EventDetailState extends ConsumerState<EventDetail> {
   @override
   Widget build(BuildContext context) {
     StudentModel? data = ref.watch(studentModelProvider);
+    double _height = MediaQuery.of(context).size.height;
+    double _width = MediaQuery.of(context).size.width;
     return Scaffold(
       body: Stack(
         alignment: Alignment.topCenter,
@@ -40,17 +42,18 @@ class _EventDetailState extends ConsumerState<EventDetail> {
             color: Colors.white.withOpacity(0.4),
             colorBlendMode: BlendMode.modulate,
             fit: BoxFit.fill,
-            height: MediaQuery.of(context).size.height * 0.5,
+            width: MediaQuery.of(context).size.width,
           ),
           CachedNetworkImage(
             imageUrl: widget.eventModel.imageUrl,
             fit: BoxFit.cover,
             alignment: Alignment.center,
-            height: MediaQuery.of(context).size.height * 0.3,
+            height: (_height > _width) ? _height * 0.3 : _height * 0.5,
           ),
           Padding(
-            padding:
-                EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.29),
+            padding: EdgeInsets.only(
+              top: (_height > _width) ? _height * 0.3 : _height * 0.5,
+            ),
             child: Container(
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
