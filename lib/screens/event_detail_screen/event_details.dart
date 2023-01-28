@@ -2,6 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tsec_app/models/event_model/event_model.dart';
+import 'package:tsec_app/models/student_model/student_model.dart';
+import 'package:tsec_app/provider/auth_provider.dart';
 
 import 'package:url_launcher/url_launcher_string.dart';
 
@@ -27,6 +29,7 @@ class _EventDetailState extends ConsumerState<EventDetail> {
 
   @override
   Widget build(BuildContext context) {
+    StudentModel? data = ref.watch(studentModelProvider);
     return Scaffold(
       body: Stack(
         alignment: Alignment.topCenter,
@@ -76,6 +79,8 @@ class _EventDetailState extends ConsumerState<EventDetail> {
                           Expanded(
                             child: Container(),
                           ),
+                          data == null ?
+                          const SizedBox() :
                           ElevatedButton(
                             onPressed: () {
                               launchUrl();

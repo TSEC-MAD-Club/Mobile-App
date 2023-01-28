@@ -1,11 +1,15 @@
 import 'dart:developer';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:tsec_app/models/student_model/student_model.dart';
+import 'package:tsec_app/provider/auth_provider.dart';
+import 'package:tsec_app/screens/departmentlist_screen/department_list.dart';
 import 'package:tsec_app/screens/main_screen/widget/card_display.dart';
+import 'package:tsec_app/utils/notification_type.dart';
 import 'package:tsec_app/utils/timetable_util.dart';
 import '../../models/event_model/event_model.dart';
 import '../../provider/event_provider.dart';
@@ -37,7 +41,8 @@ class MainScreen extends ConsumerWidget {
       blurRadius: 2,
       offset: const Offset(0, 1),
     );
-
+    StudentModel? data = ref.watch(studentModelProvider);
+    NotificationType.makeTopic(ref);
     return CustomScaffold(
       body: SafeArea(
           child: CustomScrollView(
@@ -45,37 +50,38 @@ class MainScreen extends ConsumerWidget {
           const SliverToBoxAdapter(
             child: MainScreenAppBar(sidePadding: _sidePadding),
           ),
-          SliverPadding(
-            padding: const EdgeInsets.all(20),
-            sliver: SliverToBoxAdapter(
-              child: Container(
-                width: _size.width * 0.9,
-                decoration: BoxDecoration(
-                  color: _theme.primaryColor,
-                  borderRadius: BorderRadius.circular(15.0),
-                  border: Border.all(
-                    color: _theme.primaryColorLight,
-                    width: 1,
-                    style: BorderStyle.solid,
+          data == null
+              ? const DepartmentList()
+              : SliverPadding(
+                  padding: const EdgeInsets.all(20),
+                  sliver: SliverToBoxAdapter(
+                    child: Container(
+                      width: _size.width * 0.9,
+                      decoration: BoxDecoration(
+                        color: _theme.primaryColor,
+                        borderRadius: BorderRadius.circular(15.0),
+                        border: Border.all(
+                          color: _theme.primaryColorLight,
+                          width: 1,
+                          style: BorderStyle.solid,
+                        ),
+                        boxShadow: [_boxshadow],
+                      ),
+                      child: DatePicker(
+                        DateTime.now(),
+                        monthTextStyle: _theme.textTheme.subtitle2!,
+                        dayTextStyle: _theme.textTheme.subtitle2!,
+                        dateTextStyle: _theme.textTheme.subtitle2!,
+                        initialSelectedDate: DateTime.now(),
+                        selectionColor: Colors.blue,
+                        onDateChange: ((selectedDate) async {
+                          ref.read(dayProvider.notifier).update(
+                              (state) => getweekday(selectedDate.weekday));
+                        }),
+                      ),
+                    ),
                   ),
-                  boxShadow: [_boxshadow],
                 ),
-                child: DatePicker(
-                  DateTime.now(),
-                  monthTextStyle: _theme.textTheme.subtitle2!,
-                  dayTextStyle: _theme.textTheme.subtitle2!,
-                  dateTextStyle: _theme.textTheme.subtitle2!,
-                  initialSelectedDate: DateTime.now(),
-                  selectionColor: Colors.blue,
-                  onDateChange: ((selectedDate) async {
-                    ref
-                        .read(dayProvider.notifier)
-                        .update((state) => getweekday(selectedDate.weekday));
-                  }),
-                ),
-              ),
-            ),
-          ),
           const CardDisplay()
         ],
       )),
@@ -109,7 +115,7 @@ class _MainScreenAppBarState extends ConsumerState<MainScreenAppBar> {
         imgList.add(data.imageUrl);
       }
     }), loading: () {
-      log("loading");
+      const CircularProgressIndicator();
     }, error: (Object error, StackTrace? stackTrace) {
       log(error.toString());
     });
@@ -121,6 +127,7 @@ class _MainScreenAppBarState extends ConsumerState<MainScreenAppBar> {
   static int _currentIndex = 0;
   @override
   Widget build(BuildContext context) {
+    StudentModel? data = ref.watch(studentModelProvider);
     fetchEventDetails();
     return Padding(
       padding: widget._sidePadding.copyWith(top: 15),
@@ -136,22 +143,25 @@ class _MainScreenAppBarState extends ConsumerState<MainScreenAppBar> {
                   style: Theme.of(context).textTheme.headline3,
                 ),
               ),
-              Flexible(
-                child: GestureDetector(
-                  onTap: () => GoRouter.of(context).push("/notifications"),
-                  child: Container(
-                    padding: const EdgeInsets.all(5),
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.secondary,
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    child: const IconTheme(
-                      data: IconThemeData(color: kLightModeLightBlue),
-                      child: Icon(Icons.notifications),
-                    ),
-                  ),
-                ),
-              )
+              data == null
+                  ? const SizedBox()
+                  : Flexible(
+                      child: GestureDetector(
+                        onTap: () =>
+                            GoRouter.of(context).push("/notifications"),
+                        child: Container(
+                          padding: const EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).colorScheme.secondary,
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          child: const IconTheme(
+                            data: IconThemeData(color: kLightModeLightBlue),
+                            child: Icon(Icons.notifications),
+                          ),
+                        ),
+                      ),
+                    )
             ],
           ),
           const SizedBox(height: 10),
@@ -194,40 +204,45 @@ class _MainScreenAppBarState extends ConsumerState<MainScreenAppBar> {
             items: imgList
                 .map(
                   (item) => GestureDetector(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: Container(
-                        width: MediaQuery.of(context).size.width * 0.6,
-                        height: MediaQuery.of(context).size.width * 0.4,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: CachedNetworkImageProvider(item),
-                            fit: BoxFit.fill,
-                            colorFilter: ColorFilter.mode(
-                              Colors.white.withOpacity(1),
-                              BlendMode.modulate,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 0.6,
+                          height: MediaQuery.of(context).size.width * 0.4,
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: CachedNetworkImageProvider(item),
+                              fit: BoxFit.fill,
+                              colorFilter: ColorFilter.mode(
+                                Colors.white.withOpacity(1),
+                                BlendMode.modulate,
+                              ),
                             ),
-                          ),
-                          color: Colors.white,
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(20),
+                            color: Colors.white,
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(20),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    onTap: () => GoRouter.of(context)
-                        .pushNamed("details_page", queryParams: {
-                      "Event Name": eventList[_currentIndex].eventName,
-                      "Event Time": eventList[_currentIndex].eventTime,
-                      "Event Date": eventList[_currentIndex].eventDate,
-                      "Event decription":
-                          eventList[_currentIndex].eventDescription,
-                      "Event registration url":
-                          eventList[_currentIndex].eventRegistrationUrl,
-                      "Event Image Url": item,
-                      "Event Location": eventList[_currentIndex].eventLocation
-                    }),
-                  ),
+                      onTap: () {
+                        GoRouter.of(context)
+                            .pushNamed("details_page", queryParams: {
+                          "Event Name": eventList[_currentIndex].eventName,
+                          "Event Time": eventList[_currentIndex].eventTime,
+                          "Event Date": eventList[_currentIndex].eventDate,
+                          "Event decription":
+                              eventList[_currentIndex].eventDescription,
+                          "Event registration url":
+                              eventList[_currentIndex].eventRegistrationUrl,
+                          "Event Image Url": item,
+                          "Event Location":
+                              eventList[_currentIndex].eventLocation,
+                          "Committee Name":
+                              eventList[_currentIndex].committeeName
+                        });
+                        log(_currentIndex.toString()); 
+                      }),
                 )
                 .toList(),
             options: CarouselOptions(
@@ -247,7 +262,7 @@ class _MainScreenAppBarState extends ConsumerState<MainScreenAppBar> {
           Row(
             children: [
               Text(
-                "Time Table",
+                data != null ? "Time Table" : "Departments ",
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
             ],

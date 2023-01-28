@@ -1,10 +1,17 @@
+import 'dart:developer';
+
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:tsec_app/models/notification_model/notification_model.dart';
 import 'package:tsec_app/models/student_model/student_model.dart';
 import 'package:tsec_app/provider/auth_provider.dart';
 import 'package:tsec_app/screens/login_screen/widgets/custom_dialog_box.dart';
 
+import '../../../provider/notification_provider.dart';
+import '../../../utils/notification_type.dart';
 import '../../../utils/themes.dart';
 
 class LoginWidget extends ConsumerStatefulWidget {
@@ -103,7 +110,9 @@ class _LoginWidgetState extends ConsumerState<LoginWidget> {
           child: Row(
             children: <Widget>[
               GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  GoRouter.of(context).go('/main'); 
+                },
                 child: Text(
                   "Skip",
                   style: Theme.of(context).textTheme.subtitle1,
@@ -132,6 +141,8 @@ class _LoginWidgetState extends ConsumerState<LoginWidget> {
                     ref
                         .watch(studentModelProvider.notifier)
                         .update((state) => studentModel);
+
+                    _setupFCMNotifications();
                     showDialog(
                         context: context,
                         builder: ((context) => const ChangePasswordDialog()));
@@ -152,5 +163,62 @@ class _LoginWidgetState extends ConsumerState<LoginWidget> {
         )
       ],
     );
+  }
+
+  Future<void> _setupFCMNotifications() async {
+    final _messaging = FirebaseMessaging.instance;
+    final _permission = await _messaging.requestPermission(provisional: true);
+
+    if ([
+      AuthorizationStatus.authorized,
+      AuthorizationStatus.provisional,
+    ].contains(_permission.authorizationStatus)) {
+      NotificationType.makeTopic(ref);
+      _messaging.subscribeToTopic(NotificationType.notification);
+      _messaging.subscribeToTopic(NotificationType.yearTopic);
+      _messaging.subscribeToTopic(NotificationType.yearBranchTopic);
+      _messaging.subscribeToTopic(NotificationType.yearBranchDivTopic);
+      _messaging.subscribeToTopic(NotificationType.yearBranchDivBatchTopic);
+      _setupInteractedMessage();
+      _messageOnForeground();
+    }
+  }
+
+  void _messageOnForeground() {
+    FirebaseMessaging.onMessage.listen(_handleForegroundMessage);
+  }
+
+  Future<void> _setupInteractedMessage() async {
+    // Get any messages which caused the application to open from
+    // a terminated state.
+    RemoteMessage? initialMessage =
+        await FirebaseMessaging.instance.getInitialMessage();
+
+    if (initialMessage != null) {
+      _handleMessage(initialMessage);
+    }
+
+    // Also handle any interaction when the app is in the background via a
+    // Stream listener
+    FirebaseMessaging.onMessageOpenedApp.listen(_handleMessage);
+  }
+
+  void _handleMessage(RemoteMessage message) {
+    // from - if message is sent from notification topic
+    if (message.from == NotificationType.notification.addTopicsPrefix) {
+      ref.read(notificationProvider.state).state = NotificationProvider(
+        notificationModel: NotificationModel.fromMessage(message),
+        isForeground: false,
+      );
+    }
+  }
+
+  void _handleForegroundMessage(RemoteMessage message) {
+    if (message.from == NotificationType.notification.addTopicsPrefix) {
+      ref.read(notificationProvider.state).state = NotificationProvider(
+        notificationModel: NotificationModel.fromMessage(message),
+        isForeground: true,
+      );
+    }
   }
 }

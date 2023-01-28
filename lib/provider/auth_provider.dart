@@ -12,9 +12,8 @@ final studentModelProvider = StateProvider<StudentModel?>((ref) {
   return null;
 });
 
-final signedUser = StreamProvider((ref) {
-  AuthService authService = ref.watch(authServiceProvider);
-  return authService.userCurrentState;
+final userProvider = StateProvider<User?>((ref) {
+  return ref.watch(authServiceProvider).user; 
 });
 
 class AuthProvider extends StateNotifier<bool> {
@@ -27,11 +26,6 @@ class AuthProvider extends StateNotifier<bool> {
   Future<UserCredential?> signInUser(
       String email, String password, BuildContext context) async {
     return await _authService.signInUser(email, password, context);
-  }
-
-  Future<User?> getUser() async {
-    User? user = await _authService.userCurrentState.first;
-    return user;
   }
 
   Future<StudentModel?> fetchStudentDetails(

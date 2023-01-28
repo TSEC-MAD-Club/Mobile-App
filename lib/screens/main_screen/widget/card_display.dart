@@ -1,3 +1,4 @@
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tsec_app/screens/main_screen/widget/schedule_card.dart';
@@ -25,6 +26,14 @@ class _CardDisplayState extends ConsumerState<CardDisplay> {
     Color.fromARGB(51, 0, 153, 255),
   ];
 
+  Future<String> getFacultyImageUrl(String facultyName) async {
+    final ref =
+        FirebaseStorage.instance.ref().child("faculty/comps/$facultyName.jpg");
+    String url = (await ref.getDownloadURL()).toString();
+    return url;
+  }
+
+  
   @override
   Widget build(BuildContext context) {
     final data = ref.watch(weekTimetableProvider);
@@ -38,30 +47,36 @@ class _CardDisplayState extends ConsumerState<CardDisplay> {
           } else {
             List<TimetableModel> timeTableDay = getTimetablebyDay(data, day);
             return SliverPadding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 20.0,
-                vertical: 2.0,
-              ),
-              sliver: SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  childCount: timeTableDay.length,
-                  (context, index) {
-                    var color = colorList[index];
-                    var opacity = opacityList[index];
-                    return ScheduleCard(
-                      color,
-                      opacity,
-                      lectureEndTime: timeTableDay[index].lectureEndTime,
-                      lectureName: timeTableDay[index].lectureName,
-                      lectureStartTime: timeTableDay[index].lectureStartTime,
-                      facultyImageurl:
-                          timeTableDay[index].lectureFacultyImageurl,
-                      facultyName: timeTableDay[index].lectureFacultyName,
-                    );
-                  },
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20.0,
+                  vertical: 2.0,
                 ),
-              ),
-            );
+                sliver: SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                        childCount: timeTableDay.length, (context, index) {
+                  var color = colorList[index];
+                  var opacity = opacityList[index];
+                  return FutureBuilder(
+                      future: getFacultyImageUrl(
+                          timeTableDay[index].lectureFacultyName),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          return ScheduleCard(
+                            color,
+                            opacity,
+                            lectureEndTime: timeTableDay[index].lectureEndTime,
+                            lectureName: timeTableDay[index].lectureName,
+                            lectureStartTime:
+                                timeTableDay[index].lectureStartTime,
+                            facultyImageurl: snapshot.data as String,
+                            facultyName: timeTableDay[index].lectureFacultyName,
+                          );
+                        }
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        ); 
+                      });
+                })));
           }
         }),
         error: ((error, stackTrace) => const SliverToBoxAdapter(

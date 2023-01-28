@@ -17,6 +17,8 @@ class AuthService {
   AuthService(this.firebaseAuth, this.firebaseFirestore);
 
   Stream<User?> get userCurrentState => firebaseAuth.authStateChanges();
+  
+  User? get user => firebaseAuth.currentUser;
 
   Future<UserCredential?> signInUser(
       String email, String password, BuildContext context) async {
@@ -70,4 +72,6 @@ class AuthService {
 
     return studentModel;
   }
+
+
 }
