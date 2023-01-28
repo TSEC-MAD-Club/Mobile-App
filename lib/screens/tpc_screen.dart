@@ -62,6 +62,7 @@ class _TPCScreenState extends State<TPCScreen> {
                           imageUrl: _companys[i].image,
                           height: 40,
                           width: 140,
+                          fit: BoxFit.scaleDown,
                         ),
                       ),
                       Divider(color: Colors.blueAccent.withOpacity(0.7)),
@@ -118,7 +119,8 @@ class _TPCScreenState extends State<TPCScreen> {
               return GridView.count(
                 physics: const NeverScrollableScrollPhysics(),
                 scrollDirection: Axis.vertical,
-                crossAxisCount: 2,
+                crossAxisCount:
+                    (MediaQuery.of(context).size.width / 250).ceil(),
                 children: getCompanyCards(data),
               );
             }
