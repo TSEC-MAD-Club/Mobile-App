@@ -54,6 +54,9 @@ String getCommitteeImageByName(String committeeName) {
     case "TSEC Codetantra":
       return "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/committees%2FTSEC%20Codetantra.jpg?alt=media&token=bb72197b-a698-45de-9104-8d269d666a23";
 
+    case "TSEC":
+      return "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/committees%2FTSEC.jpg?alt=media&token=968be533-2e82-49fe-83c7-f2e3604f7dc7";
+
     default:
       return "";
   }
