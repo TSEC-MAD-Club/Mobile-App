@@ -38,8 +38,7 @@ String getCommitteeImageByName(String committeeName) {
 
     case "TSEC E-Cell":
       return "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/committees%2Ftsec_e_cell.png?alt=media&token=76f25a18-c191-4cf7-824f-fc52202ed7d5";
-    
-    
+
     case "TSEC IEI":
       return "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/committees%2Ftsec_iei.png?alt=media&token=9d1a17fe-b1bc-4759-8c1f-8923e4b831b2";
 
@@ -51,6 +50,9 @@ String getCommitteeImageByName(String committeeName) {
 
     case "UBA-TSEC":
       return "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/committees%2Fuba-tsec.jpeg?alt=media&token=8aad900b-51e2-4d70-9b69-8cff328b4b54";
+
+    case "TSEC Codetantra":
+      return "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/committees%2FTSEC%20Codetantra.jpg?alt=media&token=bb72197b-a698-45de-9104-8d269d666a23";
 
     default:
       return "";
