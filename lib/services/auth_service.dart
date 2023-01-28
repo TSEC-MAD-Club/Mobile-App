@@ -18,11 +18,12 @@ class AuthService {
 
   Stream<User?> get userCurrentState => firebaseAuth.authStateChanges();
 
-  void signInUser(String email, String password, BuildContext context) async {
+  Future<UserCredential?> signInUser(
+      String email, String password, BuildContext context) async {
     try {
-      await firebaseAuth.signInWithEmailAndPassword(
+      UserCredential user = await firebaseAuth.signInWithEmailAndPassword(
           email: email, password: password);
-      log("successful login");
+      return user;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         showSnackBar(context, 'No user found for that email.');
@@ -30,6 +31,7 @@ class AuthService {
         showSnackBar(context, 'Wrong password provided for that user.');
       } else
         showSnackBar(context, e.message.toString());
+      return null;
     }
   }
 
@@ -48,18 +50,19 @@ class AuthService {
     StudentModel? studentModel;
 
     try {
-      var studentSnap = await firebaseFirestore
+      final studentSnap = await firebaseFirestore
           .collection("Students ")
           .where("email", isEqualTo: email)
           .get();
 
-      var studentDoc = studentSnap.docs.map((e) {
+      final studentDoc = studentSnap.docs.map((e) {
         return e.data();
       });
 
-      for (var element in studentDoc) {
+      for (final element in studentDoc) {
         studentModel = StudentModel.fromJson(element);
       }
+      log(studentModel!.toString());
     } on FirebaseException catch (e) {
       showSnackBar(
           context, e.stackTrace.toString() + " " + e.message.toString());
