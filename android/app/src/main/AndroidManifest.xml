@@ -11,7 +11,7 @@
         </intent>
    </queries>
    <application
-        android:label="tsec_app"
+        android:label="Tsec App"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

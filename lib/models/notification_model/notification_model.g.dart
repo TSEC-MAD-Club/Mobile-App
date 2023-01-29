@@ -15,6 +15,7 @@ NotificationModel _$NotificationModelFromJson(Map<String, dynamic> json) =>
           .toList(),
       notificationTime: const TimestampConverter()
           .fromJson(json['notificationTime'] as Timestamp),
+      topic: json['topic'] as String,
     );
 
 Map<String, dynamic> _$NotificationModelToJson(NotificationModel instance) =>
@@ -22,6 +23,7 @@ Map<String, dynamic> _$NotificationModelToJson(NotificationModel instance) =>
       'title': instance.title,
       'message': instance.message,
       'attachments': instance.attachments,
+      'topic': instance.topic,
       'notificationTime':
           const TimestampConverter().toJson(instance.notificationTime),
     };

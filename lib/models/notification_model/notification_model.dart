@@ -11,16 +11,17 @@ part 'notification_model.g.dart';
 class NotificationModel {
   final String title, message;
   final List<String>? attachments;
+  final String topic;
 
   @TimestampConverter()
   final DateTime notificationTime;
 
-  NotificationModel({
-    required this.title,
-    required this.message,
-    required this.attachments,
-    required this.notificationTime,
-  });
+  NotificationModel(
+      {required this.title,
+      required this.message,
+      required this.attachments,
+      required this.notificationTime,
+      required this.topic});
 
   factory NotificationModel.fromMessage(RemoteMessage message) =>
       NotificationModel(
@@ -34,6 +35,7 @@ class NotificationModel {
                 .map((e) => e as String)
                 .toList()
             : null,
+        topic: '',
       );
 
   factory NotificationModel.fromJson(Map<String, dynamic> json) =>

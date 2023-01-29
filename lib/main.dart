@@ -1,19 +1,21 @@
+import 'dart:developer';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tsec_app/models/event_model/event_model.dart';
-
+import 'package:tsec_app/provider/auth_provider.dart';
+import 'package:tsec_app/provider/firebase_provider.dart';
 import 'package:tsec_app/screens/event_detail_screen/event_details.dart';
 import 'package:tsec_app/screens/login_screen/login_screen.dart';
 import 'package:tsec_app/screens/splash_screen.dart';
 import 'firebase_options.dart';
-import 'models/notification_model/notification_model.dart';
+import 'models/student_model/student_model.dart';
 import 'provider/app_state_provider.dart';
-import 'provider/notification_provider.dart';
 import 'provider/shared_prefs_provider.dart';
 import 'provider/theme_provider.dart';
 import 'screens/committees_screen.dart';
@@ -25,7 +27,6 @@ import 'screens/theme_screen/theme_screen.dart';
 import 'screens/tpc_screen.dart';
 import 'utils/department_enum.dart';
 import 'utils/init_get_it.dart';
-import 'utils/notification_type.dart';
 import 'utils/themes.dart';
 
 // To handle all the background messages
@@ -67,7 +68,6 @@ class _TSECAppState extends ConsumerState<TSECApp> {
   @override
   void initState() {
     super.initState();
-    _setupFCMNotifications();
   }
 
   @override
@@ -121,7 +121,8 @@ class _TSECAppState extends ConsumerState<TSECApp> {
                 state.queryParams["Event decription"]!,
                 state.queryParams["Event registration url"]!,
                 state.queryParams["Event Image Url"]!,
-                state.queryParams["Event Location"]!);
+                state.queryParams["Event Location"]!,
+                state.queryParams["Committee Name"]!);
 
             return EventDetail(
               eventModel: eventModel,
@@ -145,8 +146,22 @@ class _TSECAppState extends ConsumerState<TSECApp> {
     );
   }
 
+  getuserData(String email) async {
+    if (ref.watch(firebaseAuthProvider).currentUser?.uid != null) {
+      StudentModel? studentModel = await ref
+          .watch(authProvider.notifier)
+          .fetchStudentDetails(email, context);
+      ref.watch(studentModelProvider.notifier).update((state) => studentModel);
+      log(studentModel.toString());
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    if (ref.watch(firebaseAuthProvider).currentUser?.uid != null) {
+      getuserData(FirebaseAuth.instance.currentUser!.email.toString());
+    }
+
     final _themeMode = ref.watch(themeProvider);
     return MaterialApp.router(
       routeInformationParser: _routes.routeInformationParser,
@@ -156,57 +171,5 @@ class _TSECAppState extends ConsumerState<TSECApp> {
       theme: theme,
       darkTheme: darkTheme,
     );
-  }
-
-  Future<void> _setupFCMNotifications() async {
-    final _messaging = FirebaseMessaging.instance;
-    final _permission = await _messaging.requestPermission(provisional: true);
-
-    if ([
-      AuthorizationStatus.authorized,
-      AuthorizationStatus.provisional,
-    ].contains(_permission.authorizationStatus)) {
-      _messaging.subscribeToTopic(NotificationType.notification);
-      _setupInteractedMessage();
-      _messageOnForeground();
-    }
-  }
-
-  void _messageOnForeground() {
-    FirebaseMessaging.onMessage.listen(_handleForegroundMessage);
-  }
-
-  Future<void> _setupInteractedMessage() async {
-    // Get any messages which caused the application to open from
-    // a terminated state.
-    RemoteMessage? initialMessage =
-        await FirebaseMessaging.instance.getInitialMessage();
-
-    if (initialMessage != null) {
-      _handleMessage(initialMessage);
-    }
-
-    // Also handle any interaction when the app is in the background via a
-    // Stream listener
-    FirebaseMessaging.onMessageOpenedApp.listen(_handleMessage);
-  }
-
-  void _handleMessage(RemoteMessage message) {
-    // from - if message is sent from notification topic
-    if (message.from == NotificationType.notification.addTopicsPrefix) {
-      ref.read(notificationProvider.state).state = NotificationProvider(
-        notificationModel: NotificationModel.fromMessage(message),
-        isForeground: false,
-      );
-    }
-  }
-
-  void _handleForegroundMessage(RemoteMessage message) {
-    if (message.from == NotificationType.notification.addTopicsPrefix) {
-      ref.read(notificationProvider.state).state = NotificationProvider(
-        notificationModel: NotificationModel.fromMessage(message),
-        isForeground: true,
-      );
-    }
   }
 }

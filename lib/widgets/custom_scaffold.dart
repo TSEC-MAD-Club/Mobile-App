@@ -1,13 +1,18 @@
 import 'dart:math' as math;
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
+import 'package:tsec_app/provider/auth_provider.dart';
 import 'package:tsec_app/screens/main_screen/widget/card_display.dart';
+import 'package:tsec_app/utils/notification_type.dart';
 import 'package:tsec_app/utils/timetable_util.dart';
 import 'package:url_launcher/link.dart';
 import '../models/notification_model/notification_model.dart';
+import '../models/student_model/student_model.dart';
+import '../provider/firebase_provider.dart';
 import '../provider/notification_provider.dart';
 import '../provider/theme_provider.dart';
 import '../screens/notification_screen/widgets/notification_dialog.dart';
@@ -53,6 +58,7 @@ class _CustomScaffoldState extends ConsumerState<CustomScaffold>
 
   @override
   Widget build(BuildContext context) {
+    StudentModel? data = ref.watch(studentModelProvider);
     ref.listen<NotificationProvider?>(
       notificationProvider,
       (previous, next) {
@@ -153,6 +159,32 @@ class _CustomScaffoldState extends ConsumerState<CustomScaffold>
                     ),
                     title: "Contact Us",
                   ),
+                ),
+                DrawerListItem(
+                  onTap: () async {
+                    final _messaging = FirebaseMessaging.instance;
+                    await ref.watch(firebaseAuthProvider).signOut();
+                    if (data != null) {
+                      ref
+                          .read(studentModelProvider.notifier)
+                          .update((state) => null);
+                      _messaging.unsubscribeFromTopic(
+                          NotificationType.yearBranchDivBatchTopic);
+                      _messaging.unsubscribeFromTopic(
+                          NotificationType.yearBranchDivTopic);
+                      _messaging.unsubscribeFromTopic(
+                          NotificationType.yearBranchTopic);
+                      _messaging
+                          .unsubscribeFromTopic(NotificationType.yearTopic);
+                    }
+                    GoRouter.of(context).go('/login');
+                  },
+                  icon: const Icon(
+                    Icons.logout_rounded,
+                    size: 22.0,
+                    color: Colors.blue,
+                  ),
+                  title: data != null ? "Logout" : "Login",
                 ),
               ],
             ),

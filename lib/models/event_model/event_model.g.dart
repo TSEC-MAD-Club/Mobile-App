@@ -14,6 +14,7 @@ EventModel _$EventModelFromJson(Map<String, dynamic> json) => EventModel(
       json['Event registration url'] as String,
       json['Image url '] as String,
       json['Event Location'] as String,
+      json['Committee Name'] as String,
     );
 
 Map<String, dynamic> _$EventModelToJson(EventModel instance) =>
@@ -25,4 +26,5 @@ Map<String, dynamic> _$EventModelToJson(EventModel instance) =>
       'Event registration url': instance.eventRegistrationUrl,
       'Image url ': instance.imageUrl,
       'Event Location': instance.eventLocation,
+      'Committee Name': instance.committeeName,
     };

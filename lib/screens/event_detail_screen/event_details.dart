@@ -2,6 +2,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tsec_app/models/event_model/event_model.dart';
+import 'package:tsec_app/models/student_model/student_model.dart';
+import 'package:tsec_app/provider/auth_provider.dart';
+import 'package:tsec_app/utils/committee_details.dart';
 
 import 'package:url_launcher/url_launcher_string.dart';
 
@@ -27,6 +30,7 @@ class _EventDetailState extends ConsumerState<EventDetail> {
 
   @override
   Widget build(BuildContext context) {
+    StudentModel? data = ref.watch(studentModelProvider);
     double _height = MediaQuery.of(context).size.height;
     double _width = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -79,19 +83,21 @@ class _EventDetailState extends ConsumerState<EventDetail> {
                           Expanded(
                             child: Container(),
                           ),
-                          ElevatedButton(
-                            onPressed: () {
-                              launchUrl();
-                            },
-                            child: const Text("Register"),
-                            style: ElevatedButton.styleFrom(
-                              padding: const EdgeInsets.only(
-                                  top: 0, bottom: 0, right: 20, left: 20),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                            ),
-                          )
+                          data == null
+                              ? const SizedBox()
+                              : ElevatedButton(
+                                  onPressed: () {
+                                    launchUrl();
+                                  },
+                                  child: const Text("Register"),
+                                  style: ElevatedButton.styleFrom(
+                                    padding: const EdgeInsets.only(
+                                        top: 0, bottom: 0, right: 20, left: 20),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                  ),
+                                )
                         ],
                       ),
                     ),
@@ -171,17 +177,18 @@ class _EventDetailState extends ConsumerState<EventDetail> {
                       child: Row(
                         children: [
                           CircleAvatar(
-                            backgroundImage: const NetworkImage(
-                              'https://cdn.pixabay.com/photo/2013/05/11/08/28/sunset-110305_1280.jpg',
+                            backgroundImage: NetworkImage(
+                              getCommitteeImageByName(
+                                  widget.eventModel.committeeName),
                             ),
-                            backgroundColor: Colors.red.shade800,
+                            backgroundColor: Colors.black,
                             radius: 20,
                           ),
                           const SizedBox(
                             width: 5,
                           ),
                           Text(
-                            "TSEC CodeCell",
+                            widget.eventModel.committeeName,
                             style: Theme.of(context).textTheme.subtitle1,
                           ),
                         ],
