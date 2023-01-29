@@ -186,73 +186,89 @@ class _MainScreenAppBarState extends ConsumerState<MainScreenAppBar> {
           const SizedBox(
             height: 15,
           ),
-          Row(
-            children: [
-              Text(
-                "Upcoming Events",
-                style: Theme.of(context).textTheme.bodyLarge,
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 15,
-          ),
-          CarouselSlider(
-            items: imgList
-                .map(
-                  (item) => GestureDetector(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        child: Container(
-                          width: MediaQuery.of(context).size.width * 0.6,
-                          height: MediaQuery.of(context).size.width * 0.4,
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: CachedNetworkImageProvider(item),
-                              fit: BoxFit.fill,
-                              colorFilter: ColorFilter.mode(
-                                Colors.white.withOpacity(1),
-                                BlendMode.modulate,
-                              ),
-                            ),
-                            color: Colors.white,
-                            borderRadius: const BorderRadius.all(
-                              Radius.circular(20),
-                            ),
-                          ),
-                        ),
-                      ),
-                      onTap: () {
-                        GoRouter.of(context)
-                            .pushNamed("details_page", queryParams: {
-                          "Event Name": eventList[_currentIndex].eventName,
-                          "Event Time": eventList[_currentIndex].eventTime,
-                          "Event Date": eventList[_currentIndex].eventDate,
-                          "Event decription":
-                              eventList[_currentIndex].eventDescription,
-                          "Event registration url":
-                              eventList[_currentIndex].eventRegistrationUrl,
-                          "Event Image Url": item,
-                          "Event Location":
-                              eventList[_currentIndex].eventLocation,
-                          "Committee Name":
-                              eventList[_currentIndex].committeeName
-                        });
-                        log(_currentIndex.toString());
-                      }),
+          imgList.isEmpty
+              ? ClipRRect(
+                  child: Image.asset(ImageAssets.tsecImg),
+                  borderRadius: BorderRadius.circular(15),
                 )
-                .toList(),
-            options: CarouselOptions(
-              autoPlay: true,
-              enlargeCenterPage: true,
-              viewportFraction: .7,
-              onPageChanged: (index, reason) {
-                setState(() {
-                  _currentIndex = index;
-                });
-              },
-            ),
-          ),
+              : Column(
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          "Upcoming Events",
+                          style: Theme.of(context).textTheme.bodyLarge,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    CarouselSlider(
+                      items: imgList
+                          .map(
+                            (item) => GestureDetector(
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 8.0),
+                                  child: Container(
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.6,
+                                    height:
+                                        MediaQuery.of(context).size.width * 0.4,
+                                    decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                        image: CachedNetworkImageProvider(item),
+                                        fit: BoxFit.fill,
+                                        colorFilter: ColorFilter.mode(
+                                          Colors.white.withOpacity(1),
+                                          BlendMode.modulate,
+                                        ),
+                                      ),
+                                      color: Colors.white,
+                                      borderRadius: const BorderRadius.all(
+                                        Radius.circular(20),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                onTap: () {
+                                  GoRouter.of(context)
+                                      .pushNamed("details_page", queryParams: {
+                                    "Event Name":
+                                        eventList[_currentIndex].eventName,
+                                    "Event Time":
+                                        eventList[_currentIndex].eventTime,
+                                    "Event Date":
+                                        eventList[_currentIndex].eventDate,
+                                    "Event decription": eventList[_currentIndex]
+                                        .eventDescription,
+                                    "Event registration url":
+                                        eventList[_currentIndex]
+                                            .eventRegistrationUrl,
+                                    "Event Image Url": item,
+                                    "Event Location":
+                                        eventList[_currentIndex].eventLocation,
+                                    "Committee Name":
+                                        eventList[_currentIndex].committeeName
+                                  });
+                                  log(_currentIndex.toString());
+                                }),
+                          )
+                          .toList(),
+                      options: CarouselOptions(
+                        autoPlay: true,
+                        enlargeCenterPage: true,
+                        viewportFraction: .7,
+                        onPageChanged: (index, reason) {
+                          setState(() {
+                            _currentIndex = index;
+                          });
+                        },
+                      ),
+                    ),
+                  ],
+                ),
           const SizedBox(
             height: 30,
           ),
