@@ -15,7 +15,12 @@ class _ChangePasswordDialogState extends ConsumerState<ChangePasswordDialog> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _passwordTextEditingController =
       TextEditingController();
-
+  @override
+  void dispose() {
+    super.dispose();
+    _passwordTextEditingController.dispose(); 
+  }
+  
   @override
   Widget build(BuildContext context) {
     return Dialog(

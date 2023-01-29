@@ -1,9 +1,7 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:tsec_app/screens/department_screen/widgets/curriculum_section.dart';
 import 'package:tsec_app/utils/department_enum.dart';
-
 import '../../utils/themes.dart';
 import '../../widgets/custom_scaffold.dart';
 import 'widgets/about_section.dart';

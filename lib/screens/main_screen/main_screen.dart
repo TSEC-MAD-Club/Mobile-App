@@ -82,7 +82,7 @@ class MainScreen extends ConsumerWidget {
                     ),
                   ),
                 ),
-          const CardDisplay()
+          data != null ? const CardDisplay() :const SliverToBoxAdapter()
         ],
       )),
     );
@@ -107,9 +107,6 @@ class _MainScreenAppBarState extends ConsumerState<MainScreenAppBar> {
   void fetchEventDetails() {
     ref.watch(eventListProvider).when(data: ((data) {
       eventList.addAll(data ?? []);
-
-      log(eventList[0].toString());
-
       imgList.clear();
       for (var data in eventList) {
         imgList.add(data.imageUrl);
