@@ -1,6 +1,6 @@
 [
     {
-        "description": "The main aim of MAD Club is to create an environment in the college where a group of students come together, collaborate and work on a real life applications using trending technologies, thereby helping the students boost their technical knowledge and application skills, and contribute towards increasing reputation of the college. Under the guidance of Dr. G.T. Thampi, Dr. Shachi Natu and Prof. Darakhshan Khan, MAD club is responsible for developing the official TSEC App and Web App.",
+        "description": "The main aim of Devs Club is to create an environment in the college where a group of students come together, collaborate and work on a real life applications using trending technologies, thereby helping the students boost their technical knowledge and application skills, and contribute towards increasing reputation of the college. Under the guidance of Dr. G.T. Thampi, Dr. Shachi Natu and Prof. Darakhshan Khan, MAD club is responsible for developing the official TSEC App and Web App.",
         "name": "Developers Club-TSEC",
         "image": "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/committees%2FDevs_club%20logo.png?alt=media&token=4d73670f-c753-48ee-92b4-84a1b53a462c"
     },
@@ -18,6 +18,12 @@
         "description": "TSEC CodeCell is a committee of Thadomal Shahani Engineering College which works towards nurturing interest and developing coding skills. We conduct various workshops and seminars for beginners, introducing them to various languages and algorithms, and for advanced coders, inculcating a regular coding habit to keep their programming skills sharp and helping students build their resume and expand their skill set.",
         "name": "TSEC-CodeCell",
         "image": "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/committees%2Ftsec_code_cell.png?alt=media&token=b3c4df91-1b74-4957-bd8b-e1762406b036"
+    },
+    {
+        "description" : "The committee is formed by DR GT Thampi ", 
+        "name" : "Tsec CodeTantra", 
+        "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/committees%2FTSEC%20Codetantra.jpg?alt=media&token=bb72197b-a698-45de-9104-8d269d666a23"
+
     },
     {
         "description": "TSEC CodeStorm serves as a Campus Chapter of CodeChef and provides a proficient platform for coding and software development. The committee collocate various events to monitor applicability of existing standards, codes and best practices. It offers technical expertise to other strategic initiatives. The goal is to expand and surge opportunities for aspiring coders through our events and workshops. A Hackathon will the major event organised by us. It is a gathering where programmers collaboratively code in an extreme manner over a duration of time. The committee prompts coding interests by updating people with new technologies and their corporate applications based on trending technical platforms and frameworks every week. The committee organises various workshops and coding competitions to make students take a step ahead towards a glowing career.",
@@ -63,10 +69,6 @@
         "description": "IIChE-TSEC is the chemical technical society and conducts seminars, research paper presentation, and industrial visits with a vision of integrating textbook learning with industrial knowledge. Chemical Students can become a member of the society from second year. The society with the aid of Mrs.Usha Nambiar conducts its Annual Technical festival - Chemergence which draws participants from whole of India.",
         "name": "IIChE-TSEC",
         "image": "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/committees%2Flogo-light.png?alt=media&token=89101db1-46fd-4650-8a04-477e570a8824"
-    },
-    {
-        "description": "Unnat Bharat Abhiyan also known as UBA has been an initiative by our Prime Minister Mr.Narendra Modi with the vision of transformational change in rural development. TSEC has been the very first college to start with this. We have adopted five villages in Neral which include Ambevadi, Anandvadi, Phanasvadi, Tapalvadi and Dhaki Cha Mal. We conduct various events for the betterment of our villages.",
-        "name": "UBA-TSEC",
-        "image": "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/committees%2Fuba-tsec.jpeg?alt=media&token=8aad900b-51e2-4d70-9b69-8cff328b4b54"
     }
+    
 ]
