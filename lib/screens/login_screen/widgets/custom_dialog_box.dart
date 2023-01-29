@@ -59,6 +59,9 @@ class _ChangePasswordDialogState extends ConsumerState<ChangePasswordDialog> {
                 child: Form(
                   key: _formKey,
                   child: TextFormField(
+                    style: const TextStyle(
+                      color: Colors.black,
+                    ),
                     controller: _passwordTextEditingController,
                     decoration:
                         const InputDecoration(hintText: "Enter your password"),
@@ -90,7 +93,8 @@ class _ChangePasswordDialogState extends ConsumerState<ChangePasswordDialog> {
                       },
                       child: const Text("Submit"),
                       style: ElevatedButton.styleFrom(
-                          fixedSize: const Size(300, 50)),
+                        fixedSize: const Size(250, 50),
+                      ),
                     ),
                   ))
             ],
