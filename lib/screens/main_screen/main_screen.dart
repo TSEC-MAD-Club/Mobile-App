@@ -82,7 +82,7 @@ class MainScreen extends ConsumerWidget {
                     ),
                   ),
                 ),
-          data != null ? const CardDisplay() :const SliverToBoxAdapter()
+          data != null ? const CardDisplay() : const SliverToBoxAdapter()
         ],
       )),
     );
