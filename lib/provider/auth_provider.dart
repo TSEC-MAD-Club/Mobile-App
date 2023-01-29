@@ -13,7 +13,7 @@ final studentModelProvider = StateProvider<StudentModel?>((ref) {
 });
 
 final userProvider = StateProvider<User?>((ref) {
-  return ref.watch(authServiceProvider).user; 
+  return ref.watch(authServiceProvider).user;
 });
 
 class AuthProvider extends StateNotifier<bool> {

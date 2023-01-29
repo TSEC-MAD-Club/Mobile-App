@@ -13,8 +13,7 @@ class EventModel {
       this.eventRegistrationUrl,
       this.imageUrl,
       this.eventLocation,
-      this.committeeName
-      );
+      this.committeeName);
 
   @JsonKey(name: 'Event Name')
   final String eventName;
@@ -31,7 +30,7 @@ class EventModel {
   @JsonKey(name: 'Event Location')
   final String eventLocation;
   @JsonKey(name: 'Committee Name')
-  final String committeeName; 
+  final String committeeName;
 
   factory EventModel.fromJson(Map<String, dynamic> json) =>
       _$EventModelFromJson(json);

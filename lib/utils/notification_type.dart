@@ -26,10 +26,9 @@ abstract class NotificationType {
       String studentBatch = studentmodel.batch.toString();
       yearTopic = studentYear;
       yearBranchTopic = "$studentYear-$studentBranch";
-      yearBranchDivTopic =
-          "$studentYear-$studentBranch-$studentDiv";
-      yearBranchDivBatchTopic = 
-      "$studentYear-$studentBranch-$studentDiv-$studentBatch";
+      yearBranchDivTopic = "$studentYear-$studentBranch-$studentDiv";
+      yearBranchDivBatchTopic =
+          "$studentYear-$studentBranch-$studentDiv-$studentBatch";
     }
   }
 }

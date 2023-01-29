@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -141,7 +139,7 @@ class _LoginWidgetState extends ConsumerState<LoginWidget> {
             children: <Widget>[
               GestureDetector(
                 onTap: () {
-                  GoRouter.of(context).go('/main'); 
+                  GoRouter.of(context).go('/main');
                 },
                 child: Text(
                   "Skip",
@@ -171,11 +169,10 @@ class _LoginWidgetState extends ConsumerState<LoginWidget> {
                     ref
                         .watch(studentModelProvider.notifier)
                         .update((state) => studentModel);
-
-                    _setupFCMNotifications();
                     showDialog(
                         context: context,
                         builder: ((context) => const ChangePasswordDialog()));
+                    _setupFCMNotifications();
                   },
                   child: const Icon(Icons.arrow_forward),
                   style: ButtonStyle(

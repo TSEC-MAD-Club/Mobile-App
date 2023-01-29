@@ -17,7 +17,7 @@ class ScheduleCard extends StatelessWidget {
   final String lectureName;
   final String facultyName;
   final String facultyImageurl;
-  final String lectureBatch; 
+  final String lectureBatch;
 
   @override
   Widget build(BuildContext context) {

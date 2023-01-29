@@ -50,7 +50,7 @@ class _CardDisplayState extends ConsumerState<CardDisplay> {
             );
           } else {
             List<TimetableModel> timeTableDay = getTimetablebyDay(data, day);
-            log(timeTableDay.length.toString()); 
+            log(timeTableDay.length.toString());
             return SliverPadding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 20.0,
@@ -58,10 +58,10 @@ class _CardDisplayState extends ConsumerState<CardDisplay> {
                 ),
                 sliver: SliverList(
                     delegate: SliverChildBuilderDelegate(
-                  childCount: timeTableDay.length ,
+                  childCount: timeTableDay.length,
                   (context, index) {
-                    var color = colorList[index%2];
-                    var opacity = opacityList[index%2];
+                    var color = colorList[index % 3];
+                    var opacity = opacityList[index % 3];
                     return ScheduleCard(
                       color,
                       opacity,
@@ -71,15 +71,18 @@ class _CardDisplayState extends ConsumerState<CardDisplay> {
                       facultyImageurl: getFacultyImagebyName(
                           timeTableDay[index].lectureFacultyName),
                       facultyName: timeTableDay[index].lectureFacultyName,
-                       lectureBatch: timeTableDay[index].lectureBatch,
+                      lectureBatch: timeTableDay[index].lectureBatch,
                     );
                   },
                 )));
           }
         }),
-        error: ((error, stackTrace) => const SliverToBoxAdapter(
-              child: Text('Error'),
-            )),
+        error: ((error, stackTrace) {
+          log(error.toString());
+          return const SliverToBoxAdapter(
+            child: Center(child: Text('Error Contact us and report problem')),
+          );
+        }),
         loading: () => const SliverToBoxAdapter(
               child: Center(child: CircularProgressIndicator()),
             ));
@@ -91,11 +94,10 @@ class _CardDisplayState extends ConsumerState<CardDisplay> {
     final daylist = data[day];
 
     for (final item in daylist) {
-      StudentModel? studentModel = ref.watch(studentModelProvider); 
-      if(item['lectureBatch'] == studentModel!.batch.toString() 
-     || item['lectureBatch'] == 'All'
-      )
-      timeTableDay.add(TimetableModel.fromJson(item));
+      StudentModel? studentModel = ref.watch(studentModelProvider);
+      if (item['lectureBatch'] == studentModel!.batch.toString() ||
+          item['lectureBatch'] == 'All')
+        timeTableDay.add(TimetableModel.fromJson(item));
     }
     log(timeTableDay.length.toString());
     return timeTableDay;

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tsec_app/screens/department_screen/widgets/department_screen_app_bar.dart';
@@ -116,5 +115,3 @@ class DeptWidget extends StatelessWidget {
     );
   }
 }
-
-

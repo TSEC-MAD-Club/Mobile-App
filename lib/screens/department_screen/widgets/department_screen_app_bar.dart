@@ -66,7 +66,7 @@ class _DepartmentScreenAppBarState
 
   @override
   Widget build(BuildContext context) {
-    StudentModel? data = ref.watch(studentModelProvider); 
+    StudentModel? data = ref.watch(studentModelProvider);
     return AppBar(
       elevation: 0,
       leadingWidth: 60.0,
@@ -85,11 +85,11 @@ class _DepartmentScreenAppBarState
       ),
       centerTitle: true,
       actions: [
-         data != null ? 
-        _buildNotificationIcon(context, onPressed: () {
-          GoRouter.of(context).push('/notifications');
-        }, icon: const Icon(Icons.notifications))
-        : const SizedBox()
+        data != null
+            ? _buildNotificationIcon(context, onPressed: () {
+                GoRouter.of(context).push('/notifications');
+              }, icon: const Icon(Icons.notifications))
+            : const SizedBox()
       ],
       backgroundColor: Theme.of(context).colorScheme.secondary,
     );

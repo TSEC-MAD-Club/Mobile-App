@@ -12,13 +12,13 @@ class NotificationService {
 
   Query<NotificationModel> get notificationQuery =>
       _firebase.collection("notifications").where("topic", whereIn: [
-            NotificationType.yearTopic,
-            NotificationType.yearBranchTopic,
-            NotificationType.yearBranchDivTopic, 
-            NotificationType.yearBranchDivBatchTopic
-          ]).withConverter<NotificationModel>(
-            fromFirestore: (snapshot, options) =>
-                NotificationModel.fromJson(snapshot.data()!),
-            toFirestore: (value, options) => value.toJson(),
-          );
+        NotificationType.yearTopic,
+        NotificationType.yearBranchTopic,
+        NotificationType.yearBranchDivTopic,
+        NotificationType.yearBranchDivBatchTopic
+      ]).withConverter<NotificationModel>(
+        fromFirestore: (snapshot, options) =>
+            NotificationModel.fromJson(snapshot.data()!),
+        toFirestore: (value, options) => value.toJson(),
+      );
 }

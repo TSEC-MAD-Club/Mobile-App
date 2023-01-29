@@ -11,8 +11,8 @@ class TimeTableService {
   final FirebaseFirestore _firestore;
   TimeTableService(FirebaseFirestore firestore) : _firestore = firestore;
 
-  Stream get timetableDocref =>
-      _firestore.collection('TimeTable')
+  Stream get timetableDocref => _firestore
+      .collection('TimeTable')
       .doc(NotificationType.yearBranchDivTopic)
       .snapshots();
 

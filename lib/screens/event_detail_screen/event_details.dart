@@ -83,21 +83,21 @@ class _EventDetailState extends ConsumerState<EventDetail> {
                           Expanded(
                             child: Container(),
                           ),
-                          data == null ?
-                          const SizedBox() :
-                          ElevatedButton(
-                            onPressed: () {
-                              launchUrl();
-                            },
-                            child: const Text("Register"),
-                            style: ElevatedButton.styleFrom(
-                              padding: const EdgeInsets.only(
-                                  top: 0, bottom: 0, right: 20, left: 20),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                            ),
-                          )
+                          data == null
+                              ? const SizedBox()
+                              : ElevatedButton(
+                                  onPressed: () {
+                                    launchUrl();
+                                  },
+                                  child: const Text("Register"),
+                                  style: ElevatedButton.styleFrom(
+                                    padding: const EdgeInsets.only(
+                                        top: 0, bottom: 0, right: 20, left: 20),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                  ),
+                                )
                         ],
                       ),
                     ),
@@ -178,10 +178,10 @@ class _EventDetailState extends ConsumerState<EventDetail> {
                         children: [
                           CircleAvatar(
                             backgroundImage: NetworkImage(
-                              getCommitteeImageByName
-                              (widget.eventModel.committeeName),
+                              getCommitteeImageByName(
+                                  widget.eventModel.committeeName),
                             ),
-                            backgroundColor: Colors.red.shade800,
+                            backgroundColor: Colors.black,
                             radius: 20,
                           ),
                           const SizedBox(

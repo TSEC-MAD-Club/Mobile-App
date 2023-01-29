@@ -152,16 +152,16 @@ class _TSECAppState extends ConsumerState<TSECApp> {
           .watch(authProvider.notifier)
           .fetchStudentDetails(email, context);
       ref.watch(studentModelProvider.notifier).update((state) => studentModel);
-      log(studentModel.toString()); 
+      log(studentModel.toString());
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    if(ref.watch(firebaseAuthProvider).currentUser?.uid != null){
-       getuserData(FirebaseAuth.instance.currentUser!.email.toString());
+    if (ref.watch(firebaseAuthProvider).currentUser?.uid != null) {
+      getuserData(FirebaseAuth.instance.currentUser!.email.toString());
     }
-   
+
     final _themeMode = ref.watch(themeProvider);
     return MaterialApp.router(
       routeInformationParser: _routes.routeInformationParser,
