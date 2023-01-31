@@ -101,42 +101,60 @@ class _EventDetailState extends ConsumerState<EventDetail> {
                         ],
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 20),
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.location_on,
-                            color: Theme.of(context).backgroundColor,
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 10, left: 20),
+                        child: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.location_on,
+                                color: Theme.of(context).backgroundColor,
+                              ),
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              FittedBox(
+                                fit: BoxFit.scaleDown,
+                                child: Text(
+                                  widget.eventModel.eventLocation,
+                                  style: Theme.of(context).textTheme.bodyText2,
+                                ),
+                              )
+                            ],
                           ),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          Text(
-                            widget.eventModel.eventLocation,
-                            style: Theme.of(context).textTheme.bodyText2,
-                          )
-                        ],
+                        ),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 20),
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.calendar_month,
-                            color: Theme.of(context).backgroundColor,
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 10, left: 20),
+                        child: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.calendar_month,
+                                color: Theme.of(context).backgroundColor,
+                              ),
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              FittedBox(
+                                fit: BoxFit.scaleDown,
+                                child: Text(
+                                  widget.eventModel.eventTime +
+                                      " " +
+                                      widget.eventModel.eventDate,
+                                  style: Theme.of(context).textTheme.bodyText2,
+                                ),
+                              ),
+                            ],
                           ),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          Text(
-                            widget.eventModel.eventTime +
-                                " " +
-                                widget.eventModel.eventDate,
-                            style: Theme.of(context).textTheme.bodyText2,
-                          ),
-                        ],
+                        ),
                       ),
                     ),
                     Padding(
@@ -172,29 +190,49 @@ class _EventDetailState extends ConsumerState<EventDetail> {
                         ],
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 20),
-                      child: Row(
-                        children: [
-                          CircleAvatar(
-                            backgroundImage: NetworkImage(
-                              getCommitteeImageByName(
-                                  widget.eventModel.committeeName),
-                            ),
-                            backgroundColor: Colors.black,
-                            radius: 20,
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 10, left: 20),
+                        child: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Row(
+                            children: [
+                              CircleAvatar(
+                                backgroundImage: NetworkImage(
+                                  getCommitteeImageByName(
+                                      widget.eventModel.committeeName),
+                                ),
+                                backgroundColor: Colors.black,
+                                radius: 20,
+                              ),
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              Text(
+                                widget.eventModel.committeeName,
+                                style: Theme.of(context).textTheme.subtitle1,
+                              ),
+                            ],
                           ),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          Text(
-                            widget.eventModel.committeeName,
-                            style: Theme.of(context).textTheme.subtitle1,
-                          ),
-                        ],
+                        ),
                       ),
                     ),
                   ],
+                ),
+              ),
+            ),
+          ),
+          Align(
+            alignment: Alignment.topLeft,
+            child: SafeArea(
+              child: IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: const Icon(
+                  Icons.keyboard_arrow_left_rounded,
+                  color: Colors.blueGrey,
                 ),
               ),
             ),
