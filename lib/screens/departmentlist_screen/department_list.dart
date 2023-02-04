@@ -103,11 +103,14 @@ class DeptWidget extends StatelessWidget {
                   padding: const EdgeInsets.all(20.0),
                   child: Image.asset(
                     "assets/images/branches/$image.png",
-                    height: 100,
+                    height: 150,
                   ),
                 ),
               ),
-              Text(department.name),
+              FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text(department.name),
+              ),
             ],
           ),
         ),
