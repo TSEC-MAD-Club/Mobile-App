@@ -67,17 +67,20 @@ class MainScreen extends ConsumerWidget {
                         ),
                         boxShadow: [_boxshadow],
                       ),
-                      child: DatePicker(
-                        DateTime.now(),
-                        monthTextStyle: _theme.textTheme.subtitle2!,
-                        dayTextStyle: _theme.textTheme.subtitle2!,
-                        dateTextStyle: _theme.textTheme.subtitle2!,
-                        initialSelectedDate: DateTime.now(),
-                        selectionColor: Colors.blue,
-                        onDateChange: ((selectedDate) async {
-                          ref.read(dayProvider.notifier).update(
-                              (state) => getweekday(selectedDate.weekday));
-                        }),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(15.0),
+                        child: DatePicker(
+                          DateTime.now(),
+                          monthTextStyle: _theme.textTheme.subtitle2!,
+                          dayTextStyle: _theme.textTheme.subtitle2!,
+                          dateTextStyle: _theme.textTheme.subtitle2!,
+                          initialSelectedDate: DateTime.now(),
+                          selectionColor: Colors.blue,
+                          onDateChange: ((selectedDate) async {
+                            ref.read(dayProvider.notifier).update(
+                                (state) => getweekday(selectedDate.weekday));
+                          }),
+                        ),
                       ),
                     ),
                   ),

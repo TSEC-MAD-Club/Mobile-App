@@ -92,26 +92,39 @@ class _CurriculumSectionState extends State<CurriculumSection> {
               ),
               // Added row to make sure that it wont take whole
               // width because of ListView
-              Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 15),
-                    child: TextButton(
-                      style: TextButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
+              Align(
+                alignment: Alignment.topLeft,
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 15),
+                        child: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: TextButton(
+                            style: TextButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              foregroundColor:
+                                  Theme.of(context).textTheme.bodyText2!.color,
+                              textStyle: Theme.of(context).textTheme.bodyText2,
+                              backgroundColor:
+                                  Theme.of(context).colorScheme.secondary,
+                            ),
+                            onPressed: _onButtonClick,
+                            child: const FittedBox(
+                              fit: BoxFit.scaleDown,
+                              child: Text("Download full syllabus"),
+                            ),
+                          ),
                         ),
-                        foregroundColor:
-                            Theme.of(context).textTheme.bodyText2!.color,
-                        textStyle: Theme.of(context).textTheme.bodyText2,
-                        backgroundColor:
-                            Theme.of(context).colorScheme.secondary,
                       ),
-                      onPressed: _onButtonClick,
-                      child: const Text("Download full syllabus"),
-                    ),
+                    ],
                   ),
-                ],
+                ),
               ),
             ],
           ),
