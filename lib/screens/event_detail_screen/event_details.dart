@@ -34,6 +34,7 @@ class _EventDetailState extends ConsumerState<EventDetail> {
     double _height = MediaQuery.of(context).size.height;
     double _width = MediaQuery.of(context).size.width;
     return Scaffold(
+      
       body: Stack(
         alignment: Alignment.topCenter,
         children: [

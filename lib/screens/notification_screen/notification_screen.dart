@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutterfire_ui/firestore.dart';
@@ -6,8 +5,6 @@ import 'package:intl/intl.dart';
 import 'package:tsec_app/screens/notification_screen/widgets/notification_list_item.dart';
 import 'package:tsec_app/services/notification_service.dart';
 import 'package:tsec_app/utils/init_get_it.dart';
-import 'package:tsec_app/utils/notification_type.dart';
-
 import '../../models/notification_model/notification_model.dart';
 import '../../utils/image_assets.dart';
 import '../../widgets/custom_app_bar.dart';
@@ -31,7 +28,6 @@ class _NotificationScreenState extends State<NotificationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    log(NotificationType.yearTopic);
     return CustomScaffold(
       body: NestedScrollView(
         headerSliverBuilder: (context, innerBoxIsScrolled) => [

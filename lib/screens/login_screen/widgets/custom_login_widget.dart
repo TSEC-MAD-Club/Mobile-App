@@ -123,15 +123,6 @@ class _LoginWidgetState extends ConsumerState<LoginWidget> {
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           crossAxisAlignment: CrossAxisAlignment.end,
-          children: const <Widget>[
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 25, vertical: 20),
-              child: Text(
-                "Forgot Password",
-                style: TextStyle(color: Colors.blue),
-              ),
-            ),
-          ],
         ),
         Padding(
           padding: const EdgeInsets.all(25.0),

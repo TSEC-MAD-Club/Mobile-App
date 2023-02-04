@@ -27,8 +27,7 @@ class _TPCScreenState extends State<TPCScreen> {
   @override
   void initState() {
     super.initState();
-    if (mounted) setState(() {});
-    _companys = _getCompanys();
+    
   }
 
   List<Widget> getCompanyCards(List<CompanyModel> _companys) {
