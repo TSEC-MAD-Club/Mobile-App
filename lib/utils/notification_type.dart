@@ -10,7 +10,7 @@ extension AddTopicsPrefix on String {
 }
 
 abstract class NotificationType {
-  static const _testPrefix = kDebugMode ? "test-" : "";
+  static const _testPrefix = "";
   static const String notification = "${_testPrefix}notification";
   static String yearTopic = "";
   static String yearBranchTopic = "";

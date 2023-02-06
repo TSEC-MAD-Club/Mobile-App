@@ -9,7 +9,12 @@
           <action android:name="android.intent.action.VIEW" />
           <data android:scheme="https" />
         </intent>
+        <intent>
+          <action android:name="android.intent.action.SEND" />
+          <data android:mimeType="*/*" />
+      </intent>
    </queries>
+     
    <application
         android:label="Tsec App"
         android:icon="@mipmap/ic_launcher">

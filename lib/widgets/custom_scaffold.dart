@@ -240,15 +240,11 @@ class _CustomScaffoldState extends ConsumerState<CustomScaffold>
                 onTap: () {
                   if (_controller.isCompleted) {
                     _controller.reverse();
-                    ref
-                        .read(dayProvider.notifier)
-                        .update((state) => getweekday(DateTime.now().weekday));
                   } else {
                     _controller.forward();
-                    ref
-                        .read(dayProvider.notifier)
-                        .update((state) => getweekday(DateTime.now().weekday));
                   }
+                      ref.read(dayProvider.notifier)
+                      .update((state) => getweekday(DateTime.now().weekday));
                 },
                 borderRadius: BorderRadius.circular(50),
                 child: Container(
