@@ -27,7 +27,7 @@ extension ItemNameExtension on Item {
     }
   }
 }
-
+  OverlayEntry? overlayEntry;
 class DepartmentScreen extends StatefulWidget {
   final DepartmentEnum department;
 
@@ -42,7 +42,7 @@ class DepartmentScreen extends StatefulWidget {
 
 class _DepartmentScreenState extends State<DepartmentScreen> {
   Item selectedItem = Item.about;
-  OverlayEntry? overlayEntry;
+
   final GlobalKey _dropDownKey = GlobalKey();
 
   void _showDropDown(BuildContext context) async {
