@@ -119,7 +119,7 @@ class _ChangePasswordDialogState extends ConsumerState<ChangePasswordDialog> {
                   child: FittedBox(
                     fit: BoxFit.scaleDown,
                     child: SizedBox(
-                      height: MediaQuery.of(context).size.height *.05,
+                      height: MediaQuery.of(context).size.height * .05,
                       width: MediaQuery.of(context).size.width * .6,
                       child: ElevatedButton(
                         onPressed: () {
@@ -130,12 +130,13 @@ class _ChangePasswordDialogState extends ConsumerState<ChangePasswordDialog> {
                             GoRouter.of(context).go('/main');
                           }
                         },
-                        child:const  FittedBox(
+                        child: const FittedBox(
                           fit: BoxFit.scaleDown,
-                          child: Text("Submit", 
-                          style: TextStyle(
-                            fontSize: 14, 
-                          ),
+                          child: Text(
+                            "Submit",
+                            style: TextStyle(
+                              fontSize: 14,
+                            ),
                           ),
                         ),
                       ),

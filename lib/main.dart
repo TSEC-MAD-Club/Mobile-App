@@ -47,17 +47,17 @@ Future<void> main() async {
 
   final _sharedPrefs = await SharedPreferences.getInstance();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
-  .then((_) {
-     runApp(
-    ProviderScope(
-      overrides: [
-        sharedPrefsProvider.overrideWithValue(SharedPrefsProvider(_sharedPrefs))
-      ],
-      child: const TSECApp(),
-    ),
-  );
-});
- 
+      .then((_) {
+    runApp(
+      ProviderScope(
+        overrides: [
+          sharedPrefsProvider
+              .overrideWithValue(SharedPrefsProvider(_sharedPrefs))
+        ],
+        child: const TSECApp(),
+      ),
+    );
+  });
 }
 
 class TSECApp extends ConsumerStatefulWidget {
@@ -73,13 +73,11 @@ class _TSECAppState extends ConsumerState<TSECApp> {
   @override
   void initState() {
     super.initState();
-    
   }
 
   @override
   void dispose() {
     super.dispose();
-
   }
 
   @override

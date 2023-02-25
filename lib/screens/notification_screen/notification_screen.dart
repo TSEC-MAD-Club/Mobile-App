@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutterfire_ui/firestore.dart';
 import 'package:intl/intl.dart';

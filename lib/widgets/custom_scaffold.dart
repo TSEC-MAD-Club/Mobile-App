@@ -243,7 +243,8 @@ class _CustomScaffoldState extends ConsumerState<CustomScaffold>
                   } else {
                     _controller.forward();
                   }
-                      ref.read(dayProvider.notifier)
+                  ref
+                      .read(dayProvider.notifier)
                       .update((state) => getweekday(DateTime.now().weekday));
                 },
                 borderRadius: BorderRadius.circular(50),
