@@ -107,9 +107,9 @@ class DeptWidget extends StatelessWidget {
                   ),
                 ),
               ),
-              FittedBox(
-                fit: BoxFit.scaleDown,
-                child: Text(department.name),
+              Text(
+                department.name,
+                textAlign: TextAlign.center,
               ),
             ],
           ),
