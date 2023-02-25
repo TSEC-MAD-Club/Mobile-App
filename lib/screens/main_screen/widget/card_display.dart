@@ -53,7 +53,7 @@ class _CardDisplayState extends ConsumerState<CardDisplay> {
             log(timeTableDay.length.toString());
             return SliverPadding(
                 padding: const EdgeInsets.symmetric(
-                  horizontal: 20.0,
+                  horizontal: 10.0,
                   vertical: 2.0,
                 ),
                 sliver: SliverList(

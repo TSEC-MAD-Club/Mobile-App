@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -45,14 +46,18 @@ Future<void> main() async {
   initGetIt();
 
   final _sharedPrefs = await SharedPreferences.getInstance();
-  runApp(
-    ProviderScope(
-      overrides: [
-        sharedPrefsProvider.overrideWithValue(SharedPrefsProvider(_sharedPrefs))
-      ],
-      child: const TSECApp(),
-    ),
-  );
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+      .then((_) {
+    runApp(
+      ProviderScope(
+        overrides: [
+          sharedPrefsProvider
+              .overrideWithValue(SharedPrefsProvider(_sharedPrefs))
+        ],
+        child: const TSECApp(),
+      ),
+    );
+  });
 }
 
 class TSECApp extends ConsumerStatefulWidget {
@@ -68,6 +73,11 @@ class _TSECAppState extends ConsumerState<TSECApp> {
   @override
   void initState() {
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override

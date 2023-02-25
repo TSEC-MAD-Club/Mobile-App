@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tsec_app/provider/auth_provider.dart';
 import 'package:tsec_app/provider/firebase_provider.dart';
@@ -10,7 +9,7 @@ extension AddTopicsPrefix on String {
 }
 
 abstract class NotificationType {
-  static const _testPrefix = kDebugMode ? "test-" : "";
+  static const _testPrefix = "";
   static const String notification = "${_testPrefix}notification";
   static String yearTopic = "";
   static String yearBranchTopic = "";
