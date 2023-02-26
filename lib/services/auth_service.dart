@@ -1,4 +1,4 @@
-import 'dart:developer';
+
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -64,7 +64,6 @@ class AuthService {
       for (final element in studentDoc) {
         studentModel = StudentModel.fromJson(element);
       }
-      log(studentModel!.toString());
     } on FirebaseException catch (e) {
       showSnackBar(
           context, e.stackTrace.toString() + " " + e.message.toString());

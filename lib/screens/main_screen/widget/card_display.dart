@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -50,7 +48,6 @@ class _CardDisplayState extends ConsumerState<CardDisplay> {
             );
           } else {
             List<TimetableModel> timeTableDay = getTimetablebyDay(data, day);
-            log(timeTableDay.length.toString());
             return SliverPadding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 10.0,
@@ -78,7 +75,6 @@ class _CardDisplayState extends ConsumerState<CardDisplay> {
           }
         }),
         error: ((error, stackTrace) {
-          log(error.toString());
           return const SliverToBoxAdapter(
             child: Center(child: Text('Error Contact us and report problem')),
           );
@@ -92,14 +88,12 @@ class _CardDisplayState extends ConsumerState<CardDisplay> {
       Map<String, dynamic> data, String day) {
     List<TimetableModel> timeTableDay = [];
     final daylist = data[day];
-
     for (final item in daylist) {
       StudentModel? studentModel = ref.watch(studentModelProvider);
       if (item['lectureBatch'] == studentModel!.batch.toString() ||
           item['lectureBatch'] == 'All')
         timeTableDay.add(TimetableModel.fromJson(item));
     }
-    log(timeTableDay.length.toString());
     return timeTableDay;
   }
 }

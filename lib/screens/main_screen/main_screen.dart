@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -41,7 +40,6 @@ class MainScreen extends ConsumerWidget {
       offset: const Offset(0, 1),
     );
     StudentModel? data = ref.watch(studentModelProvider);
-    log(data.toString());
     if (data != null) NotificationType.makeTopic(ref);
     return CustomScaffold(
       body: SafeArea(
@@ -117,7 +115,6 @@ class _MainScreenAppBarState extends ConsumerState<MainScreenAppBar> {
     }), loading: () {
       const CircularProgressIndicator();
     }, error: (Object error, StackTrace? stackTrace) {
-      log(error.toString());
     });
   }
 
@@ -255,7 +252,6 @@ class _MainScreenAppBarState extends ConsumerState<MainScreenAppBar> {
                                     "Committee Name":
                                         eventList[_currentIndex].committeeName
                                   });
-                                  log(_currentIndex.toString());
                                 }),
                           )
                           .toList(),
