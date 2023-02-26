@@ -52,10 +52,10 @@ class _CurriculumSectionState extends State<CurriculumSection> {
             .toList();
         final url = semData["url"] as String;
 
-        _storage.getResult(url).then((value) {
-          if (!mounted) return;
-          setState(() => _storageResult = value);
-        });
+        // _storage.getResult(url).then((value) {
+        //   if (!mounted) return;
+        //   setState(() => _storageResult = value);
+        // });
 
         return Flexible(
           flex: 1,
