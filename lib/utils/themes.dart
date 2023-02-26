@@ -177,6 +177,10 @@ TextButtonThemeData _getTextButtonTheme({
   );
 }
 
+getTextScale(BuildContext context) {
+  return MediaQuery.of(context).copyWith(textScaleFactor: 1);
+}
+
 ElevatedButtonThemeData _getElevatedButtonTheme({
   required Color darkColor,
   required Color lightColor,

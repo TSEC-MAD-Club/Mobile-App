@@ -174,6 +174,8 @@ class _TSECAppState extends ConsumerState<TSECApp> {
 
     final _themeMode = ref.watch(themeProvider);
     return MaterialApp.router(
+      builder: (context, child) =>
+          MediaQuery(data: getTextScale(context), child: child!),
       routeInformationParser: _routes.routeInformationParser,
       routerDelegate: _routes.routerDelegate,
       title: 'TSEC App',

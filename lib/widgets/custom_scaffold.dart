@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import 'package:tsec_app/provider/auth_provider.dart';
+import 'package:tsec_app/screens/department_screen/department_screen.dart';
 import 'package:tsec_app/screens/main_screen/widget/card_display.dart';
 import 'package:tsec_app/utils/notification_type.dart';
 import 'package:tsec_app/utils/timetable_util.dart';
@@ -243,6 +244,8 @@ class _CustomScaffoldState extends ConsumerState<CustomScaffold>
                   } else {
                     _controller.forward();
                   }
+                  overlayEntry?.remove();
+                  overlayEntry = null;
                   ref
                       .read(dayProvider.notifier)
                       .update((state) => getweekday(DateTime.now().weekday));
