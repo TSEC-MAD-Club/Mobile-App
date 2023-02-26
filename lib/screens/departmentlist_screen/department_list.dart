@@ -95,13 +95,13 @@ class DeptWidget extends StatelessWidget {
         margin: EdgeInsets.zero,
         color: Theme.of(context).colorScheme.secondary,
         child: Padding(
-          padding:  EdgeInsets.all(size*0.02),
+          padding: EdgeInsets.all(size * 0.02),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Flexible(
                 child: Padding(
-                  padding:  EdgeInsets.all(size*0.04),
+                  padding: EdgeInsets.all(size * 0.04),
                   child: Image.asset(
                     "assets/images/branches/$image.png",
                     height: 150,

@@ -106,16 +106,18 @@ class _MainScreenAppBarState extends ConsumerState<MainScreenAppBar> {
   List<EventModel> eventList = [];
 
   void fetchEventDetails() {
-    ref.watch(eventListProvider).when(data: ((data) {
-      eventList.addAll(data ?? []);
-      imgList.clear();
-      for (var data in eventList) {
-        imgList.add(data.imageUrl);
-      }
-    }), loading: () {
-      const CircularProgressIndicator();
-    }, error: (Object error, StackTrace? stackTrace) {
-    });
+    ref.watch(eventListProvider).when(
+        data: ((data) {
+          eventList.addAll(data ?? []);
+          imgList.clear();
+          for (var data in eventList) {
+            imgList.add(data.imageUrl);
+          }
+        }),
+        loading: () {
+          const CircularProgressIndicator();
+        },
+        error: (Object error, StackTrace? stackTrace) {});
   }
 
   static List<String> imgList = [];

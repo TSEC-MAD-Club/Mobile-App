@@ -14,7 +14,6 @@ class TimetableModel {
     required this.lectureName,
     required this.lectureStartTime,
     required this.lectureEndTime,
- 
     required this.lectureFacultyName,
     required this.lectureBatch,
   });
