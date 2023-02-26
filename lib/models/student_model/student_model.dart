@@ -17,14 +17,15 @@ class StudentModel {
   final String gradyear;
   @JsonKey(name: "phoneNo")
   final String phoneNum;
-  StudentModel({
-    required this.batch,
-    required this.branch,
-    required this.name,
-    required this.email,
-    required this.gradyear,
-    required this.phoneNum,
-  });
+  final String div;
+  StudentModel(
+      {required this.batch,
+      required this.branch,
+      required this.name,
+      required this.email,
+      required this.gradyear,
+      required this.phoneNum,
+      required this.div});
 
   factory StudentModel.fromJson(Map<String, dynamic> json) =>
       _$StudentModelFromJson(json);

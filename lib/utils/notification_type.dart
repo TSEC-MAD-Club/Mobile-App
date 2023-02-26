@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tsec_app/provider/auth_provider.dart';
 import 'package:tsec_app/provider/firebase_provider.dart';
@@ -10,8 +9,7 @@ extension AddTopicsPrefix on String {
 }
 
 abstract class NotificationType {
-  static const _testPrefix = kDebugMode ? "test-" : "";
-  static const String notification = "${_testPrefix}notification";
+  static const String notification = "All";
   static String yearTopic = "";
   static String yearBranchTopic = "";
   static String yearBranchDivTopic = "";
@@ -22,7 +20,7 @@ abstract class NotificationType {
       StudentModel? studentmodel = ref.watch(studentModelProvider);
       String studentYear = studentmodel!.gradyear.toString();
       String studentBranch = studentmodel.branch.toString();
-      String studentDiv = studentmodel.batch.substring(0, 2);
+      String studentDiv = studentmodel.div.toString();
       String studentBatch = studentmodel.batch.toString();
       yearTopic = studentYear;
       yearBranchTopic = "$studentYear-$studentBranch";

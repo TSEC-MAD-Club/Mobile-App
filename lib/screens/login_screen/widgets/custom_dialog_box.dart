@@ -28,80 +28,122 @@ class _ChangePasswordDialogState extends ConsumerState<ChangePasswordDialog> {
       elevation: 0,
       backgroundColor: Colors.transparent,
       child: SizedBox(
-        height: 350,
+        height: MediaQuery.of(context).size.height * .5,
         width: double.infinity,
         child: Card(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Padding(
-                padding: EdgeInsets.only(top: 15, left: 25),
-                child: Text(
-                  "Change Password",
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 30,
-                      fontWeight: FontWeight.w500),
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              const Padding(
-                padding: EdgeInsets.only(left: 25, top: 20),
-                child: Text(
-                  "Enter your new password ",
-                  style: TextStyle(fontSize: 18, color: Colors.black87),
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 20, right: 20),
-                child: Form(
-                  key: _formKey,
-                  child: TextFormField(
-                    style: const TextStyle(
-                      color: Colors.black,
+              SizedBox(
+                height: MediaQuery.of(context).size.height * .1,
+                child: const Padding(
+                  padding: EdgeInsets.only(
+                    top: 15,
+                    left: 15,
+                  ),
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      "Change\nPassword",
+                      style: TextStyle(
+                          fontFamily: "Lato",
+                          color: Colors.black,
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold),
                     ),
-                    controller: _passwordTextEditingController,
-                    decoration:
-                        const InputDecoration(hintText: "Enter your password"),
-                    validator: (value) {
-                      if (value!.isEmpty) return "Please enter the passoword";
-                      if (value.length < 6)
-                        return "The length of password is less than 6";
-
-                      return null;
-                    },
                   ),
                 ),
               ),
-              const SizedBox(
-                height: 20,
-              ),
-              Align(
-                  alignment: Alignment.center,
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 35),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          ref.watch(authProvider.notifier).changePassword(
-                              _passwordTextEditingController.text.trim(),
-                              context);
-                          GoRouter.of(context).go('/main');
-                        }
-                      },
-                      child: const Text("Submit"),
-                      style: ElevatedButton.styleFrom(
-                        fixedSize: const Size(250, 50),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * .1,
+                child: const Padding(
+                  padding: EdgeInsets.only(
+                    left: 15,
+                    top: 20,
+                  ),
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      "Enter your new password ",
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.black87,
+                        fontFamily: "Outline",
                       ),
                     ),
-                  ))
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * .1,
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                    left: 15,
+                    right: 15,
+                  ),
+                  child: Form(
+                    key: _formKey,
+                    child: TextFormField(
+                      style: const TextStyle(
+                        color: Colors.black,
+                      ),
+                      controller: _passwordTextEditingController,
+                      decoration: const InputDecoration(
+                        hintText: "Enter your password",
+                        hintStyle: TextStyle(
+                          color: Colors.black26,
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value!.isEmpty) return "Please enter the passoword";
+                        if (value.length < 6)
+                          return "The length of password is less than 6";
+
+                        return null;
+                      },
+                    ),
+                  ),
+                ),
+              ),
+              Align(
+                alignment: Alignment.center,
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                    top: 35,
+                    left: 12,
+                    right: 12,
+                  ),
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: SizedBox(
+                      height: MediaQuery.of(context).size.height * .05,
+                      width: MediaQuery.of(context).size.width * .6,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            ref.watch(authProvider.notifier).changePassword(
+                                _passwordTextEditingController.text.trim(),
+                                context);
+                            GoRouter.of(context).go('/main');
+                          }
+                        },
+                        child: const FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Text(
+                            "Submit",
+                            style: TextStyle(
+                              fontSize: 14,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
         ),

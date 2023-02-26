@@ -32,6 +32,8 @@ class ScheduleCard extends StatelessWidget {
     return Card(
       margin: const EdgeInsets.only(
         bottom: 30.0,
+        left: 10.0,
+        right: 10.0,
       ),
       elevation: 2.0,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
@@ -69,45 +71,36 @@ class ScheduleCard extends StatelessWidget {
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      FittedBox(
-                        fit: BoxFit.scaleDown,
-                        child: Text(
-                          lectureStartTime,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: _theme.textTheme.headline1!.color,
-                            fontWeight: FontWeight.w400,
-                            fontSize: 16.0,
-                            letterSpacing: 1.0,
-                            wordSpacing: 3.0,
-                          ),
+                      Text(
+                        lectureStartTime,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: _theme.textTheme.headline1!.color,
+                          fontWeight: FontWeight.w400,
+                          fontSize: 16.0,
+                          letterSpacing: 1.0,
+                          wordSpacing: 3.0,
                         ),
                       ),
-                      FittedBox(
-                        fit: BoxFit.scaleDown,
-                        child: Text(
-                          'to',
-                          style: TextStyle(
-                            color: _theme.textTheme.headline1!.color,
-                            fontWeight: FontWeight.w300,
-                            fontSize: 16.0,
-                            letterSpacing: 1.0,
-                          ),
-                          textAlign: TextAlign.center,
+                      Text(
+                        'to',
+                        style: TextStyle(
+                          color: _theme.textTheme.headline1!.color,
+                          fontWeight: FontWeight.w300,
+                          fontSize: 16.0,
+                          letterSpacing: 1.0,
                         ),
+                        textAlign: TextAlign.center,
                       ),
-                      FittedBox(
-                        fit: BoxFit.scaleDown,
-                        child: Text(
-                          lectureEndTime,
-                          style: TextStyle(
-                            color: _theme.textTheme.headline1!.color,
-                            fontWeight: FontWeight.w400,
-                            fontSize: 16.0,
-                            letterSpacing: 1.0,
-                          ),
-                          textAlign: TextAlign.center,
+                      Text(
+                        lectureEndTime,
+                        style: TextStyle(
+                          color: _theme.textTheme.headline1!.color,
+                          fontWeight: FontWeight.w400,
+                          fontSize: 16.0,
+                          letterSpacing: 1.0,
                         ),
+                        textAlign: TextAlign.center,
                       ),
                     ]),
               ),
@@ -122,16 +115,13 @@ class ScheduleCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    FittedBox(
-                      fit: BoxFit.scaleDown,
-                      child: Text(
-                        lectureName,
-                        style: TextStyle(
-                          color: _theme.textTheme.headline1!.color,
-                          fontWeight: FontWeight.w400,
-                          fontSize: 20.0,
-                          letterSpacing: 1.0,
-                        ),
+                    Text(
+                      lectureName,
+                      style: TextStyle(
+                        color: _theme.textTheme.headline1!.color,
+                        fontWeight: FontWeight.w400,
+                        fontSize: 20.0,
+                        letterSpacing: 1.0,
                       ),
                     ),
                     const SizedBox(
@@ -152,28 +142,25 @@ class ScheduleCard extends StatelessWidget {
                     const SizedBox(
                       height: 10.0,
                     ),
-                    FittedBox(
-                      fit: BoxFit.scaleDown,
-                      child: Row(
-                        children: [
-                          CircleAvatar(
-                            radius: 14.0,
-                            backgroundImage: NetworkImage(facultyImageurl),
+                    Row(
+                      children: [
+                        CircleAvatar(
+                          radius: 14.0,
+                          backgroundImage: NetworkImage(facultyImageurl),
+                        ),
+                        const SizedBox(
+                          width: 12.0,
+                        ),
+                        Text(
+                          facultyName,
+                          style: const TextStyle(
+                            color: Colors.blue,
+                            fontSize: 12.0,
+                            fontWeight: FontWeight.w300,
                           ),
-                          const SizedBox(
-                            width: 12.0,
-                          ),
-                          Text(
-                            facultyName,
-                            style: const TextStyle(
-                              color: Colors.blue,
-                              fontSize: 12.0,
-                              fontWeight: FontWeight.w300,
-                            ),
-                          )
-                        ],
-                      ),
-                    )
+                        )
+                      ],
+                    ),
                   ],
                 ),
               )
