@@ -6,7 +6,7 @@ class TimetableModel {
   final String lectureName;
   final String lectureStartTime;
   final String lectureEndTime;
-  final String lectureFacultyImageurl;
+
   final String lectureFacultyName;
   final String lectureBatch;
 
@@ -14,7 +14,6 @@ class TimetableModel {
     required this.lectureName,
     required this.lectureStartTime,
     required this.lectureEndTime,
-    required this.lectureFacultyImageurl,
     required this.lectureFacultyName,
     required this.lectureBatch,
   });

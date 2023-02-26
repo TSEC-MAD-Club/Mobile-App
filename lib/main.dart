@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -162,7 +160,6 @@ class _TSECAppState extends ConsumerState<TSECApp> {
           .watch(authProvider.notifier)
           .fetchStudentDetails(email, context);
       ref.watch(studentModelProvider.notifier).update((state) => studentModel);
-      log(studentModel.toString());
     }
   }
 

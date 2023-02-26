@@ -33,7 +33,7 @@ class DepartmentList extends StatelessWidget {
       sliver: SliverGrid.count(
         crossAxisCount: 2,
         childAspectRatio:
-            (MediaQuery.of(context).size.width > 400) ? 1.5 : 173 / 224,
+            (MediaQuery.of(context).size.width > 400) ? 1.0 : 173 / 224,
         crossAxisSpacing: 20,
         mainAxisSpacing: 20,
         children: const [
@@ -83,6 +83,7 @@ class DeptWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size.width;
     return GestureDetector(
       onTap: () => GoRouter.of(context).push(
         "/department?department=${department.index}",
@@ -94,13 +95,13 @@ class DeptWidget extends StatelessWidget {
         margin: EdgeInsets.zero,
         color: Theme.of(context).colorScheme.secondary,
         child: Padding(
-          padding: const EdgeInsets.all(15),
+          padding: EdgeInsets.all(size * 0.02),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Flexible(
                 child: Padding(
-                  padding: const EdgeInsets.all(20.0),
+                  padding: EdgeInsets.all(size * 0.04),
                   child: Image.asset(
                     "assets/images/branches/$image.png",
                     height: 150,

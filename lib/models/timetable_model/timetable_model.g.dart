@@ -11,7 +11,6 @@ TimetableModel _$TimetableModelFromJson(Map<String, dynamic> json) =>
       lectureName: json['lectureName'] as String,
       lectureStartTime: json['lectureStartTime'] as String,
       lectureEndTime: json['lectureEndTime'] as String,
-      lectureFacultyImageurl: json['lectureFacultyImageurl'] as String,
       lectureFacultyName: json['lectureFacultyName'] as String,
       lectureBatch: json['lectureBatch'] as String,
     );
@@ -21,7 +20,6 @@ Map<String, dynamic> _$TimetableModelToJson(TimetableModel instance) =>
       'lectureName': instance.lectureName,
       'lectureStartTime': instance.lectureStartTime,
       'lectureEndTime': instance.lectureEndTime,
-      'lectureFacultyImageurl': instance.lectureFacultyImageurl,
       'lectureFacultyName': instance.lectureFacultyName,
       'lectureBatch': instance.lectureBatch,
     };

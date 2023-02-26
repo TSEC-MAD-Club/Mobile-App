@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -24,11 +22,10 @@ class CardDisplay extends ConsumerStatefulWidget {
 }
 
 class _CardDisplayState extends ConsumerState<CardDisplay> {
-  static const colorList = [Colors.red, Colors.teal, Colors.blue];
+  static const colorList = [Colors.red, Colors.teal];
   static const opacityList = [
     Color.fromRGBO(255, 0, 0, 0.2),
     Color.fromARGB(51, 0, 255, 225),
-    Color.fromARGB(51, 0, 153, 255),
   ];
 
   Future<String> getFacultyImageUrl(String facultyName) async {
@@ -50,7 +47,6 @@ class _CardDisplayState extends ConsumerState<CardDisplay> {
             );
           } else {
             List<TimetableModel> timeTableDay = getTimetablebyDay(data, day);
-            log(timeTableDay.length.toString());
             return SliverPadding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 10.0,
@@ -60,8 +56,11 @@ class _CardDisplayState extends ConsumerState<CardDisplay> {
                     delegate: SliverChildBuilderDelegate(
                   childCount: timeTableDay.length,
                   (context, index) {
-                    var color = colorList[index % 3];
-                    var opacity = opacityList[index % 3];
+                    bool labs = checkLabs(timeTableDay[index].lectureName);
+                    final color = labs ? colorList[1] : colorList[0];
+                    final opacity = labs ? opacityList[1] : opacityList[0];
+                    final lectureFacultyname =
+                        timeTableDay[index].lectureFacultyName;
                     return ScheduleCard(
                       color,
                       opacity,
@@ -70,7 +69,9 @@ class _CardDisplayState extends ConsumerState<CardDisplay> {
                       lectureStartTime: timeTableDay[index].lectureStartTime,
                       facultyImageurl: getFacultyImagebyName(
                           timeTableDay[index].lectureFacultyName),
-                      facultyName: timeTableDay[index].lectureFacultyName,
+                      facultyName: lectureFacultyname.isEmpty
+                          ? "---------"
+                          : lectureFacultyname,
                       lectureBatch: timeTableDay[index].lectureBatch,
                     );
                   },
@@ -78,7 +79,6 @@ class _CardDisplayState extends ConsumerState<CardDisplay> {
           }
         }),
         error: ((error, stackTrace) {
-          log(error.toString());
           return const SliverToBoxAdapter(
             child: Center(child: Text('Error Contact us and report problem')),
           );
@@ -92,14 +92,19 @@ class _CardDisplayState extends ConsumerState<CardDisplay> {
       Map<String, dynamic> data, String day) {
     List<TimetableModel> timeTableDay = [];
     final daylist = data[day];
-
     for (final item in daylist) {
       StudentModel? studentModel = ref.watch(studentModelProvider);
       if (item['lectureBatch'] == studentModel!.batch.toString() ||
           item['lectureBatch'] == 'All')
         timeTableDay.add(TimetableModel.fromJson(item));
     }
-    log(timeTableDay.length.toString());
     return timeTableDay;
+  }
+
+  bool checkLabs(String lectureName) {
+    if (lectureName.toLowerCase().endsWith('labs')) {
+      return true;
+    }
+    return false;
   }
 }
