@@ -22,11 +22,10 @@ class CardDisplay extends ConsumerStatefulWidget {
 }
 
 class _CardDisplayState extends ConsumerState<CardDisplay> {
-  static const colorList = [Colors.red, Colors.teal, Colors.blue];
+  static const colorList = [Colors.red, Colors.teal];
   static const opacityList = [
     Color.fromRGBO(255, 0, 0, 0.2),
     Color.fromARGB(51, 0, 255, 225),
-    Color.fromARGB(51, 0, 153, 255),
   ];
 
   Future<String> getFacultyImageUrl(String facultyName) async {
@@ -57,8 +56,11 @@ class _CardDisplayState extends ConsumerState<CardDisplay> {
                     delegate: SliverChildBuilderDelegate(
                   childCount: timeTableDay.length,
                   (context, index) {
-                    var color = colorList[index % 3];
-                    var opacity = opacityList[index % 3];
+                    bool labs = checkLabs(timeTableDay[index].lectureName);
+                    final color = labs ? colorList[1] : colorList[0];
+                    final opacity = labs ? opacityList[1] : opacityList[0];
+                    final lectureFacultyname =
+                        timeTableDay[index].lectureFacultyName;
                     return ScheduleCard(
                       color,
                       opacity,
@@ -67,7 +69,9 @@ class _CardDisplayState extends ConsumerState<CardDisplay> {
                       lectureStartTime: timeTableDay[index].lectureStartTime,
                       facultyImageurl: getFacultyImagebyName(
                           timeTableDay[index].lectureFacultyName),
-                      facultyName: timeTableDay[index].lectureFacultyName,
+                      facultyName: lectureFacultyname.isEmpty
+                          ? "---------"
+                          : lectureFacultyname,
                       lectureBatch: timeTableDay[index].lectureBatch,
                     );
                   },
@@ -95,5 +99,12 @@ class _CardDisplayState extends ConsumerState<CardDisplay> {
         timeTableDay.add(TimetableModel.fromJson(item));
     }
     return timeTableDay;
+  }
+
+  bool checkLabs(String lectureName) {
+    if (lectureName.toLowerCase().endsWith('labs')) {
+      return true;
+    }
+    return false;
   }
 }
