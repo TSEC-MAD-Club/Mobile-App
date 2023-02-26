@@ -71,9 +71,7 @@ late final theme = ThemeData(
   textTheme: _textTheme.apply(
     bodyColor: kBlack,
     displayColor: kBlack,
-    
   ),
-  
   fontFamily: "SF Pro Text",
   colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.white),
 );
@@ -178,8 +176,9 @@ TextButtonThemeData _getTextButtonTheme({
     ),
   );
 }
- getTextScale(BuildContext context){
-  return  MediaQuery.of(context).copyWith(textScaleFactor: 1); 
+
+getTextScale(BuildContext context) {
+  return MediaQuery.of(context).copyWith(textScaleFactor: 1);
 }
 
 ElevatedButtonThemeData _getElevatedButtonTheme({

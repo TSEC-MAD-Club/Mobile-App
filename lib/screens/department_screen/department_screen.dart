@@ -29,6 +29,7 @@ extension ItemNameExtension on Item {
 }
 
 OverlayEntry? overlayEntry;
+
 class DepartmentScreen extends StatefulWidget {
   final DepartmentEnum department;
 

@@ -244,8 +244,8 @@ class _CustomScaffoldState extends ConsumerState<CustomScaffold>
                   } else {
                     _controller.forward();
                   }
-                   overlayEntry?.remove();
-                                overlayEntry = null;
+                  overlayEntry?.remove();
+                  overlayEntry = null;
                   ref
                       .read(dayProvider.notifier)
                       .update((state) => getweekday(DateTime.now().weekday));

@@ -12,7 +12,7 @@ class NotificationService {
 
   Query<NotificationModel> get notificationQuery =>
       _firebase.collection("notifications").where("topic", whereIn: [
-        NotificationType.notification, 
+        NotificationType.notification,
         NotificationType.yearTopic,
         NotificationType.yearBranchTopic,
         NotificationType.yearBranchDivTopic,
