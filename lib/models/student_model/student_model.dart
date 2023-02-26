@@ -17,6 +17,7 @@ class StudentModel {
   final String gradyear;
   @JsonKey(name: "phoneNo")
   final String phoneNum;
+  final String div; 
   StudentModel({
     required this.batch,
     required this.branch,
@@ -24,6 +25,7 @@ class StudentModel {
     required this.email,
     required this.gradyear,
     required this.phoneNum,
+    required this.div
   });
 
   factory StudentModel.fromJson(Map<String, dynamic> json) =>
