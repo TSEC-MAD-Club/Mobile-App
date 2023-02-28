@@ -1,6 +1,8 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:open_file/open_file.dart';
 
@@ -35,6 +37,13 @@ class _CurriculumSectionState extends State<CurriculumSection> {
       "assets/data/curriculum_data/${widget.department.fileName}.json",
       (value) async => jsonDecode(value) as Map<String, dynamic>,
     );
+
+    // SchedulerBinding.instance.addPostFrameCallback((_) {
+    //   _storage = locator<StorageUtil>();
+    //   _storage
+    //       .getResult(widget.url)
+    //       .then((value) => setState(() => _storageResult = value));
+    // });
   }
 
   @override
@@ -52,10 +61,10 @@ class _CurriculumSectionState extends State<CurriculumSection> {
             .toList();
         final url = semData["url"] as String;
 
-        // _storage.getResult(url).then((value) {
-        //   if (!mounted) return;
-        //   setState(() => _storageResult = value);
-        // });
+        _storage.getResult(url).then((value) {
+          if (!mounted) return;
+          setState(() => _storageResult = value);
+        });
 
         return Flexible(
           flex: 1,
