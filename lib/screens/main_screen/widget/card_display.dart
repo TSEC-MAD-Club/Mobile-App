@@ -68,10 +68,11 @@ class _CardDisplayState extends ConsumerState<CardDisplay> {
                       lectureName: timeTableDay[index].lectureName,
                       lectureStartTime: timeTableDay[index].lectureStartTime,
                       facultyImageurl: getFacultyImagebyName(
-                          timeTableDay[index].lectureFacultyName),
-                      facultyName: lectureFacultyname.isEmpty
-                          ? "---------"
-                          : lectureFacultyname,
+                        lectureFacultyname),
+                      facultyName:
+                          !checkTimetable(lectureFacultyname)
+                              ? "---------"
+                              : lectureFacultyname,
                       lectureBatch: timeTableDay[index].lectureBatch,
                     );
                   },
@@ -106,5 +107,10 @@ class _CardDisplayState extends ConsumerState<CardDisplay> {
       return true;
     }
     return false;
+  }
+
+  bool checkTimetable(String lectureFacultyName) {
+    if (lectureFacultyName.isEmpty || lectureFacultyName == " ") return true; 
+    return true ;
   }
 }
