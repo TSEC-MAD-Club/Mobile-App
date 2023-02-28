@@ -68,6 +68,7 @@ late final theme = ThemeData(
   primaryColor: const Color(0xFFF2F5F8),
   primaryColorLight: const Color(0xFFF2F5F8),
   primaryColorDark: const Color(0xFFD8D5D5),
+  cardColor: Colors.black87,
   textTheme: _textTheme.apply(
     bodyColor: kBlack,
     displayColor: kBlack,
@@ -82,6 +83,7 @@ late final darkTheme = ThemeData(
   primaryColorLight: const Color(0xFf34323d),
   primaryColorDark: const Color(0xFF000000),
   shadowColor: const Color(0x00A9A9A9),
+  cardColor: Colors.white70,
   elevatedButtonTheme: _getElevatedButtonTheme(
     darkColor: kDarkModeDarkBlue,
     lightColor: kDarkModeLightBlue,

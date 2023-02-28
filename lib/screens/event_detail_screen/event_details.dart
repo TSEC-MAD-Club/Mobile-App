@@ -218,6 +218,9 @@ class _EventDetailState extends ConsumerState<EventDetail> {
                         ),
                       ),
                     ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.05,
+                    ),
                   ],
                 ),
               ),

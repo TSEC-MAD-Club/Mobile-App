@@ -73,7 +73,7 @@ class _DepartmentScreenAppBarState
       toolbarHeight: 65.0,
       leading: _buildNavigation(
         context,
-        onPressed: () => GoRouter.of(context).pop(),
+        onPressed: () => GoRouter.of(context).go('/main'),
         icon: const Icon(
           Icons.chevron_left_rounded,
           size: 30,

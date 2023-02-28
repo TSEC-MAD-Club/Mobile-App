@@ -124,10 +124,21 @@ class _CurriculumSectionState extends State<CurriculumSection> {
                                   Theme.of(context).colorScheme.secondary,
                             ),
                             onPressed: _onButtonClick,
-                            child: const FittedBox(
-                              fit: BoxFit.scaleDown,
-                              child: Text("Download full syllabus"),
-                            ),
+                            child: _storageResult == null ||
+                                    _storageResult!.isDownloadInProgress
+                                ? SizedBox(
+                                    height: 24,
+                                    width: 24,
+                                    child: CircularProgressIndicator(
+                                      value: _downloadPrecent <= 0
+                                          ? null
+                                          : _downloadPrecent,
+                                    ),
+                                  )
+                                : const FittedBox(
+                                    fit: BoxFit.scaleDown,
+                                    child: Text("Download full syllabus"),
+                                  ),
                           ),
                         ),
                       ),
