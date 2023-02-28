@@ -126,7 +126,7 @@ class _CurriculumSectionState extends State<CurriculumSection> {
                                           : _downloadPrecent,
                                     ),
                                   )
-                                :const FittedBox(
+                                : const FittedBox(
                                     fit: BoxFit.scaleDown,
                                     child: Text("Download full syllabus"),
                                   ),
