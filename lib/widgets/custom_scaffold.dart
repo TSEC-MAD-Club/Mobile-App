@@ -169,6 +169,8 @@ class _CustomScaffoldState extends ConsumerState<CustomScaffold>
                       ref
                           .read(studentModelProvider.notifier)
                           .update((state) => null);
+                      _messaging
+                          .unsubscribeFromTopic(NotificationType.notification);
                       _messaging.unsubscribeFromTopic(
                           NotificationType.yearBranchDivBatchTopic);
                       _messaging.unsubscribeFromTopic(
