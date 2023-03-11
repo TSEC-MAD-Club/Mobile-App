@@ -43,6 +43,7 @@ class _TPCScreenState extends State<TPCScreen> {
           ),
           child: SizedBox(
             child: Card(
+              color: Theme.of(context).colorScheme.secondary,
               semanticContainer: true,
               clipBehavior: Clip.antiAliasWithSaveLayer,
               child: Padding(
@@ -74,11 +75,9 @@ class _TPCScreenState extends State<TPCScreen> {
                         child: FittedBox(
                           child: Text(
                             _companys[i].name,
-                            style: TextStyle(
-                              color: Colors.black.withOpacity(0.7),
-                            ),
                             textAlign: TextAlign.center,
                           ),
+                          fit: BoxFit.scaleDown,
                         ),
                       ),
                     ],

@@ -20,7 +20,6 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
     super.initState();
     Timer(const Duration(seconds: 2), () {
       if (ref.read(appStateProvider).isFirstOpen) {
-        requestPermission();
         GoRouter.of(context).go('/theme');
       } else {
         GoRouter.of(context).go('/main');
