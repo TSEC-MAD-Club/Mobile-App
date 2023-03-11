@@ -47,12 +47,12 @@ class StorageUtil {
   }
 
   Future<File> _getFile(String name) async {
-    Directory tempDir = await getTemporaryDirectory();
+    Directory tempDir = await getTemporaryDirectory(); 
     String path = tempDir.path;
     // final path = await getExternalStorageDirectories(
     //   type: StorageDirectory.pictures,
     // );
-    return File("${path!}/$name");
+    return File("$path/$name");
   }
 }
 

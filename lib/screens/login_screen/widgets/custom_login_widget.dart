@@ -5,8 +5,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tsec_app/models/notification_model/notification_model.dart';
 import 'package:tsec_app/models/student_model/student_model.dart';
+import 'package:tsec_app/provider/app_state_provider.dart';
 import 'package:tsec_app/provider/auth_provider.dart';
 import 'package:tsec_app/screens/login_screen/widgets/custom_dialog_box.dart';
+import 'package:tsec_app/services/auth_service.dart';
 
 import '../../../provider/notification_provider.dart';
 import '../../../utils/notification_type.dart';
@@ -153,16 +155,21 @@ class _LoginWidgetState extends ConsumerState<LoginWidget> {
                     if (userCredential == null) {
                       return;
                     }
+                    final user = ref.watch(authServiceProvider).user; 
                     StudentModel? studentModel = await ref
                         .watch(authProvider.notifier)
                         .fetchStudentDetails(
-                            _emailTextEditingController.text.trim(), context);
+                           user, context);
                     ref
                         .watch(studentModelProvider.notifier)
                         .update((state) => studentModel);
-                    showDialog(
-                        context: context,
-                        builder: ((context) => const ChangePasswordDialog()));
+                    if (ref.read(appStateProvider).isFirstOpen) {
+                      showDialog(
+                          context: context,
+                          builder: ((context) => const ChangePasswordDialog()));
+                    } else {
+                      GoRouter.of(context).go('/main'); 
+                    }
                     _setupFCMNotifications();
                   },
                   child: const Icon(Icons.arrow_forward),
