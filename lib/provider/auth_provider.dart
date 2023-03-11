@@ -29,8 +29,8 @@ class AuthProvider extends StateNotifier<bool> {
   }
 
   Future<StudentModel?> fetchStudentDetails(
-      String email, BuildContext context) async {
-    return await _authService.fetchStudentDetails(email, context);
+      User? user, BuildContext context) async {
+    return await _authService.fetchStudentDetails(user, context);
   }
 
   void changePassword(String password, BuildContext context) {
