@@ -34,6 +34,7 @@ firebase/
 # Web related
 lib/generated_plugin_registrant.dart
 
+
 # Symbolication related
 app.*.symbols
 
@@ -53,3 +54,5 @@ lib/firebase_options.dart
 
 #google-service
 /android/app/google-services.json
+ios/Runner/GoogleService-Info.plist
+ios/firebase_app_id_file.json

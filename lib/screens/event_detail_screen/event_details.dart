@@ -23,7 +23,8 @@ class _EventDetailState extends ConsumerState<EventDetail> {
     var url = widget.eventModel.eventRegistrationUrl;
 
     if (await canLaunchUrlString(url)) {
-      await launchUrlString(url);
+      await launchUrlString(url.toString(),
+          mode: LaunchMode.externalApplication);
     } else
       throw "Could not launch url";
   }
@@ -83,7 +84,10 @@ class _EventDetailState extends ConsumerState<EventDetail> {
                           Expanded(
                             child: Container(),
                           ),
-                          data == null
+                          data == null &&
+                                      widget.eventModel.eventRegistrationUrl ==
+                                          "" ||
+                                  widget.eventModel.eventRegistrationUrl.isEmpty
                               ? const SizedBox()
                               : ElevatedButton(
                                   onPressed: () {
