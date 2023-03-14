@@ -22,9 +22,11 @@
      
    <application
         android:label="Tsec App"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+        android:requestLegacyExternalStorage="true"
+      >
         <activity
-           android:requestLegacyExternalStorage="true"
+           
             android:name=".MainActivity"
             android:launchMode="singleTop"
             android:exported="true"

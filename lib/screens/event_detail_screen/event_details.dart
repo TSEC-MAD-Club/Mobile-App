@@ -83,7 +83,10 @@ class _EventDetailState extends ConsumerState<EventDetail> {
                           Expanded(
                             child: Container(),
                           ),
-                          data == null
+                          (data == null || 
+                            widget.eventModel.eventRegistrationUrl.isEmpty || 
+                            widget.eventModel.eventRegistrationUrl == ""
+                            )
                               ? const SizedBox()
                               : ElevatedButton(
                                   onPressed: () {

@@ -15,7 +15,7 @@ String getFacultyImagebyName(String facultyName) {
     case "Arti Deshpande":
       return "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fcomps%2Farchanapatankar.jpg?alt=media&token=e365c86b-14c8-4c05-bb13-4d4ec097ee23";
 
-    case "Darakshan Khan":
+    case "Darakhshan Khan":
       return "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fcomps%2Fdarakhshankhan.jpg?alt=media&token=18e920bc-a67c-4208-b838-45d9a7845a85";
 
     case "Jayant Gadge":
