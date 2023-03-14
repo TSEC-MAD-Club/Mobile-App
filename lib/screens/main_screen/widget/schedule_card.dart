@@ -117,6 +117,8 @@ class ScheduleCard extends StatelessWidget {
                   children: [
                     Text(
                       lectureName,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
                       style: TextStyle(
                         color: _theme.textTheme.headline1!.color,
                         fontWeight: FontWeight.w400,

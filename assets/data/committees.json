@@ -20,10 +20,9 @@
         "image": "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/committees%2Ftsec_code_cell.png?alt=media&token=b3c4df91-1b74-4957-bd8b-e1762406b036"
     },
     {
-        "description" : "TSEC CodeTantra is a technical committee of the Artificial Intelligence and Data Science Department of Thadomal Shahani Engineering College. Our vision is to inculcate programming skills in the minds of students with the help of workshops, hackathons and other competitive events.", 
-        "name" : "Tsec CodeTantra", 
-        "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/committees%2FTSEC%20Codetantra.jpg?alt=media&token=bb72197b-a698-45de-9104-8d269d666a23"
-
+        "description": "TSEC CodeTantra is a technical committee of the Artificial Intelligence and Data Science Department of Thadomal Shahani Engineering College. Our vision is to inculcate programming skills in the minds of students with the help of workshops, hackathons and other competitive events.",
+        "name": "Tsec CodeTantra",
+        "image": "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/committees%2FTSEC%20Codetantra.jpg?alt=media&token=bb72197b-a698-45de-9104-8d269d666a23"
     },
     {
         "description": "TSEC CodeStorm serves as a Campus Chapter of CodeChef and provides a proficient platform for coding and software development. The committee collocate various events to monitor applicability of existing standards, codes and best practices. It offers technical expertise to other strategic initiatives. The goal is to expand and surge opportunities for aspiring coders through our events and workshops. A Hackathon will the major event organised by us. It is a gathering where programmers collaboratively code in an extreme manner over a duration of time. The committee prompts coding interests by updating people with new technologies and their corporate applications based on trending technical platforms and frameworks every week. The committee organises various workshops and coding competitions to make students take a step ahead towards a glowing career.",
@@ -34,6 +33,11 @@
         "description": "CSI-TSEC is the student branch which comes under the CSI – Mumbai chapter and today it is one of the most vibrant amongst all the student branches. The Branch Counselor, Dr.Archana Patankar has helped this society progress at each step. Every year, CSI – TSEC conducts student activities including workshops, seminars, conferences, technical competitions, training programs and industrial visits which keeping the students involved in extra – curricular activities along with their academic curriculum and giving them a platform to show case their talent and develop their skills. In 2011, its annual festival 'RUBIX', had participants from many countries for the coding event 'Codezilla' making it the first event in TSEC to go global.",
         "name": "CSI-TSEC",
         "image": "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/committees%2Fcsi-tsec.jpg?alt=media&token=b0897ca6-b54c-4b26-81c1-71f3105de53d"
+    },
+    {
+        "description": "Google Developer Student Clubs TSEC is a community groups for students interested in Google developer technologies. Students from all undergraduate programs with an interest in growing as a developer are welcome. By joining GDSC TSEC, students grow their knowledge in a peer-to-peer learning environment and build solutions for local businesses and their community.",
+        "name": "GDSC TSEC",
+        "image": "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/committees%2FGdsc%20tsec.png?alt=media&token=fa302825-cfa7-400d-b927-1ad5a0e07982"
     },
     {
         "description": "Our aim is to kindle the young minds of our generation with the message of entrepreneurship.  Join us in this memorable journey and get ready to witness a year full of exciting events and enthralling endeavours. Our mission is to provide a pathway to the students in developing the entrepreneurs within them and also to bridge the gap between the students and Industry.",
@@ -70,5 +74,4 @@
         "name": "IIChE-TSEC",
         "image": "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/committees%2Flogo-light.png?alt=media&token=89101db1-46fd-4650-8a04-477e570a8824"
     }
-    
 ]
