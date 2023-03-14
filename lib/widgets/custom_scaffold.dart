@@ -151,7 +151,7 @@ class _CustomScaffoldState extends ConsumerState<CustomScaffold>
                   title: "Departments",
                 ),
                 Link(
-                  uri: Uri.parse("mailto:krishnadave671@gmail.com"),
+                  uri: Uri.parse("mailto:devsclubtsec@gmail.com"),
                   builder: (context, followLink) => DrawerListItem(
                     onTap: () => followLink?.call(),
                     icon: Image.asset(
@@ -169,6 +169,8 @@ class _CustomScaffoldState extends ConsumerState<CustomScaffold>
                       ref
                           .read(studentModelProvider.notifier)
                           .update((state) => null);
+                      _messaging
+                          .unsubscribeFromTopic(NotificationType.notification);
                       _messaging.unsubscribeFromTopic(
                           NotificationType.yearBranchDivBatchTopic);
                       _messaging.unsubscribeFromTopic(
