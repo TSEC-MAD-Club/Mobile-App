@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tsec_app/models/event_model/event_model.dart';
 import 'package:tsec_app/models/student_model/student_model.dart';
@@ -84,10 +85,11 @@ class _EventDetailState extends ConsumerState<EventDetail> {
                           Expanded(
                             child: Container(),
                           ),
-                          data == null &&
+                          (data == null ||
+                                  (widget.eventModel.eventRegistrationUrl
+                                          .isEmpty ||
                                       widget.eventModel.eventRegistrationUrl ==
-                                          "" ||
-                                  widget.eventModel.eventRegistrationUrl.isEmpty
+                                          ""))
                               ? const SizedBox()
                               : ElevatedButton(
                                   onPressed: () {
@@ -178,9 +180,18 @@ class _EventDetailState extends ConsumerState<EventDetail> {
                         top: 10,
                         right: 20,
                       ),
-                      child: Text(
-                        widget.eventModel.eventDescription,
+                      child: Linkify(
+                        onOpen: (link) async {
+                          if (await canLaunchUrlString(link.url)) {
+                            await launchUrlString(link.url,
+                                mode: LaunchMode.externalApplication);
+                          } else {
+                            throw 'Could not launch $link';
+                          }
+                        },
+                        text: widget.eventModel.eventDescription,
                         style: Theme.of(context).textTheme.subtitle2,
+                        linkStyle: const TextStyle(color: Colors.blue),
                       ),
                     ),
                     Padding(

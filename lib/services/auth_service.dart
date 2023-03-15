@@ -53,9 +53,8 @@ class AuthService {
       final studentSnap =
           await firebaseFirestore.collection("Students ").doc(user!.uid).get();
 
-      final studentDoc = studentSnap.data(); 
+      final studentDoc = studentSnap.data();
       studentModel = StudentModel.fromJson(studentDoc!);
-      
     } on FirebaseException catch (e) {
       showSnackBar(
           context, e.stackTrace.toString() + " " + e.message.toString());

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:open_file/open_file.dart';
+import 'package:tsec_app/utils/custom_snackbar.dart';
+import 'package:tsec_app/utils/launch_url.dart';
 
 import '../../../models/notification_model/notification_model.dart';
 import '../../../utils/init_get_it.dart';
@@ -88,7 +90,9 @@ class _DownloadButtonState extends State<_DownloadButton> {
       child: TextButton(
         style: ElevatedButton.styleFrom(
             foregroundColor: Colors.white, backgroundColor: Colors.transparent),
-        onPressed: _storageResult == null ? null : _onButtonClick,
+        onPressed: () {
+          _onButtonClick(widget.url);
+        },
         child: _storageResult == null || _storageResult!.isDownloadInProgress
             ? SizedBox(
                 height: 24,
@@ -138,9 +142,11 @@ class _DownloadButtonState extends State<_DownloadButton> {
     );
   }
 
-  void _onButtonClick() {
+  void _onButtonClick(String url) {
+    showSnackBar(context, "Downloading Syllabus ");
     if (_storageResult!.path != null) {
       OpenFile.open(_storageResult!.path!, type: _storageResult!.type);
+
       return;
     }
     _storageResult = _storageResult!.updateDownloadStatus(status: true);
@@ -157,5 +163,10 @@ class _DownloadButtonState extends State<_DownloadButton> {
         });
       },
     );
+    if (_storageResult!.path != null) {
+      OpenFile.open(_storageResult!.path!, type: _storageResult!.type);
+      return;
+    }
+    launchUrl(url, context);
   }
 }
