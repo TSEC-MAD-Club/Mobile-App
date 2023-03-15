@@ -1,8 +1,11 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:open_file/open_file.dart';
+import 'package:tsec_app/utils/custom_snackbar.dart';
+import 'package:tsec_app/utils/launch_url.dart';
 
 import '../../../utils/department_enum.dart';
 import '../../../utils/init_get_it.dart';
@@ -114,7 +117,9 @@ class _CurriculumSectionState extends State<CurriculumSection> {
                               backgroundColor:
                                   Theme.of(context).colorScheme.secondary,
                             ),
-                            onPressed: _onButtonClick,
+                            onPressed: () {
+                              _onButtonClick(url);
+                            },
                             child: _storageResult == null ||
                                     _storageResult!.isDownloadInProgress
                                 ? SizedBox(
@@ -144,7 +149,8 @@ class _CurriculumSectionState extends State<CurriculumSection> {
     );
   }
 
-  void _onButtonClick() {
+  void _onButtonClick(String url) async {
+    showSnackBar(context, "Downloading Syllabus ");
     if (_storageResult!.path != null) {
       OpenFile.open(_storageResult!.path!, type: _storageResult!.type);
       return;
@@ -163,6 +169,11 @@ class _CurriculumSectionState extends State<CurriculumSection> {
         });
       },
     );
+    if (_storageResult!.path != null) {
+      OpenFile.open(_storageResult!.path!, type: _storageResult!.type);
+      return;
+    }
+    await launchUrl(url, context);
   }
 
   Widget _buildSubjects(String name) {
