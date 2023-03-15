@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutterfire_ui/auth.dart';
 import 'package:open_file/open_file.dart';
 import 'package:tsec_app/utils/custom_snackbar.dart';
 import 'package:tsec_app/utils/launch_url.dart';
