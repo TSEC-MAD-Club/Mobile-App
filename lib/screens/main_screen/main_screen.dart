@@ -9,9 +9,11 @@ import 'package:tsec_app/screens/departmentlist_screen/department_list.dart';
 import 'package:tsec_app/screens/main_screen/widget/card_display.dart';
 import 'package:tsec_app/utils/notification_type.dart';
 import 'package:tsec_app/utils/timetable_util.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 import '../../models/event_model/event_model.dart';
 import '../../provider/event_provider.dart';
 import '../../utils/image_assets.dart';
+
 import '../../utils/launch_url.dart';
 import '../../utils/themes.dart';
 import '../../widgets/custom_scaffold.dart';
@@ -105,6 +107,15 @@ class MainScreenAppBar extends ConsumerStatefulWidget {
 class _MainScreenAppBarState extends ConsumerState<MainScreenAppBar> {
   List<EventModel> eventList = [];
 
+  void launchUrlcollege() async {
+    var url = "https://tsec.edu/";
+
+    if (await canLaunchUrlString(url)) {
+      await launchUrlString(url.toString());
+    } else
+      throw "Could not launch url";
+  }
+
   void fetchEventDetails() {
     ref.watch(eventListProvider).when(
         data: ((data) {
@@ -136,15 +147,19 @@ class _MainScreenAppBarState extends ConsumerState<MainScreenAppBar> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Flexible(
-                flex: 2,
-                child: Text(
-                  "Thadomal Shahani Engineering College",
-                  style: Theme.of(context).textTheme.headline3,
+                flex: 4,
+                child: GestureDetector(
+                  onTap: () {
+                    launchUrlcollege();
+                  },
+                  child: Text("Thadomal Shahani Engineering College",
+                      style: Theme.of(context).textTheme.headline3),
                 ),
               ),
               data == null
                   ? const SizedBox()
                   : Flexible(
+                      flex: 1,
                       child: GestureDetector(
                         onTap: () =>
                             GoRouter.of(context).push("/notifications"),
@@ -160,7 +175,8 @@ class _MainScreenAppBarState extends ConsumerState<MainScreenAppBar> {
                           ),
                         ),
                       ),
-                    )
+                    ),
+            
             ],
           ),
           const SizedBox(height: 10),
