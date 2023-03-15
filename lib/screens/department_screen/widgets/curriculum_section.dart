@@ -159,7 +159,8 @@ class _CurriculumSectionState extends State<CurriculumSection> {
 
   void launchUrlsyllabus(String url) async {
     if (await canLaunchUrlString(url)) {
-      await launchUrlString(url.toString(),mode: LaunchMode.externalApplication);
+      await launchUrlString(url.toString(),
+          mode: LaunchMode.externalApplication);
     } else
       throw "Could not launch url";
   }

@@ -144,7 +144,8 @@ class _DownloadButtonState extends State<_DownloadButton> {
 
   void launchUrlNotification(String url) async {
     if (await canLaunchUrlString(url)) {
-      await launchUrlString(url.toString(),mode: LaunchMode.externalApplication);
+      await launchUrlString(url.toString(),
+          mode: LaunchMode.externalApplication);
     } else
       throw "Could not launch url";
   }

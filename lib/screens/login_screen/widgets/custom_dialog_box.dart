@@ -37,11 +37,7 @@ class _ChangePasswordDialogState extends ConsumerState<ChangePasswordDialog> {
               SizedBox(
                 height: MediaQuery.of(context).size.height * .1,
                 child: Padding(
-                  padding: const EdgeInsets.only(
-                    top: 15,
-                    left: 15,
-                    right: 15
-                  ),
+                  padding: const EdgeInsets.only(top: 15, left: 15, right: 15),
                   child: FittedBox(
                     fit: BoxFit.scaleDown,
                     child: Text(
