@@ -52,10 +52,10 @@ class _TPCScreenState extends State<TPCScreen> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(
-                        top: 22.0,
+                        top: 15.0,
                         left: 15.0,
                         right: 15.0,
-                        bottom: 20,
+                        bottom: 15,
                       ),
                       child: CachedNetworkImage(
                         imageUrl: _companys[i].image,
@@ -70,6 +70,7 @@ class _TPCScreenState extends State<TPCScreen> {
                         top: 2.0,
                         left: 15.0,
                         right: 15.0,
+                        bottom: 10
                       ),
                       child: SizedBox(
                         width: double.infinity,
@@ -77,6 +78,7 @@ class _TPCScreenState extends State<TPCScreen> {
                           child: Text(
                             _companys[i].name,
                             textAlign: TextAlign.center,
+                            style: TextStyle(fontSize: 10),
                           ),
                           fit: BoxFit.scaleDown,
                         ),

@@ -39,7 +39,8 @@ class _ChangePasswordDialogState extends ConsumerState<ChangePasswordDialog> {
                 child: Padding(
                   padding: const EdgeInsets.only(
                     top: 15,
-                    left: 20,
+                    left: 15,
+                    right: 15
                   ),
                   child: FittedBox(
                     fit: BoxFit.scaleDown,
@@ -154,12 +155,15 @@ class _ChangePasswordDialogState extends ConsumerState<ChangePasswordDialog> {
                           GoRouter.of(context).go('/main');
                         }
                       },
-                      child: const Text(
-                        "Submit",
-                        style: TextStyle(
-                          fontSize: 16,
-                          letterSpacing: 2.0,
-                          fontWeight: FontWeight.w400,
+                      child: const FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text(
+                          "Submit",
+                          style: TextStyle(
+                            fontSize: 16,
+                            letterSpacing: 2.0,
+                            fontWeight: FontWeight.w400,
+                          ),
                         ),
                       ),
                     ),
