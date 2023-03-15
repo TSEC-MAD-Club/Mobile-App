@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:open_file/open_file.dart';
 import 'package:tsec_app/utils/custom_snackbar.dart';
-import 'package:tsec_app/utils/launch_url.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 import '../../../models/notification_model/notification_model.dart';
 import '../../../utils/init_get_it.dart';
@@ -142,6 +142,13 @@ class _DownloadButtonState extends State<_DownloadButton> {
     );
   }
 
+  void launchUrlNotification(String url) async {
+    if (await canLaunchUrlString(url)) {
+      await launchUrlString(url.toString());
+    } else
+      throw "Could not launch url";
+  }
+
   void _onButtonClick(String url) {
     showSnackBar(context, "Downloading Syllabus ");
     if (_storageResult!.path != null) {
@@ -167,6 +174,6 @@ class _DownloadButtonState extends State<_DownloadButton> {
       OpenFile.open(_storageResult!.path!, type: _storageResult!.type);
       return;
     }
-    launchUrl(url, context);
+    launchUrlNotification(url);
   }
 }
