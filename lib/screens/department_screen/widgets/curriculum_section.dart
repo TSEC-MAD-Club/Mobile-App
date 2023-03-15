@@ -7,8 +7,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:open_file/open_file.dart';
 import 'package:tsec_app/utils/custom_snackbar.dart';
-import 'package:tsec_app/utils/launch_url.dart';
-
+import 'package:url_launcher/url_launcher_string.dart';
 import '../../../utils/department_enum.dart';
 import '../../../utils/init_get_it.dart';
 import '../../../utils/storage_util.dart';
@@ -158,6 +157,13 @@ class _CurriculumSectionState extends State<CurriculumSection> {
     );
   }
 
+  void launchUrlsyllabus(String url) async {
+    if (await canLaunchUrlString(url)) {
+      await launchUrlString(url.toString());
+    } else
+      throw "Could not launch url";
+  }
+
   void _onButtonClick(String url) async {
     showSnackBar(context, "Downloading Syllabus ");
     if (_storageResult!.path != null) {
@@ -182,7 +188,7 @@ class _CurriculumSectionState extends State<CurriculumSection> {
       OpenFile.open(_storageResult!.path!, type: _storageResult!.type);
       return;
     }
-    await launchUrl(url, context);
+    launchUrlsyllabus(url);
   }
 
   Widget _buildSubjects(String name) {
