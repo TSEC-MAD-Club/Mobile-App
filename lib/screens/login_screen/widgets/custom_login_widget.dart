@@ -31,8 +31,8 @@ class _LoginWidgetState extends ConsumerState<LoginWidget> {
 
   @override
   void dispose() {
-    _emailTextEditingController.dispose(); 
-    _passwordTextEditingController.dispose(); 
+    _emailTextEditingController.dispose();
+    _passwordTextEditingController.dispose();
     super.dispose();
   }
 

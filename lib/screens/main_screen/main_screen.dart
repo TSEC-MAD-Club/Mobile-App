@@ -176,7 +176,6 @@ class _MainScreenAppBarState extends ConsumerState<MainScreenAppBar> {
                         ),
                       ),
                     ),
-            
             ],
           ),
           const SizedBox(height: 10),

@@ -191,8 +191,7 @@ class _EventDetailState extends ConsumerState<EventDetail> {
                         },
                         text: widget.eventModel.eventDescription,
                         style: Theme.of(context).textTheme.subtitle2,
-                        linkStyle: 
-                        const TextStyle(color: Colors.blue),
+                        linkStyle: const TextStyle(color: Colors.blue),
                       ),
                     ),
                     Padding(

@@ -92,7 +92,7 @@ class _DownloadButtonState extends State<_DownloadButton> {
         style: ElevatedButton.styleFrom(
             foregroundColor: Colors.white, backgroundColor: Colors.transparent),
         onPressed: () {
-          _onButtonClick(widget.url); 
+          _onButtonClick(widget.url);
         },
         child: _storageResult == null || _storageResult!.isDownloadInProgress
             ? SizedBox(
