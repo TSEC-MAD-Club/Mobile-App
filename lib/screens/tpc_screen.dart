@@ -43,46 +43,46 @@ class _TPCScreenState extends State<TPCScreen> {
           ),
           child: SizedBox(
             child: Card(
+              color: Theme.of(context).colorScheme.secondary,
               semanticContainer: true,
               clipBehavior: Clip.antiAliasWithSaveLayer,
               child: Padding(
                 padding: const EdgeInsets.all(10.0),
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          top: 22.0,
-                          left: 15.0,
-                          right: 15.0,
-                          bottom: 20,
-                        ),
-                        child: CachedNetworkImage(
-                          imageUrl: _companys[i].image,
-                          height: 40,
-                          width: 140,
-                          fit: BoxFit.scaleDown,
-                        ),
+                child: Wrap(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        top: 22.0,
+                        left: 15.0,
+                        right: 15.0,
+                        bottom: 20,
                       ),
-                      Divider(color: Colors.blueAccent.withOpacity(0.7)),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          top: 2.0,
-                          left: 15.0,
-                          right: 15.0,
-                        ),
+                      child: CachedNetworkImage(
+                        imageUrl: _companys[i].image,
+                        height: 40,
+                        width: 140,
+                        fit: BoxFit.scaleDown,
+                      ),
+                    ),
+                    Divider(color: Colors.blueAccent.withOpacity(0.7)),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        top: 2.0,
+                        left: 15.0,
+                        right: 15.0,
+                      ),
+                      child: SizedBox(
+                        width: double.infinity,
                         child: FittedBox(
                           child: Text(
                             _companys[i].name,
-                            style: TextStyle(
-                              color: Colors.black.withOpacity(0.7),
-                            ),
                             textAlign: TextAlign.center,
                           ),
+                          fit: BoxFit.scaleDown,
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
               shape: RoundedRectangleBorder(

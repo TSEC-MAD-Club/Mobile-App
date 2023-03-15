@@ -46,22 +46,15 @@ class AuthService {
   }
 
   Future<StudentModel?> fetchStudentDetails(
-      String email, BuildContext context) async {
+      User? user, BuildContext context) async {
     StudentModel? studentModel;
 
     try {
-      final studentSnap = await firebaseFirestore
-          .collection("Students ")
-          .where("email", isEqualTo: email)
-          .get();
+      final studentSnap =
+          await firebaseFirestore.collection("Students ").doc(user!.uid).get();
 
-      final studentDoc = studentSnap.docs.map((e) {
-        return e.data();
-      });
-
-      for (final element in studentDoc) {
-        studentModel = StudentModel.fromJson(element);
-      }
+      final studentDoc = studentSnap.data();
+      studentModel = StudentModel.fromJson(studentDoc!);
     } on FirebaseException catch (e) {
       showSnackBar(
           context, e.stackTrace.toString() + " " + e.message.toString());

@@ -52,7 +52,7 @@ class StorageUtil {
     // final path = await getExternalStorageDirectories(
     //   type: StorageDirectory.pictures,
     // );
-    return File("${path!}/$name");
+    return File("$path/$name");
   }
 }
 

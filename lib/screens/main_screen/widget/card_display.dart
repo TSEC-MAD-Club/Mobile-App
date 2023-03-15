@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tsec_app/models/student_model/student_model.dart';
 import 'package:tsec_app/provider/auth_provider.dart';
 import 'package:tsec_app/screens/main_screen/widget/schedule_card.dart';
+
 import 'package:tsec_app/utils/faculty_details.dart';
 import '../../../models/timetable_model/timetable_model.dart';
 import '../../../provider/timetable_provider.dart';
@@ -39,6 +40,7 @@ class _CardDisplayState extends ConsumerState<CardDisplay> {
   Widget build(BuildContext context) {
     final data = ref.watch(weekTimetableProvider);
     String day = ref.watch(dayProvider);
+
     return data.when(
         data: ((data) {
           if (data[day] == null) {
@@ -47,35 +49,41 @@ class _CardDisplayState extends ConsumerState<CardDisplay> {
             );
           } else {
             List<TimetableModel> timeTableDay = getTimetablebyDay(data, day);
-            return SliverPadding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 10.0,
-                  vertical: 2.0,
-                ),
-                sliver: SliverList(
-                    delegate: SliverChildBuilderDelegate(
-                  childCount: timeTableDay.length,
-                  (context, index) {
-                    bool labs = checkLabs(timeTableDay[index].lectureName);
-                    final color = labs ? colorList[1] : colorList[0];
-                    final opacity = labs ? opacityList[1] : opacityList[0];
-                    final lectureFacultyname =
-                        timeTableDay[index].lectureFacultyName;
-                    return ScheduleCard(
-                      color,
-                      opacity,
-                      lectureEndTime: timeTableDay[index].lectureEndTime,
-                      lectureName: timeTableDay[index].lectureName,
-                      lectureStartTime: timeTableDay[index].lectureStartTime,
-                      facultyImageurl:
-                          getFacultyImagebyName(lectureFacultyname),
-                      facultyName: !checkTimetable(lectureFacultyname)
-                          ? "---------"
-                          : lectureFacultyname,
-                      lectureBatch: timeTableDay[index].lectureBatch,
-                    );
-                  },
-                )));
+            if (timeTableDay.isEmpty) {
+              return const SliverToBoxAdapter(
+                child: Center(child: Text("No lectures Today ! ")),
+              );
+            } else {
+              return SliverPadding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10.0,
+                    vertical: 2.0,
+                  ),
+                  sliver: SliverList(
+                      delegate: SliverChildBuilderDelegate(
+                    childCount: timeTableDay.length,
+                    (context, index) {
+                      bool labs = checkLabs(timeTableDay[index].lectureName);
+                      final color = labs ? colorList[1] : colorList[0];
+                      final opacity = labs ? opacityList[1] : opacityList[0];
+                      final lectureFacultyname =
+                          timeTableDay[index].lectureFacultyName;
+                      return ScheduleCard(
+                        color,
+                        opacity,
+                        lectureEndTime: timeTableDay[index].lectureEndTime,
+                        lectureName: timeTableDay[index].lectureName,
+                        lectureStartTime: timeTableDay[index].lectureStartTime,
+                        facultyImageurl:
+                            getFacultyImagebyName(lectureFacultyname),
+                        facultyName: !checkTimetable(lectureFacultyname)
+                            ? "---------"
+                            : lectureFacultyname,
+                        lectureBatch: timeTableDay[index].lectureBatch,
+                      );
+                    },
+                  )));
+            }
           }
         }),
         error: ((error, stackTrace) {
@@ -102,7 +110,8 @@ class _CardDisplayState extends ConsumerState<CardDisplay> {
   }
 
   bool checkLabs(String lectureName) {
-    if (lectureName.toLowerCase().endsWith('labs')) {
+    if (lectureName.toLowerCase().endsWith('labs') ||
+        lectureName.toLowerCase().endsWith('lab')) {
       return true;
     }
     return false;

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:open_file/open_file.dart';
+import 'package:tsec_app/utils/custom_snackbar.dart';
+import 'package:tsec_app/utils/launch_url.dart';
 
 import '../../../models/notification_model/notification_model.dart';
 import '../../../utils/init_get_it.dart';
@@ -23,6 +25,8 @@ class NotificationDialog extends StatelessWidget {
         children: [
           Text(
             notificationModel.title,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 1,
             style: const TextStyle(
               color: Colors.black,
               fontSize: 14,
@@ -86,7 +90,9 @@ class _DownloadButtonState extends State<_DownloadButton> {
       child: TextButton(
         style: ElevatedButton.styleFrom(
             foregroundColor: Colors.white, backgroundColor: Colors.transparent),
-        onPressed: _storageResult == null ? null : _onButtonClick,
+        onPressed: () {
+          _onButtonClick(widget.url);
+        },
         child: _storageResult == null || _storageResult!.isDownloadInProgress
             ? SizedBox(
                 height: 24,
@@ -95,40 +101,52 @@ class _DownloadButtonState extends State<_DownloadButton> {
                   value: _downloadPrecent <= 0 ? null : _downloadPrecent,
                 ),
               )
-            : Row(
-                children: <Widget>[
-                  _storageResult!.path != null
-                      ? const Icon(
-                          Icons.open_in_new,
-                          color: Colors.blue,
-                        )
-                      : const Icon(
-                          Icons.download,
-                          color: Colors.blue,
+            : SizedBox(
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  scrollDirection: Axis.horizontal,
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                      maxWidth: MediaQuery.of(context).size.width,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        _storageResult!.path != null
+                            ? const Icon(
+                                Icons.open_in_new,
+                                color: Colors.blue,
+                              )
+                            : const Icon(
+                                Icons.download,
+                                color: Colors.blue,
+                              ),
+                        const SizedBox(
+                          width: 15,
                         ),
-                  const SizedBox(
-                    width: 15,
+                        Text(
+                          _storageResult!.name,
+                          style: TextStyle(
+                              decoration: TextDecoration.underline,
+                              color: Colors.blue.shade400,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold),
+                          // textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
                   ),
-                  Text(
-                    _storageResult!.name,
-                    style: TextStyle(
-                        decoration: TextDecoration.underline,
-                        color: Colors.blue.shade400,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.center,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ],
+                ),
               ),
       ),
     );
   }
 
-  void _onButtonClick() {
+  void _onButtonClick(String url) {
+    showSnackBar(context, "Downloading Syllabus ");
     if (_storageResult!.path != null) {
       OpenFile.open(_storageResult!.path!, type: _storageResult!.type);
+
       return;
     }
     _storageResult = _storageResult!.updateDownloadStatus(status: true);
@@ -145,5 +163,10 @@ class _DownloadButtonState extends State<_DownloadButton> {
         });
       },
     );
+    if (_storageResult!.path != null) {
+      OpenFile.open(_storageResult!.path!, type: _storageResult!.type);
+      return;
+    }
+    launchUrl(url, context);
   }
 }

@@ -155,10 +155,11 @@ class _TSECAppState extends ConsumerState<TSECApp> {
   }
 
   getuserData(String email) async {
-    if (ref.watch(firebaseAuthProvider).currentUser?.uid != null) {
+    final user = ref.watch(firebaseAuthProvider).currentUser;
+    if (user?.uid != null) {
       StudentModel? studentModel = await ref
           .watch(authProvider.notifier)
-          .fetchStudentDetails(email, context);
+          .fetchStudentDetails(user, context);
       ref.watch(studentModelProvider.notifier).update((state) => studentModel);
     }
   }
