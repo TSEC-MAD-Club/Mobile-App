@@ -67,14 +67,19 @@ class _TPCScreenState extends State<TPCScreen> {
                     Divider(color: Colors.blueAccent.withOpacity(0.7)),
                     Padding(
                       padding: const EdgeInsets.only(
-                          top: 2.0, left: 15.0, right: 15.0, bottom: 10),
+                        top: 5.0,
+                        left: 15.0,
+                        right: 15.0,
+                      ),
                       child: SizedBox(
                         width: double.infinity,
                         child: FittedBox(
                           child: Text(
                             _companys[i].name,
                             textAlign: TextAlign.center,
-                            style: TextStyle(fontSize: 10),
+                            style: const TextStyle(
+                              fontSize: 16,
+                            ),
                           ),
                           fit: BoxFit.scaleDown,
                         ),
