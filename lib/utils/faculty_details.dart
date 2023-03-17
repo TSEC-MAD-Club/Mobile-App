@@ -9,20 +9,29 @@ String getFacultyImagebyName(String facultyName) {
     case "Anil Chhangani":
       return "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fcomps%2Fanilchhangani.jpg?alt=media&token=c1dcd2c0-cd00-4b00-aa9d-90481b179587";
 
+    case "Adil Shaikh":
+      return "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fcomps%2FMOHAMMED-ADIL-SHAIKH.png?alt=media&token=3c5cdb2b-c9ef-46e1-bed8-60c65f3a890a";
+
     case "Archana Patankar":
       return "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fcomps%2Farchanapatankar.jpg?alt=media&token=e365c86b-14c8-4c05-bb13-4d4ec097ee23";
 
     case "Arti Deshpande":
-      return "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fcomps%2Farchanapatankar.jpg?alt=media&token=e365c86b-14c8-4c05-bb13-4d4ec097ee23";
+      return "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fcomps%2Farti_deshpande.png?alt=media&token=c3a49563-1091-4d2b-8dfc-fbd0dd418277";
 
-    case "Darakshan Khan":
+    case "Darakhshan Khan":
       return "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fcomps%2Fdarakhshankhan.jpg?alt=media&token=18e920bc-a67c-4208-b838-45d9a7845a85";
+
+    case "Gauri Shukla":
+      return "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fcomps%2FGauri-shukla.png?alt=media&token=0d34b825-dd83-48c3-8315-e83a29fac87e";
 
     case "Jayant Gadge":
       return "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fcomps%2Fjayantgadge.jpg?alt=media&token=5ca4359f-219e-4f4d-8226-fa407c2510fd";
 
     case "Juhi Ganwani":
       return "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fcomps%2Fjuhiganwani.jpg?alt=media&token=595e3ec6-636a-4ad9-b03e-a393324f4d69";
+
+    case "Khalid Ansari":
+      return "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fcomps%2FKhalid.png?alt=media&token=9bdda8e3-76b0-402b-a6a4-5250ef98996a0";
 
     case "Manisha Dumbre":
       return "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fcomps%2Fmanishadumbre.jpg?alt=media&token=e2197a74-ebe0-4a10-9d70-73cad5842f58";
@@ -38,6 +47,9 @@ String getFacultyImagebyName(String facultyName) {
 
     case "Rupali Patil":
       return "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fcomps%2Frupalipatil.jpg?alt=media&token=9110c496-ac93-4ca6-8a23-05c4787a8fcd";
+
+    case "Rupali Sarode":
+      return "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fcomps%2Frupali_sarode.png?alt=media&token=3ab0f25b-8e9e-4070-b12d-f0c765fe8a37";
 
     case "Sakshi Surve":
       return "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fcomps%2Fsakshisurve.jpg?alt=media&token=1ff5facd-e8e1-4802-a854-a24794addabc";
@@ -99,7 +111,7 @@ String getFacultyImagebyName(String facultyName) {
     case "Gopal Pardesi":
       return "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fit%2Fgopalpardesi.jpg?alt=media&token=8aec2306-1469-4833-89c1-a99a9899bed3";
 
-    case "GT Thampi":
+    case "DR G.T. Thampi":
       return "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fit%2Fgtthampi.jpg?alt=media&token=fc5ad5ee-f532-40f6-81d7-e6a32c99ea41";
 
     case "Himani Deshpande":
@@ -251,6 +263,15 @@ String getFacultyImagebyName(String facultyName) {
 
     case "Poonam Soni":
       return "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fother%2Fmaths%2Fpoonamsoni.jpg?alt=media&token=3700ec8c-99cd-45a3-b78e-8746d082231a";
+
+    case "Nikita Raichada":
+      return "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Faids%2Fnikita.png?alt=media&token=acace646-03f7-45a9-b156-ac8cb7a4d57f";
+
+    case "Naveen Vaswani":
+      return "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Faids%2FNaveen-Vaswani.png?alt=media&token=e8a4026e-1dd6-4d68-9d73-3a1faa2fee72";
+      
+    case "Saloni Dhuru":
+      return "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Faids%2Fsaloni_dhuru.png?alt=media&token=fab9fd01-b68e-4f43-9f26-d17b4c802773";
 
     case "Sabatini Almeida":
       return "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fother%2Fmaths%2Fsabatinialmeida.jpg?alt=media&token=9b88cdd9-cfe6-4d12-9bf4-ef6d3d5af574";
