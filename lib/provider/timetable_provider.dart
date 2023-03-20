@@ -1,5 +1,4 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tsec_app/provider/auth_provider.dart';
 import 'package:tsec_app/services/timetable_service.dart';
 
 // controller
