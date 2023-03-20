@@ -7,8 +7,6 @@ import 'package:tsec_app/models/notification_model/notification_model.dart';
 import 'package:tsec_app/models/student_model/student_model.dart';
 import 'package:tsec_app/provider/auth_provider.dart';
 import 'package:tsec_app/screens/login_screen/widgets/custom_dialog_box.dart';
-import 'package:tsec_app/services/auth_service.dart';
-
 import '../../../provider/notification_provider.dart';
 import '../../../utils/notification_type.dart';
 import '../../../utils/themes.dart';
