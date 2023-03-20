@@ -2,7 +2,6 @@ String getCommitteeImageByName(String committeeName) {
   switch (committeeName) {
     case "TSEC Codestorm":
       return "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/committees%2FCodeStorm_logo.png?alt=media&token=5ce893a0-ecf4-4524-97c6-83bfa8f4d1d7";
-
     case "Dev's Club":
       return "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/committees%2FDevs_club%20logo.png?alt=media&token=4d73670f-c753-48ee-92b4-84a1b53a462c";
 
@@ -53,10 +52,10 @@ String getCommitteeImageByName(String committeeName) {
 
     case "TSEC Codetantra":
       return "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/committees%2FTSEC%20Codetantra.jpg?alt=media&token=bb72197b-a698-45de-9104-8d269d666a23";
-
     case "TSEC":
       return "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/committees%2FTSEC.jpg?alt=media&token=968be533-2e82-49fe-83c7-f2e3604f7dc7";
-
+    case "Electroverse" : 
+      return "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/committees%2FElectroverse.jpeg?alt=media&token=dd13b84e-aa25-4499-8837-546153772400"; 
     default:
       return "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/committees%2Fcommittee%20logo.png?alt=media&token=80e296d6-d900-4e9c-92f3-668d22d1a0bf";
   }

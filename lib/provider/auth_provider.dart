@@ -36,4 +36,8 @@ class AuthProvider extends StateNotifier<bool> {
   void changePassword(String password, BuildContext context) {
     _authService.updatePassword(password, context);
   }
+
+  void signout() {
+    _authService.signout(); 
+  }
 }

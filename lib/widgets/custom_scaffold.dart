@@ -164,7 +164,7 @@ class _CustomScaffoldState extends ConsumerState<CustomScaffold>
                 DrawerListItem(
                   onTap: () async {
                     final _messaging = FirebaseMessaging.instance;
-                    await ref.watch(firebaseAuthProvider).signOut();
+                    
                     if (data != null) {
                       ref
                           .read(studentModelProvider.notifier)

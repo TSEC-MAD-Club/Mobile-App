@@ -166,7 +166,8 @@ class _LoginWidgetState extends ConsumerState<LoginWidget> {
                     if (userCredential == null) {
                       return;
                     }
-                    final user = ref.watch(authServiceProvider).user;
+
+                    User? user = userCredential.user; 
                     StudentModel? studentModel = await ref
                         .watch(authProvider.notifier)
                         .fetchStudentDetails(user, context);
