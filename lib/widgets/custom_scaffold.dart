@@ -13,7 +13,6 @@ import 'package:tsec_app/utils/timetable_util.dart';
 import 'package:url_launcher/link.dart';
 import '../models/notification_model/notification_model.dart';
 import '../models/student_model/student_model.dart';
-import '../provider/firebase_provider.dart';
 import '../provider/notification_provider.dart';
 import '../provider/theme_provider.dart';
 import '../screens/notification_screen/widgets/notification_dialog.dart';
@@ -164,7 +163,7 @@ class _CustomScaffoldState extends ConsumerState<CustomScaffold>
                 DrawerListItem(
                   onTap: () async {
                     final _messaging = FirebaseMessaging.instance;
-                    await ref.watch(firebaseAuthProvider).signOut();
+                    
                     if (data != null) {
                       ref
                           .read(studentModelProvider.notifier)

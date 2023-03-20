@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -154,7 +153,7 @@ class _TSECAppState extends ConsumerState<TSECApp> {
     );
   }
 
-  getuserData(String email) async {
+  getuserData() async {
     final user = ref.watch(firebaseAuthProvider).currentUser;
     if (user?.uid != null) {
       StudentModel? studentModel = await ref
@@ -167,7 +166,7 @@ class _TSECAppState extends ConsumerState<TSECApp> {
   @override
   Widget build(BuildContext context) {
     if (ref.watch(firebaseAuthProvider).currentUser?.uid != null) {
-      getuserData(FirebaseAuth.instance.currentUser!.email.toString());
+      getuserData();
     }
 
     final _themeMode = ref.watch(themeProvider);

@@ -43,7 +43,7 @@ class _CardDisplayState extends ConsumerState<CardDisplay> {
 
     return data.when(
         data: ((data) {
-          if (data[day] == null) {
+          if (data![day] == null) {
             return const SliverToBoxAdapter(
               child: Center(child: Text("No lectures Today ! ")),
             );
@@ -87,8 +87,8 @@ class _CardDisplayState extends ConsumerState<CardDisplay> {
           }
         }),
         error: ((error, stackTrace) {
-          return const SliverToBoxAdapter(
-            child: Center(child: Text('Error Contact us and report problem')),
+          return SliverToBoxAdapter(
+            child: Center(child: Text(error.toString())),
           );
         }),
         loading: () => const SliverToBoxAdapter(

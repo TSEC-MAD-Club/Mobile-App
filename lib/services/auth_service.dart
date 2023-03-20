@@ -35,14 +35,9 @@ class AuthService {
     }
   }
 
-  void updatePassword(String password, BuildContext context) {
-    userCurrentState.listen((user) async {
-      try {
-        await user?.updatePassword(password);
-      } catch (e) {
-        showSnackBar(context, e.toString());
-      }
-    });
+  void updatePassword(String password, BuildContext context) async {
+    User user = firebaseAuth.currentUser!;
+    await user.updatePassword(password);
   }
 
   Future<StudentModel?> fetchStudentDetails(
@@ -61,5 +56,9 @@ class AuthService {
     }
 
     return studentModel;
+  }
+
+  void signout() async {
+    await firebaseAuth.signOut(); 
   }
 }
