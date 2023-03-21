@@ -56,6 +56,8 @@ String getCommitteeImageByName(String committeeName) {
       return "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/committees%2FTSEC.jpg?alt=media&token=968be533-2e82-49fe-83c7-f2e3604f7dc7";
     case "Electroverse" : 
       return "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/committees%2FElectroverse.jpeg?alt=media&token=dd13b84e-aa25-4499-8837-546153772400"; 
+    case "IIC" : 
+      return "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/committees%2FIIC-LOGO.png?alt=media&token=c7e76b45-e2f8-47e1-b725-9b954976d46f"; 
     default:
       return "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/committees%2Fcommittee%20logo.png?alt=media&token=80e296d6-d900-4e9c-92f3-668d22d1a0bf";
   }
