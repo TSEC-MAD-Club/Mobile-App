@@ -73,5 +73,11 @@
         "description": "IIChE-TSEC is the chemical technical society and conducts seminars, research paper presentation, and industrial visits with a vision of integrating textbook learning with industrial knowledge. Chemical Students can become a member of the society from second year. The society with the aid of Mrs.Usha Nambiar conducts its Annual Technical festival - Chemergence which draws participants from whole of India.",
         "name": "IIChE-TSEC",
         "image": "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/committees%2Flogo-light.png?alt=media&token=89101db1-46fd-4650-8a04-477e570a8824"
+    },
+    {
+        "description": "The IIC promotes innovation, IPR, and entrepreneurship in educational institutions. We organize innovation-related activities, reward innovations, and provide mentorship to student innovators. Our workshops and interactions with entrepreneurs provide valuable knowledge and skills. We work with the Ministry of Education's Innovation Cell to create an innovation culture. Our goal is to empower the next generation of creators and change-makers.",
+        "name": "IIC",
+        "image": "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/committees%2FIIC-LOGO.png?alt=media&token=c7e76b45-e2f8-47e1-b725-9b954976d46f"
     }
+    
 ]
