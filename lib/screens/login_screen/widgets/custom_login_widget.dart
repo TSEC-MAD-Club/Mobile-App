@@ -165,7 +165,7 @@ class _LoginWidgetState extends ConsumerState<LoginWidget> {
                       return;
                     }
 
-                    User? user = userCredential.user; 
+                    User? user = userCredential.user;
                     StudentModel? studentModel = await ref
                         .watch(authProvider.notifier)
                         .fetchStudentDetails(user, context);

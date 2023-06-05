@@ -38,6 +38,6 @@ class AuthProvider extends StateNotifier<bool> {
   }
 
   void signout() {
-    _authService.signout(); 
+    _authService.signout();
   }
 }

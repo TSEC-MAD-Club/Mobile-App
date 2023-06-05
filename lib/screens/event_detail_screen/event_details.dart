@@ -36,8 +36,8 @@ class _EventDetailState extends ConsumerState<EventDetail> {
     double _height = MediaQuery.of(context).size.height;
     double _width = MediaQuery.of(context).size.width;
     return Scaffold(
-      body:
-      SafeArea(child: Stack(
+        body: SafeArea(
+      child: Stack(
         alignment: Alignment.topCenter,
         children: [
           CachedNetworkImage(
@@ -54,7 +54,6 @@ class _EventDetailState extends ConsumerState<EventDetail> {
             alignment: Alignment.center,
             height: (_height > _width) ? _height * 0.3 : _height * 0.5,
           ),
-          
           Padding(
             padding: EdgeInsets.only(
               top: (_height > _width) ? _height * 0.3 : _height * 0.5,
@@ -259,7 +258,6 @@ class _EventDetailState extends ConsumerState<EventDetail> {
           ),
         ],
       ),
-      )
-    );
+    ));
   }
 }

@@ -269,7 +269,7 @@ String getFacultyImagebyName(String facultyName) {
 
     case "Naveen Vaswani":
       return "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Faids%2FNaveen-Vaswani.png?alt=media&token=e8a4026e-1dd6-4d68-9d73-3a1faa2fee72";
-      
+
     case "Saloni Dhuru":
       return "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Faids%2Fsaloni_dhuru.png?alt=media&token=fab9fd01-b68e-4f43-9f26-d17b4c802773";
 

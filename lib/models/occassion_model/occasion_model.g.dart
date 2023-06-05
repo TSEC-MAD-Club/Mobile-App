@@ -4,7 +4,6 @@ part of 'occasion_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-
 OccasionModel _$OccasionModelFromJson(Map<String, dynamic> json) =>
     OccasionModel(
       json['Occasion Name'] as String,
