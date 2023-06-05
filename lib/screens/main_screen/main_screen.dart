@@ -108,6 +108,7 @@ class MainScreenAppBar extends ConsumerStatefulWidget {
 
 class _MainScreenAppBarState extends ConsumerState<MainScreenAppBar> {
   List<EventModel> eventList = [];
+  bool shouldLoop = true;
 
   void launchUrlcollege() async {
     var url = "https://tsec.edu/";
@@ -126,6 +127,8 @@ class _MainScreenAppBarState extends ConsumerState<MainScreenAppBar> {
           for (var data in eventList) {
             imgList.add(data.imageUrl);
           }
+          // imgList = [imgList[0]];
+          if (imgList.length == 1) shouldLoop = false;
         }),
         loading: () {
           const CircularProgressIndicator();
@@ -275,7 +278,8 @@ class _MainScreenAppBarState extends ConsumerState<MainScreenAppBar> {
                           )
                           .toList(),
                       options: CarouselOptions(
-                        autoPlay: true,
+                        autoPlay: shouldLoop,
+                        enableInfiniteScroll: shouldLoop,
                         enlargeCenterPage: true,
                         viewportFraction: .7,
                         onPageChanged: (index, reason) {
