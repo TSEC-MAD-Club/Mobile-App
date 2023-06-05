@@ -163,7 +163,7 @@ class _CustomScaffoldState extends ConsumerState<CustomScaffold>
                 DrawerListItem(
                   onTap: () async {
                     final _messaging = FirebaseMessaging.instance;
-                    
+
                     if (data != null) {
                       ref
                           .read(studentModelProvider.notifier)
@@ -249,7 +249,7 @@ class _CustomScaffoldState extends ConsumerState<CustomScaffold>
                   overlayEntry = null;
                   ref
                       .read(dayProvider.notifier)
-                      .update((state) => getweekday(DateTime.now().weekday));
+                      .update((state) => DateTime.now());
                 },
                 borderRadius: BorderRadius.circular(50),
                 child: Container(

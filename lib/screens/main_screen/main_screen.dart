@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tsec_app/models/student_model/student_model.dart';
 import 'package:tsec_app/provider/auth_provider.dart';
+import 'package:tsec_app/provider/occasion_provider.dart';
 import 'package:tsec_app/screens/departmentlist_screen/department_list.dart';
 import 'package:tsec_app/screens/main_screen/widget/card_display.dart';
 import 'package:tsec_app/utils/notification_type.dart';
@@ -20,7 +21,7 @@ import '../../widgets/custom_scaffold.dart';
 import 'package:date_picker_timeline/date_picker_timeline.dart';
 
 class MainScreen extends ConsumerWidget {
-  const MainScreen({Key? key}) : super(key: key);
+  MainScreen({Key? key}) : super(key: key);
 
   static const colorList = [Colors.red, Colors.teal, Colors.blue];
   static const opacityList = [
@@ -77,8 +78,9 @@ class MainScreen extends ConsumerWidget {
                           initialSelectedDate: DateTime.now(),
                           selectionColor: Colors.blue,
                           onDateChange: ((selectedDate) async {
-                            ref.read(dayProvider.notifier).update(
-                                (state) => getweekday(selectedDate.weekday));
+                            ref
+                                .read(dayProvider.notifier)
+                                .update((state) => selectedDate);
                           }),
                         ),
                       ),
