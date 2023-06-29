@@ -161,9 +161,17 @@ class _CustomScaffoldState extends ConsumerState<CustomScaffold>
                   ),
                 ),
                 DrawerListItem(
+                  onTap: () => _navigate("/profile-page"),
+                  icon: Image.asset(
+                    ImageAssets.meetingIcon,
+                    width: 22,
+                  ),
+                  title: "Profile",
+                ),
+                DrawerListItem(
                   onTap: () async {
                     final _messaging = FirebaseMessaging.instance;
-                    
+
                     if (data != null) {
                       ref
                           .read(studentModelProvider.notifier)
