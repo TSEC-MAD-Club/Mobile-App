@@ -89,7 +89,6 @@ class __ProfilePageAppBarStateState extends ConsumerState<ProfilePageAppBar> {
             onPressed: () {
               print("Pressed");
               setState(() {
-                isEnable = !isEnable;
               });
             },
             icon: Icon(Icons.edit))
