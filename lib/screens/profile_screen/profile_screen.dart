@@ -6,8 +6,6 @@ import '../../models/student_model/student_model.dart';
 import '../../provider/auth_provider.dart';
 import '../../widgets/custom_scaffold.dart';
 
-bool isEnable = false;
-
 class ProfilePage extends ConsumerStatefulWidget {
   const ProfilePage({super.key});
 
@@ -27,7 +25,6 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
   @override
   void initState() {
     super.initState();
-    isEnable = false;
   }
 
   @override
@@ -85,7 +82,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
               ),
               TextField(
                 controller: _nameController,
-                enabled: isEnable,
+                enabled: false,
                 decoration: InputDecoration(
                   labelStyle: const TextStyle(
                     color: Colors.grey, // Set the label color here
@@ -131,7 +128,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
               ),
               TextField(
                 controller: _phoneNumController,
-                enabled: isEnable,
+                enabled: false,
                 decoration: InputDecoration(
                   labelStyle: const TextStyle(
                     color: Colors.grey, // Set the label color here
@@ -200,7 +197,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
               ),
               TextField(
                 controller: _divController,
-                enabled: isEnable,
+                enabled: false,
                 decoration: InputDecoration(
                   labelStyle: const TextStyle(
                     color: Colors.grey, // Set the label color here
@@ -223,7 +220,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
               ),
               TextField(
                 controller: _batchController,
-                enabled: isEnable,
+                enabled: false,
                 decoration: InputDecoration(
                   labelStyle: const TextStyle(
                     color: Colors.grey, // Set the label color here

@@ -159,15 +159,22 @@ class _CustomScaffoldState extends ConsumerState<CustomScaffold>
                     ),
                     title: "Contact Us",
                   ),
-                ),
-                DrawerListItem(
+                ), data != null ? DrawerListItem(
                   onTap: () => _navigate("/profile-page"),
                   icon: Image.asset(
                     ImageAssets.meetingIcon,
                     width: 22,
                   ),
                   title: "Profile",
-                ),
+                ):Container(),
+                // DrawerListItem(
+                //   onTap: () => _navigate("/profile-page"),
+                //   icon: Image.asset(
+                //     ImageAssets.meetingIcon,
+                //     width: 22,
+                //   ),
+                //   title: "Profile",
+                // ),
                 DrawerListItem(
                   onTap: () async {
                     final _messaging = FirebaseMessaging.instance;
