@@ -152,7 +152,20 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                 _buildTextField(
                   controller: _batchController,
                   label: 'Batch',
-                  enabled: false,
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Please enter a batch';
+                    }
+                    if (value.length != 3) {
+                      return 'Batch should be a single capital letter followed by two digits';
+                    }
+                    final batchRegex = RegExp(r'^[A-Z][0-9]{2}$');
+                    if (!batchRegex.hasMatch(value)) {
+                      return 'Batch should be a single capital letter followed by two digits';
+                    }
+                    return null;
+                  },
+                  enabled: _isEditing,
                 ),
                 const SizedBox(height: 20),
                 ElevatedButton(
@@ -221,6 +234,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
       'email': _emailController.text,
       'div': _divController.text,
       'phoneNo': _phoneNumController.text,
+      'Batch': _batchController.text,
     };
 
     if (_formKey.currentState!.validate()) {
