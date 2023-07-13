@@ -153,7 +153,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                   controller: _batchController,
                   label: 'Batch',
                   validator: (value) {
-                    if (value.isEmpty) {
+                    if (value!.isEmpty) {
                       return 'Please enter a batch';
                     }
                     if (value.length != 3) {
