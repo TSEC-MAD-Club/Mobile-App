@@ -1,15 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tsec_app/models/student_model/student_model.dart';
 import 'package:tsec_app/provider/auth_provider.dart';
 import 'package:tsec_app/provider/firebase_provider.dart';
-
 import 'package:tsec_app/screens/profile_screen/widgets/profile_screen_appbar.dart';
 import 'package:tsec_app/widgets/custom_scaffold.dart';
-
 import '../../utils/image_pick.dart';
 import '../../utils/themes.dart';
 
@@ -31,6 +32,8 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
 
   Uint8List? _image;
   int _editCount = 0;
+  bool _isEditing = false;
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -52,83 +55,112 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(20),
-          child: Column(
-            children: [
-              SizedBox(
-                height: 115,
-                width: 115,
-                child: Stack(
-                  clipBehavior: Clip.none,
-                  fit: StackFit.expand,
-                  children: [
-                    _image != null
-                        ? CircleAvatar(
-                            backgroundImage: MemoryImage(_image!),
-                          )
-                        : const CircleAvatar(
-                            backgroundImage:
-                                AssetImage("assets/images/pfpholder.jpg"),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 115,
+                  width: 115,
+                  child: Stack(
+                    clipBehavior: Clip.none,
+                    fit: StackFit.expand,
+                    children: [
+                      _image != null
+                          ? CircleAvatar(
+                              backgroundImage: MemoryImage(_image!),
+                            )
+                          : const CircleAvatar(
+                              backgroundImage:
+                                  AssetImage("assets/images/pfpholder.jpg"),
+                            ),
+                      Positioned(
+                        bottom: 0,
+                        right: -25,
+                        child: RawMaterialButton(
+                          onPressed: _isEditing ? _editProfileImage : null,
+                          elevation: 2.0,
+                          fillColor: kLightModeShadowColor,
+                          child: const Icon(
+                            Icons.add_a_photo,
+                            color: Colors.blue,
                           ),
-                    Positioned(
-                      bottom: 0,
-                      right: -25,
-                      child: RawMaterialButton(
-                        onPressed: _editProfileImage,
-                        elevation: 2.0,
-                        // fillColor: const Color(0xFFF5F6F9),
-                        fillColor: kLightModeShadowColor,
-                        child: const Icon(
-                          Icons.add_a_photo,
-                          color: Colors.blue,
+                          padding: const EdgeInsets.all(6.0),
+                          shape: const CircleBorder(),
                         ),
-                        padding: const EdgeInsets.all(6.0),
-                        shape: const CircleBorder(),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              const SizedBox(height: 20),
-              _buildTextField(
-                controller: _nameController,
-                label: 'Name',
-              ),
-              const SizedBox(height: 20),
-              _buildTextField(
-                controller: _emailController,
-                label: 'Email',
-              ),
-              const SizedBox(height: 20),
-              _buildTextField(
-                controller: _phoneNumController,
-                label: 'Phone Number',
-              ),
-              const SizedBox(height: 20),
-              _buildTextField(
-                controller: _branchController,
-                label: 'Branch',
-              ),
-              const SizedBox(height: 20),
-              _buildTextField(
-                controller: _gradyearController,
-                label: 'Graduation Year',
-              ),
-              const SizedBox(height: 20),
-              _buildTextField(
-                controller: _divController,
-                label: 'Division',
-              ),
-              const SizedBox(height: 20),
-              _buildTextField(
-                controller: _batchController,
-                label: 'Batch',
-              ),
-              const SizedBox(height: 20),
-              // ElevatedButton(
-              //   onPressed: _editCount < 3 ? _saveChanges : null,
-              //   child: const Text('Save Changes'),
-              // ),
-            ],
+                const SizedBox(height: 20),
+                _buildTextField(
+                  controller: _nameController,
+                  label: 'Name',
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Please enter a name';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 20),
+                _buildTextField(
+                  controller: _emailController,
+                  label: 'Email',
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Please enter an email';
+                    }
+                    if (!isValidEmail(value)) {
+                      return 'Please enter a valid email';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 20),
+                _buildTextField(
+                  controller: _phoneNumController,
+                  label: 'Phone Number',
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Please enter a phone number';
+                    }
+                    if (!isValidPhoneNumber(value)) {
+                      return 'Please enter a valid phone number';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 20),
+                _buildTextField(
+                  controller: _branchController,
+                  label: 'Branch',
+                  enabled: false,
+                ),
+                const SizedBox(height: 20),
+                _buildTextField(
+                  controller: _gradyearController,
+                  label: 'Graduation Year',
+                  enabled: false,
+                ),
+                const SizedBox(height: 20),
+                _buildTextField(
+                  controller: _divController,
+                  label: 'Division',
+                ),
+                const SizedBox(height: 20),
+                _buildTextField(
+                  controller: _batchController,
+                  label: 'Batch',
+                  enabled: false,
+                ),
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: _isEditing ? _saveChanges : _enableEditing,
+                  child: Text(_isEditing ? 'Save Changes' : 'Edit'),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -138,10 +170,12 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
   Widget _buildTextField({
     required TextEditingController controller,
     required String label,
+    bool enabled = true,
+    String? Function(String?)? validator,
   }) {
-    return TextField(
+    return TextFormField(
       controller: controller,
-      enabled: false,
+      enabled: _isEditing && enabled,
       decoration: InputDecoration(
         labelStyle: const TextStyle(
           color: Colors.grey,
@@ -157,14 +191,17 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
         ),
         labelText: label,
       ),
+      validator: validator,
     );
   }
 
-  void _editProfileImage() async {
-    // Add your implementation for editing the profile image here
-    // This function will be called when the edit button is pressed for the profile image
-    // You can use plugins like `image_picker` to implement image selection and updating logic
+  void _enableEditing() {
+    setState(() {
+      _isEditing = true;
+    });
+  }
 
+  void _editProfileImage() async {
     Uint8List image = await pickImage(ImageSource.gallery);
 
     setState(() {
@@ -172,52 +209,57 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
     });
   }
 
-  // void _saveChanges() async {
-  //   final user = ref.read(userProvider.notifier).state;
-  //   final StudentModel? data = ref.read(studentModelProvider.notifier).state;
+  void _saveChanges() async {
+    final user = ref.read(userProvider.notifier).state;
+    final StudentModel? data = ref.read(studentModelProvider.notifier).state;
 
-  //   // Create a reference to the user's document in Firebase Firestore
-  //   final userDoc =
-  //       FirebaseFirestore.instance.collection('Students').doc(user!.uid);
+    final userDoc =
+        FirebaseFirestore.instance.collection('Students ').doc(user!.uid);
 
-  //   // Update the fields with the new values from the text controllers
-  //   final updatedData = {
-  //     'Name': _nameController.text,
-  //     'email': _emailController.text,
-  //     'Batch': _batchController.text,
-  //     'Branch': _branchController.text.toUpperCase(),
-  //     'div': _divController.text,
-  //     'gradyear': _gradyearController.text,
-  //     'phoneNo': _phoneNumController.text,
-  //   };
+    final updatedData = {
+      'Name': _nameController.text,
+      'email': _emailController.text,
+      'div': _divController.text,
+      'phoneNo': _phoneNumController.text,
+    };
 
-  //   try {
-  //     // Update the user's document with the new data
-  //     await userDoc.set(updatedData, SetOptions(merge: true));
+    if (_formKey.currentState!.validate()) {
+      try {
+        await userDoc.set(updatedData, SetOptions(merge: true));
 
-  //     // Fetch the updated data from Firebase
-  //     final updatedUserData = await userDoc.get();
-  //     final updatedStudentData = StudentModel.fromJson(updatedUserData.data()!);
+        final updatedUserData = await userDoc.get();
+        final updatedStudentData =
+            StudentModel.fromJson(updatedUserData.data()!);
 
-  //     // Update the data in the studentModelProvider
-  //     ref.read(studentModelProvider.notifier).state = updatedStudentData;
+        ref.read(studentModelProvider.notifier).state = updatedStudentData;
 
-  //     // Increment the edit count
-  //     setState(() {
-  //       _editCount++;
-  //     });
+        setState(() {
+          _editCount++;
+          _isEditing = false;
+          print(_editCount);
+        });
 
-  //     // Show a success message or perform any additional actions
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       const SnackBar(content: Text('Profile updated successfully')),
-  //     );
-  //   } catch (e) {
-  //     // Handle any errors that occurred during the update process
-  //     print('Error updating profile: $e');
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       const SnackBar(
-  //           content: Text('An error occurred. Please try again later.')),
-  //     );
-  //   }
-  //}
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Profile updated successfully')),
+        );
+      } catch (e) {
+        print('Error updating profile: $e');
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+              content: Text('An error occurred. Please try again later.')),
+        );
+      }
+    }
+  }
+
+  bool isValidEmail(String email) {
+    final emailRegex = RegExp(
+        r'^[\w-]+(\.[\w-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(\.[a-zA-Z]{2,})$');
+    return emailRegex.hasMatch(email);
+  }
+
+  bool isValidPhoneNumber(String phoneNumber) {
+    final phoneRegex = RegExp(r'^[0-9]{10}$');
+    return phoneRegex.hasMatch(phoneNumber);
+  }
 }

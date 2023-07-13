@@ -85,13 +85,13 @@ class __ProfilePageAppBarStateState extends ConsumerState<ProfilePageAppBar> {
       ),
       centerTitle: true,
       actions: [
-        IconButton(
-            onPressed: () {
-              print("Pressed");
-              setState(() {
-              });
-            },
-            icon: Icon(Icons.edit))
+        // IconButton(
+        //     onPressed: () {
+        //       print("Pressed");
+        //       setState(() {
+        //       });
+        //     },
+        //     icon: Icon(Icons.edit))
       ],
       backgroundColor: Theme.of(context).colorScheme.secondary,
     );
