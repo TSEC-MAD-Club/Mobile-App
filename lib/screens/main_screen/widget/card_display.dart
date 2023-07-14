@@ -60,10 +60,19 @@ class _CardDisplayState extends ConsumerState<CardDisplay> {
     String dayStr = getweekday(day.weekday);
 
     fetchOccasionDetails();
-
+    debugPrint("data is ${data.toString()}");
     return data.when(
         data: ((data) {
-          if (data![dayStr] == null) {
+          if (data == null) {
+            debugPrint("over here");
+            return const SliverToBoxAdapter(
+              child: Center(
+                child: Text(
+                    "Unable to fetch timetable. Please check if you have entered your details properly."),
+              ),
+            );
+          }
+          if (data[dayStr] == null) {
             return const SliverToBoxAdapter(
               child: Center(child: Text("Happy Weekend !")),
             );
