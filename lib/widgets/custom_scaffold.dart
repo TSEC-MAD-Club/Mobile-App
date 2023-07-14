@@ -264,7 +264,7 @@ class _CustomScaffoldState extends ConsumerState<CustomScaffold>
                   overlayEntry = null;
                   ref
                       .read(dayProvider.notifier)
-                      .update((state) => getweekday(DateTime.now().weekday));
+                      .update((state) => DateTime.now());
                 },
                 borderRadius: BorderRadius.circular(50),
                 child: Container(

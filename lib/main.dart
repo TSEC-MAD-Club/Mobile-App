@@ -92,7 +92,7 @@ class _TSECAppState extends ConsumerState<TSECApp> {
         GoRoute(
           name: "main",
           path: "/main",
-          builder: (context, state) => const MainScreen(),
+          builder: (context, state) => MainScreen(),
         ),
         GoRoute(
           path: '/login',

@@ -59,6 +59,6 @@ class AuthService {
   }
 
   void signout() async {
-    await firebaseAuth.signOut(); 
+    await firebaseAuth.signOut();
   }
 }

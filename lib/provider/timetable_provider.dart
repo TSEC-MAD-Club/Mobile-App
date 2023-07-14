@@ -3,5 +3,5 @@ import 'package:tsec_app/services/timetable_service.dart';
 
 // controller
 final weekTimetableProvider = StreamProvider<Map<String, dynamic>?>((ref) {
-   return ref.watch(timetableServiceProvider).getweekTimetable();
+  return ref.watch(timetableServiceProvider).getweekTimetable();
 });
