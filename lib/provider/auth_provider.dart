@@ -55,7 +55,10 @@ class AuthProvider extends StateNotifier<bool> {
       StudentModel? studentmodel = ref.watch(studentModelProvider);
       NotificationType.makeTopic(ref, studentmodel);
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Profile updated successfully')),
+        SnackBar(
+            content: Text(studentmodel?.updateCount! == 1
+                ? 'Profile updated successfully. You are only allowed to update it once again '
+                : "Profile updated successfully. You have already updated it as many times as possible ")),
       );
     } catch (e) {
       print('Error updating profile: $e');

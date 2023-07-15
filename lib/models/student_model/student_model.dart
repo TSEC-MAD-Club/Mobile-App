@@ -5,6 +5,8 @@ part 'student_model.g.dart';
 
 @JsonSerializable()
 class StudentModel {
+  @JsonKey(name: "updateCount")
+  int? updateCount;
   @JsonKey(name: "Batch")
   final String batch;
   @JsonKey(name: "Branch")
@@ -18,14 +20,16 @@ class StudentModel {
   @JsonKey(name: "phoneNo")
   final String phoneNum;
   final String div;
-  StudentModel(
-      {required this.batch,
-      required this.branch,
-      required this.name,
-      required this.email,
-      required this.gradyear,
-      required this.phoneNum,
-      required this.div});
+  StudentModel({
+    required this.batch,
+    required this.branch,
+    required this.name,
+    required this.email,
+    required this.gradyear,
+    required this.phoneNum,
+    required this.div,
+    required this.updateCount,
+  });
 
   factory StudentModel.fromJson(Map<String, dynamic> json) =>
       _$StudentModelFromJson(json);

@@ -76,24 +76,45 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
     //   'phoneNo': _phoneNumController.text,
     //   'Batch': _batchController.text,
     // };
-    StudentModel student = StudentModel(
-      div: _divController.text,
-      batch: _batchController.text,
-      branch: _branchController.text,
-      name: _nameController.text,
-      email: _emailController.text,
-      gradyear: _gradyearController.text,
-      phoneNum: _phoneNumController.text,
-    );
 
-    if (_formKey.currentState!.validate()) {
-      ref.watch(authProvider.notifier).updateUserDetails(student, ref, context);
+    final StudentModel? data = ref.watch(studentModelProvider);
+    bool b = data!.updateCount != null ? data.updateCount! < 2 : true;
+    if (b) {
+      if (data.updateCount == null) {
+        data.updateCount = 1;
+      } else {
+        int num = data.updateCount!;
+        data.updateCount = num + 1;
+      }
+      StudentModel student = StudentModel(
+        div: _divController.text,
+        batch: _batchController.text,
+        branch: _branchController.text,
+        name: _nameController.text,
+        email: _emailController.text,
+        gradyear: _gradyearController.text,
+        phoneNum: _phoneNumController.text,
+        updateCount: data.updateCount,
+      );
+
+      if (_formKey.currentState!.validate()) {
+        ref
+            .watch(authProvider.notifier)
+            .updateUserDetails(student, ref, context);
+      }
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+            content: Text(
+                'You have already updated your profile as many times as possible')),
+      );
     }
   }
 
   @override
   Widget build(BuildContext context) {
     final StudentModel? data = ref.watch(studentModelProvider);
+    debugPrint(data?.updateCount?.toString());
     _nameController.text = data!.name;
     _emailController.text = data.email;
     _batchController.text = data.batch;
