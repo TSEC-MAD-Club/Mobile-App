@@ -10,6 +10,8 @@ import 'package:tsec_app/models/student_model/student_model.dart';
 import 'package:tsec_app/provider/auth_provider.dart';
 import 'package:tsec_app/provider/firebase_provider.dart';
 import 'package:tsec_app/screens/profile_screen/widgets/profile_screen_appbar.dart';
+import 'package:tsec_app/screens/profile_screen/widgets/profile_text_field.dart';
+import 'package:tsec_app/services/auth_service.dart';
 import 'package:tsec_app/widgets/custom_scaffold.dart';
 import '../../utils/image_pick.dart';
 import '../../utils/themes.dart';
@@ -32,12 +34,61 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
 
   Uint8List? _image;
   int _editCount = 0;
-  bool _isEditing = false;
+  bool _isEditMode = false;
   final _formKey = GlobalKey<FormState>();
 
-  @override
-  void initState() {
-    super.initState();
+  bool isValidEmail(String email) {
+    final emailRegex = RegExp(
+        r'^[\w-]+(\.[\w-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(\.[a-zA-Z]{2,})$');
+    return emailRegex.hasMatch(email);
+  }
+
+  bool isValidPhoneNumber(String phoneNumber) {
+    final phoneRegex = RegExp(r'^[0-9]{10}$');
+    return phoneRegex.hasMatch(phoneNumber);
+  }
+
+  void enableEditing() {
+    setState(() {
+      _isEditMode = true;
+    });
+  }
+
+  void editProfileImage() async {
+    Uint8List image = await pickImage(ImageSource.gallery);
+
+    setState(() {
+      _image = image;
+    });
+  }
+
+  void _saveChanges(WidgetRef ref) async {
+    // final user = ref.read(userProvider.notifier).state;
+    // final StudentModel? data = ref.read(studentModelProvider.notifier).state;
+    //
+    // final userDoc =
+    //     FirebaseFirestore.instance.collection('Students ').doc(user!.uid);
+    //
+    // final updatedData = {
+    //   'Name': _nameController.text,
+    //   'email': _emailController.text,
+    //   'div': _divController.text,
+    //   'phoneNo': _phoneNumController.text,
+    //   'Batch': _batchController.text,
+    // };
+    StudentModel student = StudentModel(
+      div: _divController.text,
+      batch: _batchController.text,
+      branch: _branchController.text,
+      name: _nameController.text,
+      email: _emailController.text,
+      gradyear: _gradyearController.text,
+      phoneNum: _phoneNumController.text,
+    );
+
+    if (_formKey.currentState!.validate()) {
+      ref.watch(authProvider.notifier).updateUserDetails(student, ref, context);
+    }
   }
 
   @override
@@ -78,7 +129,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                         bottom: 0,
                         right: -25,
                         child: RawMaterialButton(
-                          onPressed: _isEditing ? _editProfileImage : null,
+                          onPressed: _isEditMode ? editProfileImage : null,
                           elevation: 2.0,
                           fillColor: kLightModeShadowColor,
                           child: const Icon(
@@ -93,9 +144,20 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                _buildTextField(
+                // _buildTextField(
+                //   controller: _nameController,
+                //   label: 'Name',
+                //   validator: (value) {
+                //     if (value!.isEmpty) {
+                //       return 'Please enter a name';
+                //     }
+                //     return null;
+                //   },
+                // ),
+                ProfileTextField(
+                  isEditMode: _isEditMode,
+                  label: "Name",
                   controller: _nameController,
-                  label: 'Name',
                   validator: (value) {
                     if (value!.isEmpty) {
                       return 'Please enter a name';
@@ -104,9 +166,23 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                   },
                 ),
                 const SizedBox(height: 20),
-                _buildTextField(
+                // _buildTextField(
+                //   controller: _emailController,
+                //   label: 'Email',
+                //   validator: (value) {
+                //     if (value!.isEmpty) {
+                //       return 'Please enter an email';
+                //     }
+                //     if (!isValidEmail(value)) {
+                //       return 'Please enter a valid email';
+                //     }
+                //     return null;
+                //   },
+                // ),
+                ProfileTextField(
+                  isEditMode: _isEditMode,
+                  label: "Email",
                   controller: _emailController,
-                  label: 'Email',
                   validator: (value) {
                     if (value!.isEmpty) {
                       return 'Please enter an email';
@@ -118,9 +194,10 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                   },
                 ),
                 const SizedBox(height: 20),
-                _buildTextField(
+                ProfileTextField(
+                  isEditMode: _isEditMode,
+                  label: "Phone Number",
                   controller: _phoneNumController,
-                  label: 'Phone Number',
                   validator: (value) {
                     if (value!.isEmpty) {
                       return 'Please enter a phone number';
@@ -131,27 +208,58 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                     return null;
                   },
                 ),
+                // _buildTextField(
+                //   controller: _phoneNumController,
+                //   label: 'Phone Number',
+                //   validator: (value) {
+                //     if (value!.isEmpty) {
+                //       return 'Please enter a phone number';
+                //     }
+                //     if (!isValidPhoneNumber(value)) {
+                //       return 'Please enter a valid phone number';
+                //     }
+                //     return null;
+                //   },
+                // ),
                 const SizedBox(height: 20),
-                _buildTextField(
+                // _buildTextField(
+                //   controller: _branchController,
+                //   label: 'Branch',
+                //   enabled: false,
+                // ),
+                ProfileTextField(
+                  isEditMode: _isEditMode,
+                  label: "Branch",
                   controller: _branchController,
-                  label: 'Branch',
-                  enabled: false,
+                  // enabled: false,
                 ),
                 const SizedBox(height: 20),
-                _buildTextField(
+                ProfileTextField(
+                  isEditMode: _isEditMode,
+                  label: "Graduation Year",
                   controller: _gradyearController,
-                  label: 'Graduation Year',
                   enabled: false,
                 ),
+                // _buildTextField(
+                //   controller: _gradyearController,
+                //   label: 'Graduation Year',
+                //   enabled: false,
+                // ),
                 const SizedBox(height: 20),
-                _buildTextField(
+                ProfileTextField(
+                  isEditMode: _isEditMode,
+                  label: "Division",
                   controller: _divController,
-                  label: 'Division',
                 ),
+                // _buildTextField(
+                //   controller: _divController,
+                //   label: 'Division',
+                // ),
                 const SizedBox(height: 20),
-                _buildTextField(
+                ProfileTextField(
+                  isEditMode: _isEditMode,
+                  label: "Batch",
                   controller: _batchController,
-                  label: 'Batch',
                   validator: (value) {
                     if (value!.isEmpty) {
                       return 'Please enter a batch';
@@ -165,12 +273,36 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                     }
                     return null;
                   },
-                  enabled: _isEditing,
+                  enabled: _isEditMode,
                 ),
+                // _buildTextField(
+                //   controller: _batchController,
+                //   label: 'Batch',
+                //   validator: (value) {
+                //     if (value!.isEmpty) {
+                //       return 'Please enter a batch';
+                //     }
+                //     if (value.length != 3) {
+                //       return 'Batch should be a single capital letter followed by two digits';
+                //     }
+                //     final batchRegex = RegExp(r'^[A-Z][0-9]{2}$');
+                //     if (!batchRegex.hasMatch(value)) {
+                //       return 'Batch should be a single capital letter followed by two digits';
+                //     }
+                //     return null;
+                //   },
+                //   enabled: _isEditMode,
+                // ),
                 const SizedBox(height: 20),
                 ElevatedButton(
-                  onPressed: _isEditing ? _saveChanges : _enableEditing,
-                  child: Text(_isEditing ? 'Save Changes' : 'Edit'),
+                  onPressed: () {
+                    if (_isEditMode) {
+                      _saveChanges(ref);
+                    } else {
+                      enableEditing();
+                    }
+                  },
+                  child: Text(_isEditMode ? 'Save Changes' : 'Edit'),
                 ),
               ],
             ),
@@ -180,100 +312,31 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
     );
   }
 
-  Widget _buildTextField({
-    required TextEditingController controller,
-    required String label,
-    bool enabled = true,
-    String? Function(String?)? validator,
-  }) {
-    return TextFormField(
-      controller: controller,
-      enabled: _isEditing && enabled,
-      decoration: InputDecoration(
-        labelStyle: const TextStyle(
-          color: Colors.grey,
-        ),
-        border: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.grey[900] ?? Colors.grey),
-        ),
-        disabledBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.grey),
-        ),
-        enabledBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.white70),
-        ),
-        labelText: label,
-      ),
-      validator: validator,
-    );
-  }
-
-  void _enableEditing() {
-    setState(() {
-      _isEditing = true;
-    });
-  }
-
-  void _editProfileImage() async {
-    Uint8List image = await pickImage(ImageSource.gallery);
-
-    setState(() {
-      _image = image;
-    });
-  }
-
-  void _saveChanges() async {
-    final user = ref.read(userProvider.notifier).state;
-    final StudentModel? data = ref.read(studentModelProvider.notifier).state;
-
-    final userDoc =
-        FirebaseFirestore.instance.collection('Students ').doc(user!.uid);
-
-    final updatedData = {
-      'Name': _nameController.text,
-      'email': _emailController.text,
-      'div': _divController.text,
-      'phoneNo': _phoneNumController.text,
-      'Batch': _batchController.text,
-    };
-
-    if (_formKey.currentState!.validate()) {
-      try {
-        await userDoc.set(updatedData, SetOptions(merge: true));
-
-        final updatedUserData = await userDoc.get();
-        final updatedStudentData =
-            StudentModel.fromJson(updatedUserData.data()!);
-
-        ref.read(studentModelProvider.notifier).state = updatedStudentData;
-
-        setState(() {
-          _editCount++;
-          _isEditing = false;
-          print(_editCount);
-        });
-
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Profile updated successfully')),
-        );
-      } catch (e) {
-        print('Error updating profile: $e');
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-              content: Text('An error occurred. Please try again later.')),
-        );
-      }
-    }
-  }
-
-  bool isValidEmail(String email) {
-    final emailRegex = RegExp(
-        r'^[\w-]+(\.[\w-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(\.[a-zA-Z]{2,})$');
-    return emailRegex.hasMatch(email);
-  }
-
-  bool isValidPhoneNumber(String phoneNumber) {
-    final phoneRegex = RegExp(r'^[0-9]{10}$');
-    return phoneRegex.hasMatch(phoneNumber);
-  }
+  // Widget _buildTextField({
+  //   required TextEditingController controller,
+  //   required String label,
+  //   bool enabled = true,
+  //   String? Function(String?)? validator,
+  // }) {
+  //   return TextFormField(
+  //     controller: controller,
+  //     enabled: _isEditMode && enabled,
+  //     decoration: InputDecoration(
+  //       labelStyle: const TextStyle(
+  //         color: Colors.grey,
+  //       ),
+  //       border: OutlineInputBorder(
+  //         borderSide: BorderSide(color: Colors.grey[900] ?? Colors.grey),
+  //       ),
+  //       disabledBorder: const OutlineInputBorder(
+  //         borderSide: BorderSide(color: Colors.grey),
+  //       ),
+  //       enabledBorder: const OutlineInputBorder(
+  //         borderSide: BorderSide(color: Colors.white70),
+  //       ),
+  //       labelText: label,
+  //     ),
+  //     validator: validator,
+  //   );
+  // }
 }

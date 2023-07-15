@@ -15,9 +15,8 @@ abstract class NotificationType {
   static String yearBranchDivTopic = "";
   static String yearBranchDivBatchTopic = "";
 
-  static void makeTopic(WidgetRef ref) {
+  static void makeTopic(WidgetRef ref, StudentModel? studentmodel) {
     if (ref.watch(firebaseAuthProvider).currentUser?.uid != null) {
-      StudentModel? studentmodel = ref.watch(studentModelProvider);
       String studentYear = studentmodel!.gradyear.toString();
       String studentBranch = studentmodel.branch.toString();
       String studentDiv = studentmodel.div.toString();

@@ -43,7 +43,7 @@ class MainScreen extends ConsumerWidget {
       offset: const Offset(0, 1),
     );
     StudentModel? data = ref.watch(studentModelProvider);
-    if (data != null) NotificationType.makeTopic(ref);
+    if (data != null) NotificationType.makeTopic(ref, data);
     return CustomScaffold(
       body: SafeArea(
           child: CustomScrollView(

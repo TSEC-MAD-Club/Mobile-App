@@ -45,7 +45,7 @@ class _CardDisplayState extends ConsumerState<CardDisplay> {
     ref.watch(occasionListProvider).when(
         data: ((data) {
           occasionList.addAll(data ?? []);
-          debugPrint("all occasions are : " + occasionList.toString());
+          // debugPrint("all occasions are : " + occasionList.toString());
         }),
         loading: () {
           const CircularProgressIndicator();
@@ -56,11 +56,12 @@ class _CardDisplayState extends ConsumerState<CardDisplay> {
   @override
   Widget build(BuildContext context) {
     final data = ref.watch(weekTimetableProvider);
+    StudentModel? studentData = ref.watch(studentModelProvider);
     DateTime day = ref.watch(dayProvider);
     String dayStr = getweekday(day.weekday);
 
     fetchOccasionDetails();
-    debugPrint("data is ${data.toString()}");
+    // debugPrint("data is ${data.toString()}");
     return data.when(
         data: ((data) {
           if (data == null) {
