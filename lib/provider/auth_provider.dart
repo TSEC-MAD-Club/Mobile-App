@@ -54,6 +54,25 @@ class AuthProvider extends StateNotifier<bool> {
 
       StudentModel? studentmodel = ref.watch(studentModelProvider);
       NotificationType.makeTopic(ref, studentmodel);
+
+      String studentYear = updatedStudentData.gradyear.toString();
+      String studentBranch = updatedStudentData.branch.toString();
+      String studentDiv = updatedStudentData.div.toString();
+      String studentBatch = updatedStudentData.batch.toString();
+      // yearTopic = studentYear;
+      // yearBranchTopic = "$studentYear-$studentBranch";
+      // yearBranchDivTopic = "$studentYear-$studentBranch-$studentDiv";
+      // yearBranchDivBatchTopic =
+      //     "$studentYear-$studentBranch-$studentDiv-$studentBatch";
+
+      ref.read(notificationTypeProvider.notifier).state = NotificationTypeC(
+          notification: "All",
+          yearTopic: studentYear,
+          yearBranchTopic: "$studentYear-$studentBranch",
+          yearBranchDivTopic: "$studentYear-$studentBranch-$studentDiv",
+          yearBranchDivBatchTopic:
+              "$studentYear-$studentBranch-$studentDiv-$studentBatch");
+
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
             content: Text(studentmodel?.updateCount! == 1

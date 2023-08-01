@@ -8,6 +8,7 @@ import 'package:tsec_app/screens/main_screen/widget/schedule_card.dart';
 import 'package:tsec_app/provider/occasion_provider.dart';
 
 import 'package:tsec_app/utils/faculty_details.dart';
+import 'package:tsec_app/utils/notification_type.dart';
 import '../../../models/timetable_model/timetable_model.dart';
 import '../../../provider/timetable_provider.dart';
 import '../../../utils/timetable_util.dart';
@@ -55,12 +56,15 @@ class _CardDisplayState extends ConsumerState<CardDisplay> {
 
   @override
   Widget build(BuildContext context) {
-    final data = ref.watch(weekTimetableProvider);
+    final data = ref.watch(counterStreamProvider);
     DateTime day = ref.watch(dayProvider);
     String dayStr = getweekday(day.weekday);
 
     fetchOccasionDetails();
     // debugPrint("data is ${data.toString()}");
+
+    final dat = ref.watch(notificationTypeProvider);
+    debugPrint("hh ${dat?.yearBranchDivTopic}");
     return data.when(
         data: ((data) {
           if (data == null) {
