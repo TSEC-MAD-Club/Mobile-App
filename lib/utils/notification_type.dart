@@ -16,23 +16,25 @@ abstract class NotificationType {
   static String yearBranchDivBatchTopic = "";
 
   static void makeTopic(WidgetRef ref, StudentModel? studentmodel) {
-    if (ref.watch(firebaseAuthProvider).currentUser?.uid != null) {
-      String studentYear = studentmodel!.gradyear.toString();
-      String studentBranch = studentmodel.branch.toString();
-      String studentDiv = studentmodel.div.toString();
-      String studentBatch = studentmodel.batch.toString();
-      yearTopic = studentYear;
-      yearBranchTopic = "$studentYear-$studentBranch";
-      yearBranchDivTopic = "$studentYear-$studentBranch-$studentDiv";
-      yearBranchDivBatchTopic =
-          "$studentYear-$studentBranch-$studentDiv-$studentBatch";
+    if (studentmodel != null) {
+      if (ref.watch(firebaseAuthProvider).currentUser?.uid != null) {
+        String studentYear = studentmodel.gradyear.toString();
+        String studentBranch = studentmodel.branch.toString();
+        String studentDiv = studentmodel.div.toString();
+        String studentBatch = studentmodel.batch.toString();
+        yearTopic = studentYear;
+        yearBranchTopic = "$studentYear-$studentBranch";
+        yearBranchDivTopic = "$studentYear-$studentBranch-$studentDiv";
+        yearBranchDivBatchTopic =
+            "$studentYear-$studentBranch-$studentDiv-$studentBatch";
 
-      // ref.read(notificationTypeProvider.notifier).state = NotificationTypeC(
-      //     notification: "All",
-      //     yearTopic: yearTopic,
-      //     yearBranchTopic: yearBranchTopic,
-      //     yearBranchDivTopic: yearBranchDivTopic,
-      //     yearBranchDivBatchTopic: yearBranchDivBatchTopic);
+        // ref.read(notificationTypeProvider.notifier).state = NotificationTypeC(
+        //     notification: "All",
+        //     yearTopic: yearTopic,
+        //     yearBranchTopic: yearBranchTopic,
+        //     yearBranchDivTopic: yearBranchDivTopic,
+        //     yearBranchDivBatchTopic: yearBranchDivBatchTopic);
+      }
     }
   }
 }

@@ -62,6 +62,23 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
     });
   }
 
+  String convertFirstLetterToUpperCase(String input) {
+    if (input.isEmpty) {
+      return input;
+    }
+
+    // Convert the entire string to lowercase first
+    String lowerCaseInput = input.toLowerCase();
+
+    // Get the first letter and convert it to uppercase
+    String firstLetterUpperCase = lowerCaseInput[0].toUpperCase();
+
+    // Combine the first letter with the rest of the lowercase string
+    String convertedString = firstLetterUpperCase + lowerCaseInput.substring(1);
+
+    return convertedString;
+  }
+
   void _saveChanges(WidgetRef ref) async {
     // final user = ref.read(userProvider.notifier).state;
     // final StudentModel? data = ref.read(studentModelProvider.notifier).state;
@@ -89,7 +106,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
       StudentModel student = StudentModel(
         div: _divController.text,
         batch: _batchController.text,
-        branch: _branchController.text,
+        branch: convertFirstLetterToUpperCase(_branchController.text) ,
         name: _nameController.text,
         email: _emailController.text,
         gradyear: _gradyearController.text,

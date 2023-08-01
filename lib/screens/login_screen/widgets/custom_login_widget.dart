@@ -174,10 +174,13 @@ class _LoginWidgetState extends ConsumerState<LoginWidget> {
                         .watch(studentModelProvider.notifier)
                         .update((state) => studentModel);
 
-                    showDialog(
-                        context: context,
-                        builder: ((context) => const ChangePasswordDialog()));
+                    // showDialog(
+                    //     context: context,
+                    // builder: ((context) => const ChangePasswordDialog()));
+
+                    GoRouter.of(context).go('/main');
                     _setupFCMNotifications(st);
+                    GoRouter.of(context).go('/main');
                   },
                   child: const Icon(Icons.arrow_forward),
                   style: ButtonStyle(

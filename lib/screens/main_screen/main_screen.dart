@@ -44,34 +44,22 @@ class MainScreen extends ConsumerWidget {
     );
     StudentModel? data = ref.watch(studentModelProvider);
 
-    if (data != null) NotificationType.makeTopic(ref, data);
+    if (data != null) {
+      NotificationType.makeTopic(ref, data);
 
-    String studentYear = data!.gradyear.toString();
-    String studentBranch = data!.branch.toString();
-    String studentDiv = data!.div.toString();
-    String studentBatch = data!.batch.toString();
-    // yearTopic = studentYear;
-    // yearBranchTopic = "$studentYear-$studentBranch";
-    // yearBranchDivTopic = "$studentYear-$studentBranch-$studentDiv";
-    // yearBranchDivBatchTopic =
-    //     "$studentYear-$studentBranch-$studentDiv-$studentBatch";
+      // String studentYear = data.gradyear.toString();
+      // String studentBranch = data.branch.toString();
+      // String studentDiv = data.div.toString();
+      // String studentBatch = data.batch.toString();
+      // ref.read(notificationTypeProvider.notifier).state = NotificationTypeC(
+      //     notification: "All",
+      //     yearTopic: studentYear,
+      //     yearBranchTopic: "$studentYear-$studentBranch",
+      //     yearBranchDivTopic: "$studentYear-$studentBranch-$studentDiv",
+      //     yearBranchDivBatchTopic:
+      //         "$studentYear-$studentBranch-$studentDiv-$studentBatch");
+    }
 
-    // ref.read(notificationTypeProvider.notifier).state = NotificationTypeC(
-    //     notification: "All",
-    //     yearTopic: studentYear,
-    //     yearBranchTopic: "$studentYear-$studentBranch",
-    //     yearBranchDivTopic: "$studentYear-$studentBranch-$studentDiv",
-    //     yearBranchDivBatchTopic:
-    //         "$studentYear-$studentBranch-$studentDiv-$studentBatch");
-
-    // ref.watch(notificationTypeProvider.notifier).update((state) =>
-    //     NotificationTypeC(
-    //         notification: "All",
-    //         yearTopic: studentYear,
-    //         yearBranchTopic: "$studentYear-$studentBranch",
-    //         yearBranchDivTopic: "$studentYear-$studentBranch-$studentDiv",
-    //         yearBranchDivBatchTopic:
-    //             "$studentYear-$studentBranch-$studentDiv-$studentBatch"));
     return CustomScaffold(
       body: SafeArea(
           child: CustomScrollView(
