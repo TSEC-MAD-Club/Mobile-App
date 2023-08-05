@@ -159,11 +159,26 @@ class _CustomScaffoldState extends ConsumerState<CustomScaffold>
                     ),
                     title: "Contact Us",
                   ),
-                ),
+                ), data != null ? DrawerListItem(
+                  onTap: () => _navigate("/profile-page"),
+                  icon: Image.asset(
+                    ImageAssets.meetingIcon,
+                    width: 22,
+                  ),
+                  title: "Profile",
+                ):Container(),
+                // DrawerListItem(
+                //   onTap: () => _navigate("/profile-page"),
+                //   icon: Image.asset(
+                //     ImageAssets.meetingIcon,
+                //     width: 22,
+                //   ),
+                //   title: "Profile",
+                // ),
                 DrawerListItem(
                   onTap: () async {
                     final _messaging = FirebaseMessaging.instance;
-                    
+
                     if (data != null) {
                       ref
                           .read(studentModelProvider.notifier)
@@ -249,7 +264,7 @@ class _CustomScaffoldState extends ConsumerState<CustomScaffold>
                   overlayEntry = null;
                   ref
                       .read(dayProvider.notifier)
-                      .update((state) => getweekday(DateTime.now().weekday));
+                      .update((state) => DateTime.now());
                 },
                 borderRadius: BorderRadius.circular(50),
                 child: Container(

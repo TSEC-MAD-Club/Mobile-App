@@ -1,17 +1,21 @@
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tsec_app/models/occassion_model/occasion_model.dart';
 import 'package:tsec_app/models/student_model/student_model.dart';
 import 'package:tsec_app/provider/auth_provider.dart';
 import 'package:tsec_app/screens/main_screen/widget/schedule_card.dart';
+import 'package:tsec_app/provider/occasion_provider.dart';
 
 import 'package:tsec_app/utils/faculty_details.dart';
+import 'package:tsec_app/utils/notification_type.dart';
 import '../../../models/timetable_model/timetable_model.dart';
 import '../../../provider/timetable_provider.dart';
 import '../../../utils/timetable_util.dart';
 
-final dayProvider = StateProvider.autoDispose<String>((ref) {
-  String day = getweekday(DateTime.now().weekday);
+final dayProvider = StateProvider.autoDispose<DateTime>((ref) {
+  DateTime day = DateTime.now();
+  // debugPrint(day);
   return day;
 });
 
@@ -36,19 +40,53 @@ class _CardDisplayState extends ConsumerState<CardDisplay> {
     return url;
   }
 
+  List<OccasionModel> occasionList = [];
+
+  void fetchOccasionDetails() {
+    ref.watch(occasionListProvider).when(
+        data: ((data) {
+          occasionList.addAll(data ?? []);
+          // debugPrint("all occasions are : " + occasionList.toString());
+        }),
+        loading: () {
+          const CircularProgressIndicator();
+        },
+        error: (Object error, StackTrace? stackTrace) {});
+  }
+
   @override
   Widget build(BuildContext context) {
-    final data = ref.watch(weekTimetableProvider);
-    String day = ref.watch(dayProvider);
+    final data = ref.watch(counterStreamProvider);
+    DateTime day = ref.watch(dayProvider);
+    String dayStr = getweekday(day.weekday);
 
+    fetchOccasionDetails();
+    // debugPrint("data is ${data.toString()}");
+
+    final dat = ref.watch(notificationTypeProvider);
+    debugPrint("hh ${dat?.yearBranchDivTopic}");
     return data.when(
         data: ((data) {
-          if (data![day] == null) {
+          if (data == null) {
+            // debugPrint("over here");
             return const SliverToBoxAdapter(
-              child: Center(child: Text("No lectures Today ! ")),
+              child: Center(
+                child: Text(
+                    "Unable to fetch timetable. Please check if you have entered your details properly."),
+              ),
+            );
+          }
+          if (data[dayStr] == null) {
+            return const SliverToBoxAdapter(
+              child: Center(child: Text("Happy Weekend !")),
+            );
+          } else if (checkOccasion(day, occasionList) != "") {
+            return SliverToBoxAdapter(
+              child: Center(
+                  child: Text("Happy ${checkOccasion(day, occasionList)}!")),
             );
           } else {
-            List<TimetableModel> timeTableDay = getTimetablebyDay(data, day);
+            List<TimetableModel> timeTableDay = getTimetablebyDay(data, dayStr);
             if (timeTableDay.isEmpty) {
               return const SliverToBoxAdapter(
                 child: Center(child: Text("No lectures Today ! ")),

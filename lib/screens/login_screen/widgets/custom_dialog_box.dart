@@ -18,9 +18,8 @@ class _ChangePasswordDialogState extends ConsumerState<ChangePasswordDialog> {
 
   @override
   void dispose() {
-    _passwordTextEditingController.dispose(); 
+    _passwordTextEditingController.dispose();
     super.dispose();
-    
   }
 
   @override

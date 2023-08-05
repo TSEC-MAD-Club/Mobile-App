@@ -13,6 +13,8 @@ class AuthService {
   final FirebaseAuth firebaseAuth;
   final FirebaseFirestore firebaseFirestore;
   AuthService(this.firebaseAuth, this.firebaseFirestore);
+  CollectionReference studentCollection =
+      FirebaseFirestore.instance.collection('Students ');
 
   Stream<User?> get userCurrentState => firebaseAuth.authStateChanges();
 
@@ -40,6 +42,17 @@ class AuthService {
     await user.updatePassword(password);
   }
 
+  Future<StudentModel> updateUserDetails(StudentModel student) async {
+    DocumentReference studentDoc = studentCollection.doc(user!.uid);
+    await studentDoc.update(student.toJson());
+    final updatedUserData = await studentDoc.get();
+
+    var userMap = updatedUserData.data() as Map<String, dynamic>;
+    StudentModel updatedStudentData = StudentModel.fromJson(userMap);
+    debugPrint("student data is $updatedStudentData");
+    return updatedStudentData;
+  }
+
   Future<StudentModel?> fetchStudentDetails(
       User? user, BuildContext context) async {
     StudentModel? studentModel;
@@ -59,6 +72,6 @@ class AuthService {
   }
 
   void signout() async {
-    await firebaseAuth.signOut(); 
+    await firebaseAuth.signOut();
   }
 }

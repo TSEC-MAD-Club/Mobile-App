@@ -14,6 +14,7 @@ StudentModel _$StudentModelFromJson(Map<String, dynamic> json) => StudentModel(
       gradyear: json['gradyear'] as String,
       phoneNum: json['phoneNo'] as String,
       div: json['div'] as String,
+      updateCount: json['updateCount'] as int?,
     );
 
 Map<String, dynamic> _$StudentModelToJson(StudentModel instance) =>
@@ -25,4 +26,5 @@ Map<String, dynamic> _$StudentModelToJson(StudentModel instance) =>
       'gradyear': instance.gradyear,
       'phoneNo': instance.phoneNum,
       'div': instance.div,
+      'updateCount' : instance.updateCount,
     };

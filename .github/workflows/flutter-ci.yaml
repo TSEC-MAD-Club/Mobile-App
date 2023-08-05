@@ -46,7 +46,7 @@ jobs:
 
       - name: Lint and Analyze code
         run: |
-          flutter format .
+          dart format .
           flutter analyze .
 
       # - name: Run Tests

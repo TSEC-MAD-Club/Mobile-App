@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tsec_app/models/student_model/student_model.dart';
 import 'package:tsec_app/provider/auth_provider.dart';
+import 'package:tsec_app/provider/occasion_provider.dart';
 import 'package:tsec_app/screens/departmentlist_screen/department_list.dart';
 import 'package:tsec_app/screens/main_screen/widget/card_display.dart';
 import 'package:tsec_app/utils/notification_type.dart';
@@ -20,7 +21,7 @@ import '../../widgets/custom_scaffold.dart';
 import 'package:date_picker_timeline/date_picker_timeline.dart';
 
 class MainScreen extends ConsumerWidget {
-  const MainScreen({Key? key}) : super(key: key);
+  MainScreen({Key? key}) : super(key: key);
 
   static const colorList = [Colors.red, Colors.teal, Colors.blue];
   static const opacityList = [
@@ -42,7 +43,23 @@ class MainScreen extends ConsumerWidget {
       offset: const Offset(0, 1),
     );
     StudentModel? data = ref.watch(studentModelProvider);
-    if (data != null) NotificationType.makeTopic(ref);
+
+    if (data != null) {
+      NotificationType.makeTopic(ref, data);
+
+      // String studentYear = data.gradyear.toString();
+      // String studentBranch = data.branch.toString();
+      // String studentDiv = data.div.toString();
+      // String studentBatch = data.batch.toString();
+      // ref.read(notificationTypeProvider.notifier).state = NotificationTypeC(
+      //     notification: "All",
+      //     yearTopic: studentYear,
+      //     yearBranchTopic: "$studentYear-$studentBranch",
+      //     yearBranchDivTopic: "$studentYear-$studentBranch-$studentDiv",
+      //     yearBranchDivBatchTopic:
+      //         "$studentYear-$studentBranch-$studentDiv-$studentBatch");
+    }
+
     return CustomScaffold(
       body: SafeArea(
           child: CustomScrollView(
@@ -77,8 +94,9 @@ class MainScreen extends ConsumerWidget {
                           initialSelectedDate: DateTime.now(),
                           selectionColor: Colors.blue,
                           onDateChange: ((selectedDate) async {
-                            ref.read(dayProvider.notifier).update(
-                                (state) => getweekday(selectedDate.weekday));
+                            ref
+                                .read(dayProvider.notifier)
+                                .update((state) => selectedDate);
                           }),
                         ),
                       ),
@@ -106,6 +124,7 @@ class MainScreenAppBar extends ConsumerStatefulWidget {
 
 class _MainScreenAppBarState extends ConsumerState<MainScreenAppBar> {
   List<EventModel> eventList = [];
+  bool shouldLoop = true;
 
   void launchUrlcollege() async {
     var url = "https://tsec.edu/";
@@ -124,6 +143,8 @@ class _MainScreenAppBarState extends ConsumerState<MainScreenAppBar> {
           for (var data in eventList) {
             imgList.add(data.imageUrl);
           }
+          // imgList = [imgList[0]];
+          if (imgList.length == 1) shouldLoop = false;
         }),
         loading: () {
           const CircularProgressIndicator();
@@ -273,7 +294,8 @@ class _MainScreenAppBarState extends ConsumerState<MainScreenAppBar> {
                           )
                           .toList(),
                       options: CarouselOptions(
-                        autoPlay: true,
+                        autoPlay: shouldLoop,
+                        enableInfiniteScroll: shouldLoop,
                         enlargeCenterPage: true,
                         viewportFraction: .7,
                         onPageChanged: (index, reason) {

@@ -38,6 +38,7 @@ class _LoginWidgetState extends ConsumerState<LoginWidget> {
   Widget build(BuildContext context) {
     final brightness = Theme.of(context).brightness;
     bool isItDarkMode = brightness == Brightness.dark;
+    StudentModel? st = ref.watch(studentModelProvider);
     return Wrap(
       children: [
         Padding(
@@ -165,7 +166,7 @@ class _LoginWidgetState extends ConsumerState<LoginWidget> {
                       return;
                     }
 
-                    User? user = userCredential.user; 
+                    User? user = userCredential.user;
                     StudentModel? studentModel = await ref
                         .watch(authProvider.notifier)
                         .fetchStudentDetails(user, context);
@@ -173,11 +174,13 @@ class _LoginWidgetState extends ConsumerState<LoginWidget> {
                         .watch(studentModelProvider.notifier)
                         .update((state) => studentModel);
 
-                    showDialog(
-                        context: context,
-                        builder: ((context) => const ChangePasswordDialog()));
+                    // showDialog(
+                    //     context: context,
+                    // builder: ((context) => const ChangePasswordDialog()));
 
-                    _setupFCMNotifications();
+                    GoRouter.of(context).go('/main');
+                    _setupFCMNotifications(st);
+                    GoRouter.of(context).go('/main');
                   },
                   child: const Icon(Icons.arrow_forward),
                   style: ButtonStyle(
@@ -197,7 +200,7 @@ class _LoginWidgetState extends ConsumerState<LoginWidget> {
     );
   }
 
-  Future<void> _setupFCMNotifications() async {
+  Future<void> _setupFCMNotifications(StudentModel? studentModel) async {
     final _messaging = FirebaseMessaging.instance;
     final _permission = await _messaging.requestPermission(provisional: true);
 
@@ -205,7 +208,7 @@ class _LoginWidgetState extends ConsumerState<LoginWidget> {
       AuthorizationStatus.authorized,
       AuthorizationStatus.provisional,
     ].contains(_permission.authorizationStatus)) {
-      NotificationType.makeTopic(ref);
+      NotificationType.makeTopic(ref, studentModel);
       _messaging.subscribeToTopic(NotificationType.notification);
       _messaging.subscribeToTopic(NotificationType.yearTopic);
       _messaging.subscribeToTopic(NotificationType.yearBranchTopic);
