@@ -9,12 +9,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tsec_app/models/student_model/student_model.dart';
 import 'package:tsec_app/provider/auth_provider.dart';
 import 'package:tsec_app/provider/firebase_provider.dart';
+import 'package:tsec_app/screens/profile_screen/widgets/profile_drop_down.dart';
 import 'package:tsec_app/screens/profile_screen/widgets/profile_screen_appbar.dart';
 import 'package:tsec_app/screens/profile_screen/widgets/profile_text_field.dart';
 import 'package:tsec_app/services/auth_service.dart';
 import 'package:tsec_app/widgets/custom_scaffold.dart';
 import '../../utils/image_pick.dart';
 import '../../utils/themes.dart';
+import '../../utils/department_enum.dart';
 
 class ProfilePage extends ConsumerStatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -31,6 +33,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
   final TextEditingController _divController = TextEditingController();
   final TextEditingController _gradyearController = TextEditingController();
   final TextEditingController _phoneNumController = TextEditingController();
+  final List departments = ["Comps", "Aids", "It", "Extc", "Chem"];
 
   Uint8List? _image;
   int _editCount = 0;
@@ -106,7 +109,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
       StudentModel student = StudentModel(
         div: _divController.text,
         batch: _batchController.text,
-        branch: convertFirstLetterToUpperCase(_branchController.text) ,
+        branch: convertFirstLetterToUpperCase(_branchController.text),
         name: _nameController.text,
         email: _emailController.text,
         gradyear: _gradyearController.text,
@@ -123,7 +126,8 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
             content: Text(
-                'You have already updated your profile as many times as possible')),
+                'You have already updated your profile as many times as possible'
+                )),
       );
     }
   }
@@ -265,12 +269,21 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                 //   label: 'Branch',
                 //   enabled: false,
                 // ),
-                ProfileTextField(
-                  isEditMode: _isEditMode,
-                  label: "Branch",
-                  controller: _branchController,
-                  // enabled: false,
-                ),
+
+                ProfileDropDown(
+                    controller: _branchController,
+                    label: "Branch",
+                    value: data.branch,
+                    isEditMode: _isEditMode,
+                    enabled: false,
+                    options: departments
+                    ),
+                // ProfileTextField(
+                //   isEditMode: _isEditMode,
+                //   label: "Branch",
+                //   controller: _branchController,
+                // enabled: false,
+                // ),
                 const SizedBox(height: 20),
                 ProfileTextField(
                   isEditMode: _isEditMode,
