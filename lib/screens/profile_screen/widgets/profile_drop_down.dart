@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:tsec_app/screens/department_screen/widgets/drop_down_menu_item.dart';
+import 'package:tsec_app/utils/themes.dart';
+import '../../../utils/themes.dart';
 
 class ProfileDropDown extends StatefulWidget {
   TextEditingController controller;
@@ -12,6 +14,7 @@ class ProfileDropDown extends StatefulWidget {
   String? Function(String?)? validator;
   bool isEditMode;
   List options;
+  ThemeMode theme;
 
   ProfileDropDown(
       {super.key,
@@ -21,7 +24,8 @@ class ProfileDropDown extends StatefulWidget {
       this.validator,
       required this.isEditMode,
       required this.options,
-      required this.value});
+      required this.value,
+      required this.theme});
 
   @override
   State<ProfileDropDown> createState() => _ProfileDropDownState();
@@ -35,7 +39,7 @@ class _ProfileDropDownState extends State<ProfileDropDown> {
       child: DropdownButtonFormField(
         items: widget.options
             .map((option) => DropdownMenuItem(
-                  child: Text(option),
+                  child: Text(option.toString()),
                   value: option,
                 ))
             .toList(),
@@ -49,18 +53,19 @@ class _ProfileDropDownState extends State<ProfileDropDown> {
           labelStyle: const TextStyle(
             color: Colors.grey,
           ),
-          border: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.grey[900] ?? Colors.grey),
+          border: const OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.grey),
           ),
           disabledBorder: const OutlineInputBorder(
             borderSide: BorderSide(color: Colors.grey),
           ),
           enabledBorder: const OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.white70),
+            borderSide: BorderSide(color: Colors.grey),
           ),
           labelText: widget.label,
         ),
-        dropdownColor: Colors.grey[900],
+        dropdownColor:
+            widget.theme.toString() == "ThemeMode.light" ? kWhite : kBlack,
       ),
     );
   }

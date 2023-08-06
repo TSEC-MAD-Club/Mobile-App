@@ -9,11 +9,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tsec_app/models/student_model/student_model.dart';
 import 'package:tsec_app/provider/auth_provider.dart';
 import 'package:tsec_app/provider/firebase_provider.dart';
+import 'package:tsec_app/provider/notification_provider.dart';
 import 'package:tsec_app/screens/profile_screen/widgets/profile_drop_down.dart';
 import 'package:tsec_app/screens/profile_screen/widgets/profile_screen_appbar.dart';
 import 'package:tsec_app/screens/profile_screen/widgets/profile_text_field.dart';
 import 'package:tsec_app/services/auth_service.dart';
 import 'package:tsec_app/widgets/custom_scaffold.dart';
+import '../../provider/theme_provider.dart';
 import '../../utils/image_pick.dart';
 import '../../utils/themes.dart';
 import '../../utils/department_enum.dart';
@@ -33,7 +35,8 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
   final TextEditingController _divController = TextEditingController();
   final TextEditingController _gradyearController = TextEditingController();
   final TextEditingController _phoneNumController = TextEditingController();
-  final List departments = ["Comps", "Aids", "It", "Extc", "Chem"];
+  final List _departments = ["Comps", "Aids", "It", "Extc", "Chem"];
+  DateTime now = DateTime.now();
 
   Uint8List? _image;
   int _editCount = 0;
@@ -55,6 +58,94 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
     setState(() {
       _isEditMode = true;
     });
+  }
+
+  List yearOptions() {
+    DateTime year = DateTime(now.year);
+    return List<String>.generate(
+        4, (i) => (int.parse(year.year.toString()) + i).toString());
+  }
+
+  List batchOption(batch) {
+    return List<String>.generate(4, (i) => '$batch${i + 1}');
+  }
+
+  List divisionOption() {
+    String currentYear = DateTime(now.year).year.toString();
+    String currentMonth = DateTime(now.month).month.toString();
+    String department = convertFirstLetterToUpperCase(_branchController.text);
+    String gradyear = _gradyearController.text;
+    List options = [_divController.text];
+
+    switch (department) {
+      case "Comps":
+        return ["C1", "C2", "C3"];
+
+      case "Chem":
+        return ["K"];
+
+      case "Extc":
+        return ["A"];
+
+      case "It":
+        if (int.parse(currentMonth) >= 6) {
+          if (gradyear == currentYear) {
+            options.addAll(["B1", "B2"]);
+            return options.toSet().toList();
+          } else if (gradyear == (int.parse(currentYear) + 1).toString()) {
+            options.addAll(["B1", "B2"]);
+            return options.toSet().toList();
+          } else if (gradyear == (int.parse(currentYear) + 2).toString()) {
+            options.addAll(["T1", "T2"]);
+            return options.toSet().toList();
+          } else if (gradyear == (int.parse(currentYear) + 3).toString()) {
+            options.addAll(["S1", "S2"]);
+            return options.toSet().toList();
+          }
+        } else {
+          if (gradyear == currentYear) {
+            options.addAll(["B1", "B2"]);
+            return options.toSet().toList();
+          } else if (gradyear == (int.parse(currentYear) + 1).toString()) {
+            options.addAll(["T1", "T2"]);
+            return options.toSet().toList();
+          } else if (gradyear == (int.parse(currentYear) + 2).toString()) {
+            options.addAll(["S1", "S2"]);
+            return options.toSet().toList();
+          }
+        }
+        break;
+
+      case "Aids":
+        if (int.parse(currentMonth) >= 6) {
+          if (gradyear == currentYear) {
+            options.addAll(["B"]);
+            return options.toSet().toList();
+          } else if (gradyear == (int.parse(currentYear) + 1).toString()) {
+            options.addAll(["B"]);
+            return options.toSet().toList();
+          } else if (gradyear == (int.parse(currentYear) + 2).toString()) {
+            options.addAll(["T1", "T2"]);
+            return options.toSet().toList();
+          } else if (gradyear == (int.parse(currentYear) + 3).toString()) {
+            options.addAll(["S1", "S2"]);
+            return options.toSet().toList();
+          }
+        } else {
+          if (gradyear == currentYear) {
+            options.addAll(["B"]);
+            return options.toSet().toList();
+          } else if (gradyear == (int.parse(currentYear) + 1).toString()) {
+            options.addAll(["T1", "T2"]);
+            return options.toSet().toList();
+          } else if (gradyear == (int.parse(currentYear) + 2).toString()) {
+            options.addAll(["S1", "S2"]);
+            return options.toSet().toList();
+          }
+        }
+    }
+
+    return [""];
   }
 
   void editProfileImage() async {
@@ -126,8 +217,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
             content: Text(
-                'You have already updated your profile as many times as possible'
-                )),
+                'You have already updated your profile as many times as possible')),
       );
     }
   }
@@ -135,6 +225,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     final StudentModel? data = ref.watch(studentModelProvider);
+    ThemeMode theme = ref.read(themeProvider);
     debugPrint(data?.updateCount?.toString());
     _nameController.text = data!.name;
     _emailController.text = data.email;
@@ -273,11 +364,11 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                 ProfileDropDown(
                     controller: _branchController,
                     label: "Branch",
-                    value: data.branch,
+                    value:
+                        convertFirstLetterToUpperCase(_branchController.text),
                     isEditMode: _isEditMode,
-                    enabled: false,
-                    options: departments
-                    ),
+                    theme: theme,
+                    options: _departments),
                 // ProfileTextField(
                 //   isEditMode: _isEditMode,
                 //   label: "Branch",
@@ -285,20 +376,25 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                 // enabled: false,
                 // ),
                 const SizedBox(height: 20),
-                ProfileTextField(
+                ProfileDropDown(
                   isEditMode: _isEditMode,
+                  value: _gradyearController.text,
+                  options: yearOptions(),
+                  theme: theme,
                   label: "Graduation Year",
                   controller: _gradyearController,
-                  enabled: false,
                 ),
                 // _buildTextField(
                 //   controller: _gradyearController,
                 //   label: 'Graduation Year',
-                //   enabled: false,
+                // enabled: false,
                 // ),
                 const SizedBox(height: 20),
-                ProfileTextField(
+                ProfileDropDown(
+                  value: convertFirstLetterToUpperCase(_divController.text),
+                  options: divisionOption(),
                   isEditMode: _isEditMode,
+                  theme: theme,
                   label: "Division",
                   controller: _divController,
                 ),
@@ -311,20 +407,20 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                   isEditMode: _isEditMode,
                   label: "Batch",
                   controller: _batchController,
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Please enter a batch';
-                    }
-                    if (value.length != 3) {
-                      return 'Batch should be a single capital letter followed by two digits';
-                    }
-                    final batchRegex = RegExp(r'^[A-Z][0-9]{2}$');
-                    if (!batchRegex.hasMatch(value)) {
-                      return 'Batch should be a single capital letter followed by two digits';
-                    }
-                    return null;
-                  },
-                  enabled: _isEditMode,
+                  // validator: (value) {
+                  //   if (value!.isEmpty) {
+                  //     return 'Please enter a batch';
+                  //   }
+                  //   if (value.length != 3) {
+                  //     return 'Batch should be a single capital letter followed by two digits';
+                  //   }
+                  //   final batchRegex = RegExp(r'^[A-Z][0-9]{2}$');
+                  //   if (!batchRegex.hasMatch(value)) {
+                  //     return 'Batch should be a single capital letter followed by two digits';
+                  //   }
+                  //   return null;
+                  // },
+                  // enabled: _isEditMode,
                 ),
                 // _buildTextField(
                 //   controller: _batchController,

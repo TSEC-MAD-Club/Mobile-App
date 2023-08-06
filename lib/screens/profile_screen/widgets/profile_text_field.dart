@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ProfileTextField extends StatefulWidget {
   TextEditingController controller;
@@ -39,7 +40,7 @@ class _ProfileTextFieldState extends State<ProfileTextField> {
           borderSide: BorderSide(color: Colors.grey),
         ),
         enabledBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.white70),
+          borderSide: BorderSide(color:Colors.grey),
         ),
         labelText: widget.label,
       ),
