@@ -1,10 +1,5 @@
-import 'dart:ffi';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:tsec_app/screens/department_screen/widgets/drop_down_menu_item.dart';
 import 'package:tsec_app/utils/themes.dart';
-import '../../../utils/themes.dart';
 
 class ProfileDropDown extends StatefulWidget {
   TextEditingController controller;
@@ -65,7 +60,7 @@ class _ProfileDropDownState extends State<ProfileDropDown> {
           labelText: widget.label,
         ),
         dropdownColor:
-            widget.theme.toString() == "ThemeMode.light" ? kWhite : kBlack,
+            widget.theme.toString() == "ThemeMode.light" ? kWhite : kLightBlack,
       ),
     );
   }

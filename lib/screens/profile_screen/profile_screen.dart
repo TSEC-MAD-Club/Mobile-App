@@ -71,8 +71,9 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
   }
 
   List divisionOption() {
-    String currentYear = DateTime(now.year).year.toString();
-    String currentMonth = DateTime(now.month).month.toString();
+    DateTime date = DateTime(now.year,now.month);
+    String currentYear = date.year.toString();
+    String currentMonth = date.month.toString();
     String department = convertFirstLetterToUpperCase(_branchController.text);
     String gradyear = _gradyearController.text;
     List options = [_divController.text];
@@ -145,7 +146,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
         }
     }
 
-    return [""];
+    return ["S1","S2","T1","T2","B1","B2","C1","C2","C3","K","A"];
   }
 
   void editProfileImage() async {
@@ -217,7 +218,8 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
             content: Text(
-                'You have already updated your profile as many times as possible')),
+                'You have already updated your profile as many times as possible'
+                )),
       );
     }
   }
