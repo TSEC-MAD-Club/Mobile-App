@@ -84,44 +84,49 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
   void _saveChanges(WidgetRef ref) async {
     final StudentModel? data = ref.watch(studentModelProvider);
     bool b = data!.updateCount != null ? data.updateCount! < 2 : true;
-    if (b) {
-      if (data.updateCount == null) {
-        data.updateCount = 1;
-      } else {
-        int num = data.updateCount!;
-        data.updateCount = num + 1;
-      }
-      StudentModel student = StudentModel(
-          div: _divController.text,
-          batch: _batchController.text,
-          branch: convertFirstLetterToUpperCase(_branchController.text),
-          name: _nameController.text,
-          email: _emailController.text,
-          gradyear: _gradyearController.text,
-          phoneNum: _phoneNumController.text,
-          updateCount: data.updateCount,
-          address: _addressController.text,
-          homeStation: _homeStationController.text,
-          dateOfBirth: _dateOfBirthController.text);
-
-      if (_formKey.currentState!.validate()) {
-        ref
-            .watch(authProvider.notifier)
-            .updateUserDetails(student, ref, context);
-        setState(() {
-          _isEditMode = false;
-          isExpanded = false;
-          isBlurred = false;
-        });
-      }
+    // if (b) {
+    if (data.updateCount == null) {
+      data.updateCount = 1;
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text(
-              'You have already updated your profile as many times as possible'),
-        ),
-      );
+      int num = data.updateCount!;
+      data.updateCount = num + 1;
     }
+    StudentModel student = StudentModel(
+        div: _divController.text,
+        batch: _batchController.text,
+        branch: convertFirstLetterToUpperCase(_branchController.text),
+        name: _nameController.text,
+        email: _emailController.text,
+        gradyear: _gradyearController.text,
+        phoneNum: _phoneNumController.text,
+        updateCount: data.updateCount,
+        address: _addressController.text,
+        homeStation: _homeStationController.text,
+        dateOfBirth: _dateOfBirthController.text);
+
+    if (_formKey.currentState!.validate()) {
+      ref.watch(authProvider.notifier).updateUserDetails(student, ref, context);
+      setState(() {
+        _isEditMode = false;
+        isExpanded = false;
+        isBlurred = false;
+      });
+    }
+    // } else {
+    //   ScaffoldMessenger.of(context).showSnackBar(
+    //     const SnackBar(
+    //       content: Text(
+    //           'You have already updated your profile as many times as possible'),
+    //     ),
+    //   );
+    // }
+    // } else {
+    //   ScaffoldMessenger.of(context).showSnackBar(
+    //     const SnackBar(
+    //         content: Text(
+    //             'You have already updated your profile as many times as possible')),
+    //   );
+    // }
   }
 
   bool isExpanded = false;

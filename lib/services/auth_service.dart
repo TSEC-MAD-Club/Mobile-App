@@ -62,7 +62,11 @@ class AuthService {
           await firebaseFirestore.collection("Students ").doc(user!.uid).get();
 
       final studentDoc = studentSnap.data();
-      studentModel = StudentModel.fromJson(studentDoc!);
+      if (studentDoc != null) {
+        studentModel = StudentModel.fromJson(studentDoc);
+      } else {
+        studentModel = null;
+      }
     } on FirebaseException catch (e) {
       showSnackBar(
           context, e.stackTrace.toString() + " " + e.message.toString());
