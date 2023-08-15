@@ -1,17 +1,11 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:intl/intl.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tsec_app/models/student_model/student_model.dart';
 import 'package:tsec_app/provider/auth_provider.dart';
-import 'package:tsec_app/provider/firebase_provider.dart';
 import 'package:tsec_app/screens/profile_screen/widgets/profile_screen_appbar.dart';
 import 'package:tsec_app/screens/profile_screen/widgets/profile_text_field.dart';
-import 'package:tsec_app/services/auth_service.dart';
 import 'package:tsec_app/widgets/custom_scaffold.dart';
 import '../../utils/image_pick.dart';
 import '../../utils/themes.dart';
@@ -106,7 +100,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
       StudentModel student = StudentModel(
         div: _divController.text,
         batch: _batchController.text,
-        branch: convertFirstLetterToUpperCase(_branchController.text) ,
+        branch: convertFirstLetterToUpperCase(_branchController.text),
         name: _nameController.text,
         email: _emailController.text,
         gradyear: _gradyearController.text,
@@ -122,8 +116,9 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-            content: Text(
-                'You have already updated your profile as many times as possible')),
+          content: Text(
+              'You have already updated your profile as many times as possible'),
+        ),
       );
     }
   }
@@ -143,194 +138,134 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
       appBar: const ProfilePageAppBar(title: "Profile"),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.all(18),
           child: Form(
             key: _formKey,
             child: Column(
               children: [
-                SizedBox(
-                  height: 115,
-                  width: 115,
-                  child: Stack(
-                    clipBehavior: Clip.none,
-                    fit: StackFit.expand,
-                    children: [
-                      _image != null
-                          ? CircleAvatar(
-                              backgroundImage: MemoryImage(_image!),
-                            )
-                          : const CircleAvatar(
-                              backgroundImage:
-                                  AssetImage("assets/images/pfpholder.jpg"),
-                            ),
-                      Positioned(
-                        bottom: 0,
-                        right: -25,
-                        child: RawMaterialButton(
-                          onPressed: _isEditMode ? editProfileImage : null,
-                          elevation: 2.0,
-                          fillColor: kLightModeShadowColor,
-                          child: const Icon(
-                            Icons.add_a_photo,
-                            color: Colors.blue,
+                Stack(
+                  clipBehavior: Clip.none,
+                  alignment: Alignment.center,
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(15),
+                      child: Container(
+                        width: double.infinity,
+                        height: 150,
+                        decoration: const BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage("assets/images/tsecImages.png"),
+                            fit: BoxFit.cover,
                           ),
-                          padding: const EdgeInsets.all(6.0),
-                          shape: const CircleBorder(),
                         ),
                       ),
-                    ],
+                    ),
+                    Positioned(
+                      bottom: -50,
+                      child: Container(
+                        width: 100, // Adjust the width and height as needed
+                        height: 100,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: Theme.of(context).scaffoldBackgroundColor,
+                            width: 4, // Adjust the border width as needed
+                          ),
+                        ),
+                        child: buildProfileImages(),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 50,
+                ),
+                Text(
+                  data.name,
+                  style: Theme.of(context).textTheme.headlineSmall,
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: 380,
+                  decoration: BoxDecoration(
+                    color: Colors.grey[900],
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ProfileTextField(
+                            isEditMode: _isEditMode,
+                            label: "Email",
+                            controller: _emailController,
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'Please enter an email';
+                              }
+                              if (!isValidEmail(value)) {
+                                return 'Please enter a valid email';
+                              }
+                              return null;
+                            },
+                          ),
+                          ProfileTextField(
+                            isEditMode: _isEditMode,
+                            label: "Phone Number",
+                            controller: _phoneNumController,
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'Please enter a phone number';
+                              }
+                              if (!isValidPhoneNumber(value)) {
+                                return 'Please enter a valid phone number';
+                              }
+                              return null;
+                            },
+                          ),
+                          ProfileTextField(
+                            isEditMode: _isEditMode,
+                            label: "Branch",
+                            controller: _branchController,
+                            // enabled: false,
+                          ),
+                          ProfileTextField(
+                            isEditMode: _isEditMode,
+                            label: "Graduation Year",
+                            controller: _gradyearController,
+                            enabled: false,
+                          ),
+                          ProfileTextField(
+                            isEditMode: _isEditMode,
+                            label: "Division",
+                            controller: _divController,
+                          ),
+                          ProfileTextField(
+                            isEditMode: _isEditMode,
+                            label: "Batch",
+                            controller: _batchController,
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'Please enter a batch';
+                              }
+                              if (value.length != 3) {
+                                return 'Batch should be a single capital letter followed by two digits';
+                              }
+                              final batchRegex = RegExp(r'^[A-Z][0-9]{2}$');
+                              if (!batchRegex.hasMatch(value)) {
+                                return 'Batch should be a single capital letter followed by two digits';
+                              }
+                              return null;
+                            },
+                            enabled: _isEditMode,
+                          ),
+                        ]),
                   ),
                 ),
-                const SizedBox(height: 20),
-                // _buildTextField(
-                //   controller: _nameController,
-                //   label: 'Name',
-                //   validator: (value) {
-                //     if (value!.isEmpty) {
-                //       return 'Please enter a name';
-                //     }
-                //     return null;
-                //   },
-                // ),
-                ProfileTextField(
-                  isEditMode: _isEditMode,
-                  label: "Name",
-                  controller: _nameController,
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Please enter a name';
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 20),
-                // _buildTextField(
-                //   controller: _emailController,
-                //   label: 'Email',
-                //   validator: (value) {
-                //     if (value!.isEmpty) {
-                //       return 'Please enter an email';
-                //     }
-                //     if (!isValidEmail(value)) {
-                //       return 'Please enter a valid email';
-                //     }
-                //     return null;
-                //   },
-                // ),
-                ProfileTextField(
-                  isEditMode: _isEditMode,
-                  label: "Email",
-                  controller: _emailController,
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Please enter an email';
-                    }
-                    if (!isValidEmail(value)) {
-                      return 'Please enter a valid email';
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 20),
-                ProfileTextField(
-                  isEditMode: _isEditMode,
-                  label: "Phone Number",
-                  controller: _phoneNumController,
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Please enter a phone number';
-                    }
-                    if (!isValidPhoneNumber(value)) {
-                      return 'Please enter a valid phone number';
-                    }
-                    return null;
-                  },
-                ),
-                // _buildTextField(
-                //   controller: _phoneNumController,
-                //   label: 'Phone Number',
-                //   validator: (value) {
-                //     if (value!.isEmpty) {
-                //       return 'Please enter a phone number';
-                //     }
-                //     if (!isValidPhoneNumber(value)) {
-                //       return 'Please enter a valid phone number';
-                //     }
-                //     return null;
-                //   },
-                // ),
-                const SizedBox(height: 20),
-                // _buildTextField(
-                //   controller: _branchController,
-                //   label: 'Branch',
-                //   enabled: false,
-                // ),
-                ProfileTextField(
-                  isEditMode: _isEditMode,
-                  label: "Branch",
-                  controller: _branchController,
-                  // enabled: false,
-                ),
-                const SizedBox(height: 20),
-                ProfileTextField(
-                  isEditMode: _isEditMode,
-                  label: "Graduation Year",
-                  controller: _gradyearController,
-                  enabled: false,
-                ),
-                // _buildTextField(
-                //   controller: _gradyearController,
-                //   label: 'Graduation Year',
-                //   enabled: false,
-                // ),
-                const SizedBox(height: 20),
-                ProfileTextField(
-                  isEditMode: _isEditMode,
-                  label: "Division",
-                  controller: _divController,
-                ),
-                // _buildTextField(
-                //   controller: _divController,
-                //   label: 'Division',
-                // ),
-                const SizedBox(height: 20),
-                ProfileTextField(
-                  isEditMode: _isEditMode,
-                  label: "Batch",
-                  controller: _batchController,
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Please enter a batch';
-                    }
-                    if (value.length != 3) {
-                      return 'Batch should be a single capital letter followed by two digits';
-                    }
-                    final batchRegex = RegExp(r'^[A-Z][0-9]{2}$');
-                    if (!batchRegex.hasMatch(value)) {
-                      return 'Batch should be a single capital letter followed by two digits';
-                    }
-                    return null;
-                  },
-                  enabled: _isEditMode,
-                ),
-                // _buildTextField(
-                //   controller: _batchController,
-                //   label: 'Batch',
-                //   validator: (value) {
-                //     if (value!.isEmpty) {
-                //       return 'Please enter a batch';
-                //     }
-                //     if (value.length != 3) {
-                //       return 'Batch should be a single capital letter followed by two digits';
-                //     }
-                //     final batchRegex = RegExp(r'^[A-Z][0-9]{2}$');
-                //     if (!batchRegex.hasMatch(value)) {
-                //       return 'Batch should be a single capital letter followed by two digits';
-                //     }
-                //     return null;
-                //   },
-                //   enabled: _isEditMode,
-                // ),
                 const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
@@ -350,6 +285,37 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
     );
   }
 
+  Widget buildProfileImages() {
+    return Stack(
+      children: [
+        _image != null
+            ? CircleAvatar(
+                radius: 50,
+                backgroundImage: MemoryImage(_image!),
+              )
+            : const CircleAvatar(
+                radius: 50,
+                backgroundImage: AssetImage("assets/images/pfpholder.jpg"),
+              ),
+        Positioned(
+          bottom: 0,
+          right: -30,
+          child: RawMaterialButton(
+            onPressed: _isEditMode ? editProfileImage : null,
+            elevation: 2.0,
+            fillColor: kLightModeShadowColor,
+            child: const Icon(
+              Icons.add_a_photo,
+              color: Colors.blue,
+            ),
+            padding: const EdgeInsets.all(3.0),
+            shape: const CircleBorder(),
+          ),
+        ),
+      ],
+    );
+  }
+}
   // Widget _buildTextField({
   //   required TextEditingController controller,
   //   required String label,
@@ -377,4 +343,3 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
   //     validator: validator,
   //   );
   // }
-}

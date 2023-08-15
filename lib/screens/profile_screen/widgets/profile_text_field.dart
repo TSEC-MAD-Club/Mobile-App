@@ -32,15 +32,15 @@ class _ProfileTextFieldState extends State<ProfileTextField> {
         labelStyle: const TextStyle(
           color: Colors.grey,
         ),
-        border: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.grey[900] ?? Colors.grey),
-        ),
-        disabledBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.grey),
-        ),
-        enabledBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.white70),
-        ),
+        // border: OutlineInputBorder(
+        //   borderSide: BorderSide(color: Colors.grey[900] ?? Colors.grey),
+        // ),
+        // disabledBorder: const OutlineInputBorder(
+        //   borderSide: BorderSide(color: Colors.grey),
+        // ),
+        // enabledBorder: const OutlineInputBorder(
+        //   borderSide: BorderSide(color: Colors.white70),
+        // ),
         labelText: widget.label,
       ),
       validator: widget.validator,
