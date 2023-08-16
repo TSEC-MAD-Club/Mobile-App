@@ -15,6 +15,12 @@ class StudentModel {
   final String name;
   @JsonKey(name: "email")
   final String email;
+  @JsonKey(name: "address")
+  final String? address;
+  @JsonKey(name: "homeStation")
+  final String? homeStation;
+  @JsonKey(name: "dateOfBirth")
+  final String? dateOfBirth;
   @JsonKey(name: "gradyear")
   final String gradyear;
   @JsonKey(name: "phoneNo")
@@ -25,6 +31,9 @@ class StudentModel {
     required this.branch,
     required this.name,
     required this.email,
+    required this.address,
+    required this.homeStation,
+    required this.dateOfBirth,
     required this.gradyear,
     required this.phoneNum,
     required this.div,

@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 class CustomTextWithDivider extends StatefulWidget {
   final String label;
   final String value;
-  final bool showDivider; // New field to enable/disable Divider
+  // final bool showDivider; // New field to enable/disable Divider
 
   const CustomTextWithDivider({
     Key? key, // Don't forget to include the key parameter
     required this.label,
     required this.value,
-    this.showDivider = true, // Default value is true
+    // this.showDivider = true, // Default value is true
   }) : super(key: key);
 
   @override
@@ -19,19 +19,30 @@ class CustomTextWithDivider extends StatefulWidget {
 class _CustomTextWithDividerState extends State<CustomTextWithDivider> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          widget.label,
-        ),
-        Text(widget.value),
-        if (widget.showDivider) // Conditionally display the Divider
-          const Divider(
-            thickness: 1,
-            color: Colors.grey,
+    return Padding(
+      padding: const EdgeInsets.only(left: 15, right: 15, top: 7),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(widget.label,
+              style: Theme.of(context)
+                  .textTheme
+                  .titleSmall
+                  ?.copyWith(color: Colors.grey)),
+          Text(
+            widget.value,
+            style: Theme.of(context)
+                .textTheme
+                .headlineSmall
+                ?.copyWith(fontSize: 15, fontWeight: FontWeight.normal),
           ),
-      ],
+          // if (widget.showDivider) // Conditionally display the Divider
+          //   Divider(
+          //     thickness: 1,
+          //     color: Colors.grey.shade800,
+          //   ),
+        ],
+      ),
     );
   }
 }

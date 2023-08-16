@@ -30,6 +30,9 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
   final TextEditingController _divController = TextEditingController();
   final TextEditingController _gradyearController = TextEditingController();
   final TextEditingController _phoneNumController = TextEditingController();
+  final TextEditingController _addressController = TextEditingController();
+  final TextEditingController _homeStationController = TextEditingController();
+  final TextEditingController _dateOfBirthController = TextEditingController();
 
   Uint8List? _image;
   int _editCount = 0;
@@ -78,24 +81,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
     return convertedString;
   }
 
-  bool isExpanded = false;
-  bool isBlurred = false;
-
   void _saveChanges(WidgetRef ref) async {
-    // final user = ref.read(userProvider.notifier).state;
-    // final StudentModel? data = ref.read(studentModelProvider.notifier).state;
-    //
-    // final userDoc =
-    //     FirebaseFirestore.instance.collection('Students ').doc(user!.uid);
-    //
-    // final updatedData = {
-    //   'Name': _nameController.text,
-    //   'email': _emailController.text,
-    //   'div': _divController.text,
-    //   'phoneNo': _phoneNumController.text,
-    //   'Batch': _batchController.text,
-    // };
-
     final StudentModel? data = ref.watch(studentModelProvider);
     bool b = data!.updateCount != null ? data.updateCount! < 2 : true;
     if (b) {
@@ -106,15 +92,17 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
         data.updateCount = num + 1;
       }
       StudentModel student = StudentModel(
-        div: _divController.text,
-        batch: _batchController.text,
-        branch: convertFirstLetterToUpperCase(_branchController.text),
-        name: _nameController.text,
-        email: _emailController.text,
-        gradyear: _gradyearController.text,
-        phoneNum: _phoneNumController.text,
-        updateCount: data.updateCount,
-      );
+          div: _divController.text,
+          batch: _batchController.text,
+          branch: convertFirstLetterToUpperCase(_branchController.text),
+          name: _nameController.text,
+          email: _emailController.text,
+          gradyear: _gradyearController.text,
+          phoneNum: _phoneNumController.text,
+          updateCount: data.updateCount,
+          address: _addressController.text,
+          homeStation: _homeStationController.text,
+          dateOfBirth: _dateOfBirthController.text);
 
       if (_formKey.currentState!.validate()) {
         ref
@@ -136,6 +124,9 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
     }
   }
 
+  bool isExpanded = false;
+  bool isBlurred = false;
+
   @override
   Widget build(BuildContext context) {
     final StudentModel? data = ref.watch(studentModelProvider);
@@ -147,67 +138,73 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
     _divController.text = data.div;
     _gradyearController.text = data.gradyear;
     _phoneNumController.text = data.phoneNum;
+    _addressController.text = data.address ?? '';
+    _homeStationController.text = data.homeStation ?? '';
+    _dateOfBirthController.text = data.dateOfBirth ?? '';
+
     return CustomScaffold(
       appBar: const ProfilePageAppBar(title: "Profile"),
       body: Padding(
         padding: const EdgeInsets.all(15.0),
-        child: Stack(
-          children: [
-            Column(
-              children: [
-                Stack(
-                  clipBehavior: Clip.none,
-                  alignment: Alignment.center,
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(15),
-                      child: Container(
-                        width: double.infinity,
-                        height: 150,
-                        decoration: const BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage("assets/images/tsecImages.png"),
-                            fit: BoxFit.cover,
+        child: Form(
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              Column(
+                children: [
+                  Stack(
+                    clipBehavior: Clip.none,
+                    alignment: Alignment.center,
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(15),
+                        child: Container(
+                          width: double.infinity,
+                          height: 150,
+                          decoration: const BoxDecoration(
+                            image: DecorationImage(
+                              image: AssetImage("assets/images/tsecImages.png"),
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    Positioned(
-                      bottom: -50,
-                      child: Container(
-                        width: 100, // Adjust the width and height as needed
-                        height: 100,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                            color: Theme.of(context).scaffoldBackgroundColor,
-                            width: 4, // Adjust the border width as needed
+                      Positioned(
+                        bottom: -50,
+                        child: Container(
+                          width: 100, // Adjust the width and height as needed
+                          height: 100,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                              color: Theme.of(context).scaffoldBackgroundColor,
+                              width: 4, // Adjust the border width as needed
+                            ),
                           ),
+                          child: buildProfileImages(),
                         ),
-                        child: buildProfileImages(),
                       ),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 50,
-                ),
-                Text(
-                  data.name,
-                  style: Theme.of(context).textTheme.headlineSmall,
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: 380,
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).primaryColor,
-                    borderRadius: BorderRadius.circular(30),
+                    ],
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(15.0),
+                  const SizedBox(
+                    height: 50,
+                  ),
+                  Text(
+                    data.name,
+                    style: Theme.of(context).textTheme.headlineSmall,
+                  ),
+                  // TODO: Add HomeStation ex : Virar
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: 400,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey.shade800),
+                      color: Theme.of(context).primaryColor,
+                      borderRadius: BorderRadius.circular(30),
+                    ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -215,21 +212,49 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                           label: "Email",
                           value: data.email,
                         ),
+                        Divider(
+                          thickness: 1,
+                          color: Colors.grey.shade800,
+                        ),
                         CustomTextWithDivider(
                           label: "Phone Number",
                           value: data.phoneNum,
+                        ),
+                        Divider(
+                          thickness: 1,
+                          color: Colors.grey.shade800,
+                        ),
+                        CustomTextWithDivider(
+                          label: "Date of Birth",
+                          value: data.dateOfBirth ?? " ",
+                        ),
+                        Divider(
+                          thickness: 1,
+                          color: Colors.grey.shade800,
                         ),
                         CustomTextWithDivider(
                           label: "Branch",
                           value: data.branch,
                         ),
+                        Divider(
+                          thickness: 1,
+                          color: Colors.grey.shade800,
+                        ),
                         CustomTextWithDivider(
                           label: "Graduation Year",
                           value: data.gradyear,
                         ),
+                        Divider(
+                          thickness: 1,
+                          color: Colors.grey.shade800,
+                        ),
                         CustomTextWithDivider(
                           label: "Division",
                           value: data.div,
+                        ),
+                        Divider(
+                          thickness: 1,
+                          color: Colors.grey.shade800,
                         ),
                         CustomTextWithDivider(
                           label: "Batch",
@@ -238,40 +263,35 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                       ],
                     ),
                   ),
-                ),
-                const SizedBox(height: 20),
-              ],
-            ),
-            isBlurred
-                ? BackdropFilter(
-                    filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
-                    child: Container(
-                      color: Colors.black.withOpacity(0.5),
-                      width: double.infinity,
-                      height: double.infinity,
-                    ),
-                  )
-                : const SizedBox.shrink(),
-            Positioned(
-              bottom: 10,
-              child: Center(
-                child: isExpanded
-                    ? Align(
-                        alignment: Alignment.topCenter,
-                        child: AnimatedContainer(
+                  const SizedBox(height: 20),
+                ],
+              ),
+              isBlurred
+                  ? BackdropFilter(
+                      filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+                      child: Container(
+                        width: double.infinity,
+                        height: double.infinity,
+                      ),
+                    )
+                  : const SizedBox.shrink(),
+              Positioned(
+                bottom: 0,
+                left: 10,
+                right: 10,
+                child: Form(
+                  key: _formKey,
+                  child: isExpanded
+                      ? AnimatedContainer(
                           duration: const Duration(milliseconds: 500),
                           curve: Curves.easeInOut,
                           width: 500,
-                          height: 650,
+                          height: 680,
+                          //padding: const EdgeInsets.only(top: 10),
                           decoration: BoxDecoration(
-                            color: Theme.of(context).primaryColorDark,
-                            borderRadius: BorderRadius.circular(10.0),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.3),
-                                blurRadius: 10.0,
-                              ),
-                            ],
+                            border: Border.all(color: Colors.grey.shade800),
+                            color: Theme.of(context).primaryColor,
+                            borderRadius: BorderRadius.circular(30),
                           ),
                           child: Padding(
                             padding: const EdgeInsets.all(10.0),
@@ -297,36 +317,50 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                       return 'Please enter an email';
                                     }
                                     if (!isValidEmail(value)) {
-                                      return 'Please enter a valid email';
+                                      return 'Please enter a Valid Email';
                                     }
                                     return null;
                                   },
                                 ),
                                 ProfileTextField(
+                                  controller: _addressController,
+                                  label: 'Address',
                                   isEditMode: _isEditMode,
-                                  label: "Phone Number",
-                                  controller: _phoneNumController,
                                   validator: (value) {
                                     if (value!.isEmpty) {
-                                      return 'Please enter a phone number';
-                                    }
-                                    if (!isValidPhoneNumber(value)) {
-                                      return 'Please enter a valid phone number';
+                                      return 'Please enter your Address';
                                     }
                                     return null;
                                   },
                                 ),
                                 ProfileTextField(
+                                  controller: _homeStationController,
+                                  label: 'Home Station',
                                   isEditMode: _isEditMode,
-                                  label: "Phone Number",
-                                  controller: _phoneNumController,
                                   validator: (value) {
                                     if (value!.isEmpty) {
-                                      return 'Please enter a phone number';
+                                      return 'Please enter your Home Station';
                                     }
-                                    if (!isValidPhoneNumber(value)) {
-                                      return 'Please enter a valid phone number';
+                                    return null;
+                                  },
+                                ),
+                                ProfileTextField(
+                                  controller: _dateOfBirthController,
+                                  label: 'Date of Birth',
+                                  isEditMode: _isEditMode,
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return 'Please enter Date Of Birth';
                                     }
+                                    // Regular expression to match the desired DOB format: 20 August 2003
+                                    const pattern =
+                                        r'^(0[1-9]|[12][0-9]|3[01]) (January|February|March|April|May|June|July|August|September|October|November|December) \d{4}$';
+                                    final regex = RegExp(pattern);
+
+                                    if (!regex.hasMatch(value)) {
+                                      return 'Invalid Date Of Birth format. Please use the format: 20 August 2003';
+                                    }
+
                                     return null;
                                   },
                                 ),
@@ -385,20 +419,20 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                   height: 15,
                                 ),
                                 Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Center(
-                                      child: ElevatedButton(
-                                          onPressed: () {
-                                            if (_isEditMode) {
-                                              _saveChanges(ref);
-                                            }
-                                          },
-                                          style: ElevatedButton.styleFrom(
-                                              backgroundColor: Colors.green),
-                                          child: const Text(
-                                            "Save Changes",
-                                          )),
-                                    ),
+                                    ElevatedButton(
+                                        onPressed: () {
+                                          if (_isEditMode) {
+                                            _saveChanges(ref);
+                                          }
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.green),
+                                        child: const Text(
+                                          "Save Changes",
+                                        )),
                                     IconButton(
                                       onPressed: () {
                                         setState(() {
@@ -413,30 +447,36 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                         color: Colors.white,
                                         size: 30,
                                       ), // Use Icon widget to specify the icon
+                                    ),
+                                    SizedBox(
+                                      width: 10,
                                     )
                                   ],
                                 )
                               ],
                             ),
                           ),
+                        )
+                      : Align(
+                          alignment: Alignment.bottomCenter,
+                          child: ElevatedButton(
+                              onPressed: () {
+                                if (!_isEditMode) {
+                                  enableEditing();
+                                  setState(() {
+                                    isExpanded = true;
+                                    isBlurred = true;
+                                    _isEditMode = true;
+                                  });
+                                }
+                              },
+                              child: //Text(_isEditMode ? 'Save Changes' : 'Edit'),
+                                  const Text("EDIT")),
                         ),
-                      )
-                    : ElevatedButton(
-                        onPressed: () {
-                          if (!_isEditMode) {
-                            enableEditing();
-                            setState(() {
-                              isExpanded = true;
-                              isBlurred = true;
-                              _isEditMode = true;
-                            });
-                          }
-                        },
-                        child: //Text(_isEditMode ? 'Save Changes' : 'Edit'),
-                            const Text("EDIT")),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
