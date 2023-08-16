@@ -1,9 +1,14 @@
+// ignore_for_file: lines_longer_than_80_chars
+
+import 'dart:ui';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tsec_app/models/student_model/student_model.dart';
 import 'package:tsec_app/provider/auth_provider.dart';
+import 'package:tsec_app/screens/profile_screen/widgets/customTextWithDivider.dart';
 import 'package:tsec_app/screens/profile_screen/widgets/profile_screen_appbar.dart';
 import 'package:tsec_app/screens/profile_screen/widgets/profile_text_field.dart';
 import 'package:tsec_app/widgets/custom_scaffold.dart';
@@ -73,6 +78,9 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
     return convertedString;
   }
 
+  bool isExpanded = false;
+  bool isBlurred = false;
+
   void _saveChanges(WidgetRef ref) async {
     // final user = ref.read(userProvider.notifier).state;
     // final StudentModel? data = ref.read(studentModelProvider.notifier).state;
@@ -112,6 +120,11 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
         ref
             .watch(authProvider.notifier)
             .updateUserDetails(student, ref, context);
+        setState(() {
+          _isEditMode = false;
+          isExpanded = false;
+          isBlurred = false;
+        });
       }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -136,12 +149,11 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
     _phoneNumController.text = data.phoneNum;
     return CustomScaffold(
       appBar: const ProfilePageAppBar(title: "Profile"),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(18),
-          child: Form(
-            key: _formKey,
-            child: Column(
+      body: Padding(
+        padding: const EdgeInsets.all(15.0),
+        child: Stack(
+          children: [
+            Column(
               children: [
                 Stack(
                   clipBehavior: Clip.none,
@@ -191,95 +203,212 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                   width: MediaQuery.of(context).size.width,
                   height: 380,
                   decoration: BoxDecoration(
-                    color: Colors.grey[900],
+                    color: Theme.of(context).primaryColor,
                     borderRadius: BorderRadius.circular(30),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.all(10.0),
+                    padding: const EdgeInsets.all(15.0),
                     child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ProfileTextField(
-                            isEditMode: _isEditMode,
-                            label: "Email",
-                            controller: _emailController,
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return 'Please enter an email';
-                              }
-                              if (!isValidEmail(value)) {
-                                return 'Please enter a valid email';
-                              }
-                              return null;
-                            },
-                          ),
-                          ProfileTextField(
-                            isEditMode: _isEditMode,
-                            label: "Phone Number",
-                            controller: _phoneNumController,
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return 'Please enter a phone number';
-                              }
-                              if (!isValidPhoneNumber(value)) {
-                                return 'Please enter a valid phone number';
-                              }
-                              return null;
-                            },
-                          ),
-                          ProfileTextField(
-                            isEditMode: _isEditMode,
-                            label: "Branch",
-                            controller: _branchController,
-                            // enabled: false,
-                          ),
-                          ProfileTextField(
-                            isEditMode: _isEditMode,
-                            label: "Graduation Year",
-                            controller: _gradyearController,
-                            enabled: false,
-                          ),
-                          ProfileTextField(
-                            isEditMode: _isEditMode,
-                            label: "Division",
-                            controller: _divController,
-                          ),
-                          ProfileTextField(
-                            isEditMode: _isEditMode,
-                            label: "Batch",
-                            controller: _batchController,
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return 'Please enter a batch';
-                              }
-                              if (value.length != 3) {
-                                return 'Batch should be a single capital letter followed by two digits';
-                              }
-                              final batchRegex = RegExp(r'^[A-Z][0-9]{2}$');
-                              if (!batchRegex.hasMatch(value)) {
-                                return 'Batch should be a single capital letter followed by two digits';
-                              }
-                              return null;
-                            },
-                            enabled: _isEditMode,
-                          ),
-                        ]),
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        CustomTextWithDivider(
+                          label: "Email",
+                          value: data.email,
+                        ),
+                        CustomTextWithDivider(
+                          label: "Phone Number",
+                          value: data.phoneNum,
+                        ),
+                        CustomTextWithDivider(
+                          label: "Branch",
+                          value: data.branch,
+                        ),
+                        CustomTextWithDivider(
+                          label: "Graduation Year",
+                          value: data.gradyear,
+                        ),
+                        CustomTextWithDivider(
+                          label: "Division",
+                          value: data.div,
+                        ),
+                        CustomTextWithDivider(
+                          label: "Batch",
+                          value: data.batch,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 const SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () {
-                    if (_isEditMode) {
-                      _saveChanges(ref);
-                    } else {
-                      enableEditing();
-                    }
-                  },
-                  child: Text(_isEditMode ? 'Save Changes' : 'Edit'),
-                ),
               ],
             ),
-          ),
+            isBlurred
+                ? BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+                    child: Container(
+                      color: Colors.black.withOpacity(0.5),
+                      width: double.infinity,
+                      height: double.infinity,
+                    ),
+                  )
+                : const SizedBox.shrink(),
+            Positioned(
+              bottom: 10,
+              child: Center(
+                child: isExpanded
+                    ? Align(
+                        alignment: Alignment.topCenter,
+                        child: AnimatedContainer(
+                          duration: const Duration(milliseconds: 500),
+                          curve: Curves.easeInOut,
+                          width: 500,
+                          height: 500,
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).primaryColorDark,
+                            borderRadius: BorderRadius.circular(10.0),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.3),
+                                blurRadius: 10.0,
+                              ),
+                            ],
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Column(
+                              children: [
+                                ProfileTextField(
+                                  isEditMode: _isEditMode,
+                                  label: "Name",
+                                  controller: _nameController,
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return 'Please enter a name';
+                                    }
+                                    return null;
+                                  },
+                                ),
+                                ProfileTextField(
+                                  isEditMode: _isEditMode,
+                                  label: "Email",
+                                  controller: _emailController,
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return 'Please enter an email';
+                                    }
+                                    if (!isValidEmail(value)) {
+                                      return 'Please enter a valid email';
+                                    }
+                                    return null;
+                                  },
+                                ),
+                                ProfileTextField(
+                                  isEditMode: _isEditMode,
+                                  label: "Phone Number",
+                                  controller: _phoneNumController,
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return 'Please enter a phone number';
+                                    }
+                                    if (!isValidPhoneNumber(value)) {
+                                      return 'Please enter a valid phone number';
+                                    }
+                                    return null;
+                                  },
+                                ),
+                                ProfileTextField(
+                                  isEditMode: _isEditMode,
+                                  label: "Branch",
+                                  controller: _branchController,
+                                  enabled: false,
+                                ),
+                                ProfileTextField(
+                                  isEditMode: _isEditMode,
+                                  label: "Graduation Year",
+                                  controller: _gradyearController,
+                                  enabled: false,
+                                ),
+                                ProfileTextField(
+                                  isEditMode: _isEditMode,
+                                  label: "Division",
+                                  controller: _divController,
+                                ),
+                                ProfileTextField(
+                                  isEditMode: _isEditMode,
+                                  label: "Batch",
+                                  controller: _batchController,
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return 'Please enter a batch';
+                                    }
+                                    if (value.length != 3) {
+                                      return 'Batch should be a single capital letter followed by two digits';
+                                    }
+                                    final batchRegex =
+                                        RegExp(r'^[A-Z][0-9]{2}$');
+                                    if (!batchRegex.hasMatch(value)) {
+                                      return 'Batch should be a single capital letter followed by two digits';
+                                    }
+                                    return null;
+                                  },
+                                  enabled: _isEditMode,
+                                ),
+                                const SizedBox(
+                                  height: 15,
+                                ),
+                                Row(
+                                  children: [
+                                    Center(
+                                      child: ElevatedButton(
+                                          onPressed: () {
+                                            if (_isEditMode) {
+                                              _saveChanges(ref);
+                                            }
+                                          },
+                                          style: ElevatedButton.styleFrom(
+                                              backgroundColor: Colors.green),
+                                          child: const Text(
+                                            "Save Changes",
+                                          )),
+                                    ),
+                                    IconButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          isExpanded = false;
+                                          isBlurred = false;
+
+                                          _isEditMode = false;
+                                        });
+                                      },
+                                      icon: const Icon(
+                                        Icons.cancel_outlined,
+                                        color: Colors.white,
+                                        size: 30,
+                                      ), // Use Icon widget to specify the icon
+                                    )
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      )
+                    : ElevatedButton(
+                        onPressed: () {
+                          if (!_isEditMode) {
+                            enableEditing();
+                            setState(() {
+                              isExpanded = true;
+                              isBlurred = true;
+                              _isEditMode = true;
+                            });
+                          }
+                        },
+                        child: //Text(_isEditMode ? 'Save Changes' : 'Edit'),
+                            const Text("EDIT")),
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -316,30 +445,30 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
     );
   }
 }
-  // Widget _buildTextField({
-  //   required TextEditingController controller,
-  //   required String label,
-  //   bool enabled = true,
-  //   String? Function(String?)? validator,
-  // }) {
-  //   return TextFormField(
-  //     controller: controller,
-  //     enabled: _isEditMode && enabled,
-  //     decoration: InputDecoration(
-  //       labelStyle: const TextStyle(
-  //         color: Colors.grey,
-  //       ),
-  //       border: OutlineInputBorder(
-  //         borderSide: BorderSide(color: Colors.grey[900] ?? Colors.grey),
-  //       ),
-  //       disabledBorder: const OutlineInputBorder(
-  //         borderSide: BorderSide(color: Colors.grey),
-  //       ),
-  //       enabledBorder: const OutlineInputBorder(
-  //         borderSide: BorderSide(color: Colors.white70),
-  //       ),
-  //       labelText: label,
-  //     ),
-  //     validator: validator,
-  //   );
-  // }
+// Widget _buildTextField({
+//   required TextEditingController controller,
+//   required String label,
+//   bool enabled = true,
+//   String? Function(String?)? validator,
+// }) {
+//   return TextFormField(
+//     controller: controller,
+//     enabled: _isEditMode && enabled,
+//     decoration: InputDecoration(
+//       labelStyle: const TextStyle(
+//         color: Colors.grey,
+//       ),
+//       border: OutlineInputBorder(
+//         borderSide: BorderSide(color: Colors.grey[900] ?? Colors.grey),
+//       ),
+//       disabledBorder: const OutlineInputBorder(
+//         borderSide: BorderSide(color: Colors.grey),
+//       ),
+//       enabledBorder: const OutlineInputBorder(
+//         borderSide: BorderSide(color: Colors.white70),
+//       ),
+//       labelText: label,
+//     ),
+//     validator: validator,
+//   );
+// }
