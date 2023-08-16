@@ -262,7 +262,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                           duration: const Duration(milliseconds: 500),
                           curve: Curves.easeInOut,
                           width: 500,
-                          height: 500,
+                          height: 650,
                           decoration: BoxDecoration(
                             color: Theme.of(context).primaryColorDark,
                             borderRadius: BorderRadius.circular(10.0),
@@ -298,6 +298,34 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                     }
                                     if (!isValidEmail(value)) {
                                       return 'Please enter a valid email';
+                                    }
+                                    return null;
+                                  },
+                                ),
+                                ProfileTextField(
+                                  isEditMode: _isEditMode,
+                                  label: "Phone Number",
+                                  controller: _phoneNumController,
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return 'Please enter a phone number';
+                                    }
+                                    if (!isValidPhoneNumber(value)) {
+                                      return 'Please enter a valid phone number';
+                                    }
+                                    return null;
+                                  },
+                                ),
+                                ProfileTextField(
+                                  isEditMode: _isEditMode,
+                                  label: "Phone Number",
+                                  controller: _phoneNumController,
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return 'Please enter a phone number';
+                                    }
+                                    if (!isValidPhoneNumber(value)) {
+                                      return 'Please enter a valid phone number';
                                     }
                                     return null;
                                   },
