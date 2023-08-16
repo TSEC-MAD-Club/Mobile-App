@@ -15,7 +15,7 @@ class ProfileTextField extends StatefulWidget {
     Key? key,
     required this.controller,
     required this.label,
-    this.enabled = false,
+    this.enabled = true,
     this.visible = true,
     this.validator,
     required this.isEditMode,

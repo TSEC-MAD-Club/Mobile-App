@@ -30,6 +30,9 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
   final TextEditingController _divController = TextEditingController();
   final TextEditingController _gradyearController = TextEditingController();
   final TextEditingController _phoneNumController = TextEditingController();
+  final TextEditingController _addressController = TextEditingController();
+  final TextEditingController _homeStationController = TextEditingController();
+  final TextEditingController _dateOfBirthController = TextEditingController();
 
   Uint8List? _image;
   int _editCount = 0;
@@ -78,24 +81,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
     return convertedString;
   }
 
-  bool isExpanded = false;
-  bool isBlurred = false;
-
   void _saveChanges(WidgetRef ref) async {
-    // final user = ref.read(userProvider.notifier).state;
-    // final StudentModel? data = ref.read(studentModelProvider.notifier).state;
-    //
-    // final userDoc =
-    //     FirebaseFirestore.instance.collection('Students ').doc(user!.uid);
-    //
-    // final updatedData = {
-    //   'Name': _nameController.text,
-    //   'email': _emailController.text,
-    //   'div': _divController.text,
-    //   'phoneNo': _phoneNumController.text,
-    //   'Batch': _batchController.text,
-    // };
-
     final StudentModel? data = ref.watch(studentModelProvider);
     bool b = data!.updateCount != null ? data.updateCount! < 2 : true;
     if (b) {
@@ -106,15 +92,17 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
         data.updateCount = num + 1;
       }
       StudentModel student = StudentModel(
-        div: _divController.text,
-        batch: _batchController.text,
-        branch: convertFirstLetterToUpperCase(_branchController.text),
-        name: _nameController.text,
-        email: _emailController.text,
-        gradyear: _gradyearController.text,
-        phoneNum: _phoneNumController.text,
-        updateCount: data.updateCount,
-      );
+          div: _divController.text,
+          batch: _batchController.text,
+          branch: convertFirstLetterToUpperCase(_branchController.text),
+          name: _nameController.text,
+          email: _emailController.text,
+          gradyear: _gradyearController.text,
+          phoneNum: _phoneNumController.text,
+          updateCount: data.updateCount,
+          address: _addressController.text,
+          homeStation: _homeStationController.text,
+          dateOfBirth: _dateOfBirthController.text);
 
       if (_formKey.currentState!.validate()) {
         ref
@@ -136,6 +124,9 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
     }
   }
 
+  bool isExpanded = false;
+  bool isBlurred = false;
+
   @override
   Widget build(BuildContext context) {
     final StudentModel? data = ref.watch(studentModelProvider);
@@ -147,11 +138,16 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
     _divController.text = data.div;
     _gradyearController.text = data.gradyear;
     _phoneNumController.text = data.phoneNum;
+    _addressController.text = data.address ?? '';
+    _homeStationController.text = data.homeStation ?? '';
+    _dateOfBirthController.text = data.dateOfBirth ?? '';
+
     return CustomScaffold(
       appBar: const ProfilePageAppBar(title: "Profile"),
       body: Padding(
         padding: const EdgeInsets.all(15.0),
         child: Stack(
+          alignment: Alignment.center,
           children: [
             Column(
               children: [
@@ -201,42 +197,60 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width,
-                  height: 380,
+                  height: 340,
                   decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey.shade800),
                     color: Theme.of(context).primaryColor,
                     borderRadius: BorderRadius.circular(30),
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        CustomTextWithDivider(
-                          label: "Email",
-                          value: data.email,
-                        ),
-                        CustomTextWithDivider(
-                          label: "Phone Number",
-                          value: data.phoneNum,
-                        ),
-                        CustomTextWithDivider(
-                          label: "Branch",
-                          value: data.branch,
-                        ),
-                        CustomTextWithDivider(
-                          label: "Graduation Year",
-                          value: data.gradyear,
-                        ),
-                        CustomTextWithDivider(
-                          label: "Division",
-                          value: data.div,
-                        ),
-                        CustomTextWithDivider(
-                          label: "Batch",
-                          value: data.batch,
-                        ),
-                      ],
-                    ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      CustomTextWithDivider(
+                        label: "Email",
+                        value: data.email,
+                      ),
+                      Divider(
+                        thickness: 1,
+                        color: Colors.grey.shade800,
+                      ),
+                      CustomTextWithDivider(
+                        label: "Phone Number",
+                        value: data.phoneNum,
+                      ),
+                      Divider(
+                        thickness: 1,
+                        color: Colors.grey.shade800,
+                      ),
+                      CustomTextWithDivider(
+                        label: "Branch",
+                        value: data.branch,
+                      ),
+                      Divider(
+                        thickness: 1,
+                        color: Colors.grey.shade800,
+                      ),
+                      CustomTextWithDivider(
+                        label: "Graduation Year",
+                        value: data.gradyear,
+                      ),
+                      Divider(
+                        thickness: 1,
+                        color: Colors.grey.shade800,
+                      ),
+                      CustomTextWithDivider(
+                        label: "Division",
+                        value: data.div,
+                      ),
+                      Divider(
+                        thickness: 1,
+                        color: Colors.grey.shade800,
+                      ),
+                      CustomTextWithDivider(
+                        label: "Batch",
+                        value: data.batch,
+                      ),
+                    ],
                   ),
                 ),
                 const SizedBox(height: 20),
@@ -253,142 +267,170 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                   )
                 : const SizedBox.shrink(),
             Positioned(
-              bottom: 10,
-              child: Center(
+              bottom: 8,
+              // left: 8,
+              // right: 8,
+              child: Form(
+                key: _formKey,
                 child: isExpanded
                     ? Align(
-                        alignment: Alignment.topCenter,
-                        child: AnimatedContainer(
-                          duration: const Duration(milliseconds: 500),
-                          curve: Curves.easeInOut,
-                          width: 500,
-                          height: 500,
-                          decoration: BoxDecoration(
-                            color: Theme.of(context).primaryColorDark,
-                            borderRadius: BorderRadius.circular(10.0),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.3),
-                                blurRadius: 10.0,
-                              ),
-                            ],
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Column(
-                              children: [
-                                ProfileTextField(
-                                  isEditMode: _isEditMode,
-                                  label: "Name",
-                                  controller: _nameController,
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return 'Please enter a name';
-                                    }
-                                    return null;
-                                  },
+                        // alignment: Alignment.topCenter,
+                        child: Center(
+                          child: AnimatedContainer(
+                            duration: const Duration(milliseconds: 500),
+                            curve: Curves.easeInOut,
+                            width: 500,
+                            height: 650,
+                            padding: const EdgeInsets.only(top: 17),
+                            decoration: BoxDecoration(
+                              color: Theme.of(context).primaryColor,
+                              borderRadius: BorderRadius.circular(12.0),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.3),
+                                  blurRadius: 10.0,
                                 ),
-                                ProfileTextField(
-                                  isEditMode: _isEditMode,
-                                  label: "Email",
-                                  controller: _emailController,
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return 'Please enter an email';
-                                    }
-                                    if (!isValidEmail(value)) {
-                                      return 'Please enter a valid email';
-                                    }
-                                    return null;
-                                  },
-                                ),
-                                ProfileTextField(
-                                  isEditMode: _isEditMode,
-                                  label: "Phone Number",
-                                  controller: _phoneNumController,
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return 'Please enter a phone number';
-                                    }
-                                    if (!isValidPhoneNumber(value)) {
-                                      return 'Please enter a valid phone number';
-                                    }
-                                    return null;
-                                  },
-                                ),
-                                ProfileTextField(
-                                  isEditMode: _isEditMode,
-                                  label: "Branch",
-                                  controller: _branchController,
-                                  enabled: false,
-                                ),
-                                ProfileTextField(
-                                  isEditMode: _isEditMode,
-                                  label: "Graduation Year",
-                                  controller: _gradyearController,
-                                  enabled: false,
-                                ),
-                                ProfileTextField(
-                                  isEditMode: _isEditMode,
-                                  label: "Division",
-                                  controller: _divController,
-                                ),
-                                ProfileTextField(
-                                  isEditMode: _isEditMode,
-                                  label: "Batch",
-                                  controller: _batchController,
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return 'Please enter a batch';
-                                    }
-                                    if (value.length != 3) {
-                                      return 'Batch should be a single capital letter followed by two digits';
-                                    }
-                                    final batchRegex =
-                                        RegExp(r'^[A-Z][0-9]{2}$');
-                                    if (!batchRegex.hasMatch(value)) {
-                                      return 'Batch should be a single capital letter followed by two digits';
-                                    }
-                                    return null;
-                                  },
-                                  enabled: _isEditMode,
-                                ),
-                                const SizedBox(
-                                  height: 15,
-                                ),
-                                Row(
-                                  children: [
-                                    Center(
-                                      child: ElevatedButton(
-                                          onPressed: () {
-                                            if (_isEditMode) {
-                                              _saveChanges(ref);
-                                            }
-                                          },
-                                          style: ElevatedButton.styleFrom(
-                                              backgroundColor: Colors.green),
-                                          child: const Text(
-                                            "Save Changes",
-                                          )),
-                                    ),
-                                    IconButton(
-                                      onPressed: () {
-                                        setState(() {
-                                          isExpanded = false;
-                                          isBlurred = false;
-
-                                          _isEditMode = false;
-                                        });
-                                      },
-                                      icon: const Icon(
-                                        Icons.cancel_outlined,
-                                        color: Colors.white,
-                                        size: 30,
-                                      ), // Use Icon widget to specify the icon
-                                    )
-                                  ],
-                                )
                               ],
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Column(
+                                children: [
+                                  ProfileTextField(
+                                    isEditMode: _isEditMode,
+                                    label: "Name",
+                                    controller: _nameController,
+                                    validator: (value) {
+                                      if (value!.isEmpty) {
+                                        return 'Please enter a name';
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                  ProfileTextField(
+                                    isEditMode: _isEditMode,
+                                    label: "Email",
+                                    controller: _emailController,
+                                    validator: (value) {
+                                      if (value!.isEmpty) {
+                                        return 'Please enter an email';
+                                      }
+                                      if (!isValidEmail(value)) {
+                                        return 'Please enter a Valid Email';
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                  ProfileTextField(
+                                    controller: _addressController,
+                                    label: 'Address',
+                                    isEditMode: _isEditMode,
+                                    validator: (value) {
+                                      if (value!.isEmpty) {
+                                        return 'Please enter your Address';
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                  ProfileTextField(
+                                    controller: _homeStationController,
+                                    label: 'Home Station',
+                                    isEditMode: _isEditMode,
+                                    validator: (value) {
+                                      if (value!.isEmpty) {
+                                        return 'Please enter your Home Station';
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                  ProfileTextField(
+                                    isEditMode: _isEditMode,
+                                    label: "Phone Number",
+                                    controller: _phoneNumController,
+                                    validator: (value) {
+                                      if (value!.isEmpty) {
+                                        return 'Please enter a phone number';
+                                      }
+                                      if (!isValidPhoneNumber(value)) {
+                                        return 'Please enter a valid phone number';
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                  ProfileTextField(
+                                    isEditMode: _isEditMode,
+                                    label: "Branch",
+                                    controller: _branchController,
+                                    enabled: false,
+                                  ),
+                                  ProfileTextField(
+                                    isEditMode: _isEditMode,
+                                    label: "Graduation Year",
+                                    controller: _gradyearController,
+                                    enabled: false,
+                                  ),
+                                  ProfileTextField(
+                                    isEditMode: _isEditMode,
+                                    label: "Division",
+                                    controller: _divController,
+                                  ),
+                                  ProfileTextField(
+                                    isEditMode: _isEditMode,
+                                    label: "Batch",
+                                    controller: _batchController,
+                                    validator: (value) {
+                                      if (value!.isEmpty) {
+                                        return 'Please enter a batch';
+                                      }
+                                      if (value.length != 3) {
+                                        return 'Batch should be a single capital letter followed by two digits';
+                                      }
+                                      final batchRegex =
+                                          RegExp(r'^[A-Z][0-9]{2}$');
+                                      if (!batchRegex.hasMatch(value)) {
+                                        return 'Batch should be a single capital letter followed by two digits';
+                                      }
+                                      return null;
+                                    },
+                                    enabled: _isEditMode,
+                                  ),
+                                  const SizedBox(
+                                    height: 15,
+                                  ),
+                                  Row(
+                                    children: [
+                                      Center(
+                                        child: ElevatedButton(
+                                            onPressed: () {
+                                              if (_isEditMode) {
+                                                _saveChanges(ref);
+                                              }
+                                            },
+                                            style: ElevatedButton.styleFrom(
+                                                backgroundColor: Colors.green),
+                                            child: const Text(
+                                              "Save Changes",
+                                            )),
+                                      ),
+                                      IconButton(
+                                        onPressed: () {
+                                          setState(() {
+                                            isExpanded = false;
+                                            isBlurred = false;
+
+                                            _isEditMode = false;
+                                          });
+                                        },
+                                        icon: const Icon(
+                                          Icons.cancel_outlined,
+                                          color: Colors.white,
+                                          size: 30,
+                                        ), // Use Icon widget to specify the icon
+                                      )
+                                    ],
+                                  )
+                                ],
+                              ),
                             ),
                           ),
                         ),
