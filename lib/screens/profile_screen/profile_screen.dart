@@ -145,7 +145,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
     return CustomScaffold(
       appBar: const ProfilePageAppBar(title: "Profile"),
       body: Padding(
-        padding: const EdgeInsets.all(15.0),
+        padding: const EdgeInsets.all(20.0),
         child: Form(
           child: Stack(
             alignment: Alignment.center,
@@ -170,14 +170,14 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                         ),
                       ),
                       Positioned(
-                        bottom: -50,
+                        bottom: -30,
                         child: Container(
                           width: 100, // Adjust the width and height as needed
                           height: 100,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             border: Border.all(
-                              color: Theme.of(context).scaffoldBackgroundColor,
+                              color: Colors.white,
                               width: 4, // Adjust the border width as needed
                             ),
                           ),
@@ -187,19 +187,23 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                     ],
                   ),
                   const SizedBox(
-                    height: 50,
+                    height: 35,
                   ),
                   Text(
                     data.name,
+                    style: Theme.of(context).textTheme.headlineMedium,
+                  ),
+                  Text(
+                    // TODO: FIX this
+                    'Location${data.homeStation ?? " "}',
                     style: Theme.of(context).textTheme.headlineSmall,
                   ),
-                  // TODO: Add HomeStation ex : Virar
                   const SizedBox(
-                    height: 10,
+                    height: 15,
                   ),
                   Container(
                     width: MediaQuery.of(context).size.width,
-                    height: 400,
+                    height: 350,
                     decoration: BoxDecoration(
                       border: Border.all(color: Colors.grey.shade800),
                       color: Theme.of(context).primaryColor,
@@ -208,9 +212,12 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        CustomTextWithDivider(
-                          label: "Email",
-                          value: data.email,
+                        Padding(
+                          padding: const EdgeInsets.only(top: 2),
+                          child: CustomTextWithDivider(
+                            label: "Email",
+                            value: data.email,
+                          ),
                         ),
                         Divider(
                           thickness: 1,
@@ -241,8 +248,8 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                           color: Colors.grey.shade800,
                         ),
                         CustomTextWithDivider(
-                          label: "Graduation Year",
-                          value: data.gradyear,
+                          label: "Batch",
+                          value: data.batch,
                         ),
                         Divider(
                           thickness: 1,
@@ -252,229 +259,217 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                           label: "Division",
                           value: data.div,
                         ),
-                        Divider(
-                          thickness: 1,
-                          color: Colors.grey.shade800,
-                        ),
-                        CustomTextWithDivider(
-                          label: "Batch",
-                          value: data.batch,
-                        ),
                       ],
                     ),
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 10),
                 ],
               ),
               isBlurred
                   ? BackdropFilter(
                       filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
-                      child: Container(
+                      child: const SizedBox(
                         width: double.infinity,
                         height: double.infinity,
                       ),
                     )
                   : const SizedBox.shrink(),
-              Positioned(
-                bottom: 0,
-                left: 10,
-                right: 10,
-                child: Form(
-                  key: _formKey,
-                  child: isExpanded
-                      ? AnimatedContainer(
-                          duration: const Duration(milliseconds: 500),
-                          curve: Curves.easeInOut,
-                          width: 500,
-                          height: 680,
-                          //padding: const EdgeInsets.only(top: 10),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey.shade800),
-                            color: Theme.of(context).primaryColor,
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Column(
+              _isEditMode
+                  ? SingleChildScrollView(
+                      child: AnimatedContainer(
+                      duration: const Duration(milliseconds: 500),
+                      curve: Curves.easeInOut,
+                      width: 450,
+                      height: 675,
+                      //padding: const EdgeInsets.only(top: 10),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey.shade800),
+                        color: Theme.of(context).primaryColor,
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Column(
+                          children: [
+                            ProfileTextField(
+                              isEditMode: _isEditMode,
+                              label: "Name",
+                              controller: _nameController,
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return 'Please enter a name';
+                                }
+                                return null;
+                              },
+                            ),
+                            ProfileTextField(
+                              isEditMode: _isEditMode,
+                              label: "Email",
+                              controller: _emailController,
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return 'Please enter an email';
+                                }
+                                if (!isValidEmail(value)) {
+                                  return 'Please enter a Valid Email';
+                                }
+                                return null;
+                              },
+                            ),
+                            ProfileTextField(
+                              controller: _addressController,
+                              label: 'Address',
+                              isEditMode: _isEditMode,
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return 'Please enter your Address';
+                                }
+                                return null;
+                              },
+                            ),
+                            ProfileTextField(
+                              controller: _homeStationController,
+                              label: 'Home Station',
+                              isEditMode: _isEditMode,
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return 'Please enter your Home Station';
+                                }
+                                return null;
+                              },
+                            ),
+                            ProfileTextField(
+                              controller: _dateOfBirthController,
+                              label: 'Date of Birth',
+                              isEditMode: _isEditMode,
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return 'Please enter Date Of Birth';
+                                }
+                                // Regular expression to match the desired DOB format: 20 August 2003
+                                const pattern =
+                                    r'^(0[1-9]|[12][0-9]|3[01]) (January|February|March|April|May|June|July|August|September|October|November|December) \d{4}$';
+                                final regex = RegExp(pattern);
+
+                                if (!regex.hasMatch(value)) {
+                                  return 'Invalid Date Of Birth format. Please use the format: 20 August 2003';
+                                }
+
+                                return null;
+                              },
+                            ),
+                            ProfileTextField(
+                              isEditMode: _isEditMode,
+                              label: "Phone Number",
+                              controller: _phoneNumController,
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return 'Please enter a phone number';
+                                }
+                                if (!isValidPhoneNumber(value)) {
+                                  return 'Please enter a valid phone number';
+                                }
+                                return null;
+                              },
+                            ),
+                            ProfileTextField(
+                              isEditMode: _isEditMode,
+                              label: "Branch",
+                              controller: _branchController,
+                              enabled: false,
+                            ),
+                            ProfileTextField(
+                              isEditMode: _isEditMode,
+                              label: "Graduation Year",
+                              controller: _gradyearController,
+                              enabled: false,
+                            ),
+                            ProfileTextField(
+                              isEditMode: _isEditMode,
+                              label: "Division",
+                              controller: _divController,
+                            ),
+                            ProfileTextField(
+                              isEditMode: _isEditMode,
+                              label: "Batch",
+                              controller: _batchController,
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return 'Please enter a batch';
+                                }
+                                if (value.length != 3) {
+                                  return 'Batch should be a single capital letter followed by two digits';
+                                }
+                                final batchRegex = RegExp(r'^[A-Z][0-9]{2}$');
+                                if (!batchRegex.hasMatch(value)) {
+                                  return 'Batch should be a single capital letter followed by two digits';
+                                }
+                                return null;
+                              },
+                              enabled: _isEditMode,
+                            ),
+                            const SizedBox(
+                              height: 15,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                ProfileTextField(
-                                  isEditMode: _isEditMode,
-                                  label: "Name",
-                                  controller: _nameController,
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return 'Please enter a name';
-                                    }
-                                    return null;
-                                  },
-                                ),
-                                ProfileTextField(
-                                  isEditMode: _isEditMode,
-                                  label: "Email",
-                                  controller: _emailController,
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return 'Please enter an email';
-                                    }
-                                    if (!isValidEmail(value)) {
-                                      return 'Please enter a Valid Email';
-                                    }
-                                    return null;
-                                  },
-                                ),
-                                ProfileTextField(
-                                  controller: _addressController,
-                                  label: 'Address',
-                                  isEditMode: _isEditMode,
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return 'Please enter your Address';
-                                    }
-                                    return null;
-                                  },
-                                ),
-                                ProfileTextField(
-                                  controller: _homeStationController,
-                                  label: 'Home Station',
-                                  isEditMode: _isEditMode,
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return 'Please enter your Home Station';
-                                    }
-                                    return null;
-                                  },
-                                ),
-                                ProfileTextField(
-                                  controller: _dateOfBirthController,
-                                  label: 'Date of Birth',
-                                  isEditMode: _isEditMode,
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return 'Please enter Date Of Birth';
-                                    }
-                                    // Regular expression to match the desired DOB format: 20 August 2003
-                                    const pattern =
-                                        r'^(0[1-9]|[12][0-9]|3[01]) (January|February|March|April|May|June|July|August|September|October|November|December) \d{4}$';
-                                    final regex = RegExp(pattern);
+                                ElevatedButton(
+                                    onPressed: () {
+                                      if (_isEditMode) {
+                                        _saveChanges(ref);
+                                      }
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                        backgroundColor: Colors.green),
+                                    child: const Text(
+                                      "Save Changes",
+                                    )),
+                                IconButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      isExpanded = false;
+                                      isBlurred = false;
 
-                                    if (!regex.hasMatch(value)) {
-                                      return 'Invalid Date Of Birth format. Please use the format: 20 August 2003';
-                                    }
-
-                                    return null;
+                                      _isEditMode = false;
+                                    });
                                   },
+                                  icon: const Icon(
+                                    Icons.cancel_outlined,
+                                    color: Colors.white,
+                                    size: 30,
+                                  ), // Use Icon widget to specify the icon
                                 ),
-                                ProfileTextField(
-                                  isEditMode: _isEditMode,
-                                  label: "Phone Number",
-                                  controller: _phoneNumController,
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return 'Please enter a phone number';
-                                    }
-                                    if (!isValidPhoneNumber(value)) {
-                                      return 'Please enter a valid phone number';
-                                    }
-                                    return null;
-                                  },
-                                ),
-                                ProfileTextField(
-                                  isEditMode: _isEditMode,
-                                  label: "Branch",
-                                  controller: _branchController,
-                                  enabled: false,
-                                ),
-                                ProfileTextField(
-                                  isEditMode: _isEditMode,
-                                  label: "Graduation Year",
-                                  controller: _gradyearController,
-                                  enabled: false,
-                                ),
-                                ProfileTextField(
-                                  isEditMode: _isEditMode,
-                                  label: "Division",
-                                  controller: _divController,
-                                ),
-                                ProfileTextField(
-                                  isEditMode: _isEditMode,
-                                  label: "Batch",
-                                  controller: _batchController,
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return 'Please enter a batch';
-                                    }
-                                    if (value.length != 3) {
-                                      return 'Batch should be a single capital letter followed by two digits';
-                                    }
-                                    final batchRegex =
-                                        RegExp(r'^[A-Z][0-9]{2}$');
-                                    if (!batchRegex.hasMatch(value)) {
-                                      return 'Batch should be a single capital letter followed by two digits';
-                                    }
-                                    return null;
-                                  },
-                                  enabled: _isEditMode,
-                                ),
-                                const SizedBox(
-                                  height: 15,
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    ElevatedButton(
-                                        onPressed: () {
-                                          if (_isEditMode) {
-                                            _saveChanges(ref);
-                                          }
-                                        },
-                                        style: ElevatedButton.styleFrom(
-                                            backgroundColor: Colors.green),
-                                        child: const Text(
-                                          "Save Changes",
-                                        )),
-                                    IconButton(
-                                      onPressed: () {
-                                        setState(() {
-                                          isExpanded = false;
-                                          isBlurred = false;
-
-                                          _isEditMode = false;
-                                        });
-                                      },
-                                      icon: const Icon(
-                                        Icons.cancel_outlined,
-                                        color: Colors.white,
-                                        size: 30,
-                                      ), // Use Icon widget to specify the icon
-                                    ),
-                                    SizedBox(
-                                      width: 10,
-                                    )
-                                  ],
+                                SizedBox(
+                                  width: 10,
                                 )
                               ],
-                            ),
-                          ),
-                        )
-                      : Align(
-                          alignment: Alignment.bottomCenter,
-                          child: ElevatedButton(
-                              onPressed: () {
-                                if (!_isEditMode) {
-                                  enableEditing();
-                                  setState(() {
-                                    isExpanded = true;
-                                    isBlurred = true;
-                                    _isEditMode = true;
-                                  });
-                                }
-                              },
-                              child: //Text(_isEditMode ? 'Save Changes' : 'Edit'),
-                                  const Text("EDIT")),
+                            )
+                          ],
                         ),
-                ),
-              ),
+                      ),
+                    ))
+                  : Positioned(
+                      bottom: 0,
+                      left: 10,
+                      right: 10,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 100, right: 100),
+                        child: ElevatedButton(
+                          onPressed: () {
+                            if (!_isEditMode) {
+                              enableEditing();
+                              setState(() {
+                                isExpanded = true;
+                                isBlurred = true;
+                                _isEditMode = true;
+                              });
+                            }
+                          },
+                          child: const Text("EDIT"),
+                        ),
+                      )),
+              const SizedBox(height: 20),
             ],
           ),
         ),
@@ -487,11 +482,11 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
       children: [
         _image != null
             ? CircleAvatar(
-                radius: 50,
+                radius: 60,
                 backgroundImage: MemoryImage(_image!),
               )
             : const CircleAvatar(
-                radius: 50,
+                radius: 60,
                 backgroundImage: AssetImage("assets/images/pfpholder.jpg"),
               ),
         Positioned(

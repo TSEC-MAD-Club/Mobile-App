@@ -20,7 +20,7 @@ class _CustomTextWithDividerState extends State<CustomTextWithDivider> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 15, right: 15, top: 7),
+      padding: const EdgeInsets.only(left: 10, right: 15, top: 5, bottom: 3),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

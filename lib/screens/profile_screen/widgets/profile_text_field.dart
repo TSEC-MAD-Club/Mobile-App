@@ -32,6 +32,7 @@ class _ProfileTextFieldState extends State<ProfileTextField> {
       controller: widget.controller,
       enabled: widget.isEditMode && widget.enabled,
       decoration: InputDecoration(
+        border: InputBorder.none,
         labelStyle: const TextStyle(
           color: Colors.grey,
         ),
