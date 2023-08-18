@@ -84,6 +84,8 @@ flutter:
     - assets/images/icons/
     - assets/images/pfpholder.jpg
     - assets/images/tsecImages.png
+    - assets/images/tsecimage.png
+    - assets/images/tsecimage2.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
   # For details regarding adding assets from package dependencies, see

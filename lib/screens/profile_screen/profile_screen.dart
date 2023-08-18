@@ -155,121 +155,145 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
           child: Stack(
             alignment: Alignment.center,
             children: [
-              Column(
-                children: [
-                  Stack(
-                    clipBehavior: Clip.none,
-                    alignment: Alignment.center,
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(15),
-                        child: Container(
-                          width: double.infinity,
-                          height: 150,
-                          decoration: const BoxDecoration(
-                            image: DecorationImage(
-                              image: AssetImage("assets/images/tsecImages.png"),
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        bottom: -50,
-                        child: Container(
-                          width: 100, // Adjust the width and height as needed
-                          height: 100,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                              color: Theme.of(context).scaffoldBackgroundColor,
-                              width: 4, // Adjust the border width as needed
-                            ),
-                          ),
-                          child: buildProfileImages(),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 50,
-                  ),
-                  Text(
-                    data.name,
-                    style: Theme.of(context).textTheme.headlineSmall,
-                  ),
-                  // TODO: Add HomeStation ex : Virar
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: 400,
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey.shade800),
-                      color: Theme.of(context).primaryColor,
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+              SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Stack(
+                      clipBehavior: Clip.none,
+                      alignment: Alignment.center,
                       children: [
-                        CustomTextWithDivider(
-                          label: "Email",
-                          value: data.email,
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(15),
+                          child: Container(
+                            width: double.infinity,
+                            height: 100,
+                            decoration: const BoxDecoration(
+                              image: DecorationImage(
+                                image:
+                                    AssetImage("assets/images/tsecimage2.png"),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
                         ),
-                        Divider(
-                          thickness: 1,
-                          color: Colors.grey.shade800,
-                        ),
-                        CustomTextWithDivider(
-                          label: "Phone Number",
-                          value: data.phoneNum,
-                        ),
-                        Divider(
-                          thickness: 1,
-                          color: Colors.grey.shade800,
-                        ),
-                        CustomTextWithDivider(
-                          label: "Date of Birth",
-                          value: data.dateOfBirth ?? " ",
-                        ),
-                        Divider(
-                          thickness: 1,
-                          color: Colors.grey.shade800,
-                        ),
-                        CustomTextWithDivider(
-                          label: "Branch",
-                          value: data.branch,
-                        ),
-                        Divider(
-                          thickness: 1,
-                          color: Colors.grey.shade800,
-                        ),
-                        CustomTextWithDivider(
-                          label: "Graduation Year",
-                          value: data.gradyear,
-                        ),
-                        Divider(
-                          thickness: 1,
-                          color: Colors.grey.shade800,
-                        ),
-                        CustomTextWithDivider(
-                          label: "Division",
-                          value: data.div,
-                        ),
-                        Divider(
-                          thickness: 1,
-                          color: Colors.grey.shade800,
-                        ),
-                        CustomTextWithDivider(
-                          label: "Batch",
-                          value: data.batch,
+                        Positioned(
+                          bottom: -30,
+                          child: Container(
+                            width: 90, // Adjust the width and height as needed
+                            height: 90,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              border: Border.all(
+                                color:
+                                    Theme.of(context).scaffoldBackgroundColor,
+                                width: 4, // Adjust the border width as needed
+                              ),
+                            ),
+                            child: buildProfileImages(),
+                          ),
                         ),
                       ],
                     ),
-                  ),
-                  const SizedBox(height: 20),
-                ],
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    Text(
+                      data.name,
+                      style: Theme.of(context)
+                          .textTheme
+                          .headlineMedium
+                          ?.copyWith(fontWeight: FontWeight.w600),
+                    ),
+                    const SizedBox(
+                      height: 2,
+                    ),
+                    Text(
+                      data.homeStation ?? "",
+                      style: Theme.of(context)
+                          .textTheme
+                          .headlineSmall
+                          ?.copyWith(color: Color.fromARGB(255, 171, 171, 171)),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      // height: 400,
+                      padding: EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Color(0xFF454545)),
+                        color: Color(0xFF323232),
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          CustomTextWithDivider(
+                            label: "Email",
+                            value: data.email,
+                            showDivider: true,
+                          ),
+                          // Divider(
+                          //   thickness: 1,
+                          //   color: Colors.grey.shade800,
+                          // ),
+                          CustomTextWithDivider(
+                            label: "Phone Number",
+                            value: data.phoneNum,
+                            showDivider: true,
+                          ),
+                          // Divider(
+                          //   thickness: 1,
+                          //   color: Color(0xFF454545),
+                          // ),
+                          CustomTextWithDivider(
+                            label: "Date of Birth",
+                            value: data.dateOfBirth ?? " ",
+                            showDivider: true,
+                          ),
+                          // Divider(
+                          //   thickness: 1,
+                          //   color: Color(0xFF454545),
+                          // ),
+                          CustomTextWithDivider(
+                            label: "Branch",
+                            value: data.branch,
+                            showDivider: true,
+                          ),
+                          // Divider(
+                          //   thickness: 1,
+                          //   color: Color(0xFF454545),
+                          // ),
+                          CustomTextWithDivider(
+                            label: "Graduation Year",
+                            value: data.gradyear,
+                            showDivider: true,
+                          ),
+                          // Divider(
+                          //   thickness: 1,
+                          //   color: Colors.grey.shade800,
+                          // ),
+                          CustomTextWithDivider(
+                            label: "Division",
+                            value: data.div,
+                            showDivider: true,
+                          ),
+                          // Divider(
+                          //   thickness: 1,
+                          //   color: Colors.grey.shade800,
+                          // ),
+                          CustomTextWithDivider(
+                            label: "Batch",
+                            value: data.batch,
+                            showDivider: false,
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                  ],
+                ),
               ),
               isBlurred
                   ? BackdropFilter(
@@ -507,7 +531,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
             elevation: 2.0,
             fillColor: kLightModeShadowColor,
             child: const Icon(
-              Icons.add_a_photo,
+              Icons.edit,
               color: Colors.blue,
             ),
             padding: const EdgeInsets.all(3.0),
