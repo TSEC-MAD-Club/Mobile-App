@@ -49,7 +49,7 @@ class AuthService {
 
     var userMap = updatedUserData.data() as Map<String, dynamic>;
     StudentModel updatedStudentData = StudentModel.fromJson(userMap);
-    debugPrint("student data is $updatedStudentData");
+    debugPrint("updated student data in auth service is $updatedStudentData");
     return updatedStudentData;
   }
 

@@ -64,11 +64,11 @@ class _CardDisplayState extends ConsumerState<CardDisplay> {
     // debugPrint("data is ${data.toString()}");
 
     final dat = ref.watch(notificationTypeProvider);
-    debugPrint("hh ${dat?.yearBranchDivTopic}");
+    debugPrint("time table batch details: ${dat?.yearBranchDivTopic}");
     return data.when(
         data: ((data) {
           if (data == null) {
-            // debugPrint("over here");
+            debugPrint("over here");
             return const SliverToBoxAdapter(
               child: Center(
                 child: Text(
