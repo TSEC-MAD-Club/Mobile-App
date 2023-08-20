@@ -37,6 +37,13 @@ class AuthService {
     }
   }
 
+  Future resetPassword(String email, BuildContext context) async {
+    // User user = firebaseAuth.currentUser!;
+    // await user.updatePassword(password);
+
+    await firebaseAuth.sendPasswordResetEmail(email: email);
+  }
+
   void updatePassword(String password, BuildContext context) async {
     User user = firebaseAuth.currentUser!;
     await user.updatePassword(password);
@@ -75,7 +82,7 @@ class AuthService {
     return studentModel;
   }
 
-  void signout() async {
+  Future signout() async {
     await firebaseAuth.signOut();
   }
 }

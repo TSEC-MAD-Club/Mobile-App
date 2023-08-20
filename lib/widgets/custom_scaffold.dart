@@ -199,6 +199,7 @@ class _CustomScaffoldState extends ConsumerState<CustomScaffold>
                       _messaging
                           .unsubscribeFromTopic(NotificationType.yearTopic);
                     }
+                    ref.watch(authProvider.notifier).signout();
                     GoRouter.of(context).go('/login');
                   },
                   icon: const Icon(

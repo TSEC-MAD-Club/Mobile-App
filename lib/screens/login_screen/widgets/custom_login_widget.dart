@@ -7,6 +7,7 @@ import 'package:tsec_app/models/notification_model/notification_model.dart';
 import 'package:tsec_app/models/student_model/student_model.dart';
 import 'package:tsec_app/provider/auth_provider.dart';
 import 'package:tsec_app/screens/login_screen/widgets/custom_dialog_box.dart';
+import 'package:tsec_app/utils/custom_snackbar.dart';
 import '../../../provider/notification_provider.dart';
 import '../../../utils/notification_type.dart';
 import '../../../utils/themes.dart';
@@ -134,8 +135,47 @@ class _LoginWidgetState extends ConsumerState<LoginWidget> {
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
-          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Padding(
+              padding: EdgeInsets.only(right: 30),
+              child: InkResponse(
+                onTap: () async {
+                  if (_emailTextEditingController.text.trim() != "") {
+                    try {
+                      await ref.watch(authProvider.notifier).resetPassword(
+                          _emailTextEditingController.text.trim(), context);
+
+                      showSnackBar(context,
+                          'Check your inbox and click on the link in password reset email');
+                    } on FirebaseAuthException catch (e) {
+                      if (e.code == 'user-not-found') {
+                        showSnackBar(context, 'No user found for that email.');
+                      } else
+                        showSnackBar(context, e.message.toString());
+                      return null;
+                    }
+                  } else {
+                    showSnackBar(context,
+                        'Enter the email to reset password of that account');
+                  }
+                },
+                highlightShape: BoxShape.rectangle, // Custom shape
+
+                child: Container(
+                  height: 30,
+                  child: Center(
+                    child: Text('Reset Password'),
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
+        SizedBox(height: 30),
+        // Row(
+        //   mainAxisAlignment: MainAxisAlignment.end,
+        //   crossAxisAlignment: CrossAxisAlignment.end,
+        // ),
         Padding(
           padding: const EdgeInsets.all(25.0),
           child: Row(
@@ -173,13 +213,29 @@ class _LoginWidgetState extends ConsumerState<LoginWidget> {
                     ref
                         .watch(studentModelProvider.notifier)
                         .update((state) => studentModel);
-
+                    debugPrint(studentModel.toString());
+                    // String studentYear = studentModel!.gradyear.toString();
+                    // String studentBranch = studentModel.branch.toString();
+                    // String studentDiv = studentModel.div.toString();
+                    // String studentBatch = studentModel.batch.toString();
+                    // ref.read(notificationTypeProvider.notifier).state =
+                    //     NotificationTypeC(
+                    //         notification: "All",
+                    //         yearTopic: studentYear,
+                    //         yearBranchTopic: "$studentYear-$studentBranch",
+                    //         yearBranchDivTopic:
+                    //             "$studentYear-$studentBranch-$studentDiv",
+                    //         yearBranchDivBatchTopic:
+                    //             "$studentYear-$studentBranch-$studentDiv-$studentBatch");
                     // showDialog(
                     //     context: context,
                     // builder: ((context) => const ChangePasswordDialog()));
 
-                    GoRouter.of(context).go('/main');
-                    _setupFCMNotifications(st);
+                    // GoRouter.of(context).go('/main');
+                    await ref
+                        .watch(authProvider.notifier)
+                        .updateUserStateDetails(studentModel, ref);
+                    _setupFCMNotifications(studentModel);
                     GoRouter.of(context).go('/main');
                   },
                   child: const Icon(Icons.arrow_forward),

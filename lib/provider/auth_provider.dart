@@ -33,6 +33,10 @@ class AuthProvider extends StateNotifier<bool> {
     return await _authService.signInUser(email, password, context);
   }
 
+  Future resetPassword(String email, BuildContext context) async {
+    return await _authService.resetPassword(email, context);
+  }
+
   Future<StudentModel?> fetchStudentDetails(
       User? user, BuildContext context) async {
     return await _authService.fetchStudentDetails(user, context);
@@ -40,6 +44,24 @@ class AuthProvider extends StateNotifier<bool> {
 
   void changePassword(String password, BuildContext context) {
     _authService.updatePassword(password, context);
+  }
+
+  Future updateUserStateDetails(
+      StudentModel? studentmodel, WidgetRef ref) async {
+    if (studentmodel != null) {
+      String studentYear = studentmodel.gradyear.toString();
+      String studentBranch = studentmodel.branch.toString();
+      String studentDiv = studentmodel.div.toString();
+      String studentBatch = studentmodel.batch.toString();
+
+      ref.read(notificationTypeProvider.notifier).state = NotificationTypeC(
+          notification: "All",
+          yearTopic: studentYear,
+          yearBranchTopic: "$studentYear-$studentBranch",
+          yearBranchDivTopic: "$studentYear-$studentBranch-$studentDiv",
+          yearBranchDivBatchTopic:
+              "$studentYear-$studentBranch-$studentDiv-$studentBatch");
+    }
   }
 
   void updateUserDetails(
@@ -54,24 +76,24 @@ class AuthProvider extends StateNotifier<bool> {
 
       StudentModel? studentmodel = ref.watch(studentModelProvider);
       NotificationType.makeTopic(ref, studentmodel);
-
-      String studentYear = updatedStudentData.gradyear.toString();
-      String studentBranch = updatedStudentData.branch.toString();
-      String studentDiv = updatedStudentData.div.toString();
-      String studentBatch = updatedStudentData.batch.toString();
+      updateUserStateDetails(studentmodel, ref);
+      // String studentYear = updatedStudentData.gradyear.toString();
+      // String studentBranch = updatedStudentData.branch.toString();
+      // String studentDiv = updatedStudentData.div.toString();
+      // String studentBatch = updatedStudentData.batch.toString();
       // yearTopic = studentYear;
       // yearBranchTopic = "$studentYear-$studentBranch";
       // yearBranchDivTopic = "$studentYear-$studentBranch-$studentDiv";
       // yearBranchDivBatchTopic =
       //     "$studentYear-$studentBranch-$studentDiv-$studentBatch";
 
-      ref.read(notificationTypeProvider.notifier).state = NotificationTypeC(
-          notification: "All",
-          yearTopic: studentYear,
-          yearBranchTopic: "$studentYear-$studentBranch",
-          yearBranchDivTopic: "$studentYear-$studentBranch-$studentDiv",
-          yearBranchDivBatchTopic:
-              "$studentYear-$studentBranch-$studentDiv-$studentBatch");
+      // ref.read(notificationTypeProvider.notifier).state = NotificationTypeC(
+      //     notification: "All",
+      //     yearTopic: studentYear,
+      //     yearBranchTopic: "$studentYear-$studentBranch",
+      //     yearBranchDivTopic: "$studentYear-$studentBranch-$studentDiv",
+      //     yearBranchDivBatchTopic:
+      //         "$studentYear-$studentBranch-$studentDiv-$studentBatch");
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -88,7 +110,7 @@ class AuthProvider extends StateNotifier<bool> {
     }
   }
 
-  void signout() {
-    _authService.signout();
+  Future signout() async {
+    await _authService.signout();
   }
 }

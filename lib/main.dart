@@ -12,6 +12,7 @@ import 'package:tsec_app/screens/event_detail_screen/event_details.dart';
 import 'package:tsec_app/screens/login_screen/login_screen.dart';
 import 'package:tsec_app/screens/profile_screen/profile_screen.dart';
 import 'package:tsec_app/screens/splash_screen.dart';
+import 'package:tsec_app/utils/notification_type.dart';
 import 'firebase_options.dart';
 import 'models/student_model/student_model.dart';
 import 'provider/app_state_provider.dart';
@@ -165,6 +166,27 @@ class _TSECAppState extends ConsumerState<TSECApp> {
           .watch(authProvider.notifier)
           .fetchStudentDetails(user, context);
       ref.watch(studentModelProvider.notifier).update((state) => studentModel);
+      ref.read(studentModelProvider.notifier).state = studentModel;
+
+      NotificationType.makeTopic(ref, studentModel);
+
+      await ref
+          .watch(authProvider.notifier)
+          .updateUserStateDetails(studentModel, ref);
+      // if (studentModel != null) {
+      //   debugPrint("in main");
+      //   String studentYear = studentModel.gradyear.toString();
+      //   String studentBranch = studentModel.branch.toString();
+      //   String studentDiv = studentModel.div.toString();
+      //   String studentBatch = studentModel.batch.toString();
+      //   ref.read(notificationTypeProvider.notifier).state = NotificationTypeC(
+      //       notification: "All",
+      //       yearTopic: studentYear,
+      //       yearBranchTopic: "$studentYear-$studentBranch",
+      //       yearBranchDivTopic: "$studentYear-$studentBranch-$studentDiv",
+      //       yearBranchDivBatchTopic:
+      //           "$studentYear-$studentBranch-$studentDiv-$studentBatch");
+      // }
     }
   }
 
