@@ -32,7 +32,7 @@ class TimeTableService {
   Stream<Map<String, dynamic>?> getweekTimetable(String? data) {
     final d = data ?? NotificationType.yearBranchDivTopic;
     return _firestore
-        .collection('TimeTable 2023')
+        .collection('TimeTable')
         .doc(d)
         .snapshots()
         .map((doc) => doc.data());

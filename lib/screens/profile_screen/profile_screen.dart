@@ -1,4 +1,5 @@
 // ignore_for_file: lines_longer_than_80_chars
+import 'package:go_router/go_router.dart';
 
 import 'dart:ui';
 
@@ -17,7 +18,8 @@ import '../../utils/themes.dart';
 import 'package:intl/intl.dart';
 
 class ProfilePage extends ConsumerStatefulWidget {
-  const ProfilePage({Key? key}) : super(key: key);
+  bool justLoggedIn;
+  ProfilePage({Key? key, required this.justLoggedIn}) : super(key: key);
 
   @override
   ConsumerState<ProfilePage> createState() => _ProfilePageState();
@@ -149,7 +151,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
     });
   }
 
-  void _saveChanges(WidgetRef ref) async {
+  Future _saveChanges(WidgetRef ref) async {
     final StudentModel? data = ref.watch(studentModelProvider);
     bool b = data!.updateCount != null ? data.updateCount! < 2 : true;
     // if (b) {
@@ -242,32 +244,12 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     final StudentModel? data = ref.watch(studentModelProvider);
-    // name = data!.name;
-    // _nameController.text = data!.name;
-    // _emailController.text = data.email;
-    // _batchController.text = data.batch;
-    // _branchController.text = data.branch.toUpperCase();
-    // _divController.text = data.div;
-    // _gradyearController.text = data.gradyear;
-    // _phoneNumController.text = data.phoneNum;
-    // _addressController.text = data.address ?? '';
-    // _homeStationController.text = data.homeStation ?? '';
-    // _dateOfBirthController.text = data.dateOfBirth ?? '';
 
-    // name = data.name;
-    // email = data.email;
-    // batch = data.batch;
-    // branch = data.branch.toUpperCase();
-    // div = data.div;
-    // gradyear = data.gradyear;
-    // batch = data.batch;
-    // phoneNum = data.phoneNum;
-    // address = data.address ?? '';
-    // homeStation = data.homeStation ?? '';
-    // dob = data.dateOfBirth ?? '';
-
+    bool hide = widget.justLoggedIn || _isEditMode;
+    // bool hide = _isEditMode;
     return CustomScaffold(
-      hideButton: _isEditMode,
+      hideButton: hide,
+      //fuck the  the app bar and the floating action button
       appBar: const ProfilePageAppBar(title: "Profile"),
       body: Column(
         children: [
@@ -1017,244 +999,151 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
               ),
             ),
           ),
+          // !_isEditMode
+          //     ? Container(
+          //         margin: EdgeInsets.only(bottom: 15),
+          //         child: ElevatedButton(
+          //           onPressed: () {
+          //             if (!_isEditMode) {
+          //               // enableEditing();
+          //               setState(() {
+          //                 // isExpanded = true;
+          //                 // isBlurred = true;
+          //                 _isEditMode = true;
+          //               });
+          //               Future.delayed(Duration(milliseconds: 1000), () {
+          //                 if (listScrollController.hasClients) {
+          //                   final position =
+          //                       listScrollController.position.viewportDimension;
+          //                   listScrollController.animateTo(
+          //                     position,
+          //                     duration: Duration(seconds: 1),
+          //                     curve: Curves.easeOut,
+          //                   );
+          //                 }
+          //               });
+          //             }
+          //           },
+          //           style: ElevatedButton.styleFrom(
+          //             shape: RoundedRectangleBorder(
+          //               borderRadius: BorderRadius.circular(
+          //                   50.0), // Half of desired button height
+          //             ),
+          //             padding:
+          //                 EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          //           ),
+          //           child: //Text(_isEditMode ? 'Save Changes' : 'Edit'),
+          //               const Text("EDIT"),
+          //         ),
+          //       )
+          //     : Container(),
           !_isEditMode
-              ? Container(
-                  margin: EdgeInsets.only(bottom: 15),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      if (!_isEditMode) {
-                        // enableEditing();
-                        setState(() {
-                          // isExpanded = true;
-                          // isBlurred = true;
-                          _isEditMode = true;
-                        });
-                        Future.delayed(Duration(milliseconds: 1000), () {
-                          if (listScrollController.hasClients) {
-                            final position =
-                                listScrollController.position.viewportDimension;
-                            listScrollController.animateTo(
-                              position,
-                              duration: Duration(seconds: 1),
-                              curve: Curves.easeOut,
-                            );
-                          }
-                        });
-                      }
-                    },
-                    style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(
-                            50.0), // Half of desired button height
-                      ),
+              ? (widget.justLoggedIn
+                  ? Container(
                       padding:
-                          EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                    ),
-                    child: //Text(_isEditMode ? 'Save Changes' : 'Edit'),
-                        const Text("EDIT"),
-                  ),
-                )
+                          EdgeInsets.symmetric(vertical: 0, horizontal: 20),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Container(
+                            margin: EdgeInsets.only(bottom: 15),
+                            child: ElevatedButton(
+                              onPressed: () {
+                                if (!_isEditMode) {
+                                  // enableEditing();
+                                  setState(() {
+                                    // isExpanded = true;
+                                    // isBlurred = true;
+                                    _isEditMode = true;
+                                  });
+                                  Future.delayed(Duration(milliseconds: 1000),
+                                      () {
+                                    if (listScrollController.hasClients) {
+                                      final position = listScrollController
+                                          .position.viewportDimension;
+                                      listScrollController.animateTo(
+                                        position,
+                                        duration: Duration(seconds: 1),
+                                        curve: Curves.easeOut,
+                                      );
+                                    }
+                                  });
+                                }
+                              },
+                              style: ElevatedButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                      50.0), // Half of desired button height
+                                ),
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 20, vertical: 10),
+                              ),
+                              child: //Text(_isEditMode ? 'Save Changes' : 'Edit'),
+                                  const Text("EDIT"),
+                            ),
+                          ),
+                          ElevatedButton(
+                            onPressed: () async {
+                              await _saveChanges(ref);
+                              GoRouter.of(context).go('/main');
+                            },
+                            child: const Icon(Icons.arrow_forward),
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                  Colors.transparent),
+                              shape: MaterialStateProperty.all<
+                                  RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(15.0),
+                                ),
+                              ),
+                              padding:
+                                  MaterialStateProperty.all(EdgeInsets.zero),
+                            ),
+                          )
+                        ],
+                      ),
+                    )
+                  : Container(
+                      margin: EdgeInsets.only(bottom: 15),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          if (!_isEditMode) {
+                            // enableEditing();
+                            setState(() {
+                              // isExpanded = true;
+                              // isBlurred = true;
+                              _isEditMode = true;
+                            });
+                            Future.delayed(Duration(milliseconds: 1000), () {
+                              if (listScrollController.hasClients) {
+                                final position = listScrollController
+                                    .position.viewportDimension;
+                                listScrollController.animateTo(
+                                  position,
+                                  duration: Duration(seconds: 1),
+                                  curve: Curves.easeOut,
+                                );
+                              }
+                            });
+                          }
+                        },
+                        style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(
+                                50.0), // Half of desired button height
+                          ),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 10),
+                        ),
+                        child: //Text(_isEditMode ? 'Save Changes' : 'Edit'),
+                            const Text("EDIT"),
+                      ),
+                    ))
               : Container(),
         ],
       ),
-      // Positioned(
-      //   bottom: 0,
-      //   left: 10,
-      //   right: 10,
-      //   child: Form(
-      //     key: _formKey,
-      //     child: isExpanded
-      //         ? AnimatedContainer(
-      //             duration: const Duration(milliseconds: 500),
-      //             curve: Curves.easeInOut,
-      //             width: 500,
-      //             height: 680,
-      //             //padding: const EdgeInsets.only(top: 10),
-      //             decoration: BoxDecoration(
-      //               border: Border.all(color: Colors.grey.shade800),
-      //               color: Theme.of(context).primaryColor,
-      //               borderRadius: BorderRadius.circular(30),
-      //             ),
-      //             child: Padding(
-      //               padding: const EdgeInsets.all(10.0),
-      //               child: Column(
-      //                 children: [
-      //                   ProfileTextField(
-      //                     isEditMode: _isEditMode,
-      //                     label: "Name",
-      //                     controller: _nameController,
-      //                     validator: (value) {
-      //                       if (value!.isEmpty) {
-      //                         return 'Please enter a name';
-      //                       }
-      //                       return null;
-      //                     },
-      //                   ),
-      //                   ProfileTextField(
-      //                     isEditMode: _isEditMode,
-      //                     label: "Email",
-      //                     controller: _emailController,
-      //                     validator: (value) {
-      //                       if (value!.isEmpty) {
-      //                         return 'Please enter an email';
-      //                       }
-      //                       if (!isValidEmail(value)) {
-      //                         return 'Please enter a Valid Email';
-      //                       }
-      //                       return null;
-      //                     },
-      //                   ),
-      //                   ProfileTextField(
-      //                     controller: _addressController,
-      //                     label: 'Address',
-      //                     isEditMode: _isEditMode,
-      //                     validator: (value) {
-      //                       if (value!.isEmpty) {
-      //                         return 'Please enter your Address';
-      //                       }
-      //                       return null;
-      //                     },
-      //                   ),
-      //                   ProfileTextField(
-      //                     controller: _homeStationController,
-      //                     label: 'Home Station',
-      //                     isEditMode: _isEditMode,
-      //                     validator: (value) {
-      //                       if (value!.isEmpty) {
-      //                         return 'Please enter your Home Station';
-      //                       }
-      //                       return null;
-      //                     },
-      //                   ),
-      //                   ProfileTextField(
-      //                     controller: _dateOfBirthController,
-      //                     label: 'Date of Birth',
-      //                     isEditMode: _isEditMode,
-      //                     validator: (value) {
-      //                       if (value!.isEmpty) {
-      //                         return 'Please enter Date Of Birth';
-      //                       }
-      //                       // Regular expression to match the desired DOB format: 20 August 2003
-      //                       const pattern =
-      //                           r'^(0[1-9]|[12][0-9]|3[01]) (January|February|March|April|May|June|July|August|September|October|November|December) \d{4}$';
-      //                       final regex = RegExp(pattern);
-
-      //                       if (!regex.hasMatch(value)) {
-      //                         return 'Invalid Date Of Birth format. Please use the format: 20 August 2003';
-      //                       }
-
-      //                       return null;
-      //                     },
-      //                   ),
-      //                   ProfileTextField(
-      //                     isEditMode: _isEditMode,
-      //                     label: "Phone Number",
-      //                     controller: _phoneNumController,
-      //                     validator: (value) {
-      //                       if (value!.isEmpty) {
-      //                         return 'Please enter a phone number';
-      //                       }
-      //                       if (!isValidPhoneNumber(value)) {
-      //                         return 'Please enter a valid phone number';
-      //                       }
-      //                       return null;
-      //                     },
-      //                   ),
-      //                   ProfileTextField(
-      //                     isEditMode: _isEditMode,
-      //                     label: "Branch",
-      //                     controller: _branchController,
-      //                     enabled: false,
-      //                   ),
-      //                   ProfileTextField(
-      //                     isEditMode: _isEditMode,
-      //                     label: "Graduation Year",
-      //                     controller: _gradyearController,
-      //                     enabled: false,
-      //                   ),
-      //                   ProfileTextField(
-      //                     isEditMode: _isEditMode,
-      //                     label: "Division",
-      //                     controller: _divController,
-      //                   ),
-      //                   ProfileTextField(
-      //                     isEditMode: _isEditMode,
-      //                     label: "Batch",
-      //                     controller: _batchController,
-      //                     validator: (value) {
-      //                       if (value!.isEmpty) {
-      //                         return 'Please enter a batch';
-      //                       }
-      //                       if (value.length != 3) {
-      //                         return 'Batch should be a single capital letter followed by two digits';
-      //                       }
-      //                       final batchRegex = RegExp(r'^[A-Z][0-9]{2}$');
-      //                       if (!batchRegex.hasMatch(value)) {
-      //                         return 'Batch should be a single capital letter followed by two digits';
-      //                       }
-      //                       return null;
-      //                     },
-      //                     enabled: _isEditMode,
-      //                   ),
-      //                   const SizedBox(
-      //                     height: 15,
-      //                   ),
-      //                   Row(
-      //                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //                     children: [
-      //                       ElevatedButton(
-      //                           onPressed: () {
-      //                             if (_isEditMode) {
-      //                               _saveChanges(ref);
-      //                             }
-      //                           },
-      //                           style: ElevatedButton.styleFrom(
-      //                               backgroundColor: Colors.green),
-      //                           child: const Text(
-      //                             "Save Changes",
-      //                           )),
-      //                       IconButton(
-      //                         onPressed: () {
-      //                           setState(() {
-      //                             isExpanded = false;
-      //                             isBlurred = false;
-
-      //                             _isEditMode = false;
-      //                           });
-      //                         },
-      //                         icon: const Icon(
-      //                           Icons.cancel_outlined,
-      //                           color: Colors.white,
-      //                           size: 30,
-      //                         ), // Use Icon widget to specify the icon
-      //                       ),
-      //                       SizedBox(
-      //                         width: 10,
-      //                       )
-      //                     ],
-      //                   )
-      //                 ],
-      //               ),
-      //             ),
-      //           )
-      //         : Align(
-      //             alignment: Alignment.bottomCenter,
-      //             child: ElevatedButton(
-      //                 onPressed: () {
-      //                   if (!_isEditMode) {
-      //                     enableEditing();
-      //                     setState(() {
-      //                       isExpanded = true;
-      //                       isBlurred = true;
-      //                       _isEditMode = true;
-      //                     });
-      //                   }
-      //                 },
-      //                 child: //Text(_isEditMode ? 'Save Changes' : 'Edit'),
-      //                     const Text("EDIT")),
-      //           ),
-      //   ),
-      // ),
     );
   }
 

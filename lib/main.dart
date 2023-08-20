@@ -151,9 +151,15 @@ class _TSECAppState extends ConsumerState<TSECApp> {
           builder: (context, state) => const DepartmentListScreen(),
         ),
         GoRoute(
-          path: "/profile-page",
-          builder: (context, state) => const ProfilePage(),
-        ),
+          path: '/profile-page',
+          builder: (context, state) {
+            // use state.queryParams to get search query from query parameter
+            String justLoggedInSt =
+                state.queryParams['justLoggedIn'] ?? "false"; // may be null
+            bool justLoggedIn = justLoggedInSt == "true";
+            return ProfilePage(justLoggedIn: justLoggedIn);
+          },
+        )
       ],
       refreshListenable: ref.watch(appStateProvider),
     );

@@ -251,8 +251,8 @@ class _CustomScaffoldState extends ConsumerState<CustomScaffold>
               );
             },
             child: Scaffold(
-              appBar: widget.appBar,
-              body: widget.body,
+              appBar: !hide ? widget.appBar : null,
+              body: SafeArea(child: widget.body ?? Container()),
             ),
           ),
           !hide

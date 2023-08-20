@@ -16,7 +16,8 @@ class _LoginScreenState extends State<LoginScreen> {
     return GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: Scaffold(
-          body: ListView(
+          body: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: const <Widget>[
               CustomAppBarForLogin(
                 title: "Welcome!",
