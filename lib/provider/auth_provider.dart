@@ -1,7 +1,12 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
+import 'package:http/http.dart' as http;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tsec_app/models/student_model/student_model.dart';
+import 'package:tsec_app/provider/firebase_provider.dart';
 import 'package:tsec_app/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:tsec_app/utils/notification_type.dart';
@@ -11,6 +16,10 @@ final authProvider = StateNotifierProvider<AuthProvider, bool>(((ref) {
 }));
 
 final studentModelProvider = StateProvider<StudentModel?>((ref) {
+  return null;
+});
+
+final profilePicProvider = StateProvider<Uint8List?>((ref) {
   return null;
 });
 
@@ -35,6 +44,35 @@ class AuthProvider extends StateNotifier<bool> {
 
   Future resetPassword(String email, BuildContext context) async {
     return await _authService.resetPassword(email, context);
+  }
+
+  Future updateProfilePic(Uint8List image) async {
+    _ref.read(profilePicProvider.notifier).state = image;
+    await _authService.updateProfilePic(image);
+  }
+
+  Future fetchProfilePic() async {
+    final user = _ref.read(firebaseAuthProvider).currentUser;
+    String url =
+        "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Images%2F${user?.uid}";
+    final response = await http.get(Uri.parse(url));
+
+    if (response.statusCode == 200) {
+      final jsonResponse =
+          Map<String, dynamic>.from(json.decode(response.body));
+      // return jsonResponse['downloadTokens'] ?? '';
+      url = "$url?alt=media&token=${jsonResponse['downloadTokens']}";
+      final res = await http.get(Uri.parse(url));
+      if (res.statusCode == 200) {
+        _ref.read(profilePicProvider.notifier).state = res.bodyBytes;
+        debugPrint("download url in auth provider is $url");
+        return response.bodyBytes;
+      } else {
+        throw Exception('Failed to fetch image');
+      }
+    } else {
+      _ref.read(profilePicProvider.notifier).state = null;
+    }
   }
 
   Future<StudentModel?> fetchStudentDetails(

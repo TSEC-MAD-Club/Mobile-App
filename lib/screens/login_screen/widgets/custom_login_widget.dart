@@ -242,7 +242,7 @@ class _LoginWidgetState extends ConsumerState<LoginWidget> {
                       ref
                           .watch(studentModelProvider.notifier)
                           .update((state) => studentModel);
-                      debugPrint(studentModel.toString());
+                      // debugPrint(studentModel.toString());
                       // String studentYear = studentModel!.gradyear.toString();
                       // String studentBranch = studentModel.branch.toString();
                       // String studentDiv = studentModel.div.toString();
@@ -264,6 +264,9 @@ class _LoginWidgetState extends ConsumerState<LoginWidget> {
                       await ref
                           .watch(authProvider.notifier)
                           .updateUserStateDetails(studentModel, ref);
+
+                      await ref.watch(authProvider.notifier).fetchProfilePic();
+
                       _setupFCMNotifications(studentModel);
                       if (studentModel != null) {
                         if (studentModel.updateCount != null &&

@@ -1,14 +1,18 @@
 // ignore_for_file: lines_longer_than_80_chars
+import 'dart:convert';
+import 'dart:io';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:go_router/go_router.dart';
-
+import 'package:http/http.dart' as http;
 import 'dart:ui';
-
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tsec_app/models/student_model/student_model.dart';
 import 'package:tsec_app/provider/auth_provider.dart';
+import 'package:tsec_app/provider/firebase_provider.dart';
 import 'package:tsec_app/screens/profile_screen/widgets/customTextWithDivider.dart';
 import 'package:tsec_app/screens/profile_screen/widgets/profile_screen_appbar.dart';
 import 'package:tsec_app/screens/profile_screen/widgets/profile_text_field.dart';
@@ -46,12 +50,13 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
   String phoneNum = "";
   String address = "";
   String homeStation = "";
+  String? profilePicUrl;
   // String dob = "";
 
   final TextEditingController _dobController = TextEditingController();
 
-  Uint8List? _image;
-  int _editCount = 0;
+  Uint8List? profilePic;
+  // int _editCount = 0;
   bool _isEditMode = false;
   final _formKey = GlobalKey<FormState>();
 
@@ -72,13 +77,22 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
     });
   }
 
-  void editProfileImage() async {
-    Uint8List image = await pickImage(ImageSource.gallery);
+  // void getProfilePic() async {
+  //   final user = ref.read(firebaseAuthProvider).currentUser;
+  //   String url =
+  //       "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Images%2F${user?.uid}";
+  //   final response = await http.get(Uri.parse(url));
 
-    setState(() {
-      _image = image;
-    });
-  }
+  //   if (response.statusCode == 200) {
+  //     final jsonResponse =
+  //         Map<String, dynamic>.from(json.decode(response.body));
+  //     // return jsonResponse['downloadTokens'] ?? '';
+  //     url = "$url?alt=media&token=${jsonResponse['downloadTokens']}";
+  //     debugPrint("download url is $url");
+  //   } else {
+  //     throw Exception('Failed to fetch download tokens');
+  //   }
+  // }
 
   String convertFirstLetterToUpperCase(String input) {
     if (input.isEmpty) {
@@ -149,6 +163,27 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
     setState(() {
       batchList = batches;
     });
+  }
+
+  // bool loadingImage = false;
+  Future editProfileImage() async {
+    // setState(() {
+    //   loadingImage = true;
+    // });
+    Uint8List? image = await pickImage(ImageSource.gallery);
+    if (image != null) {
+      await ref.watch(authProvider.notifier).updateProfilePic(image);
+      // setState(() {
+      //   loadingImage = false;
+      // });
+    } else {
+      // setState(() {
+      //   loadingImage = false;
+      // });
+    }
+    // setState(() {
+    //   _image = image;
+    // });
   }
 
   Future _saveChanges(WidgetRef ref) async {
@@ -222,7 +257,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
   @override
   void initState() {
     super.initState();
-
+    // getProfilePic();
     final StudentModel? data = ref.read(studentModelProvider);
     name = data!.name;
     email = data.email;
@@ -239,6 +274,88 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
     _dobController.text = data.dateOfBirth ?? "";
     calcBatchList(data.div);
     calcDivisionList(data.gradyear);
+  }
+
+  Widget buildProfileImages(WidgetRef ref) {
+    profilePic = ref.watch(profilePicProvider);
+    // return !loadingImage
+    return GestureDetector(
+      onTap: () {
+        editProfileImage();
+      },
+      child: Stack(
+        // return Stack(
+        clipBehavior: Clip.none,
+        children: [
+          // profilePicUrl != null
+          // ? CircleAvatar(
+          // CircleAvatar(
+          //   radius: 50,
+          //   backgroundImage: MemoryImage(_image!),
+          //   backgroundImage: Image.network(profilePicUrl!).image,
+          //   child: CachedNetworkImage(
+          //     imageUrl: profilePicUrl!,
+          //     placeholder: (context, url) =>
+          //         new CircularProgressIndicator(),
+          //     errorWidget: (context, url, error) => new Icon(Icons.error),
+          //   ),
+          // ),
+          // CachedNetworkImage(
+          //   imageUrl: profilePicUrl!,
+          //   imageBuilder: (context, imageProvider) => Container(
+          //     width: 90.0,
+          //     height: 90.0,
+          //     decoration: BoxDecoration(
+          //       shape: BoxShape.circle,
+          //       image: DecorationImage(
+          //           image: imageProvider, fit: BoxFit.cover),
+          //     ),
+          //   ),
+          //   placeholder: (context, url) =>
+          //       Center(child: CircularProgressIndicator()),
+          //   errorWidget: (context, url, error) => Icon(Icons.error),
+          // ), // : const CircleAvatar(
+          //   radius: 50,
+          //   backgroundImage:
+          //       AssetImage("assets/images/pfpholder.jpg"),
+          // ),
+          profilePic != null
+              ? CircleAvatar(
+                  radius: 50,
+                  backgroundImage: MemoryImage(profilePic!),
+                  // backgroundImage: MemoryImage(_image!),
+                )
+              : const CircleAvatar(
+                  radius: 50,
+                  backgroundImage: AssetImage("assets/images/pfpholder.jpg"),
+                ),
+          Positioned(
+              bottom: 0,
+              right: -40,
+              child: RawMaterialButton(
+                onPressed: () {
+                  editProfileImage();
+                },
+                elevation: 2.0,
+                fillColor: Color(0xFFF5F6F9),
+                child: Icon(
+                  Icons.edit,
+                  color: Colors.blue,
+                ),
+                padding: EdgeInsets.all(3.0),
+                shape: CircleBorder(side: BorderSide(color: Colors.black)),
+              )),
+        ],
+      ),
+    );
+    // : Container(
+    //     decoration: BoxDecoration(
+    //       color: Colors.black,
+    //       shape: BoxShape.circle,
+    //     ),
+    //     padding: EdgeInsets.all(25),
+    //     child: const CircularProgressIndicator(),
+    //   ); // Adjust the stroke width to change the size);
   }
 
   @override
@@ -301,7 +418,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                             4, // Adjust the border width as needed
                                       ),
                                     ),
-                                    child: buildProfileImages(),
+                                    child: buildProfileImages(ref),
                                   ),
                                 ),
                               ],
@@ -1144,37 +1261,6 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
               : Container(),
         ],
       ),
-    );
-  }
-
-  Widget buildProfileImages() {
-    return Stack(
-      children: [
-        _image != null
-            ? CircleAvatar(
-                radius: 50,
-                backgroundImage: MemoryImage(_image!),
-              )
-            : const CircleAvatar(
-                radius: 50,
-                backgroundImage: AssetImage("assets/images/pfpholder.jpg"),
-              ),
-        Positioned(
-          bottom: 0,
-          right: -30,
-          child: RawMaterialButton(
-            onPressed: _isEditMode ? editProfileImage : null,
-            elevation: 2.0,
-            fillColor: kLightModeShadowColor,
-            child: const Icon(
-              Icons.edit,
-              color: Colors.blue,
-            ),
-            padding: const EdgeInsets.all(3.0),
-            shape: const CircleBorder(),
-          ),
-        ),
-      ],
     );
   }
 }

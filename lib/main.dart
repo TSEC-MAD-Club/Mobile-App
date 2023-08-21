@@ -179,6 +179,8 @@ class _TSECAppState extends ConsumerState<TSECApp> {
       await ref
           .watch(authProvider.notifier)
           .updateUserStateDetails(studentModel, ref);
+
+      await ref.watch(authProvider.notifier).fetchProfilePic();
       // if (studentModel != null) {
       //   debugPrint("in main");
       //   String studentYear = studentModel.gradyear.toString();
