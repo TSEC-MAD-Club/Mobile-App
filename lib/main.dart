@@ -153,7 +153,6 @@ class _TSECAppState extends ConsumerState<TSECApp> {
         GoRoute(
           path: '/profile-page',
           builder: (context, state) {
-            // use state.queryParams to get search query from query parameter
             String justLoggedInSt =
                 state.queryParams['justLoggedIn'] ?? "false"; // may be null
             bool justLoggedIn = justLoggedInSt == "true";
@@ -171,7 +170,7 @@ class _TSECAppState extends ConsumerState<TSECApp> {
       StudentModel? studentModel = await ref
           .watch(authProvider.notifier)
           .fetchStudentDetails(user, context);
-      ref.watch(studentModelProvider.notifier).update((state) => studentModel);
+      // ref.watch(studentModelProvider.notifier).update((state) => studentModel);
       ref.read(studentModelProvider.notifier).state = studentModel;
 
       NotificationType.makeTopic(ref, studentModel);

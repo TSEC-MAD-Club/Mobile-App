@@ -102,7 +102,7 @@ class AuthProvider extends StateNotifier<bool> {
     }
   }
 
-  void updateUserDetails(
+  Future updateUserDetails(
       StudentModel student, WidgetRef ref, BuildContext context) async {
     try {
       StudentModel updatedStudentData =

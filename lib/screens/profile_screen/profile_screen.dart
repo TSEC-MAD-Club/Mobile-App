@@ -30,17 +30,6 @@ class ProfilePage extends ConsumerStatefulWidget {
 }
 
 class _ProfilePageState extends ConsumerState<ProfilePage> {
-  // final TextEditingController _nameController = TextEditingController();
-  // final TextEditingController _emailController = TextEditingController();
-  // final TextEditingController _batchController = TextEditingController();
-  // final TextEditingController _branchController = TextEditingController();
-  // final TextEditingController _divController = TextEditingController();
-  // final TextEditingController _gradyearController = TextEditingController();
-  // final TextEditingController _phoneNumController = TextEditingController();
-  // final TextEditingController _addressController = TextEditingController();
-  // final TextEditingController _homeStationController = TextEditingController();
-  // final TextEditingController _dateOfBirthController = TextEditingController();
-
   String name = "";
   String email = "";
   String? batch = "";
@@ -76,23 +65,6 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
       _isEditMode = true;
     });
   }
-
-  // void getProfilePic() async {
-  //   final user = ref.read(firebaseAuthProvider).currentUser;
-  //   String url =
-  //       "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Images%2F${user?.uid}";
-  //   final response = await http.get(Uri.parse(url));
-
-  //   if (response.statusCode == 200) {
-  //     final jsonResponse =
-  //         Map<String, dynamic>.from(json.decode(response.body));
-  //     // return jsonResponse['downloadTokens'] ?? '';
-  //     url = "$url?alt=media&token=${jsonResponse['downloadTokens']}";
-  //     debugPrint("download url is $url");
-  //   } else {
-  //     throw Exception('Failed to fetch download tokens');
-  //   }
-  // }
 
   String convertFirstLetterToUpperCase(String input) {
     if (input.isEmpty) {
@@ -191,85 +163,75 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
   Future _saveChanges(WidgetRef ref) async {
     final StudentModel? data = ref.watch(studentModelProvider);
     bool b = data!.updateCount != null ? data.updateCount! < 2 : true;
-    // if (b) {
-    if (batch == null || div == null) {
+    if (b) {
+      if (batch == null || div == null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Choose an appropriate value for division and batch'),
+          ),
+        );
+        return false;
+      }
+
+      if (data.updateCount == null) {
+        data.updateCount = 1;
+      } else {
+        int num = data.updateCount!;
+        data.updateCount = num + 1;
+      }
+      // debugPrint("in here ${address} ${_dobController.text} ${batch} ${name}");
+      StudentModel student = StudentModel(
+        div: div,
+        batch: batch,
+        branch: convertFirstLetterToUpperCase(branch),
+        name: name,
+        email: email,
+        gradyear: gradyear,
+        phoneNum: phoneNum,
+        updateCount: data.updateCount,
+        address: address,
+        homeStation: homeStation,
+        dateOfBirth: _dobController.text,
+      );
+
+      if (_formKey.currentState!.validate()) {
+        await ref
+            .watch(authProvider.notifier)
+            .updateUserDetails(student, ref, context);
+        setState(() {
+          _isEditMode = false;
+        });
+        return true;
+      }
+      return false;
+    } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Choose an appropriate value for division and batch'),
+          content: Text(
+              'You have already updated your profile as many times as possible'),
         ),
       );
-      return;
     }
-
-    if (data.updateCount == null) {
-      data.updateCount = 1;
-    } else {
-      int num = data.updateCount!;
-      data.updateCount = num + 1;
-    }
-    // debugPrint("in here ${address} ${_dobController.text} ${batch} ${name}");
-    StudentModel student = StudentModel(
-      div: div,
-      batch: batch,
-      branch: convertFirstLetterToUpperCase(branch),
-      name: name,
-      email: email,
-      gradyear: gradyear,
-      phoneNum: phoneNum,
-      updateCount: data.updateCount,
-      address: address,
-      homeStation: homeStation,
-      // dateOfBirth: dob,
-      dateOfBirth: _dobController.text,
-    );
-
-    if (_formKey.currentState!.validate()) {
-      ref.watch(authProvider.notifier).updateUserDetails(student, ref, context);
-      setState(() {
-        _isEditMode = false;
-      });
-    }
-    // } else {
-    //   ScaffoldMessenger.of(context).showSnackBar(
-    //     const SnackBar(
-    //       content: Text(
-    //           'You have already updated your profile as many times as possible'),
-    //     ),
-    //   );
-    // }
   }
 
   ScrollController listScrollController = ScrollController();
 
   @override
   void dispose() {
-    // _addressController.dispose();
-    // _batchController.dispose();
-    // _branchController.dispose();
-    // _dateOfBirthController.dispose();
-    // _divController.dispose();
-    // _emailController.dispose();
-    // _gradyearController.dispose();
-    // _homeStationController.dispose();
-    // _nameController.dispose();
-    // _phoneNumController.dispose();
     super.dispose();
   }
 
   @override
   void initState() {
     super.initState();
-    // getProfilePic();
     final StudentModel? data = ref.read(studentModelProvider);
     name = data!.name;
     email = data.email;
     batch = data.batch;
     branch = data.branch;
     div = data.div;
-    // div = null;
     gradyear = data.gradyear;
     batch = data.batch;
-    // batch = null;
     phoneNum = data.phoneNum;
     address = data.address ?? '';
     homeStation = data.homeStation ?? '';
@@ -280,47 +242,13 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
 
   Widget buildProfileImages(WidgetRef ref) {
     profilePic = ref.watch(profilePicProvider);
-    // return !loadingImage
     return GestureDetector(
       onTap: () {
         editProfileImage();
       },
       child: Stack(
-        // return Stack(
         clipBehavior: Clip.none,
         children: [
-          // profilePicUrl != null
-          // ? CircleAvatar(
-          // CircleAvatar(
-          //   radius: 50,
-          //   backgroundImage: MemoryImage(_image!),
-          //   backgroundImage: Image.network(profilePicUrl!).image,
-          //   child: CachedNetworkImage(
-          //     imageUrl: profilePicUrl!,
-          //     placeholder: (context, url) =>
-          //         new CircularProgressIndicator(),
-          //     errorWidget: (context, url, error) => new Icon(Icons.error),
-          //   ),
-          // ),
-          // CachedNetworkImage(
-          //   imageUrl: profilePicUrl!,
-          //   imageBuilder: (context, imageProvider) => Container(
-          //     width: 90.0,
-          //     height: 90.0,
-          //     decoration: BoxDecoration(
-          //       shape: BoxShape.circle,
-          //       image: DecorationImage(
-          //           image: imageProvider, fit: BoxFit.cover),
-          //     ),
-          //   ),
-          //   placeholder: (context, url) =>
-          //       Center(child: CircularProgressIndicator()),
-          //   errorWidget: (context, url, error) => Icon(Icons.error),
-          // ), // : const CircleAvatar(
-          //   radius: 50,
-          //   backgroundImage:
-          //       AssetImage("assets/images/pfpholder.jpg"),
-          // ),
           profilePic != null
               ? CircleAvatar(
                   radius: 50,
@@ -350,14 +278,6 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
         ],
       ),
     );
-    // : Container(
-    //     decoration: BoxDecoration(
-    //       color: Colors.black,
-    //       shape: BoxShape.circle,
-    //     ),
-    //     padding: EdgeInsets.all(25),
-    //     child: const CircularProgressIndicator(),
-    //   ); // Adjust the stroke width to change the size);
   }
 
   @override
@@ -368,7 +288,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
     // bool hide = _isEditMode;
     return CustomScaffold(
       hideButton: hide,
-      //fuck the  the app bar and the floating action button
+      //fuck the app bar and the floating action button
       appBar: const ProfilePageAppBar(title: "Profile"),
       body: Column(
         children: [
@@ -379,10 +299,6 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(15.0),
-                    // child: Form(
-                    //   child: Stack(
-                    // alignment: Alignment.center,
-                    // children: [
                     child: Stack(
                       children: [
                         Column(
@@ -408,16 +324,14 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                 Positioned(
                                   bottom: -30,
                                   child: Container(
-                                    width:
-                                        90, // Adjust the width and height as needed
+                                    width: 90,
                                     height: 90,
                                     decoration: BoxDecoration(
                                       shape: BoxShape.circle,
                                       border: Border.all(
                                         color: Theme.of(context)
                                             .scaffoldBackgroundColor,
-                                        width:
-                                            4, // Adjust the border width as needed
+                                        width: 4,
                                       ),
                                     ),
                                     child: buildProfileImages(ref),
@@ -440,13 +354,6 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                             ),
                             Text(
                               data.homeStation ?? "",
-                              // style: Theme.of(context)
-                              //     .textTheme
-                              //     .headlineSmall
-                              //     ?.copyWith(
-                              //         color:
-                              //             Color.fromARGB(255, 171, 171, 171)),
-
                               style: Theme.of(context)
                                   .textTheme
                                   .headlineSmall
@@ -454,26 +361,12 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                     color:
                                         Theme.of(context).colorScheme.onPrimary,
                                   ),
-
-                              // style: Theme.of(context).textTheme.headlineSmall
-                              //     ?.copyWith(
-                              //         color: Theme.of(context).primaryColor),
                             ),
                             const SizedBox(
                               height: 15,
                             ),
                           ],
                         ),
-                        // isBlurred
-                        //     ? BackdropFilter(
-                        //         filter:
-                        //             ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
-                        //         child: SizedBox(
-                        //           width: double.infinity,
-                        //           height: double.infinity,
-                        //         ),
-                        //       )
-                        //     : const SizedBox.shrink(),
                         Padding(
                           padding: EdgeInsets.only(top: 200),
                           child: Column(
@@ -564,7 +457,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                       children: [
                                         Expanded(
                                           child: Scrollbar(
-                                            //   thumbVisibility: true,
+                                            thumbVisibility: true,
                                             child: SingleChildScrollView(
                                               child: Form(
                                                 key: _formKey,
@@ -630,115 +523,6 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                                         return null;
                                                       },
                                                     ),
-                                                    ProfileTextField(
-                                                      // controller:
-                                                      //     _addressController,
-
-                                                      initVal: address,
-                                                      onSaved: (newVal) {
-                                                        setState(() {
-                                                          if (newVal != null) {
-                                                            address = newVal;
-                                                          }
-                                                        });
-                                                      },
-                                                      label: 'Address',
-                                                      isEditMode: _isEditMode,
-                                                      // validator: (value) {
-                                                      //   if (value!.isEmpty) {
-                                                      //     return 'Please enter your Address';
-                                                      //   }
-                                                      //   return null;
-                                                      // },
-                                                    ),
-                                                    // ProfileTextField(
-                                                    //   // controller:
-                                                    //   //     _homeStationController,
-
-                                                    //   initVal: homeStation,
-                                                    //   onSaved: (newVal) {
-                                                    //     setState(() {
-                                                    //       if (newVal != null) {
-                                                    //         homeStation =
-                                                    //             newVal;
-                                                    //       }
-                                                    //     });
-                                                    //   },
-                                                    //   label: 'Home Station',
-                                                    //   isEditMode: _isEditMode,
-                                                    //   validator: (value) {
-                                                    //     if (value!.isEmpty) {
-                                                    //       return 'Please enter your Home Station';
-                                                    //     }
-                                                    //     return null;
-                                                    //   },
-                                                    // ),
-                                                    // ProfileTextField(
-                                                    //   // controller:
-                                                    //   //     _dateOfBirthController,
-                                                    //   isEditMode: _isEditMode,
-                                                    //   label: "Date of Birth",
-                                                    //   initVal: dob,
-                                                    //   // onSaved: (newVal) {
-                                                    //   //   setState(() {
-                                                    //   //     if (newVal != null) {
-                                                    //   //       dob = newVal;
-                                                    //   //     }
-                                                    //   //   });
-                                                    //   // },
-                                                    //   readOnly: true,
-                                                    //   // validator: (value) {
-                                                    //   //   if (value!.isEmpty) {
-                                                    //   //     return 'Please enter Date Of Birth';
-                                                    //   //   }
-                                                    //   //   // Regular expression to match the desired DOB format: 20 August 2003
-                                                    //   //   const pattern =
-                                                    //   //       r'^(0[1-9]|[12][0-9]|3[01]) (January|February|March|April|May|June|July|August|September|October|November|December) \d{4}$';
-                                                    //   //   final regex =
-                                                    //   //       RegExp(pattern);
-
-                                                    //   //   if (!regex
-                                                    //   //       .hasMatch(value)) {
-                                                    //   //     return 'Invalid Date Of Birth format. Please use the format: 20 August 2003';
-                                                    //   //   }
-
-                                                    //   //   return null;
-                                                    //   // },
-                                                    //   onTap: () async {
-                                                    //     DateTime? pickedDate =
-                                                    //         await showDatePicker(
-                                                    //       context: context,
-                                                    //       initialDate: DateTime
-                                                    //               .now()
-                                                    //           .subtract(Duration(
-                                                    //               days: 20 *
-                                                    //                   365)), //get today's date
-                                                    //       firstDate: DateTime(
-                                                    //           1960), //DateTime.now() - not to allow to choose before today.
-                                                    //       lastDate:
-                                                    //           DateTime(2010),
-                                                    //     );
-                                                    //     if (pickedDate !=
-                                                    //         null) {
-                                                    //       String formattedDate =
-                                                    //           DateFormat(
-                                                    //                   'd MMMM y')
-                                                    //               .format(
-                                                    //                   pickedDate); // format date in required form here we use yyyy-MM-dd that means time is removed
-                                                    //       // print(
-                                                    //       //     formattedDate); //formatted date output using intl package =>  2022-07-04
-                                                    //       //You can format date as per your need
-
-                                                    //       setState(() {
-                                                    //         dob =
-                                                    //             formattedDate; //set foratted date to TextField value.
-                                                    //       });
-                                                    //     } else {
-                                                    //       // print(
-                                                    //       //     "Date is not selected");
-                                                    //     }
-                                                    //   },
-                                                    // ),
 
                                                     TextFormField(
                                                       readOnly: true,
@@ -807,20 +591,62 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                                           return 'Please enter Date Of Birth';
                                                         }
                                                         // Regular expression to match the desired DOB format: 20 August 2003
-                                                        const pattern =
-                                                            r'^(0[1-9]|[12][0-9]|3[01]) (January|February|March|April|May|June|July|August|September|October|November|December) \d{4}$';
-                                                        final regex =
-                                                            RegExp(pattern);
+                                                        // const pattern =
+                                                        //     r'^(-1[1-9]|[12][0-9]|3[01]) (January|February|March|April|May|June|July|August|September|October|November|December) \d{4}$';
+                                                        // final regex =
+                                                        //     RegExp(pattern);
 
-                                                        if (!regex
-                                                            .hasMatch(value)) {
-                                                          return 'Invalid Date Of Birth format. Please use the format: 20 August 2003';
-                                                        }
+                                                        // if (!regex
+                                                        //     .hasMatch(value)) {
+                                                        //   return 'Invalid Date Of Birth format. Please use the format: 19 August 2003';
+                                                        // }
 
                                                         return null;
                                                       },
                                                       // initialValue: dob,
                                                       // onSaved: widget.onSaved ?? (val) {},
+                                                    ),
+                                                    ProfileTextField(
+                                                      initVal: address,
+                                                      onSaved: (newVal) {
+                                                        setState(() {
+                                                          if (newVal != null) {
+                                                            address = newVal;
+                                                          }
+                                                        });
+                                                      },
+                                                      label: 'Address',
+                                                      isEditMode: _isEditMode,
+                                                      validator: (value) {
+                                                        if (value!.isEmpty) {
+                                                          return 'Please enter your Address';
+                                                        }
+                                                        return null;
+                                                      },
+                                                    ),
+
+                                                    ProfileTextField(
+                                                      // controller:
+                                                      //     _addressController,
+
+                                                      initVal: homeStation,
+                                                      onSaved: (newVal) {
+                                                        setState(() {
+                                                          if (newVal != null) {
+                                                            homeStation =
+                                                                newVal;
+                                                          }
+                                                        });
+                                                      },
+                                                      label:
+                                                          'Nearest Railway Station',
+                                                      isEditMode: _isEditMode,
+                                                      validator: (value) {
+                                                        if (value!.isEmpty) {
+                                                          return 'Please enter the nearest railway station to your place';
+                                                        }
+                                                        return null;
+                                                      },
                                                     ),
                                                     ProfileTextField(
                                                       isEditMode: _isEditMode,
@@ -859,7 +685,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                                           }
                                                         });
                                                       },
-                                                      enabled: true,
+                                                      enabled: false,
                                                     ),
                                                     ProfileTextField(
                                                       isEditMode: _isEditMode,
@@ -880,7 +706,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                                           }
                                                         });
                                                       },
-                                                      enabled: true,
+                                                      enabled: false,
                                                     ),
                                                     Row(
                                                       mainAxisAlignment:
@@ -1187,8 +1013,18 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                 height: 50,
                                 child: ElevatedButton(
                                   onPressed: () async {
-                                    await _saveChanges(ref);
-                                    GoRouter.of(context).go('/main');
+                                    if (data.batch != null &&
+                                        data.div != null) {
+                                      GoRouter.of(context).go('/main');
+                                    } else {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        const SnackBar(
+                                          content: Text(
+                                              'Please fill in your details'),
+                                        ),
+                                      );
+                                    }
                                   },
                                   child: const Icon(Icons.arrow_forward),
                                   style: ButtonStyle(

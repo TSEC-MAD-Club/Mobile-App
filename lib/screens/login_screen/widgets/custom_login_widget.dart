@@ -191,6 +191,8 @@ class _LoginWidgetState extends ConsumerState<LoginWidget> {
                         child: Center(
                           child: Text(
                             'Reset Password',
+                            style: TextStyle(
+                                color: Theme.of(context).colorScheme.primary),
                           ),
                         ),
                       ),

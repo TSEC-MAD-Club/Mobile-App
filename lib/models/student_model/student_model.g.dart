@@ -7,7 +7,7 @@ part of 'student_model.dart';
 // **************************************************************************
 
 StudentModel _$StudentModelFromJson(Map<String, dynamic> json) => StudentModel(
-      batch: json['Batch'] as String,
+      batch: json['Batch'] as String?,
       branch: json['Branch'] as String,
       name: json['Name'] as String,
       email: json['email'] as String,
@@ -16,7 +16,7 @@ StudentModel _$StudentModelFromJson(Map<String, dynamic> json) => StudentModel(
       dateOfBirth: json['dateOfBirth'] as String?,
       gradyear: json['gradyear'] as String,
       phoneNum: json['phoneNo'] as String,
-      div: json['div'] as String,
+      div: json['div'] as String?,
       updateCount: json['updateCount'] as int?,
     );
 
