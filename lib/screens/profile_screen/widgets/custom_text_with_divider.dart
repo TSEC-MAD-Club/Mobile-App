@@ -40,7 +40,7 @@ class _CustomTextWithDividerState extends State<CustomTextWithDivider> {
           if (widget.showDivider) // Conditionally display the Divider
             Divider(
               thickness: 1,
-              color: Color(0xFF454545),
+              color: Theme.of(context).colorScheme.outline,
             ),
           // Divider(
           //   thickness: 1,

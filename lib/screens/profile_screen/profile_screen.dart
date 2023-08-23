@@ -13,7 +13,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:tsec_app/models/student_model/student_model.dart';
 import 'package:tsec_app/provider/auth_provider.dart';
 import 'package:tsec_app/provider/firebase_provider.dart';
-import 'package:tsec_app/screens/profile_screen/widgets/customTextWithDivider.dart';
+import 'package:tsec_app/screens/profile_screen/widgets/custom_text_with_divider.dart';
 import 'package:tsec_app/screens/profile_screen/widgets/profile_screen_appbar.dart';
 import 'package:tsec_app/screens/profile_screen/widgets/profile_text_field.dart';
 import 'package:tsec_app/widgets/custom_scaffold.dart';
@@ -120,6 +120,8 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
       l = ["A", "B", "C", "D", "E", "F", "G", "H", "I"];
     } else if (branch == "Comps") {
       l = ["C1", "C2", "C3"];
+    } else if (branch == "Chem") {
+      l = ["K"];
     } else if (gradyear == "2026") {
       if (branch == "It" || branch == "Aids") {
         l = ["S1", "S2"];
@@ -438,12 +440,24 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                             ),
                             Text(
                               data.homeStation ?? "",
+                              // style: Theme.of(context)
+                              //     .textTheme
+                              //     .headlineSmall
+                              //     ?.copyWith(
+                              //         color:
+                              //             Color.fromARGB(255, 171, 171, 171)),
+
                               style: Theme.of(context)
                                   .textTheme
                                   .headlineSmall
                                   ?.copyWith(
-                                      color:
-                                          Color.fromARGB(255, 171, 171, 171)),
+                                    color:
+                                        Theme.of(context).colorScheme.onPrimary,
+                                  ),
+
+                              // style: Theme.of(context).textTheme.headlineSmall
+                              //     ?.copyWith(
+                              //         color: Theme.of(context).primaryColor),
                             ),
                             const SizedBox(
                               height: 15,
@@ -477,9 +491,16 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                         0.95,
                                     padding: EdgeInsets.all(10),
                                     decoration: BoxDecoration(
-                                      border:
-                                          Border.all(color: Color(0xFF454545)),
-                                      color: Color(0xFF323232),
+                                      // border:
+                                      //     Border.all(color: Color(0xFF454545)),
+                                      border: Border.all(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .outline),
+                                      // color: Color(0xFF323232),
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .primaryContainer,
                                       borderRadius: BorderRadius.circular(30),
                                     ),
                                     child: Column(
@@ -488,58 +509,34 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                       children: [
                                         CustomTextWithDivider(
                                           label: "Email",
-                                          value: data!.email,
+                                          value: data.email,
                                           showDivider: true,
                                         ),
-                                        // Divider(
-                                        //   thickness: 1,
-                                        //   color: Colors.grey.shade800,
-                                        // ),
                                         CustomTextWithDivider(
                                           label: "Phone Number",
                                           value: data.phoneNum,
                                           showDivider: true,
                                         ),
-                                        // Divider(
-                                        //   thickness: 1,
-                                        //   color: Color(0xFF454545),
-                                        // ),
                                         CustomTextWithDivider(
                                           label: "Date of Birth",
                                           value: data.dateOfBirth ?? " ",
                                           showDivider: true,
                                         ),
-                                        // Divider(
-                                        //   thickness: 1,
-                                        //   color: Color(0xFF454545),
-                                        // ),
                                         CustomTextWithDivider(
                                           label: "Branch",
                                           value: data.branch,
                                           showDivider: true,
                                         ),
-                                        // Divider(
-                                        //   thickness: 1,
-                                        //   color: Color(0xFF454545),
-                                        // ),
                                         CustomTextWithDivider(
                                           label: "Graduation Year",
                                           value: data.gradyear,
                                           showDivider: true,
                                         ),
-                                        // Divider(
-                                        //   thickness: 1,
-                                        //   color: Colors.grey.shade800,
-                                        // ),
                                         CustomTextWithDivider(
                                           label: "Division",
                                           value: data.div ?? "-",
                                           showDivider: true,
                                         ),
-                                        // Divider(
-                                        //   thickness: 1,
-                                        //   color: Colors.grey.shade800,
-                                        // ),
                                         CustomTextWithDivider(
                                           label: "Batch",
                                           value: data.batch ?? "-",
@@ -554,9 +551,13 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                         0.95,
                                     padding: EdgeInsets.all(10),
                                     decoration: BoxDecoration(
-                                      border:
-                                          Border.all(color: Color(0xFF454545)),
-                                      color: Color(0xFF323232),
+                                      border: Border.all(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .outline),
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .primaryContainer,
                                       borderRadius: BorderRadius.circular(30),
                                     ),
                                     child: Column(
@@ -754,8 +755,10 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                                             UnderlineInputBorder(
                                                           borderSide:
                                                               BorderSide(
-                                                            color: Color(
-                                                                0xFF454545),
+                                                            color: Theme.of(
+                                                                    context)
+                                                                .colorScheme
+                                                                .outline,
                                                           ), // Change to your desired color
                                                         ),
                                                         labelStyle:
@@ -902,8 +905,10 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                                             underline:
                                                                 Container(
                                                               height: 1,
-                                                              color: Color(
-                                                                  0xFF454545), // Change to your desired color
+                                                              color: Theme.of(
+                                                                      context)
+                                                                  .colorScheme
+                                                                  .outline, // Change to your desired color
                                                             ),
                                                             dropdownColor: Theme
                                                                     .of(context)
@@ -957,8 +962,10 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                                             underline:
                                                                 Container(
                                                               height: 1,
-                                                              color: Color(
-                                                                  0xFF454545), // Change to your desired color
+                                                              color: Theme.of(
+                                                                      context)
+                                                                  .colorScheme
+                                                                  .outline, // Change to your desired color
                                                             ),
                                                             dropdownColor: Theme
                                                                     .of(context)
@@ -1047,51 +1054,59 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                             ),
                                           ),
                                         ),
+                                        SizedBox(height: 10),
                                         Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
                                           children: [
-                                            // Spacer(),
-                                            ElevatedButton(
-                                              onPressed: () {
-                                                if (_isEditMode) {
-                                                  _saveChanges(ref);
-                                                }
-                                              },
-                                              style: ElevatedButton.styleFrom(
-                                                padding: EdgeInsets.symmetric(
-                                                    horizontal: 20,
-                                                    vertical: 10),
-                                                backgroundColor: Colors.green,
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          50.0), // Half of desired button height
+                                            Spacer(),
+                                            Expanded(
+                                              child: ElevatedButton(
+                                                onPressed: () {
+                                                  if (_isEditMode) {
+                                                    _saveChanges(ref);
+                                                  }
+                                                },
+                                                style: ElevatedButton.styleFrom(
+                                                  padding: EdgeInsets.symmetric(
+                                                      vertical: 15),
+                                                  backgroundColor: Colors.green,
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            50.0), // Half of desired button height
+                                                  ),
                                                 ),
-                                              ),
-                                              child: const Text(
-                                                "Save Changes",
-                                                style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.w600,
+                                                child: Text(
+                                                  "Save Changes",
+                                                  style: TextStyle(
+                                                    color: Theme.of(context)
+                                                        .colorScheme
+                                                        .onSecondaryContainer,
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
                                                 ),
                                               ),
                                             ),
-
-                                            Spacer(),
-                                            IconButton(
-                                              onPressed: () {
-                                                setState(() {
-                                                  // isExpanded = false;
-                                                  // isBlurred = false;
-                                                  _isEditMode = false;
-                                                });
-                                              },
-                                              icon: const Icon(
-                                                Icons.cancel_outlined,
-                                                color: Colors.white,
-                                                size: 30,
-                                              ), // Use Icon widget to specify the icon
+                                            Expanded(
+                                              child: Align(
+                                                alignment:
+                                                    Alignment.centerRight,
+                                                child: IconButton(
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      // isExpanded = false;
+                                                      // isBlurred = false;
+                                                      _isEditMode = false;
+                                                    });
+                                                  },
+                                                  icon: Icon(
+                                                    Icons.cancel_outlined,
+                                                    color: Theme.of(context)
+                                                        .colorScheme
+                                                        .onSecondaryContainer,
+                                                    size: 30,
+                                                  ), // Use Icon widget to specify the icon
+                                                ),
+                                              ),
                                             ),
                                             // SizedBox(
                                             //   width: 10,
@@ -1116,107 +1131,81 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
               ),
             ),
           ),
-          // !_isEditMode
-          //     ? Container(
-          //         margin: EdgeInsets.only(bottom: 15),
-          //         child: ElevatedButton(
-          //           onPressed: () {
-          //             if (!_isEditMode) {
-          //               // enableEditing();
-          //               setState(() {
-          //                 // isExpanded = true;
-          //                 // isBlurred = true;
-          //                 _isEditMode = true;
-          //               });
-          //               Future.delayed(Duration(milliseconds: 1000), () {
-          //                 if (listScrollController.hasClients) {
-          //                   final position =
-          //                       listScrollController.position.viewportDimension;
-          //                   listScrollController.animateTo(
-          //                     position,
-          //                     duration: Duration(seconds: 1),
-          //                     curve: Curves.easeOut,
-          //                   );
-          //                 }
-          //               });
-          //             }
-          //           },
-          //           style: ElevatedButton.styleFrom(
-          //             shape: RoundedRectangleBorder(
-          //               borderRadius: BorderRadius.circular(
-          //                   50.0), // Half of desired button height
-          //             ),
-          //             padding:
-          //                 EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-          //           ),
-          //           child: //Text(_isEditMode ? 'Save Changes' : 'Edit'),
-          //               const Text("EDIT"),
-          //         ),
-          //       )
-          //     : Container(),
           !_isEditMode
               ? (widget.justLoggedIn
                   ? Container(
                       padding:
                           EdgeInsets.symmetric(vertical: 0, horizontal: 20),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Container(
-                            margin: EdgeInsets.only(bottom: 15),
-                            child: ElevatedButton(
-                              onPressed: () {
-                                if (!_isEditMode) {
-                                  // enableEditing();
-                                  setState(() {
-                                    // isExpanded = true;
-                                    // isBlurred = true;
-                                    _isEditMode = true;
-                                  });
-                                  Future.delayed(Duration(milliseconds: 1000),
-                                      () {
-                                    if (listScrollController.hasClients) {
-                                      final position = listScrollController
-                                          .position.viewportDimension;
-                                      listScrollController.animateTo(
-                                        position,
-                                        duration: Duration(seconds: 1),
-                                        curve: Curves.easeOut,
-                                      );
-                                    }
-                                  });
-                                }
-                              },
-                              style: ElevatedButton.styleFrom(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(
-                                      50.0), // Half of desired button height
+                          Spacer(),
+                          Expanded(
+                            child: Container(
+                              margin: EdgeInsets.only(bottom: 15),
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  if (!_isEditMode) {
+                                    // enableEditing();
+                                    setState(() {
+                                      // isExpanded = true;
+                                      // isBlurred = true;
+                                      _isEditMode = true;
+                                    });
+                                    Future.delayed(Duration(milliseconds: 1000),
+                                        () {
+                                      if (listScrollController.hasClients) {
+                                        final position = listScrollController
+                                            .position.viewportDimension;
+                                        listScrollController.animateTo(
+                                          position,
+                                          duration: Duration(seconds: 1),
+                                          curve: Curves.easeOut,
+                                        );
+                                      }
+                                    });
+                                  }
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(
+                                        50.0), // Half of desired button height
+                                  ),
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 20, vertical: 10),
                                 ),
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 20, vertical: 10),
+                                child: //Text(_isEditMode ? 'Save Changes' : 'Edit'),
+                                    const Text("EDIT"),
                               ),
-                              child: //Text(_isEditMode ? 'Save Changes' : 'Edit'),
-                                  const Text("EDIT"),
                             ),
                           ),
-                          ElevatedButton(
-                            onPressed: () async {
-                              await _saveChanges(ref);
-                              GoRouter.of(context).go('/main');
-                            },
-                            child: const Icon(Icons.arrow_forward),
-                            style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all<Color>(
-                                  Colors.transparent),
-                              shape: MaterialStateProperty.all<
-                                  RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15.0),
+                          Expanded(
+                            child: Align(
+                              alignment: Alignment.centerRight,
+                              child: SizedBox(
+                                width: 60,
+                                height: 50,
+                                child: ElevatedButton(
+                                  onPressed: () async {
+                                    await _saveChanges(ref);
+                                    GoRouter.of(context).go('/main');
+                                  },
+                                  child: const Icon(Icons.arrow_forward),
+                                  style: ButtonStyle(
+                                    // backgroundColor: MaterialStateProperty.all<Color>(
+                                    //     Colors.transparent),
+                                    shape: MaterialStateProperty.all<
+                                        RoundedRectangleBorder>(
+                                      RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(15.0),
+                                      ),
+                                    ),
+                                    padding: MaterialStateProperty.all(
+                                        EdgeInsets.zero),
+                                  ),
                                 ),
                               ),
-                              padding:
-                                  MaterialStateProperty.all(EdgeInsets.zero),
                             ),
                           )
                         ],

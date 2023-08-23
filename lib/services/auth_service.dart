@@ -21,7 +21,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tsec_app/models/student_model/student_model.dart';
 import 'package:tsec_app/provider/auth_provider.dart';
-import 'package:tsec_app/screens/profile_screen/widgets/customTextWithDivider.dart';
+import 'package:tsec_app/screens/profile_screen/widgets/custom_text_with_divider.dart';
 import 'package:tsec_app/screens/profile_screen/widgets/profile_screen_appbar.dart';
 import 'package:tsec_app/screens/profile_screen/widgets/profile_text_field.dart';
 import 'package:tsec_app/widgets/custom_scaffold.dart';

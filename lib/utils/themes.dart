@@ -74,7 +74,15 @@ late final theme = ThemeData(
     displayColor: kBlack,
   ),
   fontFamily: "SF Pro Text",
-  colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.white),
+  colorScheme: ColorScheme.fromSwatch().copyWith(
+    secondary: Colors.white,
+    onPrimary: Color.fromARGB(255, 78, 73, 73),
+    inversePrimary: Color.fromARGB(255, 241, 241, 241),
+    primaryContainer: Colors.white,
+    secondaryContainer: Color(0xff00C62C),
+    onSecondaryContainer: Colors.black,
+    outline: Color(0xFFE0E0E0),
+  ),
 );
 
 late final darkTheme = ThemeData(
@@ -84,6 +92,7 @@ late final darkTheme = ThemeData(
   primaryColorDark: const Color(0xFF000000),
   shadowColor: const Color(0x00A9A9A9),
   cardColor: Colors.white70,
+  // textSecondaryColor: Color.fromARGB(255, 65, 60, 60),
   elevatedButtonTheme: _getElevatedButtonTheme(
     darkColor: kDarkModeDarkBlue,
     lightColor: kDarkModeLightBlue,
@@ -97,7 +106,15 @@ late final darkTheme = ThemeData(
     displayColor: kWhite,
   ),
   fontFamily: "SF Pro Text",
-  colorScheme: ColorScheme.fromSwatch().copyWith(secondary: kLightBlack),
+  colorScheme: ColorScheme.fromSwatch().copyWith(
+    secondary: kLightBlack,
+    onPrimary: Color.fromARGB(255, 171, 171, 171),
+    primaryContainer: Color(0xFF323232),
+    secondaryContainer: Color(0xff00C62C),
+    onSecondaryContainer: Colors.white,
+    outline: Color(0xFF454545),
+    inversePrimary: Color.fromARGB(255, 63, 63, 63),
+  ),
 );
 
 const _textTheme = TextTheme(

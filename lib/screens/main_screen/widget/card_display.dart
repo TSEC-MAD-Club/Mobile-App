@@ -71,7 +71,7 @@ class _CardDisplayState extends ConsumerState<CardDisplay> {
             return const SliverToBoxAdapter(
               child: Center(
                 child: Text(
-                  "Unable to fetch timetable. Please check if you have entered your details properly.",
+                  "Unable to fetch timetable. Please check if you have entered your details correctly in the profile section.",
                   textAlign: TextAlign.center,
                 ),
               ),

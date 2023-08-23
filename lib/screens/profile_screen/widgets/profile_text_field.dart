@@ -54,9 +54,12 @@ class _ProfileTextFieldState extends State<ProfileTextField> {
             decoration: InputDecoration(
               enabledBorder: UnderlineInputBorder(
                 borderSide: BorderSide(
-                  color: Color(0xFF454545),
+                  color: Theme.of(context).colorScheme.outline,
                 ), // Change to your desired color
               ),
+              disabledBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(
+                      color: Theme.of(context).colorScheme.inversePrimary)),
               labelStyle: const TextStyle(
                 color: Colors.grey,
               ),
