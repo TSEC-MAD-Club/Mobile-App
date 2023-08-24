@@ -48,7 +48,7 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
   final GlobalKey _dropDownKey = GlobalKey();
 
   void _showDropDown(BuildContext context) async {
-    OverlayState overlayState = Overlay.of(context)!;
+    OverlayState overlayState = Overlay.of(context);
 
     overlayEntry = OverlayEntry(builder: (context) {
       return Positioned(

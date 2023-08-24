@@ -24,10 +24,12 @@ class CustomScaffold extends ConsumerStatefulWidget {
     Key? key,
     this.appBar,
     this.body,
+    this.hideButton,
   }) : super(key: key);
 
   final PreferredSizeWidget? appBar;
   final Widget? body;
+  final bool? hideButton;
 
   @override
   ConsumerState<CustomScaffold> createState() => _CustomScaffoldState();
@@ -58,6 +60,7 @@ class _CustomScaffoldState extends ConsumerState<CustomScaffold>
 
   @override
   Widget build(BuildContext context) {
+    bool hide = widget.hideButton ?? false;
     StudentModel? data = ref.watch(studentModelProvider);
     ref.listen<NotificationProvider?>(
       notificationProvider,
@@ -81,7 +84,6 @@ class _CustomScaffoldState extends ConsumerState<CustomScaffold>
         }
       },
     );
-
     final size = MediaQuery.of(context).size;
     return Material(
       color: Theme.of(context).scaffoldBackgroundColor,
@@ -159,14 +161,17 @@ class _CustomScaffoldState extends ConsumerState<CustomScaffold>
                     ),
                     title: "Contact Us",
                   ),
-                ), data != null ? DrawerListItem(
-                  onTap: () => _navigate("/profile-page"),
-                  icon: Image.asset(
-                    ImageAssets.meetingIcon,
-                    width: 22,
-                  ),
-                  title: "Profile",
-                ):Container(),
+                ),
+                data != null
+                    ? DrawerListItem(
+                        onTap: () => _navigate("/profile-page"),
+                        icon: Image.asset(
+                          ImageAssets.meetingIcon,
+                          width: 22,
+                        ),
+                        title: "Profile",
+                      )
+                    : Container(),
                 // DrawerListItem(
                 //   onTap: () => _navigate("/profile-page"),
                 //   icon: Image.asset(
@@ -194,6 +199,7 @@ class _CustomScaffoldState extends ConsumerState<CustomScaffold>
                       _messaging
                           .unsubscribeFromTopic(NotificationType.yearTopic);
                     }
+                    ref.watch(authProvider.notifier).signout();
                     GoRouter.of(context).go('/login');
                   },
                   icon: const Icon(
@@ -245,62 +251,63 @@ class _CustomScaffoldState extends ConsumerState<CustomScaffold>
               );
             },
             child: Scaffold(
-              appBar: widget.appBar,
-              body: widget.body,
+              appBar: !hide ? widget.appBar : null,
+              body: SafeArea(child: widget.body ?? Container()),
             ),
           ),
-          Align(
-            alignment: Alignment.bottomRight,
-            child: Padding(
-              padding: const EdgeInsets.all(20),
-              child: InkWell(
-                onTap: () {
-                  if (_controller.isCompleted) {
-                    _controller.reverse();
-                  } else {
-                    _controller.forward();
-                  }
-                  overlayEntry?.remove();
-                  overlayEntry = null;
-                  ref
-                      .read(dayProvider.notifier)
-                      .update((state) => DateTime.now());
-                },
-                borderRadius: BorderRadius.circular(50),
-                child: Container(
-                  height: 45,
-                  width: 45,
-                  padding: const EdgeInsets.all(13),
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        Color(0xFF136ABF),
-                        Color(0xFF4391DE),
-                      ],
-                    ),
-                  ),
-                  child: AnimatedBuilder(
-                    animation: _controller,
-                    builder: (context, child) => Transform.rotate(
-                      angle: math.pi * _controller.value,
-                      child: _controller.value > .5
-                          ? const Icon(
-                              Icons.close,
-                              color: Colors.white,
-                              size: 20,
-                            )
-                          : CustomPaint(
-                              painter: _MenuIconPainter(),
+          !hide
+              ? Align(
+                  alignment: Alignment.bottomRight,
+                  child: Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: InkWell(
+                        onTap: () {
+                          if (_controller.isCompleted) {
+                            _controller.reverse();
+                          } else {
+                            _controller.forward();
+                          }
+                          overlayEntry?.remove();
+                          overlayEntry = null;
+                          ref
+                              .read(dayProvider.notifier)
+                              .update((state) => DateTime.now());
+                        },
+                        borderRadius: BorderRadius.circular(50),
+                        child: Container(
+                          height: 45,
+                          width: 45,
+                          padding: const EdgeInsets.all(13),
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                            gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [
+                                Color(0xFF136ABF),
+                                Color(0xFF4391DE),
+                              ],
                             ),
-                    ),
+                          ),
+                          child: AnimatedBuilder(
+                            animation: _controller,
+                            builder: (context, child) => Transform.rotate(
+                              angle: math.pi * _controller.value,
+                              child: _controller.value > .5
+                                  ? const Icon(
+                                      Icons.close,
+                                      color: Colors.white,
+                                      size: 20,
+                                    )
+                                  : CustomPaint(
+                                      painter: _MenuIconPainter(),
+                                    ),
+                            ),
+                          ),
+                        )),
                   ),
-                ),
-              ),
-            ),
-          )
+                )
+              : Container()
         ],
       ),
     );
