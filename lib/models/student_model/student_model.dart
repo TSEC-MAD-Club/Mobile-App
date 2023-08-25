@@ -8,7 +8,7 @@ class StudentModel {
   @JsonKey(name: "updateCount")
   int? updateCount;
   @JsonKey(name: "Batch")
-  final String batch;
+  final String? batch;
   @JsonKey(name: "Branch")
   final String branch;
   @JsonKey(name: "Name")
@@ -25,7 +25,7 @@ class StudentModel {
   final String gradyear;
   @JsonKey(name: "phoneNo")
   final String phoneNum;
-  final String div;
+  final String? div;
   StudentModel({
     required this.batch,
     required this.branch,

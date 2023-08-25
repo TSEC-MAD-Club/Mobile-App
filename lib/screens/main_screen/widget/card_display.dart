@@ -64,15 +64,16 @@ class _CardDisplayState extends ConsumerState<CardDisplay> {
     // debugPrint("data is ${data.toString()}");
 
     final dat = ref.watch(notificationTypeProvider);
-    debugPrint("hh ${dat?.yearBranchDivTopic}");
+    debugPrint("time table batch details: ${dat?.yearBranchDivTopic}");
     return data.when(
         data: ((data) {
           if (data == null) {
-            // debugPrint("over here");
             return const SliverToBoxAdapter(
               child: Center(
                 child: Text(
-                    "Unable to fetch timetable. Please check if you have entered your details properly."),
+                  "Unable to fetch timetable. Please check if you have entered your details correctly in the profile section.",
+                  textAlign: TextAlign.center,
+                ),
               ),
             );
           }
@@ -140,10 +141,14 @@ class _CardDisplayState extends ConsumerState<CardDisplay> {
     final daylist = data[day];
     for (final item in daylist) {
       StudentModel? studentModel = ref.watch(studentModelProvider);
+      // debugPrint(studentModel!.batch.toString());
       if (item['lectureBatch'] == studentModel!.batch.toString() ||
-          item['lectureBatch'] == 'All')
+          item['lectureBatch'] == 'All') {
+        debugPrint("in timetable, item is $item");
         timeTableDay.add(TimetableModel.fromJson(item));
+      }
     }
+    debugPrint(timeTableDay.toString());
     return timeTableDay;
   }
 

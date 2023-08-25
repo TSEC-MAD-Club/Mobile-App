@@ -20,21 +20,14 @@ class _CustomTextWithDividerState extends State<CustomTextWithDivider> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 10, right: 15, top: 5, bottom: 3),
+      padding: const EdgeInsets.only(left: 15, right: 15, top: 7),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(widget.label,
-              style: Theme.of(context)
-                  .textTheme
-                  .titleSmall
-                  ?.copyWith(color: Colors.grey)),
+          Text(widget.label, style: Theme.of(context).textTheme.titleSmall?.copyWith(color: Colors.grey)),
           Text(
             widget.value,
-            style: Theme.of(context)
-                .textTheme
-                .headlineSmall
-                ?.copyWith(fontSize: 15, fontWeight: FontWeight.normal),
+            style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontSize: 15, fontWeight: FontWeight.normal),
           ),
           // if (widget.showDivider) // Conditionally display the Divider
           //   Divider(

@@ -24,12 +24,13 @@ environment:
   sdk: ">=2.17.0 <3.0.0"
 
 dependencies:
-  cached_network_image: ^3.2.1
+  cached_network_image: ^3.2.3
   carousel_slider: ^4.1.1
   cloud_firestore: ^4.2.0
   cupertino_icons: ^1.0.5
   date_picker_timeline: ^1.2.3
   expandable: ^5.0.1
+  file_picker: ^5.3.1
   firebase_auth: ^4.2.0
   firebase_core: ^2.4.0
   firebase_messaging: ^14.1.4
@@ -84,6 +85,8 @@ flutter:
     - assets/images/icons/
     - assets/images/pfpholder.jpg
     - assets/images/tsecImages.png
+    - assets/images/tsecimage.png
+    - assets/images/tsecimage2.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
   # For details regarding adding assets from package dependencies, see
