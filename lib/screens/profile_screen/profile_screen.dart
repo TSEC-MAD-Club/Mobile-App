@@ -50,7 +50,8 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
   final _formKey = GlobalKey<FormState>();
 
   bool isValidEmail(String email) {
-    final emailRegex = RegExp(r'^[\w-]+(\.[\w-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(\.[a-zA-Z]{2,})$');
+    final emailRegex = RegExp(
+        r'^[\w-]+(\.[\w-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(\.[a-zA-Z]{2,})$');
     return emailRegex.hasMatch(email);
   }
 
@@ -194,7 +195,9 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
       );
 
       if (_formKey.currentState!.validate()) {
-        await ref.watch(authProvider.notifier).updateUserDetails(student, ref, context);
+        await ref
+            .watch(authProvider.notifier)
+            .updateUserDetails(student, ref, context);
         setState(() {
           _isEditMode = false;
         });
@@ -204,7 +207,8 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('You have already updated your profile as many times as possible'),
+          content: Text(
+              'You have already updated your profile as many times as possible'),
         ),
       );
     }
@@ -286,369 +290,802 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
       hideButton: hide,
       //fuck the app bar and the floating action button
       appBar: const ProfilePageAppBar(title: "Profile"),
-      body: Padding(
-        padding: const EdgeInsets.all(15.0),
-        child: Form(
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              Column(
+      body: Column(
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              controller: listScrollController,
+              child: Column(
                 children: [
-                  Stack(
-                    clipBehavior: Clip.none,
-                    alignment: Alignment.center,
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(15),
-                        child: Container(
-                          width: double.infinity,
-                          height: 150,
-                          decoration: const BoxDecoration(
-                            image: DecorationImage(
-                              image: AssetImage("assets/images/tsecImages.png"),
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        bottom: -50,
-                        child: Container(
-                          width: 100, // Adjust the width and height as needed
-                          height: 100,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                              color: Theme.of(context).scaffoldBackgroundColor,
-                              width: 4, // Adjust the border width as needed
-                            ),
-                          ),
-                          child: buildProfileImages(),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 50,
-                  ),
-                  Text(
-                    data.name,
-                    style: Theme.of(context).textTheme.headlineSmall,
-                  ),
-                  // TODO: Add HomeStation ex : Virar
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: 400,
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey.shade800),
-                      color: Theme.of(context).primaryColor,
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                  Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Stack(
                       children: [
-                        CustomTextWithDivider(
-                          label: "Email",
-                          value: data.email,
+                        Column(
+                          children: [
+                            Stack(
+                              clipBehavior: Clip.none,
+                              alignment: Alignment.center,
+                              children: [
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(15),
+                                  child: Container(
+                                    width: double.infinity,
+                                    height: 100,
+                                    decoration: const BoxDecoration(
+                                      image: DecorationImage(
+                                        image: AssetImage(
+                                            "assets/images/tsecimage2.png"),
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Positioned(
+                                  bottom: -30,
+                                  child: Container(
+                                    width: 90,
+                                    height: 90,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      border: Border.all(
+                                        color: Theme.of(context)
+                                            .scaffoldBackgroundColor,
+                                        width: 4,
+                                      ),
+                                    ),
+                                    child: buildProfileImages(ref),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 30,
+                            ),
+                            Text(
+                              data!.name,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headlineMedium
+                                  ?.copyWith(fontWeight: FontWeight.w600),
+                            ),
+                            const SizedBox(
+                              height: 2,
+                            ),
+                            Text(
+                              data.homeStation ?? "",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headlineSmall
+                                  ?.copyWith(
+                                    color:
+                                        Theme.of(context).colorScheme.onPrimary,
+                                  ),
+                            ),
+                            const SizedBox(
+                              height: 15,
+                            ),
+                          ],
                         ),
-                        Divider(
-                          thickness: 1,
-                          color: Colors.grey.shade800,
-                        ),
-                        CustomTextWithDivider(
-                          label: "Phone Number",
-                          value: data.phoneNum,
-                        ),
-                        Divider(
-                          thickness: 1,
-                          color: Colors.grey.shade800,
-                        ),
-                        CustomTextWithDivider(
-                          label: "Date of Birth",
-                          value: data.dateOfBirth ?? " ",
-                        ),
-                        Divider(
-                          thickness: 1,
-                          color: Colors.grey.shade800,
-                        ),
-                        CustomTextWithDivider(
-                          label: "Branch",
-                          value: data.branch,
-                        ),
-                        Divider(
-                          thickness: 1,
-                          color: Colors.grey.shade800,
-                        ),
-                        CustomTextWithDivider(
-                          label: "Graduation Year",
-                          value: data.gradyear,
-                        ),
-                        Divider(
-                          thickness: 1,
-                          color: Colors.grey.shade800,
-                        ),
-                        CustomTextWithDivider(
-                          label: "Division",
-                          value: data.div,
-                        ),
-                        Divider(
-                          thickness: 1,
-                          color: Colors.grey.shade800,
-                        ),
-                        CustomTextWithDivider(
-                          label: "Batch",
-                          value: data.batch,
+                        Padding(
+                          padding: EdgeInsets.only(top: 200),
+                          child: Column(
+                            children: [
+                              BackdropFilter(
+                                filter: ImageFilter.blur(
+                                  sigmaX: _isEditMode ? 10.0 : 0.0,
+                                  sigmaY: _isEditMode ? 10.0 : 0.0,
+                                ),
+                                child: AnimatedCrossFade(
+                                  duration: const Duration(seconds: 1),
+                                  firstChild: Container(
+                                    height: 460,
+                                    width: MediaQuery.of(context).size.width *
+                                        0.95,
+                                    padding: EdgeInsets.all(10),
+                                    decoration: BoxDecoration(
+                                      // border:
+                                      //     Border.all(color: Color(0xFF454545)),
+                                      border: Border.all(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .outline),
+                                      // color: Color(0xFF323232),
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .primaryContainer,
+                                      borderRadius: BorderRadius.circular(30),
+                                    ),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        CustomTextWithDivider(
+                                          label: "Email",
+                                          value: data.email,
+                                          showDivider: true,
+                                        ),
+                                        CustomTextWithDivider(
+                                          label: "Phone Number",
+                                          value: data.phoneNum,
+                                          showDivider: true,
+                                        ),
+                                        CustomTextWithDivider(
+                                          label: "Date of Birth",
+                                          value: data.dateOfBirth ?? " ",
+                                          showDivider: true,
+                                        ),
+                                        CustomTextWithDivider(
+                                          label: "Branch",
+                                          value: data.branch,
+                                          showDivider: true,
+                                        ),
+                                        CustomTextWithDivider(
+                                          label: "Graduation Year",
+                                          value: data.gradyear,
+                                          showDivider: true,
+                                        ),
+                                        CustomTextWithDivider(
+                                          label: "Division",
+                                          value: data.div ?? "-",
+                                          showDivider: true,
+                                        ),
+                                        CustomTextWithDivider(
+                                          label: "Batch",
+                                          value: data.batch ?? "-",
+                                          showDivider: false,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  secondChild: Container(
+                                    height: 580,
+                                    width: MediaQuery.of(context).size.width *
+                                        0.95,
+                                    padding: EdgeInsets.all(10),
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .outline),
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .primaryContainer,
+                                      borderRadius: BorderRadius.circular(30),
+                                    ),
+                                    child: Column(
+                                      children: [
+                                        Expanded(
+                                          child: Scrollbar(
+                                            thumbVisibility: true,
+                                            child: SingleChildScrollView(
+                                              child: Form(
+                                                key: _formKey,
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    // ProfileTextField(
+                                                    //   isEditMode: _isEditMode,
+                                                    //   label: "Name",
+                                                    //   controller:
+                                                    //       _nameController,
+                                                    //   initVal: name,
+                                                    //   onSaved: (newVal) {
+                                                    //     setState(() {
+                                                    //       name = newVal;
+                                                    //     });
+                                                    //   },
+                                                    //   validator: (value) {
+                                                    //     if (value!.isEmpty) {
+                                                    //       return 'Please enter a name';
+                                                    //     }
+                                                    //     return null;
+                                                    //   },
+                                                    // ),
+                                                    ProfileTextField(
+                                                      // onChanged: (val) {
+                                                      //   widget.controller.text = val;
+                                                      // },
+                                                      initVal: name,
+                                                      isEditMode: _isEditMode,
+                                                      onSaved: (newVal) {
+                                                        setState(() {
+                                                          if (newVal != null) {
+                                                            name = newVal;
+                                                          }
+                                                        });
+                                                      },
+                                                      label: "Name",
+                                                    ),
+                                                    ProfileTextField(
+                                                      isEditMode: _isEditMode,
+                                                      label: "Email",
+                                                      // controller:
+                                                      //     _emailController,
+                                                      initVal: email,
+                                                      onSaved: (newVal) {
+                                                        setState(() {
+                                                          if (newVal != null) {
+                                                            email = newVal;
+                                                          }
+                                                        });
+                                                      },
+                                                      enabled: false,
+                                                      validator: (value) {
+                                                        if (value!.isEmpty) {
+                                                          return 'Please enter an email';
+                                                        }
+                                                        if (!isValidEmail(
+                                                            value)) {
+                                                          return 'Please enter a Valid Email';
+                                                        }
+                                                        return null;
+                                                      },
+                                                    ),
+
+                                                    TextFormField(
+                                                      readOnly: true,
+                                                      controller:
+                                                          _dobController,
+                                                      // onChanged: (val) {
+                                                      //   widget.controller.text = val;
+                                                      // },
+                                                      // initialValue: widget.initVal,
+                                                      // onSaved: widget.onSaved,
+                                                      decoration:
+                                                          InputDecoration(
+                                                        enabledBorder:
+                                                            UnderlineInputBorder(
+                                                          borderSide:
+                                                              BorderSide(
+                                                            color: Theme.of(
+                                                                    context)
+                                                                .colorScheme
+                                                                .outline,
+                                                          ), // Change to your desired color
+                                                        ),
+                                                        labelStyle:
+                                                            const TextStyle(
+                                                          color: Colors.grey,
+                                                        ),
+                                                        labelText:
+                                                            "Date of Birth",
+                                                      ),
+                                                      onTap: () async {
+                                                        DateTime? pickedDate =
+                                                            await showDatePicker(
+                                                          context: context,
+                                                          initialDate: DateTime
+                                                                  .now()
+                                                              .subtract(Duration(
+                                                                  days: 20 *
+                                                                      365)), //get today's date
+                                                          firstDate: DateTime(
+                                                              1960), //DateTime.now() - not to allow to choose before today.
+                                                          lastDate:
+                                                              DateTime(2010),
+                                                        );
+                                                        if (pickedDate !=
+                                                            null) {
+                                                          String formattedDate =
+                                                              DateFormat(
+                                                                      'd MMMM y')
+                                                                  .format(
+                                                                      pickedDate); // format date in required form here we use yyyy-MM-dd that means time is removed
+                                                          // print(
+                                                          //     formattedDate); //formatted date output using intl package =>  2022-07-04
+                                                          //You can format date as per your need
+
+                                                          // setState(() {
+                                                          _dobController.text =
+                                                              formattedDate; //set foratted date to TextField value.
+                                                          // });
+                                                        } else {
+                                                          // print(
+                                                          //     "Date is not selected");
+                                                        }
+                                                      },
+                                                      validator: (value) {
+                                                        if (value!.isEmpty) {
+                                                          return 'Please enter Date Of Birth';
+                                                        }
+                                                        // Regular expression to match the desired DOB format: 20 August 2003
+                                                        // const pattern =
+                                                        //     r'^(-1[1-9]|[12][0-9]|3[01]) (January|February|March|April|May|June|July|August|September|October|November|December) \d{4}$';
+                                                        // final regex =
+                                                        //     RegExp(pattern);
+
+                                                        // if (!regex
+                                                        //     .hasMatch(value)) {
+                                                        //   return 'Invalid Date Of Birth format. Please use the format: 19 August 2003';
+                                                        // }
+
+                                                        return null;
+                                                      },
+                                                      // initialValue: dob,
+                                                      // onSaved: widget.onSaved ?? (val) {},
+                                                    ),
+                                                    ProfileTextField(
+                                                      initVal: address,
+                                                      onSaved: (newVal) {
+                                                        setState(() {
+                                                          if (newVal != null) {
+                                                            address = newVal;
+                                                          }
+                                                        });
+                                                      },
+                                                      label: 'Address',
+                                                      isEditMode: _isEditMode,
+                                                      validator: (value) {
+                                                        if (value!.isEmpty) {
+                                                          return 'Please enter your Address';
+                                                        }
+                                                        return null;
+                                                      },
+                                                    ),
+
+                                                    ProfileTextField(
+                                                      // controller:
+                                                      //     _addressController,
+
+                                                      initVal: homeStation,
+                                                      onSaved: (newVal) {
+                                                        setState(() {
+                                                          if (newVal != null) {
+                                                            homeStation =
+                                                                newVal;
+                                                          }
+                                                        });
+                                                      },
+                                                      label:
+                                                          'Nearest Railway Station',
+                                                      isEditMode: _isEditMode,
+                                                      validator: (value) {
+                                                        if (value!.isEmpty) {
+                                                          return 'Please enter the nearest railway station to your place';
+                                                        }
+                                                        return null;
+                                                      },
+                                                    ),
+                                                    ProfileTextField(
+                                                      isEditMode: _isEditMode,
+                                                      label: "Phone Number",
+                                                      // controller:
+                                                      //     _phoneNumController,
+                                                      initVal: phoneNum,
+                                                      onSaved: (newVal) {
+                                                        setState(() {
+                                                          if (newVal != null) {
+                                                            phoneNum = newVal;
+                                                          }
+                                                        });
+                                                      },
+                                                      validator: (value) {
+                                                        if (value!.isEmpty) {
+                                                          return 'Please enter a phone number';
+                                                        }
+                                                        if (!isValidPhoneNumber(
+                                                            value)) {
+                                                          return 'Please enter a valid phone number';
+                                                        }
+                                                        return null;
+                                                      },
+                                                    ),
+                                                    ProfileTextField(
+                                                      isEditMode: _isEditMode,
+                                                      label: "Branch",
+                                                      // controller:
+                                                      //     _branchController,
+                                                      initVal: branch,
+                                                      onSaved: (newVal) {
+                                                        setState(() {
+                                                          if (newVal != null) {
+                                                            branch = newVal;
+                                                          }
+                                                        });
+                                                      },
+                                                      enabled: false,
+                                                    ),
+                                                    ProfileTextField(
+                                                      isEditMode: _isEditMode,
+                                                      initVal: gradyear,
+                                                      label:
+                                                          "Graduation Year", // decoration: BoxDecoration(
+                                                      //   border: Border.all(color: Color(0xFF454545)),
+                                                      //   color: Color(0xFF323232),
+                                                      //   borderRadius: BorderRadius.circular(30),
+                                                      // ),
+                                                      // controller:
+                                                      //     _gradyearController,
+
+                                                      onSaved: (newVal) {
+                                                        setState(() {
+                                                          if (newVal != null) {
+                                                            gradyear = newVal;
+                                                          }
+                                                        });
+                                                      },
+                                                      enabled: false,
+                                                    ),
+                                                    Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .fromLTRB(
+                                                                  4, 5, 4, 5),
+                                                          child: DropdownButton(
+                                                            // Initial Value
+                                                            value: div,
+                                                            hint: Text(
+                                                              "Division",
+                                                              style: TextStyle(
+                                                                  color: Colors
+                                                                      .grey),
+                                                            ),
+
+                                                            underline:
+                                                                Container(
+                                                              height: 1,
+                                                              color: Theme.of(
+                                                                      context)
+                                                                  .colorScheme
+                                                                  .outline, // Change to your desired color
+                                                            ),
+                                                            dropdownColor: Theme
+                                                                    .of(context)
+                                                                .primaryColor,
+                                                            icon: const Icon(Icons
+                                                                .keyboard_arrow_down),
+
+                                                            // Array list of items
+                                                            items: divisionList
+                                                                .map((String
+                                                                    items) {
+                                                              return DropdownMenuItem(
+                                                                value: items,
+                                                                child:
+                                                                    Text(items),
+                                                              );
+                                                            }).toList(),
+                                                            // After selecting the desired option,it will
+                                                            // change button value to selected value
+                                                            onChanged: (String?
+                                                                newValue) {
+                                                              if (newValue !=
+                                                                  null) {
+                                                                setState(() {
+                                                                  div =
+                                                                      newValue;
+                                                                  calcBatchList(
+                                                                      newValue);
+                                                                  batch = null;
+                                                                });
+                                                              }
+                                                            },
+                                                          ),
+                                                        ),
+                                                        SizedBox(width: 20),
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .fromLTRB(
+                                                                  4, 5, 4, 5),
+                                                          child: DropdownButton(
+                                                            // Initial Value
+                                                            value: batch,
+
+                                                            hint: Text(
+                                                              "Batch",
+                                                              style: TextStyle(
+                                                                  color: Colors
+                                                                      .grey),
+                                                            ),
+                                                            underline:
+                                                                Container(
+                                                              height: 1,
+                                                              color: Theme.of(
+                                                                      context)
+                                                                  .colorScheme
+                                                                  .outline, // Change to your desired color
+                                                            ),
+                                                            dropdownColor: Theme
+                                                                    .of(context)
+                                                                .primaryColor,
+                                                            // Down Arrow Icon
+                                                            icon: const Icon(Icons
+                                                                .keyboard_arrow_down),
+
+                                                            // Array list of items
+                                                            items: batchList
+                                                                .map((String
+                                                                    items) {
+                                                              return DropdownMenuItem(
+                                                                value: items,
+                                                                child:
+                                                                    Text(items),
+                                                              );
+                                                            }).toList(),
+                                                            // After selecting the desired option,it will
+                                                            // change button value to selected value
+                                                            onChanged: (String?
+                                                                newValue) {
+                                                              if (newValue !=
+                                                                  null) {
+                                                                setState(() {
+                                                                  batch =
+                                                                      newValue;
+                                                                });
+                                                              }
+                                                            },
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    // ProfileTextField(
+                                                    //   isEditMode: _isEditMode,
+                                                    //   label: "Division",
+                                                    //   // controller:
+                                                    //   //     _divController,
+                                                    //   initVal: div,
+
+                                                    //   onSaved: (newVal) {
+                                                    //     setState(() {
+                                                    //       if (newVal != null) {
+                                                    //         div = newVal;
+                                                    //       }
+                                                    //     });
+                                                    //   },
+                                                    // ),
+                                                    // ProfileTextField(
+                                                    //   isEditMode: _isEditMode,
+                                                    //   label: "Batch",
+                                                    //   // controller:
+                                                    //   //     _batchController,
+                                                    //   initVal: batch,
+                                                    //   onSaved: (newVal) {
+                                                    //     setState(() {
+                                                    //       if (newVal != null) {
+                                                    //         batch = newVal;
+                                                    //       }
+                                                    //     });
+                                                    //   },
+                                                    //   validator: (value) {
+                                                    //     if (value!.isEmpty) {
+                                                    //       return 'Please enter a batch';
+                                                    //     }
+                                                    //     if (value.length != 3) {
+                                                    //       return 'Batch should be a single capital letter followed by two digits';
+                                                    //     }
+                                                    //     final batchRegex = RegExp(
+                                                    //         r'^[A-Z][0-9]{2}$');
+                                                    //     if (!batchRegex
+                                                    //         .hasMatch(value)) {
+                                                    //       return 'Batch should be a single capital letter followed by two digits';
+                                                    //     }
+                                                    //     return null;
+                                                    //   },
+                                                    //   enabled: _isEditMode,
+                                                    // ),
+                                                    const SizedBox(
+                                                      height: 15,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(height: 10),
+                                        Row(
+                                          children: [
+                                            Spacer(),
+                                            Expanded(
+                                              child: ElevatedButton(
+                                                onPressed: () {
+                                                  if (_isEditMode) {
+                                                    _saveChanges(ref);
+                                                  }
+                                                },
+                                                style: ElevatedButton.styleFrom(
+                                                  padding: EdgeInsets.symmetric(
+                                                      vertical: 15),
+                                                  backgroundColor: Colors.green,
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            50.0), // Half of desired button height
+                                                  ),
+                                                ),
+                                                child: Text(
+                                                  "Save Changes",
+                                                  style: TextStyle(
+                                                    color: Theme.of(context)
+                                                        .colorScheme
+                                                        .onSecondaryContainer,
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            Expanded(
+                                              child: Align(
+                                                alignment:
+                                                    Alignment.centerRight,
+                                                child: IconButton(
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      // isExpanded = false;
+                                                      // isBlurred = false;
+                                                      _isEditMode = false;
+                                                    });
+                                                  },
+                                                  icon: Icon(
+                                                    Icons.cancel_outlined,
+                                                    color: Theme.of(context)
+                                                        .colorScheme
+                                                        .onSecondaryContainer,
+                                                    size: 30,
+                                                  ), // Use Icon widget to specify the icon
+                                                ),
+                                              ),
+                                            ),
+                                            // SizedBox(
+                                            //   width: 10,
+                                            // )
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  crossFadeState: !_isEditMode
+                                      ? CrossFadeState.showFirst
+                                      : CrossFadeState.showSecond,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),
                   ),
-                  const SizedBox(height: 20),
                 ],
               ),
-              isBlurred
-                  ? BackdropFilter(
-                      filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
-                      child: Container(
-                        width: double.infinity,
-                        height: double.infinity,
-                      ),
-                    )
-                  : const SizedBox.shrink(),
-              Positioned(
-                bottom: 0,
-                left: 10,
-                right: 10,
-                child: Form(
-                  key: _formKey,
-                  child: isExpanded
-                      ? AnimatedContainer(
-                          duration: const Duration(milliseconds: 500),
-                          curve: Curves.easeInOut,
-                          width: 500,
-                          height: 680,
-                          //padding: const EdgeInsets.only(top: 10),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey.shade800),
-                            color: Theme.of(context).primaryColor,
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Column(
-                              children: [
-                                ProfileTextField(
-                                  isEditMode: _isEditMode,
-                                  label: "Name",
-                                  controller: _nameController,
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return 'Please enter a name';
-                                    }
-                                    return null;
-                                  },
+            ),
+          ),
+          !_isEditMode
+              ? (widget.justLoggedIn
+                  ? Container(
+                      padding:
+                          EdgeInsets.symmetric(vertical: 0, horizontal: 20),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Spacer(),
+                          Expanded(
+                            child: Container(
+                              margin: EdgeInsets.only(bottom: 15),
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  if (!_isEditMode) {
+                                    // enableEditing();
+                                    setState(() {
+                                      // isExpanded = true;
+                                      // isBlurred = true;
+                                      _isEditMode = true;
+                                    });
+                                    Future.delayed(Duration(milliseconds: 1000),
+                                        () {
+                                      if (listScrollController.hasClients) {
+                                        final position = listScrollController
+                                            .position.viewportDimension;
+                                        listScrollController.animateTo(
+                                          position,
+                                          duration: Duration(seconds: 1),
+                                          curve: Curves.easeOut,
+                                        );
+                                      }
+                                    });
+                                  }
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(
+                                        50.0), // Half of desired button height
+                                  ),
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 20, vertical: 10),
                                 ),
-                                ProfileTextField(
-                                  isEditMode: _isEditMode,
-                                  label: "Email",
-                                  controller: _emailController,
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return 'Please enter an email';
-                                    }
-                                    if (!isValidEmail(value)) {
-                                      return 'Please enter a Valid Email';
-                                    }
-                                    return null;
-                                  },
-                                ),
-                                ProfileTextField(
-                                  controller: _addressController,
-                                  label: 'Address',
-                                  isEditMode: _isEditMode,
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return 'Please enter your Address';
-                                    }
-                                    return null;
-                                  },
-                                ),
-                                ProfileTextField(
-                                  controller: _homeStationController,
-                                  label: 'Home Station',
-                                  isEditMode: _isEditMode,
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return 'Please enter your Home Station';
-                                    }
-                                    return null;
-                                  },
-                                ),
-                                ProfileTextField(
-                                  controller: _dateOfBirthController,
-                                  label: 'Date of Birth',
-                                  isEditMode: _isEditMode,
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return 'Please enter Date Of Birth';
-                                    }
-                                    // Regular expression to match the desired DOB format: 20 August 2003
-                                    const pattern =
-                                        r'^(0[1-9]|[12][0-9]|3[01]) (January|February|March|April|May|June|July|August|September|October|November|December) \d{4}$';
-                                    final regex = RegExp(pattern);
-
-                                    if (!regex.hasMatch(value)) {
-                                      return 'Invalid Date Of Birth format. Please use the format: 20 August 2003';
-                                    }
-
-                                    return null;
-                                  },
-                                ),
-                                ProfileTextField(
-                                  isEditMode: _isEditMode,
-                                  label: "Phone Number",
-                                  controller: _phoneNumController,
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return 'Please enter a phone number';
-                                    }
-                                    if (!isValidPhoneNumber(value)) {
-                                      return 'Please enter a valid phone number';
-                                    }
-                                    return null;
-                                  },
-                                ),
-                                ProfileTextField(
-                                  isEditMode: _isEditMode,
-                                  label: "Branch",
-                                  controller: _branchController,
-                                  enabled: false,
-                                ),
-                                ProfileTextField(
-                                  isEditMode: _isEditMode,
-                                  label: "Graduation Year",
-                                  controller: _gradyearController,
-                                  enabled: false,
-                                ),
-                                ProfileTextField(
-                                  isEditMode: _isEditMode,
-                                  label: "Division",
-                                  controller: _divController,
-                                ),
-                                ProfileTextField(
-                                  isEditMode: _isEditMode,
-                                  label: "Batch",
-                                  controller: _batchController,
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return 'Please enter a batch';
-                                    }
-                                    if (value.length != 3) {
-                                      return 'Batch should be a single capital letter followed by two digits';
-                                    }
-                                    final batchRegex = RegExp(r'^[A-Z][0-9]{2}$');
-                                    if (!batchRegex.hasMatch(value)) {
-                                      return 'Batch should be a single capital letter followed by two digits';
-                                    }
-                                    return null;
-                                  },
-                                  enabled: _isEditMode,
-                                ),
-                                const SizedBox(
-                                  height: 15,
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    ElevatedButton(
-                                        onPressed: () {
-                                          if (_isEditMode) {
-                                            _saveChanges(ref);
-                                          }
-                                        },
-                                        style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
-                                        child: const Text(
-                                          "Save Changes",
-                                        )),
-                                    IconButton(
-                                      onPressed: () {
-                                        setState(() {
-                                          isExpanded = false;
-                                          isBlurred = false;
-
-                                          _isEditMode = false;
-                                        });
-                                      },
-                                      icon: const Icon(
-                                        Icons.cancel_outlined,
-                                        color: Colors.white,
-                                        size: 30,
-                                      ), // Use Icon widget to specify the icon
-                                    ),
-                                    SizedBox(
-                                      width: 10,
-                                    )
-                                  ],
-                                )
-                              ],
+                                child: //Text(_isEditMode ? 'Save Changes' : 'Edit'),
+                                    const Text("EDIT"),
+                              ),
                             ),
                           ),
-                        )
-                      : Align(
-                          alignment: Alignment.bottomCenter,
-                          child: ElevatedButton(
-                              onPressed: () {
-                                if (!_isEditMode) {
-                                  enableEditing();
-                                  setState(() {
-                                    isExpanded = true;
-                                    isBlurred = true;
-                                    _isEditMode = true;
-                                  });
-                                }
-                              },
-                              child: //Text(_isEditMode ? 'Save Changes' : 'Edit'),
-                                  const Text("EDIT")),
+                          Expanded(
+                            child: Align(
+                              alignment: Alignment.centerRight,
+                              child: SizedBox(
+                                width: 60,
+                                height: 50,
+                                child: ElevatedButton(
+                                  onPressed: () async {
+                                    if (data.batch != null &&
+                                        data.div != null) {
+                                      GoRouter.of(context).go('/main');
+                                    } else {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        const SnackBar(
+                                          content: Text(
+                                              'Please fill in your details'),
+                                        ),
+                                      );
+                                    }
+                                  },
+                                  child: const Icon(Icons.arrow_forward),
+                                  style: ButtonStyle(
+                                    // backgroundColor: MaterialStateProperty.all<Color>(
+                                    //     Colors.transparent),
+                                    shape: MaterialStateProperty.all<
+                                        RoundedRectangleBorder>(
+                                      RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(15.0),
+                                      ),
+                                    ),
+                                    padding: MaterialStateProperty.all(
+                                        EdgeInsets.zero),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    )
+                  : Container(
+                      margin: EdgeInsets.only(bottom: 15),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          if (!_isEditMode) {
+                            // enableEditing();
+                            setState(() {
+                              // isExpanded = true;
+                              // isBlurred = true;
+                              _isEditMode = true;
+                            });
+                            Future.delayed(Duration(milliseconds: 1000), () {
+                              if (listScrollController.hasClients) {
+                                final position = listScrollController
+                                    .position.viewportDimension;
+                                listScrollController.animateTo(
+                                  position,
+                                  duration: Duration(seconds: 1),
+                                  curve: Curves.easeOut,
+                                );
+                              }
+                            });
+                          }
+                        },
+                        style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(
+                                50.0), // Half of desired button height
+                          ),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 10),
                         ),
-                ),
-              ),
-            ],
-          ),
-        ),
+                        child: //Text(_isEditMode ? 'Save Changes' : 'Edit'),
+                            const Text("EDIT"),
+                      ),
+                    ))
+              : Container(),
+        ],
       ),
-    );
-  }
-
-  Widget buildProfileImages() {
-    return Stack(
-      children: [
-        _image != null
-            ? CircleAvatar(
-                radius: 50,
-                backgroundImage: MemoryImage(_image!),
-              )
-            : const CircleAvatar(
-                radius: 50,
-                backgroundImage: AssetImage("assets/images/pfpholder.jpg"),
-              ),
-        Positioned(
-          bottom: 0,
-          right: -30,
-          child: RawMaterialButton(
-            onPressed: _isEditMode ? editProfileImage : null,
-            elevation: 2.0,
-            fillColor: kLightModeShadowColor,
-            child: const Icon(
-              Icons.add_a_photo,
-              color: Colors.blue,
-            ),
-            padding: const EdgeInsets.all(3.0),
-            shape: const CircleBorder(),
-          ),
-        ),
-      ],
     );
   }
 }

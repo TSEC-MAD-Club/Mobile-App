@@ -38,16 +38,45 @@ class ProfileTextField extends StatefulWidget {
 class _ProfileTextFieldState extends State<ProfileTextField> {
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      controller: widget.controller,
-      enabled: widget.isEditMode && widget.enabled,
-      decoration: InputDecoration(
-        labelStyle: const TextStyle(
-          color: Colors.grey,
-        ),
-        labelText: widget.label,
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(4, 5, 4, 5),
+      child: Column(
+        children: [
+          TextFormField(
+            readOnly: widget.readOnly ?? false,
+            // controller: widget.controller,
+            enabled: widget.isEditMode && widget.enabled,
+            // onChanged: (val) {
+            //   widget.controller.text = val;
+            // },
+            // initialValue: widget.initVal,
+            // onSaved: widget.onSaved,
+            decoration: InputDecoration(
+              enabledBorder: UnderlineInputBorder(
+                borderSide: BorderSide(
+                  color: Theme.of(context).colorScheme.outline,
+                ), // Change to your desired color
+              ),
+              disabledBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(
+                      color: Theme.of(context).colorScheme.inversePrimary)),
+              labelStyle: const TextStyle(
+                color: Colors.grey,
+              ),
+              labelText: widget.label,
+            ),
+            onTap: widget.onTap ?? () {},
+            onChanged: widget.onSaved ?? (val) {},
+            validator: widget.validator,
+            initialValue: widget.initVal,
+            // onSaved: widget.onSaved ?? (val) {},
+          ),
+          // Divider(
+          //   thickness: 1,
+          //   color: Color(0xFF454545),
+          // ),
+        ],
       ),
-      validator: widget.validator,
     );
   }
 }
