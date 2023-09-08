@@ -24,7 +24,7 @@ class StudentModel {
   @JsonKey(name: "gradyear")
   final String gradyear;
   @JsonKey(name: "phoneNo")
-  final String phoneNum;
+  final String? phoneNum;
   final String? div;
   StudentModel({
     required this.batch,
