@@ -163,6 +163,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
   Future _saveChanges(WidgetRef ref) async {
     final StudentModel? data = ref.watch(studentModelProvider);
     bool b = data!.updateCount != null ? data.updateCount! < 2 : true;
+    debugPrint("b is $b");
     if (b) {
       if (batch == null || div == null) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -232,7 +233,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
     div = data.div;
     gradyear = data.gradyear;
     batch = data.batch;
-    phoneNum = data.phoneNum;
+    phoneNum = data.phoneNum ?? "";
     address = data.address ?? '';
     homeStation = data.homeStation ?? '';
     _dobController.text = data.dateOfBirth ?? "";
@@ -407,7 +408,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                         ),
                                         CustomTextWithDivider(
                                           label: "Phone Number",
-                                          value: data.phoneNum,
+                                          value: data.phoneNum ?? "",
                                           showDivider: true,
                                         ),
                                         CustomTextWithDivider(

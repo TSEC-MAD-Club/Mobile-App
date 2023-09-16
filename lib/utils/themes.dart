@@ -92,7 +92,6 @@ late final darkTheme = ThemeData(
   primaryColorDark: const Color(0xFF000000),
   shadowColor: const Color(0x00A9A9A9),
   cardColor: Colors.white70,
-  // textSecondaryColor: Color.fromARGB(255, 65, 60, 60),
   elevatedButtonTheme: _getElevatedButtonTheme(
     darkColor: kDarkModeDarkBlue,
     lightColor: kDarkModeLightBlue,
@@ -108,7 +107,7 @@ late final darkTheme = ThemeData(
   fontFamily: "SF Pro Text",
   colorScheme: ColorScheme.fromSwatch().copyWith(
     secondary: kLightBlack,
-    onPrimary: Color.fromARGB(255, 171, 171, 171),
+    // onPrimary: Color.fromARGB(255, 171, 171, 171),
     primaryContainer: Color(0xFF323232),
     secondaryContainer: Color(0xff00C62C),
     onSecondaryContainer: Colors.white,
