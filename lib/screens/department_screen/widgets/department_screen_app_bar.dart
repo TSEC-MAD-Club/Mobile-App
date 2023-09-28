@@ -6,7 +6,7 @@ import 'package:tsec_app/provider/auth_provider.dart';
 import '../../../utils/themes.dart';
 
 class DepartmentScreenAppBar extends ConsumerStatefulWidget
-    with PreferredSizeWidget {
+    implements PreferredSizeWidget {
   final String title;
   const DepartmentScreenAppBar({Key? key, required this.title})
       : super(key: key);

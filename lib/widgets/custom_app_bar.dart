@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../utils/themes.dart';
 
-class CustomAppBar extends ConsumerWidget with PreferredSizeWidget {
-  const CustomAppBar({
+class CustomAppBar extends ConsumerWidget implements PreferredSizeWidget {
+  CustomAppBar({
     Key? key,
     required this.title,
     required this.image,

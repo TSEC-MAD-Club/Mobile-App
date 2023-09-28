@@ -84,7 +84,7 @@ class _TSECAppState extends ConsumerState<TSECApp> {
     super.didChangeDependencies();
 
     _routes = GoRouter(
-      urlPathStrategy: UrlPathStrategy.path,
+      // urlPathStrategy: UrlPathStrategy.path,
       routes: [
         GoRoute(
           path: "/",
@@ -124,14 +124,14 @@ class _TSECAppState extends ConsumerState<TSECApp> {
           path: "/details_page",
           builder: (context, state) {
             EventModel eventModel = EventModel(
-                state.queryParams["Event Name"]!,
-                state.queryParams["Event Time"]!,
-                state.queryParams["Event Date"]!,
-                state.queryParams["Event decription"]!,
-                state.queryParams["Event registration url"]!,
-                state.queryParams["Event Image Url"]!,
-                state.queryParams["Event Location"]!,
-                state.queryParams["Committee Name"]!);
+                state.uri.queryParameters["Event Name"]!,
+                state.uri.queryParameters["Event Time"]!,
+                state.uri.queryParameters["Event Date"]!,
+                state.uri.queryParameters["Event decription"]!,
+                state.uri.queryParameters["Event registration url"]!,
+                state.uri.queryParameters["Event Image Url"]!,
+                state.uri.queryParameters["Event Location"]!,
+                state.uri.queryParameters["Committee Name"]!);
 
             return EventDetail(
               eventModel: eventModel,
@@ -141,8 +141,8 @@ class _TSECAppState extends ConsumerState<TSECApp> {
         GoRoute(
           path: "/department",
           builder: (context, state) {
-            final department = DepartmentEnum
-                .values[int.parse(state.queryParams["department"] as String)];
+            final department = DepartmentEnum.values[
+                int.parse(state.uri.queryParameters["department"] as String)];
             return DepartmentScreen(department: department);
           },
         ),
@@ -153,8 +153,8 @@ class _TSECAppState extends ConsumerState<TSECApp> {
         GoRoute(
           path: '/profile-page',
           builder: (context, state) {
-            String justLoggedInSt =
-                state.queryParams['justLoggedIn'] ?? "false"; // may be null
+            String justLoggedInSt = state.uri.queryParameters['justLoggedIn'] ??
+                "false"; // may be null
             bool justLoggedIn = justLoggedInSt == "true";
             return ProfilePage(justLoggedIn: justLoggedIn);
           },
@@ -207,6 +207,7 @@ class _TSECAppState extends ConsumerState<TSECApp> {
     return MaterialApp.router(
       builder: (context, child) =>
           MediaQuery(data: getTextScale(context), child: child!),
+      routeInformationProvider: _routes.routeInformationProvider,
       routeInformationParser: _routes.routeInformationParser,
       routerDelegate: _routes.routerDelegate,
       title: 'TSEC App',

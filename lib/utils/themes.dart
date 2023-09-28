@@ -76,7 +76,7 @@ late final theme = ThemeData(
   fontFamily: "SF Pro Text",
   colorScheme: ColorScheme.fromSwatch().copyWith(
     secondary: Colors.white,
-    onPrimary: Color.fromARGB(255, 78, 73, 73),
+    // onPrimary: Color.fromARGB(255, 78, 73, 73),
     inversePrimary: Color.fromARGB(255, 241, 241, 241),
     primaryContainer: Colors.white,
     secondaryContainer: Color(0xff00C62C),

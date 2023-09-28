@@ -7,7 +7,7 @@ import 'package:tsec_app/screens/profile_screen/profile_screen.dart';
 import '../../../utils/themes.dart';
 
 class ProfilePageAppBar extends ConsumerStatefulWidget
-    with PreferredSizeWidget {
+    implements PreferredSizeWidget {
   final String title;
   const ProfilePageAppBar({Key? key, required this.title}) : super(key: key);
 

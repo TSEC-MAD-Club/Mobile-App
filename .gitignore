@@ -57,3 +57,4 @@ lib/firebase_options.dart
 ios/Runner/GoogleService-Info.plist
 ios/firebase_app_id_file.json
 Session.vim
+TsecAppKey.jks

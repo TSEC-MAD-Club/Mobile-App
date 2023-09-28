@@ -271,25 +271,28 @@ class _MainScreenAppBarState extends ConsumerState<MainScreenAppBar> {
                                   ),
                                 ),
                                 onTap: () {
-                                  GoRouter.of(context)
-                                      .pushNamed("details_page", queryParams: {
-                                    "Event Name":
-                                        eventList[_currentIndex].eventName,
-                                    "Event Time":
-                                        eventList[_currentIndex].eventTime,
-                                    "Event Date":
-                                        eventList[_currentIndex].eventDate,
-                                    "Event decription": eventList[_currentIndex]
-                                        .eventDescription,
-                                    "Event registration url":
-                                        eventList[_currentIndex]
-                                            .eventRegistrationUrl,
-                                    "Event Image Url": item,
-                                    "Event Location":
-                                        eventList[_currentIndex].eventLocation,
-                                    "Committee Name":
-                                        eventList[_currentIndex].committeeName
-                                  });
+                                  GoRouter.of(context).pushNamed("details_page",
+                                      queryParameters: {
+                                        "Event Name":
+                                            eventList[_currentIndex].eventName,
+                                        "Event Time":
+                                            eventList[_currentIndex].eventTime,
+                                        "Event Date":
+                                            eventList[_currentIndex].eventDate,
+                                        "Event decription":
+                                            eventList[_currentIndex]
+                                                .eventDescription,
+                                        "Event registration url":
+                                            eventList[_currentIndex]
+                                                .eventRegistrationUrl,
+                                        "Event Image Url": item,
+                                        "Event Location":
+                                            eventList[_currentIndex]
+                                                .eventLocation,
+                                        "Committee Name":
+                                            eventList[_currentIndex]
+                                                .committeeName
+                                      });
                                 }),
                           )
                           .toList(),
