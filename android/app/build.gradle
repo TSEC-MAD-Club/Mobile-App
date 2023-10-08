@@ -46,8 +46,10 @@ android {
         applicationId "com.madclubtsec.tsec_application"
         minSdkVersion 19
         targetSdkVersion 33
-        versionCode flutterVersionCode.toInteger()
-        versionName flutterVersionName
+        // versionCode flutterVersionCode.toInteger()
+        // versionName flutterVersionName
+        versionCode 20 
+        versionName "12.0.0" 
         multiDexEnabled true
     }
 
