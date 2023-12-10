@@ -127,6 +127,16 @@ class _CustomScaffoldState extends ConsumerState<CustomScaffold>
                   ),
                   title: "Home",
                 ),
+                data != null
+                    ? DrawerListItem(
+                        onTap: () => _navigate("/concession"),
+                        icon: Image.asset(
+                          ImageAssets.callIcon,
+                          width: 22,
+                        ),
+                        title: "Railway Concession",
+                      )
+                    : Container(),
                 DrawerListItem(
                   onTap: () => _navigate("/tpc"),
                   icon: Image.asset(
@@ -315,7 +325,6 @@ class _CustomScaffoldState extends ConsumerState<CustomScaffold>
 
   Future<void> _navigate(String path) async {
     await _controller.reverse();
-
 
     final router = GoRouter.of(context);
     if (GoRouterState.of(context).uri.toString() != path) router.push(path);

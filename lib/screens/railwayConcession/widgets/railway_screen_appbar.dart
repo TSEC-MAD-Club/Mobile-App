@@ -6,7 +6,8 @@ import 'package:tsec_app/provider/auth_provider.dart';
 import 'package:tsec_app/screens/profile_screen/profile_screen.dart';
 import '../../../utils/themes.dart';
 
-class RailwayAppBar extends ConsumerStatefulWidget with PreferredSizeWidget {
+class RailwayAppBar extends ConsumerStatefulWidget
+    implements PreferredSizeWidget {
   final String title;
   const RailwayAppBar({Key? key, required this.title}) : super(key: key);
 

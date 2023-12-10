@@ -289,7 +289,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
     // bool hide = _isEditMode;
     return CustomScaffold(
       hideButton: hide,
-      //fuck the app bar and the floating action button
+      //hide the app bar and the floating action button
       appBar: const ProfilePageAppBar(title: "Profile"),
       body: Column(
         children: [

@@ -58,7 +58,8 @@ class _RailWayConcessionState extends ConsumerState<RailWayConcession> {
   final _formKey = GlobalKey<FormState>();
 
   bool isValidEmail(String email) {
-    final emailRegex = RegExp(r'^[\w-]+(\.[\w-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(\.[a-zA-Z]{2,})$');
+    final emailRegex = RegExp(
+        r'^[\w-]+(\.[\w-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(\.[a-zA-Z]{2,})$');
     return emailRegex.hasMatch(email);
   }
 
@@ -230,7 +231,8 @@ class _RailWayConcessionState extends ConsumerState<RailWayConcession> {
                                 height: 100,
                                 decoration: const BoxDecoration(
                                   image: DecorationImage(
-                                    image: AssetImage("assets/images/railwayConcession.png"),
+                                    image: AssetImage(
+                                        "assets/images/railwayConcession.png"),
                                     fit: BoxFit.cover,
                                   ),
                                 ),
@@ -243,7 +245,10 @@ class _RailWayConcessionState extends ConsumerState<RailWayConcession> {
                                 ? const Text("")
                                 : Text(
                                     "Fill the form",
-                                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.w600),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headlineMedium
+                                        ?.copyWith(fontWeight: FontWeight.w600),
                                   )
                           ],
                         ),
@@ -262,15 +267,24 @@ class _RailWayConcessionState extends ConsumerState<RailWayConcession> {
                                         duration: const Duration(seconds: 1),
                                         firstChild: Container(
                                           height: 460,
-                                          width: MediaQuery.of(context).size.width * 0.95,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.95,
                                           padding: const EdgeInsets.all(10),
                                           decoration: BoxDecoration(
                                             // border:
                                             //     Border.all(color: Color(0xFF454545)),
-                                            border: Border.all(color: Theme.of(context).colorScheme.outline),
+                                            border: Border.all(
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .outline),
                                             // color: Color(0xFF323232),
-                                            color: Theme.of(context).colorScheme.primaryContainer,
-                                            borderRadius: BorderRadius.circular(30),
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .primaryContainer,
+                                            borderRadius:
+                                                BorderRadius.circular(30),
                                           ),
                                           child: Column(
                                             children: [
@@ -281,43 +295,59 @@ class _RailWayConcessionState extends ConsumerState<RailWayConcession> {
                                                     child: Form(
                                                       key: _formKey,
                                                       child: Column(
-                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
                                                         children: [
                                                           RailwayTextField(
                                                             initVal: name,
                                                             onSaved: (newVal) {
                                                               setState(() {
-                                                                if (newVal != null) {
+                                                                if (newVal !=
+                                                                    null) {
                                                                   name = newVal;
                                                                 }
                                                               });
                                                             },
                                                             label: 'Name',
-                                                            isEditMode: _isfilled,
+                                                            isEditMode:
+                                                                _isfilled,
                                                             validator: (value) {
-                                                              if (value!.isEmpty) {
+                                                              if (value!
+                                                                  .isEmpty) {
                                                                 return 'Please enter your Name';
                                                               }
                                                               return null;
                                                             },
                                                           ),
                                                           Row(
-                                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
                                                             children: [
                                                               Expanded(
-                                                                child: RailwayTextField(
-                                                                  initVal: homeStation,
-                                                                  onSaved: (newVal) {
-                                                                    setState(() {
-                                                                      if (newVal != null) {
-                                                                        homeStation = newVal;
+                                                                child:
+                                                                    RailwayTextField(
+                                                                  initVal:
+                                                                      homeStation,
+                                                                  onSaved:
+                                                                      (newVal) {
+                                                                    setState(
+                                                                        () {
+                                                                      if (newVal !=
+                                                                          null) {
+                                                                        homeStation =
+                                                                            newVal;
                                                                       }
                                                                     });
                                                                   },
                                                                   label: 'From',
-                                                                  isEditMode: _isfilled,
-                                                                  validator: (value) {
-                                                                    if (value!.isEmpty) {
+                                                                  isEditMode:
+                                                                      _isfilled,
+                                                                  validator:
+                                                                      (value) {
+                                                                    if (value!
+                                                                        .isEmpty) {
                                                                       return 'Please enter your Home Station';
                                                                     }
                                                                     return null;
@@ -325,19 +355,28 @@ class _RailWayConcessionState extends ConsumerState<RailWayConcession> {
                                                                 ),
                                                               ),
                                                               Expanded(
-                                                                child: RailwayTextField(
-                                                                  initVal: toStation,
-                                                                  onSaved: (newVal) {
-                                                                    setState(() {
-                                                                      if (newVal != null) {
-                                                                        toStation = newVal;
+                                                                child:
+                                                                    RailwayTextField(
+                                                                  initVal:
+                                                                      toStation,
+                                                                  onSaved:
+                                                                      (newVal) {
+                                                                    setState(
+                                                                        () {
+                                                                      if (newVal !=
+                                                                          null) {
+                                                                        toStation =
+                                                                            newVal;
                                                                       }
                                                                     });
                                                                   },
                                                                   label: 'TO',
-                                                                  isEditMode: !_isfilled,
-                                                                  validator: (value) {
-                                                                    if (value!.isEmpty) {
+                                                                  isEditMode:
+                                                                      !_isfilled,
+                                                                  validator:
+                                                                      (value) {
+                                                                    if (value!
+                                                                        .isEmpty) {
                                                                       return 'Please enter your BANDRA';
                                                                     }
                                                                     return null;
@@ -347,66 +386,119 @@ class _RailWayConcessionState extends ConsumerState<RailWayConcession> {
                                                             ],
                                                           ),
                                                           Row(
-                                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
                                                             children: [
                                                               Expanded(
                                                                 flex: 1,
-                                                                child: TextFormField(
-                                                                  controller: dateOfBirthController,
-                                                                  keyboardType: TextInputType.datetime,
-                                                                  decoration: const InputDecoration(
-                                                                      border: InputBorder.none,
-                                                                      labelText: "Date of Birth",
-                                                                      labelStyle: TextStyle(
-                                                                        color: Colors.grey,
-                                                                      )),
-                                                                  readOnly: true,
-                                                                  onTap: () => _selectDate(context),
-                                                                  onChanged: (value) {
-                                                                    if (value.isNotEmpty) {
-                                                                      DateTime selectedDate = DateFormat('yyyy-MM-dd').parse(value);
-                                                                      calculateAge(selectedDate);
+                                                                child:
+                                                                    TextFormField(
+                                                                  controller:
+                                                                      dateOfBirthController,
+                                                                  keyboardType:
+                                                                      TextInputType
+                                                                          .datetime,
+                                                                  decoration:
+                                                                      const InputDecoration(
+                                                                          border: InputBorder
+                                                                              .none,
+                                                                          labelText:
+                                                                              "Date of Birth",
+                                                                          labelStyle:
+                                                                              TextStyle(
+                                                                            color:
+                                                                                Colors.grey,
+                                                                          )),
+                                                                  readOnly:
+                                                                      true,
+                                                                  onTap: () =>
+                                                                      _selectDate(
+                                                                          context),
+                                                                  onChanged:
+                                                                      (value) {
+                                                                    if (value
+                                                                        .isNotEmpty) {
+                                                                      DateTime
+                                                                          selectedDate =
+                                                                          DateFormat('yyyy-MM-dd')
+                                                                              .parse(value);
+                                                                      calculateAge(
+                                                                          selectedDate);
                                                                     }
                                                                   },
                                                                 ),
                                                               ),
                                                               Expanded(
-                                                                  child: CustomTextWithDivider(
+                                                                  child:
+                                                                      CustomTextWithDivider(
                                                                 label: "AGE",
                                                                 value: _age,
-                                                                showDivider: true,
+                                                                showDivider:
+                                                                    true,
                                                               )),
                                                             ],
                                                           ),
                                                           Row(
-                                                            mainAxisAlignment: MainAxisAlignment.start,
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .start,
                                                             children: [
                                                               Padding(
-                                                                padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
-                                                                child: DropdownButton(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                        .fromLTRB(
+                                                                        0,
+                                                                        5,
+                                                                        0,
+                                                                        5),
+                                                                child:
+                                                                    DropdownButton(
                                                                   // Initial Value
-                                                                  value: duration,
-                                                                  hint: const Text(
+                                                                  value:
+                                                                      duration,
+                                                                  hint:
+                                                                      const Text(
                                                                     "Duration",
-                                                                    style: TextStyle(color: Colors.grey),
+                                                                    style: TextStyle(
+                                                                        color: Colors
+                                                                            .grey),
                                                                   ),
-                                                                  underline: Container(
+                                                                  underline:
+                                                                      Container(
                                                                     height: 1,
-                                                                    color: Theme.of(context).colorScheme.outline, // Change to your desired color
+                                                                    color: Theme.of(
+                                                                            context)
+                                                                        .colorScheme
+                                                                        .outline, // Change to your desired color
                                                                   ),
-                                                                  dropdownColor: Theme.of(context).primaryColor,
-                                                                  icon: const Icon(Icons.keyboard_arrow_down),
+                                                                  dropdownColor:
+                                                                      Theme.of(
+                                                                              context)
+                                                                          .primaryColor,
+                                                                  icon: const Icon(
+                                                                      Icons
+                                                                          .keyboard_arrow_down),
                                                                   // Array list of items
-                                                                  items: travedurationList.map((String item) {
+                                                                  items: travedurationList
+                                                                      .map((String
+                                                                          item) {
                                                                     return DropdownMenuItem(
-                                                                      value: item,
-                                                                      child: Text(item),
+                                                                      value:
+                                                                          item,
+                                                                      child: Text(
+                                                                          item),
                                                                     );
                                                                   }).toList(),
-                                                                  onChanged: (String? newValue) {
-                                                                    if (newValue != null) {
-                                                                      setState(() {
-                                                                        duration = newValue;
+                                                                  onChanged:
+                                                                      (String?
+                                                                          newValue) {
+                                                                    if (newValue !=
+                                                                        null) {
+                                                                      setState(
+                                                                          () {
+                                                                        duration =
+                                                                            newValue;
                                                                       });
                                                                     }
                                                                   },
@@ -416,31 +508,60 @@ class _RailWayConcessionState extends ConsumerState<RailWayConcession> {
                                                                 width: 65,
                                                               ),
                                                               Padding(
-                                                                padding: const EdgeInsets.fromLTRB(0, 5, 5, 5),
-                                                                child: DropdownButton(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                        .fromLTRB(
+                                                                        0,
+                                                                        5,
+                                                                        5,
+                                                                        5),
+                                                                child:
+                                                                    DropdownButton(
                                                                   // Initial Value
-                                                                  value: travelLane,
-                                                                  hint: const Text(
+                                                                  value:
+                                                                      travelLane,
+                                                                  hint:
+                                                                      const Text(
                                                                     "Travel Lane",
-                                                                    style: TextStyle(color: Colors.grey),
+                                                                    style: TextStyle(
+                                                                        color: Colors
+                                                                            .grey),
                                                                   ),
-                                                                  underline: Container(
+                                                                  underline:
+                                                                      Container(
                                                                     height: 1,
-                                                                    color: Theme.of(context).colorScheme.outline, // Change to your desired color
+                                                                    color: Theme.of(
+                                                                            context)
+                                                                        .colorScheme
+                                                                        .outline, // Change to your desired color
                                                                   ),
-                                                                  dropdownColor: Theme.of(context).primaryColor,
-                                                                  icon: const Icon(Icons.keyboard_arrow_down),
+                                                                  dropdownColor:
+                                                                      Theme.of(
+                                                                              context)
+                                                                          .primaryColor,
+                                                                  icon: const Icon(
+                                                                      Icons
+                                                                          .keyboard_arrow_down),
                                                                   // Array list of items
-                                                                  items: travelLanelist.map((String item) {
+                                                                  items: travelLanelist
+                                                                      .map((String
+                                                                          item) {
                                                                     return DropdownMenuItem(
-                                                                      value: item,
-                                                                      child: Text(item),
+                                                                      value:
+                                                                          item,
+                                                                      child: Text(
+                                                                          item),
                                                                     );
                                                                   }).toList(),
-                                                                  onChanged: (String? newValue) {
-                                                                    if (newValue != null) {
-                                                                      setState(() {
-                                                                        travelLane = newValue;
+                                                                  onChanged:
+                                                                      (String?
+                                                                          newValue) {
+                                                                    if (newValue !=
+                                                                        null) {
+                                                                      setState(
+                                                                          () {
+                                                                        travelLane =
+                                                                            newValue;
                                                                       });
                                                                     }
                                                                   },
@@ -449,36 +570,71 @@ class _RailWayConcessionState extends ConsumerState<RailWayConcession> {
                                                             ],
                                                           ),
                                                           Row(
-                                                            mainAxisAlignment: MainAxisAlignment.start,
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .start,
                                                             children: [
                                                               SizedBox(
-                                                                width: MediaQuery.of(context).size.width * 0.95 / 2,
+                                                                width: MediaQuery.of(
+                                                                            context)
+                                                                        .size
+                                                                        .width *
+                                                                    0.95 /
+                                                                    2,
                                                                 child: Padding(
-                                                                  padding: const EdgeInsets.fromLTRB(1, 5, 1, 5),
-                                                                  child: DropdownButton(
+                                                                  padding:
+                                                                      const EdgeInsets
+                                                                          .fromLTRB(
+                                                                          1,
+                                                                          5,
+                                                                          1,
+                                                                          5),
+                                                                  child:
+                                                                      DropdownButton(
                                                                     // Initial Value
-                                                                    value: travelClass,
-                                                                    hint: const Text(
+                                                                    value:
+                                                                        travelClass,
+                                                                    hint:
+                                                                        const Text(
                                                                       "Class",
-                                                                      style: TextStyle(color: Colors.grey),
+                                                                      style: TextStyle(
+                                                                          color:
+                                                                              Colors.grey),
                                                                     ),
-                                                                    underline: Container(
+                                                                    underline:
+                                                                        Container(
                                                                       height: 1,
-                                                                      color: Theme.of(context).colorScheme.outline, // Change to your desired color
+                                                                      color: Theme.of(
+                                                                              context)
+                                                                          .colorScheme
+                                                                          .outline, // Change to your desired color
                                                                     ),
-                                                                    dropdownColor: Theme.of(context).primaryColor,
-                                                                    icon: const Icon(Icons.keyboard_arrow_down),
+                                                                    dropdownColor:
+                                                                        Theme.of(context)
+                                                                            .primaryColor,
+                                                                    icon: const Icon(
+                                                                        Icons
+                                                                            .keyboard_arrow_down),
                                                                     // Array list of items
-                                                                    items: travelClassList.map((String item) {
+                                                                    items: travelClassList
+                                                                        .map((String
+                                                                            item) {
                                                                       return DropdownMenuItem(
-                                                                        value: item,
-                                                                        child: Text(item),
+                                                                        value:
+                                                                            item,
+                                                                        child: Text(
+                                                                            item),
                                                                       );
                                                                     }).toList(),
-                                                                    onChanged: (String? newValue) {
-                                                                      if (newValue != null) {
-                                                                        setState(() {
-                                                                          travelClass = newValue;
+                                                                    onChanged:
+                                                                        (String?
+                                                                            newValue) {
+                                                                      if (newValue !=
+                                                                          null) {
+                                                                        setState(
+                                                                            () {
+                                                                          travelClass =
+                                                                              newValue;
                                                                         });
                                                                       }
                                                                     },
@@ -486,33 +642,68 @@ class _RailWayConcessionState extends ConsumerState<RailWayConcession> {
                                                                 ),
                                                               ),
                                                               SizedBox(
-                                                                width: MediaQuery.of(context).size.width * 0.95 / 3,
+                                                                width: MediaQuery.of(
+                                                                            context)
+                                                                        .size
+                                                                        .width *
+                                                                    0.95 /
+                                                                    3,
                                                                 child: Padding(
-                                                                  padding: const EdgeInsets.fromLTRB(1, 5, .5, 5),
-                                                                  child: DropdownButton(
+                                                                  padding:
+                                                                      const EdgeInsets
+                                                                          .fromLTRB(
+                                                                          1,
+                                                                          5,
+                                                                          .5,
+                                                                          5),
+                                                                  child:
+                                                                      DropdownButton(
                                                                     // Initial Value
-                                                                    value: currYear,
-                                                                    hint: const Text(
+                                                                    value:
+                                                                        currYear,
+                                                                    hint:
+                                                                        const Text(
                                                                       "(FE/SE/TE/BE)",
-                                                                      style: TextStyle(color: Colors.grey, fontSize: 13),
+                                                                      style: TextStyle(
+                                                                          color: Colors
+                                                                              .grey,
+                                                                          fontSize:
+                                                                              13),
                                                                     ),
-                                                                    underline: Container(
+                                                                    underline:
+                                                                        Container(
                                                                       height: 1,
-                                                                      color: Theme.of(context).colorScheme.outline, // Change to your desired color
+                                                                      color: Theme.of(
+                                                                              context)
+                                                                          .colorScheme
+                                                                          .outline, // Change to your desired color
                                                                     ),
-                                                                    dropdownColor: Theme.of(context).primaryColor,
-                                                                    icon: const Icon(Icons.keyboard_arrow_down),
+                                                                    dropdownColor:
+                                                                        Theme.of(context)
+                                                                            .primaryColor,
+                                                                    icon: const Icon(
+                                                                        Icons
+                                                                            .keyboard_arrow_down),
                                                                     // Array list of items
-                                                                    items: currYearList.map((String item) {
+                                                                    items: currYearList
+                                                                        .map((String
+                                                                            item) {
                                                                       return DropdownMenuItem(
-                                                                        value: item,
-                                                                        child: Text(item),
+                                                                        value:
+                                                                            item,
+                                                                        child: Text(
+                                                                            item),
                                                                       );
                                                                     }).toList(),
-                                                                    onChanged: (String? newValue) {
-                                                                      if (newValue != null) {
-                                                                        setState(() {
-                                                                          currYear = newValue;
+                                                                    onChanged:
+                                                                        (String?
+                                                                            newValue) {
+                                                                      if (newValue !=
+                                                                          null) {
+                                                                        setState(
+                                                                            () {
+                                                                          currYear =
+                                                                              newValue;
                                                                         });
                                                                       }
                                                                     },
@@ -525,52 +716,65 @@ class _RailWayConcessionState extends ConsumerState<RailWayConcession> {
                                                             initVal: address,
                                                             onSaved: (newVal) {
                                                               setState(() {
-                                                                if (newVal != null) {
-                                                                  address = newVal;
+                                                                if (newVal !=
+                                                                    null) {
+                                                                  address =
+                                                                      newVal;
                                                                 }
                                                               });
                                                             },
                                                             maxLines: 2,
                                                             label: 'Address',
-                                                            isEditMode: _isfilled,
+                                                            isEditMode:
+                                                                _isfilled,
                                                             validator: (value) {
-                                                              if (value!.isEmpty) {
+                                                              if (value!
+                                                                  .isEmpty) {
                                                                 return 'Please enter your Address';
                                                               }
                                                               return null;
                                                             },
                                                           ),
                                                           RailwayTextField(
-                                                            isEditMode: _isfilled,
-                                                            label: "Phone Number",
+                                                            isEditMode:
+                                                                _isfilled,
+                                                            label:
+                                                                "Phone Number",
                                                             initVal: phoneNum,
                                                             onSaved: (newVal) {
                                                               setState(() {
-                                                                if (newVal != null) {
-                                                                  phoneNum = newVal;
+                                                                if (newVal !=
+                                                                    null) {
+                                                                  phoneNum =
+                                                                      newVal;
                                                                 }
                                                               });
                                                             },
                                                             validator: (value) {
-                                                              if (value!.isEmpty) {
+                                                              if (value!
+                                                                  .isEmpty) {
                                                                 return 'Please enter a phone number';
                                                               }
-                                                              if (!isValidPhoneNumber(value)) {
+                                                              if (!isValidPhoneNumber(
+                                                                  value)) {
                                                                 return 'Please enter a valid phone number';
                                                               }
                                                               return null;
                                                             },
                                                           ),
                                                           RailwayTextField(
-                                                            isEditMode: _isfilled,
+                                                            isEditMode:
+                                                                _isfilled,
                                                             label: "Branch",
                                                             // controller:
                                                             //     _branchController,
                                                             initVal: branch,
                                                             onSaved: (newVal) {
                                                               setState(() {
-                                                                if (newVal != null) {
-                                                                  branch = newVal;
+                                                                if (newVal !=
+                                                                    null) {
+                                                                  branch =
+                                                                      newVal;
                                                                 }
                                                               });
                                                             },
@@ -594,15 +798,24 @@ class _RailWayConcessionState extends ConsumerState<RailWayConcession> {
                                         ),
                                         secondChild: Container(
                                           height: 520,
-                                          width: MediaQuery.of(context).size.width * 0.95,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.95,
                                           padding: const EdgeInsets.all(10),
                                           decoration: BoxDecoration(
                                             // border:
                                             //     Border.all(color: Color(0xFF454545)),
-                                            border: Border.all(color: Theme.of(context).colorScheme.outline),
+                                            border: Border.all(
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .outline),
                                             // color: Color(0xFF323232),
-                                            color: Theme.of(context).colorScheme.primaryContainer,
-                                            borderRadius: BorderRadius.circular(30),
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .primaryContainer,
+                                            borderRadius:
+                                                BorderRadius.circular(30),
                                           ),
                                           child: Padding(
                                             padding: const EdgeInsets.all(1.0),
@@ -610,32 +823,65 @@ class _RailWayConcessionState extends ConsumerState<RailWayConcession> {
                                               children: [
                                                 const Text(
                                                   "Make sure the details are Correct",
-                                                  style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
+                                                  style: TextStyle(
+                                                      color: Colors.blue,
+                                                      fontWeight:
+                                                          FontWeight.bold),
                                                 ),
                                                 Divider(
                                                   thickness: 1,
-                                                  color: Theme.of(context).colorScheme.outline,
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .outline,
                                                 ),
-                                                RailwayTextWithDivider(label: "Name", value: name),
+                                                RailwayTextWithDivider(
+                                                    label: "Name", value: name),
                                                 Row(
-                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
                                                   children: [
                                                     SizedBox(
-                                                        width: MediaQuery.of(context).size.width * 0.95 / 2,
-                                                        child: RailwayTextWithDivider(label: "FROM", value: homeStation)),
+                                                        width: MediaQuery.of(
+                                                                    context)
+                                                                .size
+                                                                .width *
+                                                            0.95 /
+                                                            2,
+                                                        child:
+                                                            RailwayTextWithDivider(
+                                                                label: "FROM",
+                                                                value:
+                                                                    homeStation)),
                                                     SizedBox(
-                                                      width: MediaQuery.of(context).size.width * 0.95 / 3,
-                                                      child: RailwayTextWithDivider(label: "TO", value: toStation),
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width *
+                                                              0.95 /
+                                                              3,
+                                                      child:
+                                                          RailwayTextWithDivider(
+                                                              label: "TO",
+                                                              value: toStation),
                                                     ),
                                                   ],
                                                 ),
-                                                RailwayTextWithDivider(label: "Class", value: travelClass ?? "Please specify the class"),
-                                                RailwayTextWithDivider(label: "Duration", value: duration ?? 'Please specify a duration'),
+                                                RailwayTextWithDivider(
+                                                    label: "Class",
+                                                    value: travelClass ??
+                                                        "Please specify the class"),
+                                                RailwayTextWithDivider(
+                                                    label: "Duration",
+                                                    value: duration ??
+                                                        'Please specify a duration'),
                                                 RailwayTextWithDivider(
                                                   label: "Address",
                                                   value: address,
                                                 ),
-                                                RailwayTextWithDivider(label: "Phone No", value: phoneNum),
+                                                RailwayTextWithDivider(
+                                                    label: "Phone No",
+                                                    value: phoneNum),
                                                 Row(
                                                   children: [
                                                     const Spacer(),
@@ -646,25 +892,39 @@ class _RailWayConcessionState extends ConsumerState<RailWayConcession> {
                                                             _iscomplete = true;
                                                           }
                                                         },
-                                                        style: ElevatedButton.styleFrom(
-                                                          padding: const EdgeInsets.symmetric(vertical: 15),
-                                                          backgroundColor: Colors.green,
-                                                          shape: RoundedRectangleBorder(
-                                                            borderRadius: BorderRadius.circular(50.0), // Half of desired button height
+                                                        style: ElevatedButton
+                                                            .styleFrom(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .symmetric(
+                                                                  vertical: 15),
+                                                          backgroundColor:
+                                                              Colors.green,
+                                                          shape:
+                                                              RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        50.0), // Half of desired button height
                                                           ),
                                                         ),
                                                         child: Text(
                                                           "Save Changes",
                                                           style: TextStyle(
-                                                            color: Theme.of(context).colorScheme.onSecondaryContainer,
-                                                            fontWeight: FontWeight.w600,
+                                                            color: Theme.of(
+                                                                    context)
+                                                                .colorScheme
+                                                                .onSecondaryContainer,
+                                                            fontWeight:
+                                                                FontWeight.w600,
                                                           ),
                                                         ),
                                                       ),
                                                     ),
                                                     Expanded(
                                                       child: Align(
-                                                        alignment: Alignment.centerRight,
+                                                        alignment: Alignment
+                                                            .centerRight,
                                                         child: IconButton(
                                                           onPressed: () {
                                                             setState(() {
@@ -672,8 +932,12 @@ class _RailWayConcessionState extends ConsumerState<RailWayConcession> {
                                                             });
                                                           },
                                                           icon: Icon(
-                                                            Icons.cancel_outlined,
-                                                            color: Theme.of(context).colorScheme.onSecondaryContainer,
+                                                            Icons
+                                                                .cancel_outlined,
+                                                            color: Theme.of(
+                                                                    context)
+                                                                .colorScheme
+                                                                .onSecondaryContainer,
                                                             size: 30,
                                                           ),
                                                         ),
@@ -685,7 +949,9 @@ class _RailWayConcessionState extends ConsumerState<RailWayConcession> {
                                             ),
                                           ),
                                         ),
-                                        crossFadeState: !_isfilled ? CrossFadeState.showSecond : CrossFadeState.showFirst,
+                                        crossFadeState: !_isfilled
+                                            ? CrossFadeState.showSecond
+                                            : CrossFadeState.showFirst,
                                       ),
                                     ),
                                   ],
@@ -704,9 +970,11 @@ class _RailWayConcessionState extends ConsumerState<RailWayConcession> {
                                     setState(() {
                                       _isfilled = false;
                                     });
-                                    Future.delayed(const Duration(milliseconds: 1000), () {
+                                    Future.delayed(
+                                        const Duration(milliseconds: 1000), () {
                                       if (listScrollController.hasClients) {
-                                        final position = listScrollController.position.viewportDimension;
+                                        final position = listScrollController
+                                            .position.viewportDimension;
                                         listScrollController.animateTo(
                                           position,
                                           duration: const Duration(seconds: 1),
@@ -720,7 +988,8 @@ class _RailWayConcessionState extends ConsumerState<RailWayConcession> {
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(50.0),
                                   ),
-                                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 20, vertical: 10),
                                 ),
                                 child: //Text(_isEditMode ? 'Save Changes' : 'Edit'),
                                     const Text("CHECK"),
@@ -747,7 +1016,8 @@ class _RailWayConcessionState extends ConsumerState<RailWayConcession> {
                               ),
                               Padding(
                                 padding: const EdgeInsets.all(15.0),
-                                child: Text('Form is Submitted Successfully.We will get back to you soon'),
+                                child: Text(
+                                    'Form is Submitted Successfully.We will get back to you soon'),
                               ),
                             ],
                           ),
