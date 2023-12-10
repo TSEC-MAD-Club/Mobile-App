@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class CustomTextWithDivider extends StatefulWidget {
+class RailwayTextWithDivider extends StatefulWidget {
   final String label;
   final String value;
   final bool showDivider; // New field to enable/disable Divider
 
-  const CustomTextWithDivider({
+  const RailwayTextWithDivider({
     Key? key, // Don't forget to include the key parameter
     required this.label,
     required this.value,
@@ -13,14 +13,14 @@ class CustomTextWithDivider extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<CustomTextWithDivider> createState() => _CustomTextWithDividerState();
+  State<RailwayTextWithDivider> createState() => _RailwayTextWithDividerState();
 }
 
-class _CustomTextWithDividerState extends State<CustomTextWithDivider> {
+class _RailwayTextWithDividerState extends State<RailwayTextWithDivider> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(4, 5, 4, 5),
+      padding: const EdgeInsets.fromLTRB(3, 5, 3, 5),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
