@@ -11,6 +11,8 @@ class RailwayTextField extends StatefulWidget {
   bool? readOnly;
   String initVal;
   int maxLines;
+  EdgeInsetsGeometry? padding;
+  TextEditingController? controller;
 
   RailwayTextField({
     Key? key,
@@ -24,6 +26,8 @@ class RailwayTextField extends StatefulWidget {
     this.onTap,
     this.initVal = "",
     this.onSaved,
+    this.padding,
+    this.controller,
   }) : super(key: key);
 
   @override
@@ -34,10 +38,11 @@ class _RailwayTextFieldState extends State<RailwayTextField> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(4, 5, 4, 5),
+      padding: widget.padding ?? EdgeInsets.fromLTRB(4, 5, 4, 5),
       child: Column(
         children: [
           TextFormField(
+            controller: widget.controller,
             readOnly: widget.readOnly ?? false,
             enabled: widget.isEditMode && widget.enabled,
             maxLines: widget.maxLines, // Set the max lines property
@@ -48,7 +53,8 @@ class _RailwayTextFieldState extends State<RailwayTextField> {
                 ),
               ),
               disabledBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: Theme.of(context).colorScheme.inversePrimary),
+                borderSide: BorderSide(
+                    color: Theme.of(context).colorScheme.inversePrimary),
               ),
               labelStyle: const TextStyle(
                 color: Colors.grey,

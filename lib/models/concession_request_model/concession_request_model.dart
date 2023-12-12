@@ -1,4 +1,3 @@
-
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:json_annotation/json_annotation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -18,7 +17,7 @@ class ConcessionRequestModel {
   final String uid;
 
   ConcessionRequestModel({
-    required this.passNum,
+    this.passNum,
     required this.status,
     required this.statusMessage,
     required this.time,

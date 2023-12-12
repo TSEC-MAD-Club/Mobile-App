@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tsec_app/models/event_model/event_model.dart';
 import 'package:tsec_app/provider/auth_provider.dart';
+import 'package:tsec_app/provider/concession_provider.dart';
 import 'package:tsec_app/provider/firebase_provider.dart';
 import 'package:tsec_app/screens/event_detail_screen/event_details.dart';
 import 'package:tsec_app/screens/login_screen/login_screen.dart';
@@ -185,6 +186,7 @@ class _TSECAppState extends ConsumerState<TSECApp> {
           .updateUserStateDetails(studentModel, ref);
 
       await ref.watch(authProvider.notifier).fetchProfilePic();
+      await ref.watch(concessionProvider.notifier).getConcessionData();
       // if (studentModel != null) {
       //   debugPrint("in main");
       //   String studentYear = studentModel.gradyear.toString();

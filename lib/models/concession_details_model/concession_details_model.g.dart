@@ -27,6 +27,8 @@ ConcessionDetailsModel _$ConcessionDetailsModelFromJson(
       idCardURL: json['idCardURL'] as String,
       previousPassURL: json['previousPassURL'] as String,
       travelLane: json['travelLane'] as String,
+      status: json['status'] as String,
+      statusMessage: json['statusMessage'] as String,
       lastPassIssued: json['lastPassIssued'] as Timestamp?,
     );
 
@@ -52,4 +54,6 @@ Map<String, dynamic> _$ConcessionDetailsModelToJson(
       'previousPassURL': instance.previousPassURL,
       'travelLane': instance.travelLane,
       'lastPassIssued': instance.lastPassIssued,
+      'status': instance.status,
+      'statusMessage': instance.statusMessage,
     };

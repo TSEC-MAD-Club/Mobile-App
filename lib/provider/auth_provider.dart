@@ -65,7 +65,7 @@ class AuthProvider extends StateNotifier<bool> {
       final res = await http.get(Uri.parse(url));
       if (res.statusCode == 200) {
         _ref.read(profilePicProvider.notifier).state = res.bodyBytes;
-        debugPrint("download url in auth provider is $url");
+        // debugPrint("download url in auth provider is $url");
         return response.bodyBytes;
       } else {
         throw Exception('Failed to fetch image');

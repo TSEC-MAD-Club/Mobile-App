@@ -63,8 +63,8 @@ class _CardDisplayState extends ConsumerState<CardDisplay> {
     fetchOccasionDetails();
     // debugPrint("data is ${data.toString()}");
 
-    final dat = ref.watch(notificationTypeProvider);
-    debugPrint("time table batch details: ${dat?.yearBranchDivTopic}");
+    // final dat = ref.watch(notificationTypeProvider);
+    // debugPrint("time table batch details: ${dat?.yearBranchDivTopic}");
     return data.when(
         data: ((data) {
           if (data == null) {
@@ -144,11 +144,11 @@ class _CardDisplayState extends ConsumerState<CardDisplay> {
       // debugPrint(studentModel!.batch.toString());
       if (item['lectureBatch'] == studentModel!.batch.toString() ||
           item['lectureBatch'] == 'All') {
-        debugPrint("in timetable, item is $item");
+        // debugPrint("in timetable, item is $item");
         timeTableDay.add(TimetableModel.fromJson(item));
       }
     }
-    debugPrint(timeTableDay.toString());
+    // debugPrint(timeTableDay.toString());
     return timeTableDay;
   }
 
