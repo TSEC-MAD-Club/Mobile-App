@@ -36,9 +36,61 @@ class _RailWayConcessionState extends ConsumerState<RailWayConcession> {
 
   bool _iscomplete = false;
   bool _isfilled = true;
+  String? status;
+  String? statusMessage;
+  String? duration;
+  DateTime? lastPassIssued;
+
+  bool canIssuePass(DateTime lastPassIssued, String duration) {
+    DateTime today = DateTime.now();
+    DateTime lastPass = lastPassIssued;
+    int diff = today.difference(lastPass).inDays;
+    bool retVal = (duration == "Monthly" && diff >= 30) ||
+        (duration == "Quarterly" && diff >= 90);
+    debugPrint(retVal.toString());
+    debugPrint(status);
+    return retVal;
+  }
+
+  String futurePassMessage() {
+    DateTime today = DateTime.now();
+    DateTime lastPass = lastPassIssued ?? DateTime.now();
+    DateTime futurePass = lastPass.add(
+        duration == "Monthly" ? const Duration(days: 30) : Duration(days: 90));
+    int diff = futurePass.difference(today).inDays;
+    return "You will be able to apply for a new pass after $diff days";
+  }
+
+  void fetchData() {
+    ConcessionDetailsModel? concessionDetails =
+        ref.watch(concessionDetailsProvider);
+
+    status = concessionDetails?.status ?? "";
+    statusMessage = concessionDetails?.statusMessage ?? "";
+    lastPassIssued =
+        concessionDetails?.lastPassIssued?.toDate() ?? DateTime.now();
+    duration = concessionDetails?.duration ?? "";
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    fetchData();
+    if (status == "rejected") {
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            duration: Duration(milliseconds: 7000),
+            content: Text(
+                "Your concession service request has been rejected: $statusMessage")));
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    fetchData();
+
     return CustomScaffold(
       hideButton: !_isfilled || _iscomplete,
       appBar: const RailwayAppBar(title: "Railway Concession"),
@@ -83,19 +135,26 @@ class _RailWayConcessionState extends ConsumerState<RailWayConcession> {
                             //       )
                           ],
                         ),
-                        _iscomplete
-                            ? Container()
-                            : RailwayEditModal(
+                        status == "" ||
+                                status == "rejected" ||
+                                canIssuePass(lastPassIssued ?? DateTime.now(),
+                                    duration ?? "Monthly")
+                            ? RailwayEditModal(
                                 isfilled: _isfilled,
                                 setIsFilled: (val) =>
                                     setState(() => _isfilled = val),
-                              ),
+                                setIsComplete: (val) =>
+                                    setState(() => _iscomplete = val),
+                              )
+                            : Container(),
                       ],
                     ),
                   ),
-                  !_iscomplete
-                      ? Container()
-                      : Align(
+                  status == "unserviced" ||
+                          ((status == "downloaded" || status == "serviced") &&
+                              !canIssuePass(lastPassIssued ?? DateTime.now(),
+                                  duration ?? "Monthly"))
+                      ? Align(
                           alignment: Alignment.center,
                           child: Column(
                             //crossAxisAlignment: CrossAxisAlignment.center,
@@ -115,12 +174,18 @@ class _RailWayConcessionState extends ConsumerState<RailWayConcession> {
                               ),
                               Padding(
                                 padding: const EdgeInsets.all(15.0),
-                                child: Text(
-                                    'Form is Submitted Successfully.We will get back to you soon'),
+                                child: status == "unserviced"
+                                    ? Text(
+                                        'Form is Submitted Successfully. $statusMessage')
+                                    : status == "serviced" ||
+                                            status == "downloaded"
+                                        ? Text(futurePassMessage())
+                                        : Container(),
                               ),
                             ],
                           ),
                         )
+                      : Container()
                 ],
               ),
             ),

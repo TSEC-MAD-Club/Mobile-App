@@ -19,10 +19,12 @@ import 'package:tsec_app/utils/station_list.dart';
 class RailwayEditModal extends ConsumerStatefulWidget {
   bool isfilled;
   Function setIsFilled;
+  Function setIsComplete;
 
   RailwayEditModal({
     super.key,
     required this.isfilled,
+    required this.setIsComplete,
     required this.setIsFilled,
   });
 
@@ -955,7 +957,7 @@ class _RailwayEditModalState extends ConsumerState<RailwayEditModal> {
                         const Spacer(),
                         Expanded(
                           child: ElevatedButton(
-                            onPressed: () {
+                            onPressed: () async {
                               if (!widget.isfilled &&
                                   _formKey.currentState!.validate()) {
                                 if (idCardPhoto == null ||
@@ -964,7 +966,9 @@ class _RailwayEditModalState extends ConsumerState<RailwayEditModal> {
                                       "Please upload ID Card and previous pass photo");
                                   return;
                                 }
-                                _saveChanges(ref);
+                                await _saveChanges(ref);
+                                widget.setIsComplete(true);
+                                widget.setIsFilled(true);
                               }
                             },
                             style: ElevatedButton.styleFrom(
@@ -975,7 +979,7 @@ class _RailwayEditModalState extends ConsumerState<RailwayEditModal> {
                               ),
                             ),
                             child: Text(
-                              "Save Changes",
+                              "Sumbit",
                               style: TextStyle(
                                 color: Theme.of(context)
                                     .colorScheme
