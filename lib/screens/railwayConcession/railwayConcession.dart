@@ -18,7 +18,10 @@ import 'package:tsec_app/screens/railwayConcession/widgets/railway_screen_appbar
 import 'package:tsec_app/screens/railwayConcession/widgets/railway_text_field.dart';
 import 'package:tsec_app/screens/railwayConcession/widgets/railway_text_with_divider.dart';
 import 'package:tsec_app/utils/custom_snackbar.dart';
+import 'package:tsec_app/utils/station_list.dart';
 import 'package:tsec_app/widgets/custom_scaffold.dart';
+import 'package:autocomplete_textfield/autocomplete_textfield.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 
 class RailWayConcession extends ConsumerStatefulWidget {
   const RailWayConcession({super.key});
@@ -163,7 +166,8 @@ class _RailWayConcessionState extends ConsumerState<RailWayConcession> {
       idCardURL = concessionDetails.idCardURL;
       previousPassURL = concessionDetails.previousPassURL;
       getImageFileFromNetwork(concessionDetails.idCardURL, "idCard");
-      getImageFileFromNetwork(concessionDetails.previousPassURL, "previousPass");
+      getImageFileFromNetwork(
+          concessionDetails.previousPassURL, "previousPass");
       //handle images
     }
   }
@@ -197,15 +201,12 @@ class _RailWayConcessionState extends ConsumerState<RailWayConcession> {
     if (response.statusCode == 200) {
       final Uint8List bytes = response.bodyBytes;
 
-      // Get the temporary directory to store the downloaded image
       final Directory tempDir = await getTemporaryDirectory();
       final String tempPath = tempDir.path;
 
-      // Create a unique file name based on the current time
       final String fileName =
           DateTime.now().millisecondsSinceEpoch.toString() + '.png';
 
-      // Write the bytes to the file
       File imageFile = File('$tempPath/$fileName');
       await imageFile.writeAsBytes(bytes);
 
@@ -323,7 +324,8 @@ class _RailWayConcessionState extends ConsumerState<RailWayConcession> {
   bool _iscomplete = false;
 
   ScrollController listScrollController = ScrollController();
-
+  TextEditingController homeStationController = TextEditingController();
+  final _popupCustomValidationKey = GlobalKey<DropdownSearchState<int>>();
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
@@ -930,32 +932,117 @@ class _RailWayConcessionState extends ConsumerState<RailWayConcession> {
                                                                     .center,
                                                             children: [
                                                               Expanded(
+                                                                // child:
+                                                                //     RailwayTextField(
+                                                                //   initVal:
+                                                                //       homeStation,
+                                                                //   onSaved:
+                                                                //       (newVal) {
+                                                                //     setState(
+                                                                //         () {
+                                                                //       if (newVal !=
+                                                                //           null) {
+                                                                //         homeStation =
+                                                                //             newVal;
+                                                                //       }
+                                                                //     });
+                                                                //   },
+                                                                //   label: 'From',
+                                                                //   isEditMode:
+                                                                //       _isfilled,
+                                                                //   validator:
+                                                                //       (value) {
+                                                                //     if (value!
+                                                                //         .isEmpty) {
+                                                                //       return 'Please enter your Home Station';
+                                                                //     }
+                                                                //     return null;
+                                                                //   },
+                                                                // ),
+
+                                                                // child:
+                                                                //     DropdownSearch<
+                                                                //         String>(
+                                                                //   popupProps:
+                                                                //       PopupProps
+                                                                //           .menu(
+                                                                //     showSelectedItems:
+                                                                //         true,
+                                                                //   ),
+                                                                //   items:
+                                                                //       mumbaiRailwayStations,
+                                                                //   dropdownDecoratorProps:
+                                                                //       DropDownDecoratorProps(
+                                                                //     dropdownSearchDecoration:
+                                                                //         InputDecoration(
+                                                                //       labelText:
+                                                                //           "Station",
+                                                                //       hintText:
+                                                                //           "country in menu mode",
+                                                                //     ),
+                                                                //   ),
+                                                                //   onChanged:
+                                                                //       print,
+                                                                //   selectedItem:
+                                                                //       "Khar Road",
+                                                                // ),
+
                                                                 child:
-                                                                    RailwayTextField(
-                                                                  initVal:
-                                                                      homeStation,
-                                                                  onSaved:
-                                                                      (newVal) {
-                                                                    setState(
-                                                                        () {
-                                                                      if (newVal !=
-                                                                          null) {
-                                                                        homeStation =
-                                                                            newVal;
-                                                                      }
-                                                                    });
-                                                                  },
-                                                                  label: 'From',
-                                                                  isEditMode:
-                                                                      _isfilled,
-                                                                  validator:
-                                                                      (value) {
-                                                                    if (value!
-                                                                        .isEmpty) {
-                                                                      return 'Please enter your Home Station';
-                                                                    }
-                                                                    return null;
-                                                                  },
+                                                                    DropdownSearch<
+                                                                        String>(
+                                                                  dropdownButtonProps:
+                                                                      DropdownButtonProps(
+                                                                    icon: Icon(
+                                                                      Icons
+                                                                          .keyboard_arrow_down_outlined,
+                                                                      color: Theme.of(
+                                                                              context)
+                                                                          .colorScheme
+                                                                          .inversePrimary,
+                                                                    ),
+                                                                    alignment:
+                                                                        Alignment
+                                                                            .bottomRight,
+                                                                  ),
+                                                                  dropdownDecoratorProps:
+                                                                      DropDownDecoratorProps(
+                                                                    dropdownSearchDecoration:
+                                                                        InputDecoration(
+                                                                      labelText:
+                                                                          "Station",
+                                                                    ),
+                                                                  ),
+                                                                  popupProps:
+                                                                      PopupProps
+                                                                          .dialog(
+                                                                    showSearchBox:
+                                                                        true,
+                                                                  ),
+                                                                  items:
+                                                                      mumbaiRailwayStations,
+                                                                  // dropdownBuilder:
+                                                                  //     (context,
+                                                                  //         selectedItem) {
+                                                                  //   return Row(
+                                                                  //     children: [
+                                                                  //       Expanded(
+                                                                  //         child:
+                                                                  //             Text(
+                                                                  //           selectedItem ??
+                                                                  //               "",
+                                                                  //           style:
+                                                                  //               TextStyle(fontSize: 16),
+                                                                  //         ),
+                                                                  //       ),
+                                                                  //       Icon(
+                                                                  //         Icons
+                                                                  //             .arrow_drop_down, // Your custom arrow icon goes here
+                                                                  //         size:
+                                                                  //             30,
+                                                                  //       ),
+                                                                  //     ],
+                                                                  //   );
+                                                                  // },
                                                                 ),
                                                               ),
                                                               Expanded(
