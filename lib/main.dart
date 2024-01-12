@@ -6,25 +6,29 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tsec_app/models/event_model/event_model.dart';
+import 'package:tsec_app/new_ui/screens/home_screen/home_screen.dart';
 import 'package:tsec_app/provider/auth_provider.dart';
 import 'package:tsec_app/provider/firebase_provider.dart';
-import 'package:tsec_app/screens/event_detail_screen/event_details.dart';
-import 'package:tsec_app/screens/login_screen/login_screen.dart';
+import 'package:tsec_app/new_ui/screens/splash_screen/splash_screen.dart';
+import 'package:tsec_app/new_ui/screens/main_screen/main_screen.dart';
+import 'package:tsec_app/new_ui/screens/login_screen/login_screen.dart';
+// import 'package:tsec_app/screens/event_detail_screen/event_details.dart';
+// import 'package:tsec_app/screens/login_screen/login_screen.dart';
 import 'package:tsec_app/screens/profile_screen/profile_screen.dart';
-import 'package:tsec_app/screens/splash_screen.dart';
+// import 'package:tsec_app/screens/splash_screen.dart';
 import 'package:tsec_app/utils/notification_type.dart';
 import 'firebase_options.dart';
 import 'models/student_model/student_model.dart';
 import 'provider/app_state_provider.dart';
 import 'provider/shared_prefs_provider.dart';
 import 'provider/theme_provider.dart';
-import 'screens/committees_screen.dart';
-import 'screens/departmentlist_screen/department_list.dart';
-import 'screens/department_screen/department_screen.dart';
-import 'screens/main_screen/main_screen.dart';
-import 'screens/notification_screen/notification_screen.dart';
-import 'screens/theme_screen/theme_screen.dart';
-import 'screens/tpc_screen.dart';
+// import 'screens/committees_screen.dart';
+// import 'screens/departmentlist_screen/department_list.dart';
+// import 'screens/department_screen/department_screen.dart';
+// import 'screens/main_screen/main_screen.dart';
+// import 'screens/notification_screen/notification_screen.dart';
+// import 'screens/theme_screen/theme_screen.dart';
+// import 'screens/tpc_screen.dart';
 import 'utils/department_enum.dart';
 import 'utils/init_get_it.dart';
 import 'utils/themes.dart';
@@ -96,6 +100,11 @@ class _TSECAppState extends ConsumerState<TSECApp> {
           builder: (context, state) => MainScreen(),
         ),
         GoRoute(
+          name: "home",
+          path: "/home",
+          builder: (context, state) => HomeScreen(),
+        ),
+        GoRoute(
           path: '/login',
           builder: (context, state) => const LoginScreen(),
         ),
@@ -103,53 +112,7 @@ class _TSECAppState extends ConsumerState<TSECApp> {
           path: "/splash",
           builder: (context, state) => const SplashScreen(),
         ),
-        GoRoute(
-          path: "/notifications",
-          builder: (context, state) => const NotificationScreen(),
-        ),
-        GoRoute(
-          path: "/theme",
-          builder: (context, state) => const ThemeScreen(),
-        ),
-        GoRoute(
-          path: "/committee",
-          builder: (context, state) => const CommitteesScreen(),
-        ),
-        GoRoute(
-          path: "/tpc",
-          builder: (context, state) => const TPCScreen(),
-        ),
-        GoRoute(
-          name: "details_page",
-          path: "/details_page",
-          builder: (context, state) {
-            EventModel eventModel = EventModel(
-                state.uri.queryParameters["Event Name"]!,
-                state.uri.queryParameters["Event Time"]!,
-                state.uri.queryParameters["Event Date"]!,
-                state.uri.queryParameters["Event decription"]!,
-                state.uri.queryParameters["Event registration url"]!,
-                state.uri.queryParameters["Event Image Url"]!,
-                state.uri.queryParameters["Event Location"]!,
-                state.uri.queryParameters["Committee Name"]!);
 
-            return EventDetail(
-              eventModel: eventModel,
-            );
-          },
-        ),
-        GoRoute(
-          path: "/department",
-          builder: (context, state) {
-            final department = DepartmentEnum.values[
-                int.parse(state.uri.queryParameters["department"] as String)];
-            return DepartmentScreen(department: department);
-          },
-        ),
-        GoRoute(
-          path: "/department-list",
-          builder: (context, state) => const DepartmentListScreen(),
-        ),
         GoRoute(
           path: '/profile-page',
           builder: (context, state) {
@@ -159,6 +122,53 @@ class _TSECAppState extends ConsumerState<TSECApp> {
             return ProfilePage(justLoggedIn: justLoggedIn);
           },
         )
+        // GoRoute(
+        //   path: "/notifications",
+        //   builder: (context, state) => const NotificationScreen(),
+        // ),
+        // GoRoute(
+        //   path: "/theme",
+        //   builder: (context, state) => const ThemeScreen(),
+        // ),
+        // GoRoute(
+        //   path: "/committee",
+        //   builder: (context, state) => const CommitteesScreen(),
+        // ),
+        // GoRoute(
+        //   path: "/tpc",
+        //   builder: (context, state) => const TPCScreen(),
+        // ),
+        // GoRoute(
+        //   name: "details_page",
+        //   path: "/details_page",
+        //   builder: (context, state) {
+        //     EventModel eventModel = EventModel(
+        //         state.uri.queryParameters["Event Name"]!,
+        //         state.uri.queryParameters["Event Time"]!,
+        //         state.uri.queryParameters["Event Date"]!,
+        //         state.uri.queryParameters["Event decription"]!,
+        //         state.uri.queryParameters["Event registration url"]!,
+        //         state.uri.queryParameters["Event Image Url"]!,
+        //         state.uri.queryParameters["Event Location"]!,
+        //         state.uri.queryParameters["Committee Name"]!);
+
+        //     return EventDetail(
+        //       eventModel: eventModel,
+        //     );
+        //   },
+        // ),
+        // GoRoute(
+        //   path: "/department",
+        //   builder: (context, state) {
+        //     final department = DepartmentEnum.values[
+        //         int.parse(state.uri.queryParameters["department"] as String)];
+        //     return DepartmentScreen(department: department);
+        //   },
+        // ),
+        // GoRoute(
+        //   path: "/department-list",
+        //   builder: (context, state) => const DepartmentListScreen(),
+        // ),
       ],
       refreshListenable: ref.watch(appStateProvider),
     );
@@ -170,7 +180,6 @@ class _TSECAppState extends ConsumerState<TSECApp> {
       StudentModel? studentModel = await ref
           .watch(authProvider.notifier)
           .fetchStudentDetails(user, context);
-      // ref.watch(studentModelProvider.notifier).update((state) => studentModel);
       ref.read(studentModelProvider.notifier).state = studentModel;
 
       NotificationType.makeTopic(ref, studentModel);
@@ -180,20 +189,6 @@ class _TSECAppState extends ConsumerState<TSECApp> {
           .updateUserStateDetails(studentModel, ref);
 
       await ref.watch(authProvider.notifier).fetchProfilePic();
-      // if (studentModel != null) {
-      //   debugPrint("in main");
-      //   String studentYear = studentModel.gradyear.toString();
-      //   String studentBranch = studentModel.branch.toString();
-      //   String studentDiv = studentModel.div.toString();
-      //   String studentBatch = studentModel.batch.toString();
-      //   ref.read(notificationTypeProvider.notifier).state = NotificationTypeC(
-      //       notification: "All",
-      //       yearTopic: studentYear,
-      //       yearBranchTopic: "$studentYear-$studentBranch",
-      //       yearBranchDivTopic: "$studentYear-$studentBranch-$studentDiv",
-      //       yearBranchDivBatchTopic:
-      //           "$studentYear-$studentBranch-$studentDiv-$studentBatch");
-      // }
     }
   }
 
@@ -203,7 +198,7 @@ class _TSECAppState extends ConsumerState<TSECApp> {
       getuserData();
     }
 
-    final _themeMode = ref.watch(themeProvider);
+    // final _themeMode = ref.watch(themeProvider);
     return MaterialApp.router(
       builder: (context, child) =>
           MediaQuery(data: getTextScale(context), child: child!),
@@ -211,8 +206,9 @@ class _TSECAppState extends ConsumerState<TSECApp> {
       routeInformationParser: _routes.routeInformationParser,
       routerDelegate: _routes.routerDelegate,
       title: 'TSEC App',
-      themeMode: _themeMode,
-      theme: theme,
+      // themeMode: _themeMode,
+      themeMode: ThemeMode.dark,
+      // theme: theme,
       darkTheme: darkTheme,
     );
   }

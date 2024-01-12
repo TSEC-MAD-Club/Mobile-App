@@ -113,7 +113,7 @@ class _LoginWidgetState extends ConsumerState<LoginWidget> {
                               ? shadowLightModeTextFields
                               : shadowDarkModeTextFields,
                         ),
-                        child: TextField(
+                        child: TextFormField(
                           controller: _passwordTextEditingController,
                           obscureText: true,
                           decoration: InputDecoration(
