@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 
 class CustomPdfIcon extends StatelessWidget {
   final String pdfName;
-  const CustomPdfIcon({super.key, required this.pdfName});
+  final VoidCallback method;
+  const CustomPdfIcon({super.key, required this.pdfName, required this.method});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       height: MediaQuery.of(context).size.height * 0.03,
-      width: MediaQuery.of(context).size.width * 0.30,
+      width: MediaQuery.of(context).size.width * 0.37,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         color: Theme.of(context).scaffoldBackgroundColor,
@@ -31,6 +32,16 @@ class CustomPdfIcon extends StatelessWidget {
                 fontSize: 14,
               ),
             ),
+            const SizedBox(
+              width: 7,
+            ),
+            InkWell(
+              onTap: method,
+              child: const Icon(
+                Icons.cancel_outlined,
+                color: Colors.grey,
+              ),
+            )
           ],
         ),
       ),
