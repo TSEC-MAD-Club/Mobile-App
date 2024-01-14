@@ -10,6 +10,7 @@ import 'package:tsec_app/provider/auth_provider.dart';
 import 'package:tsec_app/provider/firebase_provider.dart';
 import 'package:tsec_app/screens/event_detail_screen/event_details.dart';
 import 'package:tsec_app/screens/login_screen/login_screen.dart';
+import 'package:tsec_app/screens/notes_screen/notes_screen.dart';
 import 'package:tsec_app/screens/profile_screen/profile_screen.dart';
 import 'package:tsec_app/screens/splash_screen.dart';
 import 'package:tsec_app/utils/notification_type.dart';
@@ -114,6 +115,10 @@ class _TSECAppState extends ConsumerState<TSECApp> {
         GoRoute(
           path: "/committee",
           builder: (context, state) => const CommitteesScreen(),
+        ),
+        GoRoute(
+          path: "/notes",
+          builder: (context, state) => const NotesScreen(),
         ),
         GoRoute(
           path: "/tpc",
