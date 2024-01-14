@@ -127,7 +127,10 @@ class _NoteListState extends State<NoteList> {
                     children: [
                       Row(
                         children: [
-                          const CustomPdfIcon(pdfName: "module_6.pdf"),
+                          CustomPdfIcon(
+                            pdfName: "module_6.pdf",
+                            method: () {},
+                          ),
                           const SizedBox(
                             width: 4,
                           ),
@@ -249,17 +252,17 @@ class _NoteListState extends State<NoteList> {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0).copyWith(left: 14),
-                  child: const Column(
+                  child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                      const Text(
                         'Attachments',
                         style: TextStyle(
                           fontWeight: FontWeight.normal,
                           fontSize: 14,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Row(
@@ -267,12 +270,14 @@ class _NoteListState extends State<NoteList> {
                         children: [
                           CustomPdfIcon(
                             pdfName: "module_5.pdf",
+                            method: () {},
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 8,
                           ),
                           CustomPdfIcon(
                             pdfName: "module_6.pdf",
+                            method: () {},
                           ),
                         ],
                       )
