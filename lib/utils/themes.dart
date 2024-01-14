@@ -91,8 +91,11 @@ late final darkTheme = ThemeData(
     seedColor: Color(0xffB2D0FF),
     primary: Color(0xffB2D0FF),
     background: Color(0xFF1B1B1B),
-    onBackground: Color(0xff2A66FF) ,
+    onBackground: Color(0xff2A66FF),
     secondary: Color(0xff835983),
+    outline: Color(0xff454545),
+    onPrimaryContainer: Color(0xffA6A6A6),
+    primaryContainer: Color(0xff323232),
     onPrimary: Colors.black,
     onSecondary: Colors.white,
     tertiary: Color(0xffF1F1F1),
@@ -145,6 +148,26 @@ const _textTheme = TextTheme(
     fontSize: 18,
     fontWeight: FontWeight.w400,
     fontFamily: "Priego",
+  ),
+  labelLarge: TextStyle(
+    fontSize: 30,
+    fontWeight: FontWeight.w600,
+    fontFamily: "Inter",
+  ),
+  labelMedium: TextStyle(
+    fontSize: 20,
+    fontWeight: FontWeight.w500,
+    fontFamily: "Inter",
+  ),
+  labelSmall: TextStyle(
+    fontSize: 18,
+    fontWeight: FontWeight.w400,
+    fontFamily: "Inter",
+  ),
+  bodySmall: TextStyle(
+    fontSize: 18,
+    fontWeight: FontWeight.w400,
+    fontFamily: "Inter",
   ),
 );
 TextButtonThemeData _getTextButtonTheme({

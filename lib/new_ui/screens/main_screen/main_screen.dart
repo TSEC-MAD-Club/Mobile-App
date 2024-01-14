@@ -30,7 +30,7 @@ class MainScreen extends ConsumerStatefulWidget {
     Key? key,
   }) : super(key: key);
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _MainScreenState();
+  ConsumerState<MainScreen> createState() => _MainScreenState();
 }
 
 class _MainScreenState extends ConsumerState<MainScreen> {
@@ -44,20 +44,34 @@ class _MainScreenState extends ConsumerState<MainScreen> {
   static const _sidePadding = EdgeInsets.symmetric(horizontal: 15);
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
+  int currentBottomNavPage = 0;
   int currentPage = 0;
-  List<Widget> pages = [
-    HomeScreen(),
-    Container(child: Text("TPC")),
-    Container(child: Text("Commi")),
-    Container(),
-    Container(),
-    // ProfilePage(
-    //   justLoggedIn: false,
-    // ),
-  ];
+
+  late List<Widget> pages;
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    pages = [
+      HomeScreen(
+        currentBottomNavPage: currentBottomNavPage,
+        changeCurrentBottomNavPage: (int index) {
+          setState(() {
+            currentBottomNavPage = index;
+          });
+        },
+      ),
+      Container(child: Text("TPC")),
+      Container(child: Text("Commi")),
+      Container(),
+      Container(),
+      // ProfilePage(
+      //   justLoggedIn: false,
+      // ),
+    ];
     final _size = MediaQuery.of(context).size;
     var _theme = Theme.of(context);
     var _boxshadow = BoxShadow(
@@ -88,39 +102,45 @@ class _MainScreenState extends ConsumerState<MainScreen> {
 
     return SafeArea(
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         key: _scaffoldKey,
         appBar: AppBar(
           shadowColor: Colors.transparent,
-          toolbarHeight: 120,
+          backgroundColor: currentBottomNavPage != 4
+              ? Colors.transparent
+              : Theme.of(context).colorScheme.primary,
+          toolbarHeight: 80,
           leadingWidth: 100,
-          leading: Row(
-            children: [
-              SizedBox(
-                width: 8,
-              ),
-              profilePic != null
-                  ? GestureDetector(
-                      onTap: () {
-                        _scaffoldKey.currentState?.openDrawer();
-                      },
-                      child: CircleAvatar(
-                        radius: 35,
-                        backgroundImage: MemoryImage(profilePic),
-                        // backgroundImage: MemoryImage(_image!),
-                      ),
-                    )
-                  : GestureDetector(
-                      onTap: () {
-                        _scaffoldKey.currentState?.openDrawer();
-                      },
-                      child: CircleAvatar(
-                        radius: 35,
-                        backgroundImage:
-                            AssetImage("assets/images/pfpholder.jpg"),
-                      ),
-                    )
-            ],
-          ),
+          leading: currentBottomNavPage != 4
+              ? Row(
+                  children: [
+                    SizedBox(
+                      width: 8,
+                    ),
+                    profilePic != null
+                        ? GestureDetector(
+                            onTap: () {
+                              _scaffoldKey.currentState?.openDrawer();
+                            },
+                            child: CircleAvatar(
+                              radius: 35,
+                              backgroundImage: MemoryImage(profilePic),
+                              // backgroundImage: MemoryImage(_image!),
+                            ),
+                          )
+                        : GestureDetector(
+                            onTap: () {
+                              _scaffoldKey.currentState?.openDrawer();
+                            },
+                            child: CircleAvatar(
+                              radius: 35,
+                              backgroundImage:
+                                  AssetImage("assets/images/pfpholder.jpg"),
+                            ),
+                          )
+                  ],
+                )
+              : Container(),
           actions: [
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -159,7 +179,6 @@ class _MainScreenState extends ConsumerState<MainScreen> {
               ),
             )
           ],
-          backgroundColor: Colors.transparent,
         ),
         drawer: Drawer(
           shape: const RoundedRectangleBorder(
@@ -232,7 +251,6 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                       currentPage = 1;
                     });
 
-                    debugPrint(currentPage.toString());
                     Navigator.pop(context);
                   },
                 ),

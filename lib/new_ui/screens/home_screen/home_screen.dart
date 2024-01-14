@@ -3,18 +3,23 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tsec_app/models/student_model/student_model.dart';
 import 'package:tsec_app/provider/auth_provider.dart';
-import 'package:tsec_app/screens/profile_screen/profile_screen.dart';
+import 'package:tsec_app/new_ui/screens/profile_screen/profile_screen.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class HomeScreen extends ConsumerStatefulWidget {
+  int currentBottomNavPage;
+  Function changeCurrentBottomNavPage;
+  HomeScreen(
+      {required this.currentBottomNavPage,
+      required this.changeCurrentBottomNavPage,
+      super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-  int selectedPage = 0;
+class _HomeScreenState extends ConsumerState<HomeScreen> {
+  late int currentPage;
   List<Widget> widgets = <Widget>[
     HomeWidget(),
     const Text(
@@ -32,53 +37,67 @@ class _HomeScreenState extends State<HomeScreen> {
   ];
 
   @override
+  void initState() {
+    currentPage = widget.currentBottomNavPage;
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    StudentModel? data = ref.watch(studentModelProvider);
     return Scaffold(
-      bottomNavigationBar: BottomNavigationBar(
-        // backgroundColor: Colors.black,
-        elevation: 0,
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        items: const [
-          BottomNavigationBarItem(
-            backgroundColor: Colors.transparent,
-            activeIcon: Icon(Icons.home),
-            icon: Icon(Icons.home_outlined),
-            label: "Home",
-          ),
-          BottomNavigationBarItem(
-            backgroundColor: Colors.transparent,
-            icon: Icon(Icons.book_outlined),
-            activeIcon: Icon(Icons.book),
-            label: "Library",
-          ),
-          BottomNavigationBarItem(
-            backgroundColor: Colors.transparent,
-            activeIcon: Icon(Icons.calendar_today),
-            icon: Icon(Icons.calendar_today_outlined),
-            label: "Time Table",
-          ),
-          BottomNavigationBarItem(
-            backgroundColor: Colors.transparent,
-            icon: Icon(Icons.directions_railway_outlined),
-            activeIcon: Icon(Icons.directions_railway_filled),
-            label: "Railway",
-          ),
-          BottomNavigationBarItem(
-            backgroundColor: Colors.transparent,
-            icon: Icon(Icons.person_outline),
-            activeIcon: Icon(Icons.person),
-            label: "Profile",
-          ),
-        ],
-        currentIndex: selectedPage,
-        onTap: (index) {
-          setState(() {
-            selectedPage = index;
-          });
-        },
-      ),
-      body: widgets[selectedPage],
+      // resizeToAvoidBottomInset: false,
+      bottomNavigationBar: data != null
+          ? BottomNavigationBar(
+              backgroundColor: Colors.transparent,
+              type: BottomNavigationBarType.fixed,
+              elevation: 0,
+              showSelectedLabels: false,
+              showUnselectedLabels: false,
+              unselectedItemColor: Colors.white,
+              selectedItemColor: Colors.white,
+              items: [
+                BottomNavigationBarItem(
+                  backgroundColor: Colors.transparent,
+                  activeIcon: Icon(Icons.home),
+                  icon: Icon(Icons.home_outlined),
+                  label: "Home",
+                ),
+                BottomNavigationBarItem(
+                  backgroundColor: Colors.transparent,
+                  icon: Icon(Icons.book_outlined),
+                  activeIcon: Icon(Icons.book),
+                  label: "Library",
+                ),
+                BottomNavigationBarItem(
+                  backgroundColor: Colors.transparent,
+                  activeIcon: Icon(Icons.calendar_today),
+                  icon: Icon(Icons.calendar_today_outlined),
+                  label: "Time Table",
+                ),
+                BottomNavigationBarItem(
+                  backgroundColor: Colors.transparent,
+                  icon: Icon(Icons.directions_railway_outlined),
+                  activeIcon: Icon(Icons.directions_railway_filled),
+                  label: "Railway",
+                ),
+                BottomNavigationBarItem(
+                  backgroundColor: Colors.transparent,
+                  icon: Icon(Icons.person_outline),
+                  activeIcon: Icon(Icons.person),
+                  label: "Profile",
+                ),
+              ],
+              currentIndex: widget.currentBottomNavPage,
+              onTap: (index) {
+                // setState(() {
+                //   selectedPage = index;
+                // });
+                widget.changeCurrentBottomNavPage(index);
+              },
+            )
+          : Container(),
+      body: widgets[widget.currentBottomNavPage],
     );
   }
 }

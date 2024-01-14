@@ -14,7 +14,7 @@ import 'package:tsec_app/new_ui/screens/main_screen/main_screen.dart';
 import 'package:tsec_app/new_ui/screens/login_screen/login_screen.dart';
 // import 'package:tsec_app/screens/event_detail_screen/event_details.dart';
 // import 'package:tsec_app/screens/login_screen/login_screen.dart';
-import 'package:tsec_app/screens/profile_screen/profile_screen.dart';
+import 'package:tsec_app/new_ui/screens/profile_screen/profile_screen.dart';
 // import 'package:tsec_app/screens/splash_screen.dart';
 import 'package:tsec_app/utils/notification_type.dart';
 import 'firebase_options.dart';
@@ -102,7 +102,10 @@ class _TSECAppState extends ConsumerState<TSECApp> {
         GoRoute(
           name: "home",
           path: "/home",
-          builder: (context, state) => HomeScreen(),
+          builder: (context, state) => HomeScreen(
+            currentBottomNavPage: 0,
+            changeCurrentBottomNavPage: () {},
+          ),
         ),
         GoRoute(
           path: '/login',
