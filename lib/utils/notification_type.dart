@@ -62,4 +62,3 @@ class NotificationTypeC {
     required this.yearBranchDivBatchTopic,
   });
 }
-

@@ -54,111 +54,121 @@ const kWhite = Color(0xFFE4E6EB);
 const kBlack = Color(0xFF18191A);
 const kLightBlack = Color(0xFF242526);
 
-late final theme = ThemeData(
-  scaffoldBackgroundColor: const Color(0xFFF2F5F8),
-  shadowColor: const Color(0x00D3D3D3),
-  textButtonTheme: _getTextButtonTheme(
-    darkColor: kLightModeDarkBlue,
-    lightColor: kLightModeLightBlue,
-  ),
-  elevatedButtonTheme: _getElevatedButtonTheme(
-    darkColor: kLightModeDarkBlue,
-    lightColor: kLightModeDarkBlue,
-  ),
-  primaryColor: const Color(0xFFF2F5F8),
-  primaryColorLight: const Color(0xFFF2F5F8),
-  primaryColorDark: const Color(0xFFD8D5D5),
-  cardColor: Colors.black87,
-  textTheme: _textTheme.apply(
-    bodyColor: kBlack,
-    displayColor: kBlack,
-  ),
-  fontFamily: "SF Pro Text",
-  colorScheme: ColorScheme.fromSwatch().copyWith(
-    secondary: Colors.white,
-    // onPrimary: Color.fromARGB(255, 78, 73, 73),
-    inversePrimary: Color.fromARGB(255, 241, 241, 241),
-    primaryContainer: Colors.white,
-    secondaryContainer: Color(0xff00C62C),
-    onSecondaryContainer: Colors.black,
-    outline: Color(0xFFE0E0E0),
-  ),
-);
+// late final theme = ThemeData(
+//   scaffoldBackgroundColor: const Color(0xFFF2F5F8),
+//   shadowColor: const Color(0x00D3D3D3),
+//   textButtonTheme: _getTextButtonTheme(
+//     darkColor: kLightModeDarkBlue,
+//     lightColor: kLightModeLightBlue,
+//   ),
+//   elevatedButtonTheme: _getElevatedButtonTheme(
+//     darkColor: kLightModeDarkBlue,
+//     lightColor: kLightModeDarkBlue,
+//   ),
+//   primaryColor: const Color(0xFFF2F5F8),
+//   primaryColorLight: const Color(0xFFF2F5F8),
+//   primaryColorDark: const Color(0xFFD8D5D5),
+//   cardColor: Colors.black87,
+//   textTheme: _textTheme.apply(
+//     bodyColor: kBlack,
+//     displayColor: kBlack,
+//   ),
+//   fontFamily: "SF Pro Text",
+//   colorScheme: ColorScheme.fromSwatch().copyWith(
+//     secondary: Colors.white,
+//     // onPrimary: Color.fromARGB(255, 78, 73, 73),
+//     inversePrimary: Color.fromARGB(255, 241, 241, 241),
+//     primaryContainer: Colors.white,
+//     secondaryContainer: Color(0xff00C62C),
+//     onSecondaryContainer: Colors.black,
+//     outline: Color(0xFFE0E0E0),
+//   ),
+// );
 
 late final darkTheme = ThemeData(
-  scaffoldBackgroundColor: const Color(0xFF18191A),
-  primaryColor: const Color(0xFF242526),
-  primaryColorLight: const Color(0xFf34323d),
-  primaryColorDark: const Color(0xFF000000),
-  shadowColor: const Color(0x00A9A9A9),
-  cardColor: Colors.white70,
-  elevatedButtonTheme: _getElevatedButtonTheme(
-    darkColor: kDarkModeDarkBlue,
-    lightColor: kDarkModeLightBlue,
+  fontFamily: "Inter",
+  colorScheme: ColorScheme.fromSeed(
+    seedColor: Color(0xffB2D0FF),
+    primary: Color(0xffB2D0FF),
+    background: Color(0xFF1B1B1B),
+    onBackground: Color(0xff2A66FF),
+    secondary: Color(0xff835983),
+    outline: Color(0xff454545),
+    onPrimaryContainer: Color(0xffA6A6A6),
+    primaryContainer: Color(0xff323232),
+    onPrimary: Colors.black,
+    onSecondary: Colors.white,
+    tertiary: Color(0xffF1F1F1),
+    onTertiary: Color(0xff6B708C),
+    tertiaryContainer: Color(0xff1B1B1B),
+    error: Color(0xffFF4D4D),
   ),
-  textButtonTheme: _getTextButtonTheme(
-    darkColor: kDarkModeDarkBlue,
-    lightColor: kDarkModeLightBlue,
-  ),
+  scaffoldBackgroundColor: const Color(0xFF1B1B1B),
+  // primaryColor: Color(0xffB2D0FF),
+  // primaryColor: const Color(0xFF242526),
+  // primaryColorLight: const Color(0xFf34323d),
+  // primaryColorDark: const Color(0xFF000000),
+  // shadowColor: const Color(0x00A9A9A9),
+  // cardColor: Colors.white70,
+  // elevatedButtonTheme: _getElevatedButtonTheme(
+  //   darkColor: kDarkModeDarkBlue,
+  //   lightColor: kDarkModeLightBlue,
+  // ),
+  // textButtonTheme: _getTextButtonTheme(
+  //   darkColor: kDarkModeDarkBlue,
+  //   lightColor: kDarkModeLightBlue,
+  // ),
   textTheme: _textTheme.apply(
     bodyColor: kWhite,
     displayColor: kWhite,
   ),
-  fontFamily: "SF Pro Text",
-  colorScheme: ColorScheme.fromSwatch().copyWith(
-    secondary: kLightBlack,
-    // onPrimary: Color.fromARGB(255, 171, 171, 171),
-    primaryContainer: Color(0xFF323232),
-    secondaryContainer: Color(0xff00C62C),
-    onSecondaryContainer: Colors.white,
-    outline: Color(0xFF454545),
-    inversePrimary: Color.fromARGB(255, 63, 63, 63),
-  ),
+  // colorScheme: ColorScheme.fromSwatch().copyWith(
+  //   secondary: kLightBlack,
+  //   // onPrimary: Color.fromARGB(255, 171, 171, 171),
+  //   primaryContainer: Color(0xFF323232),
+  //   secondaryContainer: Color(0xff00C62C),
+  //   onSecondaryContainer: Colors.white,
+  //   outline: Color(0xFF454545),
+  //   inversePrimary: Color.fromARGB(255, 63, 63, 63),
+  // ),
 );
 
 const _textTheme = TextTheme(
-  headline1: TextStyle(
-    fontSize: 36,
-    fontWeight: FontWeight.w400,
-  ),
-  headline2: TextStyle(
-    fontSize: 28,
-    fontWeight: FontWeight.w400,
-  ),
-  headline3: TextStyle(
-    fontSize: 22,
-    fontWeight: FontWeight.w400,
-  ),
-  headline4: TextStyle(
-    fontSize: 20,
-    fontWeight: FontWeight.w400,
-  ),
-  headline5: TextStyle(
-    fontSize: 14,
-    fontWeight: FontWeight.bold,
-  ),
-  headline6: TextStyle(),
-  bodyText1: TextStyle(
-    fontSize: 17,
+  headlineLarge: TextStyle(
+    fontSize: 40,
     fontWeight: FontWeight.w600,
+    fontFamily: "Priego",
   ),
-  bodyText2: TextStyle(
-    fontSize: 17,
-    fontWeight: FontWeight.w400,
-  ),
-  caption: TextStyle(
-    fontSize: 12,
-    fontWeight: FontWeight.w400,
-  ),
-  subtitle1: TextStyle(
-    fontSize: 16,
-    fontWeight: FontWeight.w400,
-  ),
-  subtitle2: TextStyle(
-    fontSize: 14,
+  headlineMedium: TextStyle(
+    fontSize: 20,
     fontWeight: FontWeight.w500,
+    fontFamily: "Priego",
   ),
-  button: TextStyle(),
+  headlineSmall: TextStyle(
+    fontSize: 18,
+    fontWeight: FontWeight.w400,
+    fontFamily: "Priego",
+  ),
+  labelLarge: TextStyle(
+    fontSize: 30,
+    fontWeight: FontWeight.w600,
+    fontFamily: "Inter",
+  ),
+  labelMedium: TextStyle(
+    fontSize: 20,
+    fontWeight: FontWeight.w500,
+    fontFamily: "Inter",
+  ),
+  labelSmall: TextStyle(
+    fontSize: 18,
+    fontWeight: FontWeight.w400,
+    fontFamily: "Inter",
+  ),
+  bodySmall: TextStyle(
+    fontSize: 18,
+    fontWeight: FontWeight.w400,
+    fontFamily: "Inter",
+  ),
 );
 TextButtonThemeData _getTextButtonTheme({
   required Color darkColor,

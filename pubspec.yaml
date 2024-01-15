@@ -109,5 +109,29 @@ flutter:
           weight: 400
         - asset: assets/fonts/SF-Pro-Text-Semibold.otf
           weight: 600
+    - family: Priego 
+      fonts:
+        - asset: assets/fonts/priego-extrabold.otf
+          weight: 800
+        - asset: assets/fonts/priego-bold.otf
+          weight: 700 
+        - asset: assets/fonts/priego-semibold.otf
+          weight: 600 
+        - asset: assets/fonts/priego-medium.otf
+          weight: 500 
+        - asset: assets/fonts/priego-regular.otf
+          weight: 400 
+    - family: Inter 
+      fonts:
+        - asset: assets/fonts/Inter-ExtraBold.ttf
+          weight: 800
+        - asset: assets/fonts/Inter-Bold.ttf
+          weight: 700 
+        - asset: assets/fonts/Inter-SemiBold.ttf
+          weight: 600 
+        - asset: assets/fonts/Inter-Medium.ttf
+          weight: 500 
+        - asset: assets/fonts/Inter-Regular.ttf
+          weight: 400 
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

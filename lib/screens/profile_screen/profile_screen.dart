@@ -16,6 +16,7 @@ import 'package:tsec_app/provider/firebase_provider.dart';
 import 'package:tsec_app/screens/profile_screen/widgets/custom_text_with_divider.dart';
 import 'package:tsec_app/screens/profile_screen/widgets/profile_screen_appbar.dart';
 import 'package:tsec_app/screens/profile_screen/widgets/profile_text_field.dart';
+import 'package:tsec_app/utils/form_validity.dart';
 import 'package:tsec_app/widgets/custom_scaffold.dart';
 import '../../utils/image_pick.dart';
 import '../../utils/themes.dart';
@@ -48,17 +49,6 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
   // int _editCount = 0;
   bool _isEditMode = false;
   final _formKey = GlobalKey<FormState>();
-
-  bool isValidEmail(String email) {
-    final emailRegex = RegExp(
-        r'^[\w-]+(\.[\w-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(\.[a-zA-Z]{2,})$');
-    return emailRegex.hasMatch(email);
-  }
-
-  bool isValidPhoneNumber(String phoneNumber) {
-    final phoneRegex = RegExp(r'^[0-9]{10}$');
-    return phoneRegex.hasMatch(phoneNumber);
-  }
 
   void enableEditing() {
     setState(() {
@@ -115,6 +105,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
       }
     }
     setState(() {
+      l.add("");
       divisionList = l;
     });
     // debugPrint(gradyear);
@@ -135,6 +126,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
     }
     // return batches;
     setState(() {
+      batchList.add("");
       batchList = batches;
     });
   }
@@ -230,15 +222,15 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
     email = data.email;
     batch = data.batch;
     branch = data.branch;
-    div = data.div;
     gradyear = data.gradyear;
-    batch = data.batch;
     phoneNum = data.phoneNum ?? "";
     address = data.address ?? '';
     homeStation = data.homeStation ?? '';
     _dobController.text = data.dateOfBirth ?? "";
     calcBatchList(data.div);
     calcDivisionList(data.gradyear);
+    div = divisionList.contains(data.div) ? data.div : "";
+    batch = batchList.contains(data.batch) ? data.batch : "";
   }
 
   Widget buildProfileImages(WidgetRef ref) {
@@ -266,7 +258,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
               child: RawMaterialButton(
                 onPressed: () {
                   editProfileImage();
-                },
+                } ,
                 elevation: 2.0,
                 fillColor: Color(0xFFF5F6F9),
                 child: Icon(
@@ -378,7 +370,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                   sigmaY: _isEditMode ? 10.0 : 0.0,
                                 ),
                                 child: AnimatedCrossFade(
-                                  duration: const Duration(seconds: 1),
+                                    duration: const Duration(seconds: 1),
                                   firstChild: Container(
                                     height: 460,
                                     width: MediaQuery.of(context).size.width *
@@ -717,9 +709,10 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                                         Padding(
                                                           padding:
                                                               const EdgeInsets
-                                                                      .fromLTRB(
+                                                                  .fromLTRB(
                                                                   4, 5, 4, 5),
-                                                          child: DropdownButton(
+                                                          child:
+                                                              DropdownButtonFormField(
                                                             // Initial Value
                                                             value: div,
                                                             hint: Text(
@@ -729,20 +722,25 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                                                       .grey),
                                                             ),
 
-                                                            underline:
-                                                                Container(
-                                                              height: 1,
-                                                              color: Theme.of(
-                                                                      context)
-                                                                  .colorScheme
-                                                                  .outline, // Change to your desired color
-                                                            ),
+                                                            // underline:
+                                                            //     Container(
+                                                            //   height: 1,
+                                                            //   color: Theme.of(
+                                                            //           context)
+                                                            //       .colorScheme
+                                                            //       .outline, // Change to your desired color
+                                                            // ),
+                                                            validator: (value) {
+                                                              if (value == "") {
+                                                                return 'Please enter a division';
+                                                              }
+                                                              return null;
+                                                            },
                                                             dropdownColor: Theme
                                                                     .of(context)
                                                                 .primaryColor,
                                                             icon: const Icon(Icons
                                                                 .keyboard_arrow_down),
-
                                                             // Array list of items
                                                             items: divisionList
                                                                 .map((String
@@ -774,9 +772,10 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                                         Padding(
                                                           padding:
                                                               const EdgeInsets
-                                                                      .fromLTRB(
+                                                                  .fromLTRB(
                                                                   4, 5, 4, 5),
-                                                          child: DropdownButton(
+                                                          child:
+                                                              DropdownButtonFormField(
                                                             // Initial Value
                                                             value: batch,
 
@@ -786,14 +785,21 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                                                   color: Colors
                                                                       .grey),
                                                             ),
-                                                            underline:
-                                                                Container(
-                                                              height: 1,
-                                                              color: Theme.of(
-                                                                      context)
-                                                                  .colorScheme
-                                                                  .outline, // Change to your desired color
-                                                            ),
+                                                            // underline:
+                                                            //     Container(
+                                                            //   height: 1,
+                                                            //   color: Theme.of(
+                                                            //           context)
+                                                            //       .colorScheme
+                                                            //       .outline, // Change to your desired color
+                                                            // ),
+
+                                                            validator: (value) {
+                                                              if (value == "") {
+                                                                return 'Please enter a batch';
+                                                              }
+                                                              return null;
+                                                            },
                                                             dropdownColor: Theme
                                                                     .of(context)
                                                                 .primaryColor,
