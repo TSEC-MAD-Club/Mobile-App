@@ -8,6 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:tsec_app/models/concession_details_model/concession_details_model.dart';
 import 'package:tsec_app/models/concession_request_model/concession_request_model.dart';
+import 'package:tsec_app/utils/railway_enum.dart';
 // import 'package:tsec_app/utils/custom_snackbar.dart';
 
 final concessionServiceProvider = Provider((ref) {
@@ -36,7 +37,7 @@ class ConcessionService {
   Future<DateTime> getCorrectDate(DateTime date) async {
     QuerySnapshot querySnapshot = await concessionRequestCollection
         .where('time', isLessThanOrEqualTo: date)
-        .where('status', isEqualTo: "unserviced")
+        .where('status', isEqualTo: ConcessionStatus.unserviced)
         .get();
 
     int unprocessed = querySnapshot.size;
@@ -50,14 +51,14 @@ class ConcessionService {
   Future<ConcessionDetailsModel?> getConcessionDetails() async {
     try {
       var value = await concessionDetailsCollection.doc(user!.uid).get();
-      debugPrint('concession details are being fetched');
+      // debugPrint('concession details are being fetched');
       if (value.exists) {
         var detailsMap = value.data() as Map<String, dynamic>;
         ConcessionDetailsModel concessionDetailsData =
             ConcessionDetailsModel.fromJson(detailsMap);
 
-        debugPrint(
-            'concession details fetched are: ${concessionDetailsData.toString()}');
+        // debugPrint(
+        //     'concession details fetched are: ${concessionDetailsData.toString()}');
         return concessionDetailsData;
       } else {
         // Document does not exist
@@ -89,7 +90,7 @@ class ConcessionService {
     var prevPassURL = await passRef.ref.getDownloadURL();
 
     DateTime concessionDate = await getCorrectDate(DateTime.now());
-    String status = "unserviced";
+    String status = ConcessionStatus.unserviced;
     String statusMessage =
         "Your pass will be ready on ${DateFormat('dd MMM').format(concessionDate)}";
     ConcessionRequestModel concessionRequest = ConcessionRequestModel(

@@ -32,7 +32,7 @@ class ProfileField extends StatelessWidget {
           color: enabled
               ? Theme.of(context).colorScheme.onPrimaryContainer
               : Theme.of(context).colorScheme.outline,
-          width: 2.0,
+          width: 1,
         ),
       ),
       child: Padding(

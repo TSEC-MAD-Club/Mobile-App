@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tsec_app/models/student_model/student_model.dart';
+import 'package:tsec_app/provider/concession_provider.dart';
 import 'package:tsec_app/provider/firebase_provider.dart';
 import 'package:tsec_app/services/auth_service.dart';
 import 'package:flutter/material.dart';
@@ -82,6 +83,39 @@ class AuthProvider extends StateNotifier<bool> {
 
   void changePassword(String password, BuildContext context) {
     _authService.updatePassword(password, context);
+  }
+
+  Future getUserData(WidgetRef ref, BuildContext context) async {
+    final user = _ref.watch(firebaseAuthProvider).currentUser;
+    if (user?.uid != null) {
+      StudentModel? studentModel = await ref
+          .watch(authProvider.notifier)
+          .fetchStudentDetails(user, context);
+      ref.read(studentModelProvider.notifier).state = studentModel;
+
+      NotificationType.makeTopic(ref, studentModel);
+
+      await ref
+          .watch(authProvider.notifier)
+          .updateUserStateDetails(studentModel, ref);
+
+      await ref.watch(authProvider.notifier).fetchProfilePic();
+      await ref.watch(concessionProvider.notifier).getConcessionData();
+      // if (studentModel != null) {
+      //   debugPrint("in main");
+      //   String studentYear = studentModel.gradyear.toString();
+      //   String studentBranch = studentModel.branch.toString();
+      //   String studentDiv = studentModel.div.toString();
+      //   String studentBatch = studentModel.batch.toString();
+      //   ref.read(notificationTypeProvider.notifier).state = NotificationTypeC(
+      //       notification: "All",
+      //       yearTopic: studentYear,
+      //       yearBranchTopic: "$studentYear-$studentBranch",
+      //       yearBranchDivTopic: "$studentYear-$studentBranch-$studentDiv",
+      //       yearBranchDivBatchTopic:
+      //           "$studentYear-$studentBranch-$studentDiv-$studentBatch");
+      // }
+    }
   }
 
   Future updateUserStateDetails(

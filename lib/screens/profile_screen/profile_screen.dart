@@ -258,7 +258,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
               child: RawMaterialButton(
                 onPressed: () {
                   editProfileImage();
-                } ,
+                },
                 elevation: 2.0,
                 fillColor: Color(0xFFF5F6F9),
                 child: Icon(
@@ -370,7 +370,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                   sigmaY: _isEditMode ? 10.0 : 0.0,
                                 ),
                                 child: AnimatedCrossFade(
-                                    duration: const Duration(seconds: 1),
+                                  duration: const Duration(seconds: 1),
                                   firstChild: Container(
                                     height: 460,
                                     width: MediaQuery.of(context).size.width *

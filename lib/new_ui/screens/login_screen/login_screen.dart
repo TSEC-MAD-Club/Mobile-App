@@ -26,6 +26,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   late TextEditingController _emailTextEditingController;
   late TextEditingController _passwordTextEditingController;
   bool passwordVisible = true;
+  bool loggedInButtonPressed = false;
 
   final _formKey = GlobalKey<FormState>();
 
@@ -268,80 +269,79 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           ),
                         ],
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(30.0),
-                        child: ElevatedButton(
-                          onPressed: () async {
-                            if (_formKey.currentState!.validate()) {
-                              UserCredential? userCredential = await ref
-                                  .watch(authProvider.notifier)
-                                  .signInUser(
-                                      _emailTextEditingController.text.trim(),
-                                      _passwordTextEditingController.text
-                                          .trim(),
-                                      context);
+                      !loggedInButtonPressed
+                          ? Padding(
+                              padding: const EdgeInsets.all(30.0),
+                              child: ElevatedButton(
+                                onPressed: () async {
+                                  if (_formKey.currentState!.validate()) {
+                                    setState(() {
+                                      loggedInButtonPressed = true;
+                                    });
+                                    UserCredential? userCredential = await ref
+                                        .watch(authProvider.notifier)
+                                        .signInUser(
+                                            _emailTextEditingController.text
+                                                .trim(),
+                                            _passwordTextEditingController.text
+                                                .trim(),
+                                            context);
 
-                              if (userCredential == null) {
-                                return;
-                              }
+                                    if (userCredential == null) {
+                                      setState(() {
+                                        loggedInButtonPressed = false;
+                                      });
+                                      return;
+                                    }
 
-                              User? user = userCredential.user;
-                              StudentModel? studentModel = await ref
-                                  .watch(authProvider.notifier)
-                                  .fetchStudentDetails(user, context);
-                              ref
-                                  .watch(studentModelProvider.notifier)
-                                  .update((state) => studentModel);
-                              // showDialog(
-                              //     context: context,
-                              // builder: ((context) => const ChangePasswordDialog()));
+                                    await ref
+                                        .watch(authProvider.notifier)
+                                        .getUserData(ref, context);
+                                    StudentModel? studentModel =
+                                        ref.watch(studentModelProvider);
 
-                              // GoRouter.of(context).go('/main');
-                              await ref
-                                  .watch(authProvider.notifier)
-                                  .updateUserStateDetails(studentModel, ref);
-
-                              await ref
-                                  .watch(authProvider.notifier)
-                                  .fetchProfilePic();
-                              debugPrint(studentModel.toString());
-                              _setupFCMNotifications(studentModel);
-                              if (studentModel != null) {
-                                if (studentModel.updateCount != null &&
-                                    studentModel.updateCount! > 0) {
-                                  GoRouter.of(context).go('/main');
-                                } else {
-                                  GoRouter.of(context)
-                                      .go('/profile-page?justLoggedIn=true');
-                                }
-                              }
-                            }
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor:
-                                Theme.of(context).colorScheme.primary,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(
-                                  20.0), // Set the border radius here
-                            ),
-                            padding:
-                                EdgeInsets.all(16), // Adjust padding as needed
-                          ),
-                          child: Container(
-                            width: double.infinity, // Set width to full width
-                            height: 30,
-                            child: Center(
-                              child: Text(
-                                'Log In',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headlineMedium!
-                                    .copyWith(color: Colors.black),
+                                    _setupFCMNotifications(studentModel);
+                                    if (studentModel != null) {
+                                      if (studentModel.updateCount != null &&
+                                          studentModel.updateCount! > 0) {
+                                        GoRouter.of(context).go('/main');
+                                      } else {
+                                        GoRouter.of(context).go(
+                                            '/profile-page?justLoggedIn=true');
+                                      }
+                                    }
+                                  }
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor:
+                                      Theme.of(context).colorScheme.primary,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(
+                                        20.0), // Set the border radius here
+                                  ),
+                                  padding: EdgeInsets.all(
+                                      16), // Adjust padding as needed
+                                ),
+                                child: Container(
+                                  width: double
+                                      .infinity, // Set width to full width
+                                  height: 30,
+                                  child: Center(
+                                    child: Text(
+                                      'Log In',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headlineMedium!
+                                          .copyWith(color: Colors.black),
+                                    ),
+                                  ),
+                                ),
                               ),
+                            )
+                          : Padding(
+                              padding: const EdgeInsets.all(30.0),
+                              child: CircularProgressIndicator(),
                             ),
-                          ),
-                        ),
-                      ),
                     ],
                   ),
                 ),

@@ -57,7 +57,7 @@ class ConcessionProvider extends StateNotifier<bool> {
   Future getConcessionData() async {
     ConcessionDetailsModel? concessionDetailsData =
         await _concessionService.getConcessionDetails();
-
+    // debugPrint("concession: ${concessionDetailsData?.firstName}");
     _ref.read(concessionDetailsProvider.notifier).state = concessionDetailsData;
   }
 

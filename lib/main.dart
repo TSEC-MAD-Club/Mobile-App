@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tsec_app/models/event_model/event_model.dart';
 import 'package:tsec_app/new_ui/screens/home_screen/home_screen.dart';
+import 'package:tsec_app/new_ui/screens/railway_screen/railway_screen.dart';
 import 'package:tsec_app/provider/auth_provider.dart';
 import 'package:tsec_app/provider/concession_provider.dart';
 import 'package:tsec_app/provider/firebase_provider.dart';
@@ -126,7 +127,12 @@ class _TSECAppState extends ConsumerState<TSECApp> {
             bool justLoggedIn = justLoggedInSt == "true";
             return ProfilePage(justLoggedIn: justLoggedIn);
           },
-        )
+        ),
+
+        GoRoute(
+          path: "/concession",
+          builder: (context, state) => const RailwayConcessionScreen(),
+        ),
         // GoRoute(
         //   path: "/notifications",
         //   builder: (context, state) => const NotificationScreen(),
@@ -179,46 +185,46 @@ class _TSECAppState extends ConsumerState<TSECApp> {
     );
   }
 
-  getuserData() async {
-    final user = ref.watch(firebaseAuthProvider).currentUser;
-    if (user?.uid != null) {
-      StudentModel? studentModel = await ref
-          .watch(authProvider.notifier)
-          .fetchStudentDetails(user, context);
-      ref.read(studentModelProvider.notifier).state = studentModel;
+  // getuserData() async {
+  //   final user = ref.watch(firebaseAuthProvider).currentUser;
+  //   if (user?.uid != null) {
+  //     StudentModel? studentModel = await ref
+  //         .watch(authProvider.notifier)
+  //         .fetchStudentDetails(user, context);
+  //     ref.read(studentModelProvider.notifier).state = studentModel;
 
-      NotificationType.makeTopic(ref, studentModel);
+  //     NotificationType.makeTopic(ref, studentModel);
 
-      await ref
-          .watch(authProvider.notifier)
-          .updateUserStateDetails(studentModel, ref);
+  //     await ref
+  //         .watch(authProvider.notifier)
+  //         .updateUserStateDetails(studentModel, ref);
 
-      await ref.watch(authProvider.notifier).fetchProfilePic();
-      await ref.watch(concessionProvider.notifier).getConcessionData();
-      // if (studentModel != null) {
-      //   debugPrint("in main");
-      //   String studentYear = studentModel.gradyear.toString();
-      //   String studentBranch = studentModel.branch.toString();
-      //   String studentDiv = studentModel.div.toString();
-      //   String studentBatch = studentModel.batch.toString();
-      //   ref.read(notificationTypeProvider.notifier).state = NotificationTypeC(
-      //       notification: "All",
-      //       yearTopic: studentYear,
-      //       yearBranchTopic: "$studentYear-$studentBranch",
-      //       yearBranchDivTopic: "$studentYear-$studentBranch-$studentDiv",
-      //       yearBranchDivBatchTopic:
-      //           "$studentYear-$studentBranch-$studentDiv-$studentBatch");
-      // }
-    }
-  }
+  //     await ref.watch(authProvider.notifier).fetchProfilePic();
+  //     await ref.watch(concessionProvider.notifier).getConcessionData();
+  //     // if (studentModel != null) {
+  //     //   debugPrint("in main");
+  //     //   String studentYear = studentModel.gradyear.toString();
+  //     //   String studentBranch = studentModel.branch.toString();
+  //     //   String studentDiv = studentModel.div.toString();
+  //     //   String studentBatch = studentModel.batch.toString();
+  //     //   ref.read(notificationTypeProvider.notifier).state = NotificationTypeC(
+  //     //       notification: "All",
+  //     //       yearTopic: studentYear,
+  //     //       yearBranchTopic: "$studentYear-$studentBranch",
+  //     //       yearBranchDivTopic: "$studentYear-$studentBranch-$studentDiv",
+  //     //       yearBranchDivBatchTopic:
+  //     //           "$studentYear-$studentBranch-$studentDiv-$studentBatch");
+  //     // }
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
-    if (ref.watch(firebaseAuthProvider).currentUser?.uid != null) {
-      getuserData();
-    }
+    // if (ref.watch(firebaseAuthProvider).currentUser?.uid != null) {
+    // getuserData();
+    // }
 
-    // final _themeMode = ref.watch(themeProvider);
+    final _themeMode = ref.watch(themeProvider);
     return MaterialApp.router(
       builder: (context, child) =>
           MediaQuery(data: getTextScale(context), child: child!),

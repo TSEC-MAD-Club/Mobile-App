@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tsec_app/models/student_model/student_model.dart';
+import 'package:tsec_app/new_ui/screens/railway_screen/railway_screen.dart';
 import 'package:tsec_app/provider/auth_provider.dart';
 import 'package:tsec_app/new_ui/screens/profile_screen/profile_screen.dart';
 import 'package:url_launcher/url_launcher_string.dart';
+import 'package:tsec_app/provider/railway_concession_provider.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   int currentBottomNavPage;
@@ -28,9 +30,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     const Text(
       'Timetable',
     ),
-    const Text(
-      'Railway Concession',
-    ),
+    const RailwayConcessionScreen(),
     ProfilePage(
       justLoggedIn: false,
     ),
@@ -45,9 +45,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     StudentModel? data = ref.watch(studentModelProvider);
+
+    bool concessionOpen = ref.watch(railwayConcessionOpenProvider);
     return Scaffold(
       // resizeToAvoidBottomInset: false,
-      bottomNavigationBar: data != null
+      bottomNavigationBar: data != null && !concessionOpen
           ? BottomNavigationBar(
               backgroundColor: Colors.transparent,
               type: BottomNavigationBarType.fixed,
@@ -96,7 +98,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 widget.changeCurrentBottomNavPage(index);
               },
             )
-          : Container(),
+          : null,
       body: widgets[widget.currentBottomNavPage],
     );
   }
