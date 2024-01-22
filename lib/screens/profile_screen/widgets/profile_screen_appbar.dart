@@ -66,7 +66,6 @@ class __ProfilePageAppBarStateState extends ConsumerState<ProfilePageAppBar> {
 
   @override
   Widget build(BuildContext context) {
-    StudentModel? data = ref.watch(studentModelProvider);
     return AppBar(
       elevation: 0,
       leadingWidth: 60.0,

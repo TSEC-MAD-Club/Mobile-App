@@ -1,11 +1,14 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:http/http.dart' as http;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tsec_app/models/faculty_model/faculty_model.dart';
 import 'package:tsec_app/models/student_model/student_model.dart';
+import 'package:tsec_app/models/user_model/user_model.dart';
 import 'package:tsec_app/provider/concession_provider.dart';
 import 'package:tsec_app/provider/firebase_provider.dart';
 import 'package:tsec_app/services/auth_service.dart';
@@ -16,7 +19,11 @@ final authProvider = StateNotifierProvider<AuthProvider, bool>(((ref) {
   return AuthProvider(ref: ref, authService: ref.watch(authServiceProvider));
 }));
 
-final studentModelProvider = StateProvider<StudentModel?>((ref) {
+// final studentModelProvider = StateProvider<StudentModel?>((ref) {
+//   return null;
+// });
+
+final userModelProvider = StateProvider<UserModel?>((ref) {
   return null;
 });
 
@@ -47,38 +54,52 @@ class AuthProvider extends StateNotifier<bool> {
     return await _authService.resetPassword(email, context);
   }
 
-  Future updateProfilePic(Uint8List image) async {
+  Future<String> updateProfilePic(Uint8List image, UserModel userModel) async {
     _ref.read(profilePicProvider.notifier).state = image;
-    await _authService.updateProfilePic(image);
+    String url = await _authService.updateProfilePic(image, userModel);
+    return url;
   }
 
   Future fetchProfilePic() async {
-    final user = _ref.read(firebaseAuthProvider).currentUser;
-    String url =
-        "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Images%2F${user?.uid}";
-    final response = await http.get(Uri.parse(url));
+    // final user = _ref.read(firebaseAuthProvider).currentUser;
+    // String url =
+    //     "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Images%2F${user?.uid}";
+    // final response = await http.get(Uri.parse(url));
 
+    // if (response.statusCode == 200) {
+    //   final jsonResponse =
+    //       Map<String, dynamic>.from(json.decode(response.body));
+    //   // return jsonResponse['downloadTokens'] ?? '';
+    //   url = "$url?alt=media&token=${jsonResponse['downloadTokens']}";
+    //   final res = await http.get(Uri.parse(url));
+    //   if (res.statusCode == 200) {
+    //     _ref.read(profilePicProvider.notifier).state = res.bodyBytes;
+    //     // debugPrint("download url in auth provider is $url");
+    //     return response.bodyBytes;
+    //   } else {
+    //     throw Exception('Failed to fetch image');
+    //   }
+    // } else {
+    //   _ref.read(profilePicProvider.notifier).state = null;
+    // }
+    UserModel? userModel = _ref.watch(userModelProvider);
+    if (userModel == null) {
+      return;
+    }
+    String url = userModel.isStudent
+        ? userModel.studentModel!.image ?? ""
+        : userModel.facultyModel!.image;
+    final response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
-      final jsonResponse =
-          Map<String, dynamic>.from(json.decode(response.body));
-      // return jsonResponse['downloadTokens'] ?? '';
-      url = "$url?alt=media&token=${jsonResponse['downloadTokens']}";
-      final res = await http.get(Uri.parse(url));
-      if (res.statusCode == 200) {
-        _ref.read(profilePicProvider.notifier).state = res.bodyBytes;
-        // debugPrint("download url in auth provider is $url");
-        return response.bodyBytes;
-      } else {
-        throw Exception('Failed to fetch image');
-      }
+      _ref.read(profilePicProvider.notifier).state = response.bodyBytes;
+      return response.bodyBytes;
     } else {
-      _ref.read(profilePicProvider.notifier).state = null;
+      throw Exception('Failed to fetch image');
     }
   }
 
-  Future<StudentModel?> fetchStudentDetails(
-      User? user, BuildContext context) async {
-    return await _authService.fetchStudentDetails(user, context);
+  Future<UserModel?> fetchUserDetails(User? user, BuildContext context) async {
+    return await _authService.fetchUserDetails(user, context);
   }
 
   void changePassword(String password, BuildContext context) {
@@ -88,16 +109,18 @@ class AuthProvider extends StateNotifier<bool> {
   Future getUserData(WidgetRef ref, BuildContext context) async {
     final user = _ref.watch(firebaseAuthProvider).currentUser;
     if (user?.uid != null) {
-      StudentModel? studentModel = await ref
+      UserModel? userModel = await ref
           .watch(authProvider.notifier)
-          .fetchStudentDetails(user, context);
-      ref.read(studentModelProvider.notifier).state = studentModel;
+          .fetchUserDetails(user, context);
+      // ref.read(studentModelProvider.notifier).state = studentModel;
+      ref.read(userModelProvider.notifier).state = userModel;
 
-      NotificationType.makeTopic(ref, studentModel);
-
-      await ref
-          .watch(authProvider.notifier)
-          .updateUserStateDetails(studentModel, ref);
+      if (userModel != null && userModel.isStudent) {
+        NotificationType.makeTopic(ref, userModel.studentModel);
+        await ref
+            .watch(authProvider.notifier)
+            .updateStudentTimeTableData(userModel.studentModel, ref);
+      }
 
       await ref.watch(authProvider.notifier).fetchProfilePic();
       await ref.watch(concessionProvider.notifier).getConcessionData();
@@ -118,7 +141,7 @@ class AuthProvider extends StateNotifier<bool> {
     }
   }
 
-  Future updateUserStateDetails(
+  Future updateStudentTimeTableData(
       StudentModel? studentmodel, WidgetRef ref) async {
     if (studentmodel != null) {
       String studentYear = studentmodel.gradyear.toString();
@@ -136,36 +159,17 @@ class AuthProvider extends StateNotifier<bool> {
     }
   }
 
-  Future updateUserDetails(
+  Future updateStudentDetails(
       StudentModel student, WidgetRef ref, BuildContext context) async {
     try {
       StudentModel updatedStudentData =
-          await _authService.updateUserDetails(student);
-      _ref.read(studentModelProvider.notifier).state = updatedStudentData;
+          await _authService.updateStudentDetails(student);
+      _ref.read(userModelProvider.notifier).state =
+          UserModel(studentModel: updatedStudentData);
 
-      // StudentModel? data = ref.watch(studentModelProvider);
-      // if (data != null) NotificationType.makeTopic(_ref);
-
-      StudentModel? studentmodel = ref.watch(studentModelProvider);
+      StudentModel? studentmodel = ref.watch(userModelProvider)?.studentModel;
       NotificationType.makeTopic(ref, studentmodel);
-      updateUserStateDetails(studentmodel, ref);
-      // String studentYear = updatedStudentData.gradyear.toString();
-      // String studentBranch = updatedStudentData.branch.toString();
-      // String studentDiv = updatedStudentData.div.toString();
-      // String studentBatch = updatedStudentData.batch.toString();
-      // yearTopic = studentYear;
-      // yearBranchTopic = "$studentYear-$studentBranch";
-      // yearBranchDivTopic = "$studentYear-$studentBranch-$studentDiv";
-      // yearBranchDivBatchTopic =
-      //     "$studentYear-$studentBranch-$studentDiv-$studentBatch";
-
-      // ref.read(notificationTypeProvider.notifier).state = NotificationTypeC(
-      //     notification: "All",
-      //     yearTopic: studentYear,
-      //     yearBranchTopic: "$studentYear-$studentBranch",
-      //     yearBranchDivTopic: "$studentYear-$studentBranch-$studentDiv",
-      //     yearBranchDivBatchTopic:
-      //         "$studentYear-$studentBranch-$studentDiv-$studentBatch");
+      updateStudentTimeTableData(studentmodel, ref);
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -182,7 +186,32 @@ class AuthProvider extends StateNotifier<bool> {
     }
   }
 
+  Future updateFacultyDetails(
+      FacultyModel faculty, WidgetRef ref, BuildContext context) async {
+    try {
+      FacultyModel updatedFacultyData =
+          await _authService.updateFacultyDetails(faculty);
+      _ref.read(userModelProvider.notifier).state =
+          UserModel(facultyModel: updatedFacultyData);
+    } catch (e) {
+      print('Error updating profile: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+            content: Text('An error occurred. Please try again later.')),
+      );
+    }
+  }
+
   Future signout() async {
+    final _messaging = FirebaseMessaging.instance;
+
+    _ref.read(userModelProvider.notifier).update((state) => null);
+    _ref.read(profilePicProvider.notifier).update((state) => null);
+    _messaging.unsubscribeFromTopic(NotificationType.notification);
+    _messaging.unsubscribeFromTopic(NotificationType.yearBranchDivBatchTopic);
+    _messaging.unsubscribeFromTopic(NotificationType.yearBranchDivTopic);
+    _messaging.unsubscribeFromTopic(NotificationType.yearBranchTopic);
+    _messaging.unsubscribeFromTopic(NotificationType.yearTopic);
     await _authService.signout();
   }
 }

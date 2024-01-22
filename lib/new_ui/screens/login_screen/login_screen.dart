@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tsec_app/models/notification_model/notification_model.dart';
 import 'package:tsec_app/models/student_model/student_model.dart';
+import 'package:tsec_app/models/user_model/user_model.dart';
 import 'package:tsec_app/provider/auth_provider.dart';
 import 'package:tsec_app/provider/notification_provider.dart';
 import 'package:tsec_app/utils/custom_snackbar.dart';
@@ -297,18 +298,22 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                     await ref
                                         .watch(authProvider.notifier)
                                         .getUserData(ref, context);
-                                    StudentModel? studentModel =
-                                        ref.watch(studentModelProvider);
+                                    UserModel? userModel =
+                                        ref.watch(userModelProvider);
 
-                                    _setupFCMNotifications(studentModel);
-                                    if (studentModel != null) {
-                                      if (studentModel.updateCount != null &&
-                                          studentModel.updateCount! > 0) {
-                                        GoRouter.of(context).go('/main');
-                                      } else {
-                                        GoRouter.of(context).go(
-                                            '/profile-page?justLoggedIn=true');
-                                      }
+                                    if (userModel != null) {
+                                      if (userModel.isStudent)
+                                        _setupFCMNotifications(
+                                            userModel.studentModel);
+                                      // if (studentModel.updateCount != null &&
+                                      //     studentModel.updateCount! > 0) {
+                                      //   GoRouter.of(context).go('/main');
+                                      // } else {
+                                      //   GoRouter.of(context).go(
+                                      //       '/profile-page?justLoggedIn=true');
+                                      // }
+                                      GoRouter.of(context).go(
+                                          '/profile-page?justLoggedIn=true');
                                     }
                                   }
                                 },

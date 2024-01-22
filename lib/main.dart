@@ -185,39 +185,6 @@ class _TSECAppState extends ConsumerState<TSECApp> {
     );
   }
 
-  // getuserData() async {
-  //   final user = ref.watch(firebaseAuthProvider).currentUser;
-  //   if (user?.uid != null) {
-  //     StudentModel? studentModel = await ref
-  //         .watch(authProvider.notifier)
-  //         .fetchStudentDetails(user, context);
-  //     ref.read(studentModelProvider.notifier).state = studentModel;
-
-  //     NotificationType.makeTopic(ref, studentModel);
-
-  //     await ref
-  //         .watch(authProvider.notifier)
-  //         .updateUserStateDetails(studentModel, ref);
-
-  //     await ref.watch(authProvider.notifier).fetchProfilePic();
-  //     await ref.watch(concessionProvider.notifier).getConcessionData();
-  //     // if (studentModel != null) {
-  //     //   debugPrint("in main");
-  //     //   String studentYear = studentModel.gradyear.toString();
-  //     //   String studentBranch = studentModel.branch.toString();
-  //     //   String studentDiv = studentModel.div.toString();
-  //     //   String studentBatch = studentModel.batch.toString();
-  //     //   ref.read(notificationTypeProvider.notifier).state = NotificationTypeC(
-  //     //       notification: "All",
-  //     //       yearTopic: studentYear,
-  //     //       yearBranchTopic: "$studentYear-$studentBranch",
-  //     //       yearBranchDivTopic: "$studentYear-$studentBranch-$studentDiv",
-  //     //       yearBranchDivBatchTopic:
-  //     //           "$studentYear-$studentBranch-$studentDiv-$studentBatch");
-  //     // }
-  //   }
-  // }
-
   @override
   Widget build(BuildContext context) {
     // if (ref.watch(firebaseAuthProvider).currentUser?.uid != null) {

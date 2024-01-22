@@ -9,6 +9,7 @@ extension AddTopicsPrefix on String {
 }
 
 abstract class NotificationType {
+  //this data is used for subscribing to notifications
   static const String notification = "All";
   static String yearTopic = "";
   static String yearBranchTopic = "";
@@ -39,11 +40,8 @@ abstract class NotificationType {
   }
 }
 
-// ref.watch(studentModelProvider.notifier).update((state) => studentModel);
-// final StudentModel? data = ref.watch(studentModelProvider);
-// _ref.read(studentModelProvider.notifier).state = updatedStudentData;
-
 final notificationTypeProvider = StateProvider<NotificationTypeC?>((ref) {
+  //this data is used in tts
   return null;
 });
 

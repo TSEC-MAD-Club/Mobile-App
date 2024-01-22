@@ -4,6 +4,17 @@ part 'faculty_model.g.dart';
 
 @JsonSerializable()
 class FacultyModel {
+  @JsonKey(name: 'area_of_specialization')
+  final String areaOfSpecialization;
+  final String designation;
+  final String email;
+  final String experience;
+  String image;
+  final String name;
+  @JsonKey(name: 'phd_guide')
+  final String phdGuide;
+  final String qualification;
+
   FacultyModel(
     this.areaOfSpecialization,
     this.designation,
@@ -14,17 +25,6 @@ class FacultyModel {
     this.phdGuide,
     this.qualification,
   );
-
-  @JsonKey(name: 'area_of_specialization')
-  final String areaOfSpecialization;
-  final String designation;
-  final String email;
-  final String experience;
-  final String image;
-  final String name;
-  @JsonKey(name: 'phd_guide')
-  final String phdGuide;
-  final String qualification;
 
   factory FacultyModel.fromJson(Map<String, dynamic> json) =>
       _$FacultyModelFromJson(json);
