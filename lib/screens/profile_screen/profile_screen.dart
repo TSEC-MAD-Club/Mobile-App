@@ -138,7 +138,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
     // });
     Uint8List? image = await pickImage(ImageSource.gallery);
     if (image != null) {
-      await ref.watch(authProvider.notifier).updateProfilePic(image);
+      // await ref.watch(authProvider.notifier).updateProfilePic(image);
       // setState(() {
       //   loadingImage = false;
       // });
@@ -153,7 +153,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
   }
 
   Future _saveChanges(WidgetRef ref) async {
-    final StudentModel? data = ref.watch(studentModelProvider);
+    final StudentModel? data = ref.watch(userModelProvider)?.studentModel;
     bool b = data!.updateCount != null ? data.updateCount! < 2 : true;
     // debugPrint("b is $b");
     if (b) {
@@ -175,6 +175,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
       // debugPrint("in here ${address} ${_dobController.text} ${batch} ${name}");
       StudentModel student = StudentModel(
         div: div,
+        image : "",
         batch: batch,
         branch: convertFirstLetterToUpperCase(branch),
         name: name,
@@ -190,7 +191,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
       if (_formKey.currentState!.validate()) {
         await ref
             .watch(authProvider.notifier)
-            .updateUserDetails(student, ref, context);
+            .updateStudentDetails(student, ref, context);
         setState(() {
           _isEditMode = false;
         });
@@ -217,7 +218,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
   @override
   void initState() {
     super.initState();
-    final StudentModel? data = ref.read(studentModelProvider);
+    final StudentModel? data = ref.read(userModelProvider)?.studentModel;
     name = data!.name;
     email = data.email;
     batch = data.batch;
@@ -275,7 +276,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    final StudentModel? data = ref.watch(studentModelProvider);
+    final StudentModel? data = ref.watch(userModelProvider)?.studentModel;
 
     bool hide = widget.justLoggedIn || _isEditMode;
     // bool hide = _isEditMode;

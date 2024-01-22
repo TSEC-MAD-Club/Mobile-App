@@ -2,11 +2,14 @@ import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:tsec_app/models/faculty_model/faculty_model.dart';
 import 'package:tsec_app/models/student_model/student_model.dart';
+import 'package:tsec_app/models/user_model/user_model.dart';
 import 'package:tsec_app/utils/custom_snackbar.dart';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
@@ -25,8 +28,10 @@ class AuthService {
   final FirebaseFirestore firebaseFirestore;
   final FirebaseStorage firebaseStorage;
   AuthService(this.firebaseAuth, this.firebaseFirestore, this.firebaseStorage);
-  CollectionReference studentCollection =
+  CollectionReference<Map<String, dynamic>> studentCollection =
       FirebaseFirestore.instance.collection('Students ');
+  CollectionReference<Map<String, dynamic>> professorsCollection =
+      FirebaseFirestore.instance.collection('Professors');
 
   Stream<User?> get userCurrentState => firebaseAuth.authStateChanges();
 
@@ -61,7 +66,7 @@ class AuthService {
     await user.updatePassword(password);
   }
 
-  Future<StudentModel> updateUserDetails(StudentModel student) async {
+  Future<StudentModel> updateStudentDetails(StudentModel student) async {
     DocumentReference studentDoc = studentCollection.doc(user!.uid);
     await studentDoc.update(student.toJson());
     final updatedUserData = await studentDoc.get();
@@ -72,50 +77,75 @@ class AuthService {
     return updatedStudentData;
   }
 
+  Future<FacultyModel> updateFacultyDetails(FacultyModel prof) async {
+    DocumentReference profDoc = professorsCollection.doc(user!.uid);
+    await profDoc.update(prof.toJson());
+    final updatedUserData = await profDoc.get();
+
+    var userMap = updatedUserData.data() as Map<String, dynamic>;
+    FacultyModel updatedFacultyData = FacultyModel.fromJson(userMap);
+    // debugPrint("updated student data in auth service is $updatedStudentData");
+    return updatedFacultyData;
+  }
+
   String generateRandomString(int len) {
     var r = Random();
     return String.fromCharCodes(
         List.generate(len, (index) => r.nextInt(33) + 89));
   }
 
-  Future<String> updateProfilePic(Uint8List image) async {
+  Future<String> updateProfilePic(Uint8List image, UserModel userModel) async {
     // File file = await File.fromRawPath(image).writeAsBytes(image);
     Uint8List imageInUnit8List = image;
     final tempDir = await getTemporaryDirectory();
     File file = await File('${tempDir.path}/image.png').create();
     file.writeAsBytesSync(imageInUnit8List);
     // debugPrint(user!.uid.toString());
-    var imageRef = await firebaseStorage
-        .ref()
-        .child("Images")
-        .child("/${user?.uid}")
-        .putFile(file);
+    // var imageRef = await firebaseStorage
+    //     .ref()
+    //     .child("Images")
+    //     .child("/${user?.uid}")
+    //     .putFile(file);
+    var imageRef =
+        await firebaseStorage.ref().child("profile/${user?.uid}").putFile(file);
     var downloadURL = await imageRef.ref.getDownloadURL();
+    if (userModel.isStudent) {
+      StudentModel student = userModel.studentModel!;
+      student.image = downloadURL;
+      updateStudentDetails(student);
+    } else {
+      FacultyModel prof = userModel.facultyModel!;
+      prof.image = downloadURL;
+      updateFacultyDetails(prof);
+    }
     // debugPrint("download url in service is $downloadURL");
     // https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Images%2F82K8zTy8bhaW8auWxn2oK3ql6n03?alt=media&token=cdd8d8f3-dd4f-43b0-979a-a2949d5266f6
     return downloadURL;
   }
 
-  Future<StudentModel?> fetchStudentDetails(
-      User? user, BuildContext context) async {
-    StudentModel? studentModel;
+  Future<UserModel?> fetchUserDetails(User? user, BuildContext context) async {
+    UserModel? userModel;
 
     try {
-      final studentSnap =
-          await firebaseFirestore.collection("Students ").doc(user!.uid).get();
-
+      final studentSnap = await studentCollection.doc(user!.uid).get();
       final studentDoc = studentSnap.data();
+
       if (studentDoc != null) {
-        studentModel = StudentModel.fromJson(studentDoc);
+        userModel = UserModel(studentModel: StudentModel.fromJson(studentDoc));
       } else {
-        studentModel = null;
+        final profSnap = await professorsCollection.doc(user.uid).get();
+        final profDoc = profSnap.data();
+        userModel = profDoc != null
+            ? UserModel(
+                isStudent: false, facultyModel: FacultyModel.fromJson(profDoc))
+            : null;
       }
     } on FirebaseException catch (e) {
       showSnackBar(
           context, e.stackTrace.toString() + " " + e.message.toString());
     }
 
-    return studentModel;
+    return userModel;
   }
 
   Future signout() async {

@@ -61,7 +61,7 @@ class _CustomScaffoldState extends ConsumerState<CustomScaffold>
   @override
   Widget build(BuildContext context) {
     bool hide = widget.hideButton ?? false;
-    StudentModel? data = ref.watch(studentModelProvider);
+    StudentModel? data = ref.watch(userModelProvider)?.studentModel;
     ref.listen<NotificationProvider?>(
       notificationProvider,
       (previous, next) {
@@ -194,21 +194,21 @@ class _CustomScaffoldState extends ConsumerState<CustomScaffold>
                   onTap: () async {
                     final _messaging = FirebaseMessaging.instance;
 
-                    if (data != null) {
-                      ref
-                          .read(studentModelProvider.notifier)
-                          .update((state) => null);
-                      _messaging
-                          .unsubscribeFromTopic(NotificationType.notification);
-                      _messaging.unsubscribeFromTopic(
-                          NotificationType.yearBranchDivBatchTopic);
-                      _messaging.unsubscribeFromTopic(
-                          NotificationType.yearBranchDivTopic);
-                      _messaging.unsubscribeFromTopic(
-                          NotificationType.yearBranchTopic);
-                      _messaging
-                          .unsubscribeFromTopic(NotificationType.yearTopic);
-                    }
+                    // if (data != null) {
+                    //   ref
+                    //       .read(studentModelProvider.notifier)
+                    //       .update((state) => null);
+                    //   _messaging
+                    //       .unsubscribeFromTopic(NotificationType.notification);
+                    //   _messaging.unsubscribeFromTopic(
+                    //       NotificationType.yearBranchDivBatchTopic);
+                    //   _messaging.unsubscribeFromTopic(
+                    //       NotificationType.yearBranchDivTopic);
+                    //   _messaging.unsubscribeFromTopic(
+                    //       NotificationType.yearBranchTopic);
+                    //   _messaging
+                    //       .unsubscribeFromTopic(NotificationType.yearTopic);
+                    // }
                     ref.watch(authProvider.notifier).signout();
                     GoRouter.of(context).go('/login');
                   },

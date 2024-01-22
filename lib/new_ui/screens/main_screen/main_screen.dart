@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tsec_app/models/student_model/student_model.dart';
+import 'package:tsec_app/models/user_model/user_model.dart';
 import 'package:tsec_app/new_ui/screens/home_screen/home_screen.dart';
 import 'package:tsec_app/provider/auth_provider.dart';
 import 'package:tsec_app/provider/occasion_provider.dart';
@@ -81,25 +82,13 @@ class _MainScreenState extends ConsumerState<MainScreen> {
       blurRadius: 2,
       offset: const Offset(0, 1),
     );
-    StudentModel? data = ref.watch(studentModelProvider);
+    UserModel? data = ref.watch(userModelProvider);
 
-    if (data != null) {
-      NotificationType.makeTopic(ref, data);
-
-      // String studentYear = data.gradyear.toString();
-      // String studentBranch = data.branch.toString();
-      // String studentDiv = data.div.toString();
-      // String studentBatch = data.batch.toString();
-      // ref.read(notificationTypeProvider.notifier).state = NotificationTypeC(
-      //     notification: "All",
-      //     yearTopic: studentYear,
-      //     yearBranchTopic: "$studentYear-$studentBranch",
-      //     yearBranchDivTopic: "$studentYear-$studentBranch-$studentDiv",
-      //     yearBranchDivBatchTopic:
-      //         "$studentYear-$studentBranch-$studentDiv-$studentBatch");
-    }
+    // if (data != null) {
+    //   NotificationType.makeTopic(ref, data);
+    // }
     Uint8List? profilePic = ref.watch(profilePicProvider);
-    StudentModel? studentDetails = ref.watch(studentModelProvider);
+    UserModel? userDetails = ref.watch(userModelProvider);
 
     bool concessionOpen = ref.watch(railwayConcessionOpenProvider);
     // debugPrint("concession status is $concessionOpen");
@@ -227,8 +216,10 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                         height: 15,
                       ),
                       Text(
-                        studentDetails != null
-                            ? studentDetails.name
+                        userDetails != null
+                            ? (userDetails.isStudent
+                                ? userDetails.studentModel!.name
+                                : userDetails.facultyModel!.name)
                             : "Tsecite",
                         style: Theme.of(context)
                             .textTheme
@@ -379,24 +370,6 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                             ),
                             onTap: () {
                               if (data != null) {
-                                final _messaging = FirebaseMessaging.instance;
-
-                                ref
-                                    .read(studentModelProvider.notifier)
-                                    .update((state) => null);
-                                ref
-                                    .read(profilePicProvider.notifier)
-                                    .update((state) => null);
-                                _messaging.unsubscribeFromTopic(
-                                    NotificationType.notification);
-                                _messaging.unsubscribeFromTopic(
-                                    NotificationType.yearBranchDivBatchTopic);
-                                _messaging.unsubscribeFromTopic(
-                                    NotificationType.yearBranchDivTopic);
-                                _messaging.unsubscribeFromTopic(
-                                    NotificationType.yearBranchTopic);
-                                _messaging.unsubscribeFromTopic(
-                                    NotificationType.yearTopic);
                                 ref.watch(authProvider.notifier).signout();
                                 GoRouter.of(context).go('/login');
                                 // Navigator.pop(context);

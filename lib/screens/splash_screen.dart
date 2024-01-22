@@ -21,7 +21,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
   void initState() {
     super.initState();
     Timer(const Duration(seconds: 2), () {
-      StudentModel? studentModel = ref.read(studentModelProvider);
+      StudentModel? studentModel = ref.read(userModelProvider)?.studentModel;
       if (ref.read(appStateProvider).isFirstOpen) {
         GoRouter.of(context).go('/theme');
       } else if (studentModel != null) {

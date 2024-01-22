@@ -1,5 +1,6 @@
 // ignore_for_file: lines_longer_than_80_chars
 import 'dart:convert';
+import 'dart:html';
 import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:go_router/go_router.dart';
@@ -10,7 +11,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:tsec_app/models/faculty_model/faculty_model.dart';
 import 'package:tsec_app/models/student_model/student_model.dart';
+import 'package:tsec_app/models/user_model/user_model.dart';
 import 'package:tsec_app/new_ui/screens/profile_screen/widgets/profile_text_field.dart';
 import 'package:tsec_app/provider/auth_provider.dart';
 import 'package:tsec_app/provider/firebase_provider.dart';
@@ -33,6 +36,15 @@ class ProfilePage extends ConsumerStatefulWidget {
 class _ProfilePageState extends ConsumerState<ProfilePage> {
   String name = "";
   String email = "";
+  String image = "";
+
+  final TextEditingController areaOfSpecializationController =
+      TextEditingController();
+  final TextEditingController designationController = TextEditingController();
+  final TextEditingController experienceController = TextEditingController();
+  final TextEditingController phdGuideController = TextEditingController();
+  final TextEditingController qualificationController = TextEditingController();
+
   String? batch = "";
   String branch = "";
   String? div = "";
@@ -136,13 +148,17 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
   }
 
   // bool loadingImage = false;
-  Future editProfileImage() async {
+  Future editProfileImage(UserModel userModel) async {
     // setState(() {
     //   loadingImage = true;
     // });
-    Uint8List? image = await pickImage(ImageSource.gallery);
-    if (image != null) {
-      await ref.watch(authProvider.notifier).updateProfilePic(image);
+    Uint8List? img = await pickImage(ImageSource.gallery);
+    if (img != null) {
+      setState(() async {
+        image = await ref
+            .watch(authProvider.notifier)
+            .updateProfilePic(img, userModel);
+      });
       // setState(() {
       //   loadingImage = false;
       // });
@@ -156,46 +172,146 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
     // });
   }
 
+  @override
+  void initState() {
+    super.initState();
+    final UserModel? data = ref.read(userModelProvider);
+    if (data != null && data.isStudent) {
+      StudentModel studentData = data.studentModel!;
+      name = studentData.name;
+      email = studentData.email;
+      image = studentData.image ?? "";
+      gradyear = studentData.gradyear;
+      branch = studentData.branch;
+      // phoneNum = data.phoneNum ?? "";
+      phoneNoController.text = studentData.phoneNum ?? "";
+      addressController.text = studentData.address ?? "";
+      // address = data.address ?? '';
+      homeStation = studentData.homeStation ?? '';
+      dobController.text = studentData.dateOfBirth ?? "";
+      calcDivisionList(studentData.gradyear);
+      div = divisionList.contains(studentData.div)
+          ? studentData.div
+          : divisionList[0];
+      calcBatchList(div);
+      batch = batchList.contains(studentData.batch)
+          ? studentData.batch
+          : batchList[0];
+    } else if (data != null) {
+      FacultyModel facultyData = data.facultyModel!;
+      name = facultyData.name;
+      email = facultyData.email;
+      image = facultyData.image;
+      areaOfSpecializationController.text = facultyData.areaOfSpecialization;
+      designationController.text = facultyData.designation;
+      experienceController.text = facultyData.experience;
+      phdGuideController.text = facultyData.phdGuide;
+    }
+  }
+
+  void clearValues(UserModel data) {
+    setState(() {
+      if (data.isStudent) {
+        phoneNoController.text = data.studentModel?.phoneNum ?? "";
+        addressController.text = data.studentModel?.address ?? "";
+        dobController.text = data.studentModel?.dateOfBirth ?? "";
+      } else {
+        areaOfSpecializationController.text =
+            data.facultyModel?.areaOfSpecialization ?? "";
+        designationController.text = data.facultyModel?.designation ?? "";
+        experienceController.text = data.facultyModel?.experience ?? "";
+        phdGuideController.text = data.facultyModel?.phdGuide ?? "";
+      }
+      // batch = data.batch;
+      // calcBatchList(data.div);
+      // calcDivisionList(data.gradyear);
+      // div = divisionList.contains(data.div)
+      //     ? data.div
+      //     : "";
+      // batch = batchList.contains(data.batch)
+      //     ? data.batch
+      //     : "";
+      editMode = false;
+    });
+  }
+
   Future saveChanges(WidgetRef ref) async {
-    final StudentModel? data = ref.watch(studentModelProvider);
-    // bool canUpdate = data!.updateCount != null ? data.updateCount! < 2 : true;
-    bool canUpdate = true;
-    debugPrint("canUpdate is $canUpdate");
-    if (canUpdate) {
-      if (batch == null || div == null) {
+    final UserModel data = ref.watch(userModelProvider)!;
+    if (data.isStudent) {
+      // bool canUpdate = data!.updateCount != null ? data.updateCount! < 2 : true;
+      StudentModel studentData = data.studentModel!;
+      bool canUpdate = true;
+      debugPrint("canUpdate is $canUpdate");
+      if (canUpdate) {
+        if (batch == null || div == null) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content:
+                  Text('Choose an appropriate value for division and batch'),
+            ),
+          );
+          return false;
+        }
+
+        if (studentData.updateCount == null) {
+          studentData.updateCount = 1;
+        } else {
+          int num = studentData.updateCount!;
+          studentData.updateCount = num + 1;
+        }
+        // debugPrint("in here ${address} ${dobController.text} ${batch} ${name}");
+        StudentModel student = StudentModel(
+          div: div,
+          batch: batch,
+          branch: convertFirstLetterToUpperCase(branch),
+          name: name,
+          email: email,
+          gradyear: gradyear,
+          image: image,
+          phoneNum: phoneNoController.text,
+          updateCount: studentData.updateCount,
+          address: addressController.text,
+          homeStation: homeStation,
+          dateOfBirth: dobController.text,
+        );
+
+        if (_formKey.currentState!.validate()) {
+          await ref
+              .watch(authProvider.notifier)
+              .updateStudentDetails(student, ref, context);
+          // setState(() {
+          //   _isEditMode = false;
+          // });
+          setState(() {
+            editMode = false;
+          });
+          return true;
+        }
+        return false;
+      } else {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('Choose an appropriate value for division and batch'),
+            content: Text(
+                'You have already updated your profile as many times as possible'),
           ),
         );
-        return false;
       }
-
-      if (data!.updateCount == null) {
-        data.updateCount = 1;
-      } else {
-        int num = data.updateCount!;
-        data.updateCount = num + 1;
-      }
-      // debugPrint("in here ${address} ${dobController.text} ${batch} ${name}");
-      StudentModel student = StudentModel(
-        div: div,
-        batch: batch,
-        branch: convertFirstLetterToUpperCase(branch),
-        name: name,
-        email: email,
-        gradyear: gradyear,
-        phoneNum: phoneNoController.text,
-        updateCount: data.updateCount,
-        address: addressController.text,
-        homeStation: homeStation,
-        dateOfBirth: dobController.text,
+    } else {
+      FacultyModel faculty = FacultyModel(
+        areaOfSpecializationController.text,
+        designationController.text,
+        email,
+        experienceController.text,
+        image,
+        name,
+        phdGuideController.text,
+        qualificationController.text,
       );
 
       if (_formKey.currentState!.validate()) {
         await ref
             .watch(authProvider.notifier)
-            .updateUserDetails(student, ref, context);
+            .updateFacultyDetails(faculty, ref, context);
         // setState(() {
         //   _isEditMode = false;
         // });
@@ -205,13 +321,6 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
         return true;
       }
       return false;
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text(
-              'You have already updated your profile as many times as possible'),
-        ),
-      );
     }
   }
 
@@ -220,31 +329,11 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
     super.dispose();
   }
 
-  @override
-  void initState() {
-    super.initState();
-    final StudentModel? data = ref.read(studentModelProvider);
-    name = data!.name;
-    email = data.email;
-    gradyear = data.gradyear;
-    branch = data.branch;
-    // phoneNum = data.phoneNum ?? "";
-    phoneNoController.text = data.phoneNum ?? "";
-    addressController.text = data.address ?? "";
-    // address = data.address ?? '';
-    homeStation = data.homeStation ?? '';
-    dobController.text = data.dateOfBirth ?? "";
-    calcDivisionList(data.gradyear);
-    div = divisionList.contains(data.div) ? data.div : divisionList[0];
-    calcBatchList(div);
-    batch = batchList.contains(data.batch) ? data.batch : batchList[0];
-  }
-
-  Widget buildProfileImage(WidgetRef ref) {
+  Widget buildProfileImage(WidgetRef ref, UserModel data) {
     profilePic = ref.watch(profilePicProvider);
     return GestureDetector(
       onTap: () {
-        editProfileImage();
+        editProfileImage(data);
       },
       child: Stack(
         clipBehavior: Clip.none,
@@ -264,7 +353,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
               right: -40,
               child: RawMaterialButton(
                 onPressed: () {
-                  editProfileImage();
+                  editProfileImage(data);
                 },
                 elevation: 2.0,
                 fillColor: Color(0xFFF5F6F9),
@@ -283,7 +372,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
   bool editMode = false;
   @override
   Widget build(BuildContext context) {
-    final StudentModel data = ref.watch(studentModelProvider)!;
+    final UserModel data = ref.watch(userModelProvider)!;
 
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.primary,
@@ -319,18 +408,24 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      data.name,
+                                      data.isStudent
+                                          ? data.studentModel!.name
+                                          : data.facultyModel!.name,
                                       style: Theme.of(context)
                                           .textTheme
                                           .labelLarge,
                                     ),
-                                    SizedBox(height: 15),
-                                    Text(
-                                      "${data.branch}, ${calcGradYear(data.gradyear)}",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .labelMedium,
-                                    ),
+                                    data.isStudent
+                                        ? SizedBox(height: 15)
+                                        : SizedBox(),
+                                    data.isStudent
+                                        ? Text(
+                                            "${data.studentModel!.branch}, ${calcGradYear(data.studentModel!.gradyear)}",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .labelMedium,
+                                          )
+                                        : Container(),
                                   ],
                                 ),
                                 AnimatedCrossFade(
@@ -361,24 +456,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                   secondChild: Row(children: [
                                     RawMaterialButton(
                                       onPressed: () {
-                                        setState(() {
-                                          phoneNoController.text =
-                                              data.phoneNum ?? "";
-                                          addressController.text =
-                                              data.address ?? "";
-                                          dobController.text =
-                                              data.dateOfBirth ?? "";
-                                          // batch = data.batch;
-                                          // calcBatchList(data.div);
-                                          // calcDivisionList(data.gradyear);
-                                          // div = divisionList.contains(data.div)
-                                          //     ? data.div
-                                          //     : "";
-                                          // batch = batchList.contains(data.batch)
-                                          //     ? data.batch
-                                          //     : "";
-                                          editMode = false;
-                                        });
+                                        clearValues(data);
                                       },
                                       elevation: 2.0,
                                       fillColor: Color(0xFFF5F6F9),
@@ -424,258 +502,332 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                             SizedBox(height: 40),
                             Form(
                               key: _formKey,
-                              child: Column(
-                                children: [
-                                  ProfileField(
-                                    labelName: "Email",
-                                    enabled: false,
-                                    value: email,
-                                    onChanged: (val) {
-                                      setState(() {
-                                        email = val;
-                                      });
-                                    },
-                                  ),
-                                  SizedBox(height: 20),
-                                  ProfileField(
-                                    labelName: "Number",
-                                    enabled: editMode,
-                                    controller: phoneNoController,
-                                    // onChanged: (val) {
-                                    //   setState(() {
-                                    //     phoneNum = val;
-                                    //   });
-                                    // },
-                                    validator: (value) {
-                                      if (value!.isEmpty) {
-                                        return 'Please enter a phone number';
-                                      }
-                                      if (!isValidPhoneNumber(value)) {
-                                        return 'Please enter a valid phone number';
-                                      }
-                                      return null;
-                                    },
-                                  ),
-                                  SizedBox(height: 20),
-                                  ProfileField(
-                                    labelName: "DOB",
-                                    enabled: editMode,
-                                    readOnly: true,
-                                    controller: dobController,
-                                    onTap: () async {
-                                      DateTime? pickedDate =
-                                          await showDatePicker(
-                                        context: context,
-                                        initialDate: DateTime.now()
-                                            .subtract(Duration(days: 20 * 365)),
-                                        firstDate: DateTime(1960),
-                                        lastDate: DateTime(2010),
-                                      );
-                                      if (pickedDate != null) {
-                                        String formattedDate =
-                                            DateFormat('d MMMM y')
-                                                .format(pickedDate);
+                              child: data.isStudent
+                                  ? Column(
+                                      children: [
+                                        ProfileField(
+                                          labelName: "Email",
+                                          enabled: false,
+                                          value: email,
+                                          onChanged: (val) {
+                                            setState(() {
+                                              email = val;
+                                            });
+                                          },
+                                        ),
+                                        SizedBox(height: 20),
+                                        ProfileField(
+                                          labelName: "Number",
+                                          enabled: editMode,
+                                          controller: phoneNoController,
+                                          // onChanged: (val) {
+                                          //   setState(() {
+                                          //     phoneNum = val;
+                                          //   });
+                                          // },
+                                          validator: (value) {
+                                            if (value!.isEmpty) {
+                                              return 'Please enter a phone number';
+                                            }
+                                            if (!isValidPhoneNumber(value)) {
+                                              return 'Please enter a valid phone number';
+                                            }
+                                            return null;
+                                          },
+                                        ),
+                                        SizedBox(height: 20),
+                                        ProfileField(
+                                          labelName: "DOB",
+                                          enabled: editMode,
+                                          readOnly: true,
+                                          controller: dobController,
+                                          onTap: () async {
+                                            DateTime? pickedDate =
+                                                await showDatePicker(
+                                              context: context,
+                                              initialDate: DateTime.now()
+                                                  .subtract(
+                                                      Duration(days: 20 * 365)),
+                                              firstDate: DateTime(1960),
+                                              lastDate: DateTime(2010),
+                                            );
+                                            if (pickedDate != null) {
+                                              String formattedDate =
+                                                  DateFormat('d MMMM y')
+                                                      .format(pickedDate);
 
-                                        // setState(() {
-                                        dobController.text = formattedDate;
-                                      } else {
-                                        // print(
-                                        //     "Date is not selected");
-                                      }
-                                    },
-                                    validator: (value) {
-                                      if (value!.isEmpty) {
-                                        return 'Please enter Date Of Birth';
-                                      }
-                                      return null;
-                                    },
-                                  ),
-                                  SizedBox(height: 20),
-                                  ProfileField(
-                                    labelName: "Address",
-                                    enabled: editMode,
-                                    // value: address,
-                                    controller: addressController,
-                                    validator: (value) {
-                                      if (value!.isEmpty) {
-                                        return 'Please enter an address';
-                                      }
-                                      return null;
-                                    },
-                                  ),
-                                  SizedBox(height: 20),
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .primaryContainer,
-                                      borderRadius: BorderRadius.circular(20),
-                                      border: Border.all(
-                                        color: editMode
-                                            ? Theme.of(context)
+                                              // setState(() {
+                                              dobController.text =
+                                                  formattedDate;
+                                            } else {
+                                              // print(
+                                              //     "Date is not selected");
+                                            }
+                                          },
+                                          validator: (value) {
+                                            if (value!.isEmpty) {
+                                              return 'Please enter Date Of Birth';
+                                            }
+                                            return null;
+                                          },
+                                        ),
+                                        SizedBox(height: 20),
+                                        ProfileField(
+                                          labelName: "Address",
+                                          enabled: editMode,
+                                          // value: address,
+                                          controller: addressController,
+                                          validator: (value) {
+                                            if (value!.isEmpty) {
+                                              return 'Please enter an address';
+                                            }
+                                            return null;
+                                          },
+                                        ),
+                                        SizedBox(height: 20),
+                                        Container(
+                                          decoration: BoxDecoration(
+                                            color: Theme.of(context)
                                                 .colorScheme
-                                                .onPrimaryContainer
-                                            : Theme.of(context)
-                                                .colorScheme
-                                                .outline,
-                                        width: 2.0,
-                                      ),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.fromLTRB(
-                                          12, 4, 12, 4),
-                                      child: Row(
-                                        children: [
-                                          Text(
-                                            "Division",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodySmall,
-                                          ),
-                                          SizedBox(width: 25),
-                                          Container(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                .6,
-                                            child: DropdownButtonFormField(
-                                              decoration: InputDecoration(
-                                                  border: InputBorder.none),
-                                              value: div,
-                                              validator: (value) {
-                                                if (value == "") {
-                                                  return 'Please enter a division';
-                                                }
-                                                return null;
-                                              },
-                                              dropdownColor: Theme.of(context)
-                                                  .colorScheme
-                                                  .background,
-                                              items: divisionList
-                                                  .map((String item) {
-                                                return DropdownMenuItem(
-                                                  value: item,
-                                                  child: Text(
-                                                    item,
-                                                    style: TextStyle(
-                                                      color: Colors.white,
-                                                    ),
-                                                  ),
-                                                );
-                                              }).toList(),
-
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodySmall!
-                                                  .copyWith(
-                                                      color: Colors.white),
-                                              // After selecting the desired option,it will
-                                              // change button value to selected value
-                                              onChanged: editMode
-                                                  ? (String? newValue) {
-                                                      if (newValue != null) {
-                                                        setState(() {
-                                                          div = newValue;
-                                                          calcBatchList(
-                                                              newValue);
-                                                          batch = null;
-                                                        });
-                                                      }
-                                                    }
-                                                  : null,
+                                                .primaryContainer,
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            border: Border.all(
+                                              color: editMode
+                                                  ? Theme.of(context)
+                                                      .colorScheme
+                                                      .onPrimaryContainer
+                                                  : Theme.of(context)
+                                                      .colorScheme
+                                                      .outline,
+                                              width: 2.0,
                                             ),
                                           ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(height: 20),
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .primaryContainer,
-                                      borderRadius: BorderRadius.circular(20),
-                                      border: Border.all(
-                                        color: editMode
-                                            ? Theme.of(context)
-                                                .colorScheme
-                                                .onPrimaryContainer
-                                            : Theme.of(context)
-                                                .colorScheme
-                                                .outline,
-                                        width: 2.0,
-                                      ),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.fromLTRB(
-                                          12, 4, 12, 4),
-                                      child: Row(
-                                        children: [
-                                          Text(
-                                            "Batch",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodySmall,
-                                          ),
-                                          SizedBox(width: 25),
-                                          Container(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                .6,
-                                            child: DropdownButtonFormField(
-                                              decoration: InputDecoration(
-                                                  border: InputBorder.none),
-                                              value: batch,
-                                              validator: (value) {
-                                                if (value == "") {
-                                                  return 'Please enter a batch';
-                                                }
-                                                return null;
-                                              },
-                                              dropdownColor: Theme.of(context)
-                                                  .colorScheme
-                                                  .background,
-                                              items:
-                                                  batchList.map((String item) {
-                                                return DropdownMenuItem(
-                                                  value: item,
-                                                  child: Text(
-                                                    item,
-                                                    style: TextStyle(
-                                                      color: Colors.white,
-                                                    ),
-                                                  ),
-                                                );
-                                              }).toList(),
-
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodySmall!
-                                                  .copyWith(
-                                                      color: Colors.white),
-                                              // After selecting the desired option,it will
-                                              // change button value to selected value
-                                              onChanged: editMode
-                                                  ? (String? newValue) {
-                                                      if (newValue != null) {
-                                                        setState(() {
-                                                          batch = newValue;
-                                                          // calcBatchList(newValue);
-                                                          // batch = null;
-                                                        });
+                                          child: Padding(
+                                            padding: const EdgeInsets.fromLTRB(
+                                                12, 4, 12, 4),
+                                            child: Row(
+                                              children: [
+                                                Text(
+                                                  "Division",
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodySmall,
+                                                ),
+                                                SizedBox(width: 25),
+                                                Container(
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      .6,
+                                                  child:
+                                                      DropdownButtonFormField(
+                                                    decoration: InputDecoration(
+                                                        border:
+                                                            InputBorder.none),
+                                                    value: div,
+                                                    validator: (value) {
+                                                      if (value == "") {
+                                                        return 'Please enter a division';
                                                       }
-                                                    }
-                                                  : null,
+                                                      return null;
+                                                    },
+                                                    dropdownColor:
+                                                        Theme.of(context)
+                                                            .colorScheme
+                                                            .background,
+                                                    items: divisionList
+                                                        .map((String item) {
+                                                      return DropdownMenuItem(
+                                                        value: item,
+                                                        child: Text(
+                                                          item,
+                                                          style: TextStyle(
+                                                            color: Colors.white,
+                                                          ),
+                                                        ),
+                                                      );
+                                                    }).toList(),
+
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .bodySmall!
+                                                        .copyWith(
+                                                            color:
+                                                                Colors.white),
+                                                    // After selecting the desired option,it will
+                                                    // change button value to selected value
+                                                    onChanged: editMode
+                                                        ? (String? newValue) {
+                                                            if (newValue !=
+                                                                null) {
+                                                              setState(() {
+                                                                div = newValue;
+                                                                calcBatchList(
+                                                                    newValue);
+                                                                batch = null;
+                                                              });
+                                                            }
+                                                          }
+                                                        : null,
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                           ),
-                                        ],
-                                      ),
+                                        ),
+                                        SizedBox(height: 20),
+                                        Container(
+                                          decoration: BoxDecoration(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .primaryContainer,
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            border: Border.all(
+                                              color: editMode
+                                                  ? Theme.of(context)
+                                                      .colorScheme
+                                                      .onPrimaryContainer
+                                                  : Theme.of(context)
+                                                      .colorScheme
+                                                      .outline,
+                                              width: 2.0,
+                                            ),
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.fromLTRB(
+                                                12, 4, 12, 4),
+                                            child: Row(
+                                              children: [
+                                                Text(
+                                                  "Batch",
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodySmall,
+                                                ),
+                                                SizedBox(width: 25),
+                                                Container(
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      .6,
+                                                  child:
+                                                      DropdownButtonFormField(
+                                                    decoration: InputDecoration(
+                                                        border:
+                                                            InputBorder.none),
+                                                    value: batch,
+                                                    validator: (value) {
+                                                      if (value == "") {
+                                                        return 'Please enter a batch';
+                                                      }
+                                                      return null;
+                                                    },
+                                                    dropdownColor:
+                                                        Theme.of(context)
+                                                            .colorScheme
+                                                            .background,
+                                                    items: batchList
+                                                        .map((String item) {
+                                                      return DropdownMenuItem(
+                                                        value: item,
+                                                        child: Text(
+                                                          item,
+                                                          style: TextStyle(
+                                                            color: Colors.white,
+                                                          ),
+                                                        ),
+                                                      );
+                                                    }).toList(),
+
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .bodySmall!
+                                                        .copyWith(
+                                                            color:
+                                                                Colors.white),
+                                                    // After selecting the desired option,it will
+                                                    // change button value to selected value
+                                                    onChanged: editMode
+                                                        ? (String? newValue) {
+                                                            if (newValue !=
+                                                                null) {
+                                                              setState(() {
+                                                                batch =
+                                                                    newValue;
+                                                                // calcBatchList(newValue);
+                                                                // batch = null;
+                                                              });
+                                                            }
+                                                          }
+                                                        : null,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    )
+                                  : Column(
+                                      children: [
+                                        ProfileField(
+                                          labelName: "Email",
+                                          enabled: false,
+                                          value: email,
+                                          onChanged: (val) {
+                                            setState(() {
+                                              email = val;
+                                            });
+                                          },
+                                        ),
+                                        SizedBox(height: 20),
+                                        ProfileField(
+                                          labelName: "Designation",
+                                          enabled: editMode,
+                                          controller: designationController,
+                                          // onChanged: (val) {
+                                          //   setState(() {
+                                          //     phoneNum = val;
+                                          //   });
+                                          // },
+                                          validator: (value) {
+                                            if (value!.isEmpty) {
+                                              return 'Please enter a designation';
+                                            }
+                                            return null;
+                                          },
+                                        ),
+                                        SizedBox(height: 20),
+                                        ProfileField(
+                                          labelName: "Experience",
+                                          enabled: editMode,
+                                          // value: address,
+                                          controller: experienceController,
+                                          validator: (value) {
+                                            if (value!.isEmpty) {
+                                              return 'Please enter a value';
+                                            }
+                                            return null;
+                                          },
+                                        ),
+                                        SizedBox(height: 20),
+                                        ProfileField(
+                                          labelName: "Area of specialization",
+                                          enabled: editMode,
+                                          // value: address ,
+                                          controller:
+                                              areaOfSpecializationController,
+                                          validator: (value) {
+                                            if (value!.isEmpty) {
+                                              return 'Please enter a value';
+                                            }
+                                            return null;
+                                          },
+                                        ),
+                                      ],
                                     ),
-                                  ),
-                                ],
-                              ),
                             ),
                           ],
                         ),
@@ -697,7 +849,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                         width: 4,
                       ),
                     ),
-                    child: buildProfileImage(ref),
+                    child: buildProfileImage(ref, data),
                   ),
                 ),
               ),

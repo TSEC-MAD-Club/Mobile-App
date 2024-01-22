@@ -65,7 +65,6 @@ class __RailwayAppBarStateState extends ConsumerState<RailwayAppBar> {
 
   @override
   Widget build(BuildContext context) {
-    StudentModel? data = ref.watch(studentModelProvider);
     return AppBar(
       elevation: 0,
       leadingWidth: 60.0,

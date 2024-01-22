@@ -316,7 +316,7 @@ class _RailwayConcessionScreenState
   }
 
   Future saveChanges(WidgetRef ref) async {
-    StudentModel student = ref.watch(studentModelProvider)!;
+    StudentModel student = ref.watch(userModelProvider)!.studentModel!;
 
     ConcessionDetailsModel details = ConcessionDetailsModel(
       status: ConcessionStatus.unserviced,
@@ -420,7 +420,7 @@ class _RailwayConcessionScreenState
   @override
   Widget build(BuildContext context) {
     bool editMode = ref.watch(railwayConcessionOpenProvider);
-    StudentModel student = ref.watch(studentModelProvider)!;
+    StudentModel student = ref.watch(userModelProvider)!.studentModel!;
     ConcessionDetailsModel? concessionDetails =
         ref.watch(concessionDetailsProvider);
     return SafeArea(

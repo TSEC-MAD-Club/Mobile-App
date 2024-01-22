@@ -42,7 +42,7 @@ class MainScreen extends ConsumerWidget {
       blurRadius: 2,
       offset: const Offset(0, 1),
     );
-    StudentModel? data = ref.watch(studentModelProvider);
+    StudentModel? data = ref.watch(userModelProvider)?.studentModel;
 
     if (data != null) {
       NotificationType.makeTopic(ref, data);
@@ -158,7 +158,7 @@ class _MainScreenAppBarState extends ConsumerState<MainScreenAppBar> {
   static int _currentIndex = 0;
   @override
   Widget build(BuildContext context) {
-    StudentModel? data = ref.watch(studentModelProvider);
+    StudentModel? data = ref.watch(userModelProvider)?.studentModel;
     fetchEventDetails();
     return Padding(
       padding: widget._sidePadding.copyWith(top: 15),

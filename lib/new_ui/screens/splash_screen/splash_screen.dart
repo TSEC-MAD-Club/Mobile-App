@@ -1,3 +1,5 @@
+import 'package:tsec_app/models/user_model/user_model.dart';
+
 import '/../utils/image_assets.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
@@ -21,7 +23,6 @@ class SplashScreen extends ConsumerStatefulWidget {
 }
 
 class _SplashScreenState extends ConsumerState<SplashScreen> {
-
   // @override
   // void initState() {
   //   super.initState();
@@ -60,10 +61,15 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
         future: ref.watch(authProvider.notifier).getUserData(ref, context),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            StudentModel? studentModel = ref.read(studentModelProvider);
-            if (studentModel != null &&
-                (studentModel.updateCount == 0 ||
-                    studentModel.updateCount == null)) {
+            UserModel? userModel = ref.read(userModelProvider);
+            // if (userModel != null &&
+            //     (studentModel.updateCount == 0 ||
+            //         studentModel.updateCount == null)) {
+            //   return ProfilePage(justLoggedIn: true);
+            // } else {
+            //   return MainScreen();
+            // }
+            if (userModel != null) {
               return ProfilePage(justLoggedIn: true);
             } else {
               return MainScreen();
