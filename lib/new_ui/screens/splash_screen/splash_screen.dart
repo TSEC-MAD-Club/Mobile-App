@@ -1,5 +1,5 @@
 import 'package:tsec_app/models/user_model/user_model.dart';
-
+import 'package:async/async.dart';
 import '/../utils/image_assets.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
@@ -23,28 +23,17 @@ class SplashScreen extends ConsumerStatefulWidget {
 }
 
 class _SplashScreenState extends ConsumerState<SplashScreen> {
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   Timer(const Duration(seconds: 2), () {
-  //     StudentModel? studentModel = ref.read(studentModelProvider);
-  //     if (ref.read(appStateProvider).isFirstOpen) {
-  //       GoRouter.of(context).go('/theme');
-  //     } else if (studentModel != null) {
-  //       if (studentModel.updateCount == 0 || studentModel.updateCount == null) {
-  //         GoRouter.of(context).go('/profile-page?justLoggedIn=true');
-  //       } else {
-  //         GoRouter.of(context).go('/main');
-  //       }
-  //     } else {
-  //       debugPrint("student details not found");
-  //       GoRouter.of(context).go('/main');
-  //     }
-  //   });
-  // }
+  final AsyncMemoizer _memoizer = AsyncMemoizer();
+
+  fetchUserDataOnce() {
+    return _memoizer.runOnce(() async {
+      await ref.read(authProvider.notifier).getUserData(ref, context);
+      return 'REMOTE DATA';
+    });
+  }
 
   //check permissions
-  void requestPermission() async {
+  void requestpermission() async {
     final status = await Permission.storage.status;
     if (!status.isGranted) {
       await Permission.storage.request();
@@ -58,22 +47,24 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: ref.watch(authProvider.notifier).getUserData(ref, context),
+        future: fetchUserDataOnce(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             UserModel? userModel = ref.read(userModelProvider);
-            // if (userModel != null &&
-            //     (studentModel.updateCount == 0 ||
-            //         studentModel.updateCount == null)) {
-            //   return ProfilePage(justLoggedIn: true);
-            // } else {
-            //   return MainScreen();
-            // }
-            if (userModel != null) {
+            if (userModel != null &&
+                userModel.isStudent &&
+                (userModel.studentModel?.updateCount == 0 ||
+                    userModel.studentModel?.updateCount == null)) {
               return ProfilePage(justLoggedIn: true);
             } else {
               return MainScreen();
             }
+
+            // if (userModel != null) {
+            //   return ProfilePage(justLoggedIn: true);
+            // } else {
+            //   return MainScreen();
+            // }
           } else {
             return Scaffold(
               body: Center(

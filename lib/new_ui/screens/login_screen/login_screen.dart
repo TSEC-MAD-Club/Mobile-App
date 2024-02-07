@@ -45,6 +45,62 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     super.dispose();
   }
 
+  Future forgotPassword() async {
+    if (_emailTextEditingController.text.trim() != "") {
+      try {
+        await ref
+            .watch(authProvider.notifier)
+            .resetPassword(_emailTextEditingController.text.trim(), context);
+
+        showSnackBar(context,
+            'Check your inbox and click on the link in password reset email');
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'user-not-found') {
+          showSnackBar(context, 'No user found corresponding to that email.');
+        } else
+          showSnackBar(context, e.message.toString());
+        return null;
+      }
+    } else {
+      showSnackBar(
+          context, 'Enter the email to reset password of that account');
+    }
+  }
+
+  Future login() async {
+    if (_formKey.currentState!.validate()) {
+      setState(() {
+        loggedInButtonPressed = true;
+      });
+      UserCredential? userCredential = await ref
+          .watch(authProvider.notifier)
+          .signInUser(_emailTextEditingController.text.trim(),
+              _passwordTextEditingController.text.trim(), context);
+
+      if (userCredential == null) {
+        setState(() {
+          loggedInButtonPressed = false;
+        });
+        return;
+      }
+
+      await ref.watch(authProvider.notifier).getUserData(ref, context);
+      UserModel? userModel = ref.watch(userModelProvider);
+
+      if (userModel != null) {
+        if (userModel.isStudent) _setupFCMNotifications(userModel.studentModel);
+        // if (studentModel.updateCount != null &&
+        //     studentModel.updateCount! > 0) {
+        //   GoRouter.of(context).go('/main');
+        // } else {
+        //   GoRouter.of(context).go(
+        //       '/profile-page?justLoggedIn=true');
+        // }
+        GoRouter.of(context).go('/profile-page?justLoggedIn=true');
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -221,31 +277,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                               borderRadius: BorderRadius.circular(
                                   30), // Set the desired border radius
                               onTap: () async {
-                                if (_emailTextEditingController.text.trim() !=
-                                    "") {
-                                  try {
-                                    await ref
-                                        .watch(authProvider.notifier)
-                                        .resetPassword(
-                                            _emailTextEditingController.text
-                                                .trim(),
-                                            context);
-
-                                    showSnackBar(context,
-                                        'Check your inbox and click on the link in password reset email');
-                                  } on FirebaseAuthException catch (e) {
-                                    if (e.code == 'user-not-found') {
-                                      showSnackBar(context,
-                                          'No user found corresponding to that email.');
-                                    } else
-                                      showSnackBar(
-                                          context, e.message.toString());
-                                    return null;
-                                  }
-                                } else {
-                                  showSnackBar(context,
-                                      'Enter the email to reset password of that account');
-                                }
+                                forgotPassword();
                               },
                               highlightShape:
                                   BoxShape.rectangle, // Custom shape
@@ -274,48 +306,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           ? Padding(
                               padding: const EdgeInsets.all(30.0),
                               child: ElevatedButton(
-                                onPressed: () async {
-                                  if (_formKey.currentState!.validate()) {
-                                    setState(() {
-                                      loggedInButtonPressed = true;
-                                    });
-                                    UserCredential? userCredential = await ref
-                                        .watch(authProvider.notifier)
-                                        .signInUser(
-                                            _emailTextEditingController.text
-                                                .trim(),
-                                            _passwordTextEditingController.text
-                                                .trim(),
-                                            context);
-
-                                    if (userCredential == null) {
-                                      setState(() {
-                                        loggedInButtonPressed = false;
-                                      });
-                                      return;
-                                    }
-
-                                    await ref
-                                        .watch(authProvider.notifier)
-                                        .getUserData(ref, context);
-                                    UserModel? userModel =
-                                        ref.watch(userModelProvider);
-
-                                    if (userModel != null) {
-                                      if (userModel.isStudent)
-                                        _setupFCMNotifications(
-                                            userModel.studentModel);
-                                      // if (studentModel.updateCount != null &&
-                                      //     studentModel.updateCount! > 0) {
-                                      //   GoRouter.of(context).go('/main');
-                                      // } else {
-                                      //   GoRouter.of(context).go(
-                                      //       '/profile-page?justLoggedIn=true');
-                                      // }
-                                      GoRouter.of(context).go(
-                                          '/profile-page?justLoggedIn=true');
-                                    }
-                                  }
+                                onPressed: () {
+                                  login();
                                 },
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor:
