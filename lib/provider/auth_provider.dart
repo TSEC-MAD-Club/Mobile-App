@@ -89,12 +89,15 @@ class AuthProvider extends StateNotifier<bool> {
     String url = userModel.isStudent
         ? userModel.studentModel!.image ?? ""
         : userModel.facultyModel!.image;
-    final response = await http.get(Uri.parse(url));
-    if (response.statusCode == 200) {
-      _ref.read(profilePicProvider.notifier).state = response.bodyBytes;
-      return response.bodyBytes;
-    } else {
-      throw Exception('Failed to fetch image');
+        debugPrint("url is $url");
+    if (url != "") {
+      final response = await http.get(Uri.parse(url));
+      if (response.statusCode == 200) {
+        _ref.read(profilePicProvider.notifier).state = response.bodyBytes;
+        return response.bodyBytes;
+      } else {
+        throw Exception('Failed to fetch image');
+      }
     }
   }
 
@@ -165,7 +168,7 @@ class AuthProvider extends StateNotifier<bool> {
       StudentModel updatedStudentData =
           await _authService.updateStudentDetails(student);
       _ref.read(userModelProvider.notifier).state =
-          UserModel(studentModel: updatedStudentData);
+          UserModel(isStudent: true, studentModel: updatedStudentData);
 
       StudentModel? studentmodel = ref.watch(userModelProvider)?.studentModel;
       NotificationType.makeTopic(ref, studentmodel);
@@ -192,7 +195,7 @@ class AuthProvider extends StateNotifier<bool> {
       FacultyModel updatedFacultyData =
           await _authService.updateFacultyDetails(faculty);
       _ref.read(userModelProvider.notifier).state =
-          UserModel(facultyModel: updatedFacultyData);
+          UserModel(isStudent: false, facultyModel: updatedFacultyData);
     } catch (e) {
       print('Error updating profile: $e');
       ScaffoldMessenger.of(context).showSnackBar(

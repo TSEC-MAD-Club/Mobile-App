@@ -81,10 +81,8 @@ class AuthService {
     DocumentReference profDoc = professorsCollection.doc(user!.uid);
     await profDoc.update(prof.toJson());
     final updatedUserData = await profDoc.get();
-
     var userMap = updatedUserData.data() as Map<String, dynamic>;
     FacultyModel updatedFacultyData = FacultyModel.fromJson(userMap);
-    // debugPrint("updated student data in auth service is $updatedStudentData");
     return updatedFacultyData;
   }
 
@@ -131,7 +129,8 @@ class AuthService {
       final studentDoc = studentSnap.data();
 
       if (studentDoc != null) {
-        userModel = UserModel(studentModel: StudentModel.fromJson(studentDoc));
+        userModel = UserModel(
+            isStudent: true, studentModel: StudentModel.fromJson(studentDoc));
       } else {
         final profSnap = await professorsCollection.doc(user.uid).get();
         final profDoc = profSnap.data();

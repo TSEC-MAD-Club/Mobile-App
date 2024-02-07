@@ -1,6 +1,5 @@
 // ignore_for_file: lines_longer_than_80_chars
 import 'dart:convert';
-import 'dart:html';
 import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:go_router/go_router.dart';
@@ -206,6 +205,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
       designationController.text = facultyData.designation;
       experienceController.text = facultyData.experience;
       phdGuideController.text = facultyData.phdGuide;
+      qualificationController.text = facultyData.qualification;
     }
   }
 
@@ -221,6 +221,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
         designationController.text = data.facultyModel?.designation ?? "";
         experienceController.text = data.facultyModel?.experience ?? "";
         phdGuideController.text = data.facultyModel?.phdGuide ?? "";
+        qualificationController.text = data.facultyModel?.qualification ?? "";
       }
       // batch = data.batch;
       // calcBatchList(data.div);
@@ -239,9 +240,8 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
     final UserModel data = ref.watch(userModelProvider)!;
     if (data.isStudent) {
       // bool canUpdate = data!.updateCount != null ? data.updateCount! < 2 : true;
-      StudentModel studentData = data.studentModel!;
       bool canUpdate = true;
-      debugPrint("canUpdate is $canUpdate");
+
       if (canUpdate) {
         if (batch == null || div == null) {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -253,6 +253,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
           return false;
         }
 
+        StudentModel studentData = data.studentModel!;
         if (studentData.updateCount == null) {
           studentData.updateCount = 1;
         } else {
@@ -307,9 +308,8 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
         phdGuideController.text,
         qualificationController.text,
       );
-
-      if (_formKey.currentState!.validate()) {
-        await ref
+      if (_formKey.currentState?.validate() ?? false) {
+        ref
             .watch(authProvider.notifier)
             .updateFacultyDetails(faculty, ref, context);
         // setState(() {
@@ -373,9 +373,36 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     final UserModel data = ref.watch(userModelProvider)!;
-
+    debugPrint("user data is $data");
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.primary,
+      appBar: widget.justLoggedIn
+          ? AppBar(
+              backgroundColor: Colors.transparent,
+              actions: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextButton(
+                    style: TextButton.styleFrom(
+                      backgroundColor: Theme.of(context).colorScheme.background,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(
+                            8.0), // Adjust the border radius as needed
+                      ),
+                    ),
+                    child: Icon(
+                      Icons.arrow_forward,
+                      color: Colors.white,
+                    ),
+                    onPressed: () async {
+                      bool changesSaved = await saveChanges(ref);
+                      if (changesSaved) GoRouter.of(context).go('/main');
+                    },
+                  ),
+                ),
+              ],
+            )
+          : null,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
@@ -477,9 +504,10 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                     ),
                                     RawMaterialButton(
                                       onPressed: () async {
-                                        bool val = await saveChanges(ref);
-                                        if (val)
-                                          GoRouter.of(context).go('/main');
+                                        bool changesSaved =
+                                            await saveChanges(ref);
+                                        // if (changesSaved)
+                                        //   GoRouter.of(context).go('/main');
                                       },
                                       elevation: 2.0,
                                       fillColor: Color(0xFFF5F6F9),
@@ -795,6 +823,40 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                           validator: (value) {
                                             if (value!.isEmpty) {
                                               return 'Please enter a designation';
+                                            }
+                                            return null;
+                                          },
+                                        ),
+                                        SizedBox(height: 20),
+                                        ProfileField(
+                                          labelName: "Phd Guide",
+                                          enabled: editMode,
+                                          controller: phdGuideController,
+                                          // onChanged: (val) {
+                                          //   setState(() {
+                                          //     phoneNum = val;
+                                          //   });
+                                          // },
+                                          validator: (value) {
+                                            if (value!.isEmpty) {
+                                              return 'Please enter the name of your phd guide';
+                                            }
+                                            return null;
+                                          },
+                                        ),
+                                        SizedBox(height: 20),
+                                        ProfileField(
+                                          labelName: "Qualification",
+                                          enabled: editMode,
+                                          controller: qualificationController,
+                                          // onChanged: (val) {
+                                          //   setState(() {
+                                          //     phoneNum = val;
+                                          //   });
+                                          // },
+                                          validator: (value) {
+                                            if (value!.isEmpty) {
+                                              return 'Please enter your qualifications';
                                             }
                                             return null;
                                           },
