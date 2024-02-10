@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tsec_app/models/event_model/event_model.dart';
 import 'package:tsec_app/new_ui/screens/home_screen/home_screen.dart';
+import 'package:tsec_app/new_ui/screens/notes_screen/notes_screen.dart';
 import 'package:tsec_app/new_ui/screens/railway_screen/railway_screen.dart';
 import 'package:tsec_app/provider/auth_provider.dart';
 import 'package:tsec_app/provider/concession_provider.dart';
@@ -129,9 +130,11 @@ class _TSECAppState extends ConsumerState<TSECApp> {
           },
         ),
 
-        GoRoute(
-          path: "/concession",
+        GoRoute( path: "/concession",
           builder: (context, state) => const RailwayConcessionScreen(),
+        ),
+        GoRoute( path: "/notes",
+          builder: (context, state) => const NotesScreen(),
         ),
         // GoRoute(
         //   path: "/notifications",

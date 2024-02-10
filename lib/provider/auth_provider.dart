@@ -89,7 +89,7 @@ class AuthProvider extends StateNotifier<bool> {
     String url = userModel.isStudent
         ? userModel.studentModel!.image ?? ""
         : userModel.facultyModel!.image;
-        debugPrint("url is $url");
+        // debugPrint("url is $url");
     if (url != "") {
       final response = await http.get(Uri.parse(url));
       if (response.statusCode == 200) {

@@ -20,6 +20,7 @@ import 'package:tsec_app/screens/profile_screen/widgets/custom_text_with_divider
 import 'package:tsec_app/screens/profile_screen/widgets/profile_screen_appbar.dart';
 import 'package:tsec_app/screens/profile_screen/widgets/profile_text_field.dart';
 import 'package:tsec_app/utils/form_validity.dart';
+import 'package:tsec_app/utils/profile_details.dart';
 import 'package:tsec_app/widgets/custom_scaffold.dart';
 import 'package:tsec_app/utils/image_pick.dart';
 import 'package:intl/intl.dart';
@@ -81,71 +82,6 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
   List<String> divisionList = [];
   List<String> batchList = [];
 
-  void calcDivisionList(String gradyear) {
-    List<String> l = [];
-    if (gradyear == "2027") {
-      l = ["A", "B", "C", "D", "E", "F", "G", "H", "I"];
-    } else if (branch == "Comps") {
-      l = ["C1", "C2", "C3"];
-    } else if (branch == "Chem") {
-      l = ["K"];
-    } else if (gradyear == "2026") {
-      if (branch == "It" || branch == "Aids") {
-        l = ["S1", "S2"];
-      } else {
-        l = ["A"];
-      }
-    } else if (gradyear == "2025") {
-      if (branch == "It" || branch == "Aids") {
-        l = ["T1", "T2"];
-      } else {
-        l = ["A"];
-      }
-    } else {
-      //2024
-      if (branch == "It") {
-        l = ["B1", "B2"];
-      } else {
-        l = ["A"];
-      }
-    }
-    setState(() {
-      divisionList = l;
-    });
-    // debugPrint(gradyear);
-    // debugPrint(branch);
-    // debugPrint(l.toString());
-  }
-
-  String calcGradYear(String gradyear) {
-    if (gradyear == "2027") {
-      return "First Year";
-    } else if (gradyear == "2026") {
-      return "Second Year";
-    } else if (gradyear == "2025") {
-      return "Third Year";
-    } else {
-      return "Final Year";
-    }
-  }
-
-  void calcBatchList(String? div) {
-    List<String> batches = [];
-    if (div == null) {
-      setState(() {
-        batchList = batches;
-      });
-      return;
-    }
-    for (int i = 1; i <= 3; i++) {
-      batches.add("$div$i");
-    }
-    // return batches;
-    setState(() {
-      batchList = batches;
-    });
-  }
-
   // bool loadingImage = false;
   Future editProfileImage(UserModel userModel) async {
     // setState(() {
@@ -188,11 +124,14 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
       // address = data.address ?? '';
       homeStation = studentData.homeStation ?? '';
       dobController.text = studentData.dateOfBirth ?? "";
-      calcDivisionList(studentData.gradyear);
+      setState(() {
+        divisionList =
+            calcDivisionList(studentData.gradyear, studentData.branch);
+        batchList = calcBatchList(studentData.div);
+      });
       div = divisionList.contains(studentData.div)
           ? studentData.div
           : divisionList[0];
-      calcBatchList(div);
       batch = batchList.contains(studentData.batch)
           ? studentData.batch
           : batchList[0];
@@ -212,9 +151,16 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
   void clearValues(UserModel data) {
     setState(() {
       if (data.isStudent) {
-        phoneNoController.text = data.studentModel?.phoneNum ?? "";
-        addressController.text = data.studentModel?.address ?? "";
-        dobController.text = data.studentModel?.dateOfBirth ?? "";
+        StudentModel? student = data.studentModel;
+        phoneNoController.text = student?.phoneNum ?? "";
+        addressController.text = student?.address ?? "";
+        dobController.text = student?.dateOfBirth ?? "";
+        div = divisionList.contains(student?.div)
+            ? student?.div
+            : divisionList[0];
+        batch = batchList.contains(student?.batch)
+            ? student?.batch
+            : batchList[0];
       } else {
         areaOfSpecializationController.text =
             data.facultyModel?.areaOfSpecialization ?? "";

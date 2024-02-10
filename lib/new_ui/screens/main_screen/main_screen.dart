@@ -161,7 +161,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                           color: Colors.black, // Black icon color
                         ),
                         onPressed: () {
-                          // Handle button click
+                          GoRouter.of(context).push('/notes');
                         },
                       ),
                     ),
