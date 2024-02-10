@@ -151,19 +151,34 @@ const _textTheme = TextTheme(
     fontWeight: FontWeight.w400,
     fontFamily: "Priego",
   ),
-  labelLarge: TextStyle(
+  titleLarge: TextStyle(
     fontSize: 30,
     fontWeight: FontWeight.w600,
     fontFamily: "Inter",
   ),
-  labelMedium: TextStyle(
+  titleMedium: TextStyle(
     fontSize: 20,
     fontWeight: FontWeight.w500,
     fontFamily: "Inter",
   ),
-  labelSmall: TextStyle(
+  titleSmall: TextStyle(
     fontSize: 18,
     fontWeight: FontWeight.w400,
+    fontFamily: "Inter",
+  ),
+  labelLarge: TextStyle(
+    fontSize: 20,
+    fontWeight: FontWeight.w600,
+    fontFamily: "Inter",
+  ),
+  labelMedium: TextStyle(
+    fontSize: 18,
+    fontWeight: FontWeight.w500,
+    fontFamily: "Inter",
+  ),
+  labelSmall: TextStyle(
+    fontSize: 17,
+    fontWeight: FontWeight.w500,
     fontFamily: "Inter",
   ),
   bodySmall: TextStyle(
