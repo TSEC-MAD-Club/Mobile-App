@@ -34,18 +34,20 @@ class ConcessionService {
 
   User? get user => firebaseAuth.currentUser;
 
-  Future<DateTime> getCorrectDate(DateTime date) async {
+  Future<String> getWaitingMessage() async {
     QuerySnapshot querySnapshot = await concessionRequestCollection
-        .where('time', isLessThanOrEqualTo: date)
         .where('status', isEqualTo: ConcessionStatus.unserviced)
         .get();
 
     int unprocessed = querySnapshot.size;
-    if (unprocessed > 50) {
-      return getCorrectDate(date.add(Duration(days: 1)));
-    } else {
-      return date;
-    }
+    // if (unprocessed > 50) {
+    //   return getCorrectDate(date.add(Duration(days: 1)));
+    // } else {
+    //   return date;
+    // }
+    // return unprocessed;
+
+    return "Your concession request will be serviced after issuing ${unprocessed} previous requests";
   }
 
   Future<ConcessionDetailsModel?> getConcessionDetails() async {
@@ -56,8 +58,12 @@ class ConcessionService {
         var detailsMap = value.data() as Map<String, dynamic>;
         ConcessionDetailsModel concessionDetailsData =
             ConcessionDetailsModel.fromJson(detailsMap);
-
-        // debugPrint(
+        if (concessionDetailsData.status == ConcessionStatus.unserviced) {
+          debugPrint("over fcking here");
+          debugPrint(concessionDetailsData.status);
+          // int waitingQueue = await getWaitingList();
+          concessionDetailsData.statusMessage = await getWaitingMessage();
+        } // debugPrint(
         //     'concession details fetched are: ${concessionDetailsData.toString()}');
         return concessionDetailsData;
       } else {
@@ -75,6 +81,11 @@ class ConcessionService {
       ConcessionDetailsModel concessionDetails,
       File idCardPhoto,
       File previousPassPhoto) async {
+    // int waitingQueue = await getWaitingList();
+    // String statusMessage =
+    //     "Your concession request will be serviced after issuing ${waitingQueue} previous requests";
+
+    String statusMessage = await getWaitingMessage();
     var idRef = await firebaseStorage
         .ref()
         .child("idCard")
@@ -89,15 +100,15 @@ class ConcessionService {
         .putFile(previousPassPhoto);
     var prevPassURL = await passRef.ref.getDownloadURL();
 
-    DateTime concessionDate = await getCorrectDate(DateTime.now());
+    // DateTime concessionDate = await getCorrectDate(DateTime.now());
     String status = ConcessionStatus.unserviced;
-    String statusMessage =
-        "Your pass will be ready on ${DateFormat('dd MMM').format(concessionDate)}";
+    // String statusMessage =
+    //     "Your pass will be ready on ${DateFormat('dd MMM').format(concessionDate)}";
     ConcessionRequestModel concessionRequest = ConcessionRequestModel(
       uid: user!.uid,
-      time: Timestamp.fromDate(concessionDate),
+      time: DateTime.now(),
       status: status,
-      statusMessage: statusMessage,
+      statusMessage: "",
     );
 
     try {

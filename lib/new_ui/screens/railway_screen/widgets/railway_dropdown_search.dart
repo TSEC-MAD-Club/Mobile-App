@@ -21,14 +21,12 @@ class RailwayDropdownSearch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint("RailwayDropdownSearch: $val");
+    // debugPrint("RailwayDropdownSearch: $val");
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
         decoration: BoxDecoration(
-          color: Theme.of(context)
-              .colorScheme
-              .primaryContainer, // Set the background color
+          color: Theme.of(context).colorScheme.primaryContainer,
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
             color: editMode
@@ -49,6 +47,7 @@ class RailwayDropdownSearch extends StatelessWidget {
                   .bodySmall!
                   .copyWith(color: Colors.white),
               dropdownSearchDecoration: InputDecoration(
+                fillColor: Colors.white,
                 labelText: label,
                 labelStyle: TextStyle(color: Colors.grey),
                 border: InputBorder.none,
@@ -56,6 +55,31 @@ class RailwayDropdownSearch extends StatelessWidget {
             ),
             popupProps: PopupProps.dialog(
               showSearchBox: true,
+              // itemBuilder: ()
+              itemBuilder: (context, item, isSelected) {
+                return Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Container(
+                    child: Text(
+                      item,
+                      style: Theme.of(context)
+                          .textTheme
+                          .labelSmall!
+                          .copyWith(color: Colors.white),
+                    ),
+                  ),
+                );
+              },
+              containerBuilder: (context, popupWidget) {
+                return Container(
+                    color: Theme.of(context).colorScheme.background,
+                    child: popupWidget);
+              },
+              // itemBuilder: (context, item, isSelected) {
+              //   return Container(
+              //     child: Text(item),
+              //   );
+              // }),
             ),
             dropdownButtonProps: DropdownButtonProps(
               icon: Icon(

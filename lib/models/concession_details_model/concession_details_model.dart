@@ -22,7 +22,7 @@ class ConcessionDetailsModel {
   @JsonKey(name: "class")
   final String type;
   @JsonKey(name: "dob")
-  final Timestamp dob;
+  final DateTime? dob;
   @JsonKey(name: "duration")
   final String duration;
   @JsonKey(name: "to")
@@ -42,7 +42,7 @@ class ConcessionDetailsModel {
   @JsonKey(name: "travelLane")
   final String travelLane;
   @JsonKey(name: "lastPassIssued")
-  final Timestamp? lastPassIssued;
+  final DateTime? lastPassIssued;
   @JsonKey(name: "status")
   String status;
   @JsonKey(name: "statusMessage")
@@ -75,4 +75,16 @@ class ConcessionDetailsModel {
       _$ConcessionDetailsModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$ConcessionDetailsModelToJson(this);
+}
+
+class TimestampConverter implements JsonConverter<DateTime?, Timestamp?> {
+  const TimestampConverter();
+
+  @override
+  DateTime? fromJson(Timestamp? timestamp) =>
+      timestamp != null ? timestamp.toDate() : null;
+
+  @override
+  Timestamp? toJson(DateTime? date) =>
+      date != null ? Timestamp.fromDate(date) : null;
 }

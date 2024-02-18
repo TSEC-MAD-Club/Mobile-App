@@ -12,7 +12,7 @@ class ConcessionRequestModel {
   @JsonKey(name: "statusMessage")
   final String statusMessage;
   @JsonKey(name: "time")
-  final Timestamp time;
+  final DateTime time;
   @JsonKey(name: "uid")
   final String uid;
 
@@ -28,4 +28,14 @@ class ConcessionRequestModel {
       _$ConcessionRequestModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$ConcessionRequestModelToJson(this);
+}
+
+class TimestampConverter implements JsonConverter<DateTime, Timestamp> {
+  const TimestampConverter();
+
+  @override
+  DateTime fromJson(Timestamp timestamp) => timestamp.toDate();
+
+  @override
+  Timestamp toJson(DateTime date) => Timestamp.fromDate(date);
 }

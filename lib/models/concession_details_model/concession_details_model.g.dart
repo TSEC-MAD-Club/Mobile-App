@@ -16,7 +16,7 @@ ConcessionDetailsModel _$ConcessionDetailsModelFromJson(
       lastName: json['lastName'] as String,
       branch: json['branch'] as String,
       type: json['class'] as String,
-      dob: json['dob'] as Timestamp,
+      dob: const TimestampConverter().fromJson(json['dob'] as Timestamp?),
       duration: json['duration'] as String,
       to: json['to'] as String,
       from: json['from'] as String,
@@ -29,7 +29,8 @@ ConcessionDetailsModel _$ConcessionDetailsModelFromJson(
       travelLane: json['travelLane'] as String,
       status: json['status'] as String,
       statusMessage: json['statusMessage'] as String,
-      lastPassIssued: json['lastPassIssued'] as Timestamp?,
+      lastPassIssued: const TimestampConverter()
+          .fromJson(json['lastPassIssued'] as Timestamp?),
     );
 
 Map<String, dynamic> _$ConcessionDetailsModelToJson(
@@ -42,7 +43,7 @@ Map<String, dynamic> _$ConcessionDetailsModelToJson(
       'lastName': instance.lastName,
       'branch': instance.branch,
       'class': instance.type,
-      'dob': instance.dob,
+      'dob': const TimestampConverter().toJson(instance.dob),
       'duration': instance.duration,
       'to': instance.to,
       'from': instance.from,
@@ -53,7 +54,8 @@ Map<String, dynamic> _$ConcessionDetailsModelToJson(
       'idCardURL': instance.idCardURL,
       'previousPassURL': instance.previousPassURL,
       'travelLane': instance.travelLane,
-      'lastPassIssued': instance.lastPassIssued,
+      'lastPassIssued':
+          const TimestampConverter().toJson(instance.lastPassIssued),
       'status': instance.status,
       'statusMessage': instance.statusMessage,
     };

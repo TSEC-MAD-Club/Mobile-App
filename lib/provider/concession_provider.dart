@@ -13,6 +13,7 @@ import 'package:tsec_app/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:tsec_app/services/concession_service.dart';
 import 'package:tsec_app/utils/notification_type.dart';
+import 'package:tsec_app/utils/railway_enum.dart';
 
 final concessionDetailsProvider = StateProvider<ConcessionDetailsModel?>((ref) {
   return null;
@@ -48,6 +49,10 @@ class ConcessionProvider extends StateNotifier<bool> {
 
   Future applyConcession(ConcessionDetailsModel concessionDetails,
       File idCardPhoto, File previousPassPhoto, BuildContext context) async {
+    concessionDetails.status = ConcessionStatus.unserviced;
+    concessionDetails.statusMessage =
+        await _concessionService.getWaitingMessage();
+    _ref.read(concessionDetailsProvider.notifier).state = concessionDetails;
     ConcessionDetailsModel concessionDetailsData = await _concessionService
         .applyConcession(concessionDetails, idCardPhoto, previousPassPhoto);
 

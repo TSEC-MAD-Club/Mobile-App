@@ -47,8 +47,8 @@ class _RailWayConcessionState extends ConsumerState<RailWayConcession> {
     int diff = today.difference(lastPass).inDays;
     bool retVal = (duration == "Monthly" && diff >= 30) ||
         (duration == "Quarterly" && diff >= 90);
-    debugPrint(retVal.toString());
-    debugPrint(status);
+    // debugPrint(retVal.toString());
+    // debugPrint(status);
     return retVal;
   }
 
@@ -67,8 +67,7 @@ class _RailWayConcessionState extends ConsumerState<RailWayConcession> {
 
     status = concessionDetails?.status ?? "";
     statusMessage = concessionDetails?.statusMessage ?? "";
-    lastPassIssued =
-        concessionDetails?.lastPassIssued?.toDate() ?? DateTime.now();
+    lastPassIssued = concessionDetails?.lastPassIssued ?? DateTime.now();
     duration = concessionDetails?.duration ?? "";
   }
 

@@ -83,7 +83,7 @@ class _RailwayEditModalState extends ConsumerState<RailwayEditModal> {
       _ageMonths = months.toString();
       _ageYears = years.toString();
       ageController.text = "$_ageYears years $_ageMonths months";
-      debugPrint("updated ${ageController.text} ${dateOfBirthController.text}");
+      // debugPrint("updated ${ageController.text} ${dateOfBirthController.text}");
     });
   }
 
@@ -123,11 +123,11 @@ class _RailwayEditModalState extends ConsumerState<RailwayEditModal> {
       firstName = concessionDetails.firstName;
       middleName = concessionDetails.middleName;
       lastName = concessionDetails.lastName;
-      _selectedDate = concessionDetails.dob.toDate();
+      _selectedDate = concessionDetails.dob;
       // dateOfBirthController.text =
       //     concessionDetails.dob.toDate().toString().split(' ')[0];
-      dateOfBirthController.text =
-          DateFormat('dd MMM yyyy').format(concessionDetails.dob.toDate());
+      dateOfBirthController.text = DateFormat('dd MMM yyyy')
+          .format(concessionDetails.dob ?? DateTime.now());
       _ageYears = concessionDetails.ageYears.toString();
       _ageMonths = concessionDetails.ageMonths.toString();
       ageController.text =
@@ -234,7 +234,7 @@ class _RailwayEditModalState extends ConsumerState<RailwayEditModal> {
       from: homeStation,
       to: toStation,
       address: address,
-      dob: Timestamp.fromDate(_selectedDate ?? DateTime.now()),
+      dob: _selectedDate ?? DateTime.now(),
       phoneNum: int.parse(phoneNum),
       travelLane: travelLane ?? "Western",
       type: travelClass ?? "I",

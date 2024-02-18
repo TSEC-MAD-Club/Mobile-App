@@ -14,6 +14,7 @@ import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 import 'package:tsec_app/models/concession_details_model/concession_details_model.dart';
 import 'package:tsec_app/models/student_model/student_model.dart';
+import 'package:tsec_app/new_ui/screens/railway_screen/widgets/concession_status_modal.dart';
 import 'package:tsec_app/new_ui/screens/railway_screen/widgets/railway_dropdown_search.dart';
 import 'package:tsec_app/new_ui/screens/railway_screen/widgets/railway_dropdown_field.dart';
 import 'package:tsec_app/provider/auth_provider.dart';
@@ -41,21 +42,38 @@ class RailwayConcessionScreen extends ConsumerStatefulWidget {
 
 class _RailwayConcessionScreenState
     extends ConsumerState<RailwayConcessionScreen> {
-  final _popupCustomValidationKey = GlobalKey<DropdownSearchState<int>>();
+  // final _popupCustomValidationKey = GlobalKey<DropdownSearchState<int>>();
   String? status;
   String? statusMessage;
   String? duration;
   DateTime? lastPassIssued;
+  // String?
 
-  bool canIssuePass(DateTime lastPassIssued, String duration) {
-    DateTime today = DateTime.now();
-    DateTime lastPass = lastPassIssued;
-    int diff = today.difference(lastPass).inDays;
-    bool retVal = (duration == "Monthly" && diff >= 30) ||
-        (duration == "Quarterly" && diff >= 90);
-    // debugPrint(retVal.toString());
-    // debugPrint(status);
-    return retVal;
+  bool canIssuePass(ConcessionDetailsModel? concessionDetails,
+      DateTime? lastPassIssued, String? duration) {
+    if (concessionDetails?.status != null) {
+      //user has applied for concession before
+
+      // allow him to apply again if he was rejected
+      if (concessionDetails!.status == ConcessionStatus.rejected) return true;
+
+      // dont allow him to apply if his application is being processed
+      if (concessionDetails.status == ConcessionStatus.unserviced) return false;
+
+      //check date difference(only if status is serviced or downloaded)
+      if (lastPassIssued == null) return true;
+      DateTime today = DateTime.now();
+      DateTime lastPass = lastPassIssued;
+      int diff = today.difference(lastPass).inDays;
+      bool retVal = (duration == "Monthly" && diff >= 30) ||
+          (duration == "Quarterly" && diff >= 90);
+      // debugPrint(retVal.toString());
+      // debugPrint(status);
+      return retVal;
+    } else {
+      //user has never applied for concession
+      return true;
+    }
   }
 
   String futurePassMessage() {
@@ -100,7 +118,7 @@ class _RailwayConcessionScreenState
   // String address = "";
   TextEditingController addressController = TextEditingController();
   String homeStation = "";
-  String toStation = "";
+  String toStation = "Bandra";
   final TextEditingController dateOfBirthController = TextEditingController();
   final TextEditingController ageController = TextEditingController();
 
@@ -237,9 +255,10 @@ class _RailwayConcessionScreenState
       firstNameController.text = concessionDetails.firstName;
       middleNameController.text = concessionDetails.middleName;
       lastNameController.text = concessionDetails.lastName;
-      _selectedDate = concessionDetails.dob.toDate();
-      dateOfBirthController.text =
-          DateFormat('dd MMM yyyy').format(concessionDetails.dob.toDate());
+      _selectedDate = concessionDetails.dob;
+      dateOfBirthController.text = concessionDetails.dob != null
+          ? DateFormat('dd MMM yyyy').format(concessionDetails.dob!)
+          : "";
       _ageYears = concessionDetails.ageYears.toString();
       _ageMonths = concessionDetails.ageMonths.toString();
       ageController.text =
@@ -250,7 +269,8 @@ class _RailwayConcessionScreenState
       travelClass = concessionDetails.type;
       addressController.text = concessionDetails.address;
       duration = concessionDetails.duration;
-      toStation = concessionDetails.to;
+      // toStation = concessionDetails.to;
+      // toStation = "Bandra";
       homeStation = concessionDetails.from;
       gender = concessionDetails.gender;
       travelLane = concessionDetails.travelLane;
@@ -263,8 +283,7 @@ class _RailwayConcessionScreenState
 
       status = concessionDetails.status;
       statusMessage = concessionDetails.statusMessage;
-      lastPassIssued =
-          concessionDetails.lastPassIssued?.toDate() ?? DateTime.now();
+      lastPassIssued = concessionDetails.lastPassIssued;
       duration = concessionDetails.duration;
     }
   }
@@ -280,15 +299,15 @@ class _RailwayConcessionScreenState
     lastNameController.text = concessionDetails?.lastName ?? "";
     addressController.text = concessionDetails?.address ?? "";
     phoneNumController.text = concessionDetails?.phoneNum.toString() ?? "";
-    dateOfBirthController.text = concessionDetails != null
-        ? DateFormat('dd MMM yyyy').format(concessionDetails.dob.toDate())
+    dateOfBirthController.text = concessionDetails?.dob != null
+        ? DateFormat('dd MMM yyyy').format(concessionDetails!.dob!)
         : "";
     travelLane = concessionDetails?.travelLane ?? "";
     gender = concessionDetails?.gender ?? "";
     travelClass = concessionDetails?.type ?? "";
     duration = concessionDetails?.duration ?? "";
     travelLane = concessionDetails?.travelLane ?? "";
-    toStation = concessionDetails?.to ?? "";
+    // toStation = concessionDetails?.to ?? "";
     homeStation = concessionDetails?.from ?? "";
     idCardPhotoTemp = idCardPhoto;
     previousPassPhotoTemp = previousPassPhoto;
@@ -315,8 +334,9 @@ class _RailwayConcessionScreenState
       previousPassURL: previousPassURL,
       from: homeStation,
       to: toStation,
+      lastPassIssued: lastPassIssued,
       address: addressController.text,
-      dob: Timestamp.fromDate(_selectedDate ?? DateTime.now()),
+      dob: _selectedDate ?? DateTime.now(),
       phoneNum: int.parse(phoneNumController.text),
       travelLane: travelLane ?? "Western",
       type: travelClass ?? "I",
@@ -410,72 +430,17 @@ class _RailwayConcessionScreenState
           children: [
             SizedBox(height: !editMode ? 10 : 0),
             !editMode
-                ? Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      height: 70,
-                      decoration: BoxDecoration(
-                        color: concessionDetails?.status ==
-                                ConcessionStatus.rejected
-                            ? Theme.of(context).colorScheme.error
-                            : concessionDetails?.status == null ||
-                                    lastPassIssued != null &&
-                                        canIssuePass(lastPassIssued!, duration!)
-                                ? Theme.of(context)
-                                    .colorScheme
-                                    .tertiaryContainer
-                                : Theme.of(context).colorScheme.primary,
-                        borderRadius: BorderRadius.circular(18),
-                        // boxShadow: isItDarkMode
-                        //     ? shadowLightModeTextFields
-                        //     : shadowDarkModeTextFields,
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text("Status",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headlineSmall!
-                                        .copyWith(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.w500,
-                                        )),
-                                Text(concessionDetails?.status ==
-                                        ConcessionStatus.rejected
-                                    ? "Rejected"
-                                    : concessionDetails?.status ==
-                                            ConcessionStatus.unserviced
-                                        ? "Pending"
-                                        : concessionDetails?.status == null ||
-                                                lastPassIssued != null &&
-                                                    canIssuePass(
-                                                        lastPassIssued!,
-                                                        duration!)
-                                            ? "Can apply"
-                                            : ""),
-                              ],
-                            ),
-                            Text(concessionDetails?.statusMessage == null ||
-                                    (lastPassIssued != null &&
-                                        canIssuePass(
-                                            lastPassIssued!, duration!))
-                                ? "Apply for a new pass"
-                                : concessionDetails!.statusMessage),
-                          ],
-                        ),
-                      ),
-                    ),
+                ? ConcessionStatusModal(
+                    // concessionDetails: concessionDetails,
+                    canIssuePass: canIssuePass,
+                    // lastPassIssued: lastPassIssued,
+                    // duration: duration,
+                    futurePassMessage: futurePassMessage,
                   )
                 : Container(),
             !editMode ? SizedBox(height: 10) : Container(),
             AnimatedContainer(
-              duration: Duration(milliseconds: 500),
+              duration: Duration(milliseconds: 5000),
               decoration: BoxDecoration(
                 color: Theme.of(context).colorScheme.onPrimary,
                 borderRadius: !editMode
@@ -485,17 +450,18 @@ class _RailwayConcessionScreenState
                         )
                     : BorderRadius.zero,
               ),
-              height: editMode
+              height: ref.read(railwayConcessionOpenProvider.state).state
                   ? MediaQuery.of(context).size.height * .95
-                  : MediaQuery.of(context).size.height * .6,
+                  : MediaQuery.of(context).size.height * .57,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
                   children: [
                     Container(
-                      height: editMode
-                          ? MediaQuery.of(context).size.height * .8
-                          : MediaQuery.of(context).size.height * .58,
+                      height:
+                          ref.read(railwayConcessionOpenProvider.state).state
+                              ? MediaQuery.of(context).size.height * .8
+                              : MediaQuery.of(context).size.height * .54,
                       child: SingleChildScrollView(
                         child: Form(
                           key: _formKey,
@@ -765,7 +731,7 @@ class _RailwayConcessionScreenState
                                     width:
                                         MediaQuery.of(context).size.width * .45,
                                     child: RailwayDropdownSearch(
-                                      editMode: editMode,
+                                      editMode: false,
                                       label: "To",
                                       items: mumbaiRailwayStations,
                                       val: toStation,
@@ -870,9 +836,9 @@ class _RailwayConcessionScreenState
               ),
             ),
             SizedBox(height: !editMode ? 20 : 0),
-            editMode
-                ? Container()
-                : Padding(
+            !editMode &&
+                    canIssuePass(concessionDetails, lastPassIssued, duration)
+                ? Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
@@ -902,7 +868,8 @@ class _RailwayConcessionScreenState
                         ),
                       ],
                     ),
-                  ),
+                  )
+                : Container(),
           ],
         ),
       ),
