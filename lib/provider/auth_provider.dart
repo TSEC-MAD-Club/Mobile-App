@@ -11,6 +11,7 @@ import 'package:tsec_app/models/student_model/student_model.dart';
 import 'package:tsec_app/models/user_model/user_model.dart';
 import 'package:tsec_app/provider/concession_provider.dart';
 import 'package:tsec_app/provider/firebase_provider.dart';
+import 'package:tsec_app/provider/notes_provider.dart';
 import 'package:tsec_app/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:tsec_app/utils/notification_type.dart';
@@ -89,7 +90,7 @@ class AuthProvider extends StateNotifier<bool> {
     String url = userModel.isStudent
         ? userModel.studentModel!.image ?? ""
         : userModel.facultyModel!.image;
-        // debugPrint("url is $url");
+    // debugPrint("url is $url");
     if (url != "") {
       final response = await http.get(Uri.parse(url));
       if (response.statusCode == 200) {
@@ -124,9 +125,9 @@ class AuthProvider extends StateNotifier<bool> {
             .watch(authProvider.notifier)
             .updateStudentTimeTableData(userModel.studentModel, ref);
       }
-
       await ref.watch(authProvider.notifier).fetchProfilePic();
       await ref.watch(concessionProvider.notifier).getConcessionData();
+      await ref.read(notesProvider.notifier).fetchNotes();
       // if (studentModel != null) {
       //   debugPrint("in main");
       //   String studentYear = studentModel.gradyear.toString();
@@ -181,7 +182,7 @@ class AuthProvider extends StateNotifier<bool> {
                 : "Profile updated successfully. You have already updated it as many times as possible ")),
       );
     } catch (e) {
-      print('Error updating profile: $e');
+      print('Error updating student details: $e');
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
             content: Text('An error occurred. Please try again later.')),
@@ -197,7 +198,7 @@ class AuthProvider extends StateNotifier<bool> {
       _ref.read(userModelProvider.notifier).state =
           UserModel(isStudent: false, facultyModel: updatedFacultyData);
     } catch (e) {
-      print('Error updating profile: $e');
+      print('Error updating faculty details: $e');
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
             content: Text('An error occurred. Please try again later.')),
