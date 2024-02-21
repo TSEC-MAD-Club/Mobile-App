@@ -1,11 +1,14 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:tsec_app/models/class_model/class_model.dart';
 part 'notes_model.g.dart';
 
 @JsonSerializable()
-class NotesModel {
+class NotesModel extends Equatable {
+  @JsonKey(name: "id")
+  String? id;
   @JsonKey(name: "title")
   final String title;
   @JsonKey(name: "description")
@@ -22,6 +25,7 @@ class NotesModel {
   final String professorName;
 
   NotesModel({
+    required this.id,
     required this.title,
     required this.description,
     required this.attachments,
@@ -35,6 +39,18 @@ class NotesModel {
       _$NotesModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$NotesModelToJson(this);
+
+  @override
+  List<Object?> get props => [
+        id,
+        title,
+        description,
+        attachments,
+        time,
+        targetClasses,
+        subject,
+        professorName
+      ];
 }
 
 class TimestampConverter implements JsonConverter<DateTime, Timestamp> {

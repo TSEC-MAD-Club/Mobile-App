@@ -7,13 +7,14 @@ part of 'notes_model.dart';
 // **************************************************************************
 
 NotesModel _$NotesModelFromJson(Map<String, dynamic> json) => NotesModel(
+      id: json['id'] as String?,
       title: json['title'] as String,
       description: json['description'] as String,
       attachments: (json['attachments'] as List<dynamic>)
           .map((e) => e as String)
           .toList(),
       targetClasses: (json['target_classes'] as List<dynamic>)
-          .map((e) => e as ClassModel)
+          .map((e) => ClassModel.fromJson(e))
           .toList(),
       time: TimestampConverter().fromJson(json['time'] as Timestamp),
       subject: json['subject'] as String,
