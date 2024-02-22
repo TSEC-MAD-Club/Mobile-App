@@ -7,6 +7,7 @@ import 'package:tsec_app/models/notification_model/notification_model.dart';
 import 'package:tsec_app/models/student_model/student_model.dart';
 import 'package:tsec_app/models/user_model/user_model.dart';
 import 'package:tsec_app/provider/auth_provider.dart';
+import 'package:tsec_app/provider/firebase_provider.dart';
 import 'package:tsec_app/provider/notification_provider.dart';
 import 'package:tsec_app/utils/custom_snackbar.dart';
 import 'package:tsec_app/utils/form_validity.dart';
@@ -88,7 +89,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       UserModel? userModel = ref.watch(userModelProvider);
 
       if (userModel != null) {
-        if (userModel.isStudent) _setupFCMNotifications(userModel.studentModel);
+        if (userModel.isStudent) _setupFCMNotifications(userModel.studentModel, FirebaseAuth.instance.currentUser!.uid);
         // if (studentModel.updateCount != null &&
         //     studentModel.updateCount! > 0) {
         //   GoRouter.of(context).go('/main');
@@ -372,7 +373,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         ));
   }
 
-  Future<void> _setupFCMNotifications(StudentModel? studentModel) async {
+  Future<void> _setupFCMNotifications(StudentModel? studentModel, String uid) async {
     final _messaging = FirebaseMessaging.instance;
     final _permission = await _messaging.requestPermission(provisional: true);
 
@@ -381,6 +382,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       AuthorizationStatus.provisional,
     ].contains(_permission.authorizationStatus)) {
       NotificationType.makeTopic(ref, studentModel);
+      _messaging.subscribeToTopic(uid);
       _messaging.subscribeToTopic(NotificationType.notification);
       _messaging.subscribeToTopic(NotificationType.yearTopic);
       _messaging.subscribeToTopic(NotificationType.yearBranchTopic);

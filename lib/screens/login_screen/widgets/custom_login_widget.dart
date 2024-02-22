@@ -308,6 +308,7 @@ class _LoginWidgetState extends ConsumerState<LoginWidget> {
       AuthorizationStatus.provisional,
     ].contains(_permission.authorizationStatus)) {
       NotificationType.makeTopic(ref, studentModel);
+      // _messaging.subscribeToTopic(studentModel);
       _messaging.subscribeToTopic(NotificationType.notification);
       _messaging.subscribeToTopic(NotificationType.yearTopic);
       _messaging.subscribeToTopic(NotificationType.yearBranchTopic);
