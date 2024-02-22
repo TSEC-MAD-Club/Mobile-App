@@ -9,20 +9,15 @@ import 'package:tsec_app/models/event_model/event_model.dart';
 import 'package:tsec_app/new_ui/screens/home_screen/home_screen.dart';
 import 'package:tsec_app/new_ui/screens/notes_screen/notes_screen.dart';
 import 'package:tsec_app/new_ui/screens/railway_screen/railway_screen.dart';
-import 'package:tsec_app/provider/auth_provider.dart';
-import 'package:tsec_app/provider/concession_provider.dart';
-import 'package:tsec_app/provider/firebase_provider.dart';
 import 'package:tsec_app/new_ui/screens/splash_screen/splash_screen.dart';
 import 'package:tsec_app/new_ui/screens/main_screen/main_screen.dart';
 import 'package:tsec_app/new_ui/screens/login_screen/login_screen.dart';
-// import 'package:tsec_app/screens/event_detail_screen/event_details.dart';
+import "package:tsec_app/new_ui/screens/event_details_screen/event_details.dart";
 // import 'package:tsec_app/screens/login_screen/login_screen.dart';
 import 'package:tsec_app/new_ui/screens/profile_screen/profile_screen.dart';
 // import 'package:tsec_app/screens/railwayConcession/railwayConcession.dart';
 // import 'package:tsec_app/screens/splash_screen.dart';
-import 'package:tsec_app/utils/notification_type.dart';
 import 'firebase_options.dart';
-import 'models/student_model/student_model.dart';
 import 'provider/app_state_provider.dart';
 import 'provider/shared_prefs_provider.dart';
 import 'provider/theme_provider.dart';
@@ -33,7 +28,6 @@ import 'provider/theme_provider.dart';
 // import 'screens/notification_screen/notification_screen.dart';
 // import 'screens/theme_screen/theme_screen.dart';
 // import 'screens/tpc_screen.dart';
-import 'utils/department_enum.dart';
 import 'utils/init_get_it.dart';
 import 'utils/themes.dart';
 
@@ -130,10 +124,12 @@ class _TSECAppState extends ConsumerState<TSECApp> {
           },
         ),
 
-        GoRoute( path: "/concession",
+        GoRoute(
+          path: "/concession",
           builder: (context, state) => const RailwayConcessionScreen(),
         ),
-        GoRoute( path: "/notes",
+        GoRoute(
+          path: "/notes",
           builder: (context, state) => const NotesScreen(),
         ),
         // GoRoute(
@@ -152,25 +148,24 @@ class _TSECAppState extends ConsumerState<TSECApp> {
         //   path: "/tpc",
         //   builder: (context, state) => const TPCScreen(),
         // ),
-        // GoRoute(
-        //   name: "details_page",
-        //   path: "/details_page",
-        //   builder: (context, state) {
-        //     EventModel eventModel = EventModel(
-        //         state.uri.queryParameters["Event Name"]!,
-        //         state.uri.queryParameters["Event Time"]!,
-        //         state.uri.queryParameters["Event Date"]!,
-        //         state.uri.queryParameters["Event decription"]!,
-        //         state.uri.queryParameters["Event registration url"]!,
-        //         state.uri.queryParameters["Event Image Url"]!,
-        //         state.uri.queryParameters["Event Location"]!,
-        //         state.uri.queryParameters["Committee Name"]!);
-
-        //     return EventDetail(
-        //       eventModel: eventModel,
-        //     );
-        //   },
-        // ),
+        GoRoute(
+          name: "details_page",
+          path: "/details_page",
+          builder: (context, state) {
+            EventModel eventModel = EventModel(
+                state.uri.queryParameters["Event Name"]!,
+                state.uri.queryParameters["Event Time"]!,
+                state.uri.queryParameters["Event Date"]!,
+                state.uri.queryParameters["Event decription"]!,
+                state.uri.queryParameters["Event registration url"]!,
+                state.uri.queryParameters["Event Image Url"]!,
+                state.uri.queryParameters["Event Location"]!,
+                state.uri.queryParameters["Committee Name"]!);
+            return EventDetail(
+              eventModel: eventModel,
+            );
+          },
+        ),
         // GoRoute(
         //   path: "/department",
         //   builder: (context, state) {

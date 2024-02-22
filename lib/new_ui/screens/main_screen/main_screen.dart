@@ -1,31 +1,12 @@
 import 'dart:typed_data';
 
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:tsec_app/models/student_model/student_model.dart';
 import 'package:tsec_app/models/user_model/user_model.dart';
 import 'package:tsec_app/new_ui/screens/home_screen/home_screen.dart';
 import 'package:tsec_app/provider/auth_provider.dart';
-import 'package:tsec_app/provider/occasion_provider.dart';
 import 'package:tsec_app/provider/railway_concession_provider.dart';
-import 'package:tsec_app/screens/departmentlist_screen/department_list.dart';
-import 'package:tsec_app/screens/main_screen/widget/card_display.dart';
-import 'package:tsec_app/screens/profile_screen/profile_screen.dart';
-import 'package:tsec_app/utils/notification_type.dart';
-import 'package:tsec_app/utils/timetable_util.dart';
-import 'package:url_launcher/url_launcher_string.dart';
-// import '../../models/event_model/event_model.dart';
-// import '../../provider/event_provider.dart';
-// import '../../utils/image_assets.dart';
-
-// import '../../utils/launch_url.dart';
-// import '../../utils/themes.dart';
-// import '../../widgets/custom_scaffold.dart';
-import 'package:date_picker_timeline/date_picker_timeline.dart';
 
 class MainScreen extends ConsumerStatefulWidget {
   const MainScreen({
@@ -36,14 +17,6 @@ class MainScreen extends ConsumerStatefulWidget {
 }
 
 class _MainScreenState extends ConsumerState<MainScreen> {
-  static const colorList = [Colors.red, Colors.teal, Colors.blue];
-  static const opacityList = [
-    Color.fromRGBO(255, 0, 0, 0.2),
-    Color.fromARGB(51, 0, 255, 225),
-    Color.fromARGB(51, 0, 153, 255),
-  ];
-
-  static const _sidePadding = EdgeInsets.symmetric(horizontal: 15);
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   int currentBottomNavPage = 0;
@@ -74,14 +47,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
       //   justLoggedIn: false,
       // ),
     ];
-    final _size = MediaQuery.of(context).size;
-    var _theme = Theme.of(context);
-    var _boxshadow = BoxShadow(
-      color: _theme.primaryColorDark,
-      spreadRadius: 1,
-      blurRadius: 2,
-      offset: const Offset(0, 1),
-    );
+
     UserModel? data = ref.watch(userModelProvider);
 
     // if (data != null) {
