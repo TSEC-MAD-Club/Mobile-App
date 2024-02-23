@@ -138,54 +138,54 @@ class _NotesScreenState extends ConsumerState<NotesScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-            SizedBox(height: 30,),
-              // Container(
-              //   height: 200,
-              //   // decoration: BoxDecoration(
-              //   //   // color: Theme.of(context).colorScheme.secondary,
-              //   //   borderRadius: const BorderRadius.only(
-              //   //     bottomRight: Radius.circular(40),
-              //   //   ),
-              //   // ),
-              //   child: Padding(
-              //     padding:
-              //         const EdgeInsets.symmetric(horizontal: 15, vertical: 0),
-              //     child: Column(
-              //       mainAxisAlignment: MainAxisAlignment.spaceAround,
-              //       children: [
-              //         // Row(
-              //         //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //         //   children: <Widget>[
-              //         //     _buildNavigation(context,
-              //         //         icon: const Icon(Icons.chevron_left_rounded),
-              //         //         onPressed: () {
-              //         //       GoRouter.of(context).pop();
-              //         //     }),
-              //         //   ],
-              //         // ),
-              //         Row(
-              //           children: [
-              //             Expanded(
-              //               child: Text(
-              //                 "Notes",
-              //                 style: Theme.of(context)
-              //                     .textTheme
-              //                     .headlineLarge!
-              //                     .copyWith(color: Colors.white),
-              //               ),
-              //             ),
-              //             SizedBox(
-              //               width: 177,
-              //               child: Image.asset(
-              //                 ImageAssets.notes,
-              //               ),
-              //             ),
-              //           ],
-              //         ),
-              //       ],
-              //     ),
-              //   ),
-              // ),
+            SizedBox(height: 10,),
+              Container(
+                height: 200,
+                decoration: BoxDecoration(
+                  // color: Theme.of(context).colorScheme.secondary,
+                  borderRadius: const BorderRadius.only(
+                    bottomRight: Radius.circular(40),
+                  ),
+                ),
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 15, vertical: 0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          _buildNavigation(context,
+                              icon: const Icon(Icons.chevron_left_rounded),
+                              onPressed: () {
+                            GoRouter.of(context).pop();
+                          }),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              "Notes",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headlineLarge!
+                                  .copyWith(color: Colors.white),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 177,
+                            child: Image.asset(
+                              ImageAssets.notes,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: NotesFilterBar(),

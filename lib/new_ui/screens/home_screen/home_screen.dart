@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tsec_app/models/student_model/student_model.dart';
 import 'package:tsec_app/models/user_model/user_model.dart';
+import 'package:tsec_app/new_ui/screens/attendance_screen/attendance_screen.dart';
 import 'package:tsec_app/new_ui/screens/home_screen/widgets/home_widget.dart';
 import 'package:tsec_app/new_ui/screens/notes_screen/notes_screen.dart';
 import 'package:tsec_app/new_ui/screens/railway_screen/railway_screen.dart';
@@ -28,13 +29,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   late int currentPage;
   List<Widget> widgets = <Widget>[
     HomeWidget(),
-    // GoRouter.of(context).push('/notes');
-    NotesScreen(),
-    // const Text(
-    //   'Library',
-    // ),
-    const TimeTable(),
-    const RailwayConcessionScreen(),
+    AttendanceScreen(),
+    // const TimeTable(),
+    // const RailwayConcessionScreen(),
     ProfilePage(
       justLoggedIn: false,
     ),
@@ -71,8 +68,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 ),
                 BottomNavigationBarItem(
                   backgroundColor: Colors.transparent,
-                  icon: Icon(Icons.book_outlined),
-                  activeIcon: Icon(Icons.book),
+                  icon: Icon(Icons.people_outline),
+                  activeIcon: Icon(Icons.people_rounded),
                   label: "Library",
                 ),
                 BottomNavigationBarItem(

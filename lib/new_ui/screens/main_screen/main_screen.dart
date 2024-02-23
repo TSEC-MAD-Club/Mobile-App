@@ -112,7 +112,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                       ? (currentBottomNavPage == 0
                           ? "Home"
                           : currentBottomNavPage == 1
-                              ? "Notes"
+                              ? "Attendance"
                               : currentBottomNavPage == 2
                                   ? "Schedule"
                                   : currentBottomNavPage == 3
@@ -130,46 +130,46 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                   maxLines: 1,
                   overflow: TextOverflow.fade,
                 ),
-                // actions: userDetails != null
-                //     ? [
-                //         Padding(
-                //           padding: const EdgeInsets.all(8.0),
-                //           child: Ink(
-                //             decoration: ShapeDecoration(
-                //               color: Colors.white, // White background color
-                //               shape: CircleBorder(), // Circular shape
-                //             ),
-                //             child: IconButton(
-                //               icon: Icon(
-                //                 Icons.note,
-                //                 color: Colors.black, // Black icon color
-                //               ),
-                //               onPressed: () {
-                //                 GoRouter.of(context).push('/notes');
-                //               },
-                //             ),
-                //           ),
-                //         ),
-                //         Padding(
-                //           padding: const EdgeInsets.all(8.0),
-                //           child: Ink(
-                //             decoration: ShapeDecoration(
-                //               color: Colors.white, // White background color
-                //               shape: CircleBorder(), // Circular shape
-                //             ),
-                //             child: IconButton(
-                //               icon: Icon(
-                //                 Icons.event_note,
-                //                 color: Colors.black, // Black icon color
-                //               ),
-                //               onPressed: () {
-                //                 // Handle button click
-                //               },
-                //             ),
-                //           ),
-                //         )
-                //       ]
-                // : [],
+                actions: userDetails != null
+                    ? [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Ink(
+                            decoration: ShapeDecoration(
+                              color: Colors.white, // White background color
+                              shape: CircleBorder(), // Circular shape
+                            ),
+                            child: IconButton(
+                              icon: Icon(
+                                Icons.note,
+                                color: Colors.black, // Black icon color
+                              ),
+                              onPressed: () {
+                                GoRouter.of(context).push('/notes');
+                              },
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Ink(
+                            decoration: ShapeDecoration(
+                              color: Colors.white, // White background color
+                              shape: CircleBorder(), // Circular shape
+                            ),
+                            child: IconButton(
+                              icon: Icon(
+                                Icons.event_note,
+                                color: Colors.black, // Black icon color
+                              ),
+                              onPressed: () {
+                                // Handle button click
+                              },
+                            ),
+                          ),
+                        )
+                      ]
+                : [],
               )
             : null,
         drawer: !concessionOpen
