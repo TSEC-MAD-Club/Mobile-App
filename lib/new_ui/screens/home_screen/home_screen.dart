@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:tsec_app/models/student_model/student_model.dart';
 import 'package:tsec_app/models/user_model/user_model.dart';
 import 'package:tsec_app/new_ui/screens/home_screen/widgets/home_widget.dart';
+import 'package:tsec_app/new_ui/screens/notes_screen/notes_screen.dart';
 import 'package:tsec_app/new_ui/screens/railway_screen/railway_screen.dart';
 import 'package:tsec_app/new_ui/screens/timetable_screen/timetable_screen.dart';
 import 'package:tsec_app/provider/auth_provider.dart';
@@ -27,9 +28,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   late int currentPage;
   List<Widget> widgets = <Widget>[
     HomeWidget(),
-    const Text(
-      'Library',
-    ),
+    // GoRouter.of(context).push('/notes');
+    NotesScreen(),
+    // const Text(
+    //   'Library',
+    // ),
     const TimeTable(),
     const RailwayConcessionScreen(),
     ProfilePage(

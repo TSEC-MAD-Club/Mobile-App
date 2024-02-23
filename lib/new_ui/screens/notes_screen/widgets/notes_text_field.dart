@@ -25,7 +25,7 @@ class NotesTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 11, 20, 11),
+      padding: editMode ? const EdgeInsets.fromLTRB(20, 11, 20, 11) : EdgeInsets.zero,
       child: TextFormField(
         style: Theme.of(context).textTheme.bodySmall,
         controller: controller,

@@ -96,7 +96,7 @@ class _HomeWidgetState extends ConsumerState<HomeWidget> {
                           onPressed: () {},
                         ),
                         ContainerIconWithName(
-                          text: "Library",
+                          text: "Notes",
                           icon: Icons.menu_book_rounded,
                           onPressed: () {},
                         )
@@ -173,7 +173,7 @@ class _HomeWidgetState extends ConsumerState<HomeWidget> {
                                                   "${eventList[_currentIndex].eventDate}",
                                                   style: Theme.of(context)
                                                       .textTheme
-                                                      .headlineSmall!
+                                                      .titleSmall!
                                                       .copyWith(
                                                           fontSize: 15,
                                                           color: _theme
@@ -219,7 +219,7 @@ class _HomeWidgetState extends ConsumerState<HomeWidget> {
                                   .toList(),
                               options: CarouselOptions(
                                 scrollPhysics: const BouncingScrollPhysics(),
-                                autoPlay: true,
+                                autoPlay: false,
                                 aspectRatio: 1.7,
                                 viewportFraction: 1,
                                 onPageChanged: (index, reason) {

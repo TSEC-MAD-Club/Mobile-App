@@ -45,28 +45,28 @@ class TimeTable extends ConsumerWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (data == null)
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Text(
-                "Department",
-                style: Theme.of(context)
-                    .textTheme
-                    .headlineLarge!
-                    .copyWith(fontSize: 44),
-              ),
-            )
-          else
-            Padding(
-              padding: const EdgeInsets.fromLTRB(10, 5, 10, 2),
-              child: Text(
-                "Schedule",
-                style: Theme.of(context)
-                    .textTheme
-                    .headlineLarge!
-                    .copyWith(fontSize: 44),
-              ),
-            ),
+          // if (data == null)
+          //   Padding(
+          //     padding: const EdgeInsets.all(10.0),
+          //     child: Text(
+          //       "Department",
+          //       style: Theme.of(context)
+          //           .textTheme
+          //           .headlineLarge!
+          //           .copyWith(fontSize: 44),
+          //     ),
+          //   )
+          // else
+          //   Padding(
+          //     padding: const EdgeInsets.fromLTRB(10, 5, 10, 2),
+          //     child: Text(
+          //       "Schedule",
+          //       style: Theme.of(context)
+          //           .textTheme
+          //           .headlineLarge!
+          //           .copyWith(fontSize: 44),
+          //     ),
+          //   ),
           if (data == null)
             const DepartmentList()
           else
@@ -86,7 +86,7 @@ class TimeTable extends ConsumerWidget {
                       fontSize: 15,
                       color: _theme.colorScheme.onTertiary,
                     ),
-                    dateTextStyle: _theme.textTheme.headlineSmall!.copyWith(
+                    dateTextStyle: _theme.textTheme.titleSmall!.copyWith(
                       fontSize: 15,
                       color: _theme.colorScheme.onTertiary,
                     ),

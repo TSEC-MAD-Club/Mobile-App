@@ -60,10 +60,14 @@ class NotesProvider extends StateNotifier<Map<DateTime, List<NotesModel>>> {
 
       if (note.id != "") {
         debugPrint("in notes provider");
-        oldNotes[note.time] = oldNotesSameTime!
-            .where((element) => element.id != note.id)
-            .toList();
-        oldNotes[note.time]!.add(note);
+        if (oldNotesSameTime == null) {
+          oldNotes[note.time] = [note];
+        } else {
+          oldNotes[note.time] = oldNotesSameTime
+              .where((element) => element.id != note.id)
+              .toList();
+          oldNotes[note.time]!.add(note);
+        }
       } else {
         if (oldNotesSameTime != null)
           oldNotes[uploadedNote.time] = [...oldNotesSameTime, uploadedNote];

@@ -67,7 +67,7 @@ class _NoteListState extends ConsumerState<NoteList> {
     // debugPrint(allNotes.toString());
     return SizedBox(
       height: MediaQuery.of(context).size.height * .7,
-      child: ListView.builder(
+      child: allNotes.length != 0 ? ListView.builder(
         itemCount: allNotes.length,
         itemBuilder: (context, index) {
           DateTime ithDate = keys[index];
@@ -213,7 +213,9 @@ class _NoteListState extends ConsumerState<NoteList> {
             ],
           );
         },
-      ),
+      ) : Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+      Text("No notes added yet", style: Theme.of(context).textTheme.titleLarge!.copyWith(color: Colors.white))
+      ]),
     );
   }
 }

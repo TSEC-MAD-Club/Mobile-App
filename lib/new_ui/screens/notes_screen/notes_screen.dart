@@ -8,7 +8,6 @@ import 'package:go_router/go_router.dart';
 import 'package:tsec_app/models/class_model/class_model.dart';
 import 'package:tsec_app/models/notes_model/notes_model.dart';
 import 'package:tsec_app/models/user_model/user_model.dart';
-import 'package:tsec_app/new_ui/screens/notes_screen/widgets/custom_pdf_icon.dart';
 import 'package:tsec_app/new_ui/screens/notes_screen/widgets/note_list.dart';
 import 'package:tsec_app/new_ui/screens/notes_screen/widgets/notes_filter.dart';
 import 'package:tsec_app/new_ui/screens/notes_screen/widgets/notes_modal.dart';
@@ -16,11 +15,7 @@ import 'package:tsec_app/provider/auth_provider.dart';
 import 'package:tsec_app/provider/notes_provider.dart';
 import 'package:tsec_app/utils/datetime.dart';
 import 'package:tsec_app/utils/image_assets.dart';
-import 'package:tsec_app/utils/themes.dart';
-import 'package:tsec_app/widgets/custom_app_bar.dart';
-import 'package:tsec_app/widgets/custom_scaffold.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:open_file/open_file.dart';
 
 class NotesScreen extends ConsumerStatefulWidget {
   const NotesScreen({super.key});
@@ -102,11 +97,12 @@ class _NotesScreenState extends ConsumerState<NotesScreen> {
       floatingActionButton: !userModel.isStudent
           ? OpenContainer(
               transitionDuration: Duration(milliseconds: 500),
-              closedColor: Theme.of(context).colorScheme.secondaryContainer,
+              // closedColor: Theme.of(context).colorScheme.secondary,
+              closedColor: Colors.transparent,
               closedShape: const CircleBorder(),
               closedBuilder: (context, action) {
                 return FloatingActionButton(
-                  // backgroundColor: Colors.transparent,
+                  backgroundColor: Theme.of(context).colorScheme.outline,
                   onPressed: () {
                     action.call();
                   },
@@ -140,76 +136,77 @@ class _NotesScreenState extends ConsumerState<NotesScreen> {
           : Container(),
       body: SafeArea(
         child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                Container(
-                  height: 235,
-                  // decoration: BoxDecoration(
-                  //   // color: Theme.of(context).colorScheme.secondary,
-                  //   borderRadius: const BorderRadius.only(
-                  //     bottomRight: Radius.circular(40),
-                  //   ),
-                  // ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 10),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            _buildNavigation(context,
-                                icon: const Icon(Icons.chevron_left_rounded),
-                                onPressed: () {
-                              GoRouter.of(context).pop();
-                            }),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Text(
-                                "Notes",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headlineLarge!
-                                    .copyWith(color: Colors.white),
-                              ),
-                            ),
-                            SizedBox(
-                              width: 177,
-                              child: Image.asset(
-                                ImageAssets.notes,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                NotesFilterBar(),
-                const SizedBox(
-                  height: 10,
-                ),
-                NoteList(
-                  // subject: _subjects[0],
-                  // noteTitle: _noteTitle[0],
-                  // date: _date[0],
-                  // noteContent: _noteContent[0],
-                  // pdfCount: _pdfCount[0],
-                  // teacherName: _teachersName[0],
-                  formKey: _formKey,
-                  uploadNote: uploadNote,
-                ),
-                const SizedBox(
-                  height: 18,
-                )
-              ],
-            ),
+          child: Column(
+            children: [
+            SizedBox(height: 30,),
+              // Container(
+              //   height: 200,
+              //   // decoration: BoxDecoration(
+              //   //   // color: Theme.of(context).colorScheme.secondary,
+              //   //   borderRadius: const BorderRadius.only(
+              //   //     bottomRight: Radius.circular(40),
+              //   //   ),
+              //   // ),
+              //   child: Padding(
+              //     padding:
+              //         const EdgeInsets.symmetric(horizontal: 15, vertical: 0),
+              //     child: Column(
+              //       mainAxisAlignment: MainAxisAlignment.spaceAround,
+              //       children: [
+              //         // Row(
+              //         //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //         //   children: <Widget>[
+              //         //     _buildNavigation(context,
+              //         //         icon: const Icon(Icons.chevron_left_rounded),
+              //         //         onPressed: () {
+              //         //       GoRouter.of(context).pop();
+              //         //     }),
+              //         //   ],
+              //         // ),
+              //         Row(
+              //           children: [
+              //             Expanded(
+              //               child: Text(
+              //                 "Notes",
+              //                 style: Theme.of(context)
+              //                     .textTheme
+              //                     .headlineLarge!
+              //                     .copyWith(color: Colors.white),
+              //               ),
+              //             ),
+              //             SizedBox(
+              //               width: 177,
+              //               child: Image.asset(
+              //                 ImageAssets.notes,
+              //               ),
+              //             ),
+              //           ],
+              //         ),
+              //       ],
+              //     ),
+              //   ),
+              // ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: NotesFilterBar(),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              NoteList(
+                // subject: _subjects[0],
+                // noteTitle: _noteTitle[0],
+                // date: _date[0],
+                // noteContent: _noteContent[0],
+                // pdfCount: _pdfCount[0],
+                // teacherName: _teachersName[0],
+                formKey: _formKey,
+                uploadNote: uploadNote,
+              ),
+              const SizedBox(
+                height: 18,
+              )
+            ],
           ),
         ),
       ),

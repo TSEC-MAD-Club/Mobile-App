@@ -11,6 +11,10 @@ import 'package:tsec_app/new_ui/screens/notes_screen/widgets/notes_text_field.da
 import 'package:tsec_app/provider/auth_provider.dart';
 import 'package:tsec_app/provider/notes_provider.dart';
 import 'package:tsec_app/utils/profile_details.dart';
+import 'package:dio/dio.dart';
+import 'package:flutter/services.dart';
+import 'package:path_provider/path_provider.dart';
+import 'dart:io';
 
 class NotesModal extends ConsumerStatefulWidget {
   Function action;
@@ -38,9 +42,7 @@ class _NotesModalState extends ConsumerState<NotesModal> {
   String? division;
   String? subject;
 
-  @override
-  void initState() {
-    super.initState();
+  void initFunc() async {
     if (widget.note != null) {
       NotesModel note = widget.note!;
       titleController.text = note.title;
@@ -49,8 +51,70 @@ class _NotesModalState extends ConsumerState<NotesModal> {
       branch = note.targetClasses[0].branch;
       division = note.targetClasses[0].division;
       subject = note.subject;
+      selectedFiles = FilePickerResult([
+        PlatformFile(
+            path:
+                "/data/user/0/com.madclubtsec.tsec_application/cache/file_picker/se361_Chapter_01.pdf",
+            name: "se361_Chapter_01.pdf",
+            bytes: null,
+            readStream: null,
+            size: 435813)
+      ]);
+      // List<PlatformFile> f = await downloadAndConvertFiles(note.attachments);
+      // debugPrint(f.toString());
+      // selectedFiles = FilePickerResult(f);
     }
   }
+
+  @override
+  void initState() {
+    super.initState();
+    initFunc();
+  }
+
+  // Future<List<PlatformFile>> downloadAndConvertFiles(List<String> urls) async {
+  //   List<PlatformFile> platformFiles = [];
+  //
+  //   for (String url in urls) {
+  //     try {
+  //       Dio dio = Dio();
+  //       Response response = await dio.get(url);
+  //
+  //       if (response.statusCode == 200) {
+  //         // Get the temporary directory using the path_provider package
+  //         debugPrint("yea");
+  //         Directory tempDir = await getTemporaryDirectory();
+  //         String tempPath = tempDir.path;
+  //       String name = url.split("%2F")[1].split("?")[0];
+  //         debugPrint("yeah");
+  //         // Create a temporary file to save the downloaded data
+  //         File tempFile =
+  //             File('$tempPath/name');
+  //         await tempFile.writeAsBytes(response.data, flush: true);
+  //
+  //         debugPrint("yeahh");
+  //         // Convert the File to PlatformFile
+  //         PlatformFile platformFile = PlatformFile(
+  //           name: name, // Set a name for the file
+  //           path: tempFile.path,
+  //           bytes: tempFile.readAsBytesSync(),
+  //           size: 0,
+  //         );
+  //
+  //         debugPrint("yeaadskljf");
+  //         platformFiles.add(platformFile);
+  //       } else {
+  //         // Handle error
+  //         print('Failed to download file from $url');
+  //       }
+  //     } catch (e) {
+  //       // Handle exception
+  //       print('Error: $e');
+  //     }
+  //   }
+  //
+  //   return platformFiles;
+  // }
 
   Future<void> pickFiles() async {
     FilePickerResult? results = await FilePicker.platform.pickFiles(
@@ -101,8 +165,19 @@ class _NotesModalState extends ConsumerState<NotesModal> {
             key: widget.formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: !user!.isStudent
+                  ? MainAxisAlignment.spaceBetween
+                  : MainAxisAlignment.start,
               children: [
+                Center(
+                    child: Text("Note",
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleLarge!
+                            .copyWith(color: Colors.white))),
+                SizedBox(
+                  height: 10,
+                ),
                 NotesTextField(
                   editMode: !user!.isStudent,
                   label: "Title",
@@ -118,8 +193,17 @@ class _NotesModalState extends ConsumerState<NotesModal> {
                     return null;
                   },
                 ),
-                Divider(
-                  height: 2,
+                SizedBox(
+                  height: 20,
+                ),
+                user.isStudent
+                    ? Divider(
+                        height: 1,
+                        color: Theme.of(context).colorScheme.outline,
+                      )
+                    : Container(),
+                SizedBox(
+                  height: 20,
                 ),
                 NotesTextField(
                   editMode: !user.isStudent,
@@ -139,6 +223,30 @@ class _NotesModalState extends ConsumerState<NotesModal> {
                 !user.isStudent
                     ? Row(
                         children: [
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * .34,
+                            child: NotesDropdownField(
+                              editMode: true,
+                              label: "Branch",
+                              items: allBranchList,
+                              val: branch,
+                              validator: (value) {
+                                if (value == null) {
+                                  return 'Please select a branch';
+                                }
+                                return null;
+                              },
+                              onChanged: (String? newValue) {
+                                if (newValue != null) {
+                                  setState(() {
+                                    branch = newValue;
+                                    division = null;
+                                    subject = null;
+                                  });
+                                }
+                              },
+                            ),
+                          ),
                           SizedBox(
                             width: MediaQuery.of(context).size.width * .3,
                             child: NotesDropdownField(
@@ -187,35 +295,20 @@ class _NotesModalState extends ConsumerState<NotesModal> {
                               },
                             ),
                           ),
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width * .34,
-                            child: NotesDropdownField(
-                              editMode: true,
-                              label: "Branch",
-                              items: allBranchList,
-                              val: branch,
-                              validator: (value) {
-                                if (value == null) {
-                                  return 'Please select a branch';
-                                }
-                                return null;
-                              },
-                              onChanged: (String? newValue) {
-                                if (newValue != null) {
-                                  setState(() {
-                                    branch = newValue;
-                                    division = null;
-                                    subject = null;
-                                  });
-                                }
-                              },
-                            ),
-                          ),
                         ],
                       )
                     : Container(),
-                Divider(
-                  height: 2,
+                SizedBox(
+                  height: 20,
+                ),
+                user.isStudent
+                    ? Divider(
+                        height: 1,
+                        color: Theme.of(context).colorScheme.outline,
+                      )
+                    : Container(),
+                SizedBox(
+                  height: 20,
                 ),
                 NotesDropdownField(
                   editMode: year != null && branch != null && !user.isStudent,
@@ -239,20 +332,42 @@ class _NotesModalState extends ConsumerState<NotesModal> {
                 // Row(
                 //   children: []0
                 // ),
-                SizedBox(height: 20),
-                Divider(
-                  height: 2,
+                SizedBox(
+                  height: 20,
+                ),
+                user.isStudent
+                    ? Divider(
+                        height: 1,
+                        color: Theme.of(context).colorScheme.outline,
+                      )
+                    : Container(),
+                SizedBox(
+                  height: 20,
                 ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(20, 11, 20, 11),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        'Attachments',
-                        style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                              color: Colors.grey,
-                            ),
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.attachment,
+                            color: Colors.grey,
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Text(
+                            'Attachments',
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleSmall!
+                                .copyWith(
+                                  color: Colors.grey,
+                                ),
+                          ),
+                        ],
                       ),
                       const SizedBox(
                         height: 10,
@@ -360,58 +475,64 @@ class _NotesModalState extends ConsumerState<NotesModal> {
                 !user.isStudent
                     ? Expanded(
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             widget.note != null
-                                ? ElevatedButton(
-                                    style: ButtonStyle(
-                                      backgroundColor:
-                                          MaterialStateProperty.all<Color>(
-                                              Theme.of(context)
-                                                  .colorScheme
-                                                  .error),
+                                ? Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: ElevatedButton(
+                                      style: ButtonStyle(
+                                        backgroundColor:
+                                            MaterialStateProperty.all<Color>(
+                                                Theme.of(context)
+                                                    .colorScheme
+                                                    .error),
+                                      ),
+                                      onPressed: () async {
+                                        ref
+                                            .read(notesProvider.notifier)
+                                            .deleteNote(
+                                                widget.note!.id!, context);
+                                        widget.action.call();
+                                      },
+                                      child: Text('Delete',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headlineMedium),
                                     ),
-                                    onPressed: () async {
-                                      ref
-                                          .read(notesProvider.notifier)
-                                          .deleteNote(
-                                              widget.note!.id!, context);
-                                      widget.action.call();
-                                    },
-                                    child: Text('Delete',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .headlineMedium),
                                   )
                                 : Container(),
-                            ElevatedButton(
-                              style: ButtonStyle(
-                                backgroundColor:
-                                    MaterialStateProperty.all<Color>(
-                                        Theme.of(context)
-                                            .colorScheme
-                                            .tertiaryContainer),
-                                // You can customize other properties as needed
-                                // textColor, elevation, padding, shape, etc.
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: ElevatedButton(
+                                style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.all<Color>(
+                                          Theme.of(context)
+                                              .colorScheme
+                                              .tertiaryContainer),
+                                  // You can customize other properties as needed
+                                  // textColor, elevation, padding, shape, etc.
+                                ),
+                                onPressed: () {
+                                  debugPrint(
+                                      "inside notes modal clicked note id: ${widget.note?.id}");
+                                  widget.uploadNoteCallback(
+                                      selectedFiles,
+                                      widget.note?.id,
+                                      titleController.text,
+                                      descriptionController.text,
+                                      subject,
+                                      branch,
+                                      division,
+                                      year);
+                                },
+                                child: Text(
+                                    widget.note == null ? 'Upload' : 'Save',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headlineMedium),
                               ),
-                              onPressed: () {
-                                debugPrint(
-                                    "inside notes modal clicked note id: ${widget.note?.id}");
-                                widget.uploadNoteCallback(
-                                    selectedFiles,
-                                    widget.note?.id,
-                                    titleController.text,
-                                    descriptionController.text,
-                                    subject,
-                                    branch,
-                                    division,
-                                    year);
-                              },
-                              child: Text(
-                                  widget.note == null ? 'Upload' : 'Save',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headlineMedium),
                             ),
                           ],
                         ),

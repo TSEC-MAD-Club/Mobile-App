@@ -7,6 +7,10 @@ import 'package:tsec_app/models/user_model/user_model.dart';
 import 'package:tsec_app/new_ui/screens/home_screen/home_screen.dart';
 import 'package:tsec_app/provider/auth_provider.dart';
 import 'package:tsec_app/provider/railway_concession_provider.dart';
+import 'package:tsec_app/screens/committees_screen.dart';
+import 'package:tsec_app/screens/department_screen/department_screen.dart';
+import 'package:tsec_app/screens/departmentlist_screen/department_list.dart';
+import 'package:tsec_app/screens/tpc_screen.dart';
 
 class MainScreen extends ConsumerStatefulWidget {
   const MainScreen({
@@ -39,9 +43,12 @@ class _MainScreenState extends ConsumerState<MainScreen> {
           });
         },
       ),
-      Container(child: Text("TPC")),
-      Container(child: Text("Commi")),
-      Container(),
+      // Container(child: Text("TPC")),
+      TPCScreen(),
+      CommitteesScreen(),
+      // Container(child: Text("Commi")),
+      // Container(),
+      DepartmentListScreen(),
       Container(),
       // ProfilePage(
       //   justLoggedIn: false,
@@ -103,9 +110,13 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                 title: Text(
                   currentBottomNavPage == 0
                       ? "Home"
-                      : currentBottomNavPage == 3
-                          ? "Railway Concession"
-                          : "",
+                      : currentBottomNavPage == 1
+                          ? "Notes"
+                          : currentBottomNavPage == 2
+                              ? "Schedule"
+                              : currentBottomNavPage == 3
+                                  ? "Railway Concession"
+                                  : "",
                   style: Theme.of(context)
                       .textTheme
                       .headlineLarge!
@@ -113,46 +124,46 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                   maxLines: 1,
                   overflow: TextOverflow.fade,
                 ),
-                actions: userDetails != null
-                    ? [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Ink(
-                            decoration: ShapeDecoration(
-                              color: Colors.white, // White background color
-                              shape: CircleBorder(), // Circular shape
-                            ),
-                            child: IconButton(
-                              icon: Icon(
-                                Icons.note,
-                                color: Colors.black, // Black icon color
-                              ),
-                              onPressed: () {
-                                GoRouter.of(context).push('/notes');
-                              },
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Ink(
-                            decoration: ShapeDecoration(
-                              color: Colors.white, // White background color
-                              shape: CircleBorder(), // Circular shape
-                            ),
-                            child: IconButton(
-                              icon: Icon(
-                                Icons.event_note,
-                                color: Colors.black, // Black icon color
-                              ),
-                              onPressed: () {
-                                // Handle button click
-                              },
-                            ),
-                          ),
-                        )
-                      ]
-                    : [],
+                // actions: userDetails != null
+                //     ? [
+                //         Padding(
+                //           padding: const EdgeInsets.all(8.0),
+                //           child: Ink(
+                //             decoration: ShapeDecoration(
+                //               color: Colors.white, // White background color
+                //               shape: CircleBorder(), // Circular shape
+                //             ),
+                //             child: IconButton(
+                //               icon: Icon(
+                //                 Icons.note,
+                //                 color: Colors.black, // Black icon color
+                //               ),
+                //               onPressed: () {
+                //                 GoRouter.of(context).push('/notes');
+                //               },
+                //             ),
+                //           ),
+                //         ),
+                //         Padding(
+                //           padding: const EdgeInsets.all(8.0),
+                //           child: Ink(
+                //             decoration: ShapeDecoration(
+                //               color: Colors.white, // White background color
+                //               shape: CircleBorder(), // Circular shape
+                //             ),
+                //             child: IconButton(
+                //               icon: Icon(
+                //                 Icons.event_note,
+                //                 color: Colors.black, // Black icon color
+                //               ),
+                //               onPressed: () {
+                //                 // Handle button click
+                //               },
+                //             ),
+                //           ),
+                //         )
+                //       ]
+                // : [],
               )
             : null,
         drawer: !concessionOpen
