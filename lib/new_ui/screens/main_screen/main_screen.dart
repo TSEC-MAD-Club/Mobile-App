@@ -108,15 +108,21 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                       )
                     : Container(),
                 title: Text(
-                  currentBottomNavPage == 0
-                      ? "Home"
-                      : currentBottomNavPage == 1
-                          ? "Notes"
-                          : currentBottomNavPage == 2
-                              ? "Schedule"
-                              : currentBottomNavPage == 3
-                                  ? "Railway Concession"
-                                  : "",
+                  currentPage == 0
+                      ? (currentBottomNavPage == 0
+                          ? "Home"
+                          : currentBottomNavPage == 1
+                              ? "Notes"
+                              : currentBottomNavPage == 2
+                                  ? "Schedule"
+                                  : currentBottomNavPage == 3
+                                      ? "Railway Concession"
+                                      : "")
+                      : currentPage == 1
+                          ? "TPC"
+                          : currentPage == 2
+                              ? "Committees"
+                              : "Departments",
                   style: Theme.of(context)
                       .textTheme
                       .headlineLarge!

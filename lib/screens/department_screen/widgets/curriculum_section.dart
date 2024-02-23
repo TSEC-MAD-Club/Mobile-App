@@ -119,7 +119,7 @@ class _CurriculumSectionState extends State<CurriculumSection> {
                                   Theme.of(context).textTheme.bodyText2!.color,
                               textStyle: Theme.of(context).textTheme.bodyText2,
                               backgroundColor:
-                                  Theme.of(context).colorScheme.secondary,
+                                  Theme.of(context).colorScheme.primaryContainer,
                             ),
                             onPressed: () {
                               _onButtonClick(url);

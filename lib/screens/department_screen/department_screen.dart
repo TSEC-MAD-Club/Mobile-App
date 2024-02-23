@@ -124,8 +124,8 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
         }
         return true;
       },
-      child: CustomScaffold(
-        appBar: const DepartmentScreenAppBar(title: "Department"),
+      child: Scaffold(
+        // appBar: const DepartmentScreenAppBar(title: "Department"),
         body: SizedBox(
           width: size.width,
           child: Column(
@@ -135,7 +135,7 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 width: size.width,
                 decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.secondary,
+                  color: Theme.of(context).colorScheme.primaryContainer,
                   borderRadius:
                       const BorderRadius.only(bottomRight: Radius.circular(30)),
                 ),

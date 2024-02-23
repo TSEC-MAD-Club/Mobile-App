@@ -43,7 +43,7 @@ class _TPCScreenState extends State<TPCScreen> {
           ),
           child: SizedBox(
             child: Card(
-              color: Theme.of(context).colorScheme.secondary,
+              color: Theme.of(context).colorScheme.primaryContainer,
               semanticContainer: true,
               clipBehavior: Clip.antiAliasWithSaveLayer,
               child: Padding(
@@ -64,7 +64,7 @@ class _TPCScreenState extends State<TPCScreen> {
                         fit: BoxFit.scaleDown,
                       ),
                     ),
-                    Divider(color: Colors.blueAccent.withOpacity(0.7)),
+                    Divider(color: Colors.grey.withOpacity(0.7)),
                     Padding(
                       padding: const EdgeInsets.only(
                         top: 5.0,
@@ -77,9 +77,10 @@ class _TPCScreenState extends State<TPCScreen> {
                           child: Text(
                             _companys[i].name,
                             textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              fontSize: 16,
-                            ),
+                            // style: const TextStyle(
+                            //   fontSize: 16,
+                            // ),
+                            style: Theme.of(context).textTheme.headlineMedium
                           ),
                           fit: BoxFit.scaleDown,
                         ),
@@ -103,15 +104,15 @@ class _TPCScreenState extends State<TPCScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return CustomScaffold(
+    return Scaffold(
       body: NestedScrollView(
         headerSliverBuilder: (_, __) => [
-          SliverToBoxAdapter(
-            child: CustomAppBar(
-              title: "Training & Placement Cell",
-              image: Image.asset(ImageAssets.tpo),
-            ),
-          )
+          // SliverToBoxAdapter(
+          //   child: CustomAppBar(
+          //     title: "Training & Placement Cell",
+          //     image: Image.asset(ImageAssets.tpo),
+          //   ),
+          // )
         ],
         body: FutureBuilder<List<CompanyModel>>(
           future: _companys,
@@ -119,7 +120,7 @@ class _TPCScreenState extends State<TPCScreen> {
             if (snapshot.hasData) {
               final data = snapshot.data!;
               return GridView.count(
-                physics: const NeverScrollableScrollPhysics(),
+                // physics: const NeverScrollableScrollPhysics(),
                 scrollDirection: Axis.vertical,
                 crossAxisCount:
                     (MediaQuery.of(context).size.width / 250).ceil(),

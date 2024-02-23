@@ -44,13 +44,13 @@ class _CommitteesScreenState extends State<CommitteesScreen> {
   Widget build(BuildContext context) {
     double _height = MediaQuery.of(context).size.height;
     double _width = MediaQuery.of(context).size.width;
-    return CustomScaffold(
+    return Scaffold(
       body: ListView(
         children: <Widget>[
-          CustomAppBar(
-            title: "Committees & Events",
-            image: Image.asset(ImageAssets.committes),
-          ),
+          // CustomAppBar(
+          //   title: "Committees & Events",
+          //   image: Image.asset(ImageAssets.committes),
+          // ),
           SizedBox(
             height: _height * 0.03,
           ),
@@ -101,12 +101,16 @@ class _CommitteesScreenState extends State<CommitteesScreen> {
                             children: [
                               Text(
                                 data[_currentPage].name,
-                                style: Theme.of(context).textTheme.headline4,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleMedium!
+                                    .copyWith(color: Colors.white),
                                 textAlign: TextAlign.center,
                               ),
                               const SizedBox(height: 15),
                               Text(
                                 data[_currentPage].description,
+                                style: TextStyle(color: Colors.grey),
                                 textAlign: TextAlign.center,
                               ),
                               const SizedBox(height: 10),

@@ -10,8 +10,7 @@ class DepartmentListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const CustomScaffold(
-      appBar: DepartmentScreenAppBar(title: 'Department'),
+    return const Scaffold(
       body: SafeArea(
         child: CustomScrollView(
           slivers: [
@@ -93,7 +92,7 @@ class DeptWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(12),
         ),
         margin: EdgeInsets.zero,
-        color: Theme.of(context).colorScheme.secondary,
+        color: Theme.of(context).colorScheme.primaryContainer,
         child: Padding(
           padding: EdgeInsets.all(size * 0.02),
           child: Column(
@@ -111,6 +110,7 @@ class DeptWidget extends StatelessWidget {
               Text(
                 department.name,
                 textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.titleMedium
               ),
             ],
           ),

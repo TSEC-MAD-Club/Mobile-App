@@ -101,7 +101,7 @@ class FacultyItem extends StatelessWidget {
           padding:
               const EdgeInsets.only(left: 10, right: 10, top: 0, bottom: 10),
           decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.secondary,
+            color: Theme.of(context).colorScheme.primaryContainer,
             borderRadius: const BorderRadius.all(Radius.circular(12)),
             boxShadow: [
               BoxShadow(

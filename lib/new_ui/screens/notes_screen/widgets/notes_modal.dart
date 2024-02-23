@@ -224,7 +224,7 @@ class _NotesModalState extends ConsumerState<NotesModal> {
                     ? Row(
                         children: [
                           SizedBox(
-                            width: MediaQuery.of(context).size.width * .34,
+                            width: MediaQuery.of(context).size.width * .39,
                             child: NotesDropdownField(
                               editMode: true,
                               label: "Branch",

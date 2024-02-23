@@ -15,6 +15,9 @@ import 'package:tsec_app/new_ui/screens/login_screen/login_screen.dart';
 import "package:tsec_app/new_ui/screens/event_details_screen/event_details.dart";
 // import 'package:tsec_app/screens/login_screen/login_screen.dart';
 import 'package:tsec_app/new_ui/screens/profile_screen/profile_screen.dart';
+import 'package:tsec_app/screens/department_screen/department_screen.dart';
+import 'package:tsec_app/screens/departmentlist_screen/department_list.dart';
+import 'package:tsec_app/utils/department_enum.dart';
 // import 'package:tsec_app/screens/railwayConcession/railwayConcession.dart';
 // import 'package:tsec_app/screens/splash_screen.dart';
 import 'firebase_options.dart';
@@ -166,18 +169,18 @@ class _TSECAppState extends ConsumerState<TSECApp> {
             );
           },
         ),
-        // GoRoute(
-        //   path: "/department",
-        //   builder: (context, state) {
-        //     final department = DepartmentEnum.values[
-        //         int.parse(state.uri.queryParameters["department"] as String)];
-        //     return DepartmentScreen(department: department);
-        //   },
-        // ),
-        // GoRoute(
-        //   path: "/department-list",
-        //   builder: (context, state) => const DepartmentListScreen(),
-        // ),
+        GoRoute(
+          path: "/department",
+          builder: (context, state) {
+            final department = DepartmentEnum.values[
+                int.parse(state.uri.queryParameters["department"] as String)];
+            return DepartmentScreen(department: department);
+          },
+        ),
+        GoRoute(
+          path: "/department-list",
+          builder: (context, state) => const DepartmentListScreen(),
+        ),
       ],
       refreshListenable: ref.watch(appStateProvider),
     );

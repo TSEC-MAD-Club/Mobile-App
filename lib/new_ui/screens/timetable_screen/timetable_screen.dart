@@ -74,6 +74,7 @@ class TimeTable extends ConsumerWidget {
               padding: const EdgeInsets.all(20),
               child: Container(
                 width: _size.width * 0.9,
+                height: 90,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(15.0),
                   child: DatePicker(
