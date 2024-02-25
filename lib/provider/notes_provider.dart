@@ -19,12 +19,11 @@ import 'package:tsec_app/services/notes_service.dart';
 import 'package:tsec_app/utils/notification_type.dart';
 
 final notesProvider =
-    StateNotifierProvider<NotesProvider, Map<DateTime, List<NotesModel>>>(
-        ((ref) {
+    StateNotifierProvider<NotesProvider, List<NotesModel>>(((ref) {
   return NotesProvider(ref: ref, notesService: ref.read(notesServiceProvider));
 }));
 
-class NotesProvider extends StateNotifier<Map<DateTime, List<NotesModel>>> {
+class NotesProvider extends StateNotifier<List<NotesModel>> {
   final NotesService _notesService;
 
   final Ref _ref;
@@ -32,7 +31,7 @@ class NotesProvider extends StateNotifier<Map<DateTime, List<NotesModel>>> {
   NotesProvider({notesService, ref})
       : _notesService = notesService,
         _ref = ref,
-        super(Map<DateTime, List<NotesModel>>());
+        super([]);
 
   Future<List<String>> uploadAttachments(FilePickerResult? files) async {
     // _ref.read(profilePicProvider.notifier).state = image;
@@ -42,47 +41,27 @@ class NotesProvider extends StateNotifier<Map<DateTime, List<NotesModel>>> {
 
   Future<void> fetchNotes() async {
     UserModel? user = _ref.read(userModelProvider);
-    Map<DateTime, List<NotesModel>> allNotes =
-        await _notesService.fetchNotes(user);
-    // debugPrint("fetched notes are:");
-    // for (var note in allNotes.entries) {
-    //   debugPrint("fetched note: ${note.value[0].id}");
-    // }
+    List<NotesModel> allNotes = await _notesService.fetchNotes(user);
     state = allNotes;
   }
 
   Future uploadNote(NotesModel note, BuildContext context) async {
     try {
-      Map<DateTime, List<NotesModel>> oldNotes = state;
-      List<NotesModel>? oldNotesSameTime = oldNotes[note.time];
-
+      List<NotesModel> oldNotes = state;
+      bool isNewNote = note.id == "";
       NotesModel uploadedNote = await _notesService.uploadNote(note);
 
-      if (note.id != "") {
-        debugPrint("in notes provider");
-        if (oldNotesSameTime == null) {
-          oldNotes[note.time] = [note];
-        } else {
-          oldNotes[note.time] = oldNotesSameTime
-              .where((element) => element.id != note.id)
-              .toList();
-          oldNotes[note.time]!.add(note);
-        }
+      // debugPrint("in notes provider ${note.id}");
+
+      if (!isNewNote) {
+        List<NotesModel> updatedNotes = oldNotes.map((currNote) {
+          return currNote.id == note.id ? note : currNote;
+        }).toList();
+        oldNotes = updatedNotes;
       } else {
-        if (oldNotesSameTime != null)
-          oldNotes[uploadedNote.time] = [...oldNotesSameTime, uploadedNote];
-        else
-          oldNotes[uploadedNote.time] = [uploadedNote];
+        oldNotes.add(uploadedNote);
       }
-
-      // debugPrint(state.hashCode.toString());
-      // // state = oldNotes;
-      // debugPrint(state.hashCode.toString());
-
-      state = {...oldNotes};
-      // debugPrint("inside provider, ${state}");
-      // _ref.read(userModelProvider.notifier).state =
-      //     UserModel(isStudent: false, facultyModel: updatedFacultyData);
+      state = [...oldNotes];
     } catch (e) {
       print('Error uploading note: $e');
       ScaffoldMessenger.of(context).showSnackBar(
@@ -94,29 +73,11 @@ class NotesProvider extends StateNotifier<Map<DateTime, List<NotesModel>>> {
 
   Future deleteNote(String noteId, BuildContext context) async {
     try {
-      Map<DateTime, List<NotesModel>> oldNotes = state;
-      Map<DateTime, List<NotesModel>> newNotes = {};
-      for (var key in oldNotes.keys) {
-        List<NotesModel> notes = [];
-        for (NotesModel note in oldNotes[key]!) {
-          if (note.id != noteId) notes.add(note);
-        }
-        if (notes != []) newNotes[key] = notes;
-      }
-      state = newNotes;
+      List<NotesModel> oldNotes = state;
+      // Map<DateTime, List<NotesModel>> newNotes = {};
+      oldNotes = oldNotes.where((note) => note.id != noteId).toList();
+      state = oldNotes;
       await _notesService.deleteNote(noteId);
-      // NotesModel uploadedNote = await _notesService.uploadNote(note);
-      // Map<DateTime, List<NotesModel>> oldNotes =
-      //     _ref.read(fetchedNotesProvider);
-      // List<NotesModel>? oldNotesSameTime = oldNotes[uploadedNote.time];
-      // if (oldNotesSameTime != null)
-      //   oldNotes[uploadedNote.time] = [...oldNotesSameTime, uploadedNote];
-      // else
-      //   oldNotes[uploadedNote.time] = [uploadedNote];
-      // _ref.read(fetchedNotesProvider.notifier).state = oldNotes;
-
-      // _ref.read(userModelProvider.notifier).state =
-      //     UserModel(isStudent: false, facultyModel: updatedFacultyData);
     } catch (e) {
       print('Error deleting note: $e');
       ScaffoldMessenger.of(context).showSnackBar(

@@ -13,25 +13,12 @@ import 'package:tsec_app/provider/notes_provider.dart';
 import 'package:tsec_app/utils/datetime.dart';
 
 class NoteList extends ConsumerStatefulWidget {
-  // final String subject;
-  // final String noteTitle;
-  // final String date;
-  // final String noteContent;
-  // final String pdfCount;
-  // final String teacherName;
-
   Function uploadNote;
   GlobalKey<FormState> formKey;
   NoteList({
     super.key,
     required this.formKey,
     required this.uploadNote,
-    // required this.subject,
-    // required this.noteTitle,
-    // required this.date,
-    // required this.noteContent,
-    // required this.pdfCount,
-    // required this.teacherName,
   });
 
   @override
@@ -47,9 +34,6 @@ class _NoteListState extends ConsumerState<NoteList> {
     });
   }
 
-  /* This method is for shortening the note content 
-    written for 5 words, if needed more, just change the number
-  */
   String _getFirst5Words(String content) {
     List<String> words = content.split(' ');
     if (words.length > 5) {
@@ -61,40 +45,214 @@ class _NoteListState extends ConsumerState<NoteList> {
 
   @override
   Widget build(BuildContext context) {
-    Map<DateTime, List<NotesModel>> allNotes = ref.watch(notesProvider);
-    List<DateTime> keys = allNotes.keys.toList();
-    List<List<NotesModel>> values = allNotes.values.toList();
+    List<NotesModel> allNotes = ref.watch(notesProvider);
+    // List<DateTime> keys = allNotes.keys.toList();
+    // List<List<NotesModel>> values = allNotes.values.toList();
     // debugPrint(allNotes.toString());
-    return SizedBox(
-      height: MediaQuery.of(context).size.height * .7,
-      child: allNotes.length != 0 ? ListView.builder(
-        itemCount: allNotes.length,
-        itemBuilder: (context, index) {
-          DateTime ithDate = keys[index];
-          List<NotesModel> ithNotesList = values[index];
-          return Column(
-            children: [
-              SizedBox(height: 10),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(formatDate(ithDate),
-                      style: TextStyle(color: Colors.grey))
-                ],
-              ),
-              SizedBox(height: 15),
-              SizedBox(
-                height: 200,
-                child: ListView.builder(
-                  itemCount: ithNotesList.length,
-                  itemBuilder: (context, i) {
-                    List<String> attachments = ithNotesList[i]
-                        .attachments
-                        .map((e) => e.split("%2F")[1].split("?")[0])
-                        .toList();
-                    // debugPrint(attachments.toString());
-                    return Padding(
+    // return SizedBox(
+    //   height: MediaQuery.of(context).size.height * .7,
+    //   child: allNotes.length != 0
+    //       ? ListView.builder(
+    //           itemCount: allNotes.length,
+    //           itemBuilder: (context, i) {
+    //             // DateTime ithDate = keys[index];
+    //             // List<NotesModel> ithNotesList = values[index];
+    //
+    //             List<String> attachments = allNotes[i]
+    //                 .attachments
+    //                 .map((e) => e.split("%2F")[1].split("?")[0])
+    //                 .toList();
+    //             return Column(
+    //               children: [
+    //                 SizedBox(height: 10),
+    //                 i == 0 || allNotes[i].time != allNotes[i - 1].time
+    //                     ? Row(
+    //                         crossAxisAlignment: CrossAxisAlignment.center,
+    //                         mainAxisAlignment: MainAxisAlignment.center,
+    //                         children: [
+    //                           Text(
+    //                             formatDate(allNotes[i].time),
+    //                             style: TextStyle(
+    //                               color: Colors.grey,
+    //                             ),
+    //                           )
+    //                         ],
+    //                       )
+    //                     : Container(),
+    //                 SizedBox(
+    //                     height:
+    //                         i == 0 || allNotes[i].time != allNotes[i - 1].time
+    //                             ? 15
+    //                             : 0),
+    //                 Padding(
+    //                   padding: EdgeInsets.all(8),
+    //                   child: OpenContainer(
+    //                     transitionDuration: Duration(milliseconds: 500),
+    //                     closedColor:
+    //                         Theme.of(context).colorScheme.primaryContainer,
+    //                     closedBuilder: (context, action) {
+    //                       return Container(
+    //                         // margin: EdgeInsets.all(8),
+    //                         decoration: BoxDecoration(
+    //                           borderRadius: BorderRadius.circular(35),
+    //                           color: Theme.of(context)
+    //                               .colorScheme
+    //                               .primaryContainer,
+    //                         ),
+    //                         child: Padding(
+    //                           padding: const EdgeInsets.all(
+    //                             12,
+    //                           ),
+    //                           child: Column(
+    //                             crossAxisAlignment: CrossAxisAlignment.start,
+    //                             children: [
+    //                               Text(
+    //                                 "${allNotes[i].subject}: ${allNotes[i].title}",
+    //                                 style: Theme.of(context)
+    //                                     .textTheme
+    //                                     .titleMedium!
+    //                                     .copyWith(color: Colors.white),
+    //                               ),
+    //                               const SizedBox(
+    //                                 height: 7,
+    //                               ),
+    //                               Text(
+    //                                 /* use can use the
+    //                        _getFirst5Words method here if want to
+    //                        _getFirst5Words(widget.noteContent)
+    //                        method on line no. 40
+    //                                             */
+    //                                 allNotes[i].description,
+    //                                 // widget.noteContent,
+    //                                 style: Theme.of(context)
+    //                                     .textTheme
+    //                                     .titleSmall!
+    //                                     .copyWith(color: Colors.grey),
+    //                               ),
+    //                               const SizedBox(
+    //                                 height: 10,
+    //                               ),
+    //                               Row(
+    //                                 mainAxisAlignment: MainAxisAlignment.start,
+    //                                 children: [
+    //                                   Container(
+    //                                     width:
+    //                                         MediaQuery.of(context).size.width *
+    //                                             .8,
+    //                                     height: 40,
+    //                                     child: ListView.builder(
+    //                                         scrollDirection: Axis.horizontal,
+    //                                         itemCount:
+    //                                             min(2, attachments.length),
+    //                                         itemBuilder: (context, ind) {
+    //                                           return CustomPdfIcon(
+    //                                             pdfName: attachments[ind],
+    //                                           );
+    //                                         }),
+    //                                   ),
+    //                                   attachments.length > 2
+    //                                       ? Text(
+    //                                           "+${attachments.length - 2}",
+    //                                           style: TextStyle(
+    //                                               color: Theme.of(context)
+    //                                                   .colorScheme
+    //                                                   .tertiary),
+    //                                         )
+    //                                       : Container()
+    //                                 ],
+    //                               ),
+    //                             ],
+    //                           ),
+    //                         ),
+    //                       );
+    //                     },
+    //                     openBuilder: (context, action) {
+    //                       return NotesModal(
+    //                         action: action,
+    //                         note: allNotes[i],
+    //                         formKey: widget.formKey,
+    //                         uploadNoteCallback:
+    //                             (FilePickerResult? selectedFiles,
+    //                                 String? id,
+    //                                 String? title,
+    //                                 String? description,
+    //                                 String? subject,
+    //                                 String? branch,
+    //                                 String? division,
+    //                                 String? year) {
+    //                           if (widget.formKey.currentState!.validate()) {
+    //                             widget.uploadNote(
+    //                                 selectedFiles,
+    //                                 id,
+    //                                 title,
+    //                                 description,
+    //                                 subject,
+    //                                 branch,
+    //                                 division,
+    //                                 year);
+    //                             action.call();
+    //                           }
+    //                         },
+    //                       );
+    //                     },
+    //                   ),
+    //                 ),
+    //                 // SizedBox(
+    //                 //   height: 200,
+    //                 //   child: ListView.builder(
+    //                 //     itemCount: ithNotesList.length,
+    //                 //     itemBuilder: (context, i) {
+    //                 //       // debugPrint(attachments.toString());
+    //                 //       return;
+    //                 //     },
+    //                 //   ),
+    //                 // )
+    //               ],
+    //             );
+    //           },
+    //         )
+    //       : Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+    //           Text("No notes added yet",
+    //               style: Theme.of(context)
+    //                   .textTheme
+    //                   .titleLarge!
+    //                   .copyWith(color: Colors.white))
+    //         ]),
+    // );
+
+    return allNotes.length != 0
+        ? SliverList(
+            delegate: SliverChildBuilderDelegate(
+              childCount: allNotes.length,
+              (context, i) {
+                List<String> attachments = allNotes[i]
+                    .attachments
+                    .map((e) => e.split("%2F")[1].split("?")[0])
+                    .toList();
+
+                return Column(
+                  children: [
+                    SizedBox(height: 10),
+                    i == 0 || allNotes[i].time != allNotes[i - 1].time
+                        ? Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                formatDate(allNotes[i].time),
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                ),
+                              )
+                            ],
+                          )
+                        : Container(),
+                    SizedBox(
+                        height:
+                            i == 0 || allNotes[i].time != allNotes[i - 1].time
+                                ? 15
+                                : 0),
+                    Padding(
                       padding: EdgeInsets.all(8),
                       child: OpenContainer(
                         transitionDuration: Duration(milliseconds: 500),
@@ -117,7 +275,7 @@ class _NoteListState extends ConsumerState<NoteList> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "${ithNotesList[i].subject}: ${ithNotesList[i].title}",
+                                    "${allNotes[i].subject}: ${allNotes[i].title}",
                                     style: Theme.of(context)
                                         .textTheme
                                         .titleMedium!
@@ -128,11 +286,11 @@ class _NoteListState extends ConsumerState<NoteList> {
                                   ),
                                   Text(
                                     /* use can use the
-                           _getFirst5Words method here if want to
-                           _getFirst5Words(widget.noteContent)
-                           method on line no. 40
-                                                */
-                                    ithNotesList[i].description,
+                         _getFirst5Words method here if want to
+                         _getFirst5Words(widget.noteContent)
+                         method on line no. 40
+                                              */
+                                    allNotes[i].description,
                                     // widget.noteContent,
                                     style: Theme.of(context)
                                         .textTheme
@@ -179,7 +337,7 @@ class _NoteListState extends ConsumerState<NoteList> {
                         openBuilder: (context, action) {
                           return NotesModal(
                             action: action,
-                            note: ithNotesList[i],
+                            note: allNotes[i],
                             formKey: widget.formKey,
                             uploadNoteCallback:
                                 (FilePickerResult? selectedFiles,
@@ -206,16 +364,173 @@ class _NoteListState extends ConsumerState<NoteList> {
                           );
                         },
                       ),
-                    );
-                  },
-                ),
-              )
-            ],
-          );
-        },
-      ) : Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-      Text("No notes added yet", style: Theme.of(context).textTheme.titleLarge!.copyWith(color: Colors.white))
-      ]),
-    );
+                    ),
+                    // SizedBox(
+                    //   height: 200,
+                    //   child: ListView.builder(
+                    //     itemCount: ithNotesList.length,
+                    //     itemBuilder: (context, i) {
+                    //       // debugPrint(attachments.toString());
+                    //       return;
+                    //     },
+                    //   ),
+                    // )
+                  ],
+                );
+              },
+            ),
+            // itemCount: allNotes.length,
+            // itemBuilder: (context, i) {
+            //   // DateTime ithDate = keys[index];
+            //   // List<NotesModel> ithNotesList = values[index];
+            //
+            //   List<String> attachments = allNotes[i]
+            //       .attachments
+            //       .map((e) => e.split("%2F")[1].split("?")[0])
+            //       .toList();
+            //   return Column(
+            //     children: [
+            //       SizedBox(height: 10),
+            //       i == 0 || allNotes[i].time != allNotes[i - 1].time
+            //           ? Row(
+            //               crossAxisAlignment: CrossAxisAlignment.center,
+            //               mainAxisAlignment: MainAxisAlignment.center,
+            //               children: [
+            //                 Text(
+            //                   formatDate(allNotes[i].time),
+            //                   style: TextStyle(
+            //                     color: Colors.grey,
+            //                   ),
+            //                 )
+            //               ],
+            //             )
+            //           : Container(),
+            //       SizedBox(
+            //           height: i == 0 || allNotes[i].time != allNotes[i - 1].time
+            //               ? 15
+            //               : 0),
+            //       Padding(
+            //         padding: EdgeInsets.all(8),
+            //         child: OpenContainer(
+            //           transitionDuration: Duration(milliseconds: 500),
+            //           closedColor:
+            //               Theme.of(context).colorScheme.primaryContainer,
+            //           closedBuilder: (context, action) {
+            //             return Container(
+            //               // margin: EdgeInsets.all(8),
+            //               decoration: BoxDecoration(
+            //                 borderRadius: BorderRadius.circular(35),
+            //                 color:
+            //                     Theme.of(context).colorScheme.primaryContainer,
+            //               ),
+            //               child: Padding(
+            //                 padding: const EdgeInsets.all(
+            //                   12,
+            //                 ),
+            //                 child: Column(
+            //                   crossAxisAlignment: CrossAxisAlignment.start,
+            //                   children: [
+            //                     Text(
+            //                       "${allNotes[i].subject}: ${allNotes[i].title}",
+            //                       style: Theme.of(context)
+            //                           .textTheme
+            //                           .titleMedium!
+            //                           .copyWith(color: Colors.white),
+            //                     ),
+            //                     const SizedBox(
+            //                       height: 7,
+            //                     ),
+            //                     Text(
+            //                       /* use can use the
+            //              _getFirst5Words method here if want to
+            //              _getFirst5Words(widget.noteContent)
+            //              method on line no. 40
+            //                                   */
+            //                       allNotes[i].description,
+            //                       // widget.noteContent,
+            //                       style: Theme.of(context)
+            //                           .textTheme
+            //                           .titleSmall!
+            //                           .copyWith(color: Colors.grey),
+            //                     ),
+            //                     const SizedBox(
+            //                       height: 10,
+            //                     ),
+            //                     Row(
+            //                       mainAxisAlignment: MainAxisAlignment.start,
+            //                       children: [
+            //                         Container(
+            //                           width: MediaQuery.of(context).size.width *
+            //                               .8,
+            //                           height: 40,
+            //                           child: ListView.builder(
+            //                               scrollDirection: Axis.horizontal,
+            //                               itemCount: min(2, attachments.length),
+            //                               itemBuilder: (context, ind) {
+            //                                 return CustomPdfIcon(
+            //                                   pdfName: attachments[ind],
+            //                                 );
+            //                               }),
+            //                         ),
+            //                         attachments.length > 2
+            //                             ? Text(
+            //                                 "+${attachments.length - 2}",
+            //                                 style: TextStyle(
+            //                                     color: Theme.of(context)
+            //                                         .colorScheme
+            //                                         .tertiary),
+            //                               )
+            //                             : Container()
+            //                       ],
+            //                     ),
+            //                   ],
+            //                 ),
+            //               ),
+            //             );
+            //           },
+            //           openBuilder: (context, action) {
+            //             return NotesModal(
+            //               action: action,
+            //               note: allNotes[i],
+            //               formKey: widget.formKey,
+            //               uploadNoteCallback: (FilePickerResult? selectedFiles,
+            //                   String? id,
+            //                   String? title,
+            //                   String? description,
+            //                   String? subject,
+            //                   String? branch,
+            //                   String? division,
+            //                   String? year) {
+            //                 if (widget.formKey.currentState!.validate()) {
+            //                   widget.uploadNote(selectedFiles, id, title,
+            //                       description, subject, branch, division, year);
+            //                   action.call();
+            //                 }
+            //               },
+            //             );
+            //           },
+            //         ),
+            //       ),
+            //       // SizedBox(
+            //       //   height: 200,
+            //       //   child: ListView.builder(
+            //       //     itemCount: ithNotesList.length,
+            //       //     itemBuilder: (context, i) {
+            //       //       // debugPrint(attachments.toString());
+            //       //       return;
+            //       //     },
+            //       //   ),
+            //       // )
+            //     ],
+            //   );
+            // },
+          )
+        : Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+            Text("No notes added yet",
+                style: Theme.of(context)
+                    .textTheme
+                    .titleLarge!
+                    .copyWith(color: Colors.white))
+          ]);
   }
 }

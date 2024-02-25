@@ -30,8 +30,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   List<Widget> widgets = <Widget>[
     HomeWidget(),
     AttendanceScreen(),
-    // const TimeTable(),
-    // const RailwayConcessionScreen(),
+    const TimeTable(),
+    const RailwayConcessionScreen(),
     ProfilePage(
       justLoggedIn: false,
     ),
@@ -49,7 +49,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
     bool concessionOpen = ref.watch(railwayConcessionOpenProvider);
     return Scaffold(
-      // resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       bottomNavigationBar: data != null && !concessionOpen
           ? BottomNavigationBar(
               backgroundColor: Colors.transparent,

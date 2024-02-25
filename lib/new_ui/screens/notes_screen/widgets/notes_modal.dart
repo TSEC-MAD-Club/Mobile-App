@@ -6,6 +6,7 @@ import 'package:open_file/open_file.dart';
 import 'package:tsec_app/models/class_model/class_model.dart';
 import 'package:tsec_app/models/notes_model/notes_model.dart';
 import 'package:tsec_app/models/user_model/user_model.dart';
+import 'package:tsec_app/new_ui/screens/notes_screen/widgets/download_button.dart';
 import 'package:tsec_app/new_ui/screens/notes_screen/widgets/notes_dropdown_field.dart';
 import 'package:tsec_app/new_ui/screens/notes_screen/widgets/notes_text_field.dart';
 import 'package:tsec_app/provider/auth_provider.dart';
@@ -51,15 +52,6 @@ class _NotesModalState extends ConsumerState<NotesModal> {
       branch = note.targetClasses[0].branch;
       division = note.targetClasses[0].division;
       subject = note.subject;
-      selectedFiles = FilePickerResult([
-        PlatformFile(
-            path:
-                "/data/user/0/com.madclubtsec.tsec_application/cache/file_picker/se361_Chapter_01.pdf",
-            name: "se361_Chapter_01.pdf",
-            bytes: null,
-            readStream: null,
-            size: 435813)
-      ]);
       // List<PlatformFile> f = await downloadAndConvertFiles(note.attachments);
       // debugPrint(f.toString());
       // selectedFiles = FilePickerResult(f);
@@ -372,71 +364,95 @@ class _NotesModalState extends ConsumerState<NotesModal> {
                       const SizedBox(
                         height: 10,
                       ),
-                      SizedBox(
-                        height: 40,
-                        child: selectedFiles != null &&
-                                selectedFiles!.files.length > 0
-                            ? ListView.builder(
-                                scrollDirection: Axis.horizontal,
-                                itemCount: selectedFiles?.files.length ?? 0,
-                                itemBuilder: (context, index) {
-                                  var file = selectedFiles!.files[index];
-                                  return Container(
-                                    width: 120,
-                                    height: 10,
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 3.0),
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(30.0),
-                                    ),
-                                    margin: const EdgeInsets.symmetric(
-                                      horizontal: 6.0,
-                                      vertical: 2.0,
-                                    ),
-                                    child: GestureDetector(
-                                      onTap: () => openFile(file.path),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Expanded(
-                                            child: Text(
-                                              file.name,
-                                              style: TextStyle(
-                                                fontSize: 10,
-                                                color: Theme.of(context)
-                                                    .colorScheme
-                                                    .onBackground,
-                                              ),
-                                              overflow: TextOverflow.ellipsis,
+                      widget.note != null
+                          ? SizedBox(
+                              height: 40,
+                              child: widget.note!.attachments.isEmpty
+                                  ? Center(
+                                      child: Text(
+                                        "No attachments added",
+                                        style: TextStyle(color: Colors.grey),
+                                      ),
+                                    )
+                                  : ListView.builder(
+                                      itemCount:
+                                          widget.note!.attachments.length,
+                                      itemBuilder: (context, index) {
+                                        return DownloadButton(
+                                          url: widget.note!.attachments[index],
+                                        );
+                                      }),
+                            )
+                          : SizedBox(
+                              height: 40,
+                              child: selectedFiles != null &&
+                                      selectedFiles!.files.length > 0
+                                  ? ListView.builder(
+                                      scrollDirection: Axis.horizontal,
+                                      itemCount:
+                                          selectedFiles?.files.length ?? 0,
+                                      itemBuilder: (context, index) {
+                                        var file = selectedFiles!.files[index];
+                                        return Container(
+                                          width: 120,
+                                          height: 10,
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 3.0),
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius:
+                                                BorderRadius.circular(30.0),
+                                          ),
+                                          margin: const EdgeInsets.symmetric(
+                                            horizontal: 6.0,
+                                            vertical: 2.0,
+                                          ),
+                                          child: GestureDetector(
+                                            onTap: () => openFile(file.path),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Expanded(
+                                                  child: Text(
+                                                    file.name,
+                                                    style: TextStyle(
+                                                      fontSize: 10,
+                                                      color: Theme.of(context)
+                                                          .colorScheme
+                                                          .onBackground,
+                                                    ),
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                  ),
+                                                ),
+                                                !user.isStudent
+                                                    ? GestureDetector(
+                                                        onTap: () =>
+                                                            deselectFile(file),
+                                                        child: Icon(
+                                                          Icons.cancel,
+                                                          color:
+                                                              Theme.of(context)
+                                                                  .colorScheme
+                                                                  .onBackground,
+                                                        ),
+                                                      )
+                                                    : Container(),
+                                              ],
                                             ),
                                           ),
-                                          !user.isStudent
-                                              ? GestureDetector(
-                                                  onTap: () =>
-                                                      deselectFile(file),
-                                                  child: Icon(
-                                                    Icons.cancel,
-                                                    color: Theme.of(context)
-                                                        .colorScheme
-                                                        .onBackground,
-                                                  ),
-                                                )
-                                              : Container(),
-                                        ],
+                                        );
+                                      },
+                                    )
+                                  : Center(
+                                      child: Text(
+                                        "No attachments added",
+                                        style: TextStyle(color: Colors.grey),
                                       ),
                                     ),
-                                  );
-                                },
-                              )
-                            : Center(
-                                child: Text(
-                                  "No attachments added",
-                                  style: TextStyle(color: Colors.grey),
-                                ),
-                              ),
-                      )
+                            )
                     ],
                   ),
                 ),

@@ -1,25 +1,18 @@
 // ignore_for_file: lines_longer_than_80_chars
-import 'dart:convert';
-import 'dart:io';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:go_router/go_router.dart';
-import 'package:http/http.dart' as http;
 import 'dart:ui';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tsec_app/models/student_model/student_model.dart';
 import 'package:tsec_app/provider/auth_provider.dart';
-import 'package:tsec_app/provider/firebase_provider.dart';
 import 'package:tsec_app/screens/profile_screen/widgets/custom_text_with_divider.dart';
 import 'package:tsec_app/screens/profile_screen/widgets/profile_screen_appbar.dart';
 import 'package:tsec_app/screens/profile_screen/widgets/profile_text_field.dart';
 import 'package:tsec_app/utils/form_validity.dart';
 import 'package:tsec_app/widgets/custom_scaffold.dart';
 import '../../utils/image_pick.dart';
-import '../../utils/themes.dart';
 import 'package:intl/intl.dart';
 
 class ProfilePage extends ConsumerStatefulWidget {
@@ -175,7 +168,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
       // debugPrint("in here ${address} ${_dobController.text} ${batch} ${name}");
       StudentModel student = StudentModel(
         div: div,
-        image : "",
+        image: "",
         batch: batch,
         branch: convertFirstLetterToUpperCase(branch),
         name: name,
@@ -261,13 +254,14 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                   editProfileImage();
                 },
                 elevation: 2.0,
-                fillColor: Color(0xFFF5F6F9),
-                child: Icon(
+                fillColor: const Color(0xFFF5F6F9),
+                child: const Icon(
                   Icons.edit,
                   color: Colors.blue,
                 ),
-                padding: EdgeInsets.all(3.0),
-                shape: CircleBorder(side: BorderSide(color: Colors.black)),
+                padding: const EdgeInsets.all(3.0),
+                shape:
+                    const CircleBorder(side: BorderSide(color: Colors.black)),
               )),
         ],
       ),
@@ -362,7 +356,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                           ],
                         ),
                         Padding(
-                          padding: EdgeInsets.only(top: 200),
+                          padding: const EdgeInsets.only(top: 200),
                           child: Column(
                             children: [
                               BackdropFilter(
@@ -376,7 +370,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                     height: 460,
                                     width: MediaQuery.of(context).size.width *
                                         0.95,
-                                    padding: EdgeInsets.all(10),
+                                    padding: const EdgeInsets.all(10),
                                     decoration: BoxDecoration(
                                       // border:
                                       //     Border.all(color: Color(0xFF454545)),
@@ -436,7 +430,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                     height: 580,
                                     width: MediaQuery.of(context).size.width *
                                         0.95,
-                                    padding: EdgeInsets.all(10),
+                                    padding: const EdgeInsets.all(10),
                                     decoration: BoxDecoration(
                                       border: Border.all(
                                           color: Theme.of(context)
@@ -552,9 +546,10 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                                           context: context,
                                                           initialDate: DateTime
                                                                   .now()
-                                                              .subtract(Duration(
-                                                                  days: 20 *
-                                                                      365)), //get today's date
+                                                              .subtract(
+                                                                  const Duration(
+                                                                      days: 20 *
+                                                                          365)), //get today's date
                                                           firstDate: DateTime(
                                                               1960), //DateTime.now() - not to allow to choose before today.
                                                           lastDate:
@@ -716,7 +711,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                                               DropdownButtonFormField(
                                                             // Initial Value
                                                             value: div,
-                                                            hint: Text(
+                                                            hint: const Text(
                                                               "Division",
                                                               style: TextStyle(
                                                                   color: Colors
@@ -769,7 +764,8 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                                             },
                                                           ),
                                                         ),
-                                                        SizedBox(width: 20),
+                                                        const SizedBox(
+                                                            width: 20),
                                                         Padding(
                                                           padding:
                                                               const EdgeInsets
@@ -780,7 +776,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                                             // Initial Value
                                                             value: batch,
 
-                                                            hint: Text(
+                                                            hint: const Text(
                                                               "Batch",
                                                               style: TextStyle(
                                                                   color: Colors
@@ -888,10 +884,10 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                             ),
                                           ),
                                         ),
-                                        SizedBox(height: 10),
+                                        const SizedBox(height: 10),
                                         Row(
                                           children: [
-                                            Spacer(),
+                                            const Spacer(),
                                             Expanded(
                                               child: ElevatedButton(
                                                 onPressed: () {
@@ -900,8 +896,8 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                                   }
                                                 },
                                                 style: ElevatedButton.styleFrom(
-                                                  padding: EdgeInsets.symmetric(
-                                                      vertical: 15),
+                                                  padding: const EdgeInsets
+                                                      .symmetric(vertical: 15),
                                                   backgroundColor: Colors.green,
                                                   shape: RoundedRectangleBorder(
                                                     borderRadius:
@@ -968,15 +964,15 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
           !_isEditMode
               ? (widget.justLoggedIn
                   ? Container(
-                      padding:
-                          EdgeInsets.symmetric(vertical: 0, horizontal: 20),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 0, horizontal: 20),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Spacer(),
+                          const Spacer(),
                           Expanded(
                             child: Container(
-                              margin: EdgeInsets.only(bottom: 15),
+                              margin: const EdgeInsets.only(bottom: 15),
                               child: ElevatedButton(
                                 onPressed: () {
                                   if (!_isEditMode) {
@@ -986,14 +982,14 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                       // isBlurred = true;
                                       _isEditMode = true;
                                     });
-                                    Future.delayed(Duration(milliseconds: 1000),
-                                        () {
+                                    Future.delayed(
+                                        const Duration(milliseconds: 1000), () {
                                       if (listScrollController.hasClients) {
                                         final position = listScrollController
                                             .position.viewportDimension;
                                         listScrollController.animateTo(
                                           position,
-                                          duration: Duration(seconds: 1),
+                                          duration: const Duration(seconds: 1),
                                           curve: Curves.easeOut,
                                         );
                                       }
@@ -1005,7 +1001,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                     borderRadius: BorderRadius.circular(
                                         50.0), // Half of desired button height
                                   ),
-                                  padding: EdgeInsets.symmetric(
+                                  padding: const EdgeInsets.symmetric(
                                       horizontal: 20, vertical: 10),
                                 ),
                                 child: //Text(_isEditMode ? 'Save Changes' : 'Edit'),
@@ -1056,7 +1052,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                       ),
                     )
                   : Container(
-                      margin: EdgeInsets.only(bottom: 15),
+                      margin: const EdgeInsets.only(bottom: 15),
                       child: ElevatedButton(
                         onPressed: () {
                           if (!_isEditMode) {
@@ -1066,13 +1062,14 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                               // isBlurred = true;
                               _isEditMode = true;
                             });
-                            Future.delayed(Duration(milliseconds: 1000), () {
+                            Future.delayed(const Duration(milliseconds: 1000),
+                                () {
                               if (listScrollController.hasClients) {
                                 final position = listScrollController
                                     .position.viewportDimension;
                                 listScrollController.animateTo(
                                   position,
-                                  duration: Duration(seconds: 1),
+                                  duration: const Duration(seconds: 1),
                                   curve: Curves.easeOut,
                                 );
                               }
@@ -1084,7 +1081,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                             borderRadius: BorderRadius.circular(
                                 50.0), // Half of desired button height
                           ),
-                          padding: EdgeInsets.symmetric(
+                          padding: const EdgeInsets.symmetric(
                               horizontal: 20, vertical: 10),
                         ),
                         child: //Text(_isEditMode ? 'Save Changes' : 'Edit'),

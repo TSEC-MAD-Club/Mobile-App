@@ -158,9 +158,8 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
         div = divisionList.contains(student?.div)
             ? student?.div
             : divisionList[0];
-        batch = batchList.contains(student?.batch)
-            ? student?.batch
-            : batchList[0];
+        batch =
+            batchList.contains(student?.batch) ? student?.batch : batchList[0];
       } else {
         areaOfSpecializationController.text =
             data.facultyModel?.areaOfSpecialization ?? "";
@@ -322,9 +321,13 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
     debugPrint("user data is $data");
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.primary,
+      resizeToAvoidBottomInset: false,
       appBar: widget.justLoggedIn
           ? AppBar(
               backgroundColor: Colors.transparent,
+              automaticallyImplyLeading: false,
+              surfaceTintColor: Colors.transparent,
+              scrolledUnderElevation: 0,
               actions: [
                 Padding(
                   padding: const EdgeInsets.all(8.0),

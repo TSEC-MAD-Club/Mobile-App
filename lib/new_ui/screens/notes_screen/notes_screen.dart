@@ -71,15 +71,19 @@ class _NotesScreenState extends ConsumerState<NotesScreen> {
   }) {
     return GestureDetector(
       onTap: onPressed,
-      child: Container(
-        padding: const EdgeInsets.all(5),
-        decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.onSecondary,
-          borderRadius: BorderRadius.circular(5),
-        ),
-        child: IconTheme(
-          data: const IconThemeData(color: Colors.black),
-          child: icon,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Container(
+          padding: const EdgeInsets.all(0),
+          // height: 10,
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.onSecondary,
+            borderRadius: BorderRadius.circular(5),
+          ),
+          child: IconTheme(
+            data: const IconThemeData(color: Colors.black),
+            child: icon,
+          ),
         ),
       ),
     );
@@ -87,16 +91,12 @@ class _NotesScreenState extends ConsumerState<NotesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // final brightness = Theme.of(context).brightness;
-    // bool isItDarkMode = brightness == Brightness.dark;
     UserModel userModel = ref.watch(userModelProvider)!;
 
-    // Map<DateTime, List<NotesModel>> allNotes = ref.watch(notesProvider);
-    // debugPrint("parent, ${allNotes.toString()}");
     return Scaffold(
       floatingActionButton: !userModel.isStudent
           ? OpenContainer(
-              transitionDuration: Duration(milliseconds: 500),
+              transitionDuration: const Duration(milliseconds: 500),
               // closedColor: Theme.of(context).colorScheme.secondary,
               closedColor: Colors.transparent,
               closedShape: const CircleBorder(),
@@ -115,101 +115,161 @@ class _NotesScreenState extends ConsumerState<NotesScreen> {
               },
               openBuilder: (context, action) {
                 return NotesModal(
-                    action: action,
-                    formKey: _formKey,
-                    uploadNoteCallback: (FilePickerResult? selectedFiles,
-                        String? id,
-                        String? title,
-                        String? description,
-                        String? subject,
-                        String? branch,
-                        String? division,
-                        String? year) {
-                      if (_formKey.currentState!.validate()) {
-                        uploadNote(selectedFiles, id, title, description,
-                            subject, branch, division, year);
-                        action.call();
-                      }
-                    });
+                  action: action,
+                  formKey: _formKey,
+                  uploadNoteCallback: (FilePickerResult? selectedFiles,
+                      String? id,
+                      String? title,
+                      String? description,
+                      String? subject,
+                      String? branch,
+                      String? division,
+                      String? year) {
+                    if (_formKey.currentState!.validate()) {
+                      uploadNote(selectedFiles, id, title, description, subject,
+                          branch, division, year);
+                      action.call();
+                    }
+                  },
+                );
               },
             )
           : Container(),
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-            SizedBox(height: 10,),
-              Container(
-                height: 200,
-                decoration: BoxDecoration(
-                  // color: Theme.of(context).colorScheme.secondary,
-                  borderRadius: const BorderRadius.only(
-                    bottomRight: Radius.circular(40),
-                  ),
-                ),
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 0),
-                  child: Column(
+        child: CustomScrollView(
+          slivers: [
+            SliverAppBar(
+              leading: _buildNavigation(
+                context,
+                icon: const Icon(Icons.chevron_left_rounded),
+                onPressed: () {
+                  GoRouter.of(context).pop();
+                },
+              ),
+              backgroundColor: Colors.transparent,
+              floating: false,
+              pinned: false,
+              expandedHeight: 200.0, // Adjust the height as needed
+              flexibleSpace: FlexibleSpaceBar(
+                background: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          _buildNavigation(context,
-                              icon: const Icon(Icons.chevron_left_rounded),
-                              onPressed: () {
-                            GoRouter.of(context).pop();
-                          }),
-                        ],
+                      Text(
+                        "Notes",
+                        style: Theme.of(context)
+                            .textTheme
+                            .headlineLarge!
+                            .copyWith(color: Colors.white),
                       ),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Text(
-                              "Notes",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headlineLarge!
-                                  .copyWith(color: Colors.white),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 177,
-                            child: Image.asset(
-                              ImageAssets.notes,
-                            ),
-                          ),
-                        ],
+                      SizedBox(
+                        width: 177,
+                        child: Image.asset(
+                          ImageAssets.notes,
+                        ),
                       ),
                     ],
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: NotesFilterBar(),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              NoteList(
-                // subject: _subjects[0],
-                // noteTitle: _noteTitle[0],
-                // date: _date[0],
-                // noteContent: _noteContent[0],
-                // pdfCount: _pdfCount[0],
-                // teacherName: _teachersName[0],
-                formKey: _formKey,
-                uploadNote: uploadNote,
-              ),
-              const SizedBox(
-                height: 18,
-              )
-            ],
-          ),
+            ),
+            NotesFilterBar(),
+            NoteList(
+              formKey: _formKey,
+              uploadNote: uploadNote,
+            ),
+          ],
+          // headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+          //   return <Widget>[
+          //     SliverAppBar(
+          //       leading: _buildNavigation(context,
+          //           icon: const Icon(Icons.chevron_left_rounded),
+          //           onPressed: () {
+          //         GoRouter.of(context).pop();
+          //       }),
+          //       // actions: [
+          //       //   _buildNavigation(context,
+          //       //       icon: const Icon(Icons.chevron_left_rounded),
+          //       //       onPressed: () {
+          //       //     GoRouter.of(context).pop();
+          //       //   }),
+          //       // ],
+          //       backgroundColor: Colors.transparent,
+          //       floating: false,
+          //       pinned: false,
+          //       expandedHeight: 200.0, // Adjust the height as needed
+          //       flexibleSpace: FlexibleSpaceBar(
+          //         background: Padding(
+          //           padding: const EdgeInsets.all(10.0),
+          //           child: Row(
+          //             children: [
+          //               Expanded(
+          //                 child: Text(
+          //                   "Notes",
+          //                   style: Theme.of(context)
+          //                       .textTheme
+          //                       .headlineLarge!
+          //                       .copyWith(color: Colors.white),
+          //                 ),
+          //               ),
+          //               SizedBox(
+          //                 width: 177,
+          //                 child: Image.asset(
+          //                   ImageAssets.notes,
+          //                 ),
+          //               ),
+          //             ],
+          //           ),
+          //         ),
+          //       ),
+          //     ),
+          //     SliverToBoxAdapter(
+          //       child: Padding(
+          //         padding: const EdgeInsets.all(8.0),
+          //         child: NotesFilterBar(),
+          //       ),
+          //     ),
+          //   ];
+          // },
+          // body: NoteList(
+          //   // subject: _subjects[0],
+          //   // noteTitle: _noteTitle[0],
+          //   // date: _date[0],
+          //   // noteContent: _noteContent[0],
+          //   // pdfCount: _pdfCount[0],
+          //   // teacherName: _teachersName[0],
+          //   formKey: _formKey,
+          //   uploadNote: uploadNote,
+          // ),
         ),
       ),
     );
+  }
+}
+
+class CustomSliverAppBar extends SliverPersistentHeaderDelegate {
+  final double expandedHeight;
+
+  CustomSliverAppBar({required this.expandedHeight});
+
+  @override
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    return const Padding(
+      padding: EdgeInsets.all(8.0),
+      child: NotesFilterBar(),
+    );
+  }
+
+  @override
+  double get maxExtent => expandedHeight;
+
+  @override
+  double get minExtent => kToolbarHeight;
+
+  @override
+  bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) {
+    return false;
   }
 }

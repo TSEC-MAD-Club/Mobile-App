@@ -55,9 +55,9 @@ class NotesService {
     return fileDownloadUrls;
   }
 
-  Future<Map<DateTime, List<NotesModel>>> fetchNotes(UserModel? user) async {
+  Future<List<NotesModel>> fetchNotes(UserModel? user) async {
     late QuerySnapshot<Map<String, dynamic>> querySnapshot;
-    if (user == null) return Map<DateTime, List<NotesModel>>();
+    if (user == null) return [];
     if (user.isStudent) {
       // debugPrint(
       //     "${user.studentModel?.branch}, ${user.studentModel?.div}, ${calcGradYear(user.studentModel!.gradyear)}");
@@ -77,8 +77,7 @@ class NotesService {
           .where("professor_name", isEqualTo: user.facultyModel?.name)
           .get();
     }
-    Map<DateTime, List<NotesModel>> reqNotes =
-        Map<DateTime, List<NotesModel>>();
+    List<NotesModel> reqNotes = [];
 
     for (QueryDocumentSnapshot<Map<String, dynamic>> document
         in querySnapshot.docs) {
@@ -86,10 +85,10 @@ class NotesService {
       NotesModel note = NotesModel.fromJson(noteData);
       note.id = document.id;
       // debugPrint("wtsf");
-      if (reqNotes[note.time] != null)
-        reqNotes[note.time] = [...reqNotes[note.time]!, note];
-      else
-        reqNotes[note.time] = [note];
+      // if (reqNotes[note.time] != null) reqNotes[note.time] = [...reqNotes[note.time]!, note];
+      // else
+      //   reqNotes[note.time] = [note];
+      reqNotes.add(note);
       // notesList.add(note);
     }
     return reqNotes;
@@ -97,6 +96,7 @@ class NotesService {
 
   Future<NotesModel> uploadNote(NotesModel note) async {
     try {
+      debugPrint("inside notes service ${note.id}");
       if (note.id != "") {
         // try {
         //   // Try to update the existing document
