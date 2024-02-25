@@ -1,14 +1,12 @@
+// ignore_for_file: lines_longer_than_80_chars
+
 import 'dart:convert';
 import 'dart:ui';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:tsec_app/utils/image_assets.dart';
-
-import '../models/committee_model/committee_model.dart';
-import '../widgets/custom_app_bar.dart';
-import '../widgets/custom_scaffold.dart';
+import 'package:tsec_app/models/committee_model/committee_model.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 
 class CommitteesScreen extends StatefulWidget {
   const CommitteesScreen({Key? key}) : super(key: key);
@@ -18,19 +16,11 @@ class CommitteesScreen extends StatefulWidget {
 }
 
 class _CommitteesScreenState extends State<CommitteesScreen> {
-  late final PageController _pageController;
   late final Future<List<CommitteeModel>> _committees;
-  int _currentPage = 0;
 
   @override
   void initState() {
     super.initState();
-    _pageController = PageController(
-      viewportFraction: 0.5,
-    )..addListener(() {
-        if (mounted) setState(() {});
-      });
-
     _committees = _getCommittees();
   }
 
@@ -40,100 +30,101 @@ class _CommitteesScreenState extends State<CommitteesScreen> {
     return json.map((e) => CommitteeModel.fromJson(e)).toList();
   }
 
+  // ignore: unused_field
+  int _currentPage = 0;
   @override
   Widget build(BuildContext context) {
+    var _theme = Theme.of(context);
     double _height = MediaQuery.of(context).size.height;
     double _width = MediaQuery.of(context).size.width;
     return Scaffold(
-      body: ListView(
-        children: <Widget>[
-          // CustomAppBar(
-          //   title: "Committees & Events",
-          //   image: Image.asset(ImageAssets.committes),
-          // ),
-          SizedBox(
-            height: _height * 0.03,
-          ),
-          FutureBuilder<List<CommitteeModel>>(
-            future: _committees,
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                final data = snapshot.data!;
-                return Column(
-                  children: <Widget>[
-                    SizedBox(
-                      height:
-                          (_height > _width) ? _height * 0.25 : _height * 0.5,
-                      child: PageView.builder(
-                        onPageChanged: (page) {
-                          _currentPage = page;
-                        },
-                        controller: _pageController,
-                        itemCount: data.length,
-                        itemBuilder: (context, index) {
-                          final double currentPage =
-                              _pageController.position.hasContentDimensions
-                                  ? _pageController.page ?? 0
-                                  : 0;
-
-                          return Transform.scale(
-                            scale: _getScale(index, currentPage),
-                            child: Card(
-                              color: Colors.transparent,
-                              child: CachedNetworkImage(
-                                imageUrl: data[index].image,
-                                fit: BoxFit.scaleDown,
-                              ),
-                            ),
-                          );
-                        },
-                      ),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Committees & Events",
+              style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(
+              height: 25,
+            ),
+            FutureBuilder<List<CommitteeModel>>(
+              future: _committees,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  final data = snapshot.data!;
+                  return CarouselSlider.builder(
+                    itemCount: data.length,
+                    options: CarouselOptions(
+                      viewportFraction: 0.9,
+                      height: 500,
+                      enableInfiniteScroll: true,
+                      onPageChanged: (index, reason) {
+                        setState(() {
+                          _currentPage = index;
+                        });
+                      },
                     ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.55,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 50,
-                          vertical: 50,
-                        ),
-                        child: SingleChildScrollView(
-                          child: Column(
-                            children: [
-                              Text(
-                                data[_currentPage].name,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .titleMedium!
-                                    .copyWith(color: Colors.white),
-                                textAlign: TextAlign.center,
-                              ),
-                              const SizedBox(height: 15),
-                              Text(
-                                data[_currentPage].description,
-                                style: TextStyle(color: Colors.grey),
-                                textAlign: TextAlign.center,
-                              ),
-                              const SizedBox(height: 10),
-                            ],
+                    itemBuilder: (context, index, _) {
+                      return Padding(
+                        padding: const EdgeInsets.fromLTRB(2, 8, 2, 8),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: _theme.colorScheme.outline,
+                            borderRadius: BorderRadius.circular(20.0),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(20.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  child: CachedNetworkImage(
+                                    height: 100,
+                                    width: 110,
+                                    imageUrl: data[index].image,
+                                    fit: BoxFit.fill,
+                                  ),
+                                ),
+                                const SizedBox(height: 10),
+                                Text(
+                                  data[index].name,
+                                  style: Theme.of(context).textTheme.titleMedium!.copyWith(color: Colors.white),
+                                  textAlign: TextAlign.left,
+                                ),
+                                const SizedBox(height: 10),
+                                Container(
+                                  height: 250,
+                                  child: SingleChildScrollView(
+                                    child: Text(
+                                      data[_currentPage].description,
+                                      style: Theme.of(context).textTheme.titleSmall!.copyWith(color: Colors.white70, fontSize: 16),
+                                      textAlign: TextAlign.left,
+                                      // maxLines: 17,
+                                      //overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                    ),
-                  ],
-                );
-              }
+                      );
+                    },
+                  );
+                }
 
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            },
-          ),
-        ],
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
-  }
-
-  double _getScale(int index, double page) {
-    return 1 - (lerpDouble(0, .4, index - page) ?? 0).abs();
   }
 }

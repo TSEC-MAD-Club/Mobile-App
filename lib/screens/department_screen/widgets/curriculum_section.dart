@@ -10,8 +10,7 @@ import '../../../utils/storage_util.dart';
 import '../../../utils/themes.dart';
 
 class CurriculumSection extends StatefulWidget {
-  const CurriculumSection({Key? key, required this.department})
-      : super(key: key);
+  const CurriculumSection({Key? key, required this.department}) : super(key: key);
 
   final DepartmentEnum department;
 
@@ -49,8 +48,7 @@ class _CurriculumSectionState extends State<CurriculumSection> {
     return FutureBuilder<Map<String, dynamic>>(
       future: _curriculumDetails,
       builder: (context, snapshot) {
-        if (!snapshot.hasData)
-          return const Center(child: CircularProgressIndicator());
+        if (!snapshot.hasData) return const Center(child: CircularProgressIndicator());
 
         final data = snapshot.data!;
         final semData = data[_selectedSem];
@@ -84,66 +82,72 @@ class _CurriculumSectionState extends State<CurriculumSection> {
                   itemCount: 8,
                 ),
               ),
-              IconTheme(
-                data: const IconThemeData(color: kLightModeLightBlue),
-                child: Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: List.generate(
-                      subjects.length,
-                      (index) => _buildSubjects(subjects[index]),
+              Container(
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.outline,
+                  borderRadius: const BorderRadius.all(Radius.circular(30)),
+                  boxShadow: [
+                    BoxShadow(
+                      offset: const Offset(0, 3),
+                      blurRadius: 7,
+                      color: Theme.of(context).colorScheme.background,
                     ),
-                  ),
+                  ],
                 ),
-              ),
-              // Added row to make sure that it wont take whole
-              // width because of ListView
-              Align(
-                alignment: Alignment.topLeft,
-                child: FittedBox(
-                  fit: BoxFit.scaleDown,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 15),
-                        child: FittedBox(
-                          fit: BoxFit.scaleDown,
-                          child: TextButton(
-                            style: TextButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              foregroundColor:
-                                  Theme.of(context).textTheme.bodyText2!.color,
-                              textStyle: Theme.of(context).textTheme.bodyText2,
-                              backgroundColor:
-                                  Theme.of(context).colorScheme.primaryContainer,
-                            ),
-                            onPressed: () {
-                              _onButtonClick(url);
-                            },
-                            child: _storageResult == null ||
-                                    _storageResult!.isDownloadInProgress
-                                ? SizedBox(
-                                    height: 24,
-                                    width: 24,
-                                    child: CircularProgressIndicator(
-                                      value: _downloadPrecent <= 0
-                                          ? null
-                                          : _downloadPrecent,
-                                    ),
-                                  )
-                                : const FittedBox(
-                                    fit: BoxFit.scaleDown,
-                                    child: Text("Download full syllabus"),
-                                  ),
-                          ),
+                child: Column(
+                  children: [
+                    IconTheme(
+                      data: IconThemeData(color: Theme.of(context).colorScheme.outline),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: List.generate(
+                          subjects.length,
+                          (index) => _buildSubjects(subjects[index]),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+
+                    // Added row to make sure that it wont take whole
+                    // width because of ListView
+                    Align(
+                      alignment: Alignment.topRight,
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            FittedBox(
+                              fit: BoxFit.scaleDown,
+                              child: TextButton(
+                                style: TextButton.styleFrom(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  textStyle: Theme.of(context).textTheme.titleSmall,
+                                  backgroundColor: Theme.of(context).colorScheme.outline,
+                                ),
+                                onPressed: () {
+                                  _onButtonClick(url);
+                                },
+                                child: _storageResult == null || _storageResult!.isDownloadInProgress
+                                    ? SizedBox(
+                                        height: 24,
+                                        width: 24,
+                                        child: CircularProgressIndicator(
+                                          value: _downloadPrecent <= 0 ? null : _downloadPrecent,
+                                        ),
+                                      )
+                                    : const FittedBox(
+                                        fit: BoxFit.scaleDown,
+                                        child: Text("Download full syllabus"),
+                                      ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
@@ -155,8 +159,7 @@ class _CurriculumSectionState extends State<CurriculumSection> {
 
   void launchUrlsyllabus(String url) async {
     if (await canLaunchUrlString(url)) {
-      await launchUrlString(url.toString(),
-          mode: LaunchMode.externalApplication);
+      await launchUrlString(url.toString(), mode: LaunchMode.externalApplication);
     } else
       throw "Could not launch url";
   }
@@ -192,9 +195,12 @@ class _CurriculumSectionState extends State<CurriculumSection> {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        const Icon(Icons.chevron_right_rounded),
+        const Icon(
+          Icons.chevron_right_rounded,
+          color: Colors.grey,
+        ),
         const SizedBox(width: 3),
-        Flexible(child: Text(name)),
+        Flexible(child: Text(name, style: TextStyle(color: Colors.white))),
       ],
     );
   }
@@ -203,36 +209,25 @@ class _CurriculumSectionState extends State<CurriculumSection> {
     final isSelected = sem == _selectedSem;
 
     return InkWell(
-      borderRadius: BorderRadius.circular(8),
-      onTap: () => setState(() => _selectedSem = sem),
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 300),
-        decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              offset: const Offset(0, 3),
-              blurRadius: 7,
-              color: kLightModeLightBlue.withOpacity(0.23),
-            )
-          ],
-          color: Theme.of(context).colorScheme.secondary,
-          borderRadius: BorderRadius.circular(8),
-          gradient: isSelected
-              ? const LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [kDarkModeDarkBlue, kDarkModeLightBlue],
-                )
-              : null,
-        ),
-        margin: const EdgeInsets.symmetric(vertical: 10),
-        padding: const EdgeInsets.all(20),
-        child: Text(
-          "Sem\n$sem",
-          textAlign: TextAlign.center,
-          style: isSelected ? const TextStyle(color: Colors.white) : null,
-        ),
-      ),
-    );
+        borderRadius: BorderRadius.circular(8),
+        onTap: () => setState(() => _selectedSem = sem),
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 300),
+          decoration: BoxDecoration(
+            color: isSelected ? Theme.of(context).colorScheme.primary : Colors.black,
+            borderRadius: BorderRadius.circular(8),
+          ),
+          margin: const EdgeInsets.symmetric(vertical: 10),
+          padding: const EdgeInsets.all(20),
+          child: Text(
+            "Sem\n$sem",
+            textAlign: TextAlign.center,
+            style: isSelected
+                ? const TextStyle(color: Colors.black)
+                : TextStyle(
+                    color: Colors.grey,
+                  ),
+          ),
+        ));
   }
 }

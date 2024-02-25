@@ -12,11 +12,7 @@ class DepartmentListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Scaffold(
       body: SafeArea(
-        child: CustomScrollView(
-          slivers: [
-            DepartmentList(),
-          ],
-        ),
+        child: DepartmentList(),
       ),
     );
   }
@@ -27,40 +23,39 @@ class DepartmentList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SliverPadding(
-      padding: const EdgeInsets.all(20),
-      sliver: SliverGrid.count(
-        crossAxisCount: 2,
-        childAspectRatio:
-            (MediaQuery.of(context).size.width > 400) ? 1.0 : 173 / 224,
-        crossAxisSpacing: 20,
-        mainAxisSpacing: 20,
-        children: const [
-          DeptWidget(
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text("Department", style: Theme.of(context).textTheme.titleLarge),
+          ),
+          const DeptWidget(
             image: "aids",
             department: DepartmentEnum.aids,
           ),
-          DeptWidget(
+          const DeptWidget(
             image: "extc",
             department: DepartmentEnum.extc,
           ),
-          DeptWidget(
+          const DeptWidget(
             image: "cs",
             department: DepartmentEnum.cs,
           ),
-          DeptWidget(
+          const DeptWidget(
             image: "it",
             department: DepartmentEnum.it,
           ),
-          DeptWidget(
+          const DeptWidget(
             image: "biomed",
             department: DepartmentEnum.biomed,
           ),
-          DeptWidget(
+          const DeptWidget(
             image: "biotech",
             department: DepartmentEnum.biotech,
           ),
-          DeptWidget(
+          const DeptWidget(
             image: "chem",
             department: DepartmentEnum.chem,
           ),
@@ -87,30 +82,46 @@ class DeptWidget extends StatelessWidget {
       onTap: () => GoRouter.of(context).push(
         "/department?department=${department.index}",
       ),
-      child: Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
-        margin: EdgeInsets.zero,
-        color: Theme.of(context).colorScheme.primaryContainer,
-        child: Padding(
-          padding: EdgeInsets.all(size * 0.02),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+        child: Container(
+          height: 100,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            color: Theme.of(context).colorScheme.outline,
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Flexible(
-                child: Padding(
-                  padding: EdgeInsets.all(size * 0.04),
+              const SizedBox(
+                width: 10,
+              ),
+              Container(
+                height: 80,
+                width: 80,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: Theme.of(context).colorScheme.outline,
+                ),
+                child: ClipOval(
                   child: Image.asset(
                     "assets/images/branches/$image.png",
-                    height: 150,
+                    height: 40,
                   ),
                 ),
               ),
-              Text(
-                department.name,
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.titleMedium
+              const SizedBox(
+                width: 10,
+              ),
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: Theme.of(context).colorScheme.outline,
+                ),
+                child: Text(
+                  department.name,
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
               ),
             ],
           ),

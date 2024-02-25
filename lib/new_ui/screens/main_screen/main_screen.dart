@@ -44,11 +44,11 @@ class _MainScreenState extends ConsumerState<MainScreen> {
         },
       ),
       // Container(child: Text("TPC")),
-      TPCScreen(),
-      CommitteesScreen(),
+      const TPCScreen(),
+      const CommitteesScreen(),
       // Container(child: Text("Commi")),
       // Container(),
-      DepartmentListScreen(),
+      const DepartmentListScreen(),
       Container(),
       // ProfilePage(
       //   justLoggedIn: false,
@@ -72,15 +72,13 @@ class _MainScreenState extends ConsumerState<MainScreen> {
         appBar: currentBottomNavPage != 3 || !concessionOpen
             ? AppBar(
                 shadowColor: Colors.transparent,
-                backgroundColor: currentBottomNavPage != 4
-                    ? Colors.transparent
-                    : Theme.of(context).colorScheme.primary,
+                backgroundColor: currentBottomNavPage != 4 ? Colors.transparent : Theme.of(context).colorScheme.primary,
                 toolbarHeight: 80,
                 leadingWidth: 100,
                 leading: currentBottomNavPage != 4
                     ? Row(
                         children: [
-                          SizedBox(
+                          const SizedBox(
                             width: 8,
                           ),
                           profilePic != null
@@ -98,10 +96,9 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                                   onTap: () {
                                     _scaffoldKey.currentState?.openDrawer();
                                   },
-                                  child: CircleAvatar(
+                                  child: const CircleAvatar(
                                     radius: 35,
-                                    backgroundImage: AssetImage(
-                                        "assets/images/pfpholder.jpg"),
+                                    backgroundImage: AssetImage("assets/images/pfpholder.jpg"),
                                   ),
                                 ),
                         ],
@@ -123,10 +120,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                           : currentPage == 2
                               ? "Committees"
                               : "Departments",
-                  style: Theme.of(context)
-                      .textTheme
-                      .headlineLarge!
-                      .copyWith(fontSize: 34),
+                  style: Theme.of(context).textTheme.headlineLarge!.copyWith(fontSize: 34),
                   maxLines: 1,
                   overflow: TextOverflow.fade,
                 ),
@@ -135,12 +129,12 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Ink(
-                            decoration: ShapeDecoration(
+                            decoration: const ShapeDecoration(
                               color: Colors.white, // White background color
                               shape: CircleBorder(), // Circular shape
                             ),
                             child: IconButton(
-                              icon: Icon(
+                              icon: const Icon(
                                 Icons.note,
                                 color: Colors.black, // Black icon color
                               ),
@@ -153,12 +147,12 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Ink(
-                            decoration: ShapeDecoration(
+                            decoration: const ShapeDecoration(
                               color: Colors.white, // White background color
                               shape: CircleBorder(), // Circular shape
                             ),
                             child: IconButton(
-                              icon: Icon(
+                              icon: const Icon(
                                 Icons.event_note,
                                 color: Colors.black, // Black icon color
                               ),
@@ -169,15 +163,13 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                           ),
                         )
                       ]
-                : [],
+                    : [],
               )
             : null,
         drawer: !concessionOpen
             ? Drawer(
                 shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(20),
-                      bottomRight: Radius.circular(20)),
+                  borderRadius: BorderRadius.only(topRight: Radius.circular(20), bottomRight: Radius.circular(20)),
                 ),
                 backgroundColor: Colors.black,
                 child: Padding(
@@ -192,40 +184,27 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                               backgroundImage: MemoryImage(profilePic),
                               // backgroundImage: MemoryImage(_image!),
                             )
-                          : CircleAvatar(
+                          : const CircleAvatar(
                               radius: 35,
-                              backgroundImage:
-                                  AssetImage("assets/images/pfpholder.jpg"),
+                              backgroundImage: AssetImage("assets/images/pfpholder.jpg"),
                             ),
-                      SizedBox(
+                      const SizedBox(
                         height: 15,
                       ),
                       Text(
-                        userDetails != null
-                            ? (userDetails.isStudent
-                                ? userDetails.studentModel!.name
-                                : userDetails.facultyModel!.name)
-                            : "Tsecite",
-                        style: Theme.of(context)
-                            .textTheme
-                            .headlineLarge!
-                            .copyWith(fontSize: 30),
+                        userDetails != null ? (userDetails.isStudent ? userDetails.studentModel!.name : userDetails.facultyModel!.name) : "Tsecite",
+                        style: Theme.of(context).textTheme.headlineLarge!.copyWith(fontSize: 30),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 30,
                       ),
                       ListTile(
                         contentPadding: EdgeInsets.zero,
                         title: Text(
                           'Home',
-                          style: Theme.of(context)
-                              .textTheme
-                              .headlineMedium!
-                              .copyWith(
+                          style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                                 fontSize: 22,
-                                color: currentPage == 0
-                                    ? Theme.of(context).colorScheme.onBackground
-                                    : Colors.white,
+                                color: currentPage == 0 ? Theme.of(context).colorScheme.onBackground : Colors.white,
                               ),
                         ),
                         onTap: () {
@@ -239,14 +218,9 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                         contentPadding: EdgeInsets.zero,
                         title: Text(
                           'TPC',
-                          style: Theme.of(context)
-                              .textTheme
-                              .headlineMedium!
-                              .copyWith(
+                          style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                                 fontSize: 22,
-                                color: currentPage == 1
-                                    ? Theme.of(context).colorScheme.onBackground
-                                    : Colors.white,
+                                color: currentPage == 1 ? Theme.of(context).colorScheme.onBackground : Colors.white,
                               ),
                         ),
                         onTap: () {
@@ -261,14 +235,9 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                         contentPadding: EdgeInsets.zero,
                         title: Text(
                           'Committees and Events',
-                          style: Theme.of(context)
-                              .textTheme
-                              .headlineMedium!
-                              .copyWith(
+                          style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                                 fontSize: 22,
-                                color: currentPage == 2
-                                    ? Theme.of(context).colorScheme.onBackground
-                                    : Colors.white,
+                                color: currentPage == 2 ? Theme.of(context).colorScheme.onBackground : Colors.white,
                               ),
                         ),
                         onTap: () {
@@ -282,14 +251,9 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                         contentPadding: EdgeInsets.zero,
                         title: Text(
                           'Departments',
-                          style: Theme.of(context)
-                              .textTheme
-                              .headlineMedium!
-                              .copyWith(
+                          style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                                 fontSize: 22,
-                                color: currentPage == 3
-                                    ? Theme.of(context).colorScheme.onBackground
-                                    : Colors.white,
+                                color: currentPage == 3 ? Theme.of(context).colorScheme.onBackground : Colors.white,
                               ),
                         ),
                         onTap: () {
@@ -303,14 +267,9 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                         contentPadding: EdgeInsets.zero,
                         title: Text(
                           'Contact Us',
-                          style: Theme.of(context)
-                              .textTheme
-                              .headlineMedium!
-                              .copyWith(
+                          style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                                 fontSize: 22,
-                                color: currentPage == 4
-                                    ? Theme.of(context).colorScheme.onBackground
-                                    : Colors.white,
+                                color: currentPage == 4 ? Theme.of(context).colorScheme.onBackground : Colors.white,
                               ),
                         ),
                         onTap: () {
@@ -345,10 +304,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                             contentPadding: EdgeInsets.zero,
                             title: Text(
                               data != null ? 'Logout' : 'Login',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headlineMedium!
-                                  .copyWith(
+                              style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                                     fontSize: 22,
                                     color: Theme.of(context).colorScheme.error,
                                   ),

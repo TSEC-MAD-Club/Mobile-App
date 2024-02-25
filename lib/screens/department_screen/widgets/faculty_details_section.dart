@@ -23,8 +23,7 @@ class _FacultyDetailsSectionState extends State<FacultyDetailsSection> {
   late final Future<List<FacultyModel>> _faculties;
 
   Future<List<FacultyModel>> _getFaculties() async {
-    final data = await rootBundle.loadString(
-        "assets/data/faculty_details/${widget.department.fileName}.json");
+    final data = await rootBundle.loadString("assets/data/faculty_details/${widget.department.fileName}.json");
     final json = jsonDecode(data) as List;
     return json.map((e) => FacultyModel.fromJson(e)).toList();
   }
@@ -93,42 +92,57 @@ class FacultyItem extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       child: SizedBox(
         width: size.width,
         child: Container(
           width: size.width,
-          padding:
-              const EdgeInsets.only(left: 10, right: 10, top: 0, bottom: 10),
+          // padding: const EdgeInsets.only(left: 10, right: 10, top: 0, bottom: 8),
           decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.primaryContainer,
+            color: Colors.transparent,
             borderRadius: const BorderRadius.all(Radius.circular(12)),
             boxShadow: [
               BoxShadow(
                 offset: const Offset(0, 3),
                 blurRadius: 7,
-                color: kLightModeLightBlue.withOpacity(0.23),
+                color: Theme.of(context).colorScheme.background,
               ),
             ],
           ),
           child: Center(
-            child: ExpandablePanel(
-              theme: const ExpandableThemeData(iconColor: kLightModeLightBlue),
-              header: const SizedBox.shrink(),
-              collapsed: CollapsedFacultyCard(
-                name: "$name\n",
-                designation: designation,
-                imageUrl: imageUrl,
-              ),
-              expanded: ExpandedFacultyCard(
-                name: "$name\n",
-                designation: designation,
-                email: email,
-                experience: experience,
-                imageUrl: imageUrl,
-                phdGuide: phdGuide,
-                qualification: qualification,
-                specialization: specialization,
+            child: Container(
+              decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(12),
+                  ),
+                  color: Theme.of(context).colorScheme.outline),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ExpandablePanel(
+                  theme: const ExpandableThemeData(iconColor: Colors.white),
+                  header:
+                      //  CollapsedFacultyCard(
+                      //   name: "$name\n",
+                      //   designation: designation,
+                      //   imageUrl: imageUrl,
+                      // ),
+                      CollapsedFacultyCard(
+                    name: "$name\n",
+                    designation: designation,
+                    imageUrl: imageUrl,
+                  ),
+                  collapsed: SizedBox.shrink(),
+                  expanded: ExpandedFacultyCard(
+                    // name: "$name\n",
+                    //designation: designation,
+                    email: email,
+                    experience: experience,
+                    //imageUrl: imageUrl,
+                    phdGuide: phdGuide,
+                    qualification: qualification,
+                    specialization: specialization,
+                  ),
+                ),
               ),
             ),
           ),
@@ -166,17 +180,11 @@ class CollapsedFacultyCard extends StatelessWidget {
             softWrap: true,
             text: TextSpan(
               text: name,
-              style: Theme.of(context)
-                  .textTheme
-                  .headline3!
-                  .copyWith(fontWeight: FontWeight.w600, fontSize: 22),
+              style: Theme.of(context).textTheme.titleMedium,
               children: [
                 TextSpan(
                   text: designation,
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyText1!
-                      .copyWith(fontWeight: FontWeight.normal, fontSize: 16),
+                  style: Theme.of(context).textTheme.titleSmall,
                 ),
               ],
             ),
@@ -190,21 +198,21 @@ class CollapsedFacultyCard extends StatelessWidget {
 class ExpandedFacultyCard extends StatelessWidget {
   const ExpandedFacultyCard({
     Key? key,
-    required this.name,
-    required this.designation,
+    // required this.name,
+    // required this.designation,
     required this.email,
     required this.experience,
-    required this.imageUrl,
+    //required this.imageUrl,
     required this.phdGuide,
     required this.qualification,
     required this.specialization,
   }) : super(key: key);
 
-  final String name;
-  final String designation;
+  //String name;
+  //final String designation;
   final String email;
   final String experience;
-  final String imageUrl;
+  //final String imageUrl;
   final String phdGuide;
   final String qualification;
   final String specialization;
@@ -212,68 +220,75 @@ class ExpandedFacultyCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return Column(
-      children: [
-        CollapsedFacultyCard(
-          name: name,
-          designation: designation,
-          imageUrl: imageUrl,
-        ),
-        const SizedBox(
-          height: 8,
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15),
-          child: Row(
-            children: [
-              const Padding(
-                padding: EdgeInsets.only(top: 20),
-                child: Icon(
-                  Icons.email,
-                  size: 25,
-                  color: kLightModeLightBlue,
-                ),
-              ),
-              const SizedBox(
-                width: 30,
-              ),
-              Expanded(
-                child: Wrap(
-                  spacing: 5,
-                  runSpacing: 5,
-                  children: [
-                    IconWithChipText(
-                      assetPath: 'assets/images/icons/experience.png',
-                      text: experience,
-                    ),
-                    IconWithChipText(
-                      assetPath: 'assets/images/icons/qualifications.png',
-                      text: qualification,
-                    ),
-                  ],
-                ),
-              ),
-            ],
+    return Container(
+      decoration: BoxDecoration(
+          borderRadius: const BorderRadius.all(
+            Radius.circular(12),
           ),
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        Text(
-          "Area of Specialization",
-          style: Theme.of(context)
-              .textTheme
-              .headline3!
-              .copyWith(fontWeight: FontWeight.w600, fontSize: 17),
-        ),
-        const SizedBox(
-          height: 3,
-        ),
-        ChipStyledText(
-          text: specialization,
-          width: 0.5 * size.width,
-        ),
-      ],
+          color: Theme.of(context).colorScheme.outline),
+      child: Column(
+        children: [
+          // CollapsedFacultyCard(
+          //   name: name,
+          //   designation: designation,
+          //   imageUrl: imageUrl,
+          // ),
+          const SizedBox(
+            height: 8,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: Row(
+              children: [
+                // const Padding(
+                //   padding: EdgeInsets.only(top: 20),
+                //   child:
+                //   Icon(
+                //     Icons.email,
+                //     size: 25,
+                //     color: Colors.white,
+                //   ),
+                // ),
+                const SizedBox(
+                  width: 30,
+                ),
+                Expanded(
+                  child: Wrap(
+                    spacing: 5,
+                    runSpacing: 5,
+                    children: [
+                      IconWithChipText(
+                        assetPath: 'assets/images/icons/experience.png',
+                        text: experience,
+                      ),
+                      IconWithChipText(
+                        assetPath: 'assets/images/icons/qualifications.png',
+                        text: qualification,
+                      ),
+                      const Icon(
+                        Icons.star_border_purple500_outlined,
+                        size: 22,
+                        color: Colors.white,
+                      ),
+                      SizedBox(
+                        width: 20,
+                      ),
+                      Text(
+                        "Area of Specialization",
+                        style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 14),
+                      ),
+                      ChipStyledText(
+                        text: specialization,
+                        width: size.width,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -293,12 +308,16 @@ class ChipStyledText extends StatelessWidget {
       padding: const EdgeInsets.all(8),
       width: width,
       decoration: BoxDecoration(
+        border: Border.all(
+          color: Colors.white54,
+          width: 2.0,
+        ),
         borderRadius: BorderRadius.circular(10),
-        color: Theme.of(context).primaryColorLight,
+        color: Theme.of(context).colorScheme.outline,
       ),
       child: Text(
         text,
-        style: Theme.of(context).textTheme.button,
+        style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 14),
       ),
     );
   }
@@ -326,7 +345,9 @@ class IconWithChipText extends StatelessWidget {
           width: 5,
         ),
         Flexible(
-          child: ChipStyledText(text: text),
+          child: ChipStyledText(
+            text: text,
+          ),
         ),
       ],
     );

@@ -34,8 +34,7 @@ class _ExpandedCardState extends ConsumerState<ExpandedCard> {
   bool isExpanded = false;
 
   Future<String> getFacultyImageUrl(String facultyName) async {
-    final ref =
-        FirebaseStorage.instance.ref().child("faculty/comps/$facultyName.jpg");
+    final ref = FirebaseStorage.instance.ref().child("faculty/comps/$facultyName.jpg");
     String url = (await ref.getDownloadURL()).toString();
     return url;
   }
@@ -76,10 +75,13 @@ class _ExpandedCardState extends ConsumerState<ExpandedCard> {
           );
         }
         if (data[dayStr] == null) {
-          return const Center(child: Text("Happy Weekend !"));
-        } else if (checkOccasion(day, occasionList) != "") {
           return Center(
-              child: Text("Happy ${checkOccasion(day, occasionList)}!"));
+              child: Text(
+            "Happy Weekend !",
+            style: Theme.of(context).textTheme.titleLarge!.copyWith(fontSize: 25),
+          ));
+        } else if (checkOccasion(day, occasionList) != "") {
+          return Center(child: Text("Happy ${checkOccasion(day, occasionList)}!"));
         } else {
           List<TimetableModel> timeTableDay = getTimetablebyDay(data, dayStr);
           if (timeTableDay.isEmpty) {
@@ -101,16 +103,13 @@ class _ExpandedCardState extends ConsumerState<ExpandedCard> {
                       decoration: BoxDecoration(
                         color: _theme.colorScheme.tertiary,
 
-                        borderRadius: BorderRadius.circular(
-                            15.0), // Adjust the radius to control the roundness
+                        borderRadius: BorderRadius.circular(15.0), // Adjust the radius to control the roundness
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withOpacity(
-                                0.2), // Adjust the shadow color and opacity
+                            color: Colors.black.withOpacity(0.2), // Adjust the shadow color and opacity
                             spreadRadius: 2, // Adjust the spread radius
                             blurRadius: 5, // Adjust the blur radius
-                            offset:
-                                const Offset(0, 3), // Adjust the shadow offset
+                            offset: const Offset(0, 3), // Adjust the shadow offset
                           ),
                         ],
                       ),
@@ -122,12 +121,7 @@ class _ExpandedCardState extends ConsumerState<ExpandedCard> {
                             children: [
                               Text(
                                 "Today’s Schedule",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headlineLarge!
-                                    .copyWith(
-                                        fontSize: 20,
-                                        color: _theme.colorScheme.onPrimary),
+                                style: Theme.of(context).textTheme.headlineLarge!.copyWith(fontSize: 20, color: _theme.colorScheme.onPrimary),
                               ),
                               const SizedBox(
                                 height: 15,
@@ -139,33 +133,19 @@ class _ExpandedCardState extends ConsumerState<ExpandedCard> {
                                     const TimeContainer(),
                                     Expanded(
                                       child: Padding(
-                                        padding: const EdgeInsets.fromLTRB(
-                                            10, 0, 5, 0),
+                                        padding: const EdgeInsets.fromLTRB(10, 0, 5, 0),
                                         child: ListView.builder(
                                           shrinkWrap: true,
                                           itemCount: timeTableDay.length,
                                           itemBuilder: (context, index) {
-                                            final lectureFacultyname =
-                                                timeTableDay[index]
-                                                    .lectureFacultyName;
+                                            final lectureFacultyname = timeTableDay[index].lectureFacultyName;
                                             return scheduleCard(
-                                              lectureEndTime:
-                                                  timeTableDay[index]
-                                                      .lectureEndTime,
-                                              lectureName: timeTableDay[index]
-                                                  .lectureName,
-                                              lectureStartTime:
-                                                  timeTableDay[index]
-                                                      .lectureStartTime,
-                                              facultyImageurl:
-                                                  getFacultyImagebyName(
-                                                      lectureFacultyname),
-                                              facultyName: !checkTimetable(
-                                                      lectureFacultyname)
-                                                  ? ""
-                                                  : lectureFacultyname,
-                                              lectureBatch: timeTableDay[index]
-                                                  .lectureBatch,
+                                              lectureEndTime: timeTableDay[index].lectureEndTime,
+                                              lectureName: timeTableDay[index].lectureName,
+                                              lectureStartTime: timeTableDay[index].lectureStartTime,
+                                              facultyImageurl: getFacultyImagebyName(lectureFacultyname),
+                                              facultyName: !checkTimetable(lectureFacultyname) ? "" : lectureFacultyname,
+                                              lectureBatch: timeTableDay[index].lectureBatch,
                                             );
                                           },
                                         ),
@@ -180,33 +160,19 @@ class _ExpandedCardState extends ConsumerState<ExpandedCard> {
                                     const TimeContainer(),
                                     Expanded(
                                       child: Padding(
-                                        padding: const EdgeInsets.fromLTRB(
-                                            10, 0, 5, 0),
+                                        padding: const EdgeInsets.fromLTRB(10, 0, 5, 0),
                                         child: ListView.builder(
                                           shrinkWrap: true,
                                           itemCount: 1,
                                           itemBuilder: (context, index) {
-                                            final lectureFacultyname =
-                                                timeTableDay[index]
-                                                    .lectureFacultyName;
+                                            final lectureFacultyname = timeTableDay[index].lectureFacultyName;
                                             return scheduleCard(
-                                              lectureEndTime:
-                                                  timeTableDay[index]
-                                                      .lectureEndTime,
-                                              lectureName: timeTableDay[index]
-                                                  .lectureName,
-                                              lectureStartTime:
-                                                  timeTableDay[index]
-                                                      .lectureStartTime,
-                                              facultyImageurl:
-                                                  getFacultyImagebyName(
-                                                      lectureFacultyname),
-                                              facultyName: !checkTimetable(
-                                                      lectureFacultyname)
-                                                  ? ""
-                                                  : lectureFacultyname,
-                                              lectureBatch: timeTableDay[index]
-                                                  .lectureBatch,
+                                              lectureEndTime: timeTableDay[index].lectureEndTime,
+                                              lectureName: timeTableDay[index].lectureName,
+                                              lectureStartTime: timeTableDay[index].lectureStartTime,
+                                              facultyImageurl: getFacultyImagebyName(lectureFacultyname),
+                                              facultyName: !checkTimetable(lectureFacultyname) ? "" : lectureFacultyname,
+                                              lectureBatch: timeTableDay[index].lectureBatch,
                                             );
                                           },
                                         ),
@@ -233,14 +199,12 @@ class _ExpandedCardState extends ConsumerState<ExpandedCard> {
     );
   }
 
-  List<TimetableModel> getTimetablebyDay(
-      Map<String, dynamic> data, String day) {
+  List<TimetableModel> getTimetablebyDay(Map<String, dynamic> data, String day) {
     List<TimetableModel> timeTableDay = [];
     final daylist = data[day];
     for (final item in daylist) {
       UserModel? userModel = ref.watch(userModelProvider);
-      if (item['lectureBatch'] == userModel!.studentModel?.batch.toString() ||
-          item['lectureBatch'] == 'All') {
+      if (item['lectureBatch'] == userModel!.studentModel?.batch.toString() || item['lectureBatch'] == 'All') {
         timeTableDay.add(TimetableModel.fromJson(item));
       }
     }
@@ -248,8 +212,7 @@ class _ExpandedCardState extends ConsumerState<ExpandedCard> {
   }
 
   bool checkLabs(String lectureName) {
-    return lectureName.toLowerCase().endsWith('labs') ||
-        lectureName.toLowerCase().endsWith('lab');
+    return lectureName.toLowerCase().endsWith('labs') || lectureName.toLowerCase().endsWith('lab');
   }
 
   bool checkTimetable(String lectureFacultyName) {
