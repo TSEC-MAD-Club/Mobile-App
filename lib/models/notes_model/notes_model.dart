@@ -14,7 +14,7 @@ class NotesModel extends Equatable {
   @JsonKey(name: "description")
   final String description;
   @JsonKey(name: "attachments")
-  final List<String> attachments;
+  List<String> attachments;
   @JsonKey(name: "time")
   final DateTime time;
   @JsonKey(name: "target_classes")

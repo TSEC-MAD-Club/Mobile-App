@@ -1,22 +1,9 @@
-import 'dart:collection';
-import 'dart:convert';
-import 'dart:io';
-import 'dart:typed_data';
-
-import 'package:file_picker/file_picker.dart';
-import 'package:http/http.dart' as http;
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tsec_app/models/notes_model/notes_model.dart';
-import 'package:tsec_app/models/student_model/student_model.dart';
 import 'package:tsec_app/models/user_model/user_model.dart';
 import 'package:tsec_app/provider/auth_provider.dart';
-import 'package:tsec_app/provider/firebase_provider.dart';
-import 'package:tsec_app/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:tsec_app/services/notes_service.dart';
-import 'package:tsec_app/utils/notification_type.dart';
 
 final notesProvider =
     StateNotifierProvider<NotesProvider, List<NotesModel>>(((ref) {
@@ -33,9 +20,15 @@ class NotesProvider extends StateNotifier<List<NotesModel>> {
         _ref = ref,
         super([]);
 
-  Future<List<String>> uploadAttachments(FilePickerResult? files) async {
+  Future<List<String>> uploadAttachments(List<String> files) async {
     // _ref.read(profilePicProvider.notifier).state = image;
     List<String> urls = await _notesService.uploadAttachments(files);
+    return urls;
+  }
+
+  Future<List<String>> deleteAttachments(List<String> files) async {
+    // _ref.read(profilePicProvider.notifier).state = image;
+    List<String> urls = await _notesService.deleteAttachments(files);
     return urls;
   }
 
@@ -45,7 +38,8 @@ class NotesProvider extends StateNotifier<List<NotesModel>> {
     state = allNotes;
   }
 
-  Future uploadNote(NotesModel note, BuildContext context) async {
+  Future uploadNote(NotesModel note, List<String> newFiles,
+      List<String> deletedFiles, BuildContext context) async {
     try {
       List<NotesModel> oldNotes = state;
       bool isNewNote = note.id == "";
@@ -53,6 +47,7 @@ class NotesProvider extends StateNotifier<List<NotesModel>> {
 
       // debugPrint("in notes provider ${note.id}");
 
+      note.attachments = [...note.attachments, ...newFiles];
       if (!isNewNote) {
         List<NotesModel> updatedNotes = oldNotes.map((currNote) {
           return currNote.id == note.id ? note : currNote;
@@ -62,6 +57,13 @@ class NotesProvider extends StateNotifier<List<NotesModel>> {
         oldNotes.add(uploadedNote);
       }
       state = [...oldNotes];
+
+      //attachments stuff
+      List<String> urls = await uploadAttachments(newFiles);
+      note.attachments = [...note.attachments, ...urls];
+      uploadedNote = await _notesService.uploadNote(note);
+
+      await deleteAttachments(deletedFiles);
     } catch (e) {
       print('Error uploading note: $e');
       ScaffoldMessenger.of(context).showSnackBar(

@@ -16,6 +16,7 @@ import 'package:tsec_app/provider/notes_provider.dart';
 import 'package:tsec_app/utils/datetime.dart';
 import 'package:tsec_app/utils/image_assets.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:tsec_app/utils/profile_details.dart';
 
 class NotesScreen extends ConsumerStatefulWidget {
   const NotesScreen({super.key});
@@ -32,9 +33,10 @@ class _NotesScreenState extends ConsumerState<NotesScreen> {
   // used for handeling blurr effect
 
   final _formKey = GlobalKey<FormState>();
-
   void uploadNote(
-      FilePickerResult? selectedFiles,
+      List<String> newFiles,
+      List<String> deletedFiles,
+      List<String> originalFiles,
       String? id,
       String? title,
       String? description,
@@ -43,9 +45,6 @@ class _NotesScreenState extends ConsumerState<NotesScreen> {
       String? division,
       String? year) async {
     UserModel user = ref.read(userModelProvider)!;
-    List<String> urls = await ref
-        .watch(notesProvider.notifier)
-        .uploadAttachments(selectedFiles);
     NotesModel note = NotesModel(
       id: id ?? "",
       // title: titleController.text,
@@ -58,10 +57,12 @@ class _NotesScreenState extends ConsumerState<NotesScreen> {
       targetClasses: [
         ClassModel(branch: branch!, division: division!, year: year!)
       ],
-      attachments: urls,
+      attachments: originalFiles,
     );
 
-    await ref.read(notesProvider.notifier).uploadNote(note, context);
+    await ref
+        .read(notesProvider.notifier)
+        .uploadNote(note, newFiles, deletedFiles, context);
   }
 
   Widget _buildNavigation(
@@ -87,6 +88,44 @@ class _NotesScreenState extends ConsumerState<NotesScreen> {
         ),
       ),
     );
+  }
+
+  DateTime? filterStartDate;
+  DateTime? filterEndDate;
+  bool filterLatest = true;
+  List<String> filterSelectedSubjects = [];
+
+  void changeFilters(DateTime? startDate, DateTime? endDate, bool latest,
+      List<String> subjects) {
+    setState(() {
+      filterStartDate = startDate;
+      filterEndDate = endDate;
+      filterLatest = latest;
+      filterSelectedSubjects = subjects;
+    });
+  }
+
+  void clearAllFilters() {
+    setState(() {
+      UserModel user = ref.read(userModelProvider)!;
+
+      filterStartDate = null;
+      filterEndDate = null;
+      filterLatest = true;
+      filterSelectedSubjects =
+          subjects[calcGradYear(user.studentModel?.gradyear)]
+                  ?[user.studentModel?.branch]?[evenOrOddSem()] ??
+              [];
+    });
+  }
+
+  @override
+  void initState() {
+    UserModel user = ref.read(userModelProvider)!;
+    filterSelectedSubjects = subjects[calcGradYear(user.studentModel?.gradyear)]
+            ?[user.studentModel?.branch]?[evenOrOddSem()] ??
+        [];
+    super.initState();
   }
 
   @override
@@ -117,7 +156,9 @@ class _NotesScreenState extends ConsumerState<NotesScreen> {
                 return NotesModal(
                   action: action,
                   formKey: _formKey,
-                  uploadNoteCallback: (FilePickerResult? selectedFiles,
+                  uploadNoteCallback: (List<String> selectedFiles,
+                      List<String> deletedFiles,
+                      List<String> originalFiles,
                       String? id,
                       String? title,
                       String? description,
@@ -126,8 +167,8 @@ class _NotesScreenState extends ConsumerState<NotesScreen> {
                       String? division,
                       String? year) {
                     if (_formKey.currentState!.validate()) {
-                      uploadNote(selectedFiles, id, title, description, subject,
-                          branch, division, year);
+                      uploadNote(selectedFiles, deletedFiles, originalFiles, id,
+                          title, description, subject, branch, division, year);
                       action.call();
                     }
                   },
@@ -174,102 +215,28 @@ class _NotesScreenState extends ConsumerState<NotesScreen> {
                 ),
               ),
             ),
-            NotesFilterBar(),
+            NotesFilterBar(
+              startDate: filterStartDate,
+              endDate: filterEndDate,
+              latest: filterLatest,
+              subjects: filterSelectedSubjects,
+              changeFilters: (DateTime? startDate, DateTime? endDate,
+                  bool latest, List<String> subjects) {
+                changeFilters(startDate, endDate, latest, subjects);
+              },
+              clearAllFilters: clearAllFilters,
+            ),
             NoteList(
               formKey: _formKey,
-              uploadNote: uploadNote,
+              uploadNoteCallback: uploadNote,
+              startDate: filterStartDate,
+              endDate: filterEndDate,
+              latest: filterLatest,
+              subjects: filterSelectedSubjects,
             ),
           ],
-          // headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-          //   return <Widget>[
-          //     SliverAppBar(
-          //       leading: _buildNavigation(context,
-          //           icon: const Icon(Icons.chevron_left_rounded),
-          //           onPressed: () {
-          //         GoRouter.of(context).pop();
-          //       }),
-          //       // actions: [
-          //       //   _buildNavigation(context,
-          //       //       icon: const Icon(Icons.chevron_left_rounded),
-          //       //       onPressed: () {
-          //       //     GoRouter.of(context).pop();
-          //       //   }),
-          //       // ],
-          //       backgroundColor: Colors.transparent,
-          //       floating: false,
-          //       pinned: false,
-          //       expandedHeight: 200.0, // Adjust the height as needed
-          //       flexibleSpace: FlexibleSpaceBar(
-          //         background: Padding(
-          //           padding: const EdgeInsets.all(10.0),
-          //           child: Row(
-          //             children: [
-          //               Expanded(
-          //                 child: Text(
-          //                   "Notes",
-          //                   style: Theme.of(context)
-          //                       .textTheme
-          //                       .headlineLarge!
-          //                       .copyWith(color: Colors.white),
-          //                 ),
-          //               ),
-          //               SizedBox(
-          //                 width: 177,
-          //                 child: Image.asset(
-          //                   ImageAssets.notes,
-          //                 ),
-          //               ),
-          //             ],
-          //           ),
-          //         ),
-          //       ),
-          //     ),
-          //     SliverToBoxAdapter(
-          //       child: Padding(
-          //         padding: const EdgeInsets.all(8.0),
-          //         child: NotesFilterBar(),
-          //       ),
-          //     ),
-          //   ];
-          // },
-          // body: NoteList(
-          //   // subject: _subjects[0],
-          //   // noteTitle: _noteTitle[0],
-          //   // date: _date[0],
-          //   // noteContent: _noteContent[0],
-          //   // pdfCount: _pdfCount[0],
-          //   // teacherName: _teachersName[0],
-          //   formKey: _formKey,
-          //   uploadNote: uploadNote,
-          // ),
         ),
       ),
     );
-  }
-}
-
-class CustomSliverAppBar extends SliverPersistentHeaderDelegate {
-  final double expandedHeight;
-
-  CustomSliverAppBar({required this.expandedHeight});
-
-  @override
-  Widget build(
-      BuildContext context, double shrinkOffset, bool overlapsContent) {
-    return const Padding(
-      padding: EdgeInsets.all(8.0),
-      child: NotesFilterBar(),
-    );
-  }
-
-  @override
-  double get maxExtent => expandedHeight;
-
-  @override
-  double get minExtent => kToolbarHeight;
-
-  @override
-  bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) {
-    return false;
   }
 }

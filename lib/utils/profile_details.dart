@@ -44,15 +44,17 @@ Map<String, String> gradYear = {
   "BE": "2024",
 };
 
-String calcGradYear(String gradyear) {
+String calcGradYear(String? gradyear) {
   if (gradyear == "2027") {
     return "FE";
   } else if (gradyear == "2026") {
     return "SE";
   } else if (gradyear == "2025") {
     return "TE";
-  } else {
+  } else if (gradyear == "2024") {
     return "BE";
+  } else {
+    return "";
   }
 }
 

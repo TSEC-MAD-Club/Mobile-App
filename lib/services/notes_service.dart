@@ -35,13 +35,13 @@ class NotesService {
 
   User? get user => firebaseAuth.currentUser;
 
-  Future<List<String>> uploadAttachments(FilePickerResult? files) async {
+  Future<List<String>> uploadAttachments(List<String> files) async {
     if (files == null) return [];
 
-    List<PlatformFile> fileList = files.files.toSet().toList();
+    // List<PlatformFile> fileList = files.files.toSet().toList();
     List<String> fileDownloadUrls = [];
-    for (PlatformFile file in fileList) {
-      File fileFormat = File(file.path ?? "");
+    for (String file in files) {
+      File fileFormat = File(file);
       var fileRef = await firebaseStorage
           .ref()
           .child("notes_attachments")
@@ -53,6 +53,13 @@ class NotesService {
       fileDownloadUrls.add(downloadURL);
     }
     return fileDownloadUrls;
+  }
+
+  Future deleteAttachments(List<String> files) async {
+    for (String file in files) {
+      Reference storageReference = FirebaseStorage.instance.refFromURL(file);
+      storageReference.delete();
+    }
   }
 
   Future<List<NotesModel>> fetchNotes(UserModel? user) async {

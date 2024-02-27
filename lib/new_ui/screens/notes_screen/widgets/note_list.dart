@@ -1,24 +1,42 @@
-import 'dart:collection';
 import 'dart:math';
-import 'dart:ui';
 
 import 'package:animations/animations.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tsec_app/models/notes_model/notes_model.dart';
+import 'package:tsec_app/models/user_model/user_model.dart';
 import 'package:tsec_app/new_ui/screens/notes_screen/widgets/custom_pdf_icon.dart';
 import 'package:tsec_app/new_ui/screens/notes_screen/widgets/notes_modal.dart';
+import 'package:tsec_app/provider/auth_provider.dart';
 import 'package:tsec_app/provider/notes_provider.dart';
 import 'package:tsec_app/utils/datetime.dart';
 
 class NoteList extends ConsumerStatefulWidget {
-  Function uploadNote;
+  void Function(
+      List<String> selectedFiles,
+      List<String> deletedFiles,
+      List<String> originalFiles,
+      String? id,
+      String? title,
+      String? description,
+      String? subject,
+      String? branch,
+      String? division,
+      String? year) uploadNoteCallback;
   GlobalKey<FormState> formKey;
+  DateTime? startDate;
+  DateTime? endDate;
+  bool latest;
+  List<String> subjects;
   NoteList({
     super.key,
     required this.formKey,
-    required this.uploadNote,
+    required this.uploadNoteCallback,
+    required this.startDate,
+    required this.endDate,
+    required this.latest,
+    required this.subjects,
   });
 
   @override
@@ -43,182 +61,37 @@ class _NoteListState extends ConsumerState<NoteList> {
     }
   }
 
+  List<NotesModel> applyFilters(List<NotesModel> notes) {
+    if (widget.latest) {
+      notes.sort((a, b) => b.time.compareTo(a.time));
+    } else {
+      notes.sort((a, b) => a.time.compareTo(b.time));
+    }
+    // debugPrint("after date sorting ${notes.toString()}");
+    List<NotesModel> filteredNotes = notes
+        .where((note) =>
+            (widget.startDate == null ||
+                note.time.isAfter(widget.startDate!)) &&
+            (widget.endDate == null || note.time.isBefore(widget.endDate!)))
+        .toList();
+    // debugPrint("after date filtering ${filteredNotes.toString()}");
+    // for (String subject in widget.subjects) {
+    UserModel user = ref.read(userModelProvider)!;
+    if (user.isStudent) {
+      filteredNotes = filteredNotes
+          .where((note) => (widget.subjects.contains(note.subject)))
+          .toList();
+    }
+    // }
+    // debugPrint("final notes are ${dateFilteredNotes}");
+    // debugPrint("after subject filtering ${filteredNotes.toString()}");
+    return filteredNotes;
+  }
+
   @override
   Widget build(BuildContext context) {
     List<NotesModel> allNotes = ref.watch(notesProvider);
-    // List<DateTime> keys = allNotes.keys.toList();
-    // List<List<NotesModel>> values = allNotes.values.toList();
-    // debugPrint(allNotes.toString());
-    // return SizedBox(
-    //   height: MediaQuery.of(context).size.height * .7,
-    //   child: allNotes.length != 0
-    //       ? ListView.builder(
-    //           itemCount: allNotes.length,
-    //           itemBuilder: (context, i) {
-    //             // DateTime ithDate = keys[index];
-    //             // List<NotesModel> ithNotesList = values[index];
-    //
-    //             List<String> attachments = allNotes[i]
-    //                 .attachments
-    //                 .map((e) => e.split("%2F")[1].split("?")[0])
-    //                 .toList();
-    //             return Column(
-    //               children: [
-    //                 SizedBox(height: 10),
-    //                 i == 0 || allNotes[i].time != allNotes[i - 1].time
-    //                     ? Row(
-    //                         crossAxisAlignment: CrossAxisAlignment.center,
-    //                         mainAxisAlignment: MainAxisAlignment.center,
-    //                         children: [
-    //                           Text(
-    //                             formatDate(allNotes[i].time),
-    //                             style: TextStyle(
-    //                               color: Colors.grey,
-    //                             ),
-    //                           )
-    //                         ],
-    //                       )
-    //                     : Container(),
-    //                 SizedBox(
-    //                     height:
-    //                         i == 0 || allNotes[i].time != allNotes[i - 1].time
-    //                             ? 15
-    //                             : 0),
-    //                 Padding(
-    //                   padding: EdgeInsets.all(8),
-    //                   child: OpenContainer(
-    //                     transitionDuration: Duration(milliseconds: 500),
-    //                     closedColor:
-    //                         Theme.of(context).colorScheme.primaryContainer,
-    //                     closedBuilder: (context, action) {
-    //                       return Container(
-    //                         // margin: EdgeInsets.all(8),
-    //                         decoration: BoxDecoration(
-    //                           borderRadius: BorderRadius.circular(35),
-    //                           color: Theme.of(context)
-    //                               .colorScheme
-    //                               .primaryContainer,
-    //                         ),
-    //                         child: Padding(
-    //                           padding: const EdgeInsets.all(
-    //                             12,
-    //                           ),
-    //                           child: Column(
-    //                             crossAxisAlignment: CrossAxisAlignment.start,
-    //                             children: [
-    //                               Text(
-    //                                 "${allNotes[i].subject}: ${allNotes[i].title}",
-    //                                 style: Theme.of(context)
-    //                                     .textTheme
-    //                                     .titleMedium!
-    //                                     .copyWith(color: Colors.white),
-    //                               ),
-    //                               const SizedBox(
-    //                                 height: 7,
-    //                               ),
-    //                               Text(
-    //                                 /* use can use the
-    //                        _getFirst5Words method here if want to
-    //                        _getFirst5Words(widget.noteContent)
-    //                        method on line no. 40
-    //                                             */
-    //                                 allNotes[i].description,
-    //                                 // widget.noteContent,
-    //                                 style: Theme.of(context)
-    //                                     .textTheme
-    //                                     .titleSmall!
-    //                                     .copyWith(color: Colors.grey),
-    //                               ),
-    //                               const SizedBox(
-    //                                 height: 10,
-    //                               ),
-    //                               Row(
-    //                                 mainAxisAlignment: MainAxisAlignment.start,
-    //                                 children: [
-    //                                   Container(
-    //                                     width:
-    //                                         MediaQuery.of(context).size.width *
-    //                                             .8,
-    //                                     height: 40,
-    //                                     child: ListView.builder(
-    //                                         scrollDirection: Axis.horizontal,
-    //                                         itemCount:
-    //                                             min(2, attachments.length),
-    //                                         itemBuilder: (context, ind) {
-    //                                           return CustomPdfIcon(
-    //                                             pdfName: attachments[ind],
-    //                                           );
-    //                                         }),
-    //                                   ),
-    //                                   attachments.length > 2
-    //                                       ? Text(
-    //                                           "+${attachments.length - 2}",
-    //                                           style: TextStyle(
-    //                                               color: Theme.of(context)
-    //                                                   .colorScheme
-    //                                                   .tertiary),
-    //                                         )
-    //                                       : Container()
-    //                                 ],
-    //                               ),
-    //                             ],
-    //                           ),
-    //                         ),
-    //                       );
-    //                     },
-    //                     openBuilder: (context, action) {
-    //                       return NotesModal(
-    //                         action: action,
-    //                         note: allNotes[i],
-    //                         formKey: widget.formKey,
-    //                         uploadNoteCallback:
-    //                             (FilePickerResult? selectedFiles,
-    //                                 String? id,
-    //                                 String? title,
-    //                                 String? description,
-    //                                 String? subject,
-    //                                 String? branch,
-    //                                 String? division,
-    //                                 String? year) {
-    //                           if (widget.formKey.currentState!.validate()) {
-    //                             widget.uploadNote(
-    //                                 selectedFiles,
-    //                                 id,
-    //                                 title,
-    //                                 description,
-    //                                 subject,
-    //                                 branch,
-    //                                 division,
-    //                                 year);
-    //                             action.call();
-    //                           }
-    //                         },
-    //                       );
-    //                     },
-    //                   ),
-    //                 ),
-    //                 // SizedBox(
-    //                 //   height: 200,
-    //                 //   child: ListView.builder(
-    //                 //     itemCount: ithNotesList.length,
-    //                 //     itemBuilder: (context, i) {
-    //                 //       // debugPrint(attachments.toString());
-    //                 //       return;
-    //                 //     },
-    //                 //   ),
-    //                 // )
-    //               ],
-    //             );
-    //           },
-    //         )
-    //       : Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-    //           Text("No notes added yet",
-    //               style: Theme.of(context)
-    //                   .textTheme
-    //                   .titleLarge!
-    //                   .copyWith(color: Colors.white))
-    //         ]),
-    // );
+    allNotes = applyFilters(allNotes);
 
     return allNotes.length != 0
         ? SliverList(
@@ -227,9 +100,16 @@ class _NoteListState extends ConsumerState<NoteList> {
               (context, i) {
                 List<String> attachments = allNotes[i]
                     .attachments
-                    .map((e) => e.split("%2F")[1].split("?")[0])
+                    .map((e) => Uri.parse(e)
+                        .pathSegments
+                        .last
+                        .replaceFirst("notes_attachments/", ""))
                     .toList();
-
+                // debugPrint(allNotes[i]
+                //     .attachments
+                //     .map((e) => Uri.parse(e).pathSegments.last)
+                //     .toList()
+                //     .toString());
                 return Column(
                   children: [
                     SizedBox(height: 10),
@@ -339,18 +219,21 @@ class _NoteListState extends ConsumerState<NoteList> {
                             action: action,
                             note: allNotes[i],
                             formKey: widget.formKey,
-                            uploadNoteCallback:
-                                (FilePickerResult? selectedFiles,
-                                    String? id,
-                                    String? title,
-                                    String? description,
-                                    String? subject,
-                                    String? branch,
-                                    String? division,
-                                    String? year) {
+                            uploadNoteCallback: (List<String> selectedFiles,
+                                List<String> deletedFiles,
+                                List<String> originalFiles,
+                                String? id,
+                                String? title,
+                                String? description,
+                                String? subject,
+                                String? branch,
+                                String? division,
+                                String? year) {
                               if (widget.formKey.currentState!.validate()) {
-                                widget.uploadNote(
+                                widget.uploadNoteCallback(
                                     selectedFiles,
+                                    deletedFiles,
+                                    originalFiles,
                                     id,
                                     title,
                                     description,
@@ -365,172 +248,21 @@ class _NoteListState extends ConsumerState<NoteList> {
                         },
                       ),
                     ),
-                    // SizedBox(
-                    //   height: 200,
-                    //   child: ListView.builder(
-                    //     itemCount: ithNotesList.length,
-                    //     itemBuilder: (context, i) {
-                    //       // debugPrint(attachments.toString());
-                    //       return;
-                    //     },
-                    //   ),
-                    // )
                   ],
                 );
               },
             ),
-            // itemCount: allNotes.length,
-            // itemBuilder: (context, i) {
-            //   // DateTime ithDate = keys[index];
-            //   // List<NotesModel> ithNotesList = values[index];
-            //
-            //   List<String> attachments = allNotes[i]
-            //       .attachments
-            //       .map((e) => e.split("%2F")[1].split("?")[0])
-            //       .toList();
-            //   return Column(
-            //     children: [
-            //       SizedBox(height: 10),
-            //       i == 0 || allNotes[i].time != allNotes[i - 1].time
-            //           ? Row(
-            //               crossAxisAlignment: CrossAxisAlignment.center,
-            //               mainAxisAlignment: MainAxisAlignment.center,
-            //               children: [
-            //                 Text(
-            //                   formatDate(allNotes[i].time),
-            //                   style: TextStyle(
-            //                     color: Colors.grey,
-            //                   ),
-            //                 )
-            //               ],
-            //             )
-            //           : Container(),
-            //       SizedBox(
-            //           height: i == 0 || allNotes[i].time != allNotes[i - 1].time
-            //               ? 15
-            //               : 0),
-            //       Padding(
-            //         padding: EdgeInsets.all(8),
-            //         child: OpenContainer(
-            //           transitionDuration: Duration(milliseconds: 500),
-            //           closedColor:
-            //               Theme.of(context).colorScheme.primaryContainer,
-            //           closedBuilder: (context, action) {
-            //             return Container(
-            //               // margin: EdgeInsets.all(8),
-            //               decoration: BoxDecoration(
-            //                 borderRadius: BorderRadius.circular(35),
-            //                 color:
-            //                     Theme.of(context).colorScheme.primaryContainer,
-            //               ),
-            //               child: Padding(
-            //                 padding: const EdgeInsets.all(
-            //                   12,
-            //                 ),
-            //                 child: Column(
-            //                   crossAxisAlignment: CrossAxisAlignment.start,
-            //                   children: [
-            //                     Text(
-            //                       "${allNotes[i].subject}: ${allNotes[i].title}",
-            //                       style: Theme.of(context)
-            //                           .textTheme
-            //                           .titleMedium!
-            //                           .copyWith(color: Colors.white),
-            //                     ),
-            //                     const SizedBox(
-            //                       height: 7,
-            //                     ),
-            //                     Text(
-            //                       /* use can use the
-            //              _getFirst5Words method here if want to
-            //              _getFirst5Words(widget.noteContent)
-            //              method on line no. 40
-            //                                   */
-            //                       allNotes[i].description,
-            //                       // widget.noteContent,
-            //                       style: Theme.of(context)
-            //                           .textTheme
-            //                           .titleSmall!
-            //                           .copyWith(color: Colors.grey),
-            //                     ),
-            //                     const SizedBox(
-            //                       height: 10,
-            //                     ),
-            //                     Row(
-            //                       mainAxisAlignment: MainAxisAlignment.start,
-            //                       children: [
-            //                         Container(
-            //                           width: MediaQuery.of(context).size.width *
-            //                               .8,
-            //                           height: 40,
-            //                           child: ListView.builder(
-            //                               scrollDirection: Axis.horizontal,
-            //                               itemCount: min(2, attachments.length),
-            //                               itemBuilder: (context, ind) {
-            //                                 return CustomPdfIcon(
-            //                                   pdfName: attachments[ind],
-            //                                 );
-            //                               }),
-            //                         ),
-            //                         attachments.length > 2
-            //                             ? Text(
-            //                                 "+${attachments.length - 2}",
-            //                                 style: TextStyle(
-            //                                     color: Theme.of(context)
-            //                                         .colorScheme
-            //                                         .tertiary),
-            //                               )
-            //                             : Container()
-            //                       ],
-            //                     ),
-            //                   ],
-            //                 ),
-            //               ),
-            //             );
-            //           },
-            //           openBuilder: (context, action) {
-            //             return NotesModal(
-            //               action: action,
-            //               note: allNotes[i],
-            //               formKey: widget.formKey,
-            //               uploadNoteCallback: (FilePickerResult? selectedFiles,
-            //                   String? id,
-            //                   String? title,
-            //                   String? description,
-            //                   String? subject,
-            //                   String? branch,
-            //                   String? division,
-            //                   String? year) {
-            //                 if (widget.formKey.currentState!.validate()) {
-            //                   widget.uploadNote(selectedFiles, id, title,
-            //                       description, subject, branch, division, year);
-            //                   action.call();
-            //                 }
-            //               },
-            //             );
-            //           },
-            //         ),
-            //       ),
-            //       // SizedBox(
-            //       //   height: 200,
-            //       //   child: ListView.builder(
-            //       //     itemCount: ithNotesList.length,
-            //       //     itemBuilder: (context, i) {
-            //       //       // debugPrint(attachments.toString());
-            //       //       return;
-            //       //     },
-            //       //   ),
-            //       // )
-            //     ],
-            //   );
-            // },
           )
-        : Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-            Text("No notes added yet",
+        : SliverFillRemaining(
+            child: Center(
+              child: Text(
+                "No notes added yet",
                 style: Theme.of(context)
                     .textTheme
                     .titleLarge!
-                    .copyWith(color: Colors.white))
-          ]);
+                    .copyWith(color: Colors.white),
+              ),
+            ),
+          );
   }
 }

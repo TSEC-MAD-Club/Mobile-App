@@ -20,7 +20,17 @@ import 'dart:io';
 class NotesModal extends ConsumerStatefulWidget {
   Function action;
   NotesModel? note;
-  Function uploadNoteCallback;
+  void Function(
+      List<String> selectedFiles,
+      List<String> deletedFiles,
+      List<String> originalFiles,
+      String? id,
+      String? title,
+      String? description,
+      String? subject,
+      String? branch,
+      String? division,
+      String? year) uploadNoteCallback;
   GlobalKey<FormState> formKey;
   NotesModal({
     super.key,
@@ -35,7 +45,10 @@ class NotesModal extends ConsumerStatefulWidget {
 }
 
 class _NotesModalState extends ConsumerState<NotesModal> {
-  FilePickerResult? selectedFiles;
+  // FilePickerResult? selectedFiles;
+  List<String> attachments = [];
+  List<String> newAttachments = [];
+  List<String> deletedAttachments = [];
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   String? year;
@@ -52,6 +65,7 @@ class _NotesModalState extends ConsumerState<NotesModal> {
       branch = note.targetClasses[0].branch;
       division = note.targetClasses[0].division;
       subject = note.subject;
+      attachments = widget.note?.attachments ?? [];
       // List<PlatformFile> f = await downloadAndConvertFiles(note.attachments);
       // debugPrint(f.toString());
       // selectedFiles = FilePickerResult(f);
@@ -115,22 +129,31 @@ class _NotesModalState extends ConsumerState<NotesModal> {
       allowMultiple: true,
     );
     if (results != null) {
-      debugPrint(results.toString());
+      List<String> resultFiles =
+          results.files.map((e) => e.path ?? "").toList();
+      // debugPrint(results.toString());
       setState(() {
-        if (selectedFiles == null) {
-          selectedFiles = results;
-        } else {
-          selectedFiles?.files.addAll(results.files);
-        }
+        attachments = [...attachments, ...resultFiles];
+        debugPrint("new attachments: ${attachments.toString()}");
+        newAttachments = [...newAttachments, ...resultFiles];
+        // if (selectedFiles == null) {
+        //   selectedFiles = results;
+        // } else {
+        //   selectedFiles?.files.addAll(results.files);
+        // }
       });
     } else {
       // User canceled the picker
     }
   }
 
-  void deselectFile(PlatformFile file) {
+  void deselectFile(String file) {
     setState(() {
-      selectedFiles!.files.remove(file);
+      // selectedFiles!.files.remove(file);
+      attachments = attachments.where((f) => f != file).toList();
+      if (!newAttachments.contains(file))
+        deletedAttachments = [...deletedAttachments, file];
+      newAttachments = newAttachments.where((f) => f != file).toList();
     });
   }
 
@@ -155,342 +178,357 @@ class _NotesModalState extends ConsumerState<NotesModal> {
           ),
           child: Form(
             key: widget.formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: !user!.isStudent
-                  ? MainAxisAlignment.spaceBetween
-                  : MainAxisAlignment.start,
-              children: [
-                Center(
-                    child: Text("Note",
-                        style: Theme.of(context)
-                            .textTheme
-                            .titleLarge!
-                            .copyWith(color: Colors.white))),
-                SizedBox(
-                  height: 10,
-                ),
-                NotesTextField(
-                  editMode: !user!.isStudent,
-                  label: "Title",
-                  controller: titleController,
-                  readOnly: false,
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Please enter a title';
-                    }
-                    // if (!isValidPhoneNumber(value)) {
-                    //   return 'Please enter a valid phone number';
-                    // }
-                    return null;
-                  },
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                user.isStudent
-                    ? Divider(
-                        height: 1,
-                        color: Theme.of(context).colorScheme.outline,
-                      )
-                    : Container(),
-                SizedBox(
-                  height: 20,
-                ),
-                NotesTextField(
-                  editMode: !user.isStudent,
-                  label: "Description",
-                  controller: descriptionController,
-                  readOnly: false,
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Please enter a description';
-                    }
-                    // if (!isValidPhoneNumber(value)) {
-                    //   return 'Please enter a valid phone number';
-                    // }
-                    return null;
-                  },
-                ),
-                !user.isStudent
-                    ? Row(
-                        children: [
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width * .39,
-                            child: NotesDropdownField(
-                              editMode: true,
-                              label: "Branch",
-                              items: allBranchList,
-                              val: branch,
-                              validator: (value) {
-                                if (value == null) {
-                                  return 'Please select a branch';
-                                }
-                                return null;
-                              },
-                              onChanged: (String? newValue) {
-                                if (newValue != null) {
-                                  setState(() {
-                                    branch = newValue;
-                                    division = null;
-                                    subject = null;
-                                  });
-                                }
-                              },
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: !user!.isStudent
+                    ? MainAxisAlignment.spaceBetween
+                    : MainAxisAlignment.start,
+                children: [
+                  Center(
+                      child: Text("Note",
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleLarge!
+                              .copyWith(color: Colors.white))),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  NotesTextField(
+                    editMode: !user.isStudent,
+                    label: "Title",
+                    controller: titleController,
+                    readOnly: false,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter a title';
+                      }
+                      // if (!isValidPhoneNumber(value)) {
+                      //   return 'Please enter a valid phone number';
+                      // }
+                      return null;
+                    },
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  user.isStudent
+                      ? Divider(
+                          height: 1,
+                          color: Theme.of(context).colorScheme.outline,
+                        )
+                      : Container(),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  NotesTextField(
+                    editMode: !user.isStudent,
+                    label: "Description",
+                    controller: descriptionController,
+                    readOnly: false,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter a description';
+                      }
+                      // if (!isValidPhoneNumber(value)) {
+                      //   return 'Please enter a valid phone number';
+                      // }
+                      return null;
+                    },
+                  ),
+                  !user.isStudent
+                      ? Row(
+                          children: [
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width * .39,
+                              child: NotesDropdownField(
+                                editMode: true,
+                                label: "Branch",
+                                items: allBranchList,
+                                val: branch,
+                                validator: (value) {
+                                  if (value == null) {
+                                    return 'Please select a branch';
+                                  }
+                                  return null;
+                                },
+                                onChanged: (String? newValue) {
+                                  if (newValue != null) {
+                                    setState(() {
+                                      branch = newValue;
+                                      division = null;
+                                      subject = null;
+                                    });
+                                  }
+                                },
+                              ),
                             ),
-                          ),
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width * .3,
-                            child: NotesDropdownField(
-                              editMode: true,
-                              label: "Year",
-                              items: allYearList,
-                              val: year,
-                              validator: (value) {
-                                if (value == null) {
-                                  return 'Please select a year';
-                                }
-                                return null;
-                              },
-                              onChanged: (String? newValue) {
-                                if (newValue != null) {
-                                  setState(() {
-                                    year = newValue;
-                                    division = null;
-                                    subject = null;
-                                  });
-                                }
-                              },
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width * .3,
+                              child: NotesDropdownField(
+                                editMode: true,
+                                label: "Year",
+                                items: allYearList,
+                                val: year,
+                                validator: (value) {
+                                  if (value == null) {
+                                    return 'Please select a year';
+                                  }
+                                  return null;
+                                },
+                                onChanged: (String? newValue) {
+                                  if (newValue != null) {
+                                    setState(() {
+                                      year = newValue;
+                                      division = null;
+                                      subject = null;
+                                    });
+                                  }
+                                },
+                              ),
                             ),
-                          ),
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width * .24,
-                            child: NotesDropdownField(
-                              editMode: year != null && branch != null,
-                              label: "Div",
-                              items: year != null && branch != null
-                                  ? calcDivisionList(gradYear[year]!, branch!)
-                                  : [],
-                              val: division,
-                              validator: (value) {
-                                if (value == null) {
-                                  return 'Please select a division';
-                                }
-                                return null;
-                              },
-                              onChanged: (String? newValue) {
-                                if (newValue != null) {
-                                  setState(() {
-                                    division = newValue;
-                                  });
-                                }
-                              },
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width * .24,
+                              child: NotesDropdownField(
+                                editMode: year != null && branch != null,
+                                label: "Div",
+                                items: year != null && branch != null
+                                    ? calcDivisionList(gradYear[year]!, branch!)
+                                    : [],
+                                val: division,
+                                validator: (value) {
+                                  if (value == null) {
+                                    return 'Please select a division';
+                                  }
+                                  return null;
+                                },
+                                onChanged: (String? newValue) {
+                                  if (newValue != null) {
+                                    setState(() {
+                                      division = newValue;
+                                    });
+                                  }
+                                },
+                              ),
                             ),
-                          ),
-                        ],
-                      )
-                    : Container(),
-                SizedBox(
-                  height: 20,
-                ),
-                user.isStudent
-                    ? Divider(
-                        height: 1,
-                        color: Theme.of(context).colorScheme.outline,
-                      )
-                    : Container(),
-                SizedBox(
-                  height: 20,
-                ),
-                NotesDropdownField(
-                  editMode: year != null && branch != null && !user.isStudent,
-                  label: "Subject",
-                  items: subjects[year]?[branch]?[evenOrOddSem()] ?? [],
-                  val: subject,
-                  validator: (value) {
-                    if (value == null) {
-                      return 'Please select a subject';
-                    }
-                    return null;
-                  },
-                  onChanged: (String? newValue) {
-                    if (newValue != null) {
-                      setState(() {
-                        subject = newValue;
-                      });
-                    }
-                  },
-                ),
-                // Row(
-                //   children: []0
-                // ),
-                SizedBox(
-                  height: 20,
-                ),
-                user.isStudent
-                    ? Divider(
-                        height: 1,
-                        color: Theme.of(context).colorScheme.outline,
-                      )
-                    : Container(),
-                SizedBox(
-                  height: 20,
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 11, 20, 11),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.attachment,
-                            color: Colors.grey,
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            'Attachments',
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleSmall!
-                                .copyWith(
-                                  color: Colors.grey,
-                                ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      widget.note != null
-                          ? SizedBox(
-                              height: 40,
-                              child: widget.note!.attachments.isEmpty
-                                  ? Center(
-                                      child: Text(
-                                        "No attachments added",
-                                        style: TextStyle(color: Colors.grey),
+                          ],
+                        )
+                      : Container(),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  user.isStudent
+                      ? Divider(
+                          height: 1,
+                          color: Theme.of(context).colorScheme.outline,
+                        )
+                      : Container(),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  NotesDropdownField(
+                    editMode: year != null && branch != null && !user.isStudent,
+                    label: "Subject",
+                    items: subjects[year]?[branch]?[evenOrOddSem()] ?? [],
+                    val: subject,
+                    validator: (value) {
+                      if (value == null) {
+                        return 'Please select a subject';
+                      }
+                      return null;
+                    },
+                    onChanged: (String? newValue) {
+                      if (newValue != null) {
+                        setState(() {
+                          subject = newValue;
+                        });
+                      }
+                    },
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  user.isStudent
+                      ? Divider(
+                          height: 1,
+                          color: Theme.of(context).colorScheme.outline,
+                        )
+                      : Container(),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(20, 11, 20, 11),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.attachment,
+                              color: Colors.grey,
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              'Attachments',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleSmall!
+                                  .copyWith(
+                                    color: Colors.grey,
+                                  ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        // widget.note != null
+                        // ? SizedBox(
+                        SizedBox(
+                          height: 100,
+                          child: attachments.isEmpty
+                              ? Center(
+                                  child: Text(
+                                    "No attachments added",
+                                    style: TextStyle(color: Colors.grey),
+                                  ),
+                                )
+                              : Scrollbar(
+                                  thumbVisibility: true,
+                                  child: GridView.builder(
+                                      gridDelegate:
+                                          const SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount:
+                                            2, // number of items in each row
+                                        mainAxisSpacing:
+                                            15.0, // spacing between rows
+                                        crossAxisSpacing:
+                                            8.0, // spacing between columns
+                                        childAspectRatio: 35 / 9,
                                       ),
-                                    )
-                                  : ListView.builder(
-                                      itemCount:
-                                          widget.note!.attachments.length,
+                                      itemCount: attachments.length,
                                       itemBuilder: (context, index) {
                                         return DownloadButton(
-                                          url: widget.note!.attachments[index],
+                                          url: attachments[index],
+                                          removeFile: deselectFile,
                                         );
                                       }),
-                            )
-                          : SizedBox(
-                              height: 40,
-                              child: selectedFiles != null &&
-                                      selectedFiles!.files.length > 0
-                                  ? ListView.builder(
-                                      scrollDirection: Axis.horizontal,
-                                      itemCount:
-                                          selectedFiles?.files.length ?? 0,
-                                      itemBuilder: (context, index) {
-                                        var file = selectedFiles!.files[index];
-                                        return Container(
-                                          width: 120,
-                                          height: 10,
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 3.0),
-                                          decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius:
-                                                BorderRadius.circular(30.0),
-                                          ),
-                                          margin: const EdgeInsets.symmetric(
-                                            horizontal: 6.0,
-                                            vertical: 2.0,
-                                          ),
-                                          child: GestureDetector(
-                                            onTap: () => openFile(file.path),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Expanded(
-                                                  child: Text(
-                                                    file.name,
-                                                    style: TextStyle(
-                                                      fontSize: 10,
-                                                      color: Theme.of(context)
-                                                          .colorScheme
-                                                          .onBackground,
-                                                    ),
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                  ),
-                                                ),
-                                                !user.isStudent
-                                                    ? GestureDetector(
-                                                        onTap: () =>
-                                                            deselectFile(file),
-                                                        child: Icon(
-                                                          Icons.cancel,
-                                                          color:
-                                                              Theme.of(context)
-                                                                  .colorScheme
-                                                                  .onBackground,
-                                                        ),
-                                                      )
-                                                    : Container(),
-                                              ],
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                    )
-                                  : Center(
-                                      child: Text(
-                                        "No attachments added",
-                                        style: TextStyle(color: Colors.grey),
-                                      ),
-                                    ),
-                            )
-                    ],
+                                ),
+                        )
+                        // : SizedBox(
+                        //     height: 40,
+                        //     child: selectedFiles != null &&
+                        //             selectedFiles!.files.length > 0
+                        //         ? ListView.builder(
+                        //             scrollDirection: Axis.horizontal,
+                        //             itemCount:
+                        //                 selectedFiles?.files.length ?? 0,
+                        //             itemBuilder: (context, index) {
+                        //               var file = selectedFiles!.files[index];
+                        //               return Container(
+                        //                 width: 120,
+                        //                 height: 10,
+                        //                 padding: const EdgeInsets.symmetric(
+                        //                     horizontal: 3.0),
+                        //                 decoration: BoxDecoration(
+                        //                   color: Colors.white,
+                        //                   borderRadius:
+                        //                       BorderRadius.circular(30.0),
+                        //                 ),
+                        //                 margin: const EdgeInsets.symmetric(
+                        //                   horizontal: 6.0,
+                        //                   vertical: 2.0,
+                        //                 ),
+                        //                 child: GestureDetector(
+                        //                   onTap: () => openFile(file.path),
+                        //                   child: Row(
+                        //                     mainAxisAlignment:
+                        //                         MainAxisAlignment
+                        //                             .spaceBetween,
+                        //                     children: [
+                        //                       Expanded(
+                        //                         child: Text(
+                        //                           file.name,
+                        //                           style: TextStyle(
+                        //                             fontSize: 10,
+                        //                             color: Theme.of(context)
+                        //                                 .colorScheme
+                        //                                 .onBackground,
+                        //                           ),
+                        //                           overflow:
+                        //                               TextOverflow.ellipsis,
+                        //                         ),
+                        //                       ),
+                        //                       !user.isStudent
+                        //                           ? GestureDetector(
+                        //                               onTap: () =>
+                        //                                   deselectFile(file),
+                        //                               child: Icon(
+                        //                                 Icons.cancel,
+                        //                                 color:
+                        //                                     Theme.of(context)
+                        //                                         .colorScheme
+                        //                                         .onBackground,
+                        //                               ),
+                        //                             )
+                        //                           : Container(),
+                        //                     ],
+                        //                   ),
+                        //                 ),
+                        //               );
+                        //             },
+                        //           )
+                        //         : Center(
+                        //             child: Text(
+                        //               "No attachments added",
+                        //               style: TextStyle(color: Colors.grey),
+                        //             ),
+                        //           ),
+                        //   )
+                      ],
+                    ),
                   ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                !user.isStudent
-                    ? Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(20, 11, 20, 11),
-                            child: ElevatedButton(
-                              style: ButtonStyle(
-                                backgroundColor: MaterialStateProperty.all<
-                                        Color>(
-                                    Theme.of(context).colorScheme.onBackground),
-                                // You can customize other properties as needed
-                                // textColor, elevation, padding, shape, etc.
+                  SizedBox(
+                    height: 10,
+                  ),
+                  !user.isStudent
+                      ? Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Padding(
+                              padding:
+                                  const EdgeInsets.fromLTRB(20, 11, 20, 11),
+                              child: ElevatedButton(
+                                style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.all<Color>(
+                                          Theme.of(context)
+                                              .colorScheme
+                                              .onBackground),
+                                  // You can customize other properties as needed
+                                  // textColor, elevation, padding, shape, etc.
+                                ),
+                                onPressed: () async {
+                                  await pickFiles();
+                                },
+                                child: Text('Attach',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headlineMedium),
                               ),
-                              onPressed: () async {
-                                await pickFiles();
-                              },
-                              child: Text('Attach',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headlineMedium),
                             ),
-                          ),
-                        ],
-                      )
-                    : Container(),
-                const SizedBox(
-                  height: 10,
-                ),
-                !user.isStudent
-                    ? Expanded(
-                        child: Row(
+                          ],
+                        )
+                      : Container(),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  !user.isStudent
+                      ? Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             widget.note != null
@@ -534,7 +572,12 @@ class _NotesModalState extends ConsumerState<NotesModal> {
                                   debugPrint(
                                       "inside notes modal clicked note id: ${widget.note?.id}");
                                   widget.uploadNoteCallback(
-                                      selectedFiles,
+                                      newAttachments,
+                                      deletedAttachments,
+                                      attachments
+                                          .where(
+                                              (file) => file.startsWith("http"))
+                                          .toList(),
                                       widget.note?.id,
                                       titleController.text,
                                       descriptionController.text,
@@ -551,10 +594,10 @@ class _NotesModalState extends ConsumerState<NotesModal> {
                               ),
                             ),
                           ],
-                        ),
-                      )
-                    : Container(),
-              ],
+                        )
+                      : Container(),
+                ],
+              ),
             ),
           ),
         ),
