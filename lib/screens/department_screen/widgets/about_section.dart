@@ -20,7 +20,8 @@ class _AboutSectionState extends State<AboutSection> {
   late final Future<List<String>> _aboutDepartment;
 
   Future<List<String>> _getAboutDepartment() async {
-    final data = await rootBundle.loadString("assets/data/about_department/about.json");
+    final data =
+        await rootBundle.loadString("assets/data/about_department/about.json");
     final json = jsonDecode(data) as List;
     Map<String, List<String>> deptAboutMap = {
       for (var item in json)
@@ -60,27 +61,39 @@ class _AboutSectionState extends State<AboutSection> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
+                        // height: size.height * 0.12,
                         width: size.width,
-                        padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+                        padding: const EdgeInsets.fromLTRB(10, 5, 10, 15),
                         decoration: BoxDecoration(
                           color: Theme.of(context).colorScheme.outline,
-                          borderRadius: const BorderRadius.all(Radius.circular(12)),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(12)),
                         ),
                         child: Center(
                           child: ExpandablePanel(
-                            theme: ExpandableThemeData(iconColor: Theme.of(context).colorScheme.onSecondary),
+                            theme: ExpandableThemeData(
+                                iconColor:
+                                    Theme.of(context).colorScheme.onSecondary),
                             header: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
                                 "About",
-                                style: Theme.of(context).textTheme.titleLarge!.copyWith(fontSize: 20, fontWeight: FontWeight.w500),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleLarge!
+                                    .copyWith(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w500),
                               ),
                             ),
                             collapsed: Text(about,
                                 softWrap: true,
                                 maxLines: 3,
                                 overflow: TextOverflow.ellipsis,
-                                style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 12)),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleSmall!
+                                    .copyWith(fontSize: 14)),
                             expanded: Text(
                               about,
                               softWrap: true,
@@ -91,23 +104,33 @@ class _AboutSectionState extends State<AboutSection> {
                       ),
                       if (vision != "na") ...[
                         const SizedBox(
-                          height: 10,
+                          height: 15,
                         ),
                         Container(
+                          // height: size.height * 0.12,
                           width: size.width,
-                          padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+                          padding: const EdgeInsets.fromLTRB(10, 5, 10, 15),
                           decoration: BoxDecoration(
                             color: Theme.of(context).colorScheme.outline,
-                            borderRadius: const BorderRadius.all(Radius.circular(12)),
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(12)),
                           ),
                           child: Center(
                             child: ExpandablePanel(
-                              theme: ExpandableThemeData(iconColor: Theme.of(context).colorScheme.onSecondary),
+                              theme: ExpandableThemeData(
+                                  iconColor: Theme.of(context)
+                                      .colorScheme
+                                      .onSecondary),
                               header: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text(
                                   "Vision",
-                                  style: Theme.of(context).textTheme.titleLarge!.copyWith(fontSize: 20, fontWeight: FontWeight.w500),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleLarge!
+                                      .copyWith(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w500),
                                 ),
                               ),
                               collapsed: Text(
@@ -115,7 +138,10 @@ class _AboutSectionState extends State<AboutSection> {
                                 softWrap: true,
                                 maxLines: 3,
                                 overflow: TextOverflow.ellipsis,
-                                style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 12),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleSmall!
+                                    .copyWith(fontSize: 14),
                               ),
                               expanded: Text(
                                 vision,
@@ -128,23 +154,33 @@ class _AboutSectionState extends State<AboutSection> {
                       ],
                       if (mission.isNotEmpty) ...[
                         const SizedBox(
-                          height: 10,
+                          height: 15,
                         ),
                         Container(
                           width: size.width,
-                          padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+                          // height: size.height * 0.12,
+                          padding: const EdgeInsets.fromLTRB(10, 5, 10, 15),
                           decoration: BoxDecoration(
                             color: Theme.of(context).colorScheme.outline,
-                            borderRadius: const BorderRadius.all(Radius.circular(12)),
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(12)),
                           ),
                           child: Center(
                             child: ExpandablePanel(
-                              theme: ExpandableThemeData(iconColor: Theme.of(context).colorScheme.onSecondary),
+                              theme: ExpandableThemeData(
+                                  iconColor: Theme.of(context)
+                                      .colorScheme
+                                      .onSecondary),
                               header: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text(
                                   "Mission",
-                                  style: Theme.of(context).textTheme.titleLarge!.copyWith(fontSize: 20, fontWeight: FontWeight.w700),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleLarge!
+                                      .copyWith(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w700),
                                 ),
                               ),
                               collapsed: RichText(
@@ -153,19 +189,26 @@ class _AboutSectionState extends State<AboutSection> {
                                 softWrap: true,
                                 text: TextSpan(
                                   text: "",
-                                  style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 12),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleSmall!
+                                      .copyWith(fontSize: 14),
                                   children: [
                                     if (true)
                                       for (var i = 1; i <= 2; i++)
                                         i % 2 == 0
                                             ? TextSpan(
-                                                text: " " + mission[i ~/ 2 - 1] + "\n",
+                                                text: " " +
+                                                    mission[i ~/ 2 - 1] +
+                                                    "\n",
                                               )
                                             : WidgetSpan(
                                                 child: Icon(
                                                   Icons.check_box_outlined,
                                                   size: 20,
-                                                  color: Theme.of(context).colorScheme.onSecondary,
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .onSecondary,
                                                 ),
                                               ),
                                   ],
@@ -176,14 +219,21 @@ class _AboutSectionState extends State<AboutSection> {
                                   text: "",
                                   style: Theme.of(context).textTheme.titleSmall,
                                   children: [
-                                    for (var i = 1; i <= mission.length * 2; i++)
+                                    for (var i = 1;
+                                        i <= mission.length * 2;
+                                        i++)
                                       i % 2 == 0
-                                          ? TextSpan(text: " " + mission[i ~/ 2 - 1] + "\n")
+                                          ? TextSpan(
+                                              text: " " +
+                                                  mission[i ~/ 2 - 1] +
+                                                  "\n")
                                           : WidgetSpan(
                                               child: Icon(
                                                 Icons.check_box_outlined,
                                                 size: 20,
-                                                color: Theme.of(context).colorScheme.onSecondary,
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .onSecondary,
                                               ),
                                             ),
                                   ],

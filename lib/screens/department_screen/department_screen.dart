@@ -96,7 +96,8 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
   }
 
   double _getDropdownVerticalPosition() {
-    final RenderBox rowRenderBox = _dropDownKey.currentContext?.findRenderObject() as RenderBox;
+    final RenderBox rowRenderBox =
+        _dropDownKey.currentContext?.findRenderObject() as RenderBox;
     final rowHeight = rowRenderBox.size.height;
     final rowOffsetTop = rowRenderBox.localToGlobal(Offset.zero).dy;
     return rowHeight + rowOffsetTop + 10;
@@ -139,7 +140,7 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
             width: size.width,
             height: size.height,
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(12.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -152,14 +153,17 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
                   ),
                   Text(
                     widget.department.name,
-                    style: Theme.of(context).textTheme.titleLarge!.copyWith(fontSize: 15),
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleLarge!
+                        .copyWith(fontSize: 15),
                   ),
                   const SizedBox(
                     height: 20,
                   ),
-                  const Divider(
+                  Divider(
                     height: 1,
-                    color: Colors.grey,
+                    color: Colors.grey.shade600,
                   ),
                   const SizedBox(
                     height: 20,
@@ -191,10 +195,15 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
                                       alignment: Alignment.center,
                                       width: 90,
                                       height: 100,
-                                      duration: const Duration(milliseconds: 300),
+                                      duration:
+                                          const Duration(milliseconds: 300),
                                       margin: const EdgeInsets.all(3),
                                       decoration: BoxDecoration(
-                                        color: selectedItem.index == index ? Theme.of(context).colorScheme.primary : null,
+                                        color: selectedItem.index == index
+                                            ? Theme.of(context)
+                                                .colorScheme
+                                                .primary
+                                            : null,
                                         borderRadius: const BorderRadius.all(
                                           Radius.circular(12),
                                         ),
@@ -202,12 +211,20 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
                                       child: Center(
                                         child: Text(
                                           list[index],
-                                          style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                                                fontSize: 16,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleMedium!
+                                              .copyWith(
+                                                fontSize: 17,
                                                 fontWeight: FontWeight.w500,
-                                                color: selectedItem.index == index
-                                                    ? Theme.of(context).colorScheme.onPrimary
-                                                    : Theme.of(context).colorScheme.onSecondary,
+                                                color:
+                                                    selectedItem.index == index
+                                                        ? Theme.of(context)
+                                                            .colorScheme
+                                                            .onPrimary
+                                                        : Theme.of(context)
+                                                            .colorScheme
+                                                            .onSecondary,
                                               ),
                                         ),
                                       ),
