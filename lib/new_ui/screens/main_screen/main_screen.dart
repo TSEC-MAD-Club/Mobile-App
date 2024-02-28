@@ -81,7 +81,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                     ? Colors.transparent
                     : Theme.of(context).colorScheme.primary,
                 toolbarHeight: 80,
-                leadingWidth: 100,
+                leadingWidth: MediaQuery.of(context).size.width * 0.7,
                 leading: currentBottomNavPage != 4
                     ? Row(
                         children: [
@@ -112,29 +112,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                         ],
                       )
                     : Container(),
-                title: Text(
-                  currentPage == 0
-                      ? (currentBottomNavPage == 0
-                          ? "Home"
-                          : currentBottomNavPage == 1
-                              ? "Attendance"
-                              : currentBottomNavPage == 2
-                                  ? "Schedule"
-                                  : currentBottomNavPage == 3
-                                      ? "Railway Concession"
-                                      : "")
-                      : currentPage == 1
-                          ? "TPC"
-                          : currentPage == 2
-                              ? "Committees"
-                              : "Departments",
-                  style: Theme.of(context)
-                      .textTheme
-                      .headlineLarge!
-                      .copyWith(fontSize: 34),
-                  maxLines: 1,
-                  overflow: TextOverflow.fade,
-                ),
+                // title: ,
                 actions: userDetails != null
                     ? [
                         Padding(
