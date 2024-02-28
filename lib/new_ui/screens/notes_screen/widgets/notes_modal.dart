@@ -169,7 +169,10 @@ class _NotesModalState extends ConsumerState<NotesModal> {
     UserModel? user = ref.watch(userModelProvider);
 
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        iconTheme: const IconThemeData(color: Colors.white),
+        backgroundColor: Color(0xFF1B1B1B),
+      ),
       body: SafeArea(
         child: Container(
           padding: EdgeInsets.all(10),

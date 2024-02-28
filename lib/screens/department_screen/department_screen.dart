@@ -135,125 +135,133 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
       },
       child: Scaffold(
         // appBar: const DepartmentScreenAppBar(title: "Department"),
-        body: SafeArea(
-          child: SizedBox(
-            width: size.width,
-            height: size.height,
-            child: Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Department",
-                    style: Theme.of(context).textTheme.titleLarge,
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Text(
-                    widget.department.name,
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleLarge!
-                        .copyWith(fontSize: 15),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Divider(
-                    height: 1,
-                    color: Colors.grey.shade600,
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  SizedBox(
-                    width: size.width,
-                    height: size.height * 0.08,
-                    child: Stack(
-                      children: [
-                        SizedBox(
-                          width: size.width,
-                          height: size.height * 0.4,
-                          child: Align(
-                            alignment: Alignment.center,
-                            child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              itemCount: list.length,
-                              itemBuilder: (context, index) {
-                                return GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      selected = index;
-                                      selectedItem = Item.values[index];
-                                    });
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: AnimatedContainer(
-                                      alignment: Alignment.center,
-                                      width: 90,
-                                      height: 100,
-                                      duration:
-                                          const Duration(milliseconds: 300),
-                                      margin: const EdgeInsets.all(3),
-                                      decoration: BoxDecoration(
-                                        color: selectedItem.index == index
-                                            ? Theme.of(context)
-                                                .colorScheme
-                                                .primary
-                                            : null,
-                                        borderRadius: const BorderRadius.all(
-                                          Radius.circular(12),
+        body: Scaffold(
+          appBar: AppBar(
+            iconTheme: const IconThemeData(color: Colors.white),
+            backgroundColor: Color(0xFF1B1B1B),
+          ),
+          body: SafeArea(
+            child: SizedBox(
+              width: size.width,
+              height: size.height,
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Department",
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      widget.department.name,
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleLarge!
+                          .copyWith(fontSize: 15),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Divider(
+                      height: 1,
+                      color: Colors.grey.shade600,
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    SizedBox(
+                      width: size.width * 1,
+                      height: size.height * 0.10,
+                      child: Stack(
+                        children: [
+                          SizedBox(
+                            width: size.width,
+                            height: size.height * 0.4,
+                            child: Align(
+                              alignment: Alignment.center,
+                              child: ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: list.length,
+                                itemBuilder: (context, index) {
+                                  return GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        selected = index;
+                                        selectedItem = Item.values[index];
+                                      });
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: AnimatedContainer(
+                                        alignment: Alignment.center,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.25,
+                                        height: size.height * 0.15,
+                                        duration:
+                                            const Duration(milliseconds: 300),
+                                        margin: const EdgeInsets.all(3),
+                                        decoration: BoxDecoration(
+                                          color: selectedItem.index == index
+                                              ? Theme.of(context)
+                                                  .colorScheme
+                                                  .primary
+                                              : null,
+                                          borderRadius: const BorderRadius.all(
+                                            Radius.circular(12),
+                                          ),
                                         ),
-                                      ),
-                                      child: Center(
-                                        child: Text(
-                                          list[index],
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .titleMedium!
-                                              .copyWith(
-                                                fontSize: 17,
-                                                fontWeight: FontWeight.w500,
-                                                color:
-                                                    selectedItem.index == index
-                                                        ? Theme.of(context)
-                                                            .colorScheme
-                                                            .onPrimary
-                                                        : Theme.of(context)
-                                                            .colorScheme
-                                                            .onSecondary,
-                                              ),
+                                        child: Center(
+                                          child: Text(
+                                            list[index],
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleMedium!
+                                                .copyWith(
+                                                  fontSize: 17,
+                                                  fontWeight: FontWeight.w500,
+                                                  color: selectedItem.index ==
+                                                          index
+                                                      ? Theme.of(context)
+                                                          .colorScheme
+                                                          .onPrimary
+                                                      : Theme.of(context)
+                                                          .colorScheme
+                                                          .onSecondary,
+                                                ),
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                );
-                              },
+                                  );
+                                },
+                              ),
                             ),
+                          )
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: Column(
+                        children: [
+                          const SizedBox(
+                            height: 20,
                           ),
-                        )
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: Column(
-                      children: [
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        section(selectedItem),
-                      ],
-                    ),
-                  )
-                ],
+                          section(selectedItem),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
-          ),
 
-          //section(selectedItem),
+            //section(selectedItem),
+          ),
         ),
       ),
     );
