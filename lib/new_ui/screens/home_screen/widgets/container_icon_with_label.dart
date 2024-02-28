@@ -21,7 +21,7 @@ class ContainerIconWithName extends StatelessWidget {
         child: GestureDetector(
           onTap: onPressed,
           child: Container(
-            height: 125,
+            height: MediaQuery.of(context).size.height * 0.14,
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
               color: _theme.colorScheme.onSecondary,
@@ -47,7 +47,8 @@ class ContainerIconWithName extends StatelessWidget {
                 SizedBox(height: 10.0),
                 Text(
                   text,
-                  style: Theme.of(context).textTheme.headlineLarge!.copyWith(fontSize: 20, color: _theme.colorScheme.onTertiary),
+                  style: Theme.of(context).textTheme.headlineLarge!.copyWith(
+                      fontSize: 20, color: _theme.colorScheme.onTertiary),
                 ),
               ],
             ),

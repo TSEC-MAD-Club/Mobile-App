@@ -6,10 +6,12 @@ class TimeContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double _height = MediaQuery.of(context).size.height;
+    double _width = MediaQuery.of(context).size.width;
     var _theme = Theme.of(context);
     return Container(
-      width: 35.0,
-      height: 54.0,
+      width: _width * 0.08,
+      height: _height * 0.07,
       decoration: BoxDecoration(
         shape: BoxShape.rectangle,
         color: _theme.colorScheme.tertiaryContainer,

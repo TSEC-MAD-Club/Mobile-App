@@ -59,7 +59,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               showUnselectedLabels: false,
               unselectedItemColor: Colors.white,
               selectedItemColor: Colors.white,
-              items: [
+              items: const [
                 BottomNavigationBarItem(
                   backgroundColor: Colors.transparent,
                   activeIcon: Icon(Icons.home),

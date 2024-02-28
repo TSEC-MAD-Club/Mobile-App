@@ -60,6 +60,9 @@ class _ExpandedCardState extends ConsumerState<ExpandedCard> {
     DateTime day = ref.watch(dayProvider);
     String dayStr = getweekday(day.weekday);
 
+    double _height = MediaQuery.of(context).size.height;
+    double _width = MediaQuery.of(context).size.width;
+
     fetchOccasionDetails();
     var _theme = Theme.of(context);
 
@@ -101,7 +104,7 @@ class _ExpandedCardState extends ConsumerState<ExpandedCard> {
                     },
                     child: AnimatedContainer(
                       duration: const Duration(milliseconds: 500),
-                      height: isExpanded ? 490.0 : 160.0,
+                      height: isExpanded ? 490 : 160,
                       width: MediaQuery.of(context).size.width * 0.9,
                       decoration: BoxDecoration(
                         color: _theme.colorScheme.tertiary,

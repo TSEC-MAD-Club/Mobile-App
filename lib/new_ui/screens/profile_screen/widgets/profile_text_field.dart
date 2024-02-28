@@ -25,6 +25,8 @@ class ProfileField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: MediaQuery.of(context).size.height * 0.06,
+      width: MediaQuery.of(context).size.width * 0.95,
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.primaryContainer,
         borderRadius: BorderRadius.circular(20),
@@ -45,7 +47,8 @@ class ProfileField extends StatelessWidget {
             ),
             SizedBox(width: 25),
             Container(
-              width: MediaQuery.of(context).size.width * .6,
+              width: MediaQuery.of(context).size.width * .55,
+              // height: MediaQuery.of(context).size.height * .0,
               child: TextFormField(
                 decoration: InputDecoration(border: InputBorder.none),
                 enabled: enabled,

@@ -74,14 +74,13 @@ class _TPCScreenState extends State<TPCScreen> {
                       child: SizedBox(
                         width: double.infinity,
                         child: FittedBox(
-                          child: Text(
-                            _companys[i].name,
-                            textAlign: TextAlign.center,
-                            // style: const TextStyle(
-                            //   fontSize: 16,
-                            // ),
-                            style: Theme.of(context).textTheme.headlineMedium
-                          ),
+                          child: Text(_companys[i].name,
+                              textAlign: TextAlign.center,
+                              // style: const TextStyle(
+                              //   fontSize: 16,
+                              // ),
+                              style:
+                                  Theme.of(context).textTheme.headlineMedium),
                           fit: BoxFit.scaleDown,
                         ),
                       ),

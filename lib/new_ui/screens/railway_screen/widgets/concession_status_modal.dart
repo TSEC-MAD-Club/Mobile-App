@@ -12,7 +12,8 @@ class ConcessionStatusModal extends ConsumerStatefulWidget {
   Function futurePassMessage;
 
   ConcessionStatusModal(
-      {super.key, required this.canIssuePass,
+      {super.key,
+      required this.canIssuePass,
       // required this.concessionDetails, required this.lastPassIssued,
       // required this.duration,
       required this.futurePassMessage});
@@ -36,6 +37,7 @@ class _ConcessionStatusModalState extends ConsumerState<ConcessionStatusModal> {
       padding: const EdgeInsets.all(8.0),
       child: Container(
         // height: 70,
+        height: MediaQuery.of(context).size.height * 0.10,
         decoration: BoxDecoration(
           color: concessionDetails?.status == ConcessionStatus.rejected
               ? Theme.of(context).colorScheme.error

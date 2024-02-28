@@ -73,6 +73,7 @@ class RailwayDropdownSearch extends StatelessWidget {
               containerBuilder: (context, popupWidget) {
                 return Container(
                     color: Theme.of(context).colorScheme.background,
+                    // color: Colors.purple,
                     child: popupWidget);
               },
               // itemBuilder: (context, item, isSelected) {

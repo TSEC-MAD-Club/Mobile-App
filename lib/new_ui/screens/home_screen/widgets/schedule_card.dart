@@ -40,7 +40,7 @@ class scheduleCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              width: MediaQuery.of(context).size.width * 0.70,
+              width: MediaQuery.of(context).size.width * 0.72,
               height: MediaQuery.of(context).size.height * .1,
               decoration: BoxDecoration(
                 shape: BoxShape.rectangle,

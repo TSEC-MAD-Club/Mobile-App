@@ -395,8 +395,9 @@ class _RailwayConcessionScreenState
                               fit: BoxFit.cover,
                             ),
                           ),
-                          height: 150,
-                          width: 200,
+                          // h = 150, w = 200
+                          height: MediaQuery.of(context).size.height * 0.17,
+                          width: MediaQuery.of(context).size.width * 0.50,
                         ),
                         editMode
                             ? Positioned(
