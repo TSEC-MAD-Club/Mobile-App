@@ -74,7 +74,7 @@ class TimeTable extends ConsumerWidget {
               padding: const EdgeInsets.all(20),
               child: Container(
                 width: _size.width * 0.9,
-                height: MediaQuery.of(context).size.height * 0.13,
+                height: MediaQuery.of(context).size.height * 0.10,
                 // could have used _size but fuck it whore-licks
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(15.0),
@@ -108,7 +108,7 @@ class TimeTable extends ConsumerWidget {
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
               child: Container(
-                  height: MediaQuery.of(context).size.height * 0.5,
+                  height: MediaQuery.of(context).size.height * .55,
                   width: MediaQuery.of(context).size.width * 0.9,
                   decoration: BoxDecoration(
                     color: _theme.colorScheme.tertiary,

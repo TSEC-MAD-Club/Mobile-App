@@ -47,9 +47,8 @@ class ProfileField extends StatelessWidget {
             ),
             SizedBox(width: 10),
             Container(
-              width: MediaQuery.of(context).size.width * .65,
+              width: MediaQuery.of(context).size.width * .55,
               // height: MediaQuery.of(context).size.height * .0,
-              // color: Colors.amber,
               child: TextFormField(
                 decoration: InputDecoration(
                     border: InputBorder.none,
