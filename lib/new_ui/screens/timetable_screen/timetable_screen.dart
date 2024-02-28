@@ -107,7 +107,7 @@ class TimeTable extends ConsumerWidget {
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
               child: Container(
-                  height: 400,
+                  height: MediaQuery.of(context).size.height * .50,
                   width: MediaQuery.of(context).size.width * 0.9,
                   decoration: BoxDecoration(
                     color: _theme.colorScheme.tertiary,
@@ -166,10 +166,9 @@ class TimeTable extends ConsumerWidget {
                             ),
                           ),
                         ),
-                      // Existing code for CardDisplay
                       const Expanded(
                           child: Padding(
-                        padding: EdgeInsets.all(8.0),
+                        padding: EdgeInsets.all(5.0),
                         child: CardDisplay(),
                       )),
                     ],

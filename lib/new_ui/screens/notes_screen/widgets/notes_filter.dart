@@ -209,7 +209,7 @@ class _NotesFilterBarState extends ConsumerState<NotesFilterBar>
                                 lastDate: DateTime(2025),
                               );
                               if (pickedDate != null) {
-                                // setState(() {
+                                // setState(() {~
                                 //   startDate = pickedDate;
                                 // });
                                 widget.changeFilters(pickedDate, widget.endDate,

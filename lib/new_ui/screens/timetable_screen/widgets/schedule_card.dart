@@ -40,8 +40,8 @@ class ScheduleCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              width: 250.0,
-              height: 74.0,
+              width: MediaQuery.of(context).size.width * 0.70,
+              height: MediaQuery.of(context).size.height * .1,
               decoration: BoxDecoration(
                 shape: BoxShape.rectangle,
                 color: _theme.colorScheme.onSecondary,
@@ -81,7 +81,11 @@ class ScheduleCard extends StatelessWidget {
                           style: Theme.of(context)
                               .textTheme
                               .headlineMedium!
-                              .copyWith(fontSize: 20, color: Theme.of(context).colorScheme.onPrimary, fontWeight: FontWeight.bold),
+                              .copyWith(
+                                  fontSize: 20,
+                                  color:
+                                      Theme.of(context).colorScheme.onPrimary,
+                                  fontWeight: FontWeight.bold),
                         ),
                       ),
                       Padding(
@@ -90,7 +94,13 @@ class ScheduleCard extends StatelessWidget {
                           facultyName,
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
-                          style: Theme.of(context).textTheme.headlineMedium!.copyWith(fontSize: 12, color: Colors.grey, fontWeight: FontWeight.bold),
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineMedium!
+                              .copyWith(
+                                  fontSize: 12,
+                                  color: Colors.grey,
+                                  fontWeight: FontWeight.bold),
                         ),
                       )
                     ],
