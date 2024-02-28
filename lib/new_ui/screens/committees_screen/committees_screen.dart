@@ -74,7 +74,7 @@ class _CommitteesScreenState extends State<CommitteesScreen> {
                           const Duration(milliseconds: 500),
                       autoPlayCurve: Curves.fastOutSlowIn,
                       enlargeCenterPage: true,
-                      viewportFraction: 0.9,
+                      viewportFraction: 0.7,
                       // height: 550,
                       height: _height * 0.65,
                       enableInfiniteScroll: true,
@@ -97,7 +97,7 @@ class _CommitteesScreenState extends State<CommitteesScreen> {
                           child: Padding(
                             padding: const EdgeInsets.all(20.0),
                             child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 ClipRRect(
                                   borderRadius: BorderRadius.circular(10.0),

@@ -425,452 +425,455 @@ class _RailwayConcessionScreenState
         ref.watch(concessionDetailsProvider);
     return SafeArea(
       child: Scaffold(
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(height: !editMode ? 10 : 0),
-            !editMode
-                ? ConcessionStatusModal(
-                    // concessionDetails: concessionDetails,
-                    canIssuePass: canIssuePass,
-                    // lastPassIssued: lastPassIssued,
-                    // duration: duration,
-                    futurePassMessage: futurePassMessage,
-                  )
-                : Container(),
-            !editMode ? SizedBox(height: 10) : Container(),
-            AnimatedContainer(
-              duration: Duration(milliseconds: 5000),
-              decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.onPrimary,
-                borderRadius: !editMode
-                    ? BorderRadius.all(Radius.circular(25)
-                        // topLeft: Radius.circular(25.0),
-                        // topRight: Radius.circular(25.0),
-                        )
-                    : BorderRadius.zero,
-              ),
-              height: ref.read(railwayConcessionOpenProvider.state).state
-                  ? MediaQuery.of(context).size.height * .95
-                  : MediaQuery.of(context).size.height * .57,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  children: [
-                    Container(
-                      height:
-                          ref.read(railwayConcessionOpenProvider.state).state
-                              ? MediaQuery.of(context).size.height * .8
-                              : MediaQuery.of(context).size.height * .54,
-                      child: SingleChildScrollView(
-                        child: Form(
-                          key: _formKey,
-                          child: Column(
-                            children: [
-                              RailwayTextField(
-                                editMode: editMode,
-                                label: "First Name",
-                                controller: firstNameController,
-                                readOnly: false,
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return 'Please enter your First Name';
-                                  }
-                                  return null;
-                                },
-                              ),
-                              RailwayTextField(
-                                editMode: editMode,
-                                label: "Middle Name",
-                                readOnly: false,
-                                controller: middleNameController,
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return 'Please enter your Middle Name';
-                                  }
-                                  return null;
-                                },
-                              ),
-                              RailwayTextField(
-                                editMode: editMode,
-                                label: "Last Name",
-                                controller: lastNameController,
-                                readOnly: false,
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return 'Please enter your Middle Name';
-                                  }
-                                  return null;
-                                },
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  SizedBox(
-                                    width:
-                                        MediaQuery.of(context).size.width * .45,
-                                    child: RailwayDropdownField(
-                                      editMode: editMode,
-                                      label: "Gender",
-                                      items: genderList,
-                                      val: gender,
-                                      validator: (value) {
-                                        if (value == null) {
-                                          return 'Please select a gender';
-                                        }
-                                        return null;
-                                      },
-                                      onChanged: editMode
-                                          ? (String? newValue) {
-                                              if (newValue != null) {
-                                                setState(() {
-                                                  gender = newValue;
-                                                });
+        body: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(height: !editMode ? 10 : 0),
+              !editMode
+                  ? ConcessionStatusModal(
+                      // concessionDetails: concessionDetails,
+                      canIssuePass: canIssuePass,
+                      // lastPassIssued: lastPassIssued,
+                      // duration: duration,
+                      futurePassMessage: futurePassMessage,
+                    )
+                  : Container(),
+              !editMode ? SizedBox(height: 10) : Container(),
+              AnimatedContainer(
+                duration: Duration(milliseconds: 5000),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.onPrimary,
+                  borderRadius: !editMode
+                      ? BorderRadius.all(Radius.circular(25)
+                          // topLeft: Radius.circular(25.0),
+                          // topRight: Radius.circular(25.0),
+                          )
+                      : BorderRadius.zero,
+                ),
+                height: ref.read(railwayConcessionOpenProvider.state).state
+                    ? MediaQuery.of(context).size.height * .95
+                    : MediaQuery.of(context).size.height * .57,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    children: [
+                      Container(
+                        height:
+                            ref.read(railwayConcessionOpenProvider.state).state
+                                ? MediaQuery.of(context).size.height * .8
+                                : MediaQuery.of(context).size.height * .54,
+                        child: SingleChildScrollView(
+                          child: Form(
+                            key: _formKey,
+                            child: Column(
+                              children: [
+                                RailwayTextField(
+                                  editMode: editMode,
+                                  label: "First Name",
+                                  controller: firstNameController,
+                                  readOnly: false,
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return 'Please enter your First Name';
+                                    }
+                                    return null;
+                                  },
+                                ),
+                                RailwayTextField(
+                                  editMode: editMode,
+                                  label: "Middle Name",
+                                  readOnly: false,
+                                  controller: middleNameController,
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return 'Please enter your Middle Name';
+                                    }
+                                    return null;
+                                  },
+                                ),
+                                RailwayTextField(
+                                  editMode: editMode,
+                                  label: "Last Name",
+                                  controller: lastNameController,
+                                  readOnly: false,
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return 'Please enter your Middle Name';
+                                    }
+                                    return null;
+                                  },
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width *
+                                          .45,
+                                      child: RailwayDropdownField(
+                                        editMode: editMode,
+                                        label: "Gender",
+                                        items: genderList,
+                                        val: gender,
+                                        validator: (value) {
+                                          if (value == null) {
+                                            return 'Please select a gender';
+                                          }
+                                          return null;
+                                        },
+                                        onChanged: editMode
+                                            ? (String? newValue) {
+                                                if (newValue != null) {
+                                                  setState(() {
+                                                    gender = newValue;
+                                                  });
+                                                }
                                               }
-                                            }
-                                          : null,
+                                            : null,
+                                      ),
                                     ),
-                                  ),
-                                  SizedBox(
-                                    width:
-                                        MediaQuery.of(context).size.width * .45,
-                                    child: RailwayTextField(
-                                      readOnly: true,
-                                      editMode: editMode,
-                                      label: "DOB",
-                                      controller: dateOfBirthController,
-                                      onTap: () async {
-                                        selectDate(context);
-                                        // DateTime? pickedDate =
-                                        //     await showDatePicker(
-                                        //   context: context,
-                                        //   initialDate: DateTime.now().subtract(
-                                        //       Duration(days: 20 * 365)),
-                                        //   firstDate: DateTime(1960),
-                                        //   lastDate: DateTime(2010),
-                                        // );
-                                        // if (pickedDate != null) {
-                                        //   String formattedDate =
-                                        //       DateFormat('d MMMM y')
-                                        //           .format(pickedDate);
-                                        //   dateOfBirthController.text =
-                                        //       formattedDate;
-                                        // } else {
-                                        //   // print(
-                                        //   //     "Date is not selected");
-                                        // }
-                                      },
-                                      validator: (value) {
-                                        if (value!.isEmpty) {
-                                          return 'Please enter Date Of Birth';
-                                        }
-                                        return null;
-                                      },
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width *
+                                          .45,
+                                      child: RailwayTextField(
+                                        readOnly: true,
+                                        editMode: editMode,
+                                        label: "DOB",
+                                        controller: dateOfBirthController,
+                                        onTap: () async {
+                                          selectDate(context);
+                                          // DateTime? pickedDate =
+                                          //     await showDatePicker(
+                                          //   context: context,
+                                          //   initialDate: DateTime.now().subtract(
+                                          //       Duration(days: 20 * 365)),
+                                          //   firstDate: DateTime(1960),
+                                          //   lastDate: DateTime(2010),
+                                          // );
+                                          // if (pickedDate != null) {
+                                          //   String formattedDate =
+                                          //       DateFormat('d MMMM y')
+                                          //           .format(pickedDate);
+                                          //   dateOfBirthController.text =
+                                          //       formattedDate;
+                                          // } else {
+                                          //   // print(
+                                          //   //     "Date is not selected");
+                                          // }
+                                        },
+                                        validator: (value) {
+                                          if (value!.isEmpty) {
+                                            return 'Please enter Date Of Birth';
+                                          }
+                                          return null;
+                                        },
+                                      ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  SizedBox(
-                                    width:
-                                        MediaQuery.of(context).size.width * .45,
-                                    child: RailwayTextField(
-                                      editMode: editMode,
-                                      label: "Branch",
-                                      val: student.branch,
-                                      readOnly: true,
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width *
+                                          .45,
+                                      child: RailwayTextField(
+                                        editMode: editMode,
+                                        label: "Branch",
+                                        val: student.branch,
+                                        readOnly: true,
+                                      ),
                                     ),
-                                  ),
-                                  SizedBox(
-                                    width:
-                                        MediaQuery.of(context).size.width * .45,
-                                    child: RailwayTextField(
-                                      readOnly: true,
-                                      editMode: editMode,
-                                      label: "Grad Year",
-                                      val: student.gradyear,
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width *
+                                          .45,
+                                      child: RailwayTextField(
+                                        readOnly: true,
+                                        editMode: editMode,
+                                        label: "Grad Year",
+                                        val: student.gradyear,
+                                      ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                              RailwayTextField(
-                                editMode: editMode,
-                                label: "Phone Number",
-                                controller: phoneNumController,
-                                readOnly: false,
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return 'Please enter a phone number';
-                                  }
-                                  if (!isValidPhoneNumber(value)) {
-                                    return 'Please enter a valid phone number';
-                                  }
-                                  return null;
-                                },
-                              ),
-                              RailwayTextField(
-                                editMode: editMode,
-                                label: "Address",
-                                controller: addressController,
-                                readOnly: false,
-                                maxLines: 3,
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return 'Please enter your Address';
-                                  }
-                                  return null;
-                                },
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  SizedBox(
-                                    width:
-                                        MediaQuery.of(context).size.width * .45,
-                                    child: RailwayDropdownField(
-                                      editMode: editMode,
-                                      label: "Class",
-                                      items: travelClassList,
-                                      val: travelClass,
-                                      validator: (value) {
-                                        if (value == null) {
-                                          return 'Please select a travel class';
-                                        }
-                                        return null;
-                                      },
-                                      onChanged: editMode
-                                          ? (String? newValue) {
-                                              if (newValue != null) {
-                                                setState(() {
-                                                  travelClass = newValue;
-                                                });
+                                  ],
+                                ),
+                                RailwayTextField(
+                                  editMode: editMode,
+                                  label: "Phone Number",
+                                  controller: phoneNumController,
+                                  readOnly: false,
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return 'Please enter a phone number';
+                                    }
+                                    if (!isValidPhoneNumber(value)) {
+                                      return 'Please enter a valid phone number';
+                                    }
+                                    return null;
+                                  },
+                                ),
+                                RailwayTextField(
+                                  editMode: editMode,
+                                  label: "Address",
+                                  controller: addressController,
+                                  readOnly: false,
+                                  maxLines: 3,
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return 'Please enter your Address';
+                                    }
+                                    return null;
+                                  },
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width *
+                                          .45,
+                                      child: RailwayDropdownField(
+                                        editMode: editMode,
+                                        label: "Class",
+                                        items: travelClassList,
+                                        val: travelClass,
+                                        validator: (value) {
+                                          if (value == null) {
+                                            return 'Please select a travel class';
+                                          }
+                                          return null;
+                                        },
+                                        onChanged: editMode
+                                            ? (String? newValue) {
+                                                if (newValue != null) {
+                                                  setState(() {
+                                                    travelClass = newValue;
+                                                  });
+                                                }
                                               }
-                                            }
-                                          : null,
+                                            : null,
+                                      ),
                                     ),
-                                  ),
-                                  SizedBox(
-                                    width:
-                                        MediaQuery.of(context).size.width * .45,
-                                    child: RailwayDropdownField(
-                                      editMode: editMode,
-                                      label: "Duration",
-                                      items: travelDurationList,
-                                      val: duration,
-                                      validator: (value) {
-                                        if (value == null) {
-                                          return 'Please select a travel duration';
-                                        }
-                                        return null;
-                                      },
-                                      onChanged: editMode
-                                          ? (String? newValue) {
-                                              if (newValue != null) {
-                                                setState(() {
-                                                  duration = newValue;
-                                                });
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width *
+                                          .45,
+                                      child: RailwayDropdownField(
+                                        editMode: editMode,
+                                        label: "Duration",
+                                        items: travelDurationList,
+                                        val: duration,
+                                        validator: (value) {
+                                          if (value == null) {
+                                            return 'Please select a travel duration';
+                                          }
+                                          return null;
+                                        },
+                                        onChanged: editMode
+                                            ? (String? newValue) {
+                                                if (newValue != null) {
+                                                  setState(() {
+                                                    duration = newValue;
+                                                  });
+                                                }
                                               }
-                                            }
-                                          : null,
+                                            : null,
+                                      ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                              RailwayDropdownField(
-                                editMode: editMode,
-                                label: "Travel Lane",
-                                items: travelLanelist,
-                                val: travelLane,
-                                validator: (value) {
-                                  if (value == null) {
-                                    return 'Please select a travel lane';
-                                  }
-                                  return null;
-                                },
-                                onChanged: editMode
-                                    ? (String? newValue) {
-                                        if (newValue != null) {
-                                          setState(() {
-                                            travelLane = newValue;
-                                          });
+                                  ],
+                                ),
+                                RailwayDropdownField(
+                                  editMode: editMode,
+                                  label: "Travel Lane",
+                                  items: travelLanelist,
+                                  val: travelLane,
+                                  validator: (value) {
+                                    if (value == null) {
+                                      return 'Please select a travel lane';
+                                    }
+                                    return null;
+                                  },
+                                  onChanged: editMode
+                                      ? (String? newValue) {
+                                          if (newValue != null) {
+                                            setState(() {
+                                              travelLane = newValue;
+                                            });
+                                          }
                                         }
-                                      }
-                                    : null,
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  SizedBox(
-                                    width:
-                                        MediaQuery.of(context).size.width * .45,
-                                    child: RailwayDropdownSearch(
-                                      editMode: editMode,
-                                      label: "From",
-                                      items: mumbaiRailwayStations,
-                                      val: homeStation,
-                                      onChanged: (String? newVal) {
-                                        if (newVal != null) {
-                                          homeStation = newVal;
-                                        }
-                                      },
-                                      validator: (value) {
-                                        if (value == null) {
-                                          return 'Please enter your Home Station';
-                                        }
-                                        return null;
-                                      },
+                                      : null,
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width *
+                                          .45,
+                                      child: RailwayDropdownSearch(
+                                        editMode: editMode,
+                                        label: "From",
+                                        items: mumbaiRailwayStations,
+                                        val: homeStation,
+                                        onChanged: (String? newVal) {
+                                          if (newVal != null) {
+                                            homeStation = newVal;
+                                          }
+                                        },
+                                        validator: (value) {
+                                          if (value == null) {
+                                            return 'Please enter your Home Station';
+                                          }
+                                          return null;
+                                        },
+                                      ),
                                     ),
-                                  ),
-                                  SizedBox(
-                                    width:
-                                        MediaQuery.of(context).size.width * .45,
-                                    child: RailwayDropdownSearch(
-                                      editMode: false,
-                                      label: "To",
-                                      items: mumbaiRailwayStations,
-                                      val: toStation,
-                                      onChanged: (String? newVal) {
-                                        if (newVal != null) {
-                                          toStation = newVal;
-                                        }
-                                      },
-                                      validator: (value) {
-                                        if (value == null) {
-                                          return 'Please enter your Destination Station';
-                                        }
-                                        return null;
-                                      },
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width *
+                                          .45,
+                                      child: RailwayDropdownSearch(
+                                        editMode: false,
+                                        label: "To",
+                                        items: mumbaiRailwayStations,
+                                        val: toStation,
+                                        onChanged: (String? newVal) {
+                                          if (newVal != null) {
+                                            toStation = newVal;
+                                          }
+                                        },
+                                        validator: (value) {
+                                          if (value == null) {
+                                            return 'Please enter your Destination Station';
+                                          }
+                                          return null;
+                                        },
+                                      ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                // mainAxisAlignment:
-                                //     MainAxisAlignment
-                                //         .spaceBetween,
-                                children: [
-                                  buildImagePicker('ID Card Photo',
-                                      idCardPhotoTemp, editMode),
-                                  SizedBox(height: 16),
-                                  buildImagePicker('Previous Pass Photo',
-                                      previousPassPhotoTemp, editMode),
-                                ],
-                              ),
-                            ],
+                                  ],
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  // mainAxisAlignment:
+                                  //     MainAxisAlignment
+                                  //         .spaceBetween,
+                                  children: [
+                                    buildImagePicker('ID Card Photo',
+                                        idCardPhotoTemp, editMode),
+                                    SizedBox(height: 16),
+                                    buildImagePicker('Previous Pass Photo',
+                                        previousPassPhotoTemp, editMode),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    editMode
-                        ? Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.all(15.0),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  FilledButton(
-                                    onPressed: () {
-                                      clearValues();
-                                    },
-                                    style: FilledButton.styleFrom(
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(
-                                            10.0), // Set the border radius
+                      editMode
+                          ? Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.all(15.0),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    FilledButton(
+                                      onPressed: () {
+                                        clearValues();
+                                      },
+                                      style: FilledButton.styleFrom(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(
+                                              10.0), // Set the border radius
+                                        ),
+                                        backgroundColor: Theme.of(context)
+                                            .colorScheme
+                                            .secondaryContainer,
                                       ),
-                                      backgroundColor: Theme.of(context)
-                                          .colorScheme
-                                          .secondaryContainer,
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.fromLTRB(
-                                          22, 12, 22, 12),
-                                      child: Text('Cancel',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .headlineMedium!
-                                              .copyWith(
-                                                color: Colors.white,
-                                              )),
-                                    ),
-                                  ),
-                                  FilledButton(
-                                    onPressed: () {
-                                      saveChanges(ref);
-                                    },
-                                    style: FilledButton.styleFrom(
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(
-                                            10.0), // Set the border radius
+                                      child: Padding(
+                                        padding: const EdgeInsets.fromLTRB(
+                                            22, 12, 22, 12),
+                                        child: Text('Cancel',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headlineMedium!
+                                                .copyWith(
+                                                  color: Colors.white,
+                                                )),
                                       ),
-                                      backgroundColor: Theme.of(context)
-                                          .colorScheme
-                                          .tertiaryContainer,
                                     ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.fromLTRB(
-                                          22, 12, 22, 12),
-                                      child: Text('Confirm',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .headlineMedium!
-                                              .copyWith(
-                                                color: Colors.white,
-                                              )),
+                                    FilledButton(
+                                      onPressed: () {
+                                        saveChanges(ref);
+                                      },
+                                      style: FilledButton.styleFrom(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(
+                                              10.0), // Set the border radius
+                                        ),
+                                        backgroundColor: Theme.of(context)
+                                            .colorScheme
+                                            .tertiaryContainer,
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.fromLTRB(
+                                            22, 12, 22, 12),
+                                        child: Text('Confirm',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headlineMedium!
+                                                .copyWith(
+                                                  color: Colors.white,
+                                                )),
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
-                          )
-                        : Container(),
-                  ],
+                            )
+                          : Container(),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            SizedBox(height: !editMode ? 20 : 0),
-            !editMode &&
-                    canIssuePass(concessionDetails, lastPassIssued, duration)
-                ? Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        FilledButton(
-                          onPressed: () {
-                            ref
-                                .read(railwayConcessionOpenProvider.state)
-                                .state = true;
-                          },
-                          style: FilledButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(
-                                  10.0), // Set the border radius
+              SizedBox(height: !editMode ? 20 : 0),
+              !editMode &&
+                      canIssuePass(concessionDetails, lastPassIssued, duration)
+                  ? Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          FilledButton(
+                            onPressed: () {
+                              ref
+                                  .read(railwayConcessionOpenProvider.state)
+                                  .state = true;
+                            },
+                            style: FilledButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(
+                                    10.0), // Set the border radius
+                              ),
+                            ),
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.fromLTRB(22, 12, 22, 12),
+                              child: Text('Apply',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headlineMedium!
+                                      .copyWith(
+                                        color: Colors.black,
+                                      )),
                             ),
                           ),
-                          child: Padding(
-                            padding: const EdgeInsets.fromLTRB(22, 12, 22, 12),
-                            child: Text('Apply',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headlineMedium!
-                                    .copyWith(
-                                      color: Colors.black,
-                                    )),
-                          ),
-                        ),
-                      ],
-                    ),
-                  )
-                : Container(),
-          ],
+                        ],
+                      ),
+                    )
+                  : Container(),
+            ],
+          ),
         ),
       ),
     );

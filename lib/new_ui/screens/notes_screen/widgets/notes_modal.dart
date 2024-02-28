@@ -169,6 +169,7 @@ class _NotesModalState extends ConsumerState<NotesModal> {
     UserModel? user = ref.watch(userModelProvider);
 
     return Scaffold(
+      appBar: AppBar(),
       body: SafeArea(
         child: Container(
           padding: EdgeInsets.all(10),

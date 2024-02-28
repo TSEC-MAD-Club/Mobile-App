@@ -1,27 +1,12 @@
 // ignore_for_file: lines_longer_than_80_chars
-import 'dart:typed_data';
-import 'package:path_provider/path_provider.dart';
-import 'package:http/http.dart' as http;
-import 'dart:io';
-import 'dart:ui';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 import 'package:tsec_app/models/concession_details_model/concession_details_model.dart';
 import 'package:tsec_app/provider/concession_provider.dart';
-import 'package:tsec_app/screens/profile_screen/widgets/custom_text_with_divider.dart';
 import 'package:tsec_app/screens/railwayConcession/widgets/railway_edit_modal.dart';
 import 'package:tsec_app/screens/railwayConcession/widgets/railway_screen_appbar.dart';
-import 'package:tsec_app/screens/railwayConcession/widgets/railway_text_field.dart';
-import 'package:tsec_app/screens/railwayConcession/widgets/railway_text_with_divider.dart';
-import 'package:tsec_app/utils/custom_snackbar.dart';
-import 'package:tsec_app/utils/station_list.dart';
 import 'package:tsec_app/widgets/custom_scaffold.dart';
-import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 
 class RailWayConcession extends ConsumerStatefulWidget {

@@ -8,7 +8,7 @@ import 'package:tsec_app/models/user_model/user_model.dart';
 import 'package:tsec_app/new_ui/screens/home_screen/home_screen.dart';
 import 'package:tsec_app/provider/auth_provider.dart';
 import 'package:tsec_app/provider/railway_concession_provider.dart';
-import 'package:tsec_app/screens/committees_screen.dart';
+import 'package:tsec_app/new_ui/screens/committees_screen/committees_screen.dart';
 import 'package:tsec_app/screens/department_screen/department_screen.dart';
 import 'package:tsec_app/screens/departmentlist_screen/department_list.dart';
 import 'package:tsec_app/screens/tpc_screen.dart';
