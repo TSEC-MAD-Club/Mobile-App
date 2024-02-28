@@ -111,6 +111,7 @@ class AuthProvider extends StateNotifier<bool> {
   }
 
   Future getUserData(WidgetRef ref, BuildContext context) async {
+    //this is being called on both splash and login screen
     final user = _ref.watch(firebaseAuthProvider).currentUser;
     if (user?.uid != null) {
       UserModel? userModel = await ref
@@ -127,7 +128,7 @@ class AuthProvider extends StateNotifier<bool> {
       }
       await ref.watch(authProvider.notifier).fetchProfilePic();
       await ref.watch(concessionProvider.notifier).getConcessionData();
-      await ref.read(notesProvider.notifier).fetchNotes();
+      await ref.read(notesProvider.notifier).fetchNotes(userModel);
       // if (studentModel != null) {
       //   debugPrint("in main");
       //   String studentYear = studentModel.gradyear.toString();

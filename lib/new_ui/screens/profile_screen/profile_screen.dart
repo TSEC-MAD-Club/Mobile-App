@@ -643,8 +643,9 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                                                 null) {
                                                               setState(() {
                                                                 div = newValue;
-                                                                calcBatchList(
-                                                                    newValue);
+                                                                batchList =
+                                                                    calcBatchList(
+                                                                        newValue);
                                                                 batch = null;
                                                               });
                                                             }

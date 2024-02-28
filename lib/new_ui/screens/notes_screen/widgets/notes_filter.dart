@@ -8,13 +8,17 @@ import 'package:tsec_app/utils/profile_details.dart';
 
 class NotesFilterBar extends ConsumerStatefulWidget {
   DateTime? startDate;
+  String searchQuery;
   DateTime? endDate;
+  void Function(String newQuery) modifySearchQuery;
   bool latest;
   List<String> subjects;
   Function(DateTime?, DateTime?, bool, List<String>) changeFilters;
   Function clearAllFilters;
   NotesFilterBar({
     super.key,
+    required this.searchQuery,
+    required this.modifySearchQuery,
     required this.startDate,
     required this.endDate,
     required this.latest,
@@ -29,7 +33,7 @@ class NotesFilterBar extends ConsumerStatefulWidget {
 
 class _NotesFilterBarState extends ConsumerState<NotesFilterBar>
     with SingleTickerProviderStateMixin {
-  final TextEditingController _searchController = TextEditingController();
+  // final TextEditingController _searchController = TextEditingController();
 
   Widget customFilterButton(String text, bool activeButton, Function onTap) {
     return Container(
@@ -145,7 +149,8 @@ class _NotesFilterBarState extends ConsumerState<NotesFilterBar>
             firstChild: SizedBox(
               height: 60,
               child: TextField(
-                controller: _searchController,
+                // controller: _searchController,
+                onChanged: widget.modifySearchQuery,
                 decoration: InputDecoration(
                   prefixIcon: const Icon(
                     Icons.search,

@@ -7,18 +7,23 @@ import 'package:tsec_app/services/notes_service.dart';
 
 final notesProvider =
     StateNotifierProvider<NotesProvider, List<NotesModel>>(((ref) {
-  return NotesProvider(ref: ref, notesService: ref.read(notesServiceProvider));
+  final data = ref.watch(userModelProvider);
+  return NotesProvider(
+      ref: ref, user: data, notesService: ref.read(notesServiceProvider));
 }));
 
 class NotesProvider extends StateNotifier<List<NotesModel>> {
   final NotesService _notesService;
-
+  UserModel _user;
   final Ref _ref;
 
-  NotesProvider({notesService, ref})
+  NotesProvider({notesService, user, ref})
       : _notesService = notesService,
+        _user = user,
         _ref = ref,
-        super([]);
+        super([]) {
+    fetchNotes(_user);
+  }
 
   Future<List<String>> uploadAttachments(List<String> files) async {
     // _ref.read(profilePicProvider.notifier).state = image;
@@ -32,8 +37,8 @@ class NotesProvider extends StateNotifier<List<NotesModel>> {
     return urls;
   }
 
-  Future<void> fetchNotes() async {
-    UserModel? user = _ref.read(userModelProvider);
+  Future<void> fetchNotes(UserModel? user) async {
+    // UserModel? user = _ref.watch(userModelProvider);
     List<NotesModel> allNotes = await _notesService.fetchNotes(user);
     state = allNotes;
   }

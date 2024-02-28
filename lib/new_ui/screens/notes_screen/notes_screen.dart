@@ -95,6 +95,7 @@ class _NotesScreenState extends ConsumerState<NotesScreen> {
   DateTime? filterEndDate;
   bool filterLatest = true;
   List<String> filterSelectedSubjects = [];
+  String searchQuery = "";
 
   void changeFilters(DateTime? startDate, DateTime? endDate, bool latest,
       List<String> subjects) {
@@ -132,7 +133,7 @@ class _NotesScreenState extends ConsumerState<NotesScreen> {
   @override
   Widget build(BuildContext context) {
     UserModel userModel = ref.watch(userModelProvider)!;
-
+    debugPrint("search string is ${searchQuery}");
     return Scaffold(
       floatingActionButton: !userModel.isStudent
           ? OpenContainer(
@@ -217,6 +218,12 @@ class _NotesScreenState extends ConsumerState<NotesScreen> {
               ),
             ),
             NotesFilterBar(
+              searchQuery: searchQuery,
+              modifySearchQuery: (String newQuery) {
+                setState(() {
+                  searchQuery = newQuery;
+                });
+              },
               startDate: filterStartDate,
               endDate: filterEndDate,
               latest: filterLatest,
@@ -229,6 +236,7 @@ class _NotesScreenState extends ConsumerState<NotesScreen> {
             ),
             NoteList(
               formKey: _formKey,
+              searchQuery: searchQuery,
               uploadNoteCallback: uploadNote,
               startDate: filterStartDate,
               endDate: filterEndDate,

@@ -25,12 +25,14 @@ class NoteList extends ConsumerStatefulWidget {
       String? division,
       String? year) uploadNoteCallback;
   GlobalKey<FormState> formKey;
+  String searchQuery;
   DateTime? startDate;
   DateTime? endDate;
   bool latest;
   List<String> subjects;
   NoteList({
     super.key,
+    required this.searchQuery,
     required this.formKey,
     required this.uploadNoteCallback,
     required this.startDate,
@@ -72,7 +74,9 @@ class _NoteListState extends ConsumerState<NoteList> {
         .where((note) =>
             (widget.startDate == null ||
                 note.time.isAfter(widget.startDate!)) &&
-            (widget.endDate == null || note.time.isBefore(widget.endDate!)))
+            (widget.endDate == null || note.time.isBefore(widget.endDate!)) &&
+            (note.title.contains(widget.searchQuery) ||
+                note.description.contains(widget.searchQuery)))
         .toList();
     // debugPrint("after date filtering ${filteredNotes.toString()}");
     // for (String subject in widget.subjects) {
