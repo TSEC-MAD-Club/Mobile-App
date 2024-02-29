@@ -174,13 +174,13 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
                       height: 20,
                     ),
                     SizedBox(
-                      width: size.width * 1,
+                      width: size.width,
                       height: size.height * 0.10,
                       child: Stack(
                         children: [
                           SizedBox(
                             width: size.width,
-                            height: size.height * 0.4,
+                            height: size.height * 0.3,
                             child: Align(
                               alignment: Alignment.center,
                               child: ListView.builder(
@@ -195,7 +195,9 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
                                       });
                                     },
                                     child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
+                                      // padding: const EdgeInsets.all(8.0),
+                                      padding: const EdgeInsets.only(
+                                          top: 8, bottom: 8, left: 8, right: 4),
                                       child: AnimatedContainer(
                                         alignment: Alignment.center,
                                         width:
@@ -222,7 +224,7 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
                                                 .textTheme
                                                 .titleMedium!
                                                 .copyWith(
-                                                  fontSize: 17,
+                                                  fontSize: 16,
                                                   fontWeight: FontWeight.w500,
                                                   color: selectedItem.index ==
                                                           index

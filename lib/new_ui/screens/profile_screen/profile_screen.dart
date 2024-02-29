@@ -13,6 +13,9 @@ import 'package:image_picker/image_picker.dart';
 import 'package:tsec_app/models/faculty_model/faculty_model.dart';
 import 'package:tsec_app/models/student_model/student_model.dart';
 import 'package:tsec_app/models/user_model/user_model.dart';
+import 'package:tsec_app/new_ui/screens/profile_screen/widgets/address_text_field.dart';
+import 'package:tsec_app/new_ui/screens/profile_screen/widgets/faculty_field.dart';
+import 'package:tsec_app/new_ui/screens/profile_screen/widgets/phone_no_field.dart';
 import 'package:tsec_app/new_ui/screens/profile_screen/widgets/profile_text_field.dart';
 import 'package:tsec_app/provider/auth_provider.dart';
 import 'package:tsec_app/provider/firebase_provider.dart';
@@ -493,7 +496,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                           },
                                         ),
                                         SizedBox(height: 20),
-                                        ProfileField(
+                                        PhoneField(
                                           labelName: "Number",
                                           enabled: editMode,
                                           controller: phoneNoController,
@@ -549,7 +552,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                           },
                                         ),
                                         SizedBox(height: 20),
-                                        ProfileField(
+                                        AddressField(
                                           labelName: "Address",
                                           enabled: editMode,
                                           // value: address,
@@ -591,12 +594,12 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                                       .textTheme
                                                       .bodySmall,
                                                 ),
-                                                SizedBox(width: 25),
+                                                SizedBox(width: 50),
                                                 Container(
                                                   width: MediaQuery.of(context)
                                                           .size
                                                           .width *
-                                                      .6,
+                                                      .45,
                                                   child:
                                                       DropdownButtonFormField(
                                                     decoration: InputDecoration(
@@ -683,12 +686,12 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                                       .textTheme
                                                       .bodySmall,
                                                 ),
-                                                SizedBox(width: 25),
+                                                SizedBox(width: 50),
                                                 Container(
                                                   width: MediaQuery.of(context)
                                                           .size
                                                           .width *
-                                                      .6,
+                                                      .50,
                                                   child:
                                                       DropdownButtonFormField(
                                                     decoration: InputDecoration(
@@ -762,7 +765,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                               },
                                             ),
                                             SizedBox(height: 20),
-                                            ProfileField(
+                                            FacultyField(
                                               labelName: "Designation",
                                               enabled: editMode,
                                               controller: designationController,
@@ -779,7 +782,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                               },
                                             ),
                                             SizedBox(height: 20),
-                                            ProfileField(
+                                            FacultyField(
                                               labelName: "Phd Guide",
                                               enabled: editMode,
                                               controller: phdGuideController,
@@ -796,7 +799,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                               },
                                             ),
                                             SizedBox(height: 20),
-                                            ProfileField(
+                                            FacultyField(
                                               labelName: "Qualification",
                                               enabled: editMode,
                                               controller:
@@ -814,7 +817,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                               },
                                             ),
                                             SizedBox(height: 20),
-                                            ProfileField(
+                                            FacultyField(
                                               labelName: "Experience",
                                               enabled: editMode,
                                               // value: address,
@@ -827,7 +830,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                               },
                                             ),
                                             SizedBox(height: 20),
-                                            ProfileField(
+                                            FacultyField(
                                               labelName:
                                                   "Area of specialization",
                                               enabled: editMode,

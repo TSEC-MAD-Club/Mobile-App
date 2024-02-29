@@ -142,7 +142,7 @@ class _NoteListState extends ConsumerState<NoteList> {
                           return Container(
                             // margin: EdgeInsets.all(8),
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(35),
+                              borderRadius: BorderRadius.circular(40),
                               color: Theme.of(context)
                                   .colorScheme
                                   .primaryContainer,

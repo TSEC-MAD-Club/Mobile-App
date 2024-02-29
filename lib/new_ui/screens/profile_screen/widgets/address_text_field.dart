@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class ProfileField extends StatelessWidget {
+class AddressField extends StatelessWidget {
   String labelName;
   TextEditingController? controller;
   bool enabled;
@@ -10,7 +10,7 @@ class ProfileField extends StatelessWidget {
   String? Function(String?)? validator;
   final onTap;
 
-  ProfileField({
+  AddressField({
     super.key,
     this.readOnly,
     required this.labelName,
@@ -25,7 +25,7 @@ class ProfileField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.06,
+      height: MediaQuery.of(context).size.height * 0.15,
       width: MediaQuery.of(context).size.width * 0.95,
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.primaryContainer,
@@ -38,32 +38,34 @@ class ProfileField extends StatelessWidget {
         ),
       ),
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(12, 4, 12, 4),
+        padding: const EdgeInsets.fromLTRB(12, 0, 12, 0),
         child: Row(
           children: [
             Text(
               labelName,
               style: Theme.of(context).textTheme.bodySmall,
             ),
-            SizedBox(width: 10),
+            const SizedBox(width: 10),
             Container(
-              width: MediaQuery.of(context).size.width * .65,
+              width: MediaQuery.of(context).size.width * .60,
               // height: MediaQuery.of(context).size.height * .0,
               // color: Colors.amber,
               child: TextFormField(
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                     border: InputBorder.none,
                     contentPadding: EdgeInsets.zero,
-                    isDense: true),
+                    isDense: true,
+                    labelStyle: TextStyle(fontSize: 12)),
                 enabled: enabled,
                 controller: controller,
                 readOnly: readOnly ?? false,
                 initialValue: value,
-                style: Theme.of(context).textTheme.bodySmall,
+                // style: Theme.of(context).textTheme.bodySmall,
+                style: TextStyle(fontSize: 15, color: Colors.white),
                 onChanged: onChanged,
                 validator: validator,
                 onTap: onTap,
-                // maxLines: 3,
+                maxLines: 3,
               ),
             ),
           ],

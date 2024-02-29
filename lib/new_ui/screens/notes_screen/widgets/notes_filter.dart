@@ -199,7 +199,7 @@ class _NotesFilterBarState extends ConsumerState<NotesFilterBar>
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         SizedBox(
-                          width: 160,
+                          width: MediaQuery.of(context).size.width * 0.40,
                           child: TextButton(
                             onPressed: () async {
                               DateTime? pickedDate = await showDatePicker(
@@ -234,14 +234,14 @@ class _NotesFilterBarState extends ConsumerState<NotesFilterBar>
                           ),
                         ),
                         const SizedBox(
-                          width: 40,
+                          width: 20,
                           child: Icon(
                             Icons.arrow_right_alt_rounded,
                             color: Colors.black,
                           ),
                         ),
                         SizedBox(
-                          width: 160,
+                          width: MediaQuery.of(context).size.width * 0.40,
                           child: TextButton(
                             onPressed: () async {
                               DateTime? pickedDate = await showDatePicker(
@@ -292,7 +292,7 @@ class _NotesFilterBarState extends ConsumerState<NotesFilterBar>
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         SizedBox(
-                          width: 170,
+                          width: MediaQuery.of(context).size.width * 0.40,
                           child:
                               customFilterButton("Latest", widget.latest, () {
                             widget.changeFilters(
@@ -302,8 +302,11 @@ class _NotesFilterBarState extends ConsumerState<NotesFilterBar>
                                 widget.subjects);
                           }),
                         ),
+                        const SizedBox(
+                          width: 5,
+                        ),
                         SizedBox(
-                          width: 170,
+                          width: MediaQuery.of(context).size.width * 0.40,
                           child:
                               customFilterButton("Oldest", !widget.latest, () {
                             widget.changeFilters(

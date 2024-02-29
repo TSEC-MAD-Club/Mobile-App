@@ -37,7 +37,7 @@ class _ConcessionStatusModalState extends ConsumerState<ConcessionStatusModal> {
       padding: const EdgeInsets.all(8.0),
       child: Container(
         // height: 70,
-        height: MediaQuery.of(context).size.height * 0.10,
+        height: MediaQuery.of(context).size.height * 0.13,
         decoration: BoxDecoration(
           color: concessionDetails?.status == ConcessionStatus.rejected
               ? Theme.of(context).colorScheme.error
