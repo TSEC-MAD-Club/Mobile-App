@@ -747,97 +747,103 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                         ),
                                       ],
                                     )
-                                  : Column(
-                                      children: [
-                                        ProfileField(
-                                          labelName: "Email",
-                                          enabled: false,
-                                          value: email,
-                                          onChanged: (val) {
-                                            setState(() {
-                                              email = val;
-                                            });
-                                          },
+                                  : SingleChildScrollView(
+                                      child: SizedBox(
+                                        child: Column(
+                                          children: [
+                                            ProfileField(
+                                              labelName: "Email",
+                                              enabled: false,
+                                              value: email,
+                                              onChanged: (val) {
+                                                setState(() {
+                                                  email = val;
+                                                });
+                                              },
+                                            ),
+                                            SizedBox(height: 20),
+                                            ProfileField(
+                                              labelName: "Designation",
+                                              enabled: editMode,
+                                              controller: designationController,
+                                              // onChanged: (val) {
+                                              //   setState(() {
+                                              //     phoneNum = val;
+                                              //   });
+                                              // },
+                                              validator: (value) {
+                                                if (value!.isEmpty) {
+                                                  return 'Please enter a designation';
+                                                }
+                                                return null;
+                                              },
+                                            ),
+                                            SizedBox(height: 20),
+                                            ProfileField(
+                                              labelName: "Phd Guide",
+                                              enabled: editMode,
+                                              controller: phdGuideController,
+                                              // onChanged: (val) {
+                                              //   setState(() {
+                                              //     phoneNum = val;
+                                              //   });
+                                              // },
+                                              validator: (value) {
+                                                if (value!.isEmpty) {
+                                                  return 'Please enter the name of your phd guide';
+                                                }
+                                                return null;
+                                              },
+                                            ),
+                                            SizedBox(height: 20),
+                                            ProfileField(
+                                              labelName: "Qualification",
+                                              enabled: editMode,
+                                              controller:
+                                                  qualificationController,
+                                              // onChanged: (val) {
+                                              //   setState(() {
+                                              //     phoneNum = val;
+                                              //   });
+                                              // },
+                                              validator: (value) {
+                                                if (value!.isEmpty) {
+                                                  return 'Please enter your qualifications';
+                                                }
+                                                return null;
+                                              },
+                                            ),
+                                            SizedBox(height: 20),
+                                            ProfileField(
+                                              labelName: "Experience",
+                                              enabled: editMode,
+                                              // value: address,
+                                              controller: experienceController,
+                                              validator: (value) {
+                                                if (value!.isEmpty) {
+                                                  return 'Please enter a value';
+                                                }
+                                                return null;
+                                              },
+                                            ),
+                                            SizedBox(height: 20),
+                                            ProfileField(
+                                              labelName:
+                                                  "Area of specialization",
+                                              enabled: editMode,
+                                              // value: address ,
+                                              controller:
+                                                  areaOfSpecializationController,
+                                              validator: (value) {
+                                                if (value!.isEmpty) {
+                                                  return 'Please enter a value';
+                                                }
+                                                return null;
+                                              },
+                                            ),
+                                          ],
                                         ),
-                                        SizedBox(height: 20),
-                                        ProfileField(
-                                          labelName: "Designation",
-                                          enabled: editMode,
-                                          controller: designationController,
-                                          // onChanged: (val) {
-                                          //   setState(() {
-                                          //     phoneNum = val;
-                                          //   });
-                                          // },
-                                          validator: (value) {
-                                            if (value!.isEmpty) {
-                                              return 'Please enter a designation';
-                                            }
-                                            return null;
-                                          },
-                                        ),
-                                        SizedBox(height: 20),
-                                        ProfileField(
-                                          labelName: "Phd Guide",
-                                          enabled: editMode,
-                                          controller: phdGuideController,
-                                          // onChanged: (val) {
-                                          //   setState(() {
-                                          //     phoneNum = val;
-                                          //   });
-                                          // },
-                                          validator: (value) {
-                                            if (value!.isEmpty) {
-                                              return 'Please enter the name of your phd guide';
-                                            }
-                                            return null;
-                                          },
-                                        ),
-                                        SizedBox(height: 20),
-                                        ProfileField(
-                                          labelName: "Qualification",
-                                          enabled: editMode,
-                                          controller: qualificationController,
-                                          // onChanged: (val) {
-                                          //   setState(() {
-                                          //     phoneNum = val;
-                                          //   });
-                                          // },
-                                          validator: (value) {
-                                            if (value!.isEmpty) {
-                                              return 'Please enter your qualifications';
-                                            }
-                                            return null;
-                                          },
-                                        ),
-                                        SizedBox(height: 20),
-                                        ProfileField(
-                                          labelName: "Experience",
-                                          enabled: editMode,
-                                          // value: address,
-                                          controller: experienceController,
-                                          validator: (value) {
-                                            if (value!.isEmpty) {
-                                              return 'Please enter a value';
-                                            }
-                                            return null;
-                                          },
-                                        ),
-                                        SizedBox(height: 20),
-                                        ProfileField(
-                                          labelName: "Area of specialization",
-                                          enabled: editMode,
-                                          // value: address ,
-                                          controller:
-                                              areaOfSpecializationController,
-                                          validator: (value) {
-                                            if (value!.isEmpty) {
-                                              return 'Please enter a value';
-                                            }
-                                            return null;
-                                          },
-                                        ),
-                                      ],
+                                      ),
                                     ),
                             ),
                           ],

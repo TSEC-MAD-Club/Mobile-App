@@ -45,12 +45,16 @@ class ProfileField extends StatelessWidget {
               labelName,
               style: Theme.of(context).textTheme.bodySmall,
             ),
-            SizedBox(width: 25),
+            SizedBox(width: 10),
             Container(
               width: MediaQuery.of(context).size.width * .55,
               // height: MediaQuery.of(context).size.height * .0,
+              color: Colors.amber,
               child: TextFormField(
-                decoration: InputDecoration(border: InputBorder.none),
+                decoration: InputDecoration(
+                    border: InputBorder.none,
+                    contentPadding: EdgeInsets.zero,
+                    isDense: true),
                 enabled: enabled,
                 controller: controller,
                 readOnly: readOnly ?? false,

@@ -59,10 +59,11 @@ class _NotesScreenState extends ConsumerState<NotesScreen> {
       ],
       attachments: originalFiles,
     );
-
-    await ref
-        .read(notesProvider.notifier)
-        .uploadNote(note, newFiles, deletedFiles, context);
+    if (_formKey.currentState!.validate()) {
+      await ref
+          .read(notesProvider.notifier)
+          .uploadNote(note, newFiles, deletedFiles, context);
+    }
   }
 
   Widget _buildNavigation(

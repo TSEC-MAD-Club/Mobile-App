@@ -171,11 +171,11 @@ class _NotesModalState extends ConsumerState<NotesModal> {
     return Scaffold(
       appBar: AppBar(
         iconTheme: const IconThemeData(color: Colors.white),
-        backgroundColor: Color(0xFF1B1B1B),
+        backgroundColor: const Color(0xFF1B1B1B),
       ),
       body: SafeArea(
         child: Container(
-          padding: EdgeInsets.all(10),
+          padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),
             color: Theme.of(context).colorScheme.background,
@@ -196,7 +196,7 @@ class _NotesModalState extends ConsumerState<NotesModal> {
                               .textTheme
                               .titleLarge!
                               .copyWith(color: Colors.white))),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   NotesTextField(
@@ -214,7 +214,7 @@ class _NotesModalState extends ConsumerState<NotesModal> {
                       return null;
                     },
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   user.isStudent
@@ -223,9 +223,6 @@ class _NotesModalState extends ConsumerState<NotesModal> {
                           color: Theme.of(context).colorScheme.outline,
                         )
                       : Container(),
-                  SizedBox(
-                    height: 20,
-                  ),
                   NotesTextField(
                     editMode: !user.isStudent,
                     label: "Description",
@@ -319,7 +316,7 @@ class _NotesModalState extends ConsumerState<NotesModal> {
                           ],
                         )
                       : Container(),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   user.isStudent
@@ -328,7 +325,7 @@ class _NotesModalState extends ConsumerState<NotesModal> {
                           color: Theme.of(context).colorScheme.outline,
                         )
                       : Container(),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   NotesDropdownField(
@@ -350,7 +347,7 @@ class _NotesModalState extends ConsumerState<NotesModal> {
                       }
                     },
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   user.isStudent
@@ -359,7 +356,7 @@ class _NotesModalState extends ConsumerState<NotesModal> {
                           color: Theme.of(context).colorScheme.outline,
                         )
                       : Container(),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Padding(
@@ -369,11 +366,11 @@ class _NotesModalState extends ConsumerState<NotesModal> {
                       children: [
                         Row(
                           children: [
-                            Icon(
+                            const Icon(
                               Icons.attachment,
                               color: Colors.grey,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 10,
                             ),
                             Text(
@@ -395,7 +392,7 @@ class _NotesModalState extends ConsumerState<NotesModal> {
                         SizedBox(
                           height: 100,
                           child: attachments.isEmpty
-                              ? Center(
+                              ? const Center(
                                   child: Text(
                                     "No attachments added",
                                     style: TextStyle(color: Colors.grey),
@@ -496,7 +493,7 @@ class _NotesModalState extends ConsumerState<NotesModal> {
                       ],
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   !user.isStudent
