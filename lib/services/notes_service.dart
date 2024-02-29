@@ -56,6 +56,7 @@ class NotesService {
   }
 
   Future deleteAttachments(List<String> files) async {
+    debugPrint("deleted files are $files");
     for (String file in files) {
       Reference storageReference = FirebaseStorage.instance.refFromURL(file);
       storageReference.delete();
@@ -121,6 +122,7 @@ class NotesService {
         //     print('Error updating or creating document: $e');
         //   }
         // }
+        debugPrint("while uploading, note is ${note}");
         DocumentReference notesDoc = notesCollection.doc(note.id);
         await notesDoc.update(note.toJson());
       } else {

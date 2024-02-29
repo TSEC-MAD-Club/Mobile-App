@@ -133,7 +133,6 @@ class _NotesScreenState extends ConsumerState<NotesScreen> {
   @override
   Widget build(BuildContext context) {
     UserModel userModel = ref.watch(userModelProvider)!;
-    debugPrint("search string is ${searchQuery}");
     return Scaffold(
       floatingActionButton: !userModel.isStudent
           ? OpenContainer(

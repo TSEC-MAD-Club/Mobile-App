@@ -90,13 +90,15 @@ class _DownloadButtonState extends ConsumerState<DownloadButton> {
                   ),
                   // !user.isStudent
                   // ? GestureDetector(
-                  GestureDetector(
-                    onTap: () => widget.removeFile(widget.url),
-                    child: Icon(
-                      Icons.cancel,
-                      color: Theme.of(context).colorScheme.onBackground,
-                    ),
-                  )
+                  !user.isStudent
+                      ? GestureDetector(
+                          onTap: () => widget.removeFile(),
+                          child: Icon(
+                            Icons.cancel,
+                            color: Theme.of(context).colorScheme.onBackground,
+                          ),
+                        )
+                      : Container()
                   // : Container(),
                 ],
               ),

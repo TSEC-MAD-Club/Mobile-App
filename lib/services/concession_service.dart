@@ -59,8 +59,7 @@ class ConcessionService {
         ConcessionDetailsModel concessionDetailsData =
             ConcessionDetailsModel.fromJson(detailsMap);
         if (concessionDetailsData.status == ConcessionStatus.unserviced) {
-          debugPrint("over fcking here");
-          debugPrint(concessionDetailsData.status);
+          // debugPrint(concessionDetailsData.status);
           // int waitingQueue = await getWaitingList();
           concessionDetailsData.statusMessage = await getWaitingMessage();
         } // debugPrint(

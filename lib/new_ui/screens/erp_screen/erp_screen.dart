@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-class AttendanceScreen extends StatelessWidget {
-  AttendanceScreen({super.key});
+class ERPScreen extends StatelessWidget {
+  ERPScreen({super.key});
 
   WebViewController controller = WebViewController()
     ..setJavaScriptMode(JavaScriptMode.unrestricted)

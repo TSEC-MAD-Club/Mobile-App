@@ -25,16 +25,29 @@ class NotesProvider extends StateNotifier<List<NotesModel>> {
     fetchNotes(_user);
   }
 
-  Future<List<String>> uploadAttachments(List<String> files) async {
+  Future<List<String>> uploadAttachments(
+      List<String> files, BuildContext context) async {
     // _ref.read(profilePicProvider.notifier).state = image;
-    List<String> urls = await _notesService.uploadAttachments(files);
-    return urls;
+    if (files.isNotEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+            content: Text(
+                'We are uploading your attachments, this might take some time. We will notify you when the process completes.')),
+      );
+      List<String> urls = await _notesService.uploadAttachments(files);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+            content: Text('All the attached files have been uploaded')),
+      );
+      return urls;
+    } else {
+      return [];
+    }
   }
 
-  Future<List<String>> deleteAttachments(List<String> files) async {
+  Future deleteAttachments(List<String> files) async {
     // _ref.read(profilePicProvider.notifier).state = image;
-    List<String> urls = await _notesService.deleteAttachments(files);
-    return urls;
+    await _notesService.deleteAttachments(files);
   }
 
   Future<void> fetchNotes(UserModel? user) async {
@@ -46,26 +59,36 @@ class NotesProvider extends StateNotifier<List<NotesModel>> {
   Future uploadNote(NotesModel note, List<String> newFiles,
       List<String> deletedFiles, BuildContext context) async {
     try {
+      // debugPrint(newFiles.toString());
+      // debugPrint(deletedFiles.toString());
+      // debugPrint(note.attachments.toString());
       List<NotesModel> oldNotes = state;
       bool isNewNote = note.id == "";
       NotesModel uploadedNote = await _notesService.uploadNote(note);
 
       // debugPrint("in notes provider ${note.id}");
-
-      note.attachments = [...note.attachments, ...newFiles];
+      List<String> originalAttachments = note.attachments;
+      // debugPrint("before updating state ${note.attachments.toString()}");
       if (!isNewNote) {
+        note.attachments = [...note.attachments, ...newFiles];
         List<NotesModel> updatedNotes = oldNotes.map((currNote) {
           return currNote.id == note.id ? note : currNote;
         }).toList();
         oldNotes = updatedNotes;
       } else {
+        note = uploadedNote;
+        uploadedNote.attachments = [...note.attachments, ...newFiles];
         oldNotes.add(uploadedNote);
       }
       state = [...oldNotes];
 
       //attachments stuff
-      List<String> urls = await uploadAttachments(newFiles);
-      note.attachments = [...note.attachments, ...urls];
+      List<String> urls = await uploadAttachments(newFiles, context);
+      // debugPrint("after uploading attachments, urls ${urls}");
+      // debugPrint(
+      //     "after uploading attachments, attachments ${note.attachments}");
+      note.attachments = [...originalAttachments, ...urls];
+      // debugPrint("finally, attachments ${note.attachments}");
       uploadedNote = await _notesService.uploadNote(note);
 
       await deleteAttachments(deletedFiles);

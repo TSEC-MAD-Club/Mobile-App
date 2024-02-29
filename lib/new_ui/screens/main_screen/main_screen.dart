@@ -28,7 +28,7 @@ class MainScreen extends ConsumerStatefulWidget {
 class _MainScreenState extends ConsumerState<MainScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
-  int currentBottomNavPage = 0;
+  String currentBottomNavPage = "home";
   int currentPage = 0;
 
   late List<Widget> pages;
@@ -42,9 +42,9 @@ class _MainScreenState extends ConsumerState<MainScreen> {
     pages = [
       HomeScreen(
         currentBottomNavPage: currentBottomNavPage,
-        changeCurrentBottomNavPage: (int index) {
+        changeCurrentBottomNavPage: (String page) {
           setState(() {
-            currentBottomNavPage = index;
+            currentBottomNavPage = page;
           });
         },
       ),
@@ -70,19 +70,20 @@ class _MainScreenState extends ConsumerState<MainScreen> {
 
     bool concessionOpen = ref.watch(railwayConcessionOpenProvider);
     // debugPrint("concession status is $concessionOpen");
+    debugPrint("current page ${currentBottomNavPage} ${concessionOpen}");
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         key: _scaffoldKey,
-        appBar: currentBottomNavPage != 3 || !concessionOpen
+        appBar: currentBottomNavPage != "concession" || !concessionOpen
             ? AppBar(
                 shadowColor: Colors.transparent,
-                backgroundColor: currentBottomNavPage != 4
+                backgroundColor: currentBottomNavPage != "profile"
                     ? Colors.transparent
                     : Theme.of(context).colorScheme.primary,
                 toolbarHeight: 80,
                 leadingWidth: MediaQuery.of(context).size.width * 0.7,
-                leading: currentBottomNavPage != 4
+                leading: currentBottomNavPage != "profile"
                     ? Row(
                         children: [
                           const SizedBox(
@@ -109,10 +110,70 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                                         "assets/images/pfpholder.jpg"),
                                   ),
                                 ),
+                          Container(
+                            width: MediaQuery.of(context).size.width * .5,
+                            padding: EdgeInsets.only(left: 10),
+                            child: Text(
+                              currentPage == 0
+                                  ? (currentBottomNavPage == "home"
+                                      ? "Home"
+                                      : currentBottomNavPage == "attendance"
+                                          ? "ERP"
+                                          : currentBottomNavPage == "timetable"
+                                              ? "Schedule"
+                                              : currentBottomNavPage ==
+                                                      "concession"
+                                                  ? "Railway Concession"
+                                                  : "")
+                                  : currentPage == 1
+                                      ? "TPC"
+                                      : currentPage == 2
+                                          ? "Committees"
+                                          : "Departments",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headlineLarge!
+                                  .copyWith(fontSize: 30, color: Colors.white),
+                              maxLines: 1,
+                              overflow: TextOverflow.fade,
+                            ),
+                          )
+                          // SingleChildScrollView(
+                          //   scrollDirection: Axis.horizontal,
+                          //   child: Container(
+                          //   padding: EdgeInsets.only(left: 10),
+                          //     width: MediaQuery.of(context).size.width * .8,
+                          //     child: Text(
+                          //       currentPage == 0
+                          //           ? (currentBottomNavPage == "home"
+                          //               ? "Home"
+                          //               : currentBottomNavPage == "attendance"
+                          //                   ? "ERP"
+                          //                   : currentBottomNavPage ==
+                          //                           "timetable"
+                          //                       ? "Schedule"
+                          //                       : currentBottomNavPage ==
+                          //                               "concession"
+                          //                           ? "Railway Concession"
+                          //                           : "")
+                          //           : currentPage == 1
+                          //               ? "TPC"
+                          //               : currentPage == 2
+                          //                   ? "Committees"
+                          //                   : "Departments",
+                          //       style: Theme.of(context)
+                          //           .textTheme
+                          //           .headlineLarge!
+                          //           .copyWith(fontSize: 30),
+                          //       maxLines: 1,
+                          //       overflow: TextOverflow.fade,
+                          //     ),
+                          //   ),
+                          // )
                         ],
                       )
                     : Container(),
-                // title: ,
+                // title: Text("Yyay"),
                 actions: userDetails != null
                     ? [
                         Padding(
@@ -133,24 +194,24 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                             ),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Ink(
-                            decoration: const ShapeDecoration(
-                              color: Colors.white, // White background color
-                              shape: CircleBorder(), // Circular shape
-                            ),
-                            child: IconButton(
-                              icon: const Icon(
-                                Icons.event_note,
-                                color: Colors.black, // Black icon color
-                              ),
-                              onPressed: () {
-                                // Handle button click
-                              },
-                            ),
-                          ),
-                        )
+                        // Padding(
+                        //   padding: const EdgeInsets.all(8.0),
+                        //   child: Ink(
+                        //     decoration: const ShapeDecoration(
+                        //       color: Colors.white, // White background color
+                        //       shape: CircleBorder(), // Circular shape
+                        //     ),
+                        //     child: IconButton(
+                        //       icon: const Icon(
+                        //         Icons.event_note,
+                        //         color: Colors.black, // Black icon color
+                        //       ),
+                        //       onPressed: () {
+                        //         // Handle button click
+                        //       },
+                        //     ),
+                        //   ),
+                        // )
                       ]
                     : [],
               )

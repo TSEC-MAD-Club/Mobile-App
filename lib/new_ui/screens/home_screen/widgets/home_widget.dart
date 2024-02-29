@@ -12,7 +12,8 @@ import 'package:tsec_app/provider/event_provider.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class HomeWidget extends ConsumerStatefulWidget {
-  const HomeWidget({Key? key}) : super(key: key);
+  Function(String page) changeCurrentPage;
+  HomeWidget({Key? key, required this.changeCurrentPage}) : super(key: key);
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _HomeWidgetState();
@@ -59,6 +60,7 @@ class _HomeWidgetState extends ConsumerState<HomeWidget> {
     var _theme = Theme.of(context);
     UserModel? data = ref.watch(userModelProvider);
     fetchEventDetails();
+    // debugPrint("right here");
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -93,12 +95,16 @@ class _HomeWidgetState extends ConsumerState<HomeWidget> {
                         ContainerIconWithName(
                           text: "Railway",
                           icon: Icons.directions_railway_outlined,
-                          onPressed: () {},
+                          onPressed: () {
+                            widget.changeCurrentPage("concession");
+                          },
                         ),
                         ContainerIconWithName(
                           text: "Notes",
                           icon: Icons.menu_book_rounded,
-                          onPressed: () {},
+                          onPressed: () {
+                            GoRouter.of(context).push('/notes');
+                          },
                         )
                       ],
                     ),

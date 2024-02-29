@@ -104,7 +104,7 @@ class _TSECAppState extends ConsumerState<TSECApp> {
           name: "home",
           path: "/home",
           builder: (context, state) => HomeScreen(
-            currentBottomNavPage: 0,
+            currentBottomNavPage: "home",
             changeCurrentBottomNavPage: () {},
           ),
         ),
