@@ -342,12 +342,12 @@ class _RailwayConcessionScreenState
           .applyConcession(details, idCardPhoto!, previousPassPhoto!, context);
     } else if (idCardPhotoTemp == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Please select the photo of your ID card")),
+        SnackBar(content: Text("Please add the photo of your ID card")),
       );
     } else if (previousPassPhotoTemp == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-            content: Text("Please select the photo of your previous pass")),
+            content: Text("Please add the photo of your previous pass")),
       );
     }
   }

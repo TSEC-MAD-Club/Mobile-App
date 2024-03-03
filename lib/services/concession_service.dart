@@ -76,28 +76,41 @@ class ConcessionService {
     }
   }
 
+  Future<String> uploadPhoto(File file, String docName) async {
+// idCard
+// prevpass
+// File idCardPhoto,
+//       File previousPassPhoto
+    var idRef = await firebaseStorage
+        .ref()
+        .child(docName)
+        .child("/${user?.uid}")
+        .putFile(file);
+    String url = await idRef.ref.getDownloadURL();
+    return url;
+  }
+
   Future<ConcessionDetailsModel> applyConcession(
-      ConcessionDetailsModel concessionDetails,
-      File idCardPhoto,
-      File previousPassPhoto) async {
+    ConcessionDetailsModel concessionDetails,
+  ) async {
     // int waitingQueue = await getWaitingList();
     // String statusMessage =
     //     "Your concession request will be serviced after issuing ${waitingQueue} previous requests";
 
     String statusMessage = await getWaitingMessage();
-    var idRef = await firebaseStorage
-        .ref()
-        .child("idCard")
-        .child("/${user?.uid}")
-        .putFile(idCardPhoto);
-    var idCardURL = await idRef.ref.getDownloadURL();
+    // var idRef = await firebaseStorage
+    //     .ref()
+    //     .child("idCard")
+    //     .child("/${user?.uid}")
+    //     .putFile(idCardPhoto);
+    // var idCardURL = await idRef.ref.getDownloadURL();
 
-    var passRef = await firebaseStorage
-        .ref()
-        .child("prevpass")
-        .child("/${user?.uid}")
-        .putFile(previousPassPhoto);
-    var prevPassURL = await passRef.ref.getDownloadURL();
+    // var passRef = await firebaseStorage
+    //     .ref()
+    //     .child("prevpass")
+    //     .child("/${user?.uid}")
+    //     .putFile(previousPassPhoto);
+    // var prevPassURL = await passRef.ref.getDownloadURL();
 
     // DateTime concessionDate = await getCorrectDate(DateTime.now());
     String status = ConcessionStatus.unserviced;
@@ -117,10 +130,10 @@ class ConcessionService {
       print('Error updating or creating document: $e');
     }
 
-    concessionDetails.idCardURL = idCardURL;
+    // concessionDetails.idCardURL = "";
     concessionDetails.status = status;
     concessionDetails.statusMessage = statusMessage;
-    concessionDetails.previousPassURL = prevPassURL;
+    // concessionDetails.previousPassURL = "";
 
     DocumentReference concessionDetailsDoc =
         concessionDetailsCollection.doc(user!.uid);

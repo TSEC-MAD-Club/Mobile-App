@@ -49,7 +49,7 @@ class RailwayDropdownSearch extends StatelessWidget {
               dropdownSearchDecoration: InputDecoration(
                 fillColor: Colors.white,
                 labelText: label,
-                labelStyle: TextStyle(color: Colors.grey),
+                labelStyle: TextStyle(color: Colors.white),
                 border: InputBorder.none,
               ),
             ),

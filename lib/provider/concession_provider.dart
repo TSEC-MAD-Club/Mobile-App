@@ -37,14 +37,38 @@ class ConcessionProvider extends StateNotifier<bool> {
 
   Future applyConcession(ConcessionDetailsModel concessionDetails,
       File idCardPhoto, File previousPassPhoto, BuildContext context) async {
-    concessionDetails.status = ConcessionStatus.unserviced;
-    concessionDetails.statusMessage =
-        await _concessionService.getWaitingMessage();
-    _ref.read(concessionDetailsProvider.notifier).state = concessionDetails;
-    ConcessionDetailsModel concessionDetailsData = await _concessionService
-        .applyConcession(concessionDetails, idCardPhoto, previousPassPhoto);
+    // concessionDetails.status = ConcessionStatus.unserviced;
+    // concessionDetails.statusMessage =
+    //     await _concessionService.getWaitingMessage();
+    // _ref.read(concessionDetailsProvider.notifier).state = concessionDetails;
 
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Applying for concession, please be patient'),
+      ),
+    );
+    ConcessionDetailsModel concessionDetailsData =
+        await _concessionService.applyConcession(concessionDetails);
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text(
+            'We are uploading your photos, this might take some time. We will notify you when the process completes.'),
+      ),
+    );
     _ref.read(concessionDetailsProvider.notifier).state = concessionDetailsData;
+
+    concessionDetailsData.idCardURL =
+        await _concessionService.uploadPhoto(idCardPhoto, "idCard");
+    concessionDetailsData.previousPassURL =
+        await _concessionService.uploadPhoto(previousPassPhoto, "prevpass");
+    await _concessionService.applyConcession(concessionDetailsData);
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('All the attached photos have been uploaded'),
+      ),
+    );
   }
 
   Future getConcessionData() async {
@@ -53,5 +77,4 @@ class ConcessionProvider extends StateNotifier<bool> {
     // debugPrint("concession: ${concessionDetailsData?.firstName}");
     _ref.read(concessionDetailsProvider.notifier).state = concessionDetailsData;
   }
-
 }
