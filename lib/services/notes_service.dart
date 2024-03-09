@@ -45,6 +45,7 @@ class NotesService {
       var fileRef = await firebaseStorage
           .ref()
           .child("notes_attachments")
+          .child("${user?.uid}")
           .child(fileFormat.path.split("/").last)
           .putFile(fileFormat);
       // final String fileName = _selectedFile!.path.split('/').last; // Get the original file name
@@ -104,7 +105,7 @@ class NotesService {
 
   Future<NotesModel> uploadNote(NotesModel note) async {
     try {
-      debugPrint("inside notes service ${note.id}");
+      // debugPrint("inside notes service ${note.id}");
       if (note.id != "") {
         // try {
         //   // Try to update the existing document

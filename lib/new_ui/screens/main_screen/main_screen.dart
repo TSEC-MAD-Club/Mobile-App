@@ -70,7 +70,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
 
     bool concessionOpen = ref.watch(railwayConcessionOpenProvider);
     // debugPrint("concession status is $concessionOpen");
-    debugPrint("current page ${currentBottomNavPage} ${concessionOpen}");
+    // debugPrint("current page ${currentBottomNavPage} ${concessionOpen}");
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,

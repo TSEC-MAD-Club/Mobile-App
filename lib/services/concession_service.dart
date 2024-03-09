@@ -30,8 +30,6 @@ class ConcessionService {
   CollectionReference concessionRequestCollection =
       FirebaseFirestore.instance.collection('ConcessionRequest');
 
-  Stream<User?> get userCurrentState => firebaseAuth.authStateChanges();
-
   User? get user => firebaseAuth.currentUser;
 
   Future<String> getWaitingMessage() async {

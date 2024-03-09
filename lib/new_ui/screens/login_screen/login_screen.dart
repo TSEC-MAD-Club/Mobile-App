@@ -89,7 +89,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       UserModel? userModel = ref.watch(userModelProvider);
 
       if (userModel != null) {
-        if (userModel.isStudent) _setupFCMNotifications(userModel.studentModel, FirebaseAuth.instance.currentUser!.uid);
+        ref.watch(authProvider.notifier).setupFCMNotifications(ref,
+            userModel.studentModel, FirebaseAuth.instance.currentUser!.uid);
+
         // if (studentModel.updateCount != null &&
         //     studentModel.updateCount! > 0) {
         //   GoRouter.of(context).go('/main');
@@ -371,63 +373,5 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             ),
           ),
         ));
-  }
-
-  Future<void> _setupFCMNotifications(StudentModel? studentModel, String uid) async {
-    final _messaging = FirebaseMessaging.instance;
-    final _permission = await _messaging.requestPermission(provisional: true);
-
-    if ([
-      AuthorizationStatus.authorized,
-      AuthorizationStatus.provisional,
-    ].contains(_permission.authorizationStatus)) {
-      NotificationType.makeTopic(ref, studentModel);
-      _messaging.subscribeToTopic(uid);
-      _messaging.subscribeToTopic(NotificationType.notification);
-      _messaging.subscribeToTopic(NotificationType.yearTopic);
-      _messaging.subscribeToTopic(NotificationType.yearBranchTopic);
-      _messaging.subscribeToTopic(NotificationType.yearBranchDivTopic);
-      _messaging.subscribeToTopic(NotificationType.yearBranchDivBatchTopic);
-      _setupInteractedMessage();
-      _messageOnForeground();
-    }
-  }
-
-  void _messageOnForeground() {
-    FirebaseMessaging.onMessage.listen(_handleForegroundMessage);
-  }
-
-  Future<void> _setupInteractedMessage() async {
-    // Get any messages which caused the application to open from
-    // a terminated state.
-    RemoteMessage? initialMessage =
-        await FirebaseMessaging.instance.getInitialMessage();
-
-    if (initialMessage != null) {
-      _handleMessage(initialMessage);
-    }
-
-    // Also handle any interaction when the app is in the background via a
-    // Stream listener
-    FirebaseMessaging.onMessageOpenedApp.listen(_handleMessage);
-  }
-
-  void _handleMessage(RemoteMessage message) {
-    // from - if message is sent from notification topic
-    if (message.from == NotificationType.notification.addTopicsPrefix) {
-      ref.read(notificationProvider.state).state = NotificationProvider(
-        notificationModel: NotificationModel.fromMessage(message),
-        isForeground: false,
-      );
-    }
-  }
-
-  void _handleForegroundMessage(RemoteMessage message) {
-    if (message.from == NotificationType.notification.addTopicsPrefix) {
-      ref.read(notificationProvider.state).state = NotificationProvider(
-        notificationModel: NotificationModel.fromMessage(message),
-        isForeground: true,
-      );
-    }
   }
 }

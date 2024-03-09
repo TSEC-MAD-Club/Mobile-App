@@ -5,12 +5,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:open_file/open_file.dart';
 import 'package:tsec_app/models/class_model/class_model.dart';
 import 'package:tsec_app/models/notes_model/notes_model.dart';
+import 'package:tsec_app/models/subject_model/subject_model.dart';
 import 'package:tsec_app/models/user_model/user_model.dart';
 import 'package:tsec_app/new_ui/screens/notes_screen/widgets/download_button.dart';
 import 'package:tsec_app/new_ui/screens/notes_screen/widgets/notes_dropdown_field.dart';
 import 'package:tsec_app/new_ui/screens/notes_screen/widgets/notes_text_field.dart';
 import 'package:tsec_app/provider/auth_provider.dart';
 import 'package:tsec_app/provider/notes_provider.dart';
+import 'package:tsec_app/provider/subjects_provider.dart';
 import 'package:tsec_app/utils/profile_details.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/services.dart';
@@ -170,6 +172,13 @@ class _NotesModalState extends ConsumerState<NotesModal> {
   @override
   Widget build(BuildContext context) {
     UserModel? user = ref.watch(userModelProvider);
+
+    SubjectModel subjects = ref.read(subjectsProvider);
+    SemesterData semData = subjects.dataMap["${year}_${branch}"] ??
+        SemesterData(even_sem: [], odd_sem: []);
+    List<String> allSubjects =
+        evenOrOddSem() == "even_sem" ? semData.even_sem : semData.odd_sem;
+
     return Scaffold(
       appBar: AppBar(
         iconTheme: const IconThemeData(color: Colors.white),
@@ -344,7 +353,8 @@ class _NotesModalState extends ConsumerState<NotesModal> {
                       editMode:
                           year != null && branch != null && !user.isStudent,
                       label: "Subject",
-                      items: subjects[year]?[branch]?[evenOrOddSem()] ?? [],
+                      // items: subjects[year]?[branch]?[evenOrOddSem()] ?? [],
+                      items: allSubjects,
                       val: subject,
                       validator: (value) {
                         if (value == null) {

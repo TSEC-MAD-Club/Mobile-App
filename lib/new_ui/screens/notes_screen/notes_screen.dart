@@ -7,12 +7,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tsec_app/models/class_model/class_model.dart';
 import 'package:tsec_app/models/notes_model/notes_model.dart';
+import 'package:tsec_app/models/subject_model/subject_model.dart';
 import 'package:tsec_app/models/user_model/user_model.dart';
 import 'package:tsec_app/new_ui/screens/notes_screen/widgets/note_list.dart';
 import 'package:tsec_app/new_ui/screens/notes_screen/widgets/notes_filter.dart';
 import 'package:tsec_app/new_ui/screens/notes_screen/widgets/notes_modal.dart';
 import 'package:tsec_app/provider/auth_provider.dart';
+import 'package:tsec_app/provider/firebase_provider.dart';
 import 'package:tsec_app/provider/notes_provider.dart';
+import 'package:tsec_app/provider/subjects_provider.dart';
 import 'package:tsec_app/utils/datetime.dart';
 import 'package:tsec_app/utils/image_assets.dart';
 import 'package:file_picker/file_picker.dart';
@@ -110,23 +113,27 @@ class _NotesScreenState extends ConsumerState<NotesScreen> {
   void clearAllFilters() {
     setState(() {
       UserModel user = ref.read(userModelProvider)!;
-
+      SubjectModel subjects = ref.read(subjectsProvider);
       filterStartDate = null;
       filterEndDate = null;
       filterLatest = true;
+      SemesterData semData = subjects.dataMap[
+              "${calcGradYear(user.studentModel?.gradyear)}_${user.studentModel?.branch}"] ??
+          SemesterData(even_sem: [], odd_sem: []);
       filterSelectedSubjects =
-          subjects[calcGradYear(user.studentModel?.gradyear)]
-                  ?[user.studentModel?.branch]?[evenOrOddSem()] ??
-              [];
+          evenOrOddSem() == "even_sem" ? semData.even_sem : semData.odd_sem;
     });
   }
 
   @override
   void initState() {
+    SubjectModel subjects = ref.read(subjectsProvider);
     UserModel user = ref.read(userModelProvider)!;
-    filterSelectedSubjects = subjects[calcGradYear(user.studentModel?.gradyear)]
-            ?[user.studentModel?.branch]?[evenOrOddSem()] ??
-        [];
+    SemesterData semData = subjects.dataMap[
+            "${calcGradYear(user.studentModel?.gradyear)}_${user.studentModel?.branch}"] ??
+        SemesterData(even_sem: [], odd_sem: []);
+    filterSelectedSubjects =
+        evenOrOddSem() == "even_sem" ? semData.even_sem : semData.odd_sem;
     super.initState();
   }
 

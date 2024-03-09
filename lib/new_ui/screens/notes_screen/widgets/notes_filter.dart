@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:tsec_app/models/subject_model/subject_model.dart';
 import 'package:tsec_app/models/user_model/user_model.dart';
 import 'package:tsec_app/provider/auth_provider.dart';
+import 'package:tsec_app/provider/subjects_provider.dart';
 import 'package:tsec_app/utils/custom_snackbar.dart';
 import 'package:tsec_app/utils/profile_details.dart';
 
@@ -126,10 +128,14 @@ class _NotesFilterBarState extends ConsumerState<NotesFilterBar>
   @override
   Widget build(BuildContext context) {
     UserModel user = ref.watch(userModelProvider)!;
+    SubjectModel subjects = ref.read(subjectsProvider);
+
+    SemesterData semData = subjects.dataMap[
+            "${calcGradYear(user.studentModel?.gradyear)}_${user.studentModel?.branch}"] ??
+        SemesterData(even_sem: [], odd_sem: []);
+        debugPrint(semData.even_sem.toString());
     List<String> allSubjects =
-        subjects[calcGradYear(user.studentModel?.gradyear)]
-                ?[user.studentModel?.branch]?[evenOrOddSem()] ??
-            [];
+        evenOrOddSem() == "even_sem" ? semData.even_sem : semData.odd_sem;
     // debugPrint(allSubjects.toString());
     // debugPrint(
     //     "${user!.studentModel?.gradyear} ${user.studentModel?.branch} ${evenOrOddSem()}");

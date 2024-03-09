@@ -15,12 +15,10 @@ final notesProvider =
 class NotesProvider extends StateNotifier<List<NotesModel>> {
   final NotesService _notesService;
   UserModel _user;
-  final Ref _ref;
 
   NotesProvider({notesService, user, ref})
       : _notesService = notesService,
         _user = user,
-        _ref = ref,
         super([]) {
     fetchNotes(_user);
   }

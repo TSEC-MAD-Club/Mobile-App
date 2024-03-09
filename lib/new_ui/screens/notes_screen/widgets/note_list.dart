@@ -9,6 +9,7 @@ import 'package:tsec_app/models/user_model/user_model.dart';
 import 'package:tsec_app/new_ui/screens/notes_screen/widgets/custom_pdf_icon.dart';
 import 'package:tsec_app/new_ui/screens/notes_screen/widgets/notes_modal.dart';
 import 'package:tsec_app/provider/auth_provider.dart';
+import 'package:tsec_app/provider/firebase_provider.dart';
 import 'package:tsec_app/provider/notes_provider.dart';
 import 'package:tsec_app/utils/datetime.dart';
 
@@ -102,18 +103,21 @@ class _NoteListState extends ConsumerState<NoteList> {
             delegate: SliverChildBuilderDelegate(
               childCount: allNotes.length,
               (context, i) {
-                List<String> attachments = allNotes[i]
-                    .attachments
-                    .map((e) => Uri.parse(e)
-                        .pathSegments
-                        .last
-                        .replaceFirst("notes_attachments/", ""))
-                    .toList();
-                // debugPrint(allNotes[i]
-                //     .attachments
-                //     .map((e) => Uri.parse(e).pathSegments.last)
-                //     .toList()
-                //     .toString());
+                List<String> attachments = allNotes[i].attachments.map((e) {
+                  String newString = Uri.parse(e)
+                      .pathSegments
+                      .last
+                      .replaceFirst("notes_attachments/", "");
+                  int firstSlashIndex = newString.indexOf('/');
+
+                  if (firstSlashIndex != -1) {
+                    newString = newString.substring(firstSlashIndex + 1);
+                  }
+                  return newString;
+                }).toList();
+
+                debugPrint(
+                    "path is ${Uri.parse(allNotes[i].attachments[0]).pathSegments.last.replaceFirst("notes_attachments/", "")}");
                 return Column(
                   children: [
                     SizedBox(height: 10),

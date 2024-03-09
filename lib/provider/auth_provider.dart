@@ -7,11 +7,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tsec_app/models/faculty_model/faculty_model.dart';
+import 'package:tsec_app/models/notification_model/notification_model.dart';
 import 'package:tsec_app/models/student_model/student_model.dart';
 import 'package:tsec_app/models/user_model/user_model.dart';
 import 'package:tsec_app/provider/concession_provider.dart';
 import 'package:tsec_app/provider/firebase_provider.dart';
 import 'package:tsec_app/provider/notes_provider.dart';
+import 'package:tsec_app/provider/notification_provider.dart';
+import 'package:tsec_app/provider/subjects_provider.dart';
 import 'package:tsec_app/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:tsec_app/utils/notification_type.dart';
@@ -19,10 +22,6 @@ import 'package:tsec_app/utils/notification_type.dart';
 final authProvider = StateNotifierProvider<AuthProvider, bool>(((ref) {
   return AuthProvider(ref: ref, authService: ref.watch(authServiceProvider));
 }));
-
-// final studentModelProvider = StateProvider<StudentModel?>((ref) {
-//   return null;
-// });
 
 final userModelProvider = StateProvider<UserModel?>((ref) {
   return null;
@@ -62,27 +61,26 @@ class AuthProvider extends StateNotifier<bool> {
   }
 
   Future fetchProfilePic() async {
-    // final user = _ref.read(firebaseAuthProvider).currentUser;
-    // String url =
-    //     "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/Images%2F${user?.uid}";
-    // final response = await http.get(Uri.parse(url));
+    UserModel? userModel = _ref.watch(userModelProvider);
+    if (userModel == null) {
+      return;
+    }
+    String url = userModel.isStudent
+        ? userModel.studentModel!.image ?? ""
+        : userModel.facultyModel!.image;
+    // debugPrint("url is $url");
+    if (url != "") {
+      final response = await http.get(Uri.parse(url));
+      if (response.statusCode == 200) {
+        _ref.read(profilePicProvider.notifier).state = response.bodyBytes;
+        return response.bodyBytes;
+      } else {
+        throw Exception('Failed to fetch image');
+      }
+    }
+  }
 
-    // if (response.statusCode == 200) {
-    //   final jsonResponse =
-    //       Map<String, dynamic>.from(json.decode(response.body));
-    //   // return jsonResponse['downloadTokens'] ?? '';
-    //   url = "$url?alt=media&token=${jsonResponse['downloadTokens']}";
-    //   final res = await http.get(Uri.parse(url));
-    //   if (res.statusCode == 200) {
-    //     _ref.read(profilePicProvider.notifier).state = res.bodyBytes;
-    //     // debugPrint("download url in auth provider is $url");
-    //     return response.bodyBytes;
-    //   } else {
-    //     throw Exception('Failed to fetch image');
-    //   }
-    // } else {
-    //   _ref.read(profilePicProvider.notifier).state = null;
-    // }
+  Future fetchSubjects() async {
     UserModel? userModel = _ref.watch(userModelProvider);
     if (userModel == null) {
       return;
@@ -103,6 +101,7 @@ class AuthProvider extends StateNotifier<bool> {
   }
 
   Future<UserModel?> fetchUserDetails(User? user, BuildContext context) async {
+    //this fetches the core data pertaining to the student or professor
     return await _authService.fetchUserDetails(user, context);
   }
 
@@ -117,18 +116,20 @@ class AuthProvider extends StateNotifier<bool> {
       UserModel? userModel = await ref
           .watch(authProvider.notifier)
           .fetchUserDetails(user, context);
-      // ref.read(studentModelProvider.notifier).state = studentModel;
       ref.read(userModelProvider.notifier).state = userModel;
-
       if (userModel != null && userModel.isStudent) {
         NotificationType.makeTopic(ref, userModel.studentModel);
         await ref
             .watch(authProvider.notifier)
             .updateStudentTimeTableData(userModel.studentModel, ref);
+        await ref.watch(concessionProvider.notifier).getConcessionData();
+        await ref
+            .watch(subjectsProvider.notifier)
+            .fetchSubjects(userModel.studentModel!);
       }
       await ref.watch(authProvider.notifier).fetchProfilePic();
-      await ref.watch(concessionProvider.notifier).getConcessionData();
       await ref.read(notesProvider.notifier).fetchNotes(userModel);
+
       // if (studentModel != null) {
       //   debugPrint("in main");
       //   String studentYear = studentModel.gradyear.toString();
@@ -207,11 +208,75 @@ class AuthProvider extends StateNotifier<bool> {
     }
   }
 
+  Future<void> setupFCMNotifications(
+      WidgetRef ref, StudentModel? studentModel, String uid) async {
+    final _messaging = FirebaseMessaging.instance;
+    final _permission = await _messaging.requestPermission(provisional: true);
+
+    if ([
+      AuthorizationStatus.authorized,
+      AuthorizationStatus.provisional,
+    ].contains(_permission.authorizationStatus)) {
+      NotificationType.makeTopic(ref, studentModel);
+      _messaging.subscribeToTopic(uid);
+      _messaging.subscribeToTopic(NotificationType.notification);
+      _messaging.subscribeToTopic(NotificationType.yearTopic);
+      _messaging.subscribeToTopic(NotificationType.yearBranchTopic);
+      _messaging.subscribeToTopic(NotificationType.yearBranchDivTopic);
+      _messaging.subscribeToTopic(NotificationType.yearBranchDivBatchTopic);
+      _setupInteractedMessage(ref);
+      _messageOnForeground(ref);
+    }
+  }
+
+  void _messageOnForeground(WidgetRef ref) {
+    FirebaseMessaging.onMessage.listen((event) {
+      _handleForegroundMessage(ref, event);
+    });
+  }
+
+  Future<void> _setupInteractedMessage(WidgetRef ref) async {
+    // Get any messages which caused the application to open from
+    // a terminated state.
+    RemoteMessage? initialMessage =
+        await FirebaseMessaging.instance.getInitialMessage();
+
+    if (initialMessage != null) {
+      _handleMessage(ref, initialMessage);
+    }
+
+    // Also handle any interaction when the app is in the background via a
+    // Stream listener
+    FirebaseMessaging.onMessageOpenedApp.listen((event) {
+      _handleForegroundMessage(ref, event);
+    });
+  }
+
+  void _handleMessage(WidgetRef ref, RemoteMessage message) {
+    // from - if message is sent from notification topic
+    if (message.from == NotificationType.notification.addTopicsPrefix) {
+      ref.read(notificationProvider.state).state = NotificationProvider(
+        notificationModel: NotificationModel.fromMessage(message),
+        isForeground: false,
+      );
+    }
+  }
+
+  void _handleForegroundMessage(WidgetRef ref, RemoteMessage message) {
+    if (message.from == NotificationType.notification.addTopicsPrefix) {
+      ref.read(notificationProvider.state).state = NotificationProvider(
+        notificationModel: NotificationModel.fromMessage(message),
+        isForeground: true,
+      );
+    }
+  }
+
   Future signout() async {
     final _messaging = FirebaseMessaging.instance;
 
     _ref.read(userModelProvider.notifier).update((state) => null);
     _ref.read(profilePicProvider.notifier).update((state) => null);
+
     _messaging.unsubscribeFromTopic(NotificationType.notification);
     _messaging.unsubscribeFromTopic(NotificationType.yearBranchDivBatchTopic);
     _messaging.unsubscribeFromTopic(NotificationType.yearBranchDivTopic);

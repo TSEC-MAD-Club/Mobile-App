@@ -30,6 +30,7 @@ class _DownloadButtonState extends ConsumerState<DownloadButton> {
   @override
   void initState() {
     super.initState();
+    debugPrint(widget.url);
     SchedulerBinding.instance.addPostFrameCallback((_) {
       _storage = locator<StorageUtil>();
       if (widget.url.startsWith("http")) {
