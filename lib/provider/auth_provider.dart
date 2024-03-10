@@ -123,10 +123,8 @@ class AuthProvider extends StateNotifier<bool> {
             .watch(authProvider.notifier)
             .updateStudentTimeTableData(userModel.studentModel, ref);
         await ref.watch(concessionProvider.notifier).getConcessionData();
-        await ref
-            .watch(subjectsProvider.notifier)
-            .fetchSubjects(userModel.studentModel!);
       }
+      await ref.watch(subjectsProvider.notifier).fetchSubjects();
       await ref.watch(authProvider.notifier).fetchProfilePic();
       await ref.read(notesProvider.notifier).fetchNotes(userModel);
 

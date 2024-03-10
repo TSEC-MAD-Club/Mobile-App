@@ -20,7 +20,7 @@ class SubjectsService {
   CollectionReference<Map<String, dynamic>> subjectsCollection =
       FirebaseFirestore.instance.collection('Subjects');
 
-  Future<SubjectModel> fetchSubjects(StudentModel student) async {
+  Future<SubjectModel> fetchSubjects() async {
     try {
       QuerySnapshot<Map<String, dynamic>> querySnapshot =
           await subjectsCollection.get();
@@ -34,7 +34,6 @@ class SubjectsService {
       });
 
       SubjectModel firebaseData = SubjectModel(dataMap: dataMap);
-
       return firebaseData;
     } catch (error) {
       debugPrint("error is ${error}");

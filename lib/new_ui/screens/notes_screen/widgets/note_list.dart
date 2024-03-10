@@ -96,7 +96,9 @@ class _NoteListState extends ConsumerState<NoteList> {
   @override
   Widget build(BuildContext context) {
     List<NotesModel> allNotes = ref.watch(notesProvider);
-    allNotes = applyFilters(allNotes);
+    // allNotes = applyFilters(allNotes);
+    // debugPrint("all notes are ${allNotes}");
+    // List<NotesModel> allNotes = [];
 
     return allNotes.length != 0
         ? SliverList(
@@ -116,8 +118,6 @@ class _NoteListState extends ConsumerState<NoteList> {
                   return newString;
                 }).toList();
 
-                debugPrint(
-                    "path is ${Uri.parse(allNotes[i].attachments[0]).pathSegments.last.replaceFirst("notes_attachments/", "")}");
                 return Column(
                   children: [
                     SizedBox(height: 10),

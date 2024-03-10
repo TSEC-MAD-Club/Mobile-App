@@ -18,8 +18,8 @@ class SubjectsProvider extends StateNotifier<SubjectModel> {
   SubjectsProvider({required this.subjectService, required this.ref})
       : super(SubjectModel(dataMap: {}));
 
-  Future fetchSubjects(StudentModel student) async {
-    SubjectModel subModel = await subjectService.fetchSubjects(student);
+  Future fetchSubjects() async {
+    SubjectModel subModel = await subjectService.fetchSubjects();
     // debugPrint("in subjects provider ${subModel.toString()}");
     state = subModel;
   }

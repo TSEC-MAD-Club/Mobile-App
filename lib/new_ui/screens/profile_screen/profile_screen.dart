@@ -16,6 +16,7 @@ import 'package:tsec_app/models/user_model/user_model.dart';
 import 'package:tsec_app/new_ui/screens/profile_screen/widgets/address_text_field.dart';
 import 'package:tsec_app/new_ui/screens/profile_screen/widgets/faculty_field.dart';
 import 'package:tsec_app/new_ui/screens/profile_screen/widgets/phone_no_field.dart';
+import 'package:tsec_app/new_ui/screens/profile_screen/widgets/profile_dropdown_field.dart';
 import 'package:tsec_app/new_ui/screens/profile_screen/widgets/profile_text_field.dart';
 import 'package:tsec_app/provider/auth_provider.dart';
 import 'package:tsec_app/provider/firebase_provider.dart';
@@ -321,7 +322,6 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     final UserModel data = ref.watch(userModelProvider)!;
-    debugPrint("user data is $data");
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.primary,
       resizeToAvoidBottomInset: false,
@@ -496,7 +496,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                           },
                                         ),
                                         SizedBox(height: 20),
-                                        PhoneField(
+                                        ProfileField(
                                           labelName: "Number",
                                           enabled: editMode,
                                           controller: phoneNoController,
@@ -552,7 +552,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                           },
                                         ),
                                         SizedBox(height: 20),
-                                        AddressField(
+                                        ProfileField(
                                           labelName: "Address",
                                           enabled: editMode,
                                           // value: address,
@@ -565,189 +565,53 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                           },
                                         ),
                                         SizedBox(height: 20),
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .primaryContainer,
-                                            borderRadius:
-                                                BorderRadius.circular(20),
-                                            border: Border.all(
-                                              color: editMode
-                                                  ? Theme.of(context)
-                                                      .colorScheme
-                                                      .onPrimaryContainer
-                                                  : Theme.of(context)
-                                                      .colorScheme
-                                                      .outline,
-                                              width: 2.0,
-                                            ),
-                                          ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.fromLTRB(
-                                                12, 4, 12, 4),
-                                            child: Row(
-                                              children: [
-                                                Text(
-                                                  "Division",
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .bodySmall,
-                                                ),
-                                                SizedBox(width: 50),
-                                                Container(
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      .45,
-                                                  child:
-                                                      DropdownButtonFormField(
-                                                    decoration: InputDecoration(
-                                                        border:
-                                                            InputBorder.none),
-                                                    value: div,
-                                                    validator: (value) {
-                                                      if (value == "") {
-                                                        return 'Please enter a division';
-                                                      }
-                                                      return null;
-                                                    },
-                                                    dropdownColor:
-                                                        Theme.of(context)
-                                                            .colorScheme
-                                                            .background,
-                                                    items: divisionList
-                                                        .map((String item) {
-                                                      return DropdownMenuItem(
-                                                        value: item,
-                                                        child: Text(
-                                                          item,
-                                                          style: TextStyle(
-                                                            color: Colors.white,
-                                                          ),
-                                                        ),
-                                                      );
-                                                    }).toList(),
-
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .bodySmall!
-                                                        .copyWith(
-                                                            color:
-                                                                Colors.white),
-                                                    // After selecting the desired option,it will
-                                                    // change button value to selected value
-                                                    onChanged: editMode
-                                                        ? (String? newValue) {
-                                                            if (newValue !=
-                                                                null) {
-                                                              setState(() {
-                                                                div = newValue;
-                                                                batchList =
-                                                                    calcBatchList(
-                                                                        newValue);
-                                                                batch = null;
-                                                              });
-                                                            }
-                                                          }
-                                                        : null,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
+                                        ProfileDropdownField(
+                                          editMode: editMode,
+                                          text: "Division",
+                                          val: div,
+                                          validator: (value) {
+                                            if (value == "") {
+                                              return 'Please enter a division';
+                                            }
+                                            return null;
+                                          },
+                                          valList: divisionList,
+                                          onChanged: editMode
+                                              ? (String? newValue) {
+                                                  if (newValue != null) {
+                                                    setState(() {
+                                                      div = newValue;
+                                                      batchList = calcBatchList(
+                                                          newValue);
+                                                      batch = null;
+                                                    });
+                                                  }
+                                                }
+                                              : null,
                                         ),
                                         SizedBox(height: 20),
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .primaryContainer,
-                                            borderRadius:
-                                                BorderRadius.circular(20),
-                                            border: Border.all(
-                                              color: editMode
-                                                  ? Theme.of(context)
-                                                      .colorScheme
-                                                      .onPrimaryContainer
-                                                  : Theme.of(context)
-                                                      .colorScheme
-                                                      .outline,
-                                              width: 2.0,
-                                            ),
-                                          ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.fromLTRB(
-                                                12, 4, 12, 4),
-                                            child: Row(
-                                              children: [
-                                                Text(
-                                                  "Batch",
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .bodySmall,
-                                                ),
-                                                SizedBox(width: 50),
-                                                Container(
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      .50,
-                                                  child:
-                                                      DropdownButtonFormField(
-                                                    decoration: InputDecoration(
-                                                        border:
-                                                            InputBorder.none),
-                                                    value: batch,
-                                                    validator: (value) {
-                                                      if (value == "") {
-                                                        return 'Please enter a batch';
-                                                      }
-                                                      return null;
-                                                    },
-                                                    dropdownColor:
-                                                        Theme.of(context)
-                                                            .colorScheme
-                                                            .background,
-                                                    items: batchList
-                                                        .map((String item) {
-                                                      return DropdownMenuItem(
-                                                        value: item,
-                                                        child: Text(
-                                                          item,
-                                                          style: TextStyle(
-                                                            color: Colors.white,
-                                                          ),
-                                                        ),
-                                                      );
-                                                    }).toList(),
-
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .bodySmall!
-                                                        .copyWith(
-                                                            color:
-                                                                Colors.white),
-                                                    // After selecting the desired option,it will
-                                                    // change button value to selected value
-                                                    onChanged: editMode
-                                                        ? (String? newValue) {
-                                                            if (newValue !=
-                                                                null) {
-                                                              setState(() {
-                                                                batch =
-                                                                    newValue;
-                                                                // calcBatchList(newValue);
-                                                                // batch = null;
-                                                              });
-                                                            }
-                                                          }
-                                                        : null,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
+                                        ProfileDropdownField(
+                                          editMode: editMode,
+                                          text: "Batch",
+                                          val: batch,
+                                          validator: (value) {
+                                            if (value == "") {
+                                              return 'Please enter a batch';
+                                            }
+                                            return null;
+                                          },
+                                          valList: batchList,
+                                          onChanged: editMode
+                                              ? (String? newValue) {
+                                                  if (newValue != null) {
+                                                    setState(() {
+                                                      batch = newValue;
+                                                      // calcBatchList(newValue);
+                                                      // batch = null;
+                                                    });
+                                                  }
+                                                }
+                                              : null,
                                         ),
                                       ],
                                     )
@@ -766,7 +630,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                               },
                                             ),
                                             SizedBox(height: 20),
-                                            FacultyField(
+                                            ProfileField(
                                               labelName: "Designation",
                                               enabled: editMode,
                                               controller: designationController,
@@ -783,7 +647,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                               },
                                             ),
                                             SizedBox(height: 20),
-                                            FacultyField(
+                                            ProfileField(
                                               labelName: "Phd Guide",
                                               enabled: editMode,
                                               controller: phdGuideController,
@@ -800,7 +664,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                               },
                                             ),
                                             SizedBox(height: 20),
-                                            FacultyField(
+                                            ProfileField(
                                               labelName: "Qualification",
                                               enabled: editMode,
                                               controller:
@@ -818,7 +682,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                               },
                                             ),
                                             SizedBox(height: 20),
-                                            FacultyField(
+                                            ProfileField(
                                               labelName: "Experience",
                                               enabled: editMode,
                                               // value: address,
@@ -831,7 +695,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                               },
                                             ),
                                             SizedBox(height: 20),
-                                            FacultyField(
+                                            ProfileField(
                                               labelName:
                                                   "Area of specialization",
                                               enabled: editMode,

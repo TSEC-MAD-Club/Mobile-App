@@ -171,7 +171,7 @@ class _NotesModalState extends ConsumerState<NotesModal> {
 
   @override
   Widget build(BuildContext context) {
-    UserModel? user = ref.watch(userModelProvider);
+    UserModel user = ref.watch(userModelProvider)!;
 
     SubjectModel subjects = ref.read(subjectsProvider);
     SemesterData semData = subjects.dataMap["${year}_${branch}"] ??
@@ -206,7 +206,7 @@ class _NotesModalState extends ConsumerState<NotesModal> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: !user!.isStudent
+                  mainAxisAlignment: !user.isStudent
                       ? MainAxisAlignment.spaceBetween
                       : MainAxisAlignment.start,
                   children: [
@@ -214,7 +214,7 @@ class _NotesModalState extends ConsumerState<NotesModal> {
                     //   child: ,
                     // ),
                     SizedBox(
-                      height: 10,
+                      height: user.isStudent ? 10 : 0,
                     ),
                     NotesTextField(
                       editMode: !user.isStudent,
@@ -232,7 +232,7 @@ class _NotesModalState extends ConsumerState<NotesModal> {
                       },
                     ),
                     SizedBox(
-                      height: 20,
+                      height: user.isStudent ? 20 : 0,
                     ),
                     user.isStudent
                         ? Divider(
@@ -241,7 +241,7 @@ class _NotesModalState extends ConsumerState<NotesModal> {
                           )
                         : Container(),
                     SizedBox(
-                      height: 20,
+                      height: user.isStudent ? 20 : 0,
                     ),
                     NotesTextField(
                       editMode: !user.isStudent,
@@ -338,7 +338,7 @@ class _NotesModalState extends ConsumerState<NotesModal> {
                           )
                         : Container(),
                     SizedBox(
-                      height: 20,
+                      height: user.isStudent ? 20 : 0,
                     ),
                     user.isStudent
                         ? Divider(
@@ -347,7 +347,7 @@ class _NotesModalState extends ConsumerState<NotesModal> {
                           )
                         : Container(),
                     SizedBox(
-                      height: 20,
+                      height: user.isStudent ? 20 : 0,
                     ),
                     NotesDropdownField(
                       editMode:
@@ -371,7 +371,7 @@ class _NotesModalState extends ConsumerState<NotesModal> {
                       },
                     ),
                     SizedBox(
-                      height: 20,
+                      height: user.isStudent ? 20 : 0,
                     ),
                     user.isStudent
                         ? Divider(

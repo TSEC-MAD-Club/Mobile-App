@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tsec_app/models/user_model/user_model.dart';
+import 'package:tsec_app/provider/auth_provider.dart';
 
-class NotesDropdownField extends StatelessWidget {
+class NotesDropdownField extends ConsumerStatefulWidget {
   bool editMode;
   String label;
   String? val;
@@ -18,27 +21,37 @@ class NotesDropdownField extends StatelessWidget {
       this.validator});
 
   @override
+  ConsumerState<NotesDropdownField> createState() => _NotesDropdownFieldState();
+}
+
+class _NotesDropdownFieldState extends ConsumerState<NotesDropdownField> {
+  @override
   Widget build(BuildContext context) {
+    UserModel user = ref.watch(userModelProvider)!;
     return Padding(
-      padding: editMode ? EdgeInsets.fromLTRB(20, 11, 20, 11) : EdgeInsets.zero,
+      padding: !user.isStudent
+          ? const EdgeInsets.fromLTRB(20, 11, 20, 11)
+          : EdgeInsets.fromLTRB(15, 0, 15, 0),
+      // padding: EdgeInsets.fromLTRB(20, 11, 20, 11),
       child: DropdownButtonFormField(
         style: Theme.of(context)
             .textTheme
             .bodySmall!
             .copyWith(color: Colors.white),
         // style: Theme.of(context).textTheme.bodySmall,
-        value: val,
-        validator: validator,
+        value: widget.val,
+        validator: widget.validator,
         decoration: InputDecoration(
-          border: editMode ? UnderlineInputBorder() : InputBorder.none,
+          border: !user.isStudent ? UnderlineInputBorder() : InputBorder.none,
+          // border: UnderlineInputBorder(),
           labelStyle: const TextStyle(
             color: Colors.grey,
           ),
-          labelText: label,
+          labelText: widget.label,
         ),
-        icon: editMode ? Icon(Icons.keyboard_arrow_down) : Icon(null),
+        icon: widget.editMode ? Icon(Icons.keyboard_arrow_down) : Icon(null),
         dropdownColor: Theme.of(context).colorScheme.background,
-        items: items.map((String item) {
+        items: widget.items.map((String item) {
           return DropdownMenuItem(
             value: item,
             child: Text(
@@ -49,7 +62,7 @@ class NotesDropdownField extends StatelessWidget {
             ),
           );
         }).toList(),
-        onChanged: editMode ? onChanged : null,
+        onChanged: widget.editMode ? widget.onChanged : null,
       ),
     );
   }

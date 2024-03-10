@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tsec_app/models/user_model/user_model.dart';
+import 'package:tsec_app/provider/auth_provider.dart';
 
-class NotesTextField extends StatelessWidget {
+class NotesTextField extends ConsumerStatefulWidget {
   bool editMode;
   String label;
   TextEditingController? controller;
@@ -23,24 +26,34 @@ class NotesTextField extends StatelessWidget {
   });
 
   @override
+  ConsumerState<NotesTextField> createState() => _NotesTextFieldState();
+}
+
+class _NotesTextFieldState extends ConsumerState<NotesTextField> {
+  @override
   Widget build(BuildContext context) {
+    UserModel user = ref.watch(userModelProvider)!;
     return Padding(
-      padding: editMode ? const EdgeInsets.fromLTRB(20, 11, 20, 11) : EdgeInsets.zero,
+      padding: widget.editMode
+          ? const EdgeInsets.fromLTRB(20, 11, 20, 11)
+          : EdgeInsets.fromLTRB(15, 0, 15, 0),
       child: TextFormField(
-        style: Theme.of(context).textTheme.bodySmall,
-        controller: controller,
-        onTap: onTap,
-        readOnly: readOnly,
-        maxLines: maxLines,
-        validator: validator,
-        initialValue: val,
-        enabled: editMode,
+        style: Theme.of(context).textTheme.bodySmall!.copyWith(height: user.isStudent ? 3 : 1.5),
+        controller: widget.controller,
+        onTap: widget.onTap,
+        readOnly: widget.readOnly,
+        maxLines: widget.maxLines,
+        validator: widget.validator,
+        initialValue: widget.val,
+        enabled: widget.editMode,
         decoration: InputDecoration(
           // border: InputBorder.none,
           labelStyle: const TextStyle(
             color: Colors.grey,
+            // height: 4
           ),
-          labelText: label,
+          // hintStyle: TextStyle(height: 7),
+          labelText: widget.label,
         ),
       ),
     );

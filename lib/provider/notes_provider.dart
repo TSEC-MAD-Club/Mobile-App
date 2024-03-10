@@ -51,6 +51,7 @@ class NotesProvider extends StateNotifier<List<NotesModel>> {
   Future<void> fetchNotes(UserModel? user) async {
     // UserModel? user = _ref.watch(userModelProvider);
     List<NotesModel> allNotes = await _notesService.fetchNotes(user);
+    debugPrint("all fetched notes are ${allNotes}");
     state = allNotes;
   }
 
