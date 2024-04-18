@@ -24,18 +24,11 @@ class _CustomTextWithDividerState extends State<CustomTextWithDivider> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(widget.label,
-              style: Theme.of(context)
-                  .textTheme
-                  .titleSmall
-                  ?.copyWith(color: Colors.grey)),
+          Text(widget.label, style: Theme.of(context).textTheme.titleSmall?.copyWith(color: Colors.grey)),
           Container(height: 2),
           Text(
             widget.value,
-            style: Theme.of(context)
-                .textTheme
-                .titleLarge
-                ?.copyWith(fontSize: 16, fontWeight: FontWeight.normal),
+            style: Theme.of(context).textTheme.titleLarge?.copyWith(fontSize: 16, fontWeight: FontWeight.normal),
           ),
           if (widget.showDivider) // Conditionally display the Divider
             Divider(

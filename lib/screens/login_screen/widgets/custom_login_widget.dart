@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tsec_app/models/notification_model/notification_model.dart';
 import 'package:tsec_app/models/student_model/student_model.dart';
+import 'package:tsec_app/models/user_model/user_model.dart';
 import 'package:tsec_app/provider/auth_provider.dart';
 import 'package:tsec_app/screens/login_screen/widgets/custom_dialog_box.dart';
 import 'package:tsec_app/utils/custom_snackbar.dart';
@@ -39,7 +40,7 @@ class _LoginWidgetState extends ConsumerState<LoginWidget> {
   Widget build(BuildContext context) {
     final brightness = Theme.of(context).brightness;
     bool isItDarkMode = brightness == Brightness.dark;
-    StudentModel? st = ref.watch(studentModelProvider);
+    StudentModel? st = ref.watch(userModelProvider)?.studentModel;
     return Expanded(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -113,7 +114,7 @@ class _LoginWidgetState extends ConsumerState<LoginWidget> {
                               ? shadowLightModeTextFields
                               : shadowDarkModeTextFields,
                         ),
-                        child: TextField(
+                        child: TextFormField(
                           controller: _passwordTextEditingController,
                           obscureText: true,
                           decoration: InputDecoration(
@@ -237,13 +238,12 @@ class _LoginWidgetState extends ConsumerState<LoginWidget> {
                         return;
                       }
 
-                      User? user = userCredential.user;
-                      StudentModel? studentModel = await ref
-                          .watch(authProvider.notifier)
-                          .fetchStudentDetails(user, context);
-                      ref
-                          .watch(studentModelProvider.notifier)
-                          .update((state) => studentModel);
+                      // User? user = userCredential.user;
+                      // StudentModel? studentModel = await ref
+                      //     .watch(authProvider.notifier)
+                      //     .fetchStudentDetails(user, context);
+                      // ref.watch(userModelProvider.notifier).update(
+                      //     (state) => UserModel(studentModel: studentModel));
                       // debugPrint(studentModel.toString());
                       // String studentYear = studentModel!.gradyear.toString();
                       // String studentBranch = studentModel.branch.toString();
@@ -263,22 +263,22 @@ class _LoginWidgetState extends ConsumerState<LoginWidget> {
                       // builder: ((context) => const ChangePasswordDialog()));
 
                       // GoRouter.of(context).go('/main');
-                      await ref
-                          .watch(authProvider.notifier)
-                          .updateUserStateDetails(studentModel, ref);
+                      // await ref
+                      //     .watch(authProvider.notifier)
+                      //     .updateUserStateDetails(studentModel, ref);
 
-                      await ref.watch(authProvider.notifier).fetchProfilePic();
+                      // await ref.watch(authProvider.notifier).fetchProfilePic();
 
-                      _setupFCMNotifications(studentModel);
-                      if (studentModel != null) {
-                        if (studentModel.updateCount != null &&
-                            studentModel.updateCount! > 0) {
-                          GoRouter.of(context).go('/main');
-                        } else {
-                          GoRouter.of(context)
-                              .go('/profile-page?justLoggedIn=true');
-                        }
-                      }
+                      // _setupFCMNotifications(studentModel);
+                      // if (studentModel != null) {
+                      //   if (studentModel.updateCount != null &&
+                      //       studentModel.updateCount! > 0) {
+                      //     GoRouter.of(context).go('/main');
+                      //   } else {
+                      //     GoRouter.of(context)
+                      //         .go('/profile-page?justLoggedIn=true');
+                      //   }
+                      // }
                     },
                     child: const Icon(Icons.arrow_forward),
                     style: ButtonStyle(
@@ -308,6 +308,7 @@ class _LoginWidgetState extends ConsumerState<LoginWidget> {
       AuthorizationStatus.provisional,
     ].contains(_permission.authorizationStatus)) {
       NotificationType.makeTopic(ref, studentModel);
+      // _messaging.subscribeToTopic(studentModel);
       _messaging.subscribeToTopic(NotificationType.notification);
       _messaging.subscribeToTopic(NotificationType.yearTopic);
       _messaging.subscribeToTopic(NotificationType.yearBranchTopic);

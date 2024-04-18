@@ -66,7 +66,7 @@ class _DepartmentScreenAppBarState
 
   @override
   Widget build(BuildContext context) {
-    StudentModel? data = ref.watch(studentModelProvider);
+    StudentModel? data = ref.watch(userModelProvider)?.studentModel;
     return AppBar(
       elevation: 0,
       leadingWidth: 60.0,

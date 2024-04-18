@@ -15,7 +15,7 @@ final counterStreamProvider = StreamProvider((ref) {
 final timeTableProvider =
     StateNotifierProvider<TimeTableProvider, Stream<dynamic>>(((ref) {
   final data = ref.watch(notificationTypeProvider);
-  debugPrint("data refereshed ${data?.yearBranchDivTopic}");
+  // debugPrint("data refereshed ${data?.yearBranchDivTopic}");
   return TimeTableProvider(
     TimeTableService(ref.watch(firestoreProvider)),
     ref,

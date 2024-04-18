@@ -65,7 +65,14 @@ class _ProfileTextFieldState extends State<ProfileTextField> {
               ),
               labelText: widget.label,
             ),
-            style: TextStyle(color: Theme.of(context).colorScheme.onSecondaryContainer),
+            style: TextStyle(
+              color: widget.enabled
+                  ? Theme.of(context).colorScheme.onSecondaryContainer
+                  : Theme.of(context)
+                      .colorScheme
+                      .onSecondaryContainer
+                      .withOpacity(0.4),
+            ),
             onTap: widget.onTap ?? () {},
             onChanged: widget.onSaved ?? (val) {},
             validator: widget.validator,

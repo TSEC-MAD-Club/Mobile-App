@@ -32,7 +32,7 @@ class _EventDetailState extends ConsumerState<EventDetail> {
 
   @override
   Widget build(BuildContext context) {
-    StudentModel? data = ref.watch(studentModelProvider);
+    StudentModel? data = ref.watch(userModelProvider)?.studentModel;
     double _height = MediaQuery.of(context).size.height;
     double _width = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -62,7 +62,7 @@ class _EventDetailState extends ConsumerState<EventDetail> {
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
-                color: Theme.of(context).primaryColor,
+                color: Theme.of(context).colorScheme.primaryContainer,
                 borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(40),
                   topRight: Radius.circular(40),
@@ -80,7 +80,10 @@ class _EventDetailState extends ConsumerState<EventDetail> {
                             flex: 10,
                             child: Text(
                               widget.eventModel.eventName,
-                              style: Theme.of(context).textTheme.bodyLarge,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium!
+                                  .copyWith(color: Colors.white),
                             ),
                           ),
                           Expanded(
@@ -96,7 +99,10 @@ class _EventDetailState extends ConsumerState<EventDetail> {
                                   onPressed: () {
                                     launchUrl();
                                   },
-                                  child: const Text("Register"),
+                                  child: const Text(
+                                    "Register",
+                                    style: TextStyle(color: Colors.black),
+                                  ),
                                   style: ElevatedButton.styleFrom(
                                     padding: const EdgeInsets.only(
                                         top: 0, bottom: 0, right: 20, left: 20),
@@ -118,7 +124,7 @@ class _EventDetailState extends ConsumerState<EventDetail> {
                             children: [
                               Icon(
                                 Icons.location_on,
-                                color: Theme.of(context).backgroundColor,
+                                color: Colors.grey,
                               ),
                               const SizedBox(
                                 width: 5,
@@ -127,7 +133,10 @@ class _EventDetailState extends ConsumerState<EventDetail> {
                                 fit: BoxFit.scaleDown,
                                 child: Text(
                                   widget.eventModel.eventLocation,
-                                  style: Theme.of(context).textTheme.bodyText2,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleSmall!
+                                      .copyWith(color: Colors.white),
                                 ),
                               )
                             ],
@@ -145,7 +154,7 @@ class _EventDetailState extends ConsumerState<EventDetail> {
                             children: [
                               Icon(
                                 Icons.calendar_month,
-                                color: Theme.of(context).backgroundColor,
+                                color: Colors.grey,
                               ),
                               const SizedBox(
                                 width: 5,
@@ -156,7 +165,10 @@ class _EventDetailState extends ConsumerState<EventDetail> {
                                   widget.eventModel.eventTime +
                                       " " +
                                       widget.eventModel.eventDate,
-                                  style: Theme.of(context).textTheme.bodyText2,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleSmall!
+                                      .copyWith(color: Colors.white),
                                 ),
                               ),
                             ],

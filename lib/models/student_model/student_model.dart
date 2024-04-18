@@ -5,6 +5,8 @@ part 'student_model.g.dart';
 
 @JsonSerializable()
 class StudentModel {
+  @JsonKey(name: "image")
+  String? image;
   @JsonKey(name: "updateCount")
   int? updateCount;
   @JsonKey(name: "Batch")
@@ -27,6 +29,7 @@ class StudentModel {
   final String? phoneNum;
   final String? div;
   StudentModel({
+    required this.image,
     required this.batch,
     required this.branch,
     required this.name,

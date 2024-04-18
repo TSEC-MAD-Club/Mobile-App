@@ -1,3 +1,5 @@
+// ignore_for_file: lines_longer_than_80_chars
+
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:tsec_app/screens/department_screen/widgets/curriculum_section.dart';
@@ -114,6 +116,13 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    List<String> list = ["About", "Faculty", "Curriculum"];
+    int selected = 0;
+    List<Widget> screen = [
+      AboutSection(department: widget.department.name),
+      FacultyDetailsSection(department: widget.department),
+      CurriculumSection(department: widget.department)
+    ];
 
     return WillPopScope(
       onWillPop: () async {
@@ -124,92 +133,136 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
         }
         return true;
       },
-      child: CustomScaffold(
-        appBar: const DepartmentScreenAppBar(title: "Department"),
-        body: SizedBox(
-          width: size.width,
-          child: Column(
-            children: <Widget>[
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                width: size.width,
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.secondary,
-                  borderRadius:
-                      const BorderRadius.only(bottomRight: Radius.circular(30)),
-                ),
+      child: Scaffold(
+        // appBar: const DepartmentScreenAppBar(title: "Department"),
+        body: Scaffold(
+          appBar: AppBar(
+            iconTheme: const IconThemeData(color: Colors.white),
+            backgroundColor: Color(0xFF1B1B1B),
+          ),
+          body: SafeArea(
+            child: SizedBox(
+              width: size.width,
+              height: size.height,
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
+                      "Department",
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Text(
                       widget.department.name,
                       style: Theme.of(context)
                           .textTheme
-                          .headline5!
-                          .copyWith(fontSize: 22),
+                          .titleLarge!
+                          .copyWith(fontSize: 15),
                     ),
                     const SizedBox(
                       height: 20,
                     ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 15, vertical: 5),
-                      width: 230,
-                      height: 38,
-                      decoration: const BoxDecoration(
-                        color: kLightModeLightBlue,
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(12),
-                        ),
-                      ),
-                      child: Row(
-                        key: _dropDownKey,
+                    Divider(
+                      height: 1,
+                      color: Colors.grey.shade600,
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    SizedBox(
+                      width: size.width,
+                      height: size.height * 0.10,
+                      child: Stack(
                         children: [
-                          Text(
-                            selectedItem.name,
-                            style: Theme.of(context)
-                                .textTheme
-                                .button!
-                                .copyWith(color: Colors.white),
-                          ),
-                          const Spacer(),
-                          const VerticalDivider(
-                            color: Colors.white,
-                            thickness: 1,
-                            indent: 5,
-                            endIndent: 5,
-                            width: 20,
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              if (overlayEntry == null) {
-                                _showDropDown(context);
-                              } else {
-                                overlayEntry?.remove();
-                                overlayEntry = null;
-                              }
-                            },
-                            child: Transform.rotate(
-                              angle: -90 * pi / 180,
-                              child: const Icon(
-                                Icons.chevron_left,
-                                size: 30,
-                                color: Colors.white,
+                          SizedBox(
+                            width: size.width,
+                            height: size.height * 0.3,
+                            child: Align(
+                              alignment: Alignment.center,
+                              child: ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: list.length,
+                                itemBuilder: (context, index) {
+                                  return GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        selected = index;
+                                        selectedItem = Item.values[index];
+                                      });
+                                    },
+                                    child: Padding(
+                                      // padding: const EdgeInsets.all(8.0),
+                                      padding: const EdgeInsets.only(
+                                          top: 8, bottom: 8, left: 8, right: 4),
+                                      child: AnimatedContainer(
+                                        alignment: Alignment.center,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.25,
+                                        height: size.height * 0.15,
+                                        duration:
+                                            const Duration(milliseconds: 300),
+                                        margin: const EdgeInsets.all(3),
+                                        decoration: BoxDecoration(
+                                          color: selectedItem.index == index
+                                              ? Theme.of(context)
+                                                  .colorScheme
+                                                  .primary
+                                              : null,
+                                          borderRadius: const BorderRadius.all(
+                                            Radius.circular(12),
+                                          ),
+                                        ),
+                                        child: Center(
+                                          child: Text(
+                                            list[index],
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleMedium!
+                                                .copyWith(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w500,
+                                                  color: selectedItem.index ==
+                                                          index
+                                                      ? Theme.of(context)
+                                                          .colorScheme
+                                                          .onPrimary
+                                                      : Theme.of(context)
+                                                          .colorScheme
+                                                          .onSecondary,
+                                                ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                },
                               ),
                             ),
-                          ),
+                          )
                         ],
                       ),
                     ),
+                    Expanded(
+                      child: Column(
+                        children: [
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          section(selectedItem),
+                        ],
+                      ),
+                    )
                   ],
                 ),
               ),
-              const SizedBox(
-                height: 10,
-              ),
-              section(selectedItem),
-            ],
+            ),
+
+            //section(selectedItem),
           ),
         ),
       ),
