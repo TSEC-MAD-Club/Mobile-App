@@ -54,7 +54,7 @@ class _LoginWidgetState extends ConsumerState<LoginWidget> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Text("Email", style: Theme.of(context).textTheme.subtitle1),
+                    Text("Email", style: Theme.of(context).textTheme.displayMedium),
                     SizedBox(
                       height: 5,
                     ),
@@ -101,7 +101,7 @@ class _LoginWidgetState extends ConsumerState<LoginWidget> {
                       height: 10,
                     ),
                     Text("Password",
-                        style: Theme.of(context).textTheme.subtitle1),
+                        style: Theme.of(context).textTheme.displayMedium),
                     SizedBox(
                       height: 5,
                     ),
@@ -218,7 +218,7 @@ class _LoginWidgetState extends ConsumerState<LoginWidget> {
                   },
                   child: Text(
                     "Skip",
-                    style: Theme.of(context).textTheme.subtitle1,
+                    style: Theme.of(context).textTheme.displayMedium,
                   ),
                 ),
                 const Spacer(),

@@ -182,7 +182,7 @@ class _EventDetailState extends ConsumerState<EventDetail> {
                         children: [
                           Text(
                             "About",
-                            style: Theme.of(context).textTheme.headline5,
+                            style: Theme.of(context).textTheme.bodyMedium,
                           ),
                         ],
                       ),
@@ -203,7 +203,7 @@ class _EventDetailState extends ConsumerState<EventDetail> {
                           }
                         },
                         text: widget.eventModel.eventDescription,
-                        style: Theme.of(context).textTheme.subtitle2,
+                        style: Theme.of(context).textTheme.displayMedium,
                         linkStyle: const TextStyle(color: Colors.blue),
                       ),
                     ),
@@ -213,7 +213,7 @@ class _EventDetailState extends ConsumerState<EventDetail> {
                         children: [
                           Text(
                             "Organisers",
-                            style: Theme.of(context).textTheme.headline5,
+                            style: Theme.of(context).textTheme.headlineSmall,
                           ),
                         ],
                       ),
@@ -239,7 +239,7 @@ class _EventDetailState extends ConsumerState<EventDetail> {
                               ),
                               Text(
                                 widget.eventModel.committeeName,
-                                style: Theme.of(context).textTheme.subtitle1,
+                                style: Theme.of(context).textTheme.displayMedium,
                               ),
                             ],
                           ),

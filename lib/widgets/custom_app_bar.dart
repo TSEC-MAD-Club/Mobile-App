@@ -43,7 +43,7 @@ class CustomAppBar extends ConsumerWidget implements PreferredSizeWidget {
                   Expanded(
                     child: Text(
                       title,
-                      style: Theme.of(context).textTheme.headline3,
+                      style: Theme.of(context).textTheme.headlineMedium,
                     ),
                   ),
                   SizedBox(

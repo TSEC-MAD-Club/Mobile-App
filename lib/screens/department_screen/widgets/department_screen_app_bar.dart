@@ -81,7 +81,7 @@ class _DepartmentScreenAppBarState
       ),
       title: Text(
         "Department",
-        style: Theme.of(context).textTheme.headline6,
+        style: Theme.of(context).textTheme.bodyLarge,
       ),
       centerTitle: true,
       actions: [

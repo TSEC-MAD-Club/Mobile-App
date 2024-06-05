@@ -37,12 +37,13 @@ class _HomeWidgetState extends ConsumerState<HomeWidget> {
         data: ((data) {
           eventList.addAll(data ?? []);
           imgList.clear();
-          for (var data in eventList) {
-            imgList.add(data.imageUrl);
+          for (var data2 in eventList) {
+            imgList.add(data2.imageUrl);
           }
           // imgList = [imgList[0]];
           if (imgList.length == 1) shouldLoop = false;
         }),
+
         loading: () {
           const CircularProgressIndicator();
         },
@@ -87,7 +88,7 @@ class _HomeWidgetState extends ConsumerState<HomeWidget> {
             SingleChildScrollView(
               child: Column(
                 children: [
-                  if (data != null && data.isStudent) const ExpandedCard(),
+                  // if (data != null && data.isStudent) const ExpandedCard(),
                   if (data != null && data.isStudent)
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
