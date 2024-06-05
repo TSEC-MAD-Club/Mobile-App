@@ -41,6 +41,7 @@ class TimeTable extends ConsumerWidget {
       NotificationType.makeTopic(ref, data.studentModel);
     }
 
+    print(dayProvider);
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -74,7 +75,7 @@ class TimeTable extends ConsumerWidget {
               padding: const EdgeInsets.all(20),
               child: Container(
                 width: _size.width * 0.9,
-                height: MediaQuery.of(context).size.height * 0.10,
+                height: 100,
                 // could have used _size but fuck it whore-licks
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(15.0),

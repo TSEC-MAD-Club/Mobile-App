@@ -65,7 +65,7 @@ class _CustomToggleButtonState extends ConsumerState<CustomToggleButton> {
                     padding: EdgeInsets.symmetric(horizontal: width * 0.1),
                     child: Text(
                       widget.values[index],
-                      style: Theme.of(context).textTheme.bodyText2,
+                      style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
                 ),
@@ -92,7 +92,7 @@ class _CustomToggleButtonState extends ConsumerState<CustomToggleButton> {
               ),
               child: Text(
                 _theme == ThemeMode.light ? widget.values[0] : widget.values[1],
-                style: Theme.of(context).textTheme.bodyText1,
+                style: Theme.of(context).textTheme.bodyMedium,
               ),
               alignment: Alignment.center,
             ),

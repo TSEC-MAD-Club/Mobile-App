@@ -368,7 +368,7 @@ class _ForegroundNotificationSnackBar extends StatelessWidget {
                       Expanded(
                         child: Text(
                           notificationModel.title,
-                          style: Theme.of(context).textTheme.bodyText1,
+                          style: Theme.of(context).textTheme.bodyMedium,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -421,7 +421,7 @@ class DrawerListItem extends StatelessWidget {
             Flexible(
               child: Text(
                 title,
-                style: Theme.of(context).textTheme.headline4,
+                style: Theme.of(context).textTheme.headlineMedium,
               ),
             ),
           ],
