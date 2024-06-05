@@ -88,9 +88,9 @@ class MainScreen extends ConsumerWidget {
                         borderRadius: BorderRadius.circular(15.0),
                         child: DatePicker(
                           DateTime.now(),
-                          monthTextStyle: _theme.textTheme.subtitle2!,
-                          dayTextStyle: _theme.textTheme.subtitle2!,
-                          dateTextStyle: _theme.textTheme.subtitle2!,
+                          monthTextStyle: _theme.textTheme.displayMedium!,
+                          dayTextStyle: _theme.textTheme.displayMedium!,
+                          dateTextStyle: _theme.textTheme.displayMedium!,
                           initialSelectedDate: DateTime.now(),
                           selectionColor: Colors.blue,
                           onDateChange: ((selectedDate) async {
@@ -174,7 +174,7 @@ class _MainScreenAppBarState extends ConsumerState<MainScreenAppBar> {
                     launchUrlcollege();
                   },
                   child: Text("Thadomal Shahani Engineering College",
-                      style: Theme.of(context).textTheme.headline3),
+                      style: Theme.of(context).textTheme.headlineMedium),
                 ),
               ),
               data == null
@@ -215,7 +215,7 @@ class _MainScreenAppBarState extends ConsumerState<MainScreenAppBar> {
                   "Bandra, Mumbai",
                   style: Theme.of(context)
                       .primaryTextTheme
-                      .bodyText1!
+                      .bodyMedium!
                       .copyWith(color: kLightModeDarkBlue),
                 ),
               ],

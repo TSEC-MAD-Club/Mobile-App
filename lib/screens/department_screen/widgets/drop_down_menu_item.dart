@@ -14,7 +14,7 @@ class DropDownMenuItem extends StatelessWidget {
       onTap: onTap,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Text(title, style: Theme.of(context).textTheme.bodyText2),
+        child: Text(title, style: Theme.of(context).textTheme.bodyMedium),
       ),
     );
   }

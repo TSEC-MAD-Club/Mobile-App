@@ -386,13 +386,15 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(
-                                      data.isStudent
-                                          ? data.studentModel!.name
-                                          : data.facultyModel!.name,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .labelLarge,
+                                    Container(
+                                      width: MediaQuery.of(context).size.width*0.7,
+                                      child: Text(
+                                        data.isStudent
+                                            ? data.studentModel!.name
+                                            : data.facultyModel!.name,
+                                        style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18,color: Colors.white),
+
+                                      ),
                                     ),
                                     data.isStudent
                                         ? SizedBox(height: 15)

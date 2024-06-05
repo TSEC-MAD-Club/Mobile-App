@@ -111,7 +111,6 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                                   ),
                                 ),
                           Container(
-                            width: MediaQuery.of(context).size.width * .5,
                             padding: EdgeInsets.only(left: 10),
                             child: Text(
                               currentPage == 0
@@ -133,7 +132,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                               style: Theme.of(context)
                                   .textTheme
                                   .headlineLarge!
-                                  .copyWith(fontSize: 30, color: Colors.white),
+                                  .copyWith(fontSize: 15, color: Colors.white),
                               maxLines: 1,
                               overflow: TextOverflow.fade,
                             ),

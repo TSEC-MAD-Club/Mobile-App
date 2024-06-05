@@ -23,7 +23,7 @@ import 'package:tsec_app/screens/departmentlist_screen/department_list.dart';
 import 'package:tsec_app/utils/department_enum.dart';
 // import 'package:tsec_app/screens/railwayConcession/railwayConcession.dart';
 // import 'package:tsec_app/screens/splash_screen.dart';
-import 'firebase_options.dart';
+//import 'firebase_options.dart';
 import 'provider/app_state_provider.dart';
 import 'provider/shared_prefs_provider.dart';
 import 'provider/theme_provider.dart';
@@ -36,6 +36,7 @@ import 'provider/theme_provider.dart';
 // import 'screens/tpc_screen.dart';
 import 'utils/init_get_it.dart';
 import 'utils/themes.dart';
+import 'firebase_options.example.dart';
 
 // To handle all the background messages
 // Currently not used but wont work if not present
@@ -46,7 +47,7 @@ Future<void> main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
+    //options: DefaultFirebaseOptions.currentPlatform,
   );
   // if (debugMode) {
   //   try {
@@ -207,6 +208,7 @@ class _TSECAppState extends ConsumerState<TSECApp> {
 
     final _themeMode = ref.watch(themeProvider);
     return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
       builder: (context, child) =>
           MediaQuery(data: getTextScale(context), child: child!),
       routeInformationProvider: _routes.routeInformationProvider,
