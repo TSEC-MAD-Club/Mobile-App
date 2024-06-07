@@ -277,9 +277,10 @@ class _RailwayConcessionScreenState
   }
 
   void clearValues() {
-    if (!_formKey.currentState!.validate()) {
+    /*if (!_formKey.currentState!.validate()) {
+      print("HELLO");
       return;
-    }
+    }*/
     ConcessionDetailsModel? concessionDetails =
         ref.watch(concessionDetailsProvider);
     firstNameController.text = concessionDetails?.firstName ?? "";
@@ -290,11 +291,11 @@ class _RailwayConcessionScreenState
     dateOfBirthController.text = concessionDetails?.dob != null
         ? DateFormat('dd MMM yyyy').format(concessionDetails!.dob!)
         : "";
-    travelLane = concessionDetails?.travelLane ?? "";
-    gender = concessionDetails?.gender ?? "";
-    travelClass = concessionDetails?.type ?? "";
-    duration = concessionDetails?.duration ?? "";
-    travelLane = concessionDetails?.travelLane ?? "";
+    travelLane = concessionDetails?.travelLane ?? "Western";
+    gender = concessionDetails?.gender ?? "Male";
+    travelClass = concessionDetails?.type ?? "II";
+    duration = concessionDetails?.duration ?? "Monthly";
+    travelLane = concessionDetails?.travelLane ?? "Western";
     // toStation = concessionDetails?.to ?? "";
     homeStation = concessionDetails?.from ?? "";
     idCardPhotoTemp = idCardPhoto;
@@ -326,7 +327,7 @@ class _RailwayConcessionScreenState
       address: addressController.text,
       dob: _selectedDate ?? DateTime.now(),
       phoneNum: int.parse(phoneNumController.text),
-      travelLane: travelLane ?? "Western",
+      travelLane: travelLane ?? "Central",
       type: travelClass ?? "I",
     );
 
@@ -768,6 +769,7 @@ class _RailwayConcessionScreenState
                                   children: [
                                     FilledButton(
                                       onPressed: () {
+                                        print("Cleared Section");
                                         clearValues();
                                       },
                                       style: FilledButton.styleFrom(
@@ -825,6 +827,8 @@ class _RailwayConcessionScreenState
                   ),
                 ),
               ),
+
+
               SizedBox(height: !editMode ? 20 : 0),
               !editMode &&
                       canIssuePass(concessionDetails, lastPassIssued, duration)

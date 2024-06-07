@@ -36,6 +36,7 @@ class TimeTable extends ConsumerWidget {
       offset: const Offset(0, 1),
     );
     UserModel? data = ref.watch(userModelProvider);
+    print(data);
 
     if (data != null) {
       NotificationType.makeTopic(ref, data.studentModel);
