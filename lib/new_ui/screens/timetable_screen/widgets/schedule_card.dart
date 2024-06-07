@@ -102,7 +102,7 @@ class ScheduleCard extends StatelessWidget {
                                   color: Colors.grey,
                                   fontWeight: FontWeight.bold),
                         ),
-                      )
+                      ),
                     ],
                   )
                 ],
