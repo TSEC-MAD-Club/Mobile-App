@@ -131,7 +131,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
       setState(() {
         divisionList =
             calcDivisionList(studentData.gradyear, studentData.branch);
-        batchList = calcBatchList(studentData.div);
+        batchList = calcBatchList(studentData.div ?? divisionList[0]);
       });
       div = divisionList.contains(studentData.div)
           ? studentData.div
