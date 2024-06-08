@@ -107,8 +107,8 @@ class _CardDisplayState extends ConsumerState<CardDisplay> {
                     lectureEndTime: timeTableDay[index].lectureEndTime,
                     lectureName: timeTableDay[index].lectureName,
                     lectureStartTime: timeTableDay[index].lectureStartTime,
-                    facultyImageurl: getFacultyImagebyName(lectureFacultyname),
                     facultyName: !checkTimetable(lectureFacultyname) ? "---------" : lectureFacultyname,
+                    facultyImageurl: !checkTimetable(lectureFacultyname) ? getFacultyImagebyName(lectureFacultyname) : "",
                     lectureBatch: timeTableDay[index].lectureBatch,
                   );
                 },
@@ -124,12 +124,19 @@ class _CardDisplayState extends ConsumerState<CardDisplay> {
   }
 
   List<TimetableModel> getTimetablebyDay(Map<String, dynamic> data, String day) {
+
     List<TimetableModel> timeTableDay = [];
     final daylist = data[day];
     for (final item in daylist) {
      StudentModel? studentModel = ref.watch(userModelProvider)?.studentModel;
+
       if (item['lectureBatch'] == studentModel!.batch.toString() || item['lectureBatch'] == 'All') {
-        timeTableDay.add(TimetableModel.fromJson(item));
+        if(item['lectureFacultyName'] != null) {
+          timeTableDay.add(TimetableModel.fromJson(item));
+        }else{
+          item['lectureFacultyName'] = " ";
+          timeTableDay.add(TimetableModel.fromJson(item));
+        }
       }
     }
     return timeTableDay;
