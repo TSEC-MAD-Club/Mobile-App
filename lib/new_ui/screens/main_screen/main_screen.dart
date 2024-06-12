@@ -340,11 +340,8 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                               ),
                         ),
                         onTap: () {
-                          setState(() {
-                            currentPage = 5;
-                          });
-
                           Navigator.pop(context);
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => TPCScreen(),),);
                         },
                       ),
                       ListTile(
@@ -362,10 +359,11 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                               ),
                         ),
                         onTap: () {
-                          setState(() {
+                          /*setState(() {
                             currentPage = 6;
-                          });
+                          });*/
                           Navigator.pop(context);
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=> CommitteesScreen(),),);
                         },
                       ),
                       ListTile(
@@ -383,10 +381,8 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                               ),
                         ),
                         onTap: () {
-                          setState(() {
-                            currentPage = 7;
-                          });
                           Navigator.pop(context);
+                          Navigator.push(context,MaterialPageRoute(builder: (context)=> DepartmentListScreen(),),);
                         },
                       ),
                       Link(
