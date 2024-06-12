@@ -5,7 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tsec_app/models/user_model/user_model.dart';
+import 'package:tsec_app/new_ui/screens/erp_screen/erp_screen.dart';
 import 'package:tsec_app/new_ui/screens/home_screen/home_screen.dart';
+import 'package:tsec_app/new_ui/screens/home_screen/widgets/home_widget.dart';
+import 'package:tsec_app/new_ui/screens/main_screen/widgets/main_bottom_nav_bar.dart';
+import 'package:tsec_app/new_ui/screens/profile_screen/profile_screen.dart';
+import 'package:tsec_app/new_ui/screens/railway_screen/railway_screen.dart';
+import 'package:tsec_app/new_ui/screens/timetable_screen/timetable_screen.dart';
 import 'package:tsec_app/provider/auth_provider.dart';
 import 'package:tsec_app/provider/railway_concession_provider.dart';
 import 'package:tsec_app/new_ui/screens/committees_screen/committees_screen.dart';
@@ -30,29 +36,70 @@ class _MainScreenState extends ConsumerState<MainScreen> {
 
   String currentBottomNavPage = "home";
   int currentPage = 0;
+  int currentDrawerPage = 0;
+
+  void _getIndex(int index){
+    setState(() {
+      print(index.toString());
+      currentPage = index;
+    });
+  }
 
   late List<Widget> pages;
+  late Map<String, Widget> widgetMap;
   @override
   void initState() {
+    UserModel? user = ref.read(userModelProvider);
+    if (user != null && user.isStudent) {
+      widgetMap = {
+        "home": HomeWidget(
+          changeCurrentPage: (page) {
+            setState(() {
+              currentBottomNavPage = page;
+            });
+          },
+        ),
+        "attendance": ERPScreen(),
+        "timetable": const TimeTable(),
+        "concession": const RailwayConcessionScreen(),
+        "profile": ProfilePage(
+          justLoggedIn: false,
+        )
+      };
+    } else {
+      widgetMap = {
+        "home": HomeWidget(
+          changeCurrentPage: (page) {
+            setState(() {
+              currentBottomNavPage = page;
+            });
+          },
+        ),
+        "attendance": ERPScreen(),
+        "profile": ProfilePage(
+          justLoggedIn: false,
+        )
+      };
+    }
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     pages = [
-      HomeScreen(
-        currentBottomNavPage: currentBottomNavPage,
-        changeCurrentBottomNavPage: (String page) {
+      HomeWidget(
+        changeCurrentPage: (page) {
           setState(() {
             currentBottomNavPage = page;
           });
         },
       ),
-      // Container(child: Text("TPC")),
+      ERPScreen(),
+      const TimeTable(),
+      const RailwayConcessionScreen(),
+      ProfilePage(justLoggedIn: false),
       const TPCScreen(),
       const CommitteesScreen(),
-      // Container(child: Text("Commi")),
-      // Container(),
       const DepartmentListScreen(),
       Container(),
       // ProfilePage(
@@ -73,7 +120,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
     // debugPrint("current page ${currentBottomNavPage} ${concessionOpen}");
     return SafeArea(
       child: Scaffold(
-        resizeToAvoidBottomInset: false,
+        resizeToAvoidBottomInset: true,
         key: _scaffoldKey,
         appBar: currentBottomNavPage != "concession" || !concessionOpen
             ? AppBar(
@@ -113,7 +160,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                           Container(
                             padding: EdgeInsets.only(left: 10),
                             child: Text(
-                              currentPage == 0
+                              currentPage <5
                                   ? (currentBottomNavPage == "home"
                                       ? "Home"
                                       : currentBottomNavPage == "attendance"
@@ -124,9 +171,9 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                                                       "concession"
                                                   ? "Railway Concession"
                                                   : "")
-                                  : currentPage == 1
+                                  : currentPage == 5
                                       ? "TPC"
-                                      : currentPage == 2
+                                      : currentPage == 6
                                           ? "Committees"
                                           : "Departments",
                               style: Theme.of(context)
@@ -287,14 +334,14 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                               .headlineSmall!
                               .copyWith(
                                 fontSize: 22,
-                                color: currentPage == 1
+                                color: currentPage == 5
                                     ? Theme.of(context).colorScheme.onBackground
                                     : Colors.white,
                               ),
                         ),
                         onTap: () {
                           setState(() {
-                            currentPage = 1;
+                            currentPage = 5;
                           });
 
                           Navigator.pop(context);
@@ -309,14 +356,14 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                               .headlineSmall!
                               .copyWith(
                                 fontSize: 22,
-                                color: currentPage == 2
+                                color: currentPage == 6
                                     ? Theme.of(context).colorScheme.onBackground
                                     : Colors.white,
                               ),
                         ),
                         onTap: () {
                           setState(() {
-                            currentPage = 2;
+                            currentPage = 6;
                           });
                           Navigator.pop(context);
                         },
@@ -330,14 +377,14 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                               .headlineMedium!
                               .copyWith(
                                 fontSize: 22,
-                                color: currentPage == 3
+                                color: currentPage == 7
                                     ? Theme.of(context).colorScheme.onBackground
                                     : Colors.white,
                               ),
                         ),
                         onTap: () {
                           setState(() {
-                            currentPage = 3;
+                            currentPage = 7;
                           });
                           Navigator.pop(context);
                         },
@@ -414,6 +461,16 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                 ),
               )
             : null,
+        bottomNavigationBar: MainBottomNavBar(
+          onTileTap: _getIndex,
+          currentBottomNavPage: currentBottomNavPage,
+          changeCurrentBottomNavPage: (String page) {
+            setState(() {
+              currentBottomNavPage = page;
+              // currentPage = widgetMap.keys.toList()[index]
+            });
+          },
+        ),
         body: pages[currentPage],
       ),
     );
