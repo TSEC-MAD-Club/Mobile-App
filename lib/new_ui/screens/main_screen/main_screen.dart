@@ -338,10 +338,15 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                                 .headlineMedium!
                                 .copyWith(
                               fontSize: 13,
-                              color: Colors.white,
+                              color: currentPage == 3 ? Theme.of(context).colorScheme.onBackground : Colors.white,
                             ),
                           ),
-                          onTap: () {     //TODO: Make this navigate to railway page
+                          onTap: () {
+                            //page 3
+                            setState(() {
+                              currentPage = 3;
+                              Navigator.pop(context);
+                            });
                           },
                         ),
                         ListTile(
@@ -457,7 +462,13 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                                     color: Colors.white,
                                   ),
                                 ),
-                                onTap: () { },    // TODO: Make this navigate to profile edit
+                                onTap: () {
+                                  //page 4
+                                  // setState(() {
+                                  //   currentPage = 4;
+                                  //   Navigator.pop(context);
+                                  // });
+                                },    // TODO: Make this navigate to profile edit
                               ),
                               ListTile(
                                 contentPadding: EdgeInsets.zero,
