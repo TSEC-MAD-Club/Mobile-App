@@ -12,7 +12,7 @@ import 'package:tsec_app/provider/event_provider.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class HomeWidget extends ConsumerStatefulWidget {
-  Function(String page) changeCurrentPage;
+  Function(String page,int index) changeCurrentPage;
   HomeWidget({Key? key, required this.changeCurrentPage}) : super(key: key);
 
   @override
@@ -97,7 +97,7 @@ class _HomeWidgetState extends ConsumerState<HomeWidget> {
                           text: "Railway",
                           icon: Icons.directions_railway_outlined,
                           onPressed: () {
-                            widget.changeCurrentPage("concession");
+                            widget.changeCurrentPage("concession",3);
                           },
                         ),
                         ContainerIconWithName(

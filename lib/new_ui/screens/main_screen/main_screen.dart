@@ -21,6 +21,7 @@ class MainScreen extends ConsumerStatefulWidget {
   const MainScreen({
     Key? key,
   }) : super(key: key);
+
   @override
   ConsumerState<MainScreen> createState() => _MainScreenState();
 }
@@ -32,7 +33,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
   int currentPage = 0;
   int currentDrawerPage = 0;
 
-  void _getIndex(int index){
+  void _getIndex(int index) {
     setState(() {
       print(index.toString());
       currentPage = index;
@@ -41,14 +42,16 @@ class _MainScreenState extends ConsumerState<MainScreen> {
 
   late List<Widget> pages;
   late Map<String, Widget> widgetMap;
+
   @override
   void initState() {
     UserModel? user = ref.read(userModelProvider);
     if (user != null && user.isStudent) {
       widgetMap = {
         "home": HomeWidget(
-          changeCurrentPage: (page) {
+          changeCurrentPage: (page,index) {
             setState(() {
+              currentPage = index;
               currentBottomNavPage = page;
             });
           },
@@ -63,8 +66,9 @@ class _MainScreenState extends ConsumerState<MainScreen> {
     } else {
       widgetMap = {
         "home": HomeWidget(
-          changeCurrentPage: (page) {
+          changeCurrentPage: (page,index) {
             setState(() {
+              currentPage = index;
               currentBottomNavPage = page;
             });
           },
@@ -82,8 +86,9 @@ class _MainScreenState extends ConsumerState<MainScreen> {
   Widget build(BuildContext context) {
     pages = [
       HomeWidget(
-        changeCurrentPage: (page) {
+        changeCurrentPage: (page,index) {
           setState(() {
+            currentPage = index;
             currentBottomNavPage = page;
           });
         },
@@ -123,116 +128,101 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                     ? Colors.transparent
                     : Theme.of(context).colorScheme.primary,
                 toolbarHeight: 80,
-                leadingWidth: MediaQuery.of(context).size.width * 0.7,
+                //leadingWidth: MediaQuery.of(context).size.width * 0.7,
+                title: Text(
+                  currentPage < 5
+                      ? (currentBottomNavPage == "home"
+                          ? "Home"
+                          : currentBottomNavPage == "attendance"
+                              ? "ERP"
+                              : currentBottomNavPage == "timetable"
+                                  ? "Schedule"
+                                  : currentBottomNavPage == "concession"
+                                      ? "Railway Concession"
+                                      : "")
+                      : currentPage == 5
+                          ? "TPC"
+                          : currentPage == 6
+                              ? "Committees"
+                              : "Departments",
+                  style: Theme.of(context)
+                      .textTheme
+                      .headlineLarge!
+                      .copyWith(fontSize: 15, color: Colors.white),
+                  maxLines: 1,
+                  overflow: TextOverflow.fade,
+                ),
+                centerTitle: true,
                 leading: currentBottomNavPage != "profile"
-                    ? Row(
-                        children: [
-                          const SizedBox(
-                            width: 8,
-                          ),
-                          profilePic != null
-                              ? GestureDetector(
-                                  onTap: () {
-                                    _scaffoldKey.currentState?.openDrawer();
-                                  },
-                                  child: CircleAvatar(
-                                    radius: 35,
-                                    backgroundImage: MemoryImage(profilePic),
-                                    // backgroundImage: MemoryImage(_image!),
-                                  ),
-                                )
-                              : GestureDetector(
-                                  onTap: () {
-                                    _scaffoldKey.currentState?.openDrawer();
-                                  },
-                                  child: const CircleAvatar(
-                                    radius: 35,
-                                    backgroundImage: AssetImage(
-                                        "assets/images/pfpholder.jpg"),
-                                  ),
-                                ),
-                          Container(
-                            padding: EdgeInsets.only(left: 10),
-                            child: Text(
-                              currentPage <5
-                                  ? (currentBottomNavPage == "home"
-                                      ? "Home"
-                                      : currentBottomNavPage == "attendance"
-                                          ? "ERP"
-                                          : currentBottomNavPage == "timetable"
-                                              ? "Schedule"
-                                              : currentBottomNavPage ==
-                                                      "concession"
-                                                  ? "Railway Concession"
-                                                  : "")
-                                  : currentPage == 5
-                                      ? "TPC"
-                                      : currentPage == 6
-                                          ? "Committees"
-                                          : "Departments",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headlineLarge!
-                                  .copyWith(fontSize: 15, color: Colors.white),
-                              maxLines: 1,
-                              overflow: TextOverflow.fade,
+                    ? profilePic != null
+                        ? GestureDetector(
+                            onTap: () {
+                              _scaffoldKey.currentState?.openDrawer();
+                            },
+                            child: CircleAvatar(
+                              radius: 35,
+                              backgroundImage: MemoryImage(profilePic),
+                              // backgroundImage: MemoryImage(_image!),
                             ),
                           )
-                          // SingleChildScrollView(
-                          //   scrollDirection: Axis.horizontal,
-                          //   child: Container(
-                          //   padding: EdgeInsets.only(left: 10),
-                          //     width: MediaQuery.of(context).size.width * .8,
-                          //     child: Text(
-                          //       currentPage == 0
-                          //           ? (currentBottomNavPage == "home"
-                          //               ? "Home"
-                          //               : currentBottomNavPage == "attendance"
-                          //                   ? "ERP"
-                          //                   : currentBottomNavPage ==
-                          //                           "timetable"
-                          //                       ? "Schedule"
-                          //                       : currentBottomNavPage ==
-                          //                               "concession"
-                          //                           ? "Railway Concession"
-                          //                           : "")
-                          //           : currentPage == 1
-                          //               ? "TPC"
-                          //               : currentPage == 2
-                          //                   ? "Committees"
-                          //                   : "Departments",
-                          //       style: Theme.of(context)
-                          //           .textTheme
-                          //           .headlineLarge!
-                          //           .copyWith(fontSize: 30),
-                          //       maxLines: 1,
-                          //       overflow: TextOverflow.fade,
-                          //     ),
-                          //   ),
-                          // )
-                        ],
-                      )
+                        : GestureDetector(
+                            onTap: () {
+                              _scaffoldKey.currentState?.openDrawer();
+                            },
+                            child: SizedBox(
+                              height: 30,
+                              width: 30,
+                              child:
+                                  Image.asset("assets/icons/profileIcon.png"),
+                            ),
+                          )
+
+                    // SingleChildScrollView(
+                    //   scrollDirection: Axis.horizontal,
+                    //   child: Container(
+                    //   padding: EdgeInsets.only(left: 10),
+                    //     width: MediaQuery.of(context).size.width * .8,
+                    //     child: Text(
+                    //       currentPage == 0
+                    //           ? (currentBottomNavPage == "home"
+                    //               ? "Home"
+                    //               : currentBottomNavPage == "attendance"
+                    //                   ? "ERP"
+                    //                   : currentBottomNavPage ==
+                    //                           "timetable"
+                    //                       ? "Schedule"
+                    //                       : currentBottomNavPage ==
+                    //                               "concession"
+                    //                           ? "Railway Concession"
+                    //                           : "")
+                    //           : currentPage == 1
+                    //               ? "TPC"
+                    //               : currentPage == 2
+                    //                   ? "Committees"
+                    //                   : "Departments",
+                    //       style: Theme.of(context)
+                    //           .textTheme
+                    //           .headlineLarge!
+                    //           .copyWith(fontSize: 30),
+                    //       maxLines: 1,
+                    //       overflow: TextOverflow.fade,
+                    //     ),
+                    //   ),
+                    // )
                     : Container(),
                 // title: Text("Yyay"),
                 actions: userDetails != null
                     ? [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Ink(
-                            decoration: const ShapeDecoration(
-                              color: Colors.white, // White background color
-                              shape: CircleBorder(), // Circular shape
-                            ),
-                            child: IconButton(
-                              icon: const Icon(
-                                Icons.note,
-                                color: Colors.black, // Black icon color
+                        InkWell(
+                          child: Image.asset(
+                              "assets/icons/notes.png" // Black icon color
                               ),
-                              onPressed: () {
-                                GoRouter.of(context).push('/notes');
-                              },
-                            ),
-                          ),
+                          onTap: () {
+                            GoRouter.of(context).push('/notes');
+                          },
+                        ),
+                        SizedBox(
+                          width: 15,
                         ),
                         // Padding(
                         //   padding: const EdgeInsets.all(8.0),
@@ -334,11 +324,13 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                               ),
                         ),
                         onTap: () {
-                          setState(() {
-                            currentPage = 5;
-                          });
-
                           Navigator.pop(context);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => TPCScreen(),
+                            ),
+                          );
                         },
                       ),
                       ListTile(
@@ -356,10 +348,16 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                               ),
                         ),
                         onTap: () {
-                          setState(() {
+                          /*setState(() {
                             currentPage = 6;
-                          });
+                          });*/
                           Navigator.pop(context);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => CommitteesScreen(),
+                            ),
+                          );
                         },
                       ),
                       ListTile(
@@ -377,10 +375,13 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                               ),
                         ),
                         onTap: () {
-                          setState(() {
-                            currentPage = 7;
-                          });
                           Navigator.pop(context);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => DepartmentListScreen(),
+                            ),
+                          );
                         },
                       ),
                       Link(
