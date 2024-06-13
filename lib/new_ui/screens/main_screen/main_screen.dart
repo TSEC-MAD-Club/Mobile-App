@@ -10,6 +10,7 @@ import 'package:tsec_app/new_ui/screens/main_screen/widgets/main_bottom_nav_bar.
 import 'package:tsec_app/new_ui/screens/profile_screen/profile_screen.dart';
 import 'package:tsec_app/new_ui/screens/railway_screen/railway_screen.dart';
 import 'package:tsec_app/new_ui/screens/timetable_screen/timetable_screen.dart';
+import 'package:tsec_app/provider/appbar_title_provider.dart';
 import 'package:tsec_app/provider/auth_provider.dart';
 import 'package:tsec_app/provider/railway_concession_provider.dart';
 import 'package:tsec_app/new_ui/screens/committees_screen/committees_screen.dart';
@@ -324,6 +325,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                               ),
                         ),
                         onTap: () {
+                          ref.read(titleProvider.notifier).state = 'TPC';
                           Navigator.pop(context);
                           Navigator.push(
                             context,
@@ -348,6 +350,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                               ),
                         ),
                         onTap: () {
+                          ref.read(titleProvider.notifier).state = 'Committees and Events';
                           /*setState(() {
                             currentPage = 6;
                           });*/
@@ -375,6 +378,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                               ),
                         ),
                         onTap: () {
+                          ref.read(titleProvider.notifier).state = 'Departments';
                           Navigator.pop(context);
                           Navigator.push(
                             context,
