@@ -26,6 +26,9 @@ class ConcessionStatusModal extends ConsumerStatefulWidget {
 class _ConcessionStatusModalState extends ConsumerState<ConcessionStatusModal> {
   @override
   Widget build(BuildContext context) {
+
+    Size size = MediaQuery.of(context).size;
+
     ConcessionDetailsModel? concessionDetails =
         ref.watch(concessionDetailsProvider);
     DateTime? lastPassIssued = concessionDetails?.lastPassIssued;
@@ -36,64 +39,37 @@ class _ConcessionStatusModalState extends ConsumerState<ConcessionStatusModal> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
+        alignment: Alignment.center,
         // height: 70,
-        height: MediaQuery.of(context).size.height * 0.10,
+        height: 50,
+        width: size.width*0.6,
         decoration: BoxDecoration(
           color: concessionDetails?.status == ConcessionStatus.rejected
               ? Theme.of(context).colorScheme.error
               : widget.canIssuePass(concessionDetails, lastPassIssued, duration)
                   ? Theme.of(context).colorScheme.tertiaryContainer
                   : Theme.of(context).colorScheme.primary,
-          borderRadius: BorderRadius.circular(18),
+          borderRadius: BorderRadius.circular(5),
           // boxShadow: isItDarkMode
           //     ? shadowLightModeTextFields
           //     : shadowDarkModeTextFields,
         ),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Status",
-                    style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                          color: Colors.black,
-                          fontWeight: FontWeight.w600,
-                        ),
-                  ),
-                  Text(
-                    concessionDetails?.status == ConcessionStatus.rejected
-                        ? "Rejected"
-                        : concessionDetails?.status ==
-                                ConcessionStatus.unserviced
-                            ? "Pending"
-                            : widget.canIssuePass(
-                                    concessionDetails, lastPassIssued, duration)
-                                ? "Can apply"
-                                : "",
-                    style: Theme.of(context).textTheme.labelSmall!.copyWith(
-                          fontWeight: FontWeight.w500,
-                          color: Colors.black,
-                        ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 7),
-              Text(concessionDetails?.status == ConcessionStatus.rejected
-                  ? concessionDetails!.statusMessage
-                  : widget.canIssuePass(
-                          concessionDetails, lastPassIssued, duration)
-                      ? "Apply for a new pass"
-                      : (concessionDetails?.status ==
-                                  ConcessionStatus.serviced ||
-                              concessionDetails?.status ==
-                                  ConcessionStatus.downloaded)
-                          ? widget.futurePassMessage()
-                          : concessionDetails!.statusMessage),
-            ],
+          child: Text(
+            "Status : ${concessionDetails?.status == ConcessionStatus.rejected
+                    ? "Rejected"
+          : concessionDetails?.status ==
+                    ConcessionStatus.unserviced
+                    ? "Pending"
+          : widget.canIssuePass(
+          concessionDetails, lastPassIssued, duration)
+          ? "Can apply"
+          : ""}",
+            style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                  color: Colors.black,
+                  fontWeight: FontWeight.w600,
+                ),
           ),
         ),
       ),
