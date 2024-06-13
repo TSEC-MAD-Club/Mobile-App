@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:tsec_app/new_ui/screens/main_screen/widgets/common_basic_appbar.dart';
 import 'package:tsec_app/screens/department_screen/widgets/department_screen_app_bar.dart';
 
 import '../../utils/department_enum.dart';
@@ -23,43 +24,46 @@ class DepartmentList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text("Department", style: Theme.of(context).textTheme.titleLarge),
-          ),
-          const DeptWidget(
-            image: "aids",
-            department: DepartmentEnum.aids,
-          ),
-          const DeptWidget(
-            image: "extc",
-            department: DepartmentEnum.extc,
-          ),
-          const DeptWidget(
-            image: "cs",
-            department: DepartmentEnum.cs,
-          ),
-          const DeptWidget(
-            image: "it",
-            department: DepartmentEnum.it,
-          ),
-          const DeptWidget(
-            image: "biomed",
-            department: DepartmentEnum.biomed,
-          ),
-          const DeptWidget(
-            image: "biotech",
-            department: DepartmentEnum.biotech,
-          ),
-          const DeptWidget(
-            image: "chem",
-            department: DepartmentEnum.chem,
-          ),
-        ],
+    return Scaffold(
+      appBar: CommonAppbar(),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text("Department", style: Theme.of(context).textTheme.titleLarge),
+            ),
+            const DeptWidget(
+              image: "aids",
+              department: DepartmentEnum.aids,
+            ),
+            const DeptWidget(
+              image: "extc",
+              department: DepartmentEnum.extc,
+            ),
+            const DeptWidget(
+              image: "cs",
+              department: DepartmentEnum.cs,
+            ),
+            const DeptWidget(
+              image: "it",
+              department: DepartmentEnum.it,
+            ),
+            const DeptWidget(
+              image: "biomed",
+              department: DepartmentEnum.biomed,
+            ),
+            const DeptWidget(
+              image: "biotech",
+              department: DepartmentEnum.biotech,
+            ),
+            const DeptWidget(
+              image: "chem",
+              department: DepartmentEnum.chem,
+            ),
+          ],
+        ),
       ),
     );
   }
