@@ -42,7 +42,7 @@ class _HomeScreenState extends ConsumerState<MainBottomNavBar> {
     if (user != null && user.isStudent) {
       widgetMap = {
         "home": HomeWidget(
-          changeCurrentPage: (page) {
+          changeCurrentPage: (page,index) {
             setState(() {
               widget.changeCurrentBottomNavPage(page);
             });
@@ -58,7 +58,7 @@ class _HomeScreenState extends ConsumerState<MainBottomNavBar> {
     } else {
       widgetMap = {
         "home": HomeWidget(
-          changeCurrentPage: (page) {
+          changeCurrentPage: (page,index) {
             setState(() {
               widget.changeCurrentBottomNavPage(page);
             });
