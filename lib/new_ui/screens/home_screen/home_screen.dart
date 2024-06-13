@@ -39,7 +39,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     if (user != null && user.isStudent) {
       widgetMap = {
         "home": HomeWidget(
-          changeCurrentPage: (page) {
+          changeCurrentPage: (page,index) {
             setState(() {
               widget.changeCurrentBottomNavPage(page);
             });
@@ -55,7 +55,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     } else {
       widgetMap = {
         "home": HomeWidget(
-          changeCurrentPage: (page) {
+          changeCurrentPage: (page,index) {
             setState(() {
               widget.changeCurrentBottomNavPage(page);
             });
@@ -90,58 +90,72 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               showUnselectedLabels: false,
               unselectedItemColor: Colors.white,
               selectedItemColor: Colors.white,
-              items: user.isStudent
-                  ? [
-                      BottomNavigationBarItem(
-                        backgroundColor: Colors.transparent,
-                        activeIcon: Icon(Icons.home),
-                        icon: Icon(Icons.home_outlined),
-                        label: "Home",
-                      ),
-                      BottomNavigationBarItem(
-                        backgroundColor: Colors.transparent,
-                        icon: Icon(Icons.people_outline),
-                        activeIcon: Icon(Icons.people_rounded),
-                        label: "Library",
-                      ),
-                      BottomNavigationBarItem(
-                        backgroundColor: Colors.transparent,
-                        activeIcon: Icon(Icons.calendar_today),
-                        icon: Icon(Icons.calendar_today_outlined),
-                        label: "Time Table",
-                      ),
-                      BottomNavigationBarItem(
-                        backgroundColor: Colors.transparent,
-                        icon: Icon(Icons.directions_railway_outlined),
-                        activeIcon: Icon(Icons.directions_railway_filled),
-                        label: "Railway",
-                      ),
-                      BottomNavigationBarItem(
-                        backgroundColor: Colors.transparent,
-                        icon: Icon(Icons.person_outline),
-                        activeIcon: Icon(Icons.person),
-                        label: "Profile",
-                      ),
-                    ]
-                  : [
-                      BottomNavigationBarItem(
-                        backgroundColor: Colors.transparent,
-                        activeIcon: Icon(Icons.home),
-                        icon: Icon(Icons.home_outlined),
-                        label: "Home",
-                      ),
-                      BottomNavigationBarItem(
-                        backgroundColor: Colors.transparent,
-                        icon: Icon(Icons.people_outline),
-                        activeIcon: Icon(Icons.people_rounded),
-                        label: "Library",
-                      ),
-                      BottomNavigationBarItem(
-                        backgroundColor: Colors.transparent,
-                        icon: Icon(Icons.person_outline),
-                        activeIcon: Icon(Icons.person),
-                        label: "Profile",
-                      ),
+              items: [
+                BottomNavigationBarItem(
+                  backgroundColor: Colors.transparent,
+                  activeIcon: Icon(Icons.home),
+                  icon: Icon(Icons.home_outlined),
+                  label: "Home",
+                ),
+                BottomNavigationBarItem(
+                  backgroundColor: Colors.transparent,
+                  icon: Icon(Icons.people_outline),
+                  activeIcon: Icon(Icons.people_rounded),
+                  label: "Library",
+                ),
+              if(user.isStudent) ...[
+                    BottomNavigationBarItem(
+                      backgroundColor: Colors.transparent,
+                      activeIcon: Icon(Icons.calendar_today),
+                      icon: Icon(Icons.calendar_today_outlined),
+                      label: "Time Table",
+                    ),
+                    BottomNavigationBarItem(
+                      backgroundColor: Colors.transparent,
+                      icon: Icon(Icons.directions_railway_outlined),
+                      activeIcon: Icon(Icons.directions_railway_filled),
+                      label: "Railway",
+                    ),
+              ],
+                BottomNavigationBarItem(
+                  backgroundColor: Colors.transparent,
+                  icon: Icon(Icons.person_outline),
+                  activeIcon: Icon(Icons.person),
+                  label: "Profile",
+                ),
+                  //     BottomNavigationBarItem(
+                  //       backgroundColor: Colors.transparent,
+                  //       activeIcon: Icon(Icons.home),
+                  //       icon: Icon(Icons.home_outlined),
+                  //       label: "Home",
+                  //     ),
+                  //     BottomNavigationBarItem(
+                  //       backgroundColor: Colors.transparent,
+                  //       icon: Icon(Icons.people_outline),
+                  //       activeIcon: Icon(Icons.people_rounded),
+                  //       label: "Library",
+                  //     ),
+                  //     BottomNavigationBarItem(
+                  //       backgroundColor: Colors.transparent,
+                  //       activeIcon: Icon(Icons.calendar_today),
+                  //       icon: Icon(Icons.calendar_today_outlined),
+                  //       label: "Time Table",
+                  //     ),
+                  //     BottomNavigationBarItem(
+                  //       backgroundColor: Colors.transparent,
+                  //       icon: Icon(Icons.directions_railway_outlined),
+                  //       activeIcon: Icon(Icons.directions_railway_filled),
+                  //       label: "Railway",
+                  //     ),
+                  //     BottomNavigationBarItem(
+                  //       backgroundColor: Colors.transparent,
+                  //       icon: Icon(Icons.person_outline),
+                  //       activeIcon: Icon(Icons.person),
+                  //       label: "Profile",
+                  //     ),
+                  //   ]
+                  // : [
+
                     ],
               currentIndex: widgetMap.keys.toList().indexOf(currentPage),
               onTap: (index) {
