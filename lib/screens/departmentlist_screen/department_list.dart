@@ -30,10 +30,10 @@ class DepartmentList extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text("Department", style: Theme.of(context).textTheme.titleLarge),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.all(8.0),
+            //   child: Text("Department", style: Theme.of(context).textTheme.titleLarge),
+            // ),
             const DeptWidget(
               image: "aids",
               department: DepartmentEnum.aids,
@@ -117,14 +117,21 @@ class DeptWidget extends StatelessWidget {
               const SizedBox(
                 width: 10,
               ),
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: Theme.of(context).colorScheme.outline,
-                ),
-                child: Text(
-                  department.name,
-                  style: Theme.of(context).textTheme.titleMedium,
+              Expanded( // Ensures the text takes up remaining space
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: Theme.of(context).colorScheme.outline,
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: Text(
+                      department.name,
+                      style: Theme.of(context).textTheme.titleMedium,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2, // Adjust max lines as needed
+                    ),
+                  ),
                 ),
               ),
             ],
