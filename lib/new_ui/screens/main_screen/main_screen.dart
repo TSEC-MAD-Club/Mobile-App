@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -6,22 +5,18 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tsec_app/models/user_model/user_model.dart';
 import 'package:tsec_app/new_ui/screens/erp_screen/erp_screen.dart';
-import 'package:tsec_app/new_ui/screens/home_screen/home_screen.dart';
 import 'package:tsec_app/new_ui/screens/home_screen/widgets/home_widget.dart';
 import 'package:tsec_app/new_ui/screens/main_screen/widgets/main_bottom_nav_bar.dart';
 import 'package:tsec_app/new_ui/screens/profile_screen/profile_screen.dart';
 import 'package:tsec_app/new_ui/screens/railway_screen/railway_screen.dart';
 import 'package:tsec_app/new_ui/screens/timetable_screen/timetable_screen.dart';
+import 'package:tsec_app/provider/appbar_title_provider.dart';
 import 'package:tsec_app/provider/auth_provider.dart';
 import 'package:tsec_app/provider/railway_concession_provider.dart';
 import 'package:tsec_app/new_ui/screens/committees_screen/committees_screen.dart';
-import 'package:tsec_app/screens/department_screen/department_screen.dart';
 import 'package:tsec_app/screens/departmentlist_screen/department_list.dart';
 import 'package:tsec_app/screens/tpc_screen.dart';
-import 'package:tsec_app/utils/image_assets.dart';
-import 'package:tsec_app/widgets/custom_scaffold.dart';
 import 'package:url_launcher/link.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class MainScreen extends ConsumerStatefulWidget {
   const MainScreen({
@@ -330,6 +325,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                               ),
                         ),
                         onTap: () {
+                          ref.read(titleProvider.notifier).state = 'TPC';
                           Navigator.pop(context);
                           Navigator.push(
                             context,
@@ -354,6 +350,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                               ),
                         ),
                         onTap: () {
+                          ref.read(titleProvider.notifier).state = 'Committees and Events';
                           /*setState(() {
                             currentPage = 6;
                           });*/
@@ -381,6 +378,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                               ),
                         ),
                         onTap: () {
+                          ref.read(titleProvider.notifier).state = 'Departments';
                           Navigator.pop(context);
                           Navigator.push(
                             context,
