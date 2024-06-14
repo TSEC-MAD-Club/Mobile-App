@@ -24,9 +24,10 @@ class DepartmentList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       appBar: CommonAppbar(),
       body: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -35,30 +36,35 @@ class DepartmentList extends StatelessWidget {
             //   child: Text("Department", style: Theme.of(context).textTheme.titleLarge),
             // ),
             const DeptWidget(
+            /*Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text("Department", style: Theme.of(context).textTheme.titleLarge),
+            ),*/
+            DeptWidget(
               image: "aids",
               department: DepartmentEnum.aids,
             ),
-            const DeptWidget(
+            DeptWidget(
               image: "extc",
               department: DepartmentEnum.extc,
             ),
-            const DeptWidget(
+            DeptWidget(
               image: "cs",
               department: DepartmentEnum.cs,
             ),
-            const DeptWidget(
+            DeptWidget(
               image: "it",
               department: DepartmentEnum.it,
             ),
-            const DeptWidget(
+            DeptWidget(
               image: "biomed",
               department: DepartmentEnum.biomed,
             ),
-            const DeptWidget(
+            DeptWidget(
               image: "biotech",
               department: DepartmentEnum.biotech,
             ),
-            const DeptWidget(
+            DeptWidget(
               image: "chem",
               department: DepartmentEnum.chem,
             ),

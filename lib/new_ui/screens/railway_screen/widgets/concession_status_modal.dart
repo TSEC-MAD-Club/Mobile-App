@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:tsec_app/models/concession_details_model/concession_details_model.dart';
 import 'package:tsec_app/provider/concession_provider.dart';
 import 'package:tsec_app/utils/railway_enum.dart';
@@ -44,6 +45,9 @@ class _ConcessionStatusModalState extends ConsumerState<ConcessionStatusModal> {
         height: 50,
         width: size.width*0.6,
         decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(color: Colors.green.shade400,spreadRadius: 3,blurRadius: 5),
+          ],
           color: concessionDetails?.status == ConcessionStatus.rejected
               ? Theme.of(context).colorScheme.error
               : widget.canIssuePass(concessionDetails, lastPassIssued, duration)
@@ -57,7 +61,8 @@ class _ConcessionStatusModalState extends ConsumerState<ConcessionStatusModal> {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Text(
-            "Status : ${concessionDetails?.status == ConcessionStatus.rejected
+            concessionDetails?.status != null ? getStatusText(concessionDetails!.status) : "",
+            /*"Status : ${concessionDetails?.status == ConcessionStatus.rejected
                     ? "Rejected"
           : concessionDetails?.status ==
                     ConcessionStatus.unserviced
@@ -65,7 +70,7 @@ class _ConcessionStatusModalState extends ConsumerState<ConcessionStatusModal> {
           : widget.canIssuePass(
           concessionDetails, lastPassIssued, duration)
           ? "Can apply"
-          : ""}",
+          : ""}",*/
             style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                   color: Colors.black,
                   fontWeight: FontWeight.w600,
@@ -74,5 +79,14 @@ class _ConcessionStatusModalState extends ConsumerState<ConcessionStatusModal> {
         ),
       ),
     );
+  }
+
+  String getStatusText(String status){
+    if(status == ConcessionStatus.rejected){
+      return "Sorry Cnncession Rejected";
+    }else if(status == ConcessionStatus.unserviced){
+      return "Pending";
+    }
+    return "You can apply for new pass";
   }
 }
