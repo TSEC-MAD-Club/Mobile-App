@@ -35,7 +35,7 @@ class DepartmentList extends StatelessWidget {
             //   padding: const EdgeInsets.all(8.0),
             //   child: Text("Department", style: Theme.of(context).textTheme.titleLarge),
             // ),
-            const DeptWidget(
+            //const DeptWidget(
             /*Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text("Department", style: Theme.of(context).textTheme.titleLarge),
