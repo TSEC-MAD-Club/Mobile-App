@@ -1,10 +1,9 @@
-// ignore_for_file: lines_longer_than_80_chars
-
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tsec_app/models/occassion_model/occasion_model.dart';
 import 'package:tsec_app/models/student_model/student_model.dart';
+import 'package:tsec_app/new_ui/screens/home_screen/widgets/schedule_card_modified.dart';
 import 'package:tsec_app/provider/auth_provider.dart';
 import 'package:tsec_app/provider/occasion_provider.dart';
 import 'package:tsec_app/new_ui/screens/timetable_screen/widgets/schedule_card.dart';
@@ -75,65 +74,49 @@ class _CardDisplayState extends ConsumerState<CardDisplay> {
             );
           }
           if (data[dayStr] == null) {
-            return const Center(child: Text("Happy Weekend !"));
+            return const Center(child: Text("Happy Weekend !",style: TextStyle(color: Colors.greenAccent)));
           } else if (checkOccasion(day, occasionList) != "") {
-            return Center(child: Text("Happy ${checkOccasion(day, occasionList)}!"));
+            return Center(child: Text("Happy ${checkOccasion(day, occasionList)}!",style: TextStyle(color: Colors.greenAccent)));
           } else {
             List<TimetableModel> timeTableDay = getTimetablebyDay(data, dayStr);
             if (timeTableDay.isEmpty) {
               return const Center(child: Text("No lectures Today ! "));
             } else {
-              return
-                  //Container(
-                  // height: 400,
-                  // width: MediaQuery.of(context).size.width * 0.9,
-                  // decoration: BoxDecoration(
-                  //   color: _theme.colorScheme.tertiary,
-                  //   borderRadius: BorderRadius.circular(15.0),
-                  //   boxShadow: [
-                  //     BoxShadow(
-                  //       color: Colors.black.withOpacity(0.2),
-                  //       spreadRadius: 2,
-                  //       blurRadius: 5,
-                  //       offset: const Offset(0, 3),
-                  //     ),
-                  //   ],
-                  // ),
-                  ListView.builder(
-                itemCount: timeTableDay.length,
-                itemBuilder: (context, index) {
-                  final lectureFacultyname = timeTableDay[index].lectureFacultyName;
-                  return ScheduleCard(
-                    lectureEndTime: timeTableDay[index].lectureEndTime,
-                    lectureName: timeTableDay[index].lectureName,
-                    lectureStartTime: timeTableDay[index].lectureStartTime,
-                    facultyName: !checkTimetable(lectureFacultyname) ? "---------" : lectureFacultyname,
-                    facultyImageurl: !checkTimetable(lectureFacultyname) ? getFacultyImagebyName(lectureFacultyname) : "",
-                    lectureBatch: timeTableDay[index].lectureBatch,
-                  );
-                },
-                // ),
+              return SingleChildScrollView(
+                physics: NeverScrollableScrollPhysics(),
+                child: Column(
+                  children: timeTableDay.map((timetableModel) {
+                    final lectureFacultyname = timetableModel.lectureFacultyName;
+                    return ScheduleCardModified(
+                      lectureEndTime: timetableModel.lectureEndTime,
+                      lectureName: timetableModel.lectureName,
+                      lectureStartTime: timetableModel.lectureStartTime,
+                      facultyName: !checkTimetable(lectureFacultyname) ? "---------" : lectureFacultyname,
+                      facultyImageurl: checkTimetable(lectureFacultyname) ? getFacultyImagebyName(lectureFacultyname) : "",
+                      lectureBatch: timetableModel.lectureBatch,
+                    );
+                  }).toList(),
+                ),
               );
             }
           }
         }),
         error: ((error, stackTrace) {
-          return Center(child: Text(error.toString()));
+          return Center(child: Text(error.toString(),));
         }),
         loading: () => const Center(child: CircularProgressIndicator()));
   }
 
   List<TimetableModel> getTimetablebyDay(Map<String, dynamic> data, String day) {
-
     List<TimetableModel> timeTableDay = [];
     final daylist = data[day];
     for (final item in daylist) {
-     StudentModel? studentModel = ref.watch(userModelProvider)?.studentModel;
+      StudentModel? studentModel = ref.watch(userModelProvider)?.studentModel;
 
       if (item['lectureBatch'] == studentModel!.batch.toString() || item['lectureBatch'] == 'All') {
-        if(item['lectureFacultyName'] != null) {
+        if (item['lectureFacultyName'] != null) {
           timeTableDay.add(TimetableModel.fromJson(item));
-        }else{
+        } else {
           item['lectureFacultyName'] = " ";
           timeTableDay.add(TimetableModel.fromJson(item));
         }
