@@ -10,6 +10,8 @@ import 'package:tsec_app/provider/auth_provider.dart';
 import 'package:tsec_app/new_ui/screens/profile_screen/profile_screen.dart';
 import 'package:tsec_app/provider/railway_concession_provider.dart';
 
+import '../../notes_screen/notes_screen.dart';
+
 class MainBottomNavBar extends ConsumerStatefulWidget {
   String currentBottomNavPage;
   Function changeCurrentBottomNavPage;
@@ -48,7 +50,7 @@ class _HomeScreenState extends ConsumerState<MainBottomNavBar> {
             });
           },
         ),
-        "attendance": ERPScreen(),
+        "notes": NotesScreen(),
         "timetable": const TimeTable(),
         "concession": const RailwayConcessionScreen(),
         "profile": ProfilePage(
@@ -64,7 +66,6 @@ class _HomeScreenState extends ConsumerState<MainBottomNavBar> {
             });
           },
         ),
-        "attendance": ERPScreen(),
         "profile": ProfilePage(
           justLoggedIn: false,
         )
@@ -89,27 +90,21 @@ class _HomeScreenState extends ConsumerState<MainBottomNavBar> {
         elevation: 0,
         showSelectedLabels: false,
         showUnselectedLabels: false,
-        unselectedItemColor: Colors.white,
-        selectedItemColor: Colors.white,
+        unselectedItemColor: Colors.blue,
+        selectedItemColor: Colors.blue,
         items: [
           BottomNavigationBarItem(
             backgroundColor: Colors.transparent,
-            activeIcon: Icon(Icons.home),
-            icon: Icon(Icons.home_outlined),
+            activeIcon: Icon(Icons.home,),
+            icon: Icon(Icons.home_outlined,),
             label: "Home",
-          ),
-          BottomNavigationBarItem(
-            backgroundColor: Colors.transparent,
-            icon: Icon(Icons.people_outline),
-            activeIcon: Icon(Icons.people_rounded),
-            label: "Library",
           ),
           if(user.isStudent) ...[
             BottomNavigationBarItem(
               backgroundColor: Colors.transparent,
-              activeIcon: Icon(Icons.calendar_today),
-              icon: Icon(Icons.calendar_today_outlined),
-              label: "Time Table",
+              activeIcon: Icon(Icons.notes),
+              icon: Icon(Icons.notes_outlined),
+              label: "Notes",
             ),
             BottomNavigationBarItem(
               backgroundColor: Colors.transparent,

@@ -34,7 +34,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
               title: "Notifications",
               image: Image.asset(ImageAssets.committes),
             ),
-          )
+          ),
         ], body: Column(),
         /*body: FirestoreListView<NotificationModel>(
           query: locator<NotificationService>()
