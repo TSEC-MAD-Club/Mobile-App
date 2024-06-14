@@ -41,13 +41,13 @@ class _CommitteesScreenState extends State<CommitteesScreen> {
     double _height = MediaQuery.of(context).size.height;
     double _width = MediaQuery.of(context).size.width;
     return Scaffold(
-      appBar: CommonAppbar(),
+      appBar: const CommonAppbar(),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
+            /*Padding(
               padding: const EdgeInsets.all(8.0).copyWith(
                 top: 15,
               ),
@@ -58,7 +58,7 @@ class _CommitteesScreenState extends State<CommitteesScreen> {
                     .titleMedium!
                     .copyWith(fontWeight: FontWeight.bold, fontSize: 30),
               ),
-            ),
+            ),*/
             const SizedBox(
               height: 25,
             ),

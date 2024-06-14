@@ -825,30 +825,41 @@ class _RailwayConcessionScreenState
                   ? Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          FilledButton(
-                            onPressed: () {
-                              ref
-                                  .read(railwayConcessionOpenProvider.state)
-                                  .state = true;
-                            },
-                            style: FilledButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(
-                                    10.0), // Set the border radius
-                              ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                              boxShadow: [
+                                BoxShadow(color: Theme.of(context).colorScheme.tertiaryContainer,blurRadius: 5,spreadRadius: 3)
+                              ],
                             ),
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.fromLTRB(22, 12, 22, 12),
-                              child: Text('Apply',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headlineMedium!
-                                      .copyWith(
-                                        color: Colors.black,
-                                      )),
+                            child: FilledButton(
+                              onPressed: () {
+                                ref
+                                    .read(railwayConcessionOpenProvider.state)
+                                    .state = true;
+                              },
+                              style: FilledButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                      10.0), // Set the border radius
+                                ),
+                                backgroundColor: Theme.of(context).colorScheme.tertiaryContainer,
+                              ),
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(22, 12, 22, 12),
+                                child: Text('Apply',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headlineMedium!
+                                        .copyWith(
+                                          color: Colors.white,
+                                        )),
+                              ),
                             ),
                           ),
                         ],
