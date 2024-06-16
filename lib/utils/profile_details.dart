@@ -112,13 +112,20 @@ String calcGradYear(String? gradyear){
 
 }
 
-List<String> calcBatchList(String? div) {
+List<String> calcBatchList(String? div, String? branch) {
   List<String> batches = [];
   if (div == null) {
     return batches;
   }
-  for (int i = 1; i <= 3; i++) {
-    batches.add("$div$i");
+  if (branch == "Comps"){
+    for (int i = 1; i <= 4; i++) {
+      batches.add("$div$i");
+    }
+  }
+  else {
+    for (int i = 1; i <= 3; i++) {
+      batches.add("$div$i");
+    }
   }
   return batches;
 }
