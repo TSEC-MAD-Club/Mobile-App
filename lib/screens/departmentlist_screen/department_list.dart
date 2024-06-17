@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:tsec_app/new_ui/colors.dart';
 import 'package:tsec_app/new_ui/screens/main_screen/widgets/common_basic_appbar.dart';
 import 'package:tsec_app/screens/department_screen/widgets/department_screen_app_bar.dart';
 
@@ -35,7 +36,7 @@ class DepartmentList extends StatelessWidget {
             //   padding: const EdgeInsets.all(8.0),
             //   child: Text("Department", style: Theme.of(context).textTheme.titleLarge),
             // ),
-            //const DeptWidget(
+            // const DeptWidget(
             /*Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text("Department", style: Theme.of(context).textTheme.titleLarge),
@@ -84,6 +85,8 @@ class DeptWidget extends StatelessWidget {
 
   final String image;
   final DepartmentEnum department;
+  // final cardcolor=Theme.of(context).colorScheme.outline;
+  final cardcolor=commonbgLLightblack;
 
   @override
   Widget build(BuildContext context) {
@@ -98,7 +101,8 @@ class DeptWidget extends StatelessWidget {
           height: 100,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
-            color: Theme.of(context).colorScheme.outline,
+            // color: Theme.of(context).colorScheme.outline,
+            color: cardcolor,
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -111,14 +115,20 @@ class DeptWidget extends StatelessWidget {
                 width: 80,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
-                  color: Theme.of(context).colorScheme.outline,
+                  // color: Theme.of(context).colorScheme.outline,
+                  color: cardcolor,
                 ),
-                child: ClipOval(
-                  child: Image.asset(
-                    "assets/images/branches/$image.png",
-                    height: 40,
-                  ),
+                // child: ClipOval(
+                //   child: Image.asset(
+                //     "assets/images/branches/$image.png",
+                //     height: 40,
+                //   ),
+                // ),
+                child: Image.asset(
+                  "assets/images/branches/$image.png",
+                  height: 40,
                 ),
+
               ),
               const SizedBox(
                 width: 10,
@@ -127,7 +137,8 @@ class DeptWidget extends StatelessWidget {
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
-                    color: Theme.of(context).colorScheme.outline,
+                    // color: Theme.of(context).colorScheme.outline,
+                    color: cardcolor,
                   ),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10),
