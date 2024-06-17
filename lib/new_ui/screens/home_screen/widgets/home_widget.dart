@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tsec_app/models/event_model/event_model.dart';
 import 'package:tsec_app/models/user_model/user_model.dart';
+import 'package:tsec_app/new_ui/colors.dart';
 import 'package:tsec_app/new_ui/screens/home_screen/widgets/container_icon_with_label.dart';
 // import 'package:tsec_app/new_ui/screens/home_screen/widgets/expanded_card.dart';
 import 'package:tsec_app/provider/auth_provider.dart';
@@ -253,8 +254,8 @@ class _HomeWidgetState extends ConsumerState<HomeWidget> {
                   Container(
                       width: _size.width,
                       child: Padding(
-                        padding: const EdgeInsets.fromLTRB(23, 0, 0, 20),
-                        child: Text("Welcome ${data!=null?data.studentModel?.name.toLowerCase():"to rat race"}",style: TextStyle(color: Colors.white,fontSize: 19),),
+                        padding: const EdgeInsets.fromLTRB(15, 0, 0, 20),
+                        child: Text("Welcome ${data!=null?data.studentModel?.name.toLowerCase():"to Tsec"}",style: TextStyle(color: Colors.white,fontSize: 19),),
                       )
                   ),
 
@@ -337,7 +338,7 @@ class _HomeWidgetState extends ConsumerState<HomeWidget> {
                    Container(
                        width: _size.width,
                        child: Padding(
-                         padding: const EdgeInsets.fromLTRB(25, 20, 0, 0),
+                         padding: const EdgeInsets.fromLTRB(15, 20, 0, 0),
                          child: Text("Timetable",style: TextStyle(color: Colors.white,fontSize: 19),),
                        )
                    ),
@@ -348,11 +349,14 @@ class _HomeWidgetState extends ConsumerState<HomeWidget> {
                     Container(
                       width: _size.width,
                       height: _size.height*1.18,
-                      child: DepartmentList(),
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                        child: DepartmentList(),
+                      ),
                     ),
                   if(data!=null)
                     Padding(
-                      padding: const EdgeInsets.all(20),
+                      padding: const EdgeInsets.all(15),
                       child: Container(
                         width: _size.width * 0.9,
                         // color: Colors.red,
@@ -364,19 +368,19 @@ class _HomeWidgetState extends ConsumerState<HomeWidget> {
                             DateTime.now(),
                             monthTextStyle: _theme.textTheme.headlineSmall!.copyWith(
                               fontSize: 15,
-                              color: _theme.colorScheme.onTertiary,
+                              color: Colors.grey,
                             ),
                             dayTextStyle: _theme.textTheme.headlineSmall!.copyWith(
                               fontSize: 15,
-                              color: _theme.colorScheme.onTertiary,
+                              color: Colors.grey,
                             ),
                             dateTextStyle: _theme.textTheme.titleSmall!.copyWith(
                               fontSize: 15,
-                              color: _theme.colorScheme.onTertiary,
+                              color: Colors.grey,
                             ),
                             initialSelectedDate: DateTime.now(),
-                            selectionColor: _theme.colorScheme.onSecondary,
-                            selectedTextColor: _theme.colorScheme.tertiaryContainer,
+                            selectionColor: oldDateSelectBlue,
+                            selectedTextColor: Colors.white,
                             onDateChange: (selectedDate) {
                               ref
                                   .read(dayProvider.notifier)

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tsec_app/models/user_model/user_model.dart';
+import 'package:tsec_app/new_ui/colors.dart';
 import 'package:tsec_app/new_ui/screens/erp_screen/erp_screen.dart';
 import 'package:tsec_app/new_ui/screens/home_screen/widgets/home_widget.dart';
 import 'package:tsec_app/new_ui/screens/main_screen/widgets/main_bottom_nav_bar.dart';
@@ -22,6 +23,11 @@ import 'package:tsec_app/screens/departmentlist_screen/department_list.dart';
 import 'package:tsec_app/screens/notification_screen/notification_screen.dart';
 import 'package:tsec_app/screens/tpc_screen.dart';
 import 'package:url_launcher/link.dart';
+
+
+
+//LEFT DRAWER IS HERE
+
 
 class MainScreen extends ConsumerStatefulWidget {
   const MainScreen({
@@ -137,7 +143,21 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                 toolbarHeight: 80,
                 //leadingWidth: MediaQuery.of(context).size.width * 0.7,
                 title: Text(
-                  getTitle(),
+                  currentPage < 5
+                      ? (currentBottomNavPage == "home"
+                          ? "Home"
+                          : currentBottomNavPage == "attendance"
+                              ? "ERP"
+                              : currentBottomNavPage == "notes"
+                                  ? "Notes"
+                                  : currentBottomNavPage == "concession"
+                                      ? "Railway Concession"
+                                      : "")
+                      : currentPage == 5
+                          ? "TPC"
+                          : currentPage == 6
+                              ? "Committees"
+                              : "Departments",
                   style: Theme.of(context)
                       .textTheme
                       .headlineLarge!
@@ -565,15 +585,5 @@ class _MainScreenState extends ConsumerState<MainScreen> {
         body: pages[currentPage],
       ),
     );
-  }
-
-  String getTitle(){
-    switch(currentPage){
-      case 0: return "Home";
-      case 1: return "Notes";
-      case 2: return "Railway";
-      case 3: return "Profile";
-      default: return "";
-    }
   }
 }

@@ -40,14 +40,15 @@ class _ConcessionStatusModalState extends ConsumerState<ConcessionStatusModal> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
+        // color: ,
         alignment: Alignment.center,
         // height: 70,
         height: 50,
         width: size.width*0.6,
         decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(color: Colors.green.shade400,spreadRadius: 3,blurRadius: 5),
-          ],
+          // boxShadow: [
+          //   BoxShadow(color: Colors.green.shade400,spreadRadius: 3,blurRadius: 5),
+          // ],
           color: concessionDetails?.status == ConcessionStatus.rejected
               ? Theme.of(context).colorScheme.error
               : widget.canIssuePass(concessionDetails, lastPassIssued, duration)

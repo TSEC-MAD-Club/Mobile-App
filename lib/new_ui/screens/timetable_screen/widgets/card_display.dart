@@ -83,21 +83,27 @@ class _CardDisplayState extends ConsumerState<CardDisplay> {
               return const Center(child: Text("No lectures Today ! "));
             } else {
               return SingleChildScrollView(
-                physics: NeverScrollableScrollPhysics(),
                 child: Column(
-                  children: timeTableDay.map((timetableModel) {
-                    final lectureFacultyname = timetableModel.lectureFacultyName;
+                  children: List.generate(timeTableDay.length, (index) {
+                    bool labs = checkLabs(timeTableDay[index].lectureName);
+                    final color = labs ? colorList[1] : colorList[0];
+                    final opacity = labs ? opacityList[1] : opacityList[0];
+                    final lectureFacultyname = timeTableDay[index].lectureFacultyName;
+
                     return ScheduleCardModified(
-                      lectureEndTime: timetableModel.lectureEndTime,
-                      lectureName: timetableModel.lectureName,
-                      lectureStartTime: timetableModel.lectureStartTime,
+                      color,
+                      opacity,
+                      lectureEndTime: timeTableDay[index].lectureEndTime,
+                      lectureName: timeTableDay[index].lectureName,
+                      lectureStartTime: timeTableDay[index].lectureStartTime,
                       facultyName: !checkTimetable(lectureFacultyname) ? "---------" : lectureFacultyname,
                       facultyImageurl: checkTimetable(lectureFacultyname) ? getFacultyImagebyName(lectureFacultyname) : "",
-                      lectureBatch: timetableModel.lectureBatch,
+                      lectureBatch: timeTableDay[index].lectureBatch,
                     );
-                  }).toList(),
+                  }),
                 ),
               );
+
             }
           }
         }),

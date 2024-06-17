@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:tsec_app/new_ui/colors.dart';
 
 class ScheduleCardModified extends StatelessWidget {
   const ScheduleCardModified(
-      // this.color, this.opacityColor,
+      this.color, this.opacityColor,
       {Key? key,
         required this.lectureStartTime,
         required this.lectureEndTime,
@@ -11,8 +12,8 @@ class ScheduleCardModified extends StatelessWidget {
         required this.facultyImageurl,
         required this.lectureBatch})
       : super(key: key);
-  // final Color? color;
-  // final Color? opacityColor;
+  final Color? color;
+  final Color? opacityColor;
   final String lectureStartTime;
   final String lectureEndTime;
   final String lectureName;
@@ -25,10 +26,10 @@ class ScheduleCardModified extends StatelessWidget {
     var _size = MediaQuery.of(context).size;
     var _theme = Theme.of(context);
     var _boxshadow = BoxShadow(
-      color: _theme.primaryColorDark,
-      spreadRadius: 1,
-      blurRadius: 2,
-      offset: const Offset(0, 1),
+      color: Colors.black,
+      spreadRadius: 0.2,
+      blurRadius: 4,
+      offset: const Offset(0, 3),
     );
     return Card(
       margin: const EdgeInsets.only(
@@ -42,7 +43,7 @@ class ScheduleCardModified extends StatelessWidget {
         child: Container(
           height: 120,
           decoration: BoxDecoration(
-            color: _theme.primaryColor,
+            color: commonbgLightblack,
             borderRadius: BorderRadius.circular(
               15.0,
             ),
@@ -55,7 +56,7 @@ class ScheduleCardModified extends StatelessWidget {
               Container(
                 width: 12.0,
                 decoration: BoxDecoration(
-                  // color: color,
+                  color: color,
                   borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(15.0),
                     bottomLeft: Radius.circular(
@@ -67,7 +68,7 @@ class ScheduleCardModified extends StatelessWidget {
               Container(
                 width: 85.0,
                 decoration: BoxDecoration(
-                  // color: opacityColor,
+                  color: opacityColor,
                 ),
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -158,7 +159,7 @@ class ScheduleCardModified extends StatelessWidget {
                         Text(
                           facultyName,
                           style: const TextStyle(
-                            color: Colors.blue,
+                            color: Colors.white,
                             fontSize: 12.0,
                             fontWeight: FontWeight.w300,
                           ),
