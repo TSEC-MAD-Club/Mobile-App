@@ -131,7 +131,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
       setState(() {
         divisionList =
             calcDivisionList(studentData.gradyear, studentData.branch);
-        batchList = calcBatchList(studentData.div ?? divisionList[0]);
+        batchList = calcBatchList(studentData.div ?? divisionList[0], branch);
       });
       div = divisionList.contains(studentData.div)
           ? studentData.div
@@ -584,7 +584,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                                     setState(() {
                                                       div = newValue;
                                                       batchList = calcBatchList(
-                                                          newValue);
+                                                          newValue, branch);
                                                       batch = null;
                                                     });
                                                   }
