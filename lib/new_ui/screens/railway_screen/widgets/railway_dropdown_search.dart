@@ -27,7 +27,7 @@ class RailwayDropdownSearch extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.primaryContainer,
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(5),
           border: Border.all(
             color: editMode
                 ? Theme.of(context).colorScheme.onPrimaryContainer
@@ -38,7 +38,7 @@ class RailwayDropdownSearch extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.fromLTRB(12, 3, 12, 3),
           child: DropdownSearch<String>(
-            enabled: editMode,
+            //enabled: editMode,
             validator: validator,
             selectedItem: val,
             dropdownDecoratorProps: DropDownDecoratorProps(

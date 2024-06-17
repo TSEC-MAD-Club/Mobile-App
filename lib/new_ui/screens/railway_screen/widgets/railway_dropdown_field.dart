@@ -26,7 +26,7 @@ class RailwayDropdownField extends StatelessWidget {
           color: Theme.of(context)
               .colorScheme
               .primaryContainer, // Set the background color
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(5),
           border: Border.all(
             color: editMode
                 ? Theme.of(context).colorScheme.onPrimaryContainer
@@ -45,6 +45,7 @@ class RailwayDropdownField extends StatelessWidget {
             value: val,
             validator: validator,
             decoration: InputDecoration(
+              iconColor: Colors.white,
               border: InputBorder.none,
               labelStyle: const TextStyle(
                 color: Colors.grey,

@@ -12,6 +12,7 @@ import 'package:tsec_app/new_ui/screens/main_screen/widgets/main_bottom_nav_bar.
 import 'package:tsec_app/new_ui/screens/notes_screen/notes_screen.dart';
 import 'package:tsec_app/new_ui/screens/profile_screen/profile_screen.dart';
 import 'package:tsec_app/new_ui/screens/railway_screen/railway_screen.dart';
+import 'package:tsec_app/new_ui/screens/railway_screen/railwayform.dart';
 import 'package:tsec_app/new_ui/screens/timetable_screen/timetable_screen.dart';
 import 'package:tsec_app/provider/appbar_title_provider.dart';
 import 'package:tsec_app/provider/auth_provider.dart';
@@ -136,21 +137,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                 toolbarHeight: 80,
                 //leadingWidth: MediaQuery.of(context).size.width * 0.7,
                 title: Text(
-                  currentPage < 5
-                      ? (currentBottomNavPage == "home"
-                          ? "Home"
-                          : currentBottomNavPage == "attendance"
-                              ? "ERP"
-                              : currentBottomNavPage == "notes"
-                                  ? "Notes"
-                                  : currentBottomNavPage == "concession"
-                                      ? "Railway Concession"
-                                      : "")
-                      : currentPage == 5
-                          ? "TPC"
-                          : currentPage == 6
-                              ? "Committees"
-                              : "Departments",
+                  getTitle(),
                   style: Theme.of(context)
                       .textTheme
                       .headlineLarge!
@@ -578,5 +565,15 @@ class _MainScreenState extends ConsumerState<MainScreen> {
         body: pages[currentPage],
       ),
     );
+  }
+
+  String getTitle(){
+    switch(currentPage){
+      case 0: return "Home";
+      case 1: return "Notes";
+      case 2: return "Railway";
+      case 3: return "Profile";
+      default: return "";
+    }
   }
 }
