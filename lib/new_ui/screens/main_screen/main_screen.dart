@@ -134,143 +134,193 @@ class _MainScreenState extends ConsumerState<MainScreen> {
       child: Scaffold(
         resizeToAvoidBottomInset: true,
         key: _scaffoldKey,
-        appBar: currentBottomNavPage != "concession" || !concessionOpen
-            ? AppBar(
-                shadowColor: Colors.transparent,
-                backgroundColor: currentBottomNavPage != "profile"
-                    ? Colors.transparent
-                    : Theme.of(context).colorScheme.primary,
-                toolbarHeight: 80,
-                //leadingWidth: MediaQuery.of(context).size.width * 0.7,
-                title: Text(
-                  currentPage < 5
-                      ? (currentBottomNavPage == "home"
-                          ? "Home"
-                          : currentBottomNavPage == "attendance"
-                              ? "ERP"
-                              : currentBottomNavPage == "notes"
-                                  ? "Notes"
-                                  : currentBottomNavPage == "concession"
-                                      ? "Railway Concession"
-                                      : "")
-                      : currentPage == 5
-                          ? "TPC"
-                          : currentPage == 6
-                              ? "Committees"
-                              : "Departments",
-                  style: Theme.of(context)
-                      .textTheme
-                      .headlineLarge!
-                      .copyWith(fontSize: 15, color: Colors.white),
-                  maxLines: 1,
-                  overflow: TextOverflow.fade,
+        // appBar: currentBottomNavPage != "concession" || !concessionOpen
+        //     ? AppBar(
+        //         shadowColor: Colors.transparent,
+        //         backgroundColor: currentBottomNavPage != "profile"
+        //             ? Colors.transparent
+        //             : Theme.of(context).colorScheme.primary,
+        //         toolbarHeight: 80,
+        //         //leadingWidth: MediaQuery.of(context).size.width * 0.7,
+        //         title: Text(
+        //           currentPage < 5
+        //               ? (currentBottomNavPage == "home"
+        //                   ? "Home"
+        //                   : currentBottomNavPage == "attendance"
+        //                       ? "ERP"
+        //                       : currentBottomNavPage == "notes"
+        //                           ? "Notes"
+        //                           : currentBottomNavPage == "concession"
+        //                               ? "Railway Concession"
+        //                               : "")
+        //               : currentPage == 5
+        //                   ? "TPC"
+        //                   : currentPage == 6
+        //                       ? "Committees"
+        //                       : "Departments",
+        //           style: Theme.of(context)
+        //               .textTheme
+        //               .headlineLarge!
+        //               .copyWith(fontSize: 15, color: Colors.white),
+        //           maxLines: 1,
+        //           overflow: TextOverflow.fade,
+        //         ),
+        //         centerTitle: true,
+        //         leading: currentBottomNavPage != "profile"
+        //             ? profilePic != null
+        //                 ? GestureDetector(
+        //                     onTap: () {
+        //                       _scaffoldKey.currentState?.openDrawer();
+        //                     },
+        //                     child: CircleAvatar(
+        //                       radius: 20,
+        //                       backgroundImage: MemoryImage(profilePic),
+        //                       // backgroundImage: MemoryImage(_image!),
+        //                     ),
+        //                   )
+        //                 : InkWell(
+        //                     onTap: () {
+        //                       _scaffoldKey.currentState?.openDrawer();
+        //                     },
+        //                     child: CircleAvatar(radius: 15,backgroundColor: Colors.blue.shade400,child: Icon(Icons.menu,color: Colors.white,)),
+        //                   )
+        //
+        //             // SingleChildScrollView(
+        //             //   scrollDirection: Axis.horizontal,
+        //             //   child: Container(
+        //             //   padding: EdgeInsets.only(left: 10),
+        //             //     width: MediaQuery.of(context).size.width * .8,
+        //             //     child: Text(
+        //             //       currentPage == 0
+        //             //           ? (currentBottomNavPage == "home"
+        //             //               ? "Home"
+        //             //               : currentBottomNavPage == "attendance"
+        //             //                   ? "ERP"
+        //             //                   : currentBottomNavPage ==
+        //             //                           "timetable"
+        //             //                       ? "Schedule"
+        //             //                       : currentBottomNavPage ==
+        //             //                               "concession"
+        //             //                           ? "Railway Concession"
+        //             //                           : "")
+        //             //           : currentPage == 1
+        //             //               ? "TPC"
+        //             //               : currentPage == 2
+        //             //                   ? "Committees"
+        //             //                   : "Departments",
+        //             //       style: Theme.of(context)
+        //             //           .textTheme
+        //             //           .headlineLarge!
+        //             //           .copyWith(fontSize: 30),
+        //             //       maxLines: 1,
+        //             //       overflow: TextOverflow.fade,
+        //             //     ),
+        //             //   ),
+        //             // )
+        //             : Container(),
+        //         // title: Text("Yyay"),
+        //         actions: userDetails != null
+        //             ? [
+        //                 InkWell(
+        //                   child: CircleAvatar(
+        //                     backgroundColor: Colors.blue.shade400,
+        //                     child: Icon(Icons.notifications,color: Colors.white,),
+        //                   ),
+        //                   onTap: () {
+        //                     //Add the Notification Screen here
+        //                     //GoRouter.of(context).push('/notes');
+        //                     Navigator.push(context,MaterialPageRoute(builder: (context)=> NotificationScreen(),),);
+        //                   },
+        //                 ),
+        //                 SizedBox(
+        //                   width: 15,
+        //                 ),
+        //                 // Padding(
+        //                 //   padding: const EdgeInsets.all(8.0),
+        //                 //   child: Ink(
+        //                 //     decoration: const ShapeDecoration(
+        //                 //       color: Colors.white, // White background color
+        //                 //       shape: CircleBorder(), // Circular shape
+        //                 //     ),
+        //                 //     child: IconButton(
+        //                 //       icon: const Icon(
+        //                 //         Icons.event_note,
+        //                 //         color: Colors.black, // Black icon color
+        //                 //       ),
+        //                 //       onPressed: () {
+        //                 //         // Handle button click
+        //                 //       },
+        //                 //     ),
+        //                 //   ),
+        //                 // )
+        //               ]
+        //             : [],
+        //       )
+        //     : null,
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(kToolbarHeight),
+          child: AppBar(
+            automaticallyImplyLeading: false, // Remove the default back button
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            title:
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Flexible(
+                  flex: 1,
+                  child: GestureDetector(
+                    onTap: () {
+                      _scaffoldKey.currentState?.openDrawer();
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(0),
+                      child: Image.asset(
+                        'assets/images/new_app_bar/icon_ham.png',
+                        width: 39,
+                        height: 39,
+                      ),
+                    ),
+                  ),
                 ),
-                centerTitle: true,
-                leading: currentBottomNavPage != "profile"
-                    ? profilePic != null
-                        ? GestureDetector(
-                            onTap: () {
-                              _scaffoldKey.currentState?.openDrawer();
-                            },
-                            child: CircleAvatar(
-                              radius: 20,
-                              backgroundImage: MemoryImage(profilePic),
-                              // backgroundImage: MemoryImage(_image!),
-                            ),
-                          )
-                        : InkWell(
-                            onTap: () {
-                              _scaffoldKey.currentState?.openDrawer();
-                            },
-                            child: CircleAvatar(radius: 15,backgroundColor: Colors.blue.shade400,child: Icon(Icons.menu,color: Colors.white,)),
-                          )
+                Flexible(
+                  flex: 1,
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(context,MaterialPageRoute(builder: (context)=> NotificationScreen(),),);
 
-                    // SingleChildScrollView(
-                    //   scrollDirection: Axis.horizontal,
-                    //   child: Container(
-                    //   padding: EdgeInsets.only(left: 10),
-                    //     width: MediaQuery.of(context).size.width * .8,
-                    //     child: Text(
-                    //       currentPage == 0
-                    //           ? (currentBottomNavPage == "home"
-                    //               ? "Home"
-                    //               : currentBottomNavPage == "attendance"
-                    //                   ? "ERP"
-                    //                   : currentBottomNavPage ==
-                    //                           "timetable"
-                    //                       ? "Schedule"
-                    //                       : currentBottomNavPage ==
-                    //                               "concession"
-                    //                           ? "Railway Concession"
-                    //                           : "")
-                    //           : currentPage == 1
-                    //               ? "TPC"
-                    //               : currentPage == 2
-                    //                   ? "Committees"
-                    //                   : "Departments",
-                    //       style: Theme.of(context)
-                    //           .textTheme
-                    //           .headlineLarge!
-                    //           .copyWith(fontSize: 30),
-                    //       maxLines: 1,
-                    //       overflow: TextOverflow.fade,
-                    //     ),
-                    //   ),
-                    // )
-                    : Container(),
-                // title: Text("Yyay"),
-                actions: userDetails != null
-                    ? [
-                        InkWell(
-                          child: CircleAvatar(
-                            backgroundColor: Colors.blue.shade400,
-                            child: Icon(Icons.notifications,color: Colors.white,),
-                          ),
-                          onTap: () {
-                            //Add the Notification Screen here
-                            //GoRouter.of(context).push('/notes');
-                            Navigator.push(context,MaterialPageRoute(builder: (context)=> NotificationScreen(),),);
-                          },
-                        ),
-                        SizedBox(
-                          width: 15,
-                        ),
-                        // Padding(
-                        //   padding: const EdgeInsets.all(8.0),
-                        //   child: Ink(
-                        //     decoration: const ShapeDecoration(
-                        //       color: Colors.white, // White background color
-                        //       shape: CircleBorder(), // Circular shape
-                        //     ),
-                        //     child: IconButton(
-                        //       icon: const Icon(
-                        //         Icons.event_note,
-                        //         color: Colors.black, // Black icon color
-                        //       ),
-                        //       onPressed: () {
-                        //         // Handle button click
-                        //       },
-                        //     ),
-                        //   ),
-                        // )
-                      ]
-                    : [],
-              )
-            : null,
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 6, 0, 0),
+                      child: Image.asset(
+                        'assets/images/new_app_bar/icon_bell.png',
+                        width: 45,
+                        height: 45,
+                      ),
+                    ),
+                  ),
+                ),
+
+                // Second image and other widgets here
+              ],
+            ),
+          ),
+        ),
         drawer: !concessionOpen
             ? BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+              filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
               child: Container(
                 decoration: BoxDecoration(
                   boxShadow: [
-                    BoxShadow(color: Colors.blue,blurRadius: 5,spreadRadius: 3),
+                    BoxShadow(color: cardcolorblue,blurRadius: 5,spreadRadius: 3),
                   ],
                 ),
                 child: Drawer(
                     shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(20),
-                          bottomRight: Radius.circular(20)),
+                          // topRight: Radius.circular(20),
+                          // bottomRight: Radius.circular(20)
+                      ),
                     ),
                     backgroundColor: Colors.black,
                     child: Padding(
@@ -281,7 +331,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                         children: [
                           SizedBox(height: 20,),
                           Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               profilePic != null
                                   ? CircleAvatar(
@@ -311,7 +361,8 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                                   ),
                                   SizedBox(height: 5,),
                                   Text(
-                                    userDetails != null ? (userDetails.isStudent ? '${userDetails.studentModel!.branch} ${userDetails.studentModel!.gradyear}' : '') : '',
+                                    userDetails != null ? (userDetails.isStudent ?
+                                    '${userDetails.studentModel!.branch} ${userDetails.studentModel!.gradyear}' : '') : 'anonymous',
                                     style: Theme.of(context).textTheme.headlineLarge!.copyWith(fontSize: 12),
                                   )
                                 ],
@@ -557,7 +608,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                                   style: TextStyle(fontSize: 10, color: Colors.white),
                                   children: [
                                     TextSpan(
-                                      text: 'Devs Club',
+                                      text: ' Devs Club',
                                       style: TextStyle(fontSize: 10, color: Colors.blue)
                                     )
                                   ]
