@@ -40,15 +40,11 @@ class _ConcessionStatusModalState extends ConsumerState<ConcessionStatusModal> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
-        // color: ,
         alignment: Alignment.center,
         // height: 70,
         height: 50,
-        width: size.width*0.6,
+        width: size.width*0.7,
         decoration: BoxDecoration(
-          // boxShadow: [
-          //   BoxShadow(color: Colors.green.shade400,spreadRadius: 3,blurRadius: 5),
-          // ],
           color: concessionDetails?.status == ConcessionStatus.rejected
               ? Theme.of(context).colorScheme.error
               : widget.canIssuePass(concessionDetails, lastPassIssued, duration)
@@ -62,7 +58,7 @@ class _ConcessionStatusModalState extends ConsumerState<ConcessionStatusModal> {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Text(
-            concessionDetails?.status != null ? getStatusText(concessionDetails!.status) : "",
+            concessionDetails?.status != null ? "Status : ${getStatusText(concessionDetails!.status)}" : "Can Apply for Pass",
             /*"Status : ${concessionDetails?.status == ConcessionStatus.rejected
                     ? "Rejected"
           : concessionDetails?.status ==
@@ -73,7 +69,7 @@ class _ConcessionStatusModalState extends ConsumerState<ConcessionStatusModal> {
           ? "Can apply"
           : ""}",*/
             style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                  color: Colors.black,
+                  color: Colors.white,
                   fontWeight: FontWeight.w600,
                 ),
           ),
@@ -87,6 +83,8 @@ class _ConcessionStatusModalState extends ConsumerState<ConcessionStatusModal> {
       return "Sorry Cnncession Rejected";
     }else if(status == ConcessionStatus.unserviced){
       return "Pending";
+    }else if(status == ConcessionStatus.serviced){
+      return "Pass Approved";
     }
     return "You can apply for new pass";
   }

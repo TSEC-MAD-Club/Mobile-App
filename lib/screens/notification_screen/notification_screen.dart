@@ -1,3 +1,4 @@
+import 'package:firebase_ui_firestore/firebase_ui_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:tsec_app/screens/notification_screen/widgets/notification_list_item.dart';
@@ -35,9 +36,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
               image: Image.asset(ImageAssets.committes),
             ),
           ),
-        ], body: Column(),
+        ], //body: Column(),
 
-        /*body: FirestoreListView<NotificationModel>(
+        body: FirestoreListView<NotificationModel>(
           query: locator<NotificationService>()
               .notificationQuery
               .orderBy("notificationTime", descending: true),
@@ -58,7 +59,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
               ],
             );
           },
-        ),*/
+        ),
       ),
     );
   }
