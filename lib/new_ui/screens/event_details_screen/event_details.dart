@@ -101,9 +101,10 @@ class _EventDetailState extends ConsumerState<EventDetail> {
                                   },
                                   child: const Text(
                                     "Register",
-                                    style: TextStyle(color: Colors.black),
+                                    style: TextStyle(color: Colors.white),
                                   ),
                                   style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.blue,
                                     padding: const EdgeInsets.only(
                                         top: 0, bottom: 0, right: 20, left: 20),
                                     shape: RoundedRectangleBorder(
@@ -182,7 +183,12 @@ class _EventDetailState extends ConsumerState<EventDetail> {
                         children: [
                           Text(
                             "About",
-                            style: Theme.of(context).textTheme.bodyMedium,
+                            style: Theme.of(context)
+                                .textTheme
+                                .displayMedium!
+                                .copyWith(fontSize: 20,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
                           ),
                         ],
                       ),
@@ -203,8 +209,11 @@ class _EventDetailState extends ConsumerState<EventDetail> {
                           }
                         },
                         text: widget.eventModel.eventDescription,
-                        style: Theme.of(context).textTheme.displayMedium,
-                        linkStyle: const TextStyle(color: Colors.blue),
+                        style: Theme.of(context)
+                            .textTheme
+                            .displayMedium!
+                            .copyWith(fontSize: 12, color: Colors.white),
+                        linkStyle: const TextStyle(color: Colors.blue, decoration: TextDecoration.none),
                       ),
                     ),
                     Padding(
@@ -239,7 +248,14 @@ class _EventDetailState extends ConsumerState<EventDetail> {
                               ),
                               Text(
                                 widget.eventModel.committeeName,
-                                style: Theme.of(context).textTheme.displayMedium,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .displayMedium!
+                                      .copyWith(
+                                    fontSize: 14, // Smaller font size
+                                    color: Colors.white, // White text color
+                                    fontWeight: FontWeight.bold, // Bold text
+                                  ),
                               ),
                             ],
                           ),
