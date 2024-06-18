@@ -25,6 +25,7 @@ class NotesDropdownField extends ConsumerStatefulWidget {
 }
 
 class _NotesDropdownFieldState extends ConsumerState<NotesDropdownField> {
+
   @override
   Widget build(BuildContext context) {
     UserModel user = ref.watch(userModelProvider)!;
@@ -51,7 +52,7 @@ class _NotesDropdownFieldState extends ConsumerState<NotesDropdownField> {
         ),
         icon: widget.editMode ? Icon(Icons.keyboard_arrow_down) : Icon(null),
         dropdownColor: Theme.of(context).colorScheme.background,
-        items: widget.items.map((String item) {
+        items: widget.items.map((item) {
           return DropdownMenuItem(
             value: item,
             child: Text(
