@@ -101,7 +101,7 @@ class _EventDetailState extends ConsumerState<EventDetail> {
                                   },
                                   child: const Text(
                                     "Register",
-                                    style: TextStyle(color: Colors.white),
+                                    style: TextStyle(color: Colors.white, fontSize: 14),
                                   ),
                                   style: ElevatedButton.styleFrom(
                                       backgroundColor: Colors.blue,
