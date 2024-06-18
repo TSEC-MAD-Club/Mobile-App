@@ -31,7 +31,7 @@ class RailwayTextField extends StatelessWidget {
           color: Theme.of(context)
               .colorScheme
               .primaryContainer, // Set the background color
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(5),
           border: Border.all(
             color: editMode && !readOnly
                 ? Theme.of(context).colorScheme.onPrimaryContainer
@@ -49,7 +49,7 @@ class RailwayTextField extends StatelessWidget {
             maxLines: maxLines,
             validator: validator,
             initialValue: val,
-            enabled: editMode,
+            //enabled: editMode,
             decoration: InputDecoration(
               border: InputBorder.none,
               labelStyle: const TextStyle(

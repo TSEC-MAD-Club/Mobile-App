@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:tsec_app/new_ui/screens/main_screen/widgets/common_basic_appbar.dart';
 
 import '../models/company_model/company_model.dart';
 import '../utils/image_assets.dart';
@@ -104,6 +105,7 @@ class _TPCScreenState extends State<TPCScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: CommonAppbar(),
       body: NestedScrollView(
         headerSliverBuilder: (_, __) => [
           // SliverToBoxAdapter(

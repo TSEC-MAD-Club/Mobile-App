@@ -1,6 +1,4 @@
-import 'dart:collection';
 import 'dart:ui';
-
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -188,13 +186,13 @@ class _NotesScreenState extends ConsumerState<NotesScreen> {
         child: CustomScrollView(
           slivers: [
             SliverAppBar(
-              leading: _buildNavigation(
+              /*leading: _buildNavigation(
                 context,
                 icon: const Icon(Icons.chevron_left_rounded),
                 onPressed: () {
                   GoRouter.of(context).pop();
                 },
-              ),
+              ),*/
               backgroundColor: Colors.transparent,
               floating: false,
               pinned: false,

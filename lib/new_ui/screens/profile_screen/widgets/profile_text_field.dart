@@ -40,7 +40,7 @@ class _ProfileFieldState extends ConsumerState<ProfileField> {
       width: width * .95,
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.primaryContainer,
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(5),
         border: Border.all(
           color: widget.enabled
               ? Theme.of(context).colorScheme.onPrimaryContainer

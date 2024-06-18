@@ -78,6 +78,7 @@ class _NotesModalState extends ConsumerState<NotesModal> {
   void initState() {
     super.initState();
     initFunc();
+    MapsYear.mapGradYear();
   }
 
   // Future<List<PlatformFile>> downloadAndConvertFiles(List<String> urls) async {
@@ -316,7 +317,7 @@ class _NotesModalState extends ConsumerState<NotesModal> {
                                   label: "Div",
                                   items: year != null && branch != null
                                       ? calcDivisionList(
-                                          gradYear[year]!, branch!)
+                                          gradYearMapping[year]!, branch!)
                                       : [],
                                   val: division,
                                   validator: (value) {

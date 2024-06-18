@@ -26,7 +26,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return CustomScaffold(
+    return Scaffold(
       body: NestedScrollView(
         headerSliverBuilder: (context, innerBoxIsScrolled) => [
           SliverToBoxAdapter(
@@ -34,8 +34,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
               title: "Notifications",
               image: Image.asset(ImageAssets.committes),
             ),
-          )
+          ),
         ], body: Column(),
+
         /*body: FirestoreListView<NotificationModel>(
           query: locator<NotificationService>()
               .notificationQuery

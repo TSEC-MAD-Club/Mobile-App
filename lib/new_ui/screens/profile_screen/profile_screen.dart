@@ -13,6 +13,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:tsec_app/models/faculty_model/faculty_model.dart';
 import 'package:tsec_app/models/student_model/student_model.dart';
 import 'package:tsec_app/models/user_model/user_model.dart';
+import 'package:tsec_app/new_ui/colors.dart';
 import 'package:tsec_app/new_ui/screens/profile_screen/widgets/address_text_field.dart';
 import 'package:tsec_app/new_ui/screens/profile_screen/widgets/faculty_field.dart';
 import 'package:tsec_app/new_ui/screens/profile_screen/widgets/phone_no_field.dart';
@@ -131,7 +132,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
       setState(() {
         divisionList =
             calcDivisionList(studentData.gradyear, studentData.branch);
-        batchList = calcBatchList(studentData.div ?? divisionList[0]);
+        batchList = calcBatchList(studentData.div ?? divisionList[0], branch);
       });
       div = divisionList.contains(studentData.div)
           ? studentData.div
@@ -323,7 +324,8 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
   Widget build(BuildContext context) {
     final UserModel data = ref.watch(userModelProvider)!;
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.primary,
+      // backgroundColor: Theme.of(context).colorScheme.primary,
+      backgroundColor: commonbgblack,
       resizeToAvoidBottomInset: false,
       appBar: widget.justLoggedIn
           ? AppBar(
@@ -333,10 +335,11 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
               scrolledUnderElevation: 0,
               actions: [
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(8),
                   child: TextButton(
                     style: TextButton.styleFrom(
-                      backgroundColor: Theme.of(context).colorScheme.background,
+                      // backgroundColor: Theme.of(context).colorScheme.background,
+                      backgroundColor: commonbgblack,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(
                             8.0), // Adjust the border radius as needed
@@ -355,394 +358,398 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
               ],
             )
           : null,
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          Stack(
-            clipBehavior: Clip.none,
-            alignment: Alignment.center,
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.background,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(25.0),
-                    topRight: Radius.circular(25.0),
-                  ),
-                ),
-                height: MediaQuery.of(context).size.height * .7,
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      SizedBox(height: 40),
-                      Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Column(
-                          children: [
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      width: MediaQuery.of(context).size.width*0.7,
-                                      child: Text(
-                                        data.isStudent
-                                            ? data.studentModel!.name
-                                            : data.facultyModel!.name,
-                                        style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18,color: Colors.white),
-
-                                      ),
-                                    ),
-                                    data.isStudent
-                                        ? SizedBox(height: 15)
-                                        : SizedBox(),
-                                    data.isStudent
-                                        ? Text(
-                                            "${data.studentModel!.branch}, ${calcGradYear(data.studentModel!.gradyear)}",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .labelMedium,
-                                          )
-                                        : Container(),
-                                  ],
-                                ),
-                                AnimatedCrossFade(
-                                  duration: const Duration(milliseconds: 300),
-                                  crossFadeState: !editMode
-                                      ? CrossFadeState.showFirst
-                                      : CrossFadeState.showSecond,
-                                  firstChild: RawMaterialButton(
-                                    onPressed: () {
-                                      setState(() {
-                                        editMode = true;
-                                      });
-                                    },
-                                    elevation: 2.0,
-                                    fillColor: Color(0xFFF5F6F9),
-                                    child: Icon(
-                                      Icons.edit,
-                                      color: Colors.black,
-                                    ),
-                                    constraints: BoxConstraints.tightFor(
-                                      width: 50, // Set the width
-                                      height: 50.0, // Set the height
-                                    ),
-                                    shape: CircleBorder(
-                                      side: BorderSide(color: Colors.black),
-                                    ),
-                                  ),
-                                  secondChild: Row(children: [
-                                    RawMaterialButton(
-                                      onPressed: () {
-                                        clearValues(data);
-                                      },
-                                      elevation: 2.0,
-                                      fillColor: Color(0xFFF5F6F9),
-                                      child: Icon(
-                                        Icons.close,
-                                        color: Colors.black,
-                                      ),
-                                      constraints: BoxConstraints.tightFor(
-                                        width: 40, // Set the width
-                                        height: 40.0, // Set the height
-                                      ),
-                                      shape: CircleBorder(
-                                        side: BorderSide(color: Colors.black),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: 5,
-                                    ),
-                                    RawMaterialButton(
-                                      onPressed: () async {
-                                        bool changesSaved =
-                                            await saveChanges(ref);
-                                        // if (changesSaved)
-                                        //   GoRouter.of(context).go('/main');
-                                      },
-                                      elevation: 2.0,
-                                      fillColor: Color(0xFFF5F6F9),
-                                      child: Icon(
-                                        Icons.check,
-                                        color: Colors.black,
-                                      ),
-                                      constraints: BoxConstraints.tightFor(
-                                        width: 40, // Set the width
-                                        height: 40.0, // Set the height
-                                      ),
-                                      shape: CircleBorder(
-                                        side: BorderSide(color: Colors.black),
-                                      ),
-                                    )
-                                  ]),
-                                )
-                              ],
-                            ),
-                            SizedBox(height: 40),
-                            Form(
-                              key: _formKey,
-                              child: data.isStudent
-                                  ? Column(
-                                      children: [
-                                        ProfileField(
-                                          labelName: "Email",
-                                          enabled: false,
-                                          value: email,
-                                          onChanged: (val) {
-                                            setState(() {
-                                              email = val;
-                                            });
-                                          },
-                                        ),
-                                        SizedBox(height: 20),
-                                        ProfileField(
-                                          labelName: "Number",
-                                          enabled: editMode,
-                                          controller: phoneNoController,
-                                          // onChanged: (val) {
-                                          //   setState(() {
-                                          //     phoneNum = val;
-                                          //   });
-                                          // },
-                                          validator: (value) {
-                                            if (value!.isEmpty) {
-                                              return 'Please enter a phone number';
-                                            }
-                                            if (!isValidPhoneNumber(value)) {
-                                              return 'Please enter a valid phone number';
-                                            }
-                                            return null;
-                                          },
-                                        ),
-                                        SizedBox(height: 20),
-                                        ProfileField(
-                                          labelName: "DOB",
-                                          enabled: editMode,
-                                          readOnly: true,
-                                          controller: dobController,
-                                          onTap: () async {
-                                            DateTime? pickedDate =
-                                                await showDatePicker(
-                                              context: context,
-                                              initialDate: DateTime.now()
-                                                  .subtract(
-                                                      Duration(days: 20 * 365)),
-                                              firstDate: DateTime(1960),
-                                              lastDate: DateTime(2010),
-                                            );
-                                            if (pickedDate != null) {
-                                              String formattedDate =
-                                                  DateFormat('d MMMM y')
-                                                      .format(pickedDate);
-
-                                              // setState(() {
-                                              dobController.text =
-                                                  formattedDate;
-                                            } else {
-                                              // print(
-                                              //     "Date is not selected");
-                                            }
-                                          },
-                                          validator: (value) {
-                                            if (value!.isEmpty) {
-                                              return 'Please enter Date Of Birth';
-                                            }
-                                            return null;
-                                          },
-                                        ),
-                                        SizedBox(height: 20),
-                                        ProfileField(
-                                          labelName: "Address",
-                                          enabled: editMode,
-                                          // value: address,
-                                          controller: addressController,
-                                          validator: (value) {
-                                            if (value!.isEmpty) {
-                                              return 'Please enter an address';
-                                            }
-                                            return null;
-                                          },
-                                        ),
-                                        SizedBox(height: 20),
-                                        ProfileDropdownField(
-                                          editMode: editMode,
-                                          text: "Division",
-                                          val: div,
-                                          validator: (value) {
-                                            if (value == "") {
-                                              return 'Please enter a division';
-                                            }
-                                            return null;
-                                          },
-                                          valList: divisionList,
-                                          onChanged: editMode
-                                              ? (String? newValue) {
-                                                  if (newValue != null) {
-                                                    setState(() {
-                                                      div = newValue;
-                                                      batchList = calcBatchList(
-                                                          newValue);
-                                                      batch = null;
-                                                    });
-                                                  }
-                                                }
-                                              : null,
-                                        ),
-                                        SizedBox(height: 20),
-                                        ProfileDropdownField(
-                                          editMode: editMode,
-                                          text: "Batch",
-                                          val: batch,
-                                          validator: (value) {
-                                            if (value == "") {
-                                              return 'Please enter a batch';
-                                            }
-                                            return null;
-                                          },
-                                          valList: batchList,
-                                          onChanged: editMode
-                                              ? (String? newValue) {
-                                                  if (newValue != null) {
-                                                    setState(() {
-                                                      batch = newValue;
-                                                      // calcBatchList(newValue);
-                                                      // batch = null;
-                                                    });
-                                                  }
-                                                }
-                                              : null,
-                                        ),
-                                      ],
-                                    )
-                                  : SingleChildScrollView(
-                                      child: SizedBox(
-                                        child: Column(
-                                          children: [
-                                            ProfileField(
-                                              labelName: "Email",
-                                              enabled: false,
-                                              value: email,
-                                              onChanged: (val) {
-                                                setState(() {
-                                                  email = val;
-                                                });
-                                              },
-                                            ),
-                                            SizedBox(height: 20),
-                                            ProfileField(
-                                              labelName: "Designation",
-                                              enabled: editMode,
-                                              controller: designationController,
-                                              // onChanged: (val) {
-                                              //   setState(() {
-                                              //     phoneNum = val;
-                                              //   });
-                                              // },
-                                              validator: (value) {
-                                                if (value!.isEmpty) {
-                                                  return 'Please enter a designation';
-                                                }
-                                                return null;
-                                              },
-                                            ),
-                                            SizedBox(height: 20),
-                                            ProfileField(
-                                              labelName: "Phd Guide",
-                                              enabled: editMode,
-                                              controller: phdGuideController,
-                                              // onChanged: (val) {
-                                              //   setState(() {
-                                              //     phoneNum = val;
-                                              //   });
-                                              // },
-                                              validator: (value) {
-                                                if (value!.isEmpty) {
-                                                  return 'Please enter the name of your phd guide';
-                                                }
-                                                return null;
-                                              },
-                                            ),
-                                            SizedBox(height: 20),
-                                            ProfileField(
-                                              labelName: "Qualification",
-                                              enabled: editMode,
-                                              controller:
-                                                  qualificationController,
-                                              // onChanged: (val) {
-                                              //   setState(() {
-                                              //     phoneNum = val;
-                                              //   });
-                                              // },
-                                              validator: (value) {
-                                                if (value!.isEmpty) {
-                                                  return 'Please enter your qualifications';
-                                                }
-                                                return null;
-                                              },
-                                            ),
-                                            SizedBox(height: 20),
-                                            ProfileField(
-                                              labelName: "Experience",
-                                              enabled: editMode,
-                                              // value: address,
-                                              controller: experienceController,
-                                              validator: (value) {
-                                                if (value!.isEmpty) {
-                                                  return 'Please enter a value';
-                                                }
-                                                return null;
-                                              },
-                                            ),
-                                            SizedBox(height: 20),
-                                            ProfileField(
-                                              labelName:
-                                                  "Area of specialization",
-                                              enabled: editMode,
-                                              // value: address ,
-                                              controller:
-                                                  areaOfSpecializationController,
-                                              validator: (value) {
-                                                if (value!.isEmpty) {
-                                                  return 'Please enter a value';
-                                                }
-                                                return null;
-                                              },
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                            ),
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-              Positioned(
-                top: -50,
-                child: Center(
-                  child: Container(
-                    width: 90,
-                    height: 90,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(
-                        color: Theme.of(context).scaffoldBackgroundColor,
-                        width: 4,
-                      ),
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            SizedBox(height: 50,),
+            Stack(
+              clipBehavior: Clip.none,
+              alignment: Alignment.center,
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    // color: Theme.of(context).colorScheme.background,
+                    color: commonbgblack,
+                    borderRadius: BorderRadius.only(
+                      // topLeft: Radius.circular(25.0),
+                      // topRight: Radius.circular(25.0),
                     ),
-                    child: buildProfileImage(ref, data),
+                  ),
+                  height: MediaQuery.of(context).size.height * .74,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        SizedBox(height: 40),
+                        Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Column(
+                            children: [
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        width: MediaQuery.of(context).size.width*0.7,
+                                        child: Text(
+                                          data.isStudent
+                                              ? data.studentModel!.name
+                                              : data.facultyModel!.name,
+                                          style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18,color: Colors.white),
+
+                                        ),
+                                      ),
+                                      data.isStudent
+                                          ? SizedBox(height: 15)
+                                          : SizedBox(),
+                                      data.isStudent
+                                          ? Text(
+                                              "${data.studentModel!.branch}, ${calcGradYear(data.studentModel!.gradyear)}",
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .labelMedium,
+                                            )
+                                          : Container(),
+                                    ],
+                                  ),
+                                  AnimatedCrossFade(
+                                    duration: const Duration(milliseconds: 300),
+                                    crossFadeState: !editMode
+                                        ? CrossFadeState.showFirst
+                                        : CrossFadeState.showSecond,
+                                    firstChild: RawMaterialButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          editMode = true;
+                                        });
+                                      },
+                                      elevation: 2.0,
+                                      fillColor: Color(0xFFF5F6F9),
+                                      child: Icon(
+                                        Icons.edit,
+                                        color: Colors.black,
+                                      ),
+                                      constraints: BoxConstraints.tightFor(
+                                        width: 50, // Set the width
+                                        height: 50.0, // Set the height
+                                      ),
+                                      shape: CircleBorder(
+                                        side: BorderSide(color: Colors.black),
+                                      ),
+                                    ),
+                                    secondChild: Row(children: [
+                                      RawMaterialButton(
+                                        onPressed: () {
+                                          clearValues(data);
+                                        },
+                                        elevation: 2.0,
+                                        fillColor: Color(0xFFF5F6F9),
+                                        child: Icon(
+                                          Icons.close,
+                                          color: Colors.black,
+                                        ),
+                                        constraints: BoxConstraints.tightFor(
+                                          width: 40, // Set the width
+                                          height: 40.0, // Set the height
+                                        ),
+                                        shape: CircleBorder(
+                                          side: BorderSide(color: Colors.black),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 5,
+                                      ),
+                                      RawMaterialButton(
+                                        onPressed: () async {
+                                          bool changesSaved =
+                                              await saveChanges(ref);
+                                          // if (changesSaved)
+                                          //   GoRouter.of(context).go('/main');
+                                        },
+                                        elevation: 2.0,
+                                        fillColor: Color(0xFFF5F6F9),
+                                        child: Icon(
+                                          Icons.check,
+                                          color: Colors.black,
+                                        ),
+                                        constraints: BoxConstraints.tightFor(
+                                          width: 40, // Set the width
+                                          height: 40.0, // Set the height
+                                        ),
+                                        shape: CircleBorder(
+                                          side: BorderSide(color: Colors.black),
+                                        ),
+                                      )
+                                    ]),
+                                  )
+                                ],
+                              ),
+                              SizedBox(height: 40),
+                              Form(
+                                key: _formKey,
+                                child: data.isStudent
+                                    ? Column(
+                                        children: [
+                                          ProfileField(
+                                            labelName: "Email",
+                                            enabled: false,
+                                            value: email,
+                                            onChanged: (val) {
+                                              setState(() {
+                                                email = val;
+                                              });
+                                            },
+                                          ),
+                                          SizedBox(height: 20),
+                                          ProfileField(
+                                            labelName: "Number",
+                                            enabled: editMode,
+                                            controller: phoneNoController,
+                                            // onChanged: (val) {
+                                            //   setState(() {
+                                            //     phoneNum = val;
+                                            //   });
+                                            // },
+                                            validator: (value) {
+                                              if (value!.isEmpty) {
+                                                return 'Please enter a phone number';
+                                              }
+                                              if (!isValidPhoneNumber(value)) {
+                                                return 'Please enter a valid phone number';
+                                              }
+                                              return null;
+                                            },
+                                          ),
+                                          SizedBox(height: 20),
+                                          ProfileField(
+                                            labelName: "DOB",
+                                            enabled: editMode,
+                                            readOnly: true,
+                                            controller: dobController,
+                                            onTap: () async {
+                                              DateTime? pickedDate =
+                                                  await showDatePicker(
+                                                context: context,
+                                                initialDate: DateTime.now()
+                                                    .subtract(
+                                                        Duration(days: 20 * 365)),
+                                                firstDate: DateTime(1960),
+                                                lastDate: DateTime(2010),
+                                              );
+                                              if (pickedDate != null) {
+                                                String formattedDate =
+                                                    DateFormat('d MMMM y')
+                                                        .format(pickedDate);
+
+                                                // setState(() {
+                                                dobController.text =
+                                                    formattedDate;
+                                              } else {
+                                                // print(
+                                                //     "Date is not selected");
+                                              }
+                                            },
+                                            validator: (value) {
+                                              if (value!.isEmpty) {
+                                                return 'Please enter Date Of Birth';
+                                              }
+                                              return null;
+                                            },
+                                          ),
+                                          SizedBox(height: 20),
+                                          ProfileField(
+                                            labelName: "Address",
+                                            enabled: editMode,
+                                            // value: address,
+                                            controller: addressController,
+                                            validator: (value) {
+                                              if (value!.isEmpty) {
+                                                return 'Please enter an address';
+                                              }
+                                              return null;
+                                            },
+                                          ),
+                                          SizedBox(height: 20),
+                                          ProfileDropdownField(
+                                            editMode: editMode,
+                                            text: "Division",
+                                            val: div,
+                                            validator: (value) {
+                                              if (value == "") {
+                                                return 'Please enter a division';
+                                              }
+                                              return null;
+                                            },
+                                            valList: divisionList,
+                                            onChanged: editMode
+                                                ? (String? newValue) {
+                                                    if (newValue != null) {
+                                                      setState(() {
+                                                        div = newValue;
+                                                        batchList = calcBatchList(
+                                                            newValue, branch);
+                                                        batch = null;
+                                                      });
+                                                    }
+                                                  }
+                                                : null,
+                                          ),
+                                          SizedBox(height: 20),
+                                          ProfileDropdownField(
+                                            editMode: editMode,
+                                            text: "Batch",
+                                            val: batch,
+                                            validator: (value) {
+                                              if (value == "") {
+                                                return 'Please enter a batch';
+                                              }
+                                              return null;
+                                            },
+                                            valList: batchList,
+                                            onChanged: editMode
+                                                ? (String? newValue) {
+                                                    if (newValue != null) {
+                                                      setState(() {
+                                                        batch = newValue;
+                                                        // calcBatchList(newValue);
+                                                        // batch = null;
+                                                      });
+                                                    }
+                                                  }
+                                                : null,
+                                          ),
+                                        ],
+                                      )
+                                    : SingleChildScrollView(
+                                        child: SizedBox(
+                                          child: Column(
+                                            children: [
+                                              ProfileField(
+                                                labelName: "Email",
+                                                enabled: false,
+                                                value: email,
+                                                onChanged: (val) {
+                                                  setState(() {
+                                                    email = val;
+                                                  });
+                                                },
+                                              ),
+                                              SizedBox(height: 20),
+                                              ProfileField(
+                                                labelName: "Designation",
+                                                enabled: editMode,
+                                                controller: designationController,
+                                                // onChanged: (val) {
+                                                //   setState(() {
+                                                //     phoneNum = val;
+                                                //   });
+                                                // },
+                                                validator: (value) {
+                                                  if (value!.isEmpty) {
+                                                    return 'Please enter a designation';
+                                                  }
+                                                  return null;
+                                                },
+                                              ),
+                                              SizedBox(height: 20),
+                                              ProfileField(
+                                                labelName: "Phd Guide",
+                                                enabled: editMode,
+                                                controller: phdGuideController,
+                                                // onChanged: (val) {
+                                                //   setState(() {
+                                                //     phoneNum = val;
+                                                //   });
+                                                // },
+                                                validator: (value) {
+                                                  if (value!.isEmpty) {
+                                                    return 'Please enter the name of your phd guide';
+                                                  }
+                                                  return null;
+                                                },
+                                              ),
+                                              SizedBox(height: 20),
+                                              ProfileField(
+                                                labelName: "Qualification",
+                                                enabled: editMode,
+                                                controller:
+                                                    qualificationController,
+                                                // onChanged: (val) {
+                                                //   setState(() {
+                                                //     phoneNum = val;
+                                                //   });
+                                                // },
+                                                validator: (value) {
+                                                  if (value!.isEmpty) {
+                                                    return 'Please enter your qualifications';
+                                                  }
+                                                  return null;
+                                                },
+                                              ),
+                                              SizedBox(height: 20),
+                                              ProfileField(
+                                                labelName: "Experience",
+                                                enabled: editMode,
+                                                // value: address,
+                                                controller: experienceController,
+                                                validator: (value) {
+                                                  if (value!.isEmpty) {
+                                                    return 'Please enter a value';
+                                                  }
+                                                  return null;
+                                                },
+                                              ),
+                                              SizedBox(height: 20),
+                                              ProfileField(
+                                                labelName:
+                                                    "Area of specialization",
+                                                enabled: editMode,
+                                                // value: address ,
+                                                controller:
+                                                    areaOfSpecializationController,
+                                                validator: (value) {
+                                                  if (value!.isEmpty) {
+                                                    return 'Please enter a value';
+                                                  }
+                                                  return null;
+                                                },
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
-          ),
-        ],
+                Positioned(
+                  top: -50,
+                  child: Center(
+                    child: Container(
+                      width: 90,
+                      height: 90,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          color: Theme.of(context).scaffoldBackgroundColor,
+                          width: 4,
+                        ),
+                      ),
+                      child: buildProfileImage(ref, data),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

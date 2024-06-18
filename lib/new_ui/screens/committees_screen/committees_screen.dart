@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:tsec_app/models/committee_model/committee_model.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:tsec_app/new_ui/screens/main_screen/widgets/common_basic_appbar.dart';
 
 class CommitteesScreen extends StatefulWidget {
   const CommitteesScreen({Key? key}) : super(key: key);
@@ -40,12 +41,13 @@ class _CommitteesScreenState extends State<CommitteesScreen> {
     double _height = MediaQuery.of(context).size.height;
     double _width = MediaQuery.of(context).size.width;
     return Scaffold(
+      appBar: const CommonAppbar(),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
+            /*Padding(
               padding: const EdgeInsets.all(8.0).copyWith(
                 top: 15,
               ),
@@ -56,7 +58,7 @@ class _CommitteesScreenState extends State<CommitteesScreen> {
                     .titleMedium!
                     .copyWith(fontWeight: FontWeight.bold, fontSize: 30),
               ),
-            ),
+            ),*/
             const SizedBox(
               height: 25,
             ),
