@@ -262,6 +262,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
               filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
               child: Container(
                 decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
                   boxShadow: [
                     BoxShadow(color: Colors.blue,blurRadius: 5,spreadRadius: 3),
                   ],
@@ -553,12 +554,12 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                             children: [
                               Text.rich(
                                 TextSpan(
-                                  text: 'Made with ♥️ TSEC',
+                                  text: 'Made with ♥️ TSEC ',
                                   style: TextStyle(fontSize: 10, color: Colors.white),
                                   children: [
                                     TextSpan(
                                       text: 'Devs Club',
-                                      style: TextStyle(fontSize: 10, color: Colors.blue)
+                                      style: TextStyle(fontSize: 10, color: Colors.blue, fontWeight: FontWeight.w700)
                                     )
                                   ]
                                 ),
