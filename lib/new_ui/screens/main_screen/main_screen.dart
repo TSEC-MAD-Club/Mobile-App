@@ -24,11 +24,6 @@ import 'package:tsec_app/screens/notification_screen/notification_screen.dart';
 import 'package:tsec_app/screens/tpc_screen.dart';
 import 'package:url_launcher/link.dart';
 
-
-
-//LEFT DRAWER IS HERE
-
-
 class MainScreen extends ConsumerStatefulWidget {
   const MainScreen({
     Key? key,
@@ -140,24 +135,10 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                 backgroundColor: currentBottomNavPage != "profile"
                     ? Colors.transparent
                     : Theme.of(context).colorScheme.primary,
-                toolbarHeight: 80,
+                //toolbarHeight: 80,
                 //leadingWidth: MediaQuery.of(context).size.width * 0.7,
                 title: Text(
-                  currentPage < 5
-                      ? (currentBottomNavPage == "home"
-                          ? "Home"
-                          : currentBottomNavPage == "attendance"
-                              ? "ERP"
-                              : currentBottomNavPage == "notes"
-                                  ? "Notes"
-                                  : currentBottomNavPage == "concession"
-                                      ? "Railway Concession"
-                                      : "")
-                      : currentPage == 5
-                          ? "TPC"
-                          : currentPage == 6
-                              ? "Committees"
-                              : "Departments",
+                  getTitle(),
                   style: Theme.of(context)
                       .textTheme
                       .headlineLarge!
@@ -182,7 +163,8 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                             onTap: () {
                               _scaffoldKey.currentState?.openDrawer();
                             },
-                            child: CircleAvatar(radius: 15,backgroundColor: Colors.blue.shade400,child: Icon(Icons.menu,color: Colors.white,)),
+
+                            child: Container(margin: EdgeInsets.symmetric(vertical: 8),child: CircleAvatar(backgroundColor: Colors.blue,child: Icon(Icons.menu,color: Colors.white,))),
                           )
 
                     // SingleChildScrollView(
@@ -340,6 +322,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                             onTap: () {
                               setState(() {
                                 currentPage = 0;
+                                currentBottomNavPage = "home";
                               });
                               Navigator.pop(context);
                             },
@@ -586,5 +569,15 @@ class _MainScreenState extends ConsumerState<MainScreen> {
         body: pages[currentPage],
       ),
     );
+  }
+
+  String getTitle(){
+    switch(currentPage){
+      case 0: return "Home";
+      case 1: return "Notes";
+      case 2: return "Railway";
+      case 3: return "Profile";
+      default: return "";
+    }
   }
 }
