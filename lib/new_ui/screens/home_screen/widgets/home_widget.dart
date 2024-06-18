@@ -26,7 +26,14 @@ import 'package:date_picker_timeline/date_picker_timeline.dart';
 import 'package:tsec_app/widgets/custom_scaffold.dart';
 import 'package:intl/intl.dart';
 
-
+extension StringExtension on String {
+  String toTitleCase() {
+    return this.split(' ').map((word) {
+      if (word.isEmpty) return word;
+      return word[0].toUpperCase() + word.substring(1).toLowerCase();
+    }).join(' ');
+  }
+}
 
 class HomeWidget extends ConsumerStatefulWidget {
   Function(String page,int index) changeCurrentPage;
@@ -255,7 +262,10 @@ class _HomeWidgetState extends ConsumerState<HomeWidget> {
                       width: _size.width,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(15, 0, 0, 20),
-                        child: Text("Welcome ${data!=null?data.studentModel?.name.toLowerCase():"to Tsec"}",style: TextStyle(color: Colors.white,fontSize: 19),),
+                        child: Text(
+                          "Welcome ${data != null ? data.studentModel?.name?.toLowerCase()?.toTitleCase() : "To Tsec"}",
+                          style: TextStyle(color: Colors.white, fontSize: 19),
+                        ),
                       )
                   ),
 
