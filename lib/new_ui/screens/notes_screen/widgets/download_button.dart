@@ -58,7 +58,7 @@ class _DownloadButtonState extends ConsumerState<DownloadButton> {
       padding: const EdgeInsets.symmetric(horizontal: 3.0),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(30.0),
+        borderRadius: BorderRadius.circular(10.0),
       ),
       margin: const EdgeInsets.symmetric(
         horizontal: 6.0,

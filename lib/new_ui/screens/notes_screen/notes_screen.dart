@@ -185,41 +185,44 @@ class _NotesScreenState extends ConsumerState<NotesScreen> {
       body: SafeArea(
         child: CustomScrollView(
           slivers: [
-            SliverAppBar(
-              /*leading: _buildNavigation(
-                context,
-                icon: const Icon(Icons.chevron_left_rounded),
-                onPressed: () {
-                  GoRouter.of(context).pop();
-                },
-              ),*/
-              backgroundColor: Colors.transparent,
-              floating: false,
-              pinned: false,
-              expandedHeight: 200.0, // Adjust the height as needed
-              flexibleSpace: FlexibleSpaceBar(
-                background: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Text(
-                        "Notes",
-                        style: Theme.of(context)
-                            .textTheme
-                            .headlineLarge!
-                            .copyWith(color: Colors.white),
-                      ),
-                      SizedBox(
-                        width: 177,
-                        child: Image.asset(
-                          ImageAssets.notes,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+            // SliverAppBar(
+            //   /*leading: _buildNavigation(
+            //     context,
+            //     icon: const Icon(Icons.chevron_left_rounded),
+            //     onPressed: () {
+            //       GoRouter.of(context).pop();
+            //     },
+            //   ),*/
+            //   backgroundColor: Colors.transparent,
+            //   floating: false,
+            //   pinned: false,
+            //   expandedHeight: 200.0, // Adjust the height as needed
+            //   flexibleSpace: FlexibleSpaceBar(
+            //     background: Padding(
+            //       padding: const EdgeInsets.all(10.0),
+            //       child: Row(
+            //         mainAxisAlignment: MainAxisAlignment.spaceAround,
+            //         children: [
+            //           Text(
+            //             "Notes",
+            //             style: Theme.of(context)
+            //                 .textTheme
+            //                 .headlineLarge!
+            //                 .copyWith(color: Colors.white),
+            //           ),
+            //           SizedBox(
+            //             width: 177,
+            //             child: Image.asset(
+            //               ImageAssets.notes,
+            //             ),
+            //           ),
+            //         ],
+            //       ),
+            //     ),
+            //   ),
+            // ),
+            SliverToBoxAdapter(
+              child: SizedBox(height: 20)
             ),
             NotesFilterBar(
               searchQuery: searchQuery,
