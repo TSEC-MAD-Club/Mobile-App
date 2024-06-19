@@ -21,7 +21,7 @@ class ProfileDropdownField extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.primaryContainer,
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(10),
         border: Border.all(
           color: editMode
               ? Theme.of(context).colorScheme.onPrimaryContainer

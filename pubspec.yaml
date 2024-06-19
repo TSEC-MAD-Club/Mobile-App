@@ -94,6 +94,7 @@ flutter:
     - assets/data/curriculum_data/
     - assets/images/themes/
     - assets/images/app_bar/
+    - assets/images/new_app_bar/
     - assets/images/branches/
     - assets/images/icons/
     - assets/images/pfpholder.jpg
