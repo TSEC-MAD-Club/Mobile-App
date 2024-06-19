@@ -151,7 +151,7 @@ class _DownloadButtonState extends State<_DownloadButton> {
   }
 
   void _onButtonClick(String url) {
-    showSnackBar(context, "Downloading Syllabus ");
+    showSnackBar(context, "Downloading Attachment ");
     if (_storageResult!.path != null) {
       OpenFile.open(_storageResult!.path!, type: _storageResult!.type);
 
