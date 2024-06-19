@@ -235,7 +235,7 @@ class _NotesModalState extends ConsumerState<NotesModal> {
                       },
                     ),
                     SizedBox(
-                      height: user.isStudent ? 20 : 0,
+                      height: user.isStudent ? 0 : 0,
                     ),
                     user.isStudent
                         ? Divider(
@@ -341,7 +341,7 @@ class _NotesModalState extends ConsumerState<NotesModal> {
                           )
                         : Container(),
                     SizedBox(
-                      height: user.isStudent ? 20 : 0,
+                      height: user.isStudent ? 0 : 0,
                     ),
                     user.isStudent
                         ? Divider(
@@ -386,7 +386,7 @@ class _NotesModalState extends ConsumerState<NotesModal> {
                       height: 20,
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(20, 11, 20, 11),
+                      padding: const EdgeInsets.fromLTRB(10, 11, 20, 11),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -400,7 +400,7 @@ class _NotesModalState extends ConsumerState<NotesModal> {
                                 width: 10,
                               ),
                               Text(
-                                'Attachments',
+                                "Attachments",
                                 style: Theme.of(context)
                                     .textTheme
                                     .titleSmall!

@@ -262,15 +262,27 @@ class _NoteListState extends ConsumerState<NoteList> {
             ),
           )
         : SliverFillRemaining(
-            child: Center(
-              child: Text(
-                "No notes added yet",
-                style: Theme.of(context)
-                    .textTheme
-                    .titleLarge!
-                    .copyWith(color: Colors.white),
-              ),
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // Add your image here
+            Image.asset(
+              'assets/images/app_bar/notes.png', // Replace with the path to your image
+              height: 100, // Adjust the height as needed
             ),
-          );
+            SizedBox(height: 20), // Add some space between the image and the text
+            Text(
+              "No notes added yet",
+              style: Theme.of(context)
+                  .textTheme
+                  .titleLarge!
+                  .copyWith(color: Colors.white),
+            ),
+          ],
+        ),
+      ),
+    );
+
   }
 }

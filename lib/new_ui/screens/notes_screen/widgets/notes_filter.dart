@@ -153,7 +153,7 @@ class _NotesFilterBarState extends ConsumerState<NotesFilterBar>
             duration: const Duration(milliseconds: 500),
             // First Child is the search bar
             firstChild: SizedBox(
-              height: 60,
+              height: 50,
               child: TextField(
                 // controller: _searchController,
                 onChanged: widget.modifySearchQuery,
@@ -170,13 +170,6 @@ class _NotesFilterBarState extends ConsumerState<NotesFilterBar>
                     ),
                   ),
                   enabledBorder: const OutlineInputBorder(
-                    // borderSide: BorderSide(
-                    //   color: (Theme.of(context).primaryColor ==
-                    //           const Color(0xFFF2F5F8))
-                    //       ? Colors.black54
-                    //       : Colors.white38,
-                    //   width: 1.0,
-                    // ),
                     borderRadius: BorderRadius.all(
                       Radius.circular(18),
                     ),
@@ -190,9 +183,13 @@ class _NotesFilterBarState extends ConsumerState<NotesFilterBar>
                   ),
                   hintText: "Search",
                   fillColor: Theme.of(context).colorScheme.onSecondary,
+                  contentPadding: const EdgeInsets.fromLTRB(48, 12, 12, 12), // Adjust padding if needed
                 ),
+                textAlign: TextAlign.start,
               ),
             ),
+
+
             // Second child is the filter bar
             secondChild: Container(
               decoration: BoxDecoration(
