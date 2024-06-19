@@ -36,8 +36,6 @@ jobs:
         env:
           FIREBASE_OPTIONS: ${{ secrets.FIREBASE_OPTIONS }}
         run: |
-          echo "APP_VERSION=$(grep -Po '(?<=version: )(.*)(?=\+)' pubspec.yaml)" >> $GITHUB_ENV
-
           mv lib/firebase_options.example.dart lib/firebase_options.dart
 
           flutter pub get
@@ -57,7 +55,7 @@ jobs:
           flutter build apk --debug
           echo "Built apk for version ${APP_VERSION}"
 
-      - uses: actions/upload-artifact@v2
-        with:
-          name: "TSEC App-nightly-v${{ env.APP_VERSION }}.apk"
-          path: build/app/outputs/flutter-apk/app-debug.apk
+     # - uses: actions/upload-artifact@v2
+     #   with:
+     #     name: "TSEC App-nightly-v${{ env.APP_VERSION }}.apk"
+     #     path: build/app/outputs/flutter-apk/app-debug.apk
