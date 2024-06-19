@@ -28,7 +28,7 @@ class NotificationDialog extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             maxLines: 1,
             style: const TextStyle(
-              color: Colors.black,
+              color: Colors.white,
               fontSize: 14,
               fontWeight: FontWeight.bold,
             ),
@@ -38,7 +38,7 @@ class NotificationDialog extends StatelessWidget {
           Text(
             notificationModel.message,
             style: const TextStyle(
-              color: Colors.black,
+              color: Colors.white,
             ),
           ),
           if (notificationModel.attachments != null) ...[

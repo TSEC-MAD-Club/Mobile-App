@@ -36,6 +36,7 @@ class _RailwayConcessionScreenState
   String? statusMessage;
   String? duration;
   DateTime? lastPassIssued;
+
   // String?
 
   bool canIssuePass(ConcessionDetailsModel? concessionDetails,
@@ -90,20 +91,26 @@ class _RailwayConcessionScreenState
 
   // String firstName = "";
   TextEditingController firstNameController = TextEditingController();
+
   // String middleName = "";
   TextEditingController middleNameController = TextEditingController();
+
   // String lastName = "";
   TextEditingController lastNameController = TextEditingController();
+
   // String dateofbirth = "";
   String _ageYears = "";
   String _ageMonths = "";
+
   // String _age = "";
   // String phoneNum = "";
   TextEditingController phoneNumController = TextEditingController();
+
   // String? duration;
   String? gender;
   String? travelLane;
   String? travelClass;
+
   // String address = "";
   TextEditingController addressController = TextEditingController();
   String homeStation = "";
@@ -348,8 +355,7 @@ class _RailwayConcessionScreenState
       );
     } else if (previousPassPhotoTemp == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-            content: Text("Please add the photo of your previous pass")),
+        SnackBar(content: Text("Please add the photo of your previous pass")),
       );
     }
   }
@@ -410,86 +416,51 @@ class _RailwayConcessionScreenState
 
   @override
   Widget build(BuildContext context) {
-
     Size size = MediaQuery.of(context).size;
 
     bool editMode = ref.watch(railwayConcessionOpenProvider);
     StudentModel student = ref.watch(userModelProvider)!.studentModel!;
     ConcessionDetailsModel? concessionDetails =
         ref.watch(concessionDetailsProvider);
-    return  SingleChildScrollView(
-          child: Center(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(height: !editMode ? 10 : 0),
-                !editMode
-                    ? ConcessionStatusModal(
-                        // concessionDetails: concessionDetails,
-                        canIssuePass: canIssuePass,
-                        // lastPassIssued: lastPassIssued,
-                        // duration: duration,
-                        futurePassMessage: futurePassMessage,
-                      )
-                    : Container(),
-                !editMode ? SizedBox(height: 10) : Container(),
-
-                SizedBox(height: !editMode ? 20 : 0),
-                !editMode &&
-                        canIssuePass(concessionDetails, lastPassIssued, duration)
-                    ? Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Container(
-                              decoration: BoxDecoration(
-                                boxShadow: [
-                                  BoxShadow(color:  canIssuePass(concessionDetails, lastPassIssued, duration) ? Theme.of(context).colorScheme.tertiaryContainer : Colors.grey,blurRadius: 5,spreadRadius: 2)
-                                ],
-                              ),
-                              child: FilledButton(
-                                onPressed: () {
-                                  if(canIssuePass(concessionDetails, lastPassIssued, duration)) {
-                                    Navigator.push(context, MaterialPageRoute(
-                                      builder: (context) => const RailwayForm(),),);
-                                  }
-                                },
-                                style: FilledButton.styleFrom(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(
-                                        10.0), // Set the border radius
-                                  ),
-                                  backgroundColor: canIssuePass(concessionDetails, lastPassIssued, duration) ? Theme.of(context).colorScheme.tertiaryContainer : Colors.grey,
-                                ),
-                                child: Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(22, 12, 22, 12),
-                                  child: Text('Apply',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headlineMedium!
-                                          .copyWith(
-                                            color: Colors.white,
-                                          )),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      )
-                    : Container(),
-
-                SizedBox(
-                  height: 15,
-                ),
-                Container(width: size.width*0.8,child: Text("Previous Passes",style: TextStyle(fontSize: 18,color: Colors.white),))
-              ],
+    return SingleChildScrollView(
+      child: Center(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(height: !editMode ? 10 : 0),
+            InkWell(
+              splashFactory: NoSplash.splashFactory,
+              onTap: (){
+                if (canIssuePass(concessionDetails,
+                    lastPassIssued, duration)) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const RailwayForm(),
+                    ),
+                  );
+                }
+              },
+              child: ConcessionStatusModal(
+                // concessionDetails: concessionDetails,
+                canIssuePass: canIssuePass,
+                // lastPassIssued: lastPassIssued,
+                // duration: duration,
+                futurePassMessage: futurePassMessage,
+              ),
             ),
-          ),
-        );
+            SizedBox(
+              height: 15,
+            ),
+            Container(
+                width: size.width * 0.8,
+                child: Text(
+                  "Previous Passes",
+                  style: TextStyle(fontSize: 18, color: Colors.white),
+                ))
+          ],
+        ),
+      ),
+    );
   }
 }

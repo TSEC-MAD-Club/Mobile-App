@@ -24,11 +24,6 @@ import 'package:tsec_app/screens/notification_screen/notification_screen.dart';
 import 'package:tsec_app/screens/tpc_screen.dart';
 import 'package:url_launcher/link.dart';
 
-
-
-//LEFT DRAWER IS HERE
-
-
 class MainScreen extends ConsumerStatefulWidget {
   const MainScreen({
     Key? key,
@@ -311,6 +306,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
               filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
               child: Container(
                 decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
                   boxShadow: [
                     BoxShadow(color: cardcolorblue,blurRadius: 5,spreadRadius: 3),
                   ],
@@ -390,6 +386,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                             onTap: () {
                               setState(() {
                                 currentPage = 0;
+                                currentBottomNavPage = "home";
                               });
                               Navigator.pop(context);
                             },
@@ -604,12 +601,12 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                             children: [
                               Text.rich(
                                 TextSpan(
-                                  text: 'Made with ♥️ TSEC',
+                                  text: 'Made with ♥️ TSEC ',
                                   style: TextStyle(fontSize: 10, color: Colors.white),
                                   children: [
                                     TextSpan(
-                                      text: ' Devs Club',
-                                      style: TextStyle(fontSize: 10, color: Colors.blue)
+                                      text: 'Devs Club',
+                                      style: TextStyle(fontSize: 10, color: Colors.blue, fontWeight: FontWeight.w700)
                                     )
                                   ]
                                 ),
@@ -636,5 +633,15 @@ class _MainScreenState extends ConsumerState<MainScreen> {
         body: pages[currentPage],
       ),
     );
+  }
+
+  String getTitle(){
+    switch(currentPage){
+      case 0: return "Home";
+      case 1: return "Notes";
+      case 2: return "Railway";
+      case 3: return "Profile";
+      default: return "";
+    }
   }
 }
