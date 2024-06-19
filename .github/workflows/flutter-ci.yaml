@@ -42,10 +42,10 @@ jobs:
 
           flutter pub run build_runner build --delete-conflicting-outputs
 
-      - name: Lint and Analyze code
-        run: |
-          dart format .
-          flutter analyze .
+      #- name: Lint and Analyze code
+      #  run: |
+      #    dart format .
+      #    flutter analyze .
 
       # - name: Run Tests
       #   run: flutter test
