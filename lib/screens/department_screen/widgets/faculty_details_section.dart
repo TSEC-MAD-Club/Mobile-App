@@ -254,32 +254,31 @@ class ExpandedFacultyCard extends StatelessWidget {
                 ),
                 Expanded(
                   child: Wrap(
+                    direction: Axis.vertical,
                     spacing: 5,
                     runSpacing: 5,
                     children: [
                       IconWithChipText(
-                        assetPath: 'assets/images/icons/experience.png',
-                        text: experience,
-                      ),
-                      IconWithChipText(
                         assetPath: 'assets/images/icons/qualifications.png',
                         text: qualification,
                       ),
-                      const Icon(
-                        Icons.star_border_purple500_outlined,
-                        size: 22,
-                        color: Colors.white,
+                      IconWithChipText(
+                        assetPath: 'assets/images/icons/experience.png',
+                        text: experience,
                       ),
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Text(
-                        "Area of Specialization",
-                        style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 14),
-                      ),
-                      ChipStyledText(
-                        text: specialization,
-                        width: size.width,
+                      Row(
+                        children: [
+                          const Icon(
+                            Icons.star_border_purple500_outlined,
+                            size: 22,
+                            color: Color(0xff1FAFA4),
+                          ),
+                          SizedBox(width: 5),
+                          ChipStyledText(
+                            text: specialization,
+                            width: size.width*.65,
+                          ),
+                        ],
                       ),
                     ],
                   ),
@@ -344,10 +343,9 @@ class IconWithChipText extends StatelessWidget {
         const SizedBox(
           width: 5,
         ),
-        Flexible(
-          child: ChipStyledText(
-            text: text,
-          ),
+        ChipStyledText(
+          text: text,
+          width: MediaQuery.of(context).size.width*.65,
         ),
       ],
     );

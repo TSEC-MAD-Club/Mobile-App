@@ -393,7 +393,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Container(
-                                        width: MediaQuery.of(context).size.width*0.7,
+                                        width: MediaQuery.of(context).size.width*0.65,
                                         child: Text(
                                           data.isStudent
                                               ? data.studentModel!.name
@@ -440,50 +440,52 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                         side: BorderSide(color: Colors.black),
                                       ),
                                     ),
-                                    secondChild: Row(children: [
-                                      RawMaterialButton(
-                                        onPressed: () {
-                                          clearValues(data);
-                                        },
-                                        elevation: 2.0,
-                                        fillColor: Color(0xFFF5F6F9),
-                                        child: Icon(
-                                          Icons.close,
-                                          color: Colors.black,
+                                    secondChild: !editMode
+                                      ? SizedBox()
+                                      : Row(children: [
+                                        RawMaterialButton(
+                                          onPressed: () {
+                                            clearValues(data);
+                                          },
+                                          elevation: 2.0,
+                                          fillColor: Color(0xFFF5F6F9),
+                                          child: Icon(
+                                            Icons.close,
+                                            color: Colors.black,
+                                          ),
+                                          constraints: BoxConstraints.tightFor(
+                                            width: 40, // Set the width
+                                            height: 40.0, // Set the height
+                                          ),
+                                          shape: CircleBorder(
+                                            side: BorderSide(color: Colors.black),
+                                          ),
                                         ),
-                                        constraints: BoxConstraints.tightFor(
-                                          width: 40, // Set the width
-                                          height: 40.0, // Set the height
+                                        SizedBox(
+                                          width: 5,
                                         ),
-                                        shape: CircleBorder(
-                                          side: BorderSide(color: Colors.black),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 5,
-                                      ),
-                                      RawMaterialButton(
-                                        onPressed: () async {
-                                          bool changesSaved =
-                                              await saveChanges(ref);
-                                          // if (changesSaved)
-                                          //   GoRouter.of(context).go('/main');
-                                        },
-                                        elevation: 2.0,
-                                        fillColor: Color(0xFFF5F6F9),
-                                        child: Icon(
-                                          Icons.check,
-                                          color: Colors.black,
-                                        ),
-                                        constraints: BoxConstraints.tightFor(
-                                          width: 40, // Set the width
-                                          height: 40.0, // Set the height
-                                        ),
-                                        shape: CircleBorder(
-                                          side: BorderSide(color: Colors.black),
-                                        ),
-                                      )
-                                    ]),
+                                        RawMaterialButton(
+                                          onPressed: () async {
+                                            bool changesSaved =
+                                                await saveChanges(ref);
+                                            // if (changesSaved)
+                                            //   GoRouter.of(context).go('/main');
+                                          },
+                                          elevation: 2.0,
+                                          fillColor: Color(0xFFF5F6F9),
+                                          child: Icon(
+                                            Icons.check,
+                                            color: Colors.black,
+                                          ),
+                                          constraints: BoxConstraints.tightFor(
+                                            width: 40, // Set the width
+                                            height: 40.0, // Set the height
+                                          ),
+                                          shape: CircleBorder(
+                                            side: BorderSide(color: Colors.black),
+                                          ),
+                                        )
+                                      ]),
                                   )
                                 ],
                               ),
