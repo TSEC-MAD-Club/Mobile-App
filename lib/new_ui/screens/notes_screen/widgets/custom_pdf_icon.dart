@@ -8,7 +8,7 @@ class CustomPdfIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(4, 0, 4, 0),
+      padding: const EdgeInsets.fromLTRB(0, 0, 3, 0),
       child: Container(
         width: MediaQuery.of(context).size.width * 0.7,
         decoration: BoxDecoration(

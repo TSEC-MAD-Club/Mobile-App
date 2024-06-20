@@ -38,7 +38,7 @@ class _NotesTextFieldState extends ConsumerState<NotesTextField> {
           ? const EdgeInsets.fromLTRB(20, 11, 20, 11)
           : EdgeInsets.fromLTRB(15, 0, 15, 0),
       child: TextFormField(
-        style: Theme.of(context).textTheme.bodySmall!.copyWith(height: user.isStudent ? 3 : 1.5),
+        style: Theme.of(context).textTheme.bodySmall!.copyWith(height: user.isStudent ? 3: 1.5),
         controller: widget.controller,
         onTap: widget.onTap,
         readOnly: widget.readOnly,

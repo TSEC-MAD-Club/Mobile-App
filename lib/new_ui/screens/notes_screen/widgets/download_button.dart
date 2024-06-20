@@ -9,6 +9,7 @@ import 'package:tsec_app/utils/custom_snackbar.dart';
 import 'package:tsec_app/utils/init_get_it.dart';
 import 'package:tsec_app/utils/storage_util.dart';
 import 'package:url_launcher/url_launcher_string.dart';
+import 'package:tsec_app/new_ui/colors.dart';
 
 class DownloadButton extends ConsumerStatefulWidget {
   final String url;
@@ -57,8 +58,12 @@ class _DownloadButtonState extends ConsumerState<DownloadButton> {
       height: 30,
       padding: const EdgeInsets.symmetric(horizontal: 3.0),
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(10.0),
+        color: darkTextFieldBgColor,
+        borderRadius: BorderRadius.circular(15),
+        border: Border.all(
+          color: Colors.blue,
+          width: 1,
+        ),
       ),
       margin: const EdgeInsets.symmetric(
         horizontal: 6.0,
@@ -70,41 +75,50 @@ class _DownloadButtonState extends ConsumerState<DownloadButton> {
         },
         child: _storageResult == null || _storageResult!.isDownloadInProgress
             ? SizedBox(
-                height: 24,
-                width: 24,
-                child: CircularProgressIndicator(
-                  value: _downloadPrecent <= 0 ? null : _downloadPrecent,
-                ),
-              )
+          height: 24,
+          width: 24,
+          child: CircularProgressIndicator(
+            value: _downloadPrecent <= 0 ? null : _downloadPrecent,
+          ),
+        )
             : Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: Text(
-                      _storageResult!.name,
-                      style: TextStyle(
-                        fontSize: 10,
-                        color: Theme.of(context).colorScheme.onBackground,
-                      ),
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                  // !user.isStudent
-                  // ? GestureDetector(
-                  !user.isStudent
-                      ? GestureDetector(
-                          onTap: () => widget.removeFile(),
-                          child: Icon(
-                            Icons.cancel,
-                            color: Theme.of(context).colorScheme.onBackground,
-                          ),
-                        )
-                      : Container()
-                  // : Container(),
-                ],
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: Text(
+                _storageResult!.name,
+                style: TextStyle(
+                  fontSize: 15,
+                  color: Colors.white,
+                ),
+                overflow: TextOverflow.ellipsis,
               ),
+            ),
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                // SizedBox(width: 2),
+                Icon(
+                  Icons.download_rounded,
+                  size: 20,
+                  color: Colors.white,
+                ),
+              ],
+            ),
+            !user.isStudent
+                ? GestureDetector(
+              onTap: () => widget.removeFile(),
+              child: Icon(
+                Icons.cancel,
+                color: Theme.of(context).colorScheme.onBackground,
+              ),
+            )
+                : Container(),
+          ],
+        ),
       ),
     );
+
     // return Padding(
     //   padding: const EdgeInsets.only(top: 0),
     //   child: TextButton(
