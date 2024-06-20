@@ -7,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tsec_app/models/user_model/user_model.dart';
 import 'package:tsec_app/new_ui/colors.dart';
+import 'package:tsec_app/new_ui/screens/coming_soon_screen/coming_soon.dart';
 import 'package:tsec_app/new_ui/screens/erp_screen/erp_screen.dart';
 import 'package:tsec_app/new_ui/screens/home_screen/widgets/home_widget.dart';
 import 'package:tsec_app/new_ui/screens/main_screen/widgets/main_bottom_nav_bar.dart';
@@ -565,6 +566,32 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                           ),
 
                           Spacer(),
+                          ListTile(
+                            contentPadding: EdgeInsets.zero,
+                            title: Text(
+                              'Coming soon........',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headlineSmall!
+                                  .copyWith(
+                                    fontSize: 13,
+                                    color: currentPage == 5
+                                        ? Theme.of(context).colorScheme.onBackground
+                                        : Colors.white,
+                                  ),
+                            ),
+                            onTap: () {
+                              ref.read(titleProvider.notifier).state = 'Something cooking........';
+                              Navigator.pop(context);
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ComingSoon(),
+                                ),
+                              );
+                            },
+                          ),
+                          SizedBox(height: 10,),
                           Container(
                             alignment: Alignment.center,
                             width: size.width,
