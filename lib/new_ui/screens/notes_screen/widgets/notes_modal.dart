@@ -180,6 +180,8 @@ class _NotesModalState extends ConsumerState<NotesModal> {
     List<String> allSubjects =
         evenOrOddSem() == "even_sem" ? semData.even_sem : semData.odd_sem;
 
+    final scrollController = ScrollController();
+
     return Scaffold(
       appBar: AppBar(
         iconTheme: const IconThemeData(color: Colors.white),
@@ -422,7 +424,7 @@ class _NotesModalState extends ConsumerState<NotesModal> {
                                       style: TextStyle(color: Colors.grey),
                                     ),
                                   )
-                                : Scrollbar(
+                                : Scrollbar(controller: scrollController,
                                     thumbVisibility: true,
                                     child: GridView.builder(
                                         gridDelegate:

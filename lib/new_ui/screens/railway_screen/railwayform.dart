@@ -420,7 +420,7 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
       appBar: AppBar(
         shadowColor: Colors.transparent,
         backgroundColor: Colors.transparent,
-        toolbarHeight: 80,
+        //toolbarHeight: 80,
         title: Text("Railway Form",style: Theme.of(context)
             .textTheme
             .headlineLarge!

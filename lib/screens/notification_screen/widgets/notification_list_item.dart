@@ -34,7 +34,7 @@ class NotificationListItem extends StatelessWidget {
                   Expanded(
                     child: Text(
                       notificationModel.title,
-                      style: Theme.of(context).textTheme.bodyMedium,
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Colors.white),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -53,14 +53,12 @@ class NotificationListItem extends StatelessWidget {
               const SizedBox(height: 10),
               Text(
                 notificationModel.message,
+                style: TextStyle(color: Colors.white),
                 maxLines: 3,
                 overflow: TextOverflow.ellipsis,
               ),
               Divider(
-                color:
-                    (Theme.of(context).primaryColor == const Color(0xFFF2F5F8))
-                        ? Colors.black12
-                        : Colors.white12,
+                color: Colors.white12,
                 thickness: 1,
               ),
             ],
