@@ -28,7 +28,7 @@ class ComingSoon extends StatelessWidget {
                 SizedBox(
                   width: MediaQuery.of(context).size.width * .75,
                   height: MediaQuery.of(context).size.width * .60,
-                  child: Lottie.asset("assets/animation/coming_soon_lotiie.json")
+                  child: Lottie.asset("assets/animation/coming_soon_lottie.json")
                 ),
                 SizedBox(height: 40.0),
                 Text(
