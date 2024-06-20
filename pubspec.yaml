@@ -63,6 +63,7 @@ dependencies:
   webview_flutter: ^4.7.0
   webview_flutter_android: ^3.15.0
   webview_flutter_wkwebview: ^3.12.0
+  flutter_blurhash: ^0.6.0
   #firebase_ui_firestore: ^1.6.3
 
 dev_dependencies:
@@ -97,6 +98,7 @@ flutter:
     - assets/images/new_app_bar/
     - assets/images/branches/
     - assets/images/icons/
+    - assets/images/coming_soon/
     - assets/images/pfpholder.jpg
     - assets/images/tsecImages.png
     - assets/images/tsecimage.png

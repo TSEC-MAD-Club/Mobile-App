@@ -262,12 +262,11 @@ class _NoteListState extends ConsumerState<NoteList> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Add your image here
             Image.asset(
-              'assets/images/app_bar/notes.png', // Replace with the path to your image
-              height: 100, // Adjust the height as needed
+              'assets/images/app_bar/notes.png',
+              height: 100,
             ),
-            SizedBox(height: 20), // Add some space between the image and the text
+            SizedBox(height: 20),
             Text(
               "No notes added yet",
               style: Theme.of(context)
