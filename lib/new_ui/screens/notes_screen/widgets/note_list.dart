@@ -12,6 +12,7 @@ import 'package:tsec_app/provider/auth_provider.dart';
 import 'package:tsec_app/provider/firebase_provider.dart';
 import 'package:tsec_app/provider/notes_provider.dart';
 import 'package:tsec_app/utils/datetime.dart';
+import 'package:tsec_app/new_ui/colors.dart';
 
 class NoteList extends ConsumerStatefulWidget {
   void Function(
@@ -144,21 +145,16 @@ class _NoteListState extends ConsumerState<NoteList> {
                       padding: EdgeInsets.all(8),
                       child: OpenContainer(
                         transitionDuration: Duration(milliseconds: 500),
-                        closedColor:
-                            Theme.of(context).colorScheme.primaryContainer,
+                        closedColor: Color(0xff1B1B1B),
                         closedBuilder: (context, action) {
                           return Container(
                             // margin: EdgeInsets.all(8),
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(40),
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .primaryContainer,
+                              borderRadius: BorderRadius.circular(20),
+                              color: Color(0xff383838),
                             ),
                             child: Padding(
-                              padding: const EdgeInsets.all(
-                                12,
-                              ),
+                              padding: const EdgeInsets.all(20,),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -183,7 +179,7 @@ class _NoteListState extends ConsumerState<NoteList> {
                                     style: Theme.of(context)
                                         .textTheme
                                         .titleSmall!
-                                        .copyWith(color: Colors.grey),
+                                        .copyWith(color: Colors.grey, fontSize: 14),
                                   ),
                                   const SizedBox(
                                     height: 10,
@@ -210,9 +206,9 @@ class _NoteListState extends ConsumerState<NoteList> {
                                           ? Text(
                                               "+${attachments.length - 2}",
                                               style: TextStyle(
-                                                  color: Theme.of(context)
-                                                      .colorScheme
-                                                      .tertiary),
+                                                  color: Theme.of(context).colorScheme.tertiary,
+                                                  fontSize: 12,
+                                              )
                                             )
                                           : Container()
                                     ],

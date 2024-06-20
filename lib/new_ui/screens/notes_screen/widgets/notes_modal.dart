@@ -374,7 +374,7 @@ class _NotesModalState extends ConsumerState<NotesModal> {
                       },
                     ),
                     SizedBox(
-                      height: user.isStudent ? 20 : 0,
+                      height: user.isStudent ? 10 : 0,
                     ),
                     user.isStudent
                         ? Divider(
@@ -416,7 +416,7 @@ class _NotesModalState extends ConsumerState<NotesModal> {
                           // widget.note != null
                           // ? SizedBox(
                           SizedBox(
-                            height: 100,
+                            height: 300,
                             child: attachments.isEmpty
                                 ? Center(
                                     child: Text(
@@ -424,30 +424,29 @@ class _NotesModalState extends ConsumerState<NotesModal> {
                                       style: TextStyle(color: Colors.grey),
                                     ),
                                   )
-                                : Scrollbar(controller: scrollController,
-                                    thumbVisibility: true,
-                                    child: GridView.builder(
-                                        gridDelegate:
-                                            const SliverGridDelegateWithFixedCrossAxisCount(
-                                          crossAxisCount:
-                                              2, // number of items in each row
-                                          mainAxisSpacing:
-                                              15.0, // spacing between rows
-                                          crossAxisSpacing:
-                                              8.0, // spacing between columns
-                                          childAspectRatio: 35 / 9,
-                                        ),
-                                        itemCount: attachments.length,
-                                        itemBuilder: (context, index) {
-                                          return DownloadButton(
-                                            key: ValueKey(attachments[index]),
-                                            url: attachments[index],
-                                            removeFile: () {
-                                              deselectFile(index);
-                                            },
-                                          );
-                                        }),
-                                  ),
+                            :Scrollbar(
+                              controller: scrollController,
+                              thumbVisibility: true,
+                              child: GridView.builder(
+                                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 1, // number of items in each row
+                                  mainAxisSpacing: 15.0, // spacing between rows
+                                  crossAxisSpacing: 8.0, // spacing between columns
+                                  childAspectRatio: 35 / 9,
+                                ),
+                                itemCount: attachments.length,
+                                itemBuilder: (context, index) {
+                                  return DownloadButton(
+                                    key: ValueKey(attachments[index]),
+                                    url: attachments[index],
+                                    removeFile: () {
+                                      deselectFile(index);
+                                    },
+                                  );
+                                },
+                              ),
+                            ),
+
                           )
                           // : SizedBox(
                           //     height: 40,

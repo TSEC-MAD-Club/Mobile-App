@@ -13,12 +13,12 @@ class NotesDropdownField extends ConsumerStatefulWidget {
 
   NotesDropdownField(
       {super.key,
-      required this.editMode,
-      required this.label,
-      this.val,
-      this.onChanged,
-      required this.items,
-      this.validator});
+        required this.editMode,
+        required this.label,
+        this.val,
+        this.onChanged,
+        required this.items,
+        this.validator});
 
   @override
   ConsumerState<NotesDropdownField> createState() => _NotesDropdownFieldState();
@@ -33,37 +33,53 @@ class _NotesDropdownFieldState extends ConsumerState<NotesDropdownField> {
       padding: !user.isStudent
           ? const EdgeInsets.fromLTRB(20, 11, 20, 11)
           : EdgeInsets.fromLTRB(15, 0, 15, 0),
-      // padding: EdgeInsets.fromLTRB(20, 11, 20, 11),
-      child: DropdownButtonFormField(
-        style: Theme.of(context)
-            .textTheme
-            .bodySmall!
-            .copyWith(color: Colors.white),
-        // style: Theme.of(context).textTheme.bodySmall,
-        value: widget.val,
-        validator: widget.validator,
-        decoration: InputDecoration(
-          border: !user.isStudent ? UnderlineInputBorder() : InputBorder.none,
-          // border: UnderlineInputBorder(),
-          labelStyle: const TextStyle(
-            color: Colors.grey,
-          ),
-          labelText: widget.label,
-        ),
-        icon: widget.editMode ? Icon(Icons.keyboard_arrow_down) : Icon(null),
-        dropdownColor: Theme.of(context).colorScheme.background,
-        items: widget.items.map((item) {
-          return DropdownMenuItem(
-            value: item,
-            child: Text(
-              item,
-              style: TextStyle(
-                color: Colors.white,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          if (user.isStudent)
+            SizedBox(
+              height: 20,
+              child: Align(
+                alignment: Alignment.bottomLeft,
+                child: Text(
+                  widget.label,
+                  style: const TextStyle(
+                    color: Colors.grey,
+                    fontSize: 12,
+                  ),
+                ),
               ),
             ),
-          );
-        }).toList(),
-        onChanged: widget.editMode ? widget.onChanged : null,
+          DropdownButtonFormField(
+            style: Theme.of(context)
+                .textTheme
+                .bodySmall!
+                .copyWith(color: Colors.white),
+            value: widget.val,
+            validator: widget.validator,
+            decoration: InputDecoration(
+              border: !user.isStudent ? UnderlineInputBorder() : InputBorder.none,
+              labelStyle: const TextStyle(
+                color: Colors.grey,
+              ),
+              labelText: user.isStudent ? null : widget.label,
+            ),
+            icon: widget.editMode ? Icon(Icons.keyboard_arrow_down) : Icon(null),
+            dropdownColor: Theme.of(context).colorScheme.background,
+            items: widget.items.map((item) {
+              return DropdownMenuItem(
+                value: item,
+                child: Text(
+                  item,
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+              );
+            }).toList(),
+            onChanged: widget.editMode ? widget.onChanged : null,
+          ),
+        ],
       ),
     );
   }

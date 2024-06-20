@@ -12,3 +12,4 @@ const cardlightblue = Color(0xff90e0ef);
 const greencontainercolor = Color(0xff2e9d59);
 //the red container uses a gradient, unsure of its start and end values
 const darkTextFieldBgColor = Color(0xff323232);
+const notesbg = Color(0xff1B1B1B);
