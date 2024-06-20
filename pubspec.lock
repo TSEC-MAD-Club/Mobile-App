@@ -494,6 +494,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_blurhash:
+    dependency: "direct main"
+    description:
+      name: flutter_blurhash
+      sha256: "93f1c766a03dee60ced31b4b536fbc406c21c9cfac3064fd4138129bff44444d"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.6.8"
   flutter_cache_manager:
     dependency: transitive
     description:
