@@ -389,31 +389,33 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Container(
-                                        width: MediaQuery.of(context).size.width*0.65,
-                                        child: Text(
-                                          data.isStudent
-                                              ? data.studentModel!.name
-                                              : data.facultyModel!.name,
-                                          style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18,color: Colors.white),
-
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          // width: MediaQuery.of(context).size.width*0.6,
+                                          child: Text(
+                                            data.isStudent
+                                                ? data.studentModel!.name
+                                                : data.facultyModel!.name,
+                                            style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18,color: Colors.white),
+                                    
+                                          ),
                                         ),
-                                      ),
-                                      data.isStudent
-                                          ? SizedBox(height: 15)
-                                          : SizedBox(),
-                                      data.isStudent
-                                          ? Text(
-                                              "${data.studentModel!.branch}, ${calcGradYear(data.studentModel!.gradyear)}",
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .labelMedium,
-                                            )
-                                          : Container(),
-                                    ],
+                                        data.isStudent
+                                            ? SizedBox(height: 15)
+                                            : SizedBox(),
+                                        data.isStudent
+                                            ? Text(
+                                                "${data.studentModel!.branch}, ${calcGradYear(data.studentModel!.gradyear)}",
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .labelMedium,
+                                              )
+                                            : Container(),
+                                      ],
+                                    ),
                                   ),
                                   AnimatedCrossFade(
                                     duration: const Duration(milliseconds: 300),
