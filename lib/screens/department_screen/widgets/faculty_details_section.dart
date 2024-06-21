@@ -276,7 +276,7 @@ class ExpandedFacultyCard extends StatelessWidget {
                           SizedBox(width: 5),
                           ChipStyledText(
                             text: specialization,
-                            width: size.width*.65,
+                            width: size.width*.6,
                           ),
                         ],
                       ),
@@ -317,6 +317,7 @@ class ChipStyledText extends StatelessWidget {
       child: Text(
         text,
         style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 14),
+        softWrap: true,
       ),
     );
   }
@@ -345,7 +346,7 @@ class IconWithChipText extends StatelessWidget {
         ),
         ChipStyledText(
           text: text,
-          width: MediaQuery.of(context).size.width*.65,
+          width: MediaQuery.of(context).size.width*.6,
         ),
       ],
     );
