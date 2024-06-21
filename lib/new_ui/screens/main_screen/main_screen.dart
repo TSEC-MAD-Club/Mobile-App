@@ -8,6 +8,7 @@ import 'package:go_router/go_router.dart';
 import 'package:tsec_app/models/user_model/user_model.dart';
 import 'package:tsec_app/new_ui/colors.dart';
 import 'package:tsec_app/new_ui/screens/coming_soon_screen/coming_soon.dart';
+import 'package:tsec_app/new_ui/screens/about_us_screen/about_us.dart';
 import 'package:tsec_app/new_ui/screens/erp_screen/erp_screen.dart';
 import 'package:tsec_app/new_ui/screens/home_screen/widgets/home_widget.dart';
 import 'package:tsec_app/new_ui/screens/main_screen/widgets/main_bottom_nav_bar.dart';
@@ -315,8 +316,8 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                 child: Drawer(
                     shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.only(
-                          // topRight: Radius.circular(20),
-                          // bottomRight: Radius.circular(20)
+                          topRight: Radius.circular(20),
+                          bottomRight: Radius.circular(20)
                       ),
                     ),
                     backgroundColor: Colors.black,
@@ -527,12 +528,12 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                               //   currentPage = 4;
                               //   Navigator.pop(context);
                               // });
-                            },    // TODO: Make this navigate to profile edit
+                            },
                           ),*/
                           ListTile(
                             contentPadding: EdgeInsets.zero,
                             title: Text(
-                              'About',
+                              'About Us',
                               style: Theme.of(context)
                                   .textTheme
                                   .headlineMedium!
@@ -541,7 +542,17 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                                 color: Colors.white,
                               ),
                             ),
-                            onTap: () { },    // TODO: Make this navigate to the About screen
+                            /////////////////////////////////////////////////////////////////////////
+                            onTap: () {
+                                ref.read(titleProvider.notifier).state = 'About Us';
+                                Navigator.pop(context);
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => AboutUs(),
+                                  ),
+                                );
+                            },
                           ),
                           Link(
                             uri: Uri.parse("mailto:devsclubtsec@gmail.com"),
@@ -581,7 +592,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                                   ),
                             ),
                             onTap: () {
-                              ref.read(titleProvider.notifier).state = 'Something cooking........';
+                              ref.read(titleProvider.notifier).state = 'Something cooking .....';
                               Navigator.pop(context);
                               Navigator.push(
                                 context,
@@ -597,7 +608,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                             width: size.width,
                             padding: EdgeInsets.all(8),
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
+                              borderRadius: BorderRadius.circular(20),
                               color: Color(0xff383838),
                             ),
                             child: InkWell(
