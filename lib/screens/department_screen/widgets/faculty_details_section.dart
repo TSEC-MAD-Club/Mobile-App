@@ -236,55 +236,52 @@ class ExpandedFacultyCard extends StatelessWidget {
           const SizedBox(
             height: 8,
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15),
-            child: Row(
-              children: [
-                // const Padding(
-                //   padding: EdgeInsets.only(top: 20),
-                //   child:
-                //   Icon(
-                //     Icons.email,
-                //     size: 25,
-                //     color: Colors.white,
-                //   ),
-                // ),
-                const SizedBox(
-                  width: 30,
+          Row(
+            children: [
+              // const Padding(
+              //   padding: EdgeInsets.only(top: 20),
+              //   child:
+              //   Icon(
+              //     Icons.email,
+              //     size: 25,
+              //     color: Colors.white,
+              //   ),
+              // ),
+              SizedBox(
+                width: 10,
+              ),
+              Expanded(
+                child: Wrap(
+                  direction: Axis.vertical,
+                  spacing: 5,
+                  runSpacing: 5,
+                  children: [
+                    IconWithChipText(
+                      assetPath: 'assets/images/icons/qualifications.png',
+                      text: qualification,
+                    ),
+                    IconWithChipText(
+                      assetPath: 'assets/images/icons/experience.png',
+                      text: experience,
+                    ),
+                    Row(
+                      children: [
+                        const Icon(
+                          Icons.star_border_purple500_outlined,
+                          size: 22,
+                          color: Color(0xff1FAFA4),
+                        ),
+                        SizedBox(width: 5),
+                        ChipStyledText(
+                          text: specialization,
+                          width: size.width*.7,
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
-                Expanded(
-                  child: Wrap(
-                    direction: Axis.vertical,
-                    spacing: 5,
-                    runSpacing: 5,
-                    children: [
-                      IconWithChipText(
-                        assetPath: 'assets/images/icons/qualifications.png',
-                        text: qualification,
-                      ),
-                      IconWithChipText(
-                        assetPath: 'assets/images/icons/experience.png',
-                        text: experience,
-                      ),
-                      Row(
-                        children: [
-                          const Icon(
-                            Icons.star_border_purple500_outlined,
-                            size: 22,
-                            color: Color(0xff1FAFA4),
-                          ),
-                          SizedBox(width: 5),
-                          ChipStyledText(
-                            text: specialization,
-                            width: size.width*.6,
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         ],
       ),
@@ -346,7 +343,7 @@ class IconWithChipText extends StatelessWidget {
         ),
         ChipStyledText(
           text: text,
-          width: MediaQuery.of(context).size.width*.6,
+          width: MediaQuery.of(context).size.width*.7,
         ),
       ],
     );

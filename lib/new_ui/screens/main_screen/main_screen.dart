@@ -280,6 +280,9 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                     ),
                   ),
                 ),
+                Spacer(),
+                Text(getTitle(),style: TextStyle(color: Colors.white,fontSize: size.width*0.055),),
+                Spacer(),
                 Flexible(
                   flex: 1,
                   child: GestureDetector(
