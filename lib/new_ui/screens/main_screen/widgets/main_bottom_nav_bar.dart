@@ -68,6 +68,7 @@ class _HomeScreenState extends ConsumerState<MainBottomNavBar> {
             });
           },
         ),
+        "notes": NotesScreen(),
         "profile": ProfilePage(
           justLoggedIn: false,
         )
@@ -75,6 +76,7 @@ class _HomeScreenState extends ConsumerState<MainBottomNavBar> {
     }
     super.initState();
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -114,22 +116,33 @@ class _HomeScreenState extends ConsumerState<MainBottomNavBar> {
               activeIcon: Icon(Icons.directions_railway_filled),
               label: "Railway",
             ),
-          ],
-
-          if(!user.isStudent)
-          BottomNavigationBarItem(
-            backgroundColor: Colors.transparent,
-            icon: Icon(Icons.file_open_outlined),
-            activeIcon: Icon(Icons.file_open_sharp),
-            label: "Profile",
-          ),
-          if(user.isStudent)
             BottomNavigationBarItem(
               backgroundColor: Colors.transparent,
               icon: Icon(Icons.person_outlined),
               activeIcon: Icon(Icons.person),
               label: "Profile",
-            )          //     BottomNavigationBarItem(
+            )
+          ],
+
+          if(user.facultyModel != null)
+            ... [
+            BottomNavigationBarItem(
+              backgroundColor: Colors.transparent,
+              icon: Icon(Icons.file_open_outlined),
+              activeIcon: Icon(Icons.file_open_sharp),
+              label: "Notes",
+            ),
+            BottomNavigationBarItem(
+            backgroundColor: Colors.transparent,
+            icon: Icon(Icons.person_outlined),
+            activeIcon: Icon(Icons.person),
+            label: "Profile",
+          ),
+          ]
+
+
+
+          //     BottomNavigationBarItem(
           //       backgroundColor: Colors.transparent,
           //       activeIcon: Icon(Icons.home),
           //       icon: Icon(Icons.home_outlined),
