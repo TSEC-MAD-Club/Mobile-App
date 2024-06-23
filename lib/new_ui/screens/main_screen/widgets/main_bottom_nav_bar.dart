@@ -58,7 +58,8 @@ class _HomeScreenState extends ConsumerState<MainBottomNavBar> {
           justLoggedIn: false,
         )
       };
-    } else {
+    }
+    else {
       widgetMap = {
         "home": HomeWidget(
           changeCurrentPage: (page,index) {
@@ -114,13 +115,21 @@ class _HomeScreenState extends ConsumerState<MainBottomNavBar> {
               label: "Railway",
             ),
           ],
+
+          if(!user.isStudent)
           BottomNavigationBarItem(
             backgroundColor: Colors.transparent,
-            icon: Icon(Icons.person_outline),
-            activeIcon: Icon(Icons.person),
+            icon: Icon(Icons.file_open_outlined),
+            activeIcon: Icon(Icons.file_open_sharp),
             label: "Profile",
           ),
-          //     BottomNavigationBarItem(
+          if(user.isStudent)
+            BottomNavigationBarItem(
+              backgroundColor: Colors.transparent,
+              icon: Icon(Icons.person_outlined),
+              activeIcon: Icon(Icons.person),
+              label: "Profile",
+            )          //     BottomNavigationBarItem(
           //       backgroundColor: Colors.transparent,
           //       activeIcon: Icon(Icons.home),
           //       icon: Icon(Icons.home_outlined),

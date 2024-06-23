@@ -254,6 +254,8 @@ class _MainScreenState extends ConsumerState<MainScreen> {
         //             : [],
         //       )
         //     : null,
+
+
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(kToolbarHeight),
           child: AppBar(
