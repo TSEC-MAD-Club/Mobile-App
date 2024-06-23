@@ -55,7 +55,9 @@ class _MainScreenState extends ConsumerState<MainScreen> {
   @override
   void initState() {
     UserModel? user = ref.read(userModelProvider);
-    if (user != null && user.isStudent) {
+
+
+      if (user != null && user.isStudent) {
       widgetMap = {
         "home": HomeWidget(
           changeCurrentPage: (page, index) {
@@ -82,6 +84,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
             });
           },
         ),
+        "notes": const NotesScreen(),
         "profile": ProfilePage(
           justLoggedIn: false,
         )
@@ -96,6 +99,31 @@ class _MainScreenState extends ConsumerState<MainScreen> {
         .of(context)
         .size;
 
+
+    UserModel? data = ref.watch(userModelProvider);
+
+    if(data!=null && data.facultyModel!=null){
+      pages = [
+        HomeWidget(
+          changeCurrentPage: (page, index) {
+            setState(() {
+              currentPage = index;
+              currentBottomNavPage = page;
+            });
+          },
+        ),
+        const NotesScreen(),
+        ProfilePage(justLoggedIn: false),
+        const RailwayConcessionScreen(),
+        const TPCScreen(),
+        const CommitteesScreen(),
+        const DepartmentListScreen(),
+        Container(),
+        // ProfilePage(
+        //   justLoggedIn: false,
+        // ),
+      ];
+    }else{
     pages = [
       HomeWidget(
         changeCurrentPage: (page, index) {
@@ -116,8 +144,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
       //   justLoggedIn: false,
       // ),
     ];
-
-    UserModel? data = ref.watch(userModelProvider);
+    }
 
 
     // if (data != null) {
