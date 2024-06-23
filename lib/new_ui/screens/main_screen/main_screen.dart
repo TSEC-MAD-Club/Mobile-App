@@ -611,7 +611,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                             width: size.width,
                             padding: EdgeInsets.all(8),
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
+                              borderRadius: BorderRadius.circular(5),
                               color: Color(0xff383838),
                             ),
                             child: InkWell(
