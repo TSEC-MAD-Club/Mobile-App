@@ -365,7 +365,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                                   SizedBox(height: 5,),
                                   Text(
                                     userDetails != null ? (userDetails.isStudent ?
-                                    '${userDetails.studentModel!.branch} ${userDetails.studentModel!.gradyear}' : '') : 'anonymous',
+                                    '${userDetails.studentModel!.branch} ${userDetails.studentModel!.gradyear}' : '${data?.facultyModel?.qualification}') : 'anonymous',
                                     style: Theme.of(context).textTheme.headlineLarge!.copyWith(fontSize: 12),
                                   )
                                 ],
