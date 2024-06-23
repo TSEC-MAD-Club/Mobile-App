@@ -418,7 +418,7 @@ class _RailwayConcessionScreenState
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     bool editMode = ref.watch(railwayConcessionOpenProvider);
-    StudentModel student = ref.watch(userModelProvider)!.studentModel!;
+    // StudentModel student = ref.watch(userModelProvider)!.studentModel!;
     ConcessionDetailsModel? concessionDetails =
         ref.watch(concessionDetailsProvider);
     return SingleChildScrollView(
