@@ -10,6 +10,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:tsec_app/models/concession_details_model/concession_details_model.dart';
 import 'package:tsec_app/models/student_model/student_model.dart';
+import 'package:tsec_app/new_ui/colors.dart';
 import 'package:tsec_app/new_ui/screens/railway_screen/widgets/concession_status_modal.dart';
 import 'package:tsec_app/new_ui/screens/railway_screen/widgets/railway_dropdown_search.dart';
 import 'package:tsec_app/new_ui/screens/railway_screen/widgets/railway_dropdown_field.dart';
@@ -441,9 +442,10 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
             AnimatedContainer(
               duration: Duration(milliseconds: 5000),
               decoration: BoxDecoration(
+                // color: commonbgblack,
                 color: Theme.of(context).colorScheme.onPrimary,
                 borderRadius: !editMode
-                    ? BorderRadius.all(Radius.circular(25)
+                    ? BorderRadius.all(Radius.circular(0)
                         // topLeft: Radius.circular(25.0),
                         // topRight: Radius.circular(25.0),
                         )
@@ -479,7 +481,7 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
                               readOnly: false,
                               controller: middleNameController,
                               validator: (value) {
-                                if (value!.isEmpty) {
+                                if (value==null || value.isEmpty) {
                                   return 'Please enter your Middle Name';
                                 }
                                 return null;
@@ -742,53 +744,60 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          FilledButton(
-                            onPressed: () {
-                              print("Cleared Section");
-                              clearValues();
-                              Navigator.pop(context);
-                            },
-                            style: FilledButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(
-                                    10.0), // Set the border radius
+                          SizedBox(
+                            width:MediaQuery.of(context).size.width * .43,
+                            child: FilledButton(
+                              onPressed: () {
+                                print("Cleared Section");
+                                clearValues();
+                                Navigator.pop(context);
+                              },
+                              style: FilledButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                      7.0), // Set the border radius
+                                ),
+                                backgroundColor: Theme.of(context)
+                                    .colorScheme
+                                    .secondaryContainer,
                               ),
-                              backgroundColor: Theme.of(context)
-                                  .colorScheme
-                                  .secondaryContainer,
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.fromLTRB(22, 12, 22, 12),
-                              child: Text('Cancel',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headlineMedium!
-                                      .copyWith(
-                                        color: Colors.white,
-                                      )),
+                              child: Padding(
+                                padding: const EdgeInsets.fromLTRB(10, 12, 10, 12),
+                                child: Text('Cancel',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headlineMedium!
+                                        .copyWith(
+                                          color: Colors.white,
+                                        )),
+                              ),
                             ),
                           ),
-                          FilledButton(
-                            onPressed: () {
-                              saveChanges(ref);
-                            },
-                            style: FilledButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(
-                                    10.0), // Set the border radius
+                          SizedBox(
+                            width:MediaQuery.of(context).size.width * .43,
+                            child: FilledButton(
+                              onPressed: () {
+                                saveChanges(ref);
+                              },
+
+                              style: FilledButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                      7.0), // Set the border radius
+                                ),
+                                backgroundColor:
+                                    Theme.of(context).colorScheme.tertiaryContainer,
                               ),
-                              backgroundColor:
-                                  Theme.of(context).colorScheme.tertiaryContainer,
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.fromLTRB(22, 12, 22, 12),
-                              child: Text('Confirm',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headlineMedium!
-                                      .copyWith(
-                                        color: Colors.white,
-                                      )),
+                              child: Padding(
+                                padding: const EdgeInsets.fromLTRB(10, 12, 10, 12),
+                                child: Text('Confirm',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headlineMedium!
+                                        .copyWith(
+                                          color: Colors.white,
+                                        )),
+                              ),
                             ),
                           ),
                         ],

@@ -417,9 +417,8 @@ class _RailwayConcessionScreenState
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-
     bool editMode = ref.watch(railwayConcessionOpenProvider);
-    StudentModel student = ref.watch(userModelProvider)!.studentModel!;
+    // StudentModel student = ref.watch(userModelProvider)!.studentModel!;
     ConcessionDetailsModel? concessionDetails =
         ref.watch(concessionDetailsProvider);
     return SingleChildScrollView(
@@ -428,25 +427,30 @@ class _RailwayConcessionScreenState
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SizedBox(height: !editMode ? 10 : 0),
-            InkWell(
-              splashFactory: NoSplash.splashFactory,
-              onTap: (){
-                if (canIssuePass(concessionDetails,
-                    lastPassIssued, duration)) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const RailwayForm(),
-                    ),
-                  );
-                }
-              },
-              child: ConcessionStatusModal(
-                // concessionDetails: concessionDetails,
-                canIssuePass: canIssuePass,
-                // lastPassIssued: lastPassIssued,
-                // duration: duration,
-                futurePassMessage: futurePassMessage,
+            Container(
+              width: size.width*0.7,
+              // color: Colors.red,
+              child: InkWell(
+                splashFactory: NoSplash.splashFactory,
+                splashColor: Colors.transparent,
+                onTap: (){
+                  if (canIssuePass(concessionDetails,
+                      lastPassIssued, duration)) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const RailwayForm(),
+                      ),
+                    );
+                  }
+                },
+                child: ConcessionStatusModal(
+                  // concessionDetails: concessionDetails,
+                  canIssuePass: canIssuePass,
+                  // lastPassIssued: lastPassIssued,
+                  // duration: duration,
+                  futurePassMessage: futurePassMessage,
+                ),
               ),
             ),
             SizedBox(
