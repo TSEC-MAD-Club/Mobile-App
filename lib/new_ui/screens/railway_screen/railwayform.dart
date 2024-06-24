@@ -328,7 +328,7 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
       previousPassURL: previousPassURL,
       from: homeStation,
       to: toStation,
-      lastPassIssued: lastPassIssued,
+      lastPassIssued: null,
       address: addressController.text,
       dob: _selectedDate ?? DateTime.now(),
       phoneNum: int.parse(phoneNumController.text),
