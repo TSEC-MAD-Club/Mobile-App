@@ -346,6 +346,8 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
       await ref
           .watch(concessionProvider.notifier)
           .applyConcession(details, idCardPhoto!, previousPassPhoto!, context);
+      clearValues();
+      Navigator.pop(context);
     } else if (idCardPhotoTemp == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Please add the photo of your ID card")),
