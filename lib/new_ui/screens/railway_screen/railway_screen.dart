@@ -346,9 +346,9 @@ class _RailwayConcessionScreenState
       previousPassPhoto = previousPassPhotoTemp;
 
       ref.read(railwayConcessionOpenProvider.state).state = false;
-      await ref
-          .watch(concessionProvider.notifier)
-          .applyConcession(details, idCardPhoto!, previousPassPhoto!, context);
+      // await ref
+      //     .watch(concessionProvider.notifier)
+      //     .applyConcession(details, idCardPhoto!, previousPassPhoto!, context);
     } else if (idCardPhotoTemp == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Please add the photo of your ID card")),
