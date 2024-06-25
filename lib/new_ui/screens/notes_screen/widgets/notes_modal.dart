@@ -7,6 +7,7 @@ import 'package:tsec_app/models/class_model/class_model.dart';
 import 'package:tsec_app/models/notes_model/notes_model.dart';
 import 'package:tsec_app/models/subject_model/subject_model.dart';
 import 'package:tsec_app/models/user_model/user_model.dart';
+import 'package:tsec_app/new_ui/colors.dart';
 import 'package:tsec_app/new_ui/screens/notes_screen/widgets/download_button.dart';
 import 'package:tsec_app/new_ui/screens/notes_screen/widgets/notes_dropdown_field.dart';
 import 'package:tsec_app/new_ui/screens/notes_screen/widgets/notes_text_field.dart';
@@ -181,6 +182,7 @@ class _NotesModalState extends ConsumerState<NotesModal> {
         evenOrOddSem() == "even_sem" ? semData.even_sem : semData.odd_sem;
 
     final scrollController = ScrollController();
+    final _size = MediaQuery.of(context).size;
 
     return Scaffold(
       appBar: AppBar(
@@ -415,8 +417,12 @@ class _NotesModalState extends ConsumerState<NotesModal> {
                           ),
                           // widget.note != null
                           // ? SizedBox(
-                          SizedBox(
+                          Container(
                             height: 300,
+                            decoration: BoxDecoration(
+                              color: commonbgLightblack,
+                              borderRadius: BorderRadius.circular(10), // Circular border radius
+                            ),
                             child: attachments.isEmpty
                                 ? Center(
                                     child: Text(
@@ -424,26 +430,29 @@ class _NotesModalState extends ConsumerState<NotesModal> {
                                       style: TextStyle(color: Colors.grey),
                                     ),
                                   )
-                            :Scrollbar(
-                              controller: scrollController,
-                              thumbVisibility: true,
-                              child: GridView.builder(
-                                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 1, // number of items in each row
-                                  mainAxisSpacing: 15.0, // spacing between rows
-                                  crossAxisSpacing: 8.0, // spacing between columns
-                                  childAspectRatio: 35 / 9,
+                            :Padding(
+                              padding: const EdgeInsets.all(8),
+                              child: Scrollbar(
+                                controller: scrollController,
+                                thumbVisibility: true,
+                                child: GridView.builder(
+                                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 1, // number of items in each row
+                                    mainAxisSpacing: 15.0, // spacing between rows
+                                    crossAxisSpacing: 8.0, // spacing between columns
+                                    childAspectRatio: 35 / 9,
+                                  ),
+                                  itemCount: attachments.length,
+                                  itemBuilder: (context, index) {
+                                    return DownloadButton(
+                                      key: ValueKey(attachments[index]),
+                                      url: attachments[index],
+                                      removeFile: () {
+                                        deselectFile(index);
+                                      },
+                                    );
+                                  },
                                 ),
-                                itemCount: attachments.length,
-                                itemBuilder: (context, index) {
-                                  return DownloadButton(
-                                    key: ValueKey(attachments[index]),
-                                    url: attachments[index],
-                                    removeFile: () {
-                                      deselectFile(index);
-                                    },
-                                  );
-                                },
                               ),
                             ),
 
@@ -522,106 +531,143 @@ class _NotesModalState extends ConsumerState<NotesModal> {
                       ),
                     ),
                     SizedBox(
-                      height: 10,
+                      height: 1,
                     ),
-                    !user.isStudent
-                        ? Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Padding(
-                                padding:
-                                    const EdgeInsets.fromLTRB(20, 11, 20, 11),
-                                child: ElevatedButton(
-                                  style: ButtonStyle(
-                                    backgroundColor:
-                                        MaterialStateProperty.all<Color>(
-                                            Theme.of(context)
-                                                .colorScheme
-                                                .onBackground),
-                                    // You can customize other properties as needed
-                                    // textColor, elevation, padding, shape, etc.
-                                  ),
-                                  onPressed: () async {
-                                    await pickFiles();
-                                  },
-                                  child: Text('Attach',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headlineMedium),
-                                ),
-                              ),
-                            ],
-                          )
-                        : Container(),
+                    // !user.isStudent
+                    //     ? Row(
+                    //         mainAxisAlignment: MainAxisAlignment.end,
+                    //         children: [
+                    //           Padding(
+                    //             padding:
+                    //                 const EdgeInsets.fromLTRB(20, 11, 20, 11),
+                    //             child: ElevatedButton(
+                    //               style: ButtonStyle(
+                    //                 backgroundColor:
+                    //                     MaterialStateProperty.all<Color>(
+                    //                         Theme.of(context)
+                    //                             .colorScheme
+                    //                             .onBackground),
+                    //                 // You can customize other properties as needed
+                    //                 // textColor, elevation, padding, shape, etc.
+                    //               ),
+                    //               onPressed: () async {
+                    //                 await pickFiles();
+                    //               },
+                    //               child: Text('Attach',
+                    //                   style: Theme.of(context)
+                    //                       .textTheme
+                    //                       .headlineMedium),
+                    //             ),
+                    //           ),
+                    //         ],
+                    //       )
+                    //     : Container(),
+
                     const SizedBox(
                       height: 10,
                     ),
                     !user.isStudent
-                        ? Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
+                        ? Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
+                              SizedBox(width: _size.width*0.9,),
+                              Padding(
+                                padding:
+                                const EdgeInsets.fromLTRB(10, 11, 5, 11),
+                                child: Container(
+                                  width: _size.width*.5,
+                                  child: ElevatedButton(
+                                    style: ButtonStyle(
+                                      backgroundColor:
+                                      MaterialStateProperty.all<Color>(
+                                          Theme.of(context)
+                                              .colorScheme
+                                              .onBackground),
+                                      // You can customize other properties as needed
+                                      // textColor, elevation, padding, shape, etc.
+                                    ),
+                                    onPressed: () async {
+                                      await pickFiles();
+                                    },
+                                    child: Text('Attach',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headlineMedium),
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child: Container(
+                                  width: _size.width*.5,
+                                  child: ElevatedButton(
+
+                                    style: ButtonStyle(
+
+                                      backgroundColor:
+                                      MaterialStateProperty.all<Color>(
+                                          Theme.of(context)
+                                              .colorScheme
+                                              .tertiaryContainer),
+
+                                      // You can customize other properties as needed
+                                      // textColor, elevation, padding, shape, etc.
+                                    ),
+                                    onPressed: () {
+                                      debugPrint(
+                                          "inside notes modal clicked note id: ${widget.note?.id}");
+                                      widget.uploadNoteCallback(
+                                          newAttachments,
+                                          deletedAttachments,
+                                          attachments
+                                              .where((file) =>
+                                              file.startsWith("http"))
+                                              .toList(),
+                                          widget.note?.id,
+                                          titleController.text,
+                                          descriptionController.text,
+                                          subject,
+                                          branch,
+                                          division,
+                                          year);
+                                    },
+                                    child: Text(
+                                        widget.note == null ? 'Upload' : 'Save',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headlineMedium),
+                                  ),
+                                ),
+                              ),
                               widget.note != null
                                   ? Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: ElevatedButton(
-                                        style: ButtonStyle(
-                                          backgroundColor:
-                                              MaterialStateProperty.all<Color>(
-                                                  Theme.of(context)
-                                                      .colorScheme
-                                                      .error),
+                                      padding: const EdgeInsets.all(5.0),
+                                      child: Container(
+                                        width: _size.width*.5,
+                                        child: ElevatedButton(
+                                          style: ButtonStyle(
+                                            backgroundColor:
+                                                MaterialStateProperty.all<Color>(
+                                                    Theme.of(context)
+                                                        .colorScheme
+                                                        .error),
+                                          ),
+                                          onPressed: () async {
+                                            ref
+                                                .read(notesProvider.notifier)
+                                                .deleteNote(
+                                                    widget.note!.id!, context);
+                                            widget.action.call();
+                                          },
+                                          child: Text('Delete',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .headlineMedium),
                                         ),
-                                        onPressed: () async {
-                                          ref
-                                              .read(notesProvider.notifier)
-                                              .deleteNote(
-                                                  widget.note!.id!, context);
-                                          widget.action.call();
-                                        },
-                                        child: Text('Delete',
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .headlineMedium),
                                       ),
                                     )
                                   : Container(),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: ElevatedButton(
-                                  style: ButtonStyle(
-                                    backgroundColor:
-                                        MaterialStateProperty.all<Color>(
-                                            Theme.of(context)
-                                                .colorScheme
-                                                .tertiaryContainer),
-                                    // You can customize other properties as needed
-                                    // textColor, elevation, padding, shape, etc.
-                                  ),
-                                  onPressed: () {
-                                    debugPrint(
-                                        "inside notes modal clicked note id: ${widget.note?.id}");
-                                    widget.uploadNoteCallback(
-                                        newAttachments,
-                                        deletedAttachments,
-                                        attachments
-                                            .where((file) =>
-                                                file.startsWith("http"))
-                                            .toList(),
-                                        widget.note?.id,
-                                        titleController.text,
-                                        descriptionController.text,
-                                        subject,
-                                        branch,
-                                        division,
-                                        year);
-                                  },
-                                  child: Text(
-                                      widget.note == null ? 'Upload' : 'Save',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headlineMedium),
-                                ),
-                              ),
                             ],
                           )
                         : Container(),
