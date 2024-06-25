@@ -25,19 +25,21 @@ class NotesDropdownField extends ConsumerStatefulWidget {
 }
 
 class _NotesDropdownFieldState extends ConsumerState<NotesDropdownField> {
-
   @override
+
   Widget build(BuildContext context) {
     UserModel user = ref.watch(userModelProvider)!;
+    final _size = MediaQuery.of(context).size;
     return Padding(
       padding: !user.isStudent
-          ? const EdgeInsets.fromLTRB(20, 11, 20, 11)
+          ? const EdgeInsets.fromLTRB(10, 11, 10, 11)
           : EdgeInsets.fromLTRB(15, 0, 15, 0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (user.isStudent)
             SizedBox(
+              // width: _size.width*0.5,
               height: 20,
               child: Align(
                 alignment: Alignment.bottomLeft,

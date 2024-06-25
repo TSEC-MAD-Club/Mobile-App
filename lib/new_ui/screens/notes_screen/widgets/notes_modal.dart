@@ -265,7 +265,7 @@ class _NotesModalState extends ConsumerState<NotesModal> {
                         ? Row(
                             children: [
                               SizedBox(
-                                width: MediaQuery.of(context).size.width * .39,
+                                width: MediaQuery.of(context).size.width * .4,
                                 child: NotesDropdownField(
                                   editMode: true,
                                   label: "Branch",
@@ -289,7 +289,7 @@ class _NotesModalState extends ConsumerState<NotesModal> {
                                 ),
                               ),
                               SizedBox(
-                                width: MediaQuery.of(context).size.width * .3,
+                                width: MediaQuery.of(context).size.width * .26,
                                 child: NotesDropdownField(
                                   editMode: true,
                                   label: "Year",
@@ -313,7 +313,7 @@ class _NotesModalState extends ConsumerState<NotesModal> {
                                 ),
                               ),
                               SizedBox(
-                                width: MediaQuery.of(context).size.width * .24,
+                                width: MediaQuery.of(context).size.width * .25,
                                 child: NotesDropdownField(
                                   editMode: year != null && branch != null,
                                   label: "Div",
