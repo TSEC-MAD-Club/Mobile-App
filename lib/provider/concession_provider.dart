@@ -66,7 +66,7 @@ class ConcessionProvider extends StateNotifier<bool> {
 
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
-        content: Text('All the attached photos have been uploaded'),
+        content: Text('All the attached photos have been uploaded.\n Concession Successfully Applied.'),
       ),
     );
   }

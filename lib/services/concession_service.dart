@@ -121,12 +121,24 @@ class ConcessionService {
       statusMessage: "",
     );
 
+    // try {
+    //   await concessionRequestCollection.add(concessionRequest.toJson());
+    //   print('request created successfully!');
+    // } catch (e) {
+    //   print('Error updating or creating document: $e');
+    // }
     try {
-      await concessionRequestCollection.add(concessionRequest.toJson());
-      print('request created successfully!');
+      // Add or update the concession request in Firestore
+      DocumentReference concessionRequestDoc =
+      concessionRequestCollection.doc(user!.uid);
+      await concessionRequestDoc.set(concessionRequest.toJson(),
+          SetOptions(merge: true)); // Use merge to update or create
+
+      print('Concession request updated or created successfully!');
     } catch (e) {
-      print('Error updating or creating document: $e');
+      print('Error updating or creating concession request: $e');
     }
+
 
     // concessionDetails.idCardURL = "";
     concessionDetails.status = status;

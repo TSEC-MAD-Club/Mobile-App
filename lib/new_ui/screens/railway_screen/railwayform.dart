@@ -68,7 +68,7 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
     DateTime today = DateTime.now();
     DateTime lastPass = lastPassIssued ?? DateTime.now();
     DateTime futurePass = lastPass.add(
-        duration == "Monthly" ? const Duration(days: 30) : Duration(days: 90));
+        duration == "Monthly" ? const Duration(days: 27) : Duration(days: 87));
     int diff = futurePass.difference(today).inDays;
     return "You will be able to apply for a new pass after $diff days";
   }
@@ -328,7 +328,7 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
       previousPassURL: previousPassURL,
       from: homeStation,
       to: toStation,
-      lastPassIssued: lastPassIssued,
+      lastPassIssued: null,
       address: addressController.text,
       dob: _selectedDate ?? DateTime.now(),
       phoneNum: int.parse(phoneNumController.text),
@@ -346,6 +346,8 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
       await ref
           .watch(concessionProvider.notifier)
           .applyConcession(details, idCardPhoto!, previousPassPhoto!, context);
+      clearValues();
+      Navigator.pop(context);
     } else if (idCardPhotoTemp == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Please add the photo of your ID card")),

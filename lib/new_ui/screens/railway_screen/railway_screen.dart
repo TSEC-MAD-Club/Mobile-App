@@ -70,11 +70,10 @@ class _RailwayConcessionScreenState
     DateTime today = DateTime.now();
     DateTime lastPass = lastPassIssued ?? DateTime.now();
     DateTime futurePass = lastPass.add(
-        duration == "Monthly" ? const Duration(days: 30) : Duration(days: 90));
+        duration == "Monthly" ? const Duration(days: 27) : Duration(days: 87));
     int diff = futurePass.difference(today).inDays;
     return "You will be able to apply for a new pass after $diff days";
   }
-
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -331,7 +330,7 @@ class _RailwayConcessionScreenState
       previousPassURL: previousPassURL,
       from: homeStation,
       to: toStation,
-      lastPassIssued: lastPassIssued,
+      lastPassIssued: null,
       address: addressController.text,
       dob: _selectedDate ?? DateTime.now(),
       phoneNum: int.parse(phoneNumController.text),
@@ -346,9 +345,9 @@ class _RailwayConcessionScreenState
       previousPassPhoto = previousPassPhotoTemp;
 
       ref.read(railwayConcessionOpenProvider.state).state = false;
-      await ref
-          .watch(concessionProvider.notifier)
-          .applyConcession(details, idCardPhoto!, previousPassPhoto!, context);
+      // await ref
+      //     .watch(concessionProvider.notifier)
+      //     .applyConcession(details, idCardPhoto!, previousPassPhoto!, context);
     } else if (idCardPhotoTemp == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Please add the photo of your ID card")),
@@ -456,12 +455,22 @@ class _RailwayConcessionScreenState
             SizedBox(
               height: 15,
             ),
+
+            Container(
+                width: size.width * 0.68,
+                child: Text(
+                  "${futurePassMessage()}",
+                  style: TextStyle(fontSize: 18, color: Colors.white),
+                )),
+            SizedBox(
+              height: 15,
+            ),
             Container(
                 width: size.width * 0.8,
                 child: Text(
                   "Previous Passes",
                   style: TextStyle(fontSize: 18, color: Colors.white),
-                ))
+                )),
           ],
         ),
       ),
