@@ -704,22 +704,25 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
                                 ),
                                 SizedBox(
                                   width: MediaQuery.of(context).size.width * .45,
-                                  child: RailwayDropdownSearch(
-                                    editMode: false,
-                                    label: "To",
-                                    items: mumbaiRailwayStations,
-                                    val: toStation,
-                                    onChanged: (String? newVal) {
-                                      if (newVal != null) {
-                                        toStation = newVal;
-                                      }
-                                    },
-                                    validator: (value) {
-                                      if (value == null) {
-                                        return 'Please enter your Destination Station';
-                                      }
-                                      return null;
-                                    },
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "To",
+                                        style: TextStyle(
+                                          fontSize: 16.0,
+                                          color: Colors.grey,
+                                        ),
+                                      ),
+                                      SizedBox(height: 8.0),
+                                      Text(
+                                        toStation,
+                                        style: TextStyle(
+                                          fontSize: 18.0,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ],
