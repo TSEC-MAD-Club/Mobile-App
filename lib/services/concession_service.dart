@@ -74,6 +74,27 @@ class ConcessionService {
     }
   }
 
+  Future<ConcessionRequestModel?> getConcessionRequest() async {
+    try {
+      var value = await concessionRequestCollection.doc(user!.uid).get();
+      // debugPrint('concession details are being fetched');
+      if (value.exists) {
+        var detailsMap = value.data() as Map<String, dynamic>;
+        ConcessionRequestModel concessionRequestData =
+        ConcessionRequestModel.fromJson(detailsMap);
+
+        return concessionRequestData;
+      } else {
+        // Document does not exist
+        return null;
+      }
+    } catch (error) {
+      // Handle any errors that might occur during the Firestore operation
+      print("Error fetching concession details: $error");
+      return null;
+    }
+  }
+
   Future<String> uploadPhoto(File file, String docName) async {
 // idCard
 // prevpass
