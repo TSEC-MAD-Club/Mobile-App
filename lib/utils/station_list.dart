@@ -9,7 +9,6 @@ List<String> mumbaiRailwayStations = [
   'Atgaon',
   'Badlapur',
   'Bamandongri',
-  'Bandra',
   'Bhandup',
   'Bhayandar',
   'Bhivpuri Road',
