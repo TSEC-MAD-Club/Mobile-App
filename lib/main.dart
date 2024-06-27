@@ -28,7 +28,7 @@ import 'package:tsec_app/utils/department_enum.dart';
 import 'provider/app_state_provider.dart';
 import 'provider/shared_prefs_provider.dart';
 import 'provider/theme_provider.dart';
-// import 'screens/committees_screen.dart';
+// import 'screens/old_committees_screen.dart';
 // import 'screens/departmentlist_screen/department_list.dart';
 // import 'screens/department_screen/department_screen.dart';
 // import 'screens/main_screen/main_screen.dart';

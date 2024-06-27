@@ -23,6 +23,7 @@ import 'package:tsec_app/provider/railway_concession_provider.dart';
 import 'package:tsec_app/new_ui/screens/committees_screen/committees_screen.dart';
 import 'package:tsec_app/screens/departmentlist_screen/department_list.dart';
 import 'package:tsec_app/screens/notification_screen/notification_screen.dart';
+import 'package:tsec_app/new_ui/screens/committees_screen/old_committees_screen.dart';
 import 'package:tsec_app/screens/tpc_screen.dart';
 import 'package:url_launcher/link.dart';
 
@@ -125,6 +126,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
       ];
     }else{
     pages = [
+      //for User login
       HomeWidget(
         changeCurrentPage: (page, index) {
           setState(() {
@@ -521,7 +523,8 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => CommitteesScreen(),
+                            // builder: (context) => CommitteesScreen(),
+                            builder: (context) => OldCommittessScreen(),
                           ),
                         );
                       },
