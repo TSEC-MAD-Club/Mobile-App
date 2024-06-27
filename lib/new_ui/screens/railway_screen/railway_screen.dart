@@ -9,6 +9,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:tsec_app/models/concession_details_model/concession_details_model.dart';
+// import 'package:tsec_app/models/concession_request_model/concession_request_model.dart';
 import 'package:tsec_app/models/student_model/student_model.dart';
 import 'package:tsec_app/new_ui/screens/railway_screen/railwayform.dart';
 import 'package:tsec_app/new_ui/screens/railway_screen/widgets/concession_status_modal.dart';
@@ -36,8 +37,8 @@ class _RailwayConcessionScreenState
   String? statusMessage;
   String? duration;
   DateTime? lastPassIssued;
-
-  // String?
+  String? from;
+  String? to;
 
   bool canIssuePass(ConcessionDetailsModel? concessionDetails,
       DateTime? lastPassIssued, String? duration) {
@@ -66,13 +67,24 @@ class _RailwayConcessionScreenState
     }
   }
 
-  String futurePassMessage() {
+  String futurePassMessage(concessionDetails) {
+    if (canIssuePass(concessionDetails, lastPassIssued, duration)) {
+      return "⚠️ You can tap above to apply for the Pass";
+    }
+
+    if (lastPassIssued == null) {
+      return "⚠️ You need to wait until your request is granted";
+    }
+
     DateTime today = DateTime.now();
     DateTime lastPass = lastPassIssued ?? DateTime.now();
-    DateTime futurePass = lastPass.add(duration == "Monthly" ? const Duration(days: 27) : Duration(days: 87));
+    DateTime futurePass = lastPass.add(duration == "Monthly" ? const Duration(days: 27) : const Duration(days: 87));
     int diff = futurePass.difference(today).inDays;
-    return "You will be able to apply for a new pass after $diff days";
+
+    return "⚠️ You will be able to apply for a new pass only after $diff days";
   }
+
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -416,9 +428,12 @@ class _RailwayConcessionScreenState
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     bool editMode = ref.watch(railwayConcessionOpenProvider);
-    // StudentModel student = ref.watch(userModelProvider)!.studentModel!;
-    ConcessionDetailsModel? concessionDetails =
-        ref.watch(concessionDetailsProvider);
+    ConcessionDetailsModel? concessionDetails = ref.watch(concessionDetailsProvider);
+
+    String formattedDate = lastPassIssued != null
+        ? DateFormat('dd/MM/yyyy').format(lastPassIssued!)
+        : '';
+
     return SingleChildScrollView(
       child: Center(
         child: Column(
@@ -426,14 +441,12 @@ class _RailwayConcessionScreenState
           children: [
             SizedBox(height: !editMode ? 10 : 0),
             Container(
-              width: size.width*0.7,
-              // color: Colors.red,
+              width: size.width * 0.7,
               child: InkWell(
                 splashFactory: NoSplash.splashFactory,
                 splashColor: Colors.transparent,
-                onTap: (){
-                  if (canIssuePass(concessionDetails,
-                      lastPassIssued, duration)) {
+                onTap: () {
+                  if (canIssuePass(concessionDetails, lastPassIssued, duration)) {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -443,10 +456,7 @@ class _RailwayConcessionScreenState
                   }
                 },
                 child: ConcessionStatusModal(
-                  // concessionDetails: concessionDetails,
                   canIssuePass: canIssuePass,
-                  // lastPassIssued: lastPassIssued,
-                  // duration: duration,
                   futurePassMessage: futurePassMessage,
                 ),
               ),
@@ -454,22 +464,95 @@ class _RailwayConcessionScreenState
             SizedBox(
               height: 15,
             ),
-
             Container(
-                width: size.width * 0.68,
-                child: Text(
-                  "${futurePassMessage()}",
-                  style: TextStyle(fontSize: 18, color: Colors.white),
-                )),
+              width: size.width * 0.9,
+              alignment: Alignment.center,
+              child: Text(
+                "${futurePassMessage(concessionDetails)}",
+                style: TextStyle(fontSize: 15, color: Colors.white),
+              ),
+            ),
             SizedBox(
               height: 15,
             ),
-            Container(
+            if (lastPassIssued != null)
+              Container(
+                width: size.width * 0.8,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 20),
+                    Text(
+                      "Ongoing Pass",
+                      style: TextStyle(fontSize: 18, color: Colors.white),
+                    ),
+                    SizedBox(height: 10),
+                    Container(
+                      padding: EdgeInsets.all(10),
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      decoration: BoxDecoration(
+                        color: Colors.black,
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(
+                          color: Colors.blue,
+                          width: 1,
+                        ),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Certificate Num: Z####",
+                            style: TextStyle(fontSize: 16, color: Colors.white),
+                          ),
+                          SizedBox(
+                            height: 15,
+                          ),
+                          Text(
+                            "Date of Issue: $formattedDate",
+                            style: TextStyle(fontSize: 16, color: Colors.white),
+                          ),
+                          SizedBox(
+                            height: 15,
+                          ),
+                          Text(
+                            "Travel Lane: ${travelLane}",
+                            style: TextStyle(fontSize: 16, color: Colors.white),
+                          ),
+                          SizedBox(height: 10),
+                          Text(
+                            "From: ${homeStation}",
+                            style: TextStyle(fontSize: 16, color: Colors.white),
+                          ),
+                          Text(
+                            "To: ${toStation}",
+                            style: TextStyle(fontSize: 16, color: Colors.white),
+                          ),
+                          SizedBox(
+                            height: 15,
+                          ),
+                          Text(
+                            "Duration: ${duration}",
+                            style: TextStyle(fontSize: 16, color: Colors.white),
+                          ),
+                          Text(
+                            "Class: ${travelClass}",
+                            style: TextStyle(fontSize: 16, color: Colors.white),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            else
+              Container(
                 width: size.width * 0.8,
                 child: Text(
-                  "Previous Passes",
+                  "You Dont have any ongoing pass",
                   style: TextStyle(fontSize: 18, color: Colors.white),
-                )),
+                ),
+              ),
           ],
         ),
       ),
