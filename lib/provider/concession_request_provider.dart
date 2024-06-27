@@ -9,11 +9,19 @@ final concessionRequestDetailProvider = StateProvider<ConcessionRequestModel?>((
   return null;
 });
 
-class ConcessionProvider extends StateNotifier<bool> {
+
+final concessionRequestProvider = StateNotifierProvider<ConcessionRequestProvider, bool>((ref) {
+  return ConcessionRequestProvider(
+      concessionService: ref.watch(concessionServiceProvider), ref: ref);
+});
+
+
+
+class ConcessionRequestProvider extends StateNotifier<bool> {
   final ConcessionService _concessionService;
   final Ref _ref;
 
-  ConcessionProvider({required ConcessionService concessionService, required Ref ref})
+  ConcessionRequestProvider({required ConcessionService concessionService, required Ref ref})
       : _concessionService = concessionService,
         _ref = ref,
         super(false);
@@ -25,18 +33,10 @@ class ConcessionProvider extends StateNotifier<bool> {
 
       _ref.read(concessionRequestDetailProvider.notifier).state = concessionRequestDetail;
 
-      if (concessionRequestDetail != null) {
-        print("Concession request detail data ================================");
-        print(concessionRequestDetail.uid);
-        print(concessionRequestDetail.time);
-        print(concessionRequestDetail.passNum);
-        print(concessionRequestDetail.status);
-        print(concessionRequestDetail.statusMessage);
-      }
+
     } catch (e) {
       print("Error fetching concession request detail data: $e");
       // Handle error here
     }
   }
-
 }

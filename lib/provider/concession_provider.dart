@@ -78,14 +78,4 @@ class ConcessionProvider extends StateNotifier<bool> {
     _ref.read(concessionDetailsProvider.notifier).state = concessionDetailsData;
   }
 
-  Future getConcessionRequestData()async{
-    final requestdata = await _concessionService.getConcessionRequest();
-    print("concession request data ================================");
-    print(requestdata?.uid);
-    print(requestdata?.time);
-    print(requestdata?.passNum);
-    print(requestdata?.status);
-    print(requestdata?.statusMessage);
-
-  }
 }

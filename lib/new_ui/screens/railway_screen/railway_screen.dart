@@ -431,8 +431,8 @@ class _RailwayConcessionScreenState
     Size size = MediaQuery.of(context).size;
     bool editMode = ref.watch(railwayConcessionOpenProvider);
     ConcessionDetailsModel? concessionDetails = ref.watch(concessionDetailsProvider);
-    ConcessionRequestModel? concesionRequestDetail = ref.watch(concessionRequestDetailProvider);
-
+    ConcessionRequestModel? concessionRequestData = ref.watch(concessionRequestDetailProvider);
+    print(concessionRequestData.toString());
     String formattedDate = lastPassIssued != null
         ? DateFormat('dd/MM/yyyy').format(lastPassIssued!)
         : '';
@@ -478,7 +478,7 @@ class _RailwayConcessionScreenState
             SizedBox(
               height: 15,
             ),
-            if (lastPassIssued != null)
+            if (1==1)
               Container(
                 width: size.width * 0.8,
                 child: Column(
@@ -505,7 +505,7 @@ class _RailwayConcessionScreenState
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Certificate Num: ${concesionRequestDetail!=null?concesionRequestDetail.passNum:"not assigned"}",
+                            "Certificate Num: ${concessionRequestData!=null?concessionRequestData.passNum:"not assigned"}",
                             style: TextStyle(fontSize: 16, color: Colors.white),
                           ),
                           SizedBox(
