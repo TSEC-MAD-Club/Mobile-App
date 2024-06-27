@@ -392,6 +392,8 @@ class _HomeWidgetState extends ConsumerState<HomeWidget> {
                         )
                     ),
 
+
+
                   //DATE SELECTOR
                   if(_onlyUserLoggedIn)
                     Padding(
@@ -399,22 +401,23 @@ class _HomeWidgetState extends ConsumerState<HomeWidget> {
                       child: Container(
                         width: _size.width * 0.9,
                         // color: Colors.red,
-                        height: 100,
+                        height: 85,
                         // could have used _size but fuck it whore-licks
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(15.0),
                           child: DatePicker(
                             DateTime.now(),
+                            width: 50,
                             monthTextStyle: _theme.textTheme.headlineSmall!.copyWith(
-                              fontSize: 15,
+                              fontSize: 14,
                               color: Colors.grey,
                             ),
                             dayTextStyle: _theme.textTheme.headlineSmall!.copyWith(
-                              fontSize: 15,
+                              fontSize: 14,
                               color: Colors.grey,
                             ),
                             dateTextStyle: _theme.textTheme.titleSmall!.copyWith(
-                              fontSize: 15,
+                              fontSize: 13,
                               color: Colors.grey,
                             ),
                             initialSelectedDate: DateTime.now(),
