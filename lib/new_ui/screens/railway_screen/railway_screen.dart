@@ -9,6 +9,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:tsec_app/models/concession_details_model/concession_details_model.dart';
+import 'package:tsec_app/models/concession_request_model/concession_request_model.dart';
 // import 'package:tsec_app/models/concession_request_model/concession_request_model.dart';
 import 'package:tsec_app/models/student_model/student_model.dart';
 import 'package:tsec_app/new_ui/screens/railway_screen/railwayform.dart';
@@ -17,6 +18,7 @@ import 'package:tsec_app/new_ui/screens/railway_screen/widgets/railway_dropdown_
 import 'package:tsec_app/new_ui/screens/railway_screen/widgets/railway_dropdown_field.dart';
 import 'package:tsec_app/provider/auth_provider.dart';
 import 'package:tsec_app/provider/concession_provider.dart';
+import 'package:tsec_app/provider/concession_request_provider.dart';
 import 'package:tsec_app/provider/railway_concession_provider.dart';
 import 'package:tsec_app/new_ui/screens/railway_screen/widgets/railway_text_field.dart';
 import 'package:tsec_app/utils/railway_enum.dart';
@@ -429,7 +431,8 @@ class _RailwayConcessionScreenState
     Size size = MediaQuery.of(context).size;
     bool editMode = ref.watch(railwayConcessionOpenProvider);
     ConcessionDetailsModel? concessionDetails = ref.watch(concessionDetailsProvider);
-
+    ConcessionRequestModel? concessionRequestData = ref.watch(concessionRequestDetailProvider);
+    print(concessionRequestData.toString());
     String formattedDate = lastPassIssued != null
         ? DateFormat('dd/MM/yyyy').format(lastPassIssued!)
         : '';
@@ -475,7 +478,7 @@ class _RailwayConcessionScreenState
             SizedBox(
               height: 15,
             ),
-            if (lastPassIssued != null)
+            if (1==1)
               Container(
                 width: size.width * 0.8,
                 child: Column(
@@ -502,7 +505,7 @@ class _RailwayConcessionScreenState
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Certificate Num: Z####",
+                            "Certificate Num: ${concessionRequestData!=null?concessionRequestData.passNum:"not assigned"}",
                             style: TextStyle(fontSize: 16, color: Colors.white),
                           ),
                           SizedBox(

@@ -6,7 +6,7 @@ part 'concession_request_model.g.dart';
 @JsonSerializable()
 class ConcessionRequestModel {
   @JsonKey(name: "passNum")
-  int? passNum;
+  final String? passNum;
   @JsonKey(name: "status")
   final String status;
   @JsonKey(name: "statusMessage")

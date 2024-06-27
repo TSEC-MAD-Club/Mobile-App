@@ -77,4 +77,5 @@ class ConcessionProvider extends StateNotifier<bool> {
     // debugPrint("concession: ${concessionDetailsData?.firstName}");
     _ref.read(concessionDetailsProvider.notifier).state = concessionDetailsData;
   }
+
 }
