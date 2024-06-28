@@ -67,7 +67,7 @@ class _ConcessionStatusModalState extends ConsumerState<ConcessionStatusModal> {
 
   String getStatusText(String status){
     if(status == ConcessionStatus.rejected){
-      return "Sorry Concession Rejected";
+      return "Sorry Rejected";
     }else if(status == ConcessionStatus.unserviced){
       return "Pending";
     }else if(status == ConcessionStatus.serviced){

@@ -1,5 +1,6 @@
 // ignore_for_file: lines_longer_than_80_chars
 import 'dart:typed_data';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io';
@@ -16,6 +17,7 @@ import 'package:tsec_app/new_ui/screens/railway_screen/railwayform.dart';
 import 'package:tsec_app/new_ui/screens/railway_screen/widgets/concession_status_modal.dart';
 import 'package:tsec_app/new_ui/screens/railway_screen/widgets/railway_dropdown_search.dart';
 import 'package:tsec_app/new_ui/screens/railway_screen/widgets/railway_dropdown_field.dart';
+import 'package:tsec_app/new_ui/screens/railway_screen/widgets/stepperwidget.dart';
 import 'package:tsec_app/provider/auth_provider.dart';
 import 'package:tsec_app/provider/concession_provider.dart';
 import 'package:tsec_app/provider/concession_request_provider.dart';
@@ -432,7 +434,6 @@ class _RailwayConcessionScreenState
     bool editMode = ref.watch(railwayConcessionOpenProvider);
     ConcessionDetailsModel? concessionDetails = ref.watch(concessionDetailsProvider);
     ConcessionRequestModel? concessionRequestData = ref.watch(concessionRequestDetailProvider);
-    print(concessionRequestData.toString());
     String formattedDate = lastPassIssued != null
         ? DateFormat('dd/MM/yyyy').format(lastPassIssued!)
         : '';
@@ -442,7 +443,9 @@ class _RailwayConcessionScreenState
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(height: !editMode ? 10 : 0),
+            SizedBox(height: 20),
+            StatusStepper(concessionStatus: concessionDetails?.status == null ? "" : concessionDetails!.status),
+            SizedBox(height: 10),
             Container(
               width: size.width * 0.7,
               child: InkWell(
@@ -478,7 +481,7 @@ class _RailwayConcessionScreenState
             SizedBox(
               height: 15,
             ),
-            if (1==1)
+            if (concessionDetails?.status != null && (concessionDetails!.status == 'serviced' || concessionDetails!.status == 'unserviced'))
               Container(
                 width: size.width * 0.8,
                 child: Column(
@@ -504,20 +507,25 @@ class _RailwayConcessionScreenState
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            "Certificate Num: ${concessionRequestData!=null?concessionRequestData.passNum:"not assigned"}",
-                            style: TextStyle(fontSize: 16, color: Colors.white),
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          Text(
-                            "Date of Issue: $formattedDate",
-                            style: TextStyle(fontSize: 16, color: Colors.white),
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
+
+                          concessionDetails.status != "unserviced" ? Text(
+                              "Certificate Num: ${concessionRequestData != null
+                                  ? concessionRequestData.passNum
+                                  : "not assigned"}",
+                              style: TextStyle(
+                                  fontSize: 16, color: Colors.white),
+                            ) : SizedBox(),
+                          concessionDetails.status != "unserviced" ? SizedBox(
+                              height: 15,
+                            ) : SizedBox(),
+                          concessionDetails.status != "unserviced" ? Text(
+                              "Date of Issue: $formattedDate",
+                              style: TextStyle(
+                                  fontSize: 16, color: Colors.white),
+                            ) : SizedBox(),
+                          concessionDetails.status != "unserviced" ? SizedBox(
+                              height: 15,
+                            ) : SizedBox(),
                           Text(
                             "Travel Lane: ${travelLane}",
                             style: TextStyle(fontSize: 16, color: Colors.white),
@@ -551,6 +559,8 @@ class _RailwayConcessionScreenState
             else
               Container(
                 width: size.width * 0.8,
+                height: size.height*0.3,
+                alignment: Alignment.center,
                 child: Text(
                   "You Dont have any ongoing pass",
                   style: TextStyle(fontSize: 18, color: Colors.white),

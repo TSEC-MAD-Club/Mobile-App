@@ -64,6 +64,7 @@ dependencies:
   webview_flutter_android: ^3.15.0
   webview_flutter_wkwebview: ^3.12.0
   flutter_blurhash: ^0.6.0
+  easy_stepper: ^0.8.0
   #firebase_ui_firestore: ^1.6.3
 
 dev_dependencies:
