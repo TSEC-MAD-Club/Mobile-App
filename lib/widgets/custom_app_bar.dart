@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tsec_app/new_ui/colors.dart';
 import '../utils/themes.dart';
 
 class CustomAppBar extends ConsumerWidget implements PreferredSizeWidget {
@@ -18,7 +19,7 @@ class CustomAppBar extends ConsumerWidget implements PreferredSizeWidget {
       child: Container(
         height: 235,
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.secondary,
+          color: commonbgLightblack,
           borderRadius: const BorderRadius.only(
             bottomRight: Radius.circular(40),
           ),

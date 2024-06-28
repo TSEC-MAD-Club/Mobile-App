@@ -66,7 +66,7 @@ class ScheduleCardModified extends StatelessWidget {
                 ),
               ),
               Container(
-                width: 85.0,
+                width: 90.0,
                 decoration: BoxDecoration(
                   color: opacityColor,
                 ),
