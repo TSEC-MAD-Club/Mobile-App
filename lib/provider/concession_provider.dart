@@ -20,12 +20,12 @@ final concessionDetailsProvider = StateProvider<ConcessionDetailsModel?>((ref) {
 });
 
 final concessionProvider =
-    StateNotifierProvider<ConcessionProvider, bool>(((ref) {
+    StateNotifierProvider<ConcessionProvider, String>(((ref) {
   return ConcessionProvider(
       ref: ref, concessionService: ref.watch(concessionServiceProvider));
 }));
 
-class ConcessionProvider extends StateNotifier<bool> {
+class ConcessionProvider extends StateNotifier<String> {
   final ConcessionService _concessionService;
 
   final Ref _ref;
@@ -33,7 +33,7 @@ class ConcessionProvider extends StateNotifier<bool> {
   ConcessionProvider({concessionService, ref})
       : _concessionService = concessionService,
         _ref = ref,
-        super(false);
+        super("");
 
   Future applyConcession(ConcessionDetailsModel concessionDetails,
       File idCardPhoto, File previousPassPhoto, BuildContext context) async {
@@ -41,21 +41,13 @@ class ConcessionProvider extends StateNotifier<bool> {
     // concessionDetails.statusMessage =
     //     await _concessionService.getWaitingMessage();
     // _ref.read(concessionDetailsProvider.notifier).state = concessionDetails;
+    state="Applying for concession, please be patient";
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Applying for concession, please be patient'),
-      ),
-    );
     ConcessionDetailsModel concessionDetailsData =
         await _concessionService.applyConcession(concessionDetails);
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text(
-            'We are uploading your photos, this might take some time. We will notify you when the process completes.'),
-      ),
-    );
+    state="We are uploading your photos, this might take some time. We will notify you when the process completes.";
+
     _ref.read(concessionDetailsProvider.notifier).state = concessionDetailsData;
 
     concessionDetailsData.idCardURL =
@@ -63,12 +55,9 @@ class ConcessionProvider extends StateNotifier<bool> {
     concessionDetailsData.previousPassURL =
         await _concessionService.uploadPhoto(previousPassPhoto, "prevpass");
     await _concessionService.applyConcession(concessionDetailsData);
+    state="";
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('All the attached photos have been uploaded'),
-      ),
-    );
+    Navigator.of(context).pop();
   }
 
   Future getConcessionData() async {

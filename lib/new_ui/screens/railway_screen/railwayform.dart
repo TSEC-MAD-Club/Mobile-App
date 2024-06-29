@@ -416,6 +416,7 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
     StudentModel student = ref.watch(userModelProvider)!.studentModel!;
     ConcessionDetailsModel? concessionDetails =
         ref.watch(concessionDetailsProvider);
+    String currState = ref.watch(concessionProvider);
     return Scaffold(
       appBar: AppBar(
         shadowColor: Colors.transparent,
@@ -433,7 +434,25 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
           Navigator.pop(context);
         },),
       ),
-      body: SingleChildScrollView(
+      body: currState != ""
+       ? Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const CircularProgressIndicator(),
+              const SizedBox(height: 40.0,),
+              SizedBox(
+                width: 300.0,
+                child: Text(
+                  currState,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Colors.white),
+                ),
+              ),
+            ],
+          ),
+        )
+      : SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
