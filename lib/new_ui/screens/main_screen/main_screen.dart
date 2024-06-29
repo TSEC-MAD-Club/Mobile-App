@@ -10,7 +10,6 @@ import 'package:tsec_app/new_ui/colors.dart';
 import 'package:tsec_app/new_ui/screens/coming_soon_screen/coming_soon.dart';
 import 'package:tsec_app/new_ui/screens/about_us_screen/about_us.dart';
 import 'package:tsec_app/new_ui/screens/erp_screen/erp_screen.dart';
-import 'package:tsec_app/new_ui/screens/games/dino_screen/dino_screen.dart';
 import 'package:tsec_app/new_ui/screens/home_screen/widgets/home_widget.dart';
 import 'package:tsec_app/new_ui/screens/main_screen/widgets/main_bottom_nav_bar.dart';
 import 'package:tsec_app/new_ui/screens/notes_screen/notes_screen.dart';
