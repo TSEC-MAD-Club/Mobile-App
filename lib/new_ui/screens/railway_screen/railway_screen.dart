@@ -1,5 +1,6 @@
 // ignore_for_file: lines_longer_than_80_chars
 import 'dart:typed_data';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io';
@@ -9,13 +10,17 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:tsec_app/models/concession_details_model/concession_details_model.dart';
+import 'package:tsec_app/models/concession_request_model/concession_request_model.dart';
+// import 'package:tsec_app/models/concession_request_model/concession_request_model.dart';
 import 'package:tsec_app/models/student_model/student_model.dart';
 import 'package:tsec_app/new_ui/screens/railway_screen/railwayform.dart';
 import 'package:tsec_app/new_ui/screens/railway_screen/widgets/concession_status_modal.dart';
 import 'package:tsec_app/new_ui/screens/railway_screen/widgets/railway_dropdown_search.dart';
 import 'package:tsec_app/new_ui/screens/railway_screen/widgets/railway_dropdown_field.dart';
+import 'package:tsec_app/new_ui/screens/railway_screen/widgets/stepperwidget.dart';
 import 'package:tsec_app/provider/auth_provider.dart';
 import 'package:tsec_app/provider/concession_provider.dart';
+import 'package:tsec_app/provider/concession_request_provider.dart';
 import 'package:tsec_app/provider/railway_concession_provider.dart';
 import 'package:tsec_app/new_ui/screens/railway_screen/widgets/railway_text_field.dart';
 import 'package:tsec_app/utils/railway_enum.dart';
@@ -36,8 +41,8 @@ class _RailwayConcessionScreenState
   String? statusMessage;
   String? duration;
   DateTime? lastPassIssued;
-
-  // String?
+  String? from;
+  String? to;
 
   bool canIssuePass(ConcessionDetailsModel? concessionDetails,
       DateTime? lastPassIssued, String? duration) {
@@ -66,14 +71,23 @@ class _RailwayConcessionScreenState
     }
   }
 
-  String futurePassMessage() {
+  String futurePassMessage(concessionDetails) {
+    if (canIssuePass(concessionDetails, lastPassIssued, duration)) {
+      return "⚠️ You can tap above to apply for the Pass";
+    }
+
+    if (lastPassIssued == null) {
+      return "⚠️ You need to wait until your request is granted";
+    }
+
     DateTime today = DateTime.now();
     DateTime lastPass = lastPassIssued ?? DateTime.now();
-    DateTime futurePass = lastPass.add(
-        duration == "Monthly" ? const Duration(days: 30) : Duration(days: 90));
+    DateTime futurePass = lastPass.add(duration == "Monthly" ? const Duration(days: 27) : const Duration(days: 87));
     int diff = futurePass.difference(today).inDays;
-    return "You will be able to apply for a new pass after $diff days";
+
+    return "⚠️ You will be able to apply for a new pass only after $diff days";
   }
+
 
   @override
   void didChangeDependencies() {
@@ -331,7 +345,7 @@ class _RailwayConcessionScreenState
       previousPassURL: previousPassURL,
       from: homeStation,
       to: toStation,
-      lastPassIssued: lastPassIssued,
+      lastPassIssued: null,
       address: addressController.text,
       dob: _selectedDate ?? DateTime.now(),
       phoneNum: int.parse(phoneNumController.text),
@@ -346,9 +360,9 @@ class _RailwayConcessionScreenState
       previousPassPhoto = previousPassPhotoTemp;
 
       ref.read(railwayConcessionOpenProvider.state).state = false;
-      await ref
-          .watch(concessionProvider.notifier)
-          .applyConcession(details, idCardPhoto!, previousPassPhoto!, context);
+      // await ref
+      //     .watch(concessionProvider.notifier)
+      //     .applyConcession(details, idCardPhoto!, previousPassPhoto!, context);
     } else if (idCardPhotoTemp == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Please add the photo of your ID card")),
@@ -417,47 +431,141 @@ class _RailwayConcessionScreenState
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-
     bool editMode = ref.watch(railwayConcessionOpenProvider);
-    StudentModel student = ref.watch(userModelProvider)!.studentModel!;
-    ConcessionDetailsModel? concessionDetails =
-        ref.watch(concessionDetailsProvider);
+    ConcessionDetailsModel? concessionDetails = ref.watch(concessionDetailsProvider);
+    ConcessionRequestModel? concessionRequestData = ref.watch(concessionRequestDetailProvider);
+    String formattedDate = lastPassIssued != null
+        ? DateFormat('dd/MM/yyyy').format(lastPassIssued!)
+        : '';
+
     return SingleChildScrollView(
       child: Center(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(height: !editMode ? 10 : 0),
-            InkWell(
-              splashFactory: NoSplash.splashFactory,
-              onTap: (){
-                if (canIssuePass(concessionDetails,
-                    lastPassIssued, duration)) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const RailwayForm(),
-                    ),
-                  );
-                }
-              },
-              child: ConcessionStatusModal(
-                // concessionDetails: concessionDetails,
-                canIssuePass: canIssuePass,
-                // lastPassIssued: lastPassIssued,
-                // duration: duration,
-                futurePassMessage: futurePassMessage,
+            SizedBox(height: 20),
+            StatusStepper(concessionStatus: concessionDetails?.status == null ? "" : concessionDetails!.status),
+            SizedBox(height: 10),
+            Container(
+              width: size.width * 0.7,
+              child: InkWell(
+                splashFactory: NoSplash.splashFactory,
+                splashColor: Colors.transparent,
+                onTap: () {
+                  if (canIssuePass(concessionDetails, lastPassIssued, duration)) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const RailwayForm(),
+                      ),
+                    );
+                  }
+                },
+                child: ConcessionStatusModal(
+                  canIssuePass: canIssuePass,
+                  futurePassMessage: futurePassMessage,
+                ),
               ),
             ),
             SizedBox(
               height: 15,
             ),
             Container(
+              width: size.width * 0.9,
+              alignment: Alignment.center,
+              child: Text(
+                "${futurePassMessage(concessionDetails)}",
+                style: TextStyle(fontSize: 15, color: Colors.white),
+              ),
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            if (concessionDetails?.status != null && (concessionDetails!.status == 'serviced' || concessionDetails!.status == 'unserviced'))
+              Container(
                 width: size.width * 0.8,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 20),
+                    Text(
+                      "Ongoing Pass",
+                      style: TextStyle(fontSize: 18, color: Colors.white),
+                    ),
+                    SizedBox(height: 10),
+                    Container(
+                      padding: EdgeInsets.all(10),
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      decoration: BoxDecoration(
+                        color: Colors.black,
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(
+                          color: Colors.blue,
+                          width: 1,
+                        ),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+
+                          concessionDetails.status != "unserviced" ? Text(
+                              "Certificate Num: ${concessionRequestData != null
+                                  ? concessionRequestData.passNum
+                                  : "not assigned"}",
+                              style: TextStyle(
+                                  fontSize: 16, color: Colors.white),
+                            ) : SizedBox(),
+                          concessionDetails.status != "unserviced" ? SizedBox(
+                              height: 15,
+                            ) : SizedBox(),
+                          concessionDetails.status != "unserviced" ? Text(
+                              "Date of Issue: $formattedDate",
+                              style: TextStyle(
+                                  fontSize: 16, color: Colors.white),
+                            ) : SizedBox(),
+                          concessionDetails.status != "unserviced" ? SizedBox(
+                              height: 15,
+                            ) : SizedBox(),
+                          Text(
+                            "Travel Lane: ${travelLane}",
+                            style: TextStyle(fontSize: 16, color: Colors.white),
+                          ),
+                          SizedBox(height: 10),
+                          Text(
+                            "From: ${homeStation}",
+                            style: TextStyle(fontSize: 16, color: Colors.white),
+                          ),
+                          Text(
+                            "To: ${toStation}",
+                            style: TextStyle(fontSize: 16, color: Colors.white),
+                          ),
+                          SizedBox(
+                            height: 15,
+                          ),
+                          Text(
+                            "Duration: ${duration}",
+                            style: TextStyle(fontSize: 16, color: Colors.white),
+                          ),
+                          Text(
+                            "Class: ${travelClass}",
+                            style: TextStyle(fontSize: 16, color: Colors.white),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            else
+              Container(
+                width: size.width * 0.8,
+                height: size.height*0.3,
+                alignment: Alignment.center,
                 child: Text(
-                  "Previous Passes",
+                  "You Dont have any ongoing pass",
                   style: TextStyle(fontSize: 18, color: Colors.white),
-                ))
+                ),
+              ),
           ],
         ),
       ),

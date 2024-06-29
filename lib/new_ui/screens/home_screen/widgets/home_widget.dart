@@ -76,6 +76,22 @@ class _HomeWidgetState extends ConsumerState<HomeWidget> {
         error: (Object error, StackTrace? stackTrace) {});
   }
 
+  var _onlyUserLoggedIn=false;
+  void initState() {
+    UserModel? user = ref.read(userModelProvider);
+    if (user != null && user.isStudent) {
+      _onlyUserLoggedIn=true;
+    }
+    else {
+      //anonymous and faculty
+      _onlyUserLoggedIn=false;
+    }
+    super.initState();
+  }
+
+
+
+
   static List<String> imgList = [];
   final CarouselController carouselController = CarouselController();
 
@@ -263,7 +279,14 @@ class _HomeWidgetState extends ConsumerState<HomeWidget> {
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(15, 0, 0, 20),
                         child: Text(
-                          "Welcome ${data != null ? data.studentModel?.name?.toLowerCase()?.toTitleCase() : "To Tsec"}",
+                          "Welcome ${
+                              (data != null) ?
+                              data.studentModel!=null?
+                              data.studentModel?.name?.toLowerCase()?.toTitleCase()
+                              :
+                              data.facultyModel?.name?.toLowerCase()?.toTitleCase()
+                                  :
+                          "To Tsec"}",
                           style: TextStyle(color: Colors.white, fontSize: 19),
                         ),
                       )
@@ -342,20 +365,11 @@ class _HomeWidgetState extends ConsumerState<HomeWidget> {
 
 
 
-                  //CALENDER STARTS HERE
-
-                  if(data!=null)
-                   Container(
-                       width: _size.width,
-                       child: Padding(
-                         padding: const EdgeInsets.fromLTRB(15, 20, 0, 0),
-                         child: Text("Timetable",style: TextStyle(color: Colors.white,fontSize: 19),),
-                       )
-                   ),
 
 
-                  //DATE SELECTOR
-                  if (data == null)
+
+                  if(!_onlyUserLoggedIn)
+                  //departmentlist
                     Container(
                       width: _size.width,
                       height: _size.height*1.18,
@@ -364,28 +378,46 @@ class _HomeWidgetState extends ConsumerState<HomeWidget> {
                         child: DepartmentList(),
                       ),
                     ),
-                  if(data!=null)
+
+
+
+                  //CALENDER STARTS HERE
+
+                  if(_onlyUserLoggedIn)
+                    Container(
+                        width: _size.width,
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(15, 20, 0, 0),
+                          child: Text("Timetable",style: TextStyle(color: Colors.white,fontSize: 19),),
+                        )
+                    ),
+
+
+
+                  //DATE SELECTOR
+                  if(_onlyUserLoggedIn)
                     Padding(
                       padding: const EdgeInsets.all(15),
                       child: Container(
                         width: _size.width * 0.9,
                         // color: Colors.red,
-                        height: 100,
+                        height: 85,
                         // could have used _size but fuck it whore-licks
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(15.0),
                           child: DatePicker(
                             DateTime.now(),
+                            width: 50,
                             monthTextStyle: _theme.textTheme.headlineSmall!.copyWith(
-                              fontSize: 15,
+                              fontSize: 14,
                               color: Colors.grey,
                             ),
                             dayTextStyle: _theme.textTheme.headlineSmall!.copyWith(
-                              fontSize: 15,
+                              fontSize: 14,
                               color: Colors.grey,
                             ),
                             dateTextStyle: _theme.textTheme.titleSmall!.copyWith(
-                              fontSize: 15,
+                              fontSize: 13,
                               color: Colors.grey,
                             ),
                             initialSelectedDate: DateTime.now(),
@@ -403,7 +435,7 @@ class _HomeWidgetState extends ConsumerState<HomeWidget> {
 
 
                   //DISPLAY THIS TIMETABLE
-                  if (data != null)
+                  if (_onlyUserLoggedIn)
                     Container(
                         // height: MediaQuery.of(context).size.height * 2,
                         // width: MediaQuery.of(context).size.width * 0.9,
@@ -416,8 +448,7 @@ class _HomeWidgetState extends ConsumerState<HomeWidget> {
                         child: CardDisplay()
 
                       ,)
-                  else
-                    Container(),
+
                 ],
               ),
             ),

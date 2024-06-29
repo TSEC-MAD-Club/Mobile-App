@@ -21,7 +21,6 @@ class RailwayDropdownSearch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // debugPrint("RailwayDropdownSearch: $val");
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
@@ -38,7 +37,6 @@ class RailwayDropdownSearch extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.fromLTRB(12, 3, 12, 3),
           child: DropdownSearch<String>(
-            //enabled: editMode,
             validator: validator,
             selectedItem: val,
             dropdownDecoratorProps: DropDownDecoratorProps(
@@ -49,38 +47,60 @@ class RailwayDropdownSearch extends StatelessWidget {
               dropdownSearchDecoration: InputDecoration(
                 fillColor: Colors.white,
                 labelText: label,
-                labelStyle: TextStyle(color: Colors.white),
+                labelStyle: TextStyle(color: Colors.grey),
                 border: InputBorder.none,
               ),
             ),
             popupProps: PopupProps.dialog(
               showSearchBox: true,
-              // itemBuilder: ()
+              searchFieldProps: TextFieldProps(
+                style: TextStyle(color: Colors.white),
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Theme.of(context).colorScheme.background,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(
+                      color: Colors.grey,
+                    ),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(
+                      color: Colors.grey,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(
+                      color: Colors.grey,
+                      width: 2.0,
+                    ),
+                  ),
+                  contentPadding: EdgeInsets.all(10),
+                  hintText: "Search for Station",
+                  hintStyle: TextStyle(color: Colors.grey, fontSize: 16),
+                ),
+              ),
+
+
               itemBuilder: (context, item, isSelected) {
                 return Padding(
                   padding: const EdgeInsets.all(15.0),
                   child: Container(
                     child: Text(
                       item,
-                      style: Theme.of(context)
-                          .textTheme
-                          .labelSmall!
-                          .copyWith(color: Colors.white),
+                      style: TextStyle(color: Colors.grey),
                     ),
                   ),
                 );
               },
               containerBuilder: (context, popupWidget) {
                 return Container(
-                    color: Theme.of(context).colorScheme.background,
-                    // color: Colors.purple,
-                    child: popupWidget);
+                  color: Theme.of(context).colorScheme.background,
+                  child: popupWidget,
+                );
               },
-              // itemBuilder: (context, item, isSelected) {
-              //   return Container(
-              //     child: Text(item),
-              //   );
-              // }),
             ),
             dropdownButtonProps: DropdownButtonProps(
               icon: Icon(

@@ -74,6 +74,32 @@ class ConcessionService {
     }
   }
 
+  Future<ConcessionRequestModel?> getConcessionRequest() async {
+    try {
+      var value = await concessionRequestCollection.doc(user!.uid).get();
+      print('concession requests are being fetched ');
+      print(value.data());
+      if (value.exists) {
+        print("11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111");
+        print("if");
+        var detailsMap = value.data() as Map<String, dynamic>;
+        ConcessionRequestModel concessionRequestData =
+        ConcessionRequestModel.fromJson(detailsMap);
+
+        return concessionRequestData;
+      } else {
+
+        // Document does not exist
+        return null;
+      }
+    } catch (error) {
+
+      // Handle any errors that might occur during the Firestore operation
+      print("Error fetching concession request: $error");
+      return null;
+    }
+  }
+
   Future<String> uploadPhoto(File file, String docName) async {
 // idCard
 // prevpass
@@ -121,12 +147,24 @@ class ConcessionService {
       statusMessage: "",
     );
 
+    // try {
+    //   await concessionRequestCollection.add(concessionRequest.toJson());
+    //   print('request created successfully!');
+    // } catch (e) {
+    //   print('Error updating or creating document: $e');
+    // }
     try {
-      await concessionRequestCollection.add(concessionRequest.toJson());
-      print('request created successfully!');
+      // Add or update the concession request in Firestore
+      DocumentReference concessionRequestDoc =
+      concessionRequestCollection.doc(user!.uid);
+      await concessionRequestDoc.set(concessionRequest.toJson(),
+          SetOptions(merge: true)); // Use merge to update or create
+
+      print('Concession request updated or created successfully!');
     } catch (e) {
-      print('Error updating or creating document: $e');
+      print('Error updating or creating concession request: $e');
     }
+
 
     // concessionDetails.idCardURL = "";
     concessionDetails.status = status;

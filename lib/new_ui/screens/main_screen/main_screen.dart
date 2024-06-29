@@ -10,6 +10,7 @@ import 'package:tsec_app/new_ui/colors.dart';
 import 'package:tsec_app/new_ui/screens/coming_soon_screen/coming_soon.dart';
 import 'package:tsec_app/new_ui/screens/about_us_screen/about_us.dart';
 import 'package:tsec_app/new_ui/screens/erp_screen/erp_screen.dart';
+import 'package:tsec_app/new_ui/screens/games/dino_screen/dino_screen.dart';
 import 'package:tsec_app/new_ui/screens/home_screen/widgets/home_widget.dart';
 import 'package:tsec_app/new_ui/screens/main_screen/widgets/main_bottom_nav_bar.dart';
 import 'package:tsec_app/new_ui/screens/notes_screen/notes_screen.dart';
@@ -23,6 +24,7 @@ import 'package:tsec_app/provider/railway_concession_provider.dart';
 import 'package:tsec_app/new_ui/screens/committees_screen/committees_screen.dart';
 import 'package:tsec_app/screens/departmentlist_screen/department_list.dart';
 import 'package:tsec_app/screens/notification_screen/notification_screen.dart';
+import 'package:tsec_app/new_ui/screens/committees_screen/old_committees_screen.dart';
 import 'package:tsec_app/screens/tpc_screen.dart';
 import 'package:url_launcher/link.dart';
 
@@ -55,10 +57,12 @@ class _MainScreenState extends ConsumerState<MainScreen> {
   @override
   void initState() {
     UserModel? user = ref.read(userModelProvider);
-    if (user != null && user.isStudent) {
+
+
+      if (user != null && user.isStudent) {
       widgetMap = {
         "home": HomeWidget(
-          changeCurrentPage: (page,index) {
+          changeCurrentPage: (page, index) {
             setState(() {
               currentPage = index;
               currentBottomNavPage = page;
@@ -75,13 +79,14 @@ class _MainScreenState extends ConsumerState<MainScreen> {
     } else {
       widgetMap = {
         "home": HomeWidget(
-          changeCurrentPage: (page,index) {
+          changeCurrentPage: (page, index) {
             setState(() {
               currentPage = index;
               currentBottomNavPage = page;
             });
           },
         ),
+        "notes": const NotesScreen(),
         "profile": ProfilePage(
           justLoggedIn: false,
         )
@@ -92,12 +97,39 @@ class _MainScreenState extends ConsumerState<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery
+        .of(context)
+        .size;
 
-    Size size = MediaQuery.of(context).size;
 
+    UserModel? data = ref.watch(userModelProvider);
+
+    if(data!=null && data.facultyModel!=null){
+      pages = [
+        HomeWidget(
+          changeCurrentPage: (page, index) {
+            setState(() {
+              currentPage = index;
+              currentBottomNavPage = page;
+            });
+          },
+        ),
+        const NotesScreen(),
+        ProfilePage(justLoggedIn: false),
+        const RailwayConcessionScreen(),
+        const TPCScreen(),
+        const CommitteesScreen(),
+        const DepartmentListScreen(),
+        Container(),
+        // ProfilePage(
+        //   justLoggedIn: false,
+        // ),
+      ];
+    }else{
     pages = [
+      //for User login
       HomeWidget(
-        changeCurrentPage: (page,index) {
+        changeCurrentPage: (page, index) {
           setState(() {
             currentPage = index;
             currentBottomNavPage = page;
@@ -115,8 +147,8 @@ class _MainScreenState extends ConsumerState<MainScreen> {
       //   justLoggedIn: false,
       // ),
     ];
+    }
 
-    UserModel? data = ref.watch(userModelProvider);
 
     // if (data != null) {
     //   NotificationType.makeTopic(ref, data);
@@ -254,6 +286,8 @@ class _MainScreenState extends ConsumerState<MainScreen> {
         //             : [],
         //       )
         //     : null,
+
+
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(kToolbarHeight),
           child: AppBar(
@@ -281,14 +315,15 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                   ),
                 ),
                 Spacer(),
-                Text(getTitle(),style: TextStyle(color: Colors.white,fontSize: size.width*0.055),),
+                Text(getTitle(data), style: TextStyle(
+                    color: Colors.white, fontSize: size.width * 0.055),),
                 Spacer(),
                 Flexible(
                   flex: 1,
                   child: GestureDetector(
                     onTap: () {
-                      Navigator.push(context,MaterialPageRoute(builder: (context)=> NotificationScreen(),),);
-
+                      Navigator.push(context, MaterialPageRoute(builder: (
+                          context) => NotificationScreen(),),);
                     },
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(0, 6, 0, 0),
@@ -308,95 +343,108 @@ class _MainScreenState extends ConsumerState<MainScreen> {
         ),
         drawer: !concessionOpen
             ? BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  boxShadow: [
-                    BoxShadow(color: cardcolorblue,blurRadius: 5,spreadRadius: 3),
-                  ],
+          filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              boxShadow: [
+                BoxShadow(color: cardcolorblue, blurRadius: 5, spreadRadius: 3),
+              ],
+            ),
+            child: Drawer(
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(20),
+                    bottomRight: Radius.circular(20)
                 ),
-                child: Drawer(
-                    shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(20),
-                          bottomRight: Radius.circular(20)
-                      ),
-                    ),
-                    backgroundColor: Colors.black,
-                    child: Padding(
-                      padding: const EdgeInsets.all(18.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(height: 20,),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              profilePic != null
-                                  ? CircleAvatar(
-                                radius: 35,
-                                backgroundImage: MemoryImage(profilePic),
-                                // backgroundImage: MemoryImage(_image!),
-                              )
-                                  : const CircleAvatar(
-                                radius: 35,
-                                backgroundImage:
-                                AssetImage("assets/images/pfpholder.jpg"),
-                              ),
-                              SizedBox(width: 10,),
-                              Expanded(child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    userDetails != null
-                                        ? (userDetails.isStudent
-                                        ? userDetails.studentModel!.name
-                                        : userDetails.facultyModel!.name)
-                                        : "Tsecite",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headlineLarge!
-                                        .copyWith(fontSize: 20),
-                                  ),
-                                  SizedBox(height: 5,),
-                                  Text(
-                                    userDetails != null ? (userDetails.isStudent ?
-                                    '${userDetails.studentModel!.branch} ${userDetails.studentModel!.gradyear}' : '') : 'anonymous',
-                                    style: Theme.of(context).textTheme.headlineLarge!.copyWith(fontSize: 12),
-                                  )
-                                ],
-                              ))
-                            ],
-                          ),
-
-                          const SizedBox(
-                            height: 30,
-                          ),
-                          ListTile(
-                            contentPadding: EdgeInsets.zero,
-                            title: Text(
-                              'Home',
-                              style: Theme.of(context)
+              ),
+              backgroundColor: Colors.black,
+              child: Padding(
+                padding: const EdgeInsets.all(18.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 20,),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        profilePic != null
+                            ? CircleAvatar(
+                          radius: 35,
+                          backgroundImage: MemoryImage(profilePic),
+                          // backgroundImage: MemoryImage(_image!),
+                        )
+                            : const CircleAvatar(
+                          radius: 35,
+                          backgroundImage:
+                          AssetImage("assets/images/pfpholder.jpg"),
+                        ),
+                        SizedBox(width: 10,),
+                        Expanded(child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              userDetails != null
+                                  ? (userDetails.isStudent
+                                  ? userDetails.studentModel!.name
+                                  : userDetails.facultyModel!.name)
+                                  : "Tsecite",
+                              style: Theme
+                                  .of(context)
                                   .textTheme
-                                  .headlineMedium!
-                                  .copyWith(
-                                    fontSize: 13,
-                                    color: currentPage == 0
-                                        ? Theme.of(context).colorScheme.onBackground
-                                        : Colors.white,
-                                  ),
+                                  .headlineLarge!
+                                  .copyWith(fontSize: 20),
                             ),
-                            onTap: () {
-                              setState(() {
-                                currentPage = 0;
-                                currentBottomNavPage = "home";
-                              });
-                              Navigator.pop(context);
-                            },
-                          ),
-                          /*ListTile(
+                            SizedBox(height: 5,),
+                            Text(
+                              userDetails != null
+                                  ? (userDetails.isStudent ?
+                              '${userDetails.studentModel!.branch} ${userDetails
+                                  .studentModel!.gradyear}' : '${data
+                                  ?.facultyModel?.qualification}')
+                                  : 'anonymous',
+                              style: Theme
+                                  .of(context)
+                                  .textTheme
+                                  .headlineLarge!
+                                  .copyWith(fontSize: 12),
+                            )
+                          ],
+                        ))
+                      ],
+                    ),
+
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    ListTile(
+                      contentPadding: EdgeInsets.zero,
+                      title: Text(
+                        'Home',
+                        style: Theme
+                            .of(context)
+                            .textTheme
+                            .headlineMedium!
+                            .copyWith(
+                          fontSize: 13,
+                          color: currentPage == 0
+                              ? Theme
+                              .of(context)
+                              .colorScheme
+                              .onBackground
+                              : Colors.white,
+                        ),
+                      ),
+                      onTap: () {
+                        setState(() {
+                          currentPage = 0;
+                          currentBottomNavPage = "home";
+                        });
+                        Navigator.pop(context);
+                      },
+                    ),
+                    /*ListTile(
                             contentPadding: EdgeInsets.zero,
                             title: Text(
                               'Railway Concession',
@@ -416,104 +464,123 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                               });
                             },
                           ),*/
-                          ListTile(
-                            contentPadding: EdgeInsets.zero,
-                            title: Text(
-                              'Departments',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headlineMedium!
-                                  .copyWith(
-                                    fontSize: 13,
-                                    color: currentPage == 7
-                                        ? Theme.of(context).colorScheme.onBackground
-                                        : Colors.white,
-                                  ),
-                            ),
-                            onTap: () {
-                              ref.read(titleProvider.notifier).state = 'Departments';
-                              Navigator.pop(context);
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => DepartmentListScreen(),
-                                ),
-                              );
-                            },
+                    ListTile(
+                      contentPadding: EdgeInsets.zero,
+                      title: Text(
+                        'Departments',
+                        style: Theme
+                            .of(context)
+                            .textTheme
+                            .headlineMedium!
+                            .copyWith(
+                          fontSize: 13,
+                          color: currentPage == 7
+                              ? Theme
+                              .of(context)
+                              .colorScheme
+                              .onBackground
+                              : Colors.white,
+                        ),
+                      ),
+                      onTap: () {
+                        ref
+                            .read(titleProvider.notifier)
+                            .state = 'Departments';
+                        Navigator.pop(context);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => DepartmentListScreen(),
                           ),
-                          ListTile(
-                            contentPadding: EdgeInsets.zero,
-                            title: Text(
-                              'Committees',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headlineSmall!
-                                  .copyWith(
-                                    fontSize: 13,
-                                    color: currentPage == 6
-                                        ? Theme.of(context).colorScheme.onBackground
-                                        : Colors.white,
-                                  ),
-                            ),
-                            onTap: () {
-                              ref.read(titleProvider.notifier).state = 'Committees';
-                              /*setState(() {
+                        );
+                      },
+                    ),
+                    ListTile(
+                      contentPadding: EdgeInsets.zero,
+                      title: Text(
+                        'Committees',
+                        style: Theme
+                            .of(context)
+                            .textTheme
+                            .headlineSmall!
+                            .copyWith(
+                          fontSize: 13,
+                          color: currentPage == 6
+                              ? Theme
+                              .of(context)
+                              .colorScheme
+                              .onBackground
+                              : Colors.white,
+                        ),
+                      ),
+                      onTap: () {
+                        ref
+                            .read(titleProvider.notifier)
+                            .state = 'Committees';
+                        /*setState(() {
                                 currentPage = 6;
                               });*/
-                              Navigator.pop(context);
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => CommitteesScreen(),
-                                ),
-                              );
-                            },
+                        Navigator.pop(context);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            // builder: (context) => CommitteesScreen(),
+                            builder: (context) => OldCommittessScreen(),
                           ),
-                          ListTile(
-                            contentPadding: EdgeInsets.zero,
-                            title: Text(
-                              'Training and Placement Cell',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headlineSmall!
-                                  .copyWith(
-                                    fontSize: 13,
-                                    color: currentPage == 5
-                                        ? Theme.of(context).colorScheme.onBackground
-                                        : Colors.white,
-                                  ),
-                            ),
-                            onTap: () {
-                              ref.read(titleProvider.notifier).state = 'Training and Placement Cell';
-                              Navigator.pop(context);
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => TPCScreen(),
-                                ),
-                              );
-                            },
+                        );
+                      },
+                    ),
+                    ListTile(
+                      contentPadding: EdgeInsets.zero,
+                      title: Text(
+                        'Training and Placement Cell',
+                        style: Theme
+                            .of(context)
+                            .textTheme
+                            .headlineSmall!
+                            .copyWith(
+                          fontSize: 13,
+                          color: currentPage == 5
+                              ? Theme
+                              .of(context)
+                              .colorScheme
+                              .onBackground
+                              : Colors.white,
+                        ),
+                      ),
+                      onTap: () {
+                        ref
+                            .read(titleProvider.notifier)
+                            .state = 'Training and Placement Cell';
+                        Navigator.pop(context);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => TPCScreen(),
                           ),
+                        );
+                      },
+                    ),
 
-                          // ListTile(
-                          //   contentPadding: EdgeInsets.zero,
-                          //   title: Text(
-                          //     'Profile',
-                          //     style: Theme.of(context).textTheme.headlineMedium!.copyWith(
-                          //           fontSize: 22,
-                          //           color: currentPage == 5
-                          //               ? Theme.of(context).colorScheme.onBackground
-                          //               : Colors.white,
-                          //         ),
-                          //   ),
-                          //   onTap: () {
-                          //     setState(() {
-                          //       currentPage = 5;
-                          //     });
-                          //     Navigator.pop(context);
-                          //   },
-                          // ),
-                          /*ListTile(
+                    // ListTile(
+                    //   contentPadding: EdgeInsets.zero,
+                    //   title: Text(
+                    //     'Profile',
+                    //     style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+                    //           fontSize: 22,
+                    //           color: currentPage == 5
+                    //               ? Theme.of(context).colorScheme.onBackground
+                    //               : Colors.white,
+                    //         ),
+                    //   ),
+                    //   onTap: () {
+                    //     setState(() {
+                    //       currentPage = 5;
+                    //     });
+                    //     Navigator.pop(context);
+                    //   },
+                    // ),
+                    /*ListTile(
                             contentPadding: EdgeInsets.zero,
                             title: Text(
                               'Manage Account',
@@ -533,133 +600,152 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                               // });
                             },
                           ),*/
+                    ListTile(
+                      contentPadding: EdgeInsets.zero,
+                      title: Text(
+                        'About Us',
+                        style: Theme
+                            .of(context)
+                            .textTheme
+                            .headlineMedium!
+                            .copyWith(
+                          fontSize: 13,
+                          color: Colors.white,
+                        ),
+                      ),
+                      /////////////////////////////////////////////////////////////////////////
+                      onTap: () {
+                        ref
+                            .read(titleProvider.notifier)
+                            .state = 'About Us';
+                        Navigator.pop(context);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => AboutUs(),
+                          ),
+                        );
+                      },
+                    ),
+                    Link(
+                      uri: Uri.parse("mailto:devsclubtsec@gmail.com"),
+                      builder: (context, followLink) =>
                           ListTile(
                             contentPadding: EdgeInsets.zero,
                             title: Text(
-                              'About Us',
-                              style: Theme.of(context)
+                              'Contact Us',
+                              style: Theme
+                                  .of(context)
                                   .textTheme
                                   .headlineMedium!
                                   .copyWith(
                                 fontSize: 13,
-                                color: Colors.white,
+                                color: currentPage == 4
+                                    ? Theme
+                                    .of(context)
+                                    .colorScheme
+                                    .onBackground
+                                    : Colors.white,
                               ),
                             ),
-                            /////////////////////////////////////////////////////////////////////////
-                            onTap: () {
-                                ref.read(titleProvider.notifier).state = 'About Us';
-                                Navigator.pop(context);
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => AboutUs(),
-                                  ),
-                                );
-                            },
+                            onTap: () => followLink?.call(),
                           ),
-                          Link(
-                            uri: Uri.parse("mailto:devsclubtsec@gmail.com"),
-                            builder: (context, followLink) => ListTile(
-                              contentPadding: EdgeInsets.zero,
-                              title: Text(
-                                'Contact Us',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headlineMedium!
-                                    .copyWith(
-                                  fontSize: 13,
-                                  color: currentPage == 4
-                                      ? Theme.of(context)
-                                      .colorScheme
-                                      .onBackground
-                                      : Colors.white,
-                                ),
-                              ),
-                              onTap: () => followLink?.call(),
-                            ),
-                          ),
+                    ),
 
-                          Spacer(),
-                          ListTile(
-                            contentPadding: EdgeInsets.zero,
-                            title: Text(
-                              'Coming soon........',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headlineSmall!
-                                  .copyWith(
-                                    fontSize: 13,
-                                    color: currentPage == 5
-                                        ? Theme.of(context).colorScheme.onBackground
-                                        : Colors.white,
-                                  ),
-                            ),
-                            onTap: () {
-                              ref.read(titleProvider.notifier).state = 'Something cooking .....';
-                              Navigator.pop(context);
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => ComingSoon(),
-                                ),
-                              );
-                            },
+                    Spacer(),
+                    ListTile(
+                      contentPadding: EdgeInsets.zero,
+                      title: Text(
+                        'Coming soon........',
+                        style: Theme
+                            .of(context)
+                            .textTheme
+                            .headlineSmall!
+                            .copyWith(
+                          fontSize: 13,
+                          color: currentPage == 5
+                              ? Theme
+                              .of(context)
+                              .colorScheme
+                              .onBackground
+                              : Colors.white,
+                        ),
+                      ),
+                      onTap: () {
+                        ref
+                            .read(titleProvider.notifier)
+                            .state = 'Something cooking .....';
+                        Navigator.pop(context);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ComingSoon(),
                           ),
-                          SizedBox(height: 10,),
-                          Container(
-                            alignment: Alignment.center,
-                            width: size.width,
-                            padding: EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: Color(0xff383838),
-                            ),
-                            child: InkWell(
-                              child: Text(
-                                data != null ? 'Logout' : 'Login',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headlineMedium!
-                                    .copyWith(
-                                      fontSize: 22,
-                                      color: Theme.of(context).colorScheme.error,
-                                    ),
-                              ),
-                              onTap: () {
-                                if (data != null) {
-                                  ref.watch(authProvider.notifier).signout();
-                                  GoRouter.of(context).go('/login');
-                                  // Navigator.pop(context);
-                                } else {
-                                  GoRouter.of(context).go('/login');
-                                }
-                              },
-                            ),
+                        );
+                      },
+                    ),
+                    SizedBox(height: 10,),
+                    Container(
+                      alignment: Alignment.center,
+                      width: size.width,
+                      padding: EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        color: Color(0xff383838),
+                      ),
+                      child: InkWell(
+                        child: Text(
+                          data != null ? 'Logout' : 'Login',
+                          style: Theme
+                              .of(context)
+                              .textTheme
+                              .headlineMedium!
+                              .copyWith(
+                            fontSize: 22,
+                            color: Theme
+                                .of(context)
+                                .colorScheme
+                                .error,
                           ),
-                          const SizedBox(height: 10,),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text.rich(
-                                TextSpan(
-                                  text: 'Made with ♥️ TSEC ',
-                                  style: TextStyle(fontSize: 10, color: Colors.white),
-                                  children: [
-                                    TextSpan(
-                                      text: 'Devs Club',
-                                      style: TextStyle(fontSize: 10, color: Colors.blue, fontWeight: FontWeight.w700)
-                                    )
-                                  ]
-                                ),
-                              )
-                            ],
-                          )
-                        ],
+                        ),
+                        onTap: () {
+                          if (data != null) {
+                            ref.watch(authProvider.notifier).signout();
+                            GoRouter.of(context).go('/login');
+                            // Navigator.pop(context);
+                          } else {
+                            GoRouter.of(context).go('/login');
+                          }
+                        },
                       ),
                     ),
-                  ),
+                    const SizedBox(height: 10,),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text.rich(
+                          TextSpan(
+                              text: 'Made with ♥️ TSEC ',
+                              style: TextStyle(
+                                  fontSize: 10, color: Colors.white),
+                              children: [
+                                TextSpan(
+                                    text: 'Devs Club',
+                                    style: TextStyle(fontSize: 10,
+                                        color: Colors.blue,
+                                        fontWeight: FontWeight.w700)
+                                )
+                              ]
+                          ),
+                        )
+                      ],
+                    )
+                  ],
+                ),
               ),
-            )
+            ),
+          ),
+        )
             : null,
         bottomNavigationBar: MainBottomNavBar(
           onTileTap: _getIndex,
@@ -676,13 +762,32 @@ class _MainScreenState extends ConsumerState<MainScreen> {
     );
   }
 
-  String getTitle(){
-    switch(currentPage){
-      case 0: return "Home";
-      case 1: return "Notes";
-      case 2: return "Railway";
-      case 3: return "Profile";
-      default: return "";
+
+  String getTitle(UserModel? data) {
+    if (data!=null && data.facultyModel != null) {
+      switch (currentPage) {
+        case 0:
+          return "Home";
+        case 1:
+          return "Notes";
+        case 2:
+          return "Profile";
+        default:
+          return "";
+      }
+    } else {
+      switch (currentPage) {
+        case 0:
+          return "Home";
+        case 1:
+          return "Notes";
+        case 2:
+          return "Railway";
+        case 3:
+          return "Profile";
+        default:
+          return "";
+      }
     }
   }
 }

@@ -41,8 +41,7 @@ class _ConcessionStatusModalState extends ConsumerState<ConcessionStatusModal> {
       padding: const EdgeInsets.all(8.0),
       child: Container(
         alignment: Alignment.center,
-        // height: 70,
-        height: 50,
+        height: 45,
         width: size.width*0.7,
         decoration: BoxDecoration(
           color: concessionDetails?.status == ConcessionStatus.rejected
@@ -50,24 +49,12 @@ class _ConcessionStatusModalState extends ConsumerState<ConcessionStatusModal> {
               : widget.canIssuePass(concessionDetails, lastPassIssued, duration)
                   ? Theme.of(context).colorScheme.tertiaryContainer
                   : Theme.of(context).colorScheme.primary,
-          borderRadius: BorderRadius.circular(5),
-          // boxShadow: isItDarkMode
-          //     ? shadowLightModeTextFields
-          //     : shadowDarkModeTextFields,
+          borderRadius: BorderRadius.circular(20),
         ),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Text(
             concessionDetails?.status != null ? "Status : ${getStatusText(concessionDetails!.status)}" : "Can Apply for Pass",
-            /*"Status : ${concessionDetails?.status == ConcessionStatus.rejected
-                    ? "Rejected"
-          : concessionDetails?.status ==
-                    ConcessionStatus.unserviced
-                    ? "Pending"
-          : widget.canIssuePass(
-          concessionDetails, lastPassIssued, duration)
-          ? "Can apply"
-          : ""}",*/
             style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                   color: Colors.white,
                   fontWeight: FontWeight.w600,
@@ -80,7 +67,7 @@ class _ConcessionStatusModalState extends ConsumerState<ConcessionStatusModal> {
 
   String getStatusText(String status){
     if(status == ConcessionStatus.rejected){
-      return "Sorry Cnncession Rejected";
+      return "Sorry Rejected";
     }else if(status == ConcessionStatus.unserviced){
       return "Pending";
     }else if(status == ConcessionStatus.serviced){

@@ -11,6 +11,7 @@ import 'package:tsec_app/models/notification_model/notification_model.dart';
 import 'package:tsec_app/models/student_model/student_model.dart';
 import 'package:tsec_app/models/user_model/user_model.dart';
 import 'package:tsec_app/provider/concession_provider.dart';
+import 'package:tsec_app/provider/concession_request_provider.dart';
 import 'package:tsec_app/provider/firebase_provider.dart';
 import 'package:tsec_app/provider/notes_provider.dart';
 import 'package:tsec_app/provider/notification_provider.dart';
@@ -123,6 +124,7 @@ class AuthProvider extends StateNotifier<bool> {
             .watch(authProvider.notifier)
             .updateStudentTimeTableData(userModel.studentModel, ref);
         await ref.watch(concessionProvider.notifier).getConcessionData();
+        await ref.watch(concessionRequestProvider.notifier).getConcessionRequestData();
       }
       await ref.watch(subjectsProvider.notifier).fetchSubjects();
       await ref.watch(authProvider.notifier).fetchProfilePic();

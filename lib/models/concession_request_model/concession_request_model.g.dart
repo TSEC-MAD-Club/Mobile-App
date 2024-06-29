@@ -9,7 +9,7 @@ part of 'concession_request_model.dart';
 ConcessionRequestModel _$ConcessionRequestModelFromJson(
         Map<String, dynamic> json) =>
     ConcessionRequestModel(
-      passNum: json['passNum'] as int?,
+      passNum: json['passNum'] as String?,
       status: json['status'] as String,
       statusMessage: json['statusMessage'] as String,
       // time: json['time'] as Timestamp,

@@ -10,6 +10,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:tsec_app/models/concession_details_model/concession_details_model.dart';
 import 'package:tsec_app/models/student_model/student_model.dart';
+import 'package:tsec_app/new_ui/colors.dart';
 import 'package:tsec_app/new_ui/screens/railway_screen/widgets/concession_status_modal.dart';
 import 'package:tsec_app/new_ui/screens/railway_screen/widgets/railway_dropdown_search.dart';
 import 'package:tsec_app/new_ui/screens/railway_screen/widgets/railway_dropdown_field.dart';
@@ -67,7 +68,7 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
     DateTime today = DateTime.now();
     DateTime lastPass = lastPassIssued ?? DateTime.now();
     DateTime futurePass = lastPass.add(
-        duration == "Monthly" ? const Duration(days: 30) : Duration(days: 90));
+        duration == "Monthly" ? const Duration(days: 27) : Duration(days: 87));
     int diff = futurePass.difference(today).inDays;
     return "You will be able to apply for a new pass after $diff days";
   }
@@ -327,7 +328,7 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
       previousPassURL: previousPassURL,
       from: homeStation,
       to: toStation,
-      lastPassIssued: lastPassIssued,
+      lastPassIssued: null,
       address: addressController.text,
       dob: _selectedDate ?? DateTime.now(),
       phoneNum: int.parse(phoneNumController.text),
@@ -345,6 +346,8 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
       await ref
           .watch(concessionProvider.notifier)
           .applyConcession(details, idCardPhoto!, previousPassPhoto!, context);
+      clearValues();
+      Navigator.pop(context);
     } else if (idCardPhotoTemp == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Please add the photo of your ID card")),
@@ -460,9 +463,10 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
             AnimatedContainer(
               duration: Duration(milliseconds: 5000),
               decoration: BoxDecoration(
+                // color: commonbgblack,
                 color: Theme.of(context).colorScheme.onPrimary,
                 borderRadius: !editMode
-                    ? BorderRadius.all(Radius.circular(25)
+                    ? BorderRadius.all(Radius.circular(0)
                         // topLeft: Radius.circular(25.0),
                         // topRight: Radius.circular(25.0),
                         )
@@ -498,7 +502,7 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
                               readOnly: false,
                               controller: middleNameController,
                               validator: (value) {
-                                if (value!.isEmpty) {
+                                if (value==null || value.isEmpty) {
                                   return 'Please enter your Middle Name';
                                 }
                                 return null;
@@ -719,22 +723,25 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
                                 ),
                                 SizedBox(
                                   width: MediaQuery.of(context).size.width * .45,
-                                  child: RailwayDropdownSearch(
-                                    editMode: false,
-                                    label: "To",
-                                    items: mumbaiRailwayStations,
-                                    val: toStation,
-                                    onChanged: (String? newVal) {
-                                      if (newVal != null) {
-                                        toStation = newVal;
-                                      }
-                                    },
-                                    validator: (value) {
-                                      if (value == null) {
-                                        return 'Please enter your Destination Station';
-                                      }
-                                      return null;
-                                    },
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "To",
+                                        style: TextStyle(
+                                          fontSize: 16.0,
+                                          color: Colors.grey,
+                                        ),
+                                      ),
+                                      SizedBox(height: 8.0),
+                                      Text(
+                                        toStation,
+                                        style: TextStyle(
+                                          fontSize: 18.0,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ],
@@ -761,53 +768,60 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          FilledButton(
-                            onPressed: () {
-                              print("Cleared Section");
-                              clearValues();
-                              Navigator.pop(context);
-                            },
-                            style: FilledButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(
-                                    10.0), // Set the border radius
+                          SizedBox(
+                            width:MediaQuery.of(context).size.width * .43,
+                            child: FilledButton(
+                              onPressed: () {
+                                print("Cleared Section");
+                                clearValues();
+                                Navigator.pop(context);
+                              },
+                              style: FilledButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                      7.0), // Set the border radius
+                                ),
+                                backgroundColor: Theme.of(context)
+                                    .colorScheme
+                                    .secondaryContainer,
                               ),
-                              backgroundColor: Theme.of(context)
-                                  .colorScheme
-                                  .secondaryContainer,
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.fromLTRB(22, 12, 22, 12),
-                              child: Text('Cancel',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headlineMedium!
-                                      .copyWith(
-                                        color: Colors.white,
-                                      )),
+                              child: Padding(
+                                padding: const EdgeInsets.fromLTRB(10, 12, 10, 12),
+                                child: Text('Cancel',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headlineMedium!
+                                        .copyWith(
+                                          color: Colors.white,
+                                        )),
+                              ),
                             ),
                           ),
-                          FilledButton(
-                            onPressed: () {
-                              saveChanges(ref);
-                            },
-                            style: FilledButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(
-                                    10.0), // Set the border radius
+                          SizedBox(
+                            width:MediaQuery.of(context).size.width * .43,
+                            child: FilledButton(
+                              onPressed: () {
+                                saveChanges(ref);
+                              },
+
+                              style: FilledButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                      7.0), // Set the border radius
+                                ),
+                                backgroundColor:
+                                    Theme.of(context).colorScheme.tertiaryContainer,
                               ),
-                              backgroundColor:
-                                  Theme.of(context).colorScheme.tertiaryContainer,
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.fromLTRB(22, 12, 22, 12),
-                              child: Text('Confirm',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headlineMedium!
-                                      .copyWith(
-                                        color: Colors.white,
-                                      )),
+                              child: Padding(
+                                padding: const EdgeInsets.fromLTRB(10, 12, 10, 12),
+                                child: Text('Confirm',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headlineMedium!
+                                        .copyWith(
+                                          color: Colors.white,
+                                        )),
+                              ),
                             ),
                           ),
                         ],
