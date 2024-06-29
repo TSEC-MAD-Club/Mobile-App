@@ -1,5 +1,6 @@
 import 'package:easy_stepper/easy_stepper.dart';
 import 'package:flutter/material.dart';
+import 'package:tsec_app/new_ui/colors.dart';
 
 class StatusStepper extends StatelessWidget {
   final String concessionStatus;
@@ -14,14 +15,19 @@ class StatusStepper extends StatelessWidget {
       color: Colors.transparent,
       width: size.width * 0.9,
       child: EasyStepper(
-        finishedStepBorderColor: Colors.blue,
+        finishedStepBorderColor: Colors.white,
+        activeStepBorderColor: Colors.white,
+        activeStepBorderType: BorderType.normal,
+        finishedStepBorderType: BorderType.normal,
+        finishedStepBackgroundColor: Colors.white,
+        activeStepBackgroundColor: Colors.white,
 
         lineStyle: LineStyle(
             lineLength: size.width * 0.2,
-            finishedLineColor: Colors.blue,
+            finishedLineColor: Colors.white,
             lineType: LineType.normal,
             unreachedLineColor: Colors.grey.shade600,
-            unreachedLineType: LineType.dotted,
+            unreachedLineType: LineType.dashed,
         ),
         showLoadingAnimation: false,
         stepRadius: 20,
