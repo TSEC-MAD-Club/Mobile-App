@@ -24,7 +24,7 @@ class ContainerIconWithName extends StatelessWidget {
             //height: MediaQuery.of(context).size.height * 0.14,
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
-              color: _theme.colorScheme.onSecondary,
+              color: Colors.yellow.shade800,
               borderRadius: BorderRadius.circular(15.0),
               boxShadow: [
                 BoxShadow(

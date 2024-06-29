@@ -41,12 +41,12 @@ class ConcessionProvider extends StateNotifier<String> {
     // concessionDetails.statusMessage =
     //     await _concessionService.getWaitingMessage();
     // _ref.read(concessionDetailsProvider.notifier).state = concessionDetails;
-    state="Applying for concession, please be patient";
+    state="Application processing...";
 
     ConcessionDetailsModel concessionDetailsData =
         await _concessionService.applyConcession(concessionDetails);
 
-    state="We are uploading your photos, this might take some time. We will notify you when the process completes.";
+    state="Uploading files...";
 
     _ref.read(concessionDetailsProvider.notifier).state = concessionDetailsData;
 
@@ -57,7 +57,6 @@ class ConcessionProvider extends StateNotifier<String> {
     await _concessionService.applyConcession(concessionDetailsData);
     state="";
 
-    Navigator.of(context).pop();
   }
 
   Future getConcessionData() async {
