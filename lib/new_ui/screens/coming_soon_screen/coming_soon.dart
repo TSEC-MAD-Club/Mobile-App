@@ -70,22 +70,23 @@ class _ComingSoonState extends State<ComingSoon> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    "What are we working on 🤔",
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyLarge!
-                        .copyWith(color: Colors.white),
-                  ),
-                  SizedBox(height: 40.0),
+                  // Text(
+                  //   "What are we working on 🤔",
+                  //   style: Theme.of(context)
+                  //       .textTheme
+                  //       .bodyLarge!
+                  //       .copyWith(color: Colors.white),
+                  // ),
+                  SizedBox(height: 0.0),
                   SizedBox(
                     width: MediaQuery.of(context).size.width * .75,
                     height: MediaQuery.of(context).size.width * .60,
                     child: Lottie.asset("assets/animation/coming_soon_lottie.json"),
                   ),
-                  SizedBox(height: 40.0),
+                  SizedBox(height: 50.0),
                   Text(
-                    "Hold up.....something interesting is on the way! 🚀 😉",
+                    "Hold up!\nexciting updates are on the way!",
+                    textAlign: TextAlign.center,
                     style: Theme.of(context)
                         .textTheme
                         .bodyLarge!
