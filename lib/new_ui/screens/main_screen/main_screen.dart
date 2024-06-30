@@ -7,7 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tsec_app/models/user_model/user_model.dart';
 import 'package:tsec_app/new_ui/colors.dart';
-import 'package:tsec_app/new_ui/screens/bug_report_screen.dart';
+import 'package:tsec_app/new_ui/screens/bug_report_screen/bug_report_screen.dart';
 import 'package:tsec_app/new_ui/screens/coming_soon_screen/coming_soon.dart';
 import 'package:tsec_app/new_ui/screens/about_us_screen/about_us.dart';
 import 'package:tsec_app/new_ui/screens/erp_screen/erp_screen.dart';
