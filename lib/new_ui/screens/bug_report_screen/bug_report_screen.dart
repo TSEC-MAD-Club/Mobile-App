@@ -1,23 +1,34 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tsec_app/new_ui/screens/main_screen/widgets/common_basic_appbar.dart';
-import 'package:tsec_app/provider/auth_provider.dart';
+import 'package:tsec_app/new_ui/screens/bug_report_screen/widgets/image_card.dart';
 import 'package:tsec_app/provider/bug_report_provider.dart';
 import 'package:tsec_app/provider/firebase_provider.dart';
 import 'package:tsec_app/utils/custom_snackbar.dart';
 import 'package:tsec_app/utils/image_pick.dart';
 
-class BugReportScreen extends ConsumerWidget {
+class BugReportScreen extends ConsumerStatefulWidget {
   BugReportScreen({Key? key}) : super(key: key);
+  
+  @override
+  ConsumerState<BugReportScreen> createState() => _BugReportScreenState();
+}
+
+class _BugReportScreenState extends ConsumerState<BugReportScreen> {
 
   final titleController = TextEditingController();
   final descriptionController = TextEditingController();
   List<File> images = [];
 
+  void removeImage(File file) {
+    setState(() {
+      images.remove(file);
+    });
+  }
+
+
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar:  AppBar(shadowColor: Colors.transparent,
         backgroundColor: Colors.transparent,
@@ -86,12 +97,37 @@ class BugReportScreen extends ConsumerWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   OutlinedButton(onPressed: () async{
-                    images = await pickMultipleImages();
-                    print(images);
-                  }, child: Text('Pick images')),
+                    var selected = await pickMultipleImages();
+                    images.addAll(selected);
+                    setState(() {
+                      //print(images.isEmpty);
+                    });
+                    }, child: Text('Pick images'))
                 ],
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 10),
+              if (!images.isEmpty)
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    //Container(color: Colors.white, height: 20, width: 20,)
+        
+                    SizedBox(
+                      height: 120,
+                      //width: 120,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        shrinkWrap: true,
+                        itemCount: images.length,
+                        itemBuilder: (context, index) {
+                          return ImageCard(image: images[index], remImg: removeImage,);
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              //else const SizedBox(height: 20,),
+        
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -99,6 +135,7 @@ class BugReportScreen extends ConsumerWidget {
                     await ref.read(bugreportNotifierProvider.notifier).addBugreport(titleController.text, descriptionController.text, images, ref.read(firebaseAuthProvider).currentUser!.uid);
                     titleController.clear();
                     descriptionController.clear();
+                    images.clear();
                     showSnackBar(context, 'Submitted successfully');
                   }, color: Colors.green, child: Text('Submit'),),
                 ],
