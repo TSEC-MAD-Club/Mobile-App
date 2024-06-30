@@ -21,6 +21,8 @@ import 'package:tsec_app/new_ui/screens/railway_screen/widgets/railway_text_fiel
 import 'package:tsec_app/utils/railway_enum.dart';
 import 'package:tsec_app/utils/station_list.dart';
 
+import '../../../provider/concession_request_provider.dart';
+
 class RailwayForm extends ConsumerStatefulWidget {
   const RailwayForm({super.key});
 
@@ -357,6 +359,9 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
         SnackBar(content: Text("Please add the photo of your previous pass")),
       );
     }
+    ref.read(concessionProvider.notifier).getConcessionData();
+    ref.read(concessionRequestProvider.notifier).getConcessionRequestData();
+
   }
 
   Widget buildImagePicker(String type, File? selectedPhoto, bool editMode) {
