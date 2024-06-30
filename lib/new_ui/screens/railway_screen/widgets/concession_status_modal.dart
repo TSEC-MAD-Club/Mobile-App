@@ -48,7 +48,7 @@ class _ConcessionStatusModalState extends ConsumerState<ConcessionStatusModal> {
               ? Theme.of(context).colorScheme.error
               : widget.canIssuePass(concessionDetails, lastPassIssued, duration)
                   ? Theme.of(context).colorScheme.tertiaryContainer
-                  : Theme.of(context).colorScheme.primary,
+                  : Colors.yellow.shade800,
           borderRadius: BorderRadius.circular(20),
         ),
         child: Padding(

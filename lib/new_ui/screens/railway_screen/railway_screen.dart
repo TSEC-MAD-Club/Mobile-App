@@ -428,6 +428,19 @@ class _RailwayConcessionScreenState
     );
   }
 
+
+  void initState() {
+    super.initState();
+
+    // Fetch data once when the page is loaded
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(concessionProvider.notifier).getConcessionData();
+      ref.read(concessionRequestProvider.notifier).getConcessionRequestData();
+    });
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
