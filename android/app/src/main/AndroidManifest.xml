@@ -2,31 +2,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.madclubtsec.tsec_application.tsec_app">
 
-   <uses-permission android:name="android.permission.INTERNET"/>
-   <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-   <uses-permission android:name="android.permission.READ_MEDIA._*"/>
-   <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-   <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" tools:node="remove"/>
-   <uses-permission android:name="com.google.android.gms.permission.AD_ID" tools:node="remove"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_MEDIA._*"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" tools:node="remove"/>
+    <uses-permission android:name="com.google.android.gms.permission.AD_ID" tools:node="remove"/>
 
-   <queries>
+    <queries>
         <intent>
-          <action android:name="android.intent.action.VIEW" />
-          <data android:scheme="https" />
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="https" />
         </intent>
         <intent>
-          <action android:name="android.intent.action.SEND" />
-          <data android:mimeType="*/*" />
-      </intent>
-   </queries>
-     
-   <application
+            <action android:name="android.intent.action.SEND" />
+            <data android:mimeType="*/*" />
+        </intent>
+    </queries>
+
+    <application
         android:label="Tsec App"
         android:icon="@mipmap/ic_launcher"
         android:requestLegacyExternalStorage="true"
-      >
+        >
         <activity
-           
+
             android:name=".MainActivity"
             android:launchMode="singleTop"
             android:exported="true"
@@ -39,21 +39,21 @@
                  while the Flutter UI initializes. After that, this theme continues
                  to determine the Window background behind the Flutter UI. -->
             <meta-data
-              android:name="io.flutter.embedding.android.NormalTheme"
-              android:resource="@style/NormalTheme"
-              />
+                android:name="io.flutter.embedding.android.NormalTheme"
+                android:resource="@style/NormalTheme"
+                />
             <!-- Displays an Android View that continues showing the launch screen
                  Drawable until Flutter paints its first frame, then this splash
                  screen fades out. A splash screen is useful to avoid any visual
                  gap between the end of Android's launch screen and the painting of
                  Flutter's first frame. -->
             <meta-data
-              android:name="io.flutter.embedding.android.SplashScreenDrawable"
-              android:resource="@drawable/launch_background"
-              />
+                android:name="io.flutter.embedding.android.SplashScreenDrawable"
+                android:resource="@drawable/launch_background"
+                />
             <meta-data
-              android:name="com.google.firebase.messaging.default_notification_channel_id"
-              android:value="high_importance_channel" />
+                android:name="com.google.firebase.messaging.default_notification_channel_id"
+                android:value="high_importance_channel" />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
