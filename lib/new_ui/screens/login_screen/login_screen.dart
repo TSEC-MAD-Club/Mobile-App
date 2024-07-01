@@ -99,6 +99,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         //   GoRouter.of(context).go(
         //       '/profile-page?justLoggedIn=true');
         // }
+
         GoRouter.of(context).go('/profile-page?justLoggedIn=true');
       }
     }
