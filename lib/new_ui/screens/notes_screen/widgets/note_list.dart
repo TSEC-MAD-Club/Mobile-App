@@ -259,22 +259,24 @@ class _NoteListState extends ConsumerState<NoteList> {
           )
         : SliverFillRemaining(
       child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(
-              'assets/images/app_bar/notes.png',
-              height: 100,
-            ),
-            SizedBox(height: 20),
-            Text(
-              "No notes added yet",
-              style: Theme.of(context)
-                  .textTheme
-                  .titleLarge!
-                  .copyWith(color: Colors.white),
-            ),
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                'assets/images/app_bar/notes.png',
+                height: 100,
+              ),
+              SizedBox(height: 20),
+              Text(
+                "No notes added yet",
+                style: Theme.of(context)
+                    .textTheme
+                    .titleLarge!
+                    .copyWith(color: Colors.white),
+              ),
+            ],
+          ),
         ),
       ),
     );
