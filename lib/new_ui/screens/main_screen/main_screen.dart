@@ -1,6 +1,9 @@
 import 'dart:typed_data';
 import 'dart:ui';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -54,12 +57,18 @@ class _MainScreenState extends ConsumerState<MainScreen> {
   late List<Widget> pages;
   late Map<String, Widget> widgetMap;
 
+  late FirebaseMessaging _firebaseMessaging;
+
+
   @override
   void initState() {
     UserModel? user = ref.read(userModelProvider);
 
 
+
+
       if (user != null && user.isStudent) {
+        //student login
       widgetMap = {
         "home": HomeWidget(
           changeCurrentPage: (page, index) {
@@ -77,6 +86,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
         )
       };
     } else {
+
       widgetMap = {
         "home": HomeWidget(
           changeCurrentPage: (page, index) {
