@@ -17,50 +17,29 @@ import 'package:tsec_app/new_ui/screens/splash_screen/splash_screen.dart';
 import 'package:tsec_app/new_ui/screens/main_screen/main_screen.dart';
 import 'package:tsec_app/new_ui/screens/login_screen/login_screen.dart';
 import "package:tsec_app/new_ui/screens/event_details_screen/event_details.dart";
-// import 'package:tsec_app/screens/login_screen/login_screen.dart';
 import 'package:tsec_app/new_ui/screens/profile_screen/profile_screen.dart';
 import 'package:tsec_app/screens/department_screen/department_screen.dart';
 import 'package:tsec_app/screens/departmentlist_screen/department_list.dart';
 import 'package:tsec_app/utils/department_enum.dart';
-// import 'package:tsec_app/screens/railwayConcession/railwayConcession.dart';
-// import 'package:tsec_app/screens/splash_screen.dart';
-//import 'firebase_options.dart';
 import 'provider/app_state_provider.dart';
 import 'provider/shared_prefs_provider.dart';
 import 'provider/theme_provider.dart';
-// import 'screens/old_committees_screen.dart';
-// import 'screens/departmentlist_screen/department_list.dart';
-// import 'screens/department_screen/department_screen.dart';
-// import 'screens/main_screen/main_screen.dart';
-// import 'screens/notification_screen/notification_screen.dart';
-// import 'screens/theme_screen/theme_screen.dart';
-// import 'screens/tpc_screen.dart';
 import 'utils/init_get_it.dart';
 import 'utils/themes.dart';
 import 'firebase_options.example.dart';
+import 'package:tsec_app/provider/auth_provider.dart';
+import 'package:tsec_app/models/user_model/user_model.dart';
 
-// To handle all the background messages
-// Currently not used but wont work if not present
-Future<void> _handleBackgroundMessage(RemoteMessage message) async {}
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp();
+  print("Handling a background message: ${message.messageId}");
+}
 
 Future<void> main() async {
-  // bool debugMode = true;
-
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    //options: DefaultFirebaseOptions.currentPlatform,
-  );
-  // if (debugMode) {
-  //   try {
-  //     FirebaseFirestore.instance.useFirestoreEmulator('localhost', 8080);
-  //     FirebaseStorage.instance.useStorageEmulator('localhost', 9199);
-  //     await FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
-  //   } catch (e) {
-  //     // ignore: avoid_print
-  //     print(e);
-  //   }
-  // }
-  FirebaseMessaging.onBackgroundMessage(_handleBackgroundMessage);
+  await Firebase.initializeApp();
+
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   initGetIt();
 
@@ -88,10 +67,71 @@ class TSECApp extends ConsumerStatefulWidget {
 
 class _TSECAppState extends ConsumerState<TSECApp> {
   late final GoRouter _routes;
+  late FirebaseMessaging _firebaseMessaging;
 
   @override
   void initState() {
     super.initState();
+    _firebaseMessaging = FirebaseMessaging.instance;
+
+    // Request permissions for iOS
+    _firebaseMessaging.requestPermission();
+
+    // Get the FCM token and save it to Firestore
+    _firebaseMessaging.getToken().then((String? token) {
+      assert(token != null);
+      print("FCM Token: $token");
+
+      // Assume `userId` is the ID of the logged-in user in Firestore
+      final String userId = "lWgfsNhpZ9OylpPISiQ2WzyCIvT2"; //<<<----------------------------------------------
+
+      // Save the token to Firestore
+      FirebaseFirestore.instance
+          .collection('Students ')
+          .doc(userId)
+          .update({'fcmToken': token});
+    });
+
+    // Handle messages when the app is in the foreground
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      print("Received a message while in the foreground!");
+      print("Message data: ${message.data}");
+
+      if (message.notification != null) {
+        print("Message also contained a notification: ${message.notification}");
+      }
+
+      // Display the notification as a dialog or snackbar
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text(message.notification?.title ?? 'No Title'),
+          content: Text(message.notification?.body ?? 'No Body'),
+        ),
+      );
+    });
+
+    // Handle messages when the app is in the background but not terminated
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      print('Message clicked!');
+      // Handle the notification click event
+    });
+
+    // Get the FCM token and save it to Firestore
+    _firebaseMessaging.getToken().then((String? token) {
+      assert(token != null);
+      print("FCM Token: $token");
+
+      // Save the token to Firestore
+      // You need to write this part to save the token in the 'Students' collection
+    });
+
+    FirebaseMessaging.instance.getInitialMessage().then((RemoteMessage? message) {
+      if (message != null) {
+        print('Notification caused app to open from terminated state: ${message.data}');
+        // Handle the notification click event
+      }
+    });
   }
 
   @override
@@ -108,10 +148,6 @@ class _TSECAppState extends ConsumerState<TSECApp> {
 
   @override
   Widget build(BuildContext context) {
-    // if (ref.watch(firebaseAuthProvider).currentUser?.uid != null) {
-    // getuserData();
-    // }
-
     final _themeMode = ref.watch(themeProvider);
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
@@ -121,9 +157,7 @@ class _TSECAppState extends ConsumerState<TSECApp> {
       routeInformationParser: _routes.routeInformationParser,
       routerDelegate: _routes.routerDelegate,
       title: 'TSEC App',
-      // themeMode: _themeMode,
       themeMode: ThemeMode.dark,
-      // theme: theme,
       darkTheme: darkTheme,
     );
   }
