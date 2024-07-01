@@ -28,82 +28,82 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   late Map<String, Widget> widgetMap;
 
-  @override
-  void initState() {
-    super.initState();
-    UserModel? user = ref.read(userModelProvider);
-
-    _firebaseMessaging = FirebaseMessaging.instance;
-
-    // Request permissions for iOS
-    _firebaseMessaging.requestPermission();
-
-    // Handle messages when the app is in the foreground
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      print("Received a message while in the foreground!");
-      print("Message data: ${message.data}");
-
-      if (message.notification != null) {
-        print("Message also contained a notification: ${message.notification}");
-      }
-
-      // Display the notification as a dialog or snackbar
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: Text(message.notification?.title ?? 'No Title'),
-          content: Text(message.notification?.body ?? 'No Body'),
-        ),
-      );
-    });
-
-    // Handle messages when the app is in the background but not terminated
-    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      print('Message clicked!');
-      // Handle the notification click event
-    });
-
-    // Get the FCM token and save it to Firestore
-    _firebaseMessaging.getToken().then((String? token) {
-      assert(token != null);
-      print("FCM Token: $token");
-
-      // Save the token to Firestore
-      // You need to write this part to save the token in the 'Students' collection
-    });
-
-    if (user != null && user.isStudent) {
-      widgetMap = {
-        "home": HomeWidget(
-          changeCurrentPage: (page, index) {
-            setState(() {
-              widget.changeCurrentBottomNavPage(page);
-            });
-          },
-        ),
-        "attendance": ERPScreen(),
-        "timetable": const TimeTable(),
-        "concession": const RailwayConcessionScreen(),
-        "profile": ProfilePage(
-          justLoggedIn: false,
-        )
-      };
-    } else {
-      widgetMap = {
-        "home": HomeWidget(
-          changeCurrentPage: (page, index) {
-            setState(() {
-              widget.changeCurrentBottomNavPage(page);
-            });
-          },
-        ),
-        "attendance": ERPScreen(),
-        "profile": ProfilePage(
-          justLoggedIn: false,
-        )
-      };
-    }
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   UserModel? user = ref.read(userModelProvider);
+  //
+  //   _firebaseMessaging = FirebaseMessaging.instance;
+  //
+  //   // Request permissions for iOS
+  //   _firebaseMessaging.requestPermission();
+  //
+  //   // Handle messages when the app is in the foreground
+  //   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+  //     print("Received a message while in the foreground!");
+  //     print("Message data: ${message.data}");
+  //
+  //     if (message.notification != null) {
+  //       print("Message also contained a notification: ${message.notification}");
+  //     }
+  //
+  //     // Display the notification as a dialog or snackbar
+  //     showDialog(
+  //       context: context,
+  //       builder: (context) => AlertDialog(
+  //         title: Text(message.notification?.title ?? 'No Title'),
+  //         content: Text(message.notification?.body ?? 'No Body'),
+  //       ),
+  //     );
+  //   });
+  //
+  //   // Handle messages when the app is in the background but not terminated
+  //   FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+  //     print('Message clicked!');
+  //     // Handle the notification click event
+  //   });
+  //
+  //   // Get the FCM token and save it to Firestore
+  //   _firebaseMessaging.getToken().then((String? token) {
+  //     assert(token != null);
+  //     print("FCM Token: $token");
+  //
+  //     // Save the token to Firestore
+  //     // You need to write this part to save the token in the 'Students' collection
+  //   });
+  //
+  //   if (user != null && user.isStudent) {
+  //     widgetMap = {
+  //       "home": HomeWidget(
+  //         changeCurrentPage: (page, index) {
+  //           setState(() {
+  //             widget.changeCurrentBottomNavPage(page);
+  //           });
+  //         },
+  //       ),
+  //       "attendance": ERPScreen(),
+  //       "timetable": const TimeTable(),
+  //       "concession": const RailwayConcessionScreen(),
+  //       "profile": ProfilePage(
+  //         justLoggedIn: false,
+  //       )
+  //     };
+  //   } else {
+  //     widgetMap = {
+  //       "home": HomeWidget(
+  //         changeCurrentPage: (page, index) {
+  //           setState(() {
+  //             widget.changeCurrentBottomNavPage(page);
+  //           });
+  //         },
+  //       ),
+  //       "attendance": ERPScreen(),
+  //       "profile": ProfilePage(
+  //         justLoggedIn: false,
+  //       )
+  //     };
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {

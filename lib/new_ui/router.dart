@@ -25,14 +25,14 @@ final routes = GoRouter(
       path: "/main",
       builder: (context, state) => MainScreen(),
     ),
-    GoRoute(
-      name: "home",
-      path: "/home",
-      builder: (context, state) => HomeScreen(
-      currentBottomNavPage: "home",
-      changeCurrentBottomNavPage: () {},
-      ),
-    ),
+    // GoRoute(
+    //   name: "home",
+    //   path: "/home",
+    //   builder: (context, state) => HomeScreen(
+    //   currentBottomNavPage: "home",
+    //   changeCurrentBottomNavPage: () {},
+    //   ),
+    // ),
     GoRoute(
       path: '/login',
       builder: (context, state) => const LoginScreen(),

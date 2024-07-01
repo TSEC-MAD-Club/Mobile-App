@@ -45,7 +45,7 @@ class _ConcessionStatusModalState extends ConsumerState<ConcessionStatusModal> {
         width: size.width*0.7,
         decoration: BoxDecoration(
           color: concessionDetails?.status == ConcessionStatus.rejected
-              ? Theme.of(context).colorScheme.error
+              ? Colors.green
               : widget.canIssuePass(concessionDetails, lastPassIssued, duration)
                   ? Theme.of(context).colorScheme.tertiaryContainer
                   : Colors.yellow.shade800,
@@ -67,7 +67,7 @@ class _ConcessionStatusModalState extends ConsumerState<ConcessionStatusModal> {
 
   String getStatusText(String status){
     if(status == ConcessionStatus.rejected){
-      return "Sorry Rejected";
+      return "Apply Again";
     }else if(status == ConcessionStatus.unserviced){
       return "Pending";
     }else if(status == ConcessionStatus.serviced){
