@@ -479,26 +479,14 @@ class _RailwayConcessionScreenState
                 splashColor: Colors.transparent,
                 onTap: () {
                   //tried to put the saame logic in function but it didnt work
-                  // if (buttonTrigger(ConcessionStatus)) {
-                  if(status == ConcessionStatus.rejected){
+                  if (canIssuePass(concessionDetails, concessionDetails?.lastPassIssued, concessionDetails?.duration)) {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => const RailwayForm(),
                       ),
                     );
-                  }else if(status == ConcessionStatus.unserviced){
-                  }else if(status == ConcessionStatus.serviced && canIssuePass(concessionDetails, lastPassIssued, duration)){
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const RailwayForm(),
-                      ),
-                    );
-                  }else {
                   }
-
-                  // }
                 },
                 child: ConcessionStatusModal(
                   canIssuePass: canIssuePass,
