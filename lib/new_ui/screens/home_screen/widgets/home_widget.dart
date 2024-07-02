@@ -81,95 +81,92 @@ class _HomeWidgetState extends ConsumerState<HomeWidget> {
   }
 
   var _onlyUserLoggedIn=false;
+  @override
   void initState() {
+    super.initState();
+
     UserModel? user = ref.read(userModelProvider);
     if (user != null && user.isStudent) {
-      _onlyUserLoggedIn=true;
-    }
-    else {
-      //anonymous and faculty
-      _onlyUserLoggedIn=false;
+      _onlyUserLoggedIn = true;
+    } else {
+      _onlyUserLoggedIn = false;
     }
 
+    _firebaseMessaging = FirebaseMessaging.instance;
 
+    // Request permissions for iOS
+    _firebaseMessaging.requestPermission();
 
+    // Assume `userId` is the ID of the logged-in user in Firestore
+    String? userId = FirebaseAuth.instance.currentUser?.uid;
 
-      _firebaseMessaging = FirebaseMessaging.instance;
+    // Token generation for student
+    if (_onlyUserLoggedIn && userId != null) {
+      print("**********************************************************************************************************");
+      print("logged in");
 
-      // Request permissions for iOS
-      _firebaseMessaging.requestPermission();
-        // Assume `userId` is the ID of the logged-in user in Firestore
-        String? userId = FirebaseAuth.instance.currentUser?.uid; //<<<----------------------------------------------\
-    //token generate for student
-    if(_onlyUserLoggedIn && userId!=null ){
+      // Get the FCM token and save it to Firestore
+      _firebaseMessaging.getToken().then((String? token) {
+        assert(token != null);
+        print("FCM Token: $token");
 
+        // Save the token to Firestore
+        FirebaseFirestore.instance
+            .collection('Students')
+            .doc(userId)
+            .update({'fcmToken': token});
+      });
 
-        print("**********************************************************************************************************8");
-        print("logged in ");
+      // Handle messages when the app is in the foreground
+      FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+        print("Received a message while in the foreground!");
+        print("Message data: ${message.data}");
 
-        // Get the FCM token and save it to Firestore
-        _firebaseMessaging.getToken().then((String? token) {
-          assert(token != null);
-          print("FCM Token: $token");
-
-          // Save the token to Firestore
-          FirebaseFirestore.instance
-              .collection('Students ')
-              .doc(userId)
-              .update({'fcmToken': token});
-        });
-
-
-        // Handle messages when the app is in the foreground
-        FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-          print("Received a message while in the foreground!");
-          print("Message data: ${message.data}");
-
-          if (message.notification != null) {
-            print("Message also contained a notification: ${message.notification}");
-          }
+        if (message.notification != null) {
+          print("Message notification: ${message.notification}");
+          print("Notification title: ${message.notification?.title}");
+          print("Notification body: ${message.notification?.body}");
 
           // Display the notification as a dialog or snackbar
           showDialog(
             context: context,
             builder: (context) => AlertDialog(
               title: Text(message.notification?.title ?? 'No Title'),
-              content: Text(message.notification?.body ?? 'No Body'),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  if (message.data['imageUrl'] != null)
+                    Image.network(message.data['imageUrl']),
+                  SizedBox(height: 10),
+                  Text(
+                    message.notification?.body ?? 'No Body',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  // Add some spacing
+                ],
+              ),
             ),
           );
-        });
 
-        // Handle messages when the app is in the background but not terminated
-        FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-          print('Message clicked!');
+        } else {
+          print("Message did not contain a notification field.");
+        }
+      });
+
+      // Handle messages when the app is in the background but not terminated
+      FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+        print('Message clicked!');
+        // Handle the notification click event
+      });
+
+      FirebaseMessaging.instance.getInitialMessage().then((RemoteMessage? message) {
+        if (message != null) {
+          print('Notification caused app to open from terminated state: ${message.data}');
           // Handle the notification click event
-        });
-
-        // Get the FCM token and save it to Firestore
-        _firebaseMessaging.getToken().then((String? token) {
-          assert(token != null);
-          print("FCM Token: $token");
-
-          // Save the token to Firestore
-          // You need to write this part to save the token in the 'Students' collection
-        });
-
-        FirebaseMessaging.instance.getInitialMessage().then((RemoteMessage? message) {
-          if (message != null) {
-            print('Notification caused app to open from terminated state: ${message.data}');
-            // Handle the notification click event
-          }
-        });
-
-
-
+        }
+      });
     }
-
-    super.initState();
   }
-
-
-
 
   static List<String> imgList = [];
   final CarouselController carouselController = CarouselController();
