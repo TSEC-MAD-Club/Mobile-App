@@ -438,6 +438,7 @@ class _RailwayConcessionScreenState
       ref.read(concessionRequestProvider.notifier).getConcessionRequestData();
     });
   }
+  
 
 
 
@@ -451,6 +452,18 @@ class _RailwayConcessionScreenState
         ? DateFormat('dd/MM/yyyy').format(lastPassIssued!)
         : '';
 
+
+    bool buttonTrigger(ConcessionStatus){
+      if(status == ConcessionStatus.rejected){
+        return true;
+      }else if(status == ConcessionStatus.unserviced){
+        return false;
+      }else if(status == ConcessionStatus.serviced && canIssuePass(concessionDetails, lastPassIssued, duration)){
+        return true;
+      }else {
+        return false;
+      }
+    }
     return SingleChildScrollView(
       child: Center(
         child: Column(
@@ -465,14 +478,27 @@ class _RailwayConcessionScreenState
                 splashFactory: NoSplash.splashFactory,
                 splashColor: Colors.transparent,
                 onTap: () {
-                  if (canIssuePass(concessionDetails, lastPassIssued, duration)) {
+                  //tried to put the saame logic in function but it didnt work
+                  // if (buttonTrigger(ConcessionStatus)) {
+                  if(status == ConcessionStatus.rejected){
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => const RailwayForm(),
                       ),
                     );
+                  }else if(status == ConcessionStatus.unserviced){
+                  }else if(status == ConcessionStatus.serviced && canIssuePass(concessionDetails, lastPassIssued, duration)){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const RailwayForm(),
+                      ),
+                    );
+                  }else {
                   }
+
+                  // }
                 },
                 child: ConcessionStatusModal(
                   canIssuePass: canIssuePass,
