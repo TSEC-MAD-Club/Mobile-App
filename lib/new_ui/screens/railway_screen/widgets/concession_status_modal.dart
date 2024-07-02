@@ -37,6 +37,29 @@ class _ConcessionStatusModalState extends ConsumerState<ConcessionStatusModal> {
     // debugPrint(concessionDetails?.status);
     // debugPrint(
     //     widget.canIssuePass(concessionDetails, lastPassIssued, duration).toString());
+    Color getColor(String? status) {
+      if(status == ConcessionStatus.rejected){
+        return Colors.green;
+      }else if(status == ConcessionStatus.unserviced){
+        return Colors.yellow.shade800;
+      }else if(status == ConcessionStatus.serviced && widget.canIssuePass(concessionDetails, lastPassIssued, duration)){
+        return Colors.green;
+      }else {
+        return Colors.blue;
+      }
+    }
+
+    String getStatusText(String status){
+      if(status == ConcessionStatus.rejected){
+        return "Apply Again";
+      }else if(status == ConcessionStatus.unserviced){
+        return "Pending";
+      }else if(status == ConcessionStatus.serviced && widget.canIssuePass(concessionDetails, lastPassIssued, duration)){
+      return "Apply for new pass";
+      }
+        return "Pass Approved";
+    }
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
@@ -50,7 +73,7 @@ class _ConcessionStatusModalState extends ConsumerState<ConcessionStatusModal> {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Text(
-            concessionDetails?.status != null ? "Status : ${getStatusText(concessionDetails!.status)}" : "Can Apply for Pass",
+            concessionDetails?.status != null ? " ${getStatusText(concessionDetails!.status)}" : "Can Apply for Pass",
             style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                   color: Colors.white,
                   fontWeight: FontWeight.w600,
@@ -61,24 +84,6 @@ class _ConcessionStatusModalState extends ConsumerState<ConcessionStatusModal> {
     );
   }
 
-  Color getColor(String? status) {
-    if(status == ConcessionStatus.rejected){
-    return Colors.green;
-  }else if(status == ConcessionStatus.unserviced){
-    return Colors.yellow.shade800;
-  }else if(status == ConcessionStatus.serviced){
-    return Colors.green;
-  }
-  return Colors.green;
-  }
-  String getStatusText(String status){
-    if(status == ConcessionStatus.rejected){
-      return "Apply Again";
-    }else if(status == ConcessionStatus.unserviced){
-      return "Pending";
-    }else if(status == ConcessionStatus.serviced){
-      return "Pass Approved";
-    }
-    return "You can apply for new pass";
-  }
+
+
 }
