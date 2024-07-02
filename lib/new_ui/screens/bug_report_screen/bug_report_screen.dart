@@ -107,24 +107,27 @@ class _BugReportScreenState extends ConsumerState<BugReportScreen> {
               ),
               const SizedBox(height: 10),
               if (!images.isEmpty)
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    //Container(color: Colors.white, height: 20, width: 20,)
-        
-                    SizedBox(
-                      height: 120,
-                      //width: 120,
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        shrinkWrap: true,
-                        itemCount: images.length,
-                        itemBuilder: (context, index) {
-                          return ImageCard(image: images[index], remImg: removeImage,);
-                        },
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      //Container(color: Colors.white, height: 20, width: 20,)
+
+                      SizedBox(
+                        height: 120,
+                        //width: 120,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          shrinkWrap: true,
+                          itemCount: images.length,
+                          itemBuilder: (context, index) {
+                            return ImageCard(image: images[index], remImg: removeImage,);
+                          },
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               //else const SizedBox(height: 20,),
         
@@ -132,11 +135,17 @@ class _BugReportScreenState extends ConsumerState<BugReportScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   MaterialButton(onPressed: ()async{
+                    if(titleController.text.isEmpty || descriptionController.text.isEmpty || images.isEmpty){
+                      showSnackBar(context, 'Please fill all fields');
+                      return;
+                    }
+                    else {
+                    showSnackBar(context, 'Submitting...');
                     await ref.read(bugreportNotifierProvider.notifier).addBugreport(titleController.text, descriptionController.text, images, ref.read(firebaseAuthProvider).currentUser!.uid);
                     titleController.clear();
                     descriptionController.clear();
                     images.clear();
-                    showSnackBar(context, 'Submitted successfully');
+                    showSnackBar(context, 'Submitted successfully'); }
                   }, color: Colors.green, child: Text('Submit'),),
                 ],
               ),
