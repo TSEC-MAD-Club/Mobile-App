@@ -44,11 +44,7 @@ class _ConcessionStatusModalState extends ConsumerState<ConcessionStatusModal> {
         height: 45,
         width: size.width*0.7,
         decoration: BoxDecoration(
-          color: concessionDetails?.status == ConcessionStatus.rejected
-              ? Colors.green
-              : widget.canIssuePass(concessionDetails, lastPassIssued, duration)
-                  ? Theme.of(context).colorScheme.tertiaryContainer
-                  : Colors.yellow.shade800,
+          color: getColor(concessionDetails?.status),
           borderRadius: BorderRadius.circular(20),
         ),
         child: Padding(
@@ -65,6 +61,16 @@ class _ConcessionStatusModalState extends ConsumerState<ConcessionStatusModal> {
     );
   }
 
+  Color getColor(String? status) {
+    if(status == ConcessionStatus.rejected){
+    return Colors.green;
+  }else if(status == ConcessionStatus.unserviced){
+    return Colors.yellow.shade800;
+  }else if(status == ConcessionStatus.serviced){
+    return Colors.green;
+  }
+  return Colors.green;
+  }
   String getStatusText(String status){
     if(status == ConcessionStatus.rejected){
       return "Apply Again";
