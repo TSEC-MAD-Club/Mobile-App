@@ -15,51 +15,51 @@ import 'screens/home_screen/home_screen.dart';
 
 final routes = GoRouter(
   // urlPathStrategy: UrlPathStrategy.path,
-  routes: [
-  GoRoute(
-  path: "/",
-  builder: (context, state) => const SplashScreen(),
-),
-    GoRoute(
-      name: "main",
-      path: "/main",
-      builder: (context, state) => MainScreen(),
-    ),
-    // GoRoute(
-    //   name: "home",
-    //   path: "/home",
-    //   builder: (context, state) => HomeScreen(
-    //   currentBottomNavPage: "home",
-    //   changeCurrentBottomNavPage: () {},
-    //   ),
-    // ),
-    GoRoute(
-      path: '/login',
-      builder: (context, state) => const LoginScreen(),
-    ),
-    GoRoute(
-      path: "/splash",
-      builder: (context, state) => const SplashScreen(),
-    ),
+    routes: [
+      GoRoute(
+        path: "/",
+        builder: (context, state) => const SplashScreen(),
+      ),
+      GoRoute(
+        name: "main",
+        path: "/main",
+        builder: (context, state) => MainScreen(),
+      ),
+      // GoRoute(
+      //   name: "home",
+      //   path: "/home",
+      //   builder: (context, state) => HomeScreen(
+      //   currentBottomNavPage: "home",
+      //   changeCurrentBottomNavPage: () {},
+      //   ),
+      // ),
+      GoRoute(
+        path: '/login',
+        builder: (context, state) => const LoginScreen(),
+      ),
+      GoRoute(
+        path: "/splash",
+        builder: (context, state) => const SplashScreen(),
+      ),
 
-    GoRoute(
-      path: '/profile-page',
-      builder: (context, state) {
-      String justLoggedInSt = state.uri.queryParameters['justLoggedIn'] ??
-      "false"; // may be null
-      bool justLoggedIn = justLoggedInSt == "true";
-      return ProfilePage(justLoggedIn: justLoggedIn);
-      },
-    ),
+      GoRoute(
+        path: '/profile-page',
+        builder: (context, state) {
+          String justLoggedInSt = state.uri.queryParameters['justLoggedIn'] ??
+              "false"; // may be null
+          bool justLoggedIn = justLoggedInSt == "true";
+          return ProfilePage(justLoggedIn: justLoggedIn);
+        },
+      ),
 
-    GoRoute(
-      path: "/concession",
-      builder: (context, state) => const RailwayConcessionScreen(),
-    ),
-    GoRoute(
-      path: "/notes",
-      builder: (context, state) => const NotesScreen(),
-    ),
+      GoRoute(
+        path: "/concession",
+        builder: (context, state) => const RailwayConcessionScreen(),
+      ),
+      GoRoute(
+        path: "/notes",
+        builder: (context, state) => const NotesScreen(),
+      ),
 // GoRoute(
 //   path: "/notifications",
 //   builder: (context, state) => const NotificationScreen(),
@@ -76,35 +76,35 @@ final routes = GoRouter(
 //   path: "/tpc",
 //   builder: (context, state) => const TPCScreen(),
 // ),
-    GoRoute(
-      name: "details_page",
-      path: "/details_page",
-      builder: (context, state) {
-      EventModel eventModel = EventModel(
-      state.uri.queryParameters["Event Name"]!,
-      state.uri.queryParameters["Event Time"]!,
-      state.uri.queryParameters["Event Date"]!,
-      state.uri.queryParameters["Event decription"]!,
-      state.uri.queryParameters["Event registration url"]!,
-      state.uri.queryParameters["Event Image Url"]!,
-      state.uri.queryParameters["Event Location"]!,
-      state.uri.queryParameters["Committee Name"]!);
-      return EventDetail(
-        eventModel: eventModel,
-        );
-      },
-    ),
-    GoRoute(
-      path: "/department",
-      builder: (context, state) {
-      final department = DepartmentEnum.values[
-      int.parse(state.uri.queryParameters["department"] as String)];
-      return DepartmentScreen(department: department);
-      },
-    ),
-    GoRoute(
-      path: "/department-list",
-      builder: (context, state) => const DepartmentListScreen(),
-    )
-  ]
+      GoRoute(
+        name: "details_page",
+        path: "/details_page",
+        builder: (context, state) {
+          EventModel eventModel = EventModel(
+              state.uri.queryParameters["Event Name"]!,
+              state.uri.queryParameters["Event Time"]!,
+              state.uri.queryParameters["Event Date"]!,
+              state.uri.queryParameters["Event decription"]!,
+              state.uri.queryParameters["Event registration url"]!,
+              state.uri.queryParameters["Event Image Url"]!,
+              state.uri.queryParameters["Event Location"]!,
+              state.uri.queryParameters["Committee Name"]!);
+          return EventDetail(
+            eventModel: eventModel,
+          );
+        },
+      ),
+      GoRoute(
+        path: "/department",
+        builder: (context, state) {
+          final department = DepartmentEnum.values[
+          int.parse(state.uri.queryParameters["department"] as String)];
+          return DepartmentScreen(department: department);
+        },
+      ),
+      GoRoute(
+        path: "/department-list",
+        builder: (context, state) => const DepartmentListScreen(),
+      )
+    ]
 );
