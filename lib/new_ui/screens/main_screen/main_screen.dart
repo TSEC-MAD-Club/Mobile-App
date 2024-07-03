@@ -67,8 +67,8 @@ class _MainScreenState extends ConsumerState<MainScreen> {
 
 
 
-      if (user != null && user.isStudent) {
-        //student login
+    if (user != null && user.isStudent) {
+      //student login
       widgetMap = {
         "home": HomeWidget(
           changeCurrentPage: (page, index) {
@@ -136,27 +136,27 @@ class _MainScreenState extends ConsumerState<MainScreen> {
         // ),
       ];
     }else{
-    pages = [
-      //for User login
-      HomeWidget(
-        changeCurrentPage: (page, index) {
-          setState(() {
-            currentPage = index;
-            currentBottomNavPage = page;
-          });
-        },
-      ),
-      const NotesScreen(),
-      const RailwayConcessionScreen(),
-      ProfilePage(justLoggedIn: false),
-      const TPCScreen(),
-      const CommitteesScreen(),
-      const DepartmentListScreen(),
-      Container(),
-      // ProfilePage(
-      //   justLoggedIn: false,
-      // ),
-    ];
+      pages = [
+        //for User login
+        HomeWidget(
+          changeCurrentPage: (page, index) {
+            setState(() {
+              currentPage = index;
+              currentBottomNavPage = page;
+            });
+          },
+        ),
+        const NotesScreen(),
+        const RailwayConcessionScreen(),
+        ProfilePage(justLoggedIn: false),
+        const TPCScreen(),
+        const CommitteesScreen(),
+        const DepartmentListScreen(),
+        Container(),
+        // ProfilePage(
+        //   justLoggedIn: false,
+        // ),
+      ];
     }
 
 

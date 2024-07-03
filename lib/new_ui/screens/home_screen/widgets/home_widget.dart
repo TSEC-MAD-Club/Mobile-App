@@ -81,29 +81,31 @@ class _HomeWidgetState extends ConsumerState<HomeWidget> {
   }
 
   var _onlyUserLoggedIn=false;
-  @override
   void initState() {
-    super.initState();
-
     UserModel? user = ref.read(userModelProvider);
     if (user != null && user.isStudent) {
-      _onlyUserLoggedIn = true;
-    } else {
-      _onlyUserLoggedIn = false;
+      _onlyUserLoggedIn=true;
     }
+    else {
+      //anonymous and faculty
+      _onlyUserLoggedIn=false;
+    }
+
+
+
 
     _firebaseMessaging = FirebaseMessaging.instance;
 
     // Request permissions for iOS
     _firebaseMessaging.requestPermission();
-
     // Assume `userId` is the ID of the logged-in user in Firestore
-    String? userId = FirebaseAuth.instance.currentUser?.uid;
+    String? userId = FirebaseAuth.instance.currentUser?.uid; //<<<----------------------------------------------\
+    //token generate for student
+    if(_onlyUserLoggedIn && userId!=null ){
 
-    // Token generation for student
-    if (_onlyUserLoggedIn && userId != null) {
-      print("**********************************************************************************************************");
-      print("logged in");
+
+      print("**********************************************************************************************************8");
+      print("logged in ");
 
       // Get the FCM token and save it to Firestore
       _firebaseMessaging.getToken().then((String? token) {
@@ -112,10 +114,11 @@ class _HomeWidgetState extends ConsumerState<HomeWidget> {
 
         // Save the token to Firestore
         FirebaseFirestore.instance
-            .collection('Students')
+            .collection('Students ')
             .doc(userId)
             .update({'fcmToken': token});
       });
+
 
       // Handle messages when the app is in the foreground
       FirebaseMessaging.onMessage.listen((RemoteMessage message) {
@@ -123,34 +126,29 @@ class _HomeWidgetState extends ConsumerState<HomeWidget> {
         print("Message data: ${message.data}");
 
         if (message.notification != null) {
-          print("Message notification: ${message.notification}");
-          print("Notification title: ${message.notification?.title}");
-          print("Notification body: ${message.notification?.body}");
-
-          // Display the notification as a dialog or snackbar
-          showDialog(
-            context: context,
-            builder: (context) => AlertDialog(
-              title: Text(message.notification?.title ?? 'No Title'),
-              content: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  if (message.data['imageUrl'] != null)
-                    Image.network(message.data['imageUrl']),
-                  SizedBox(height: 10),
-                  Text(
-                    message.notification?.body ?? 'No Body',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  // Add some spacing
-                ],
-              ),
-            ),
-          );
-
-        } else {
-          print("Message did not contain a notification field.");
+          print("Message also contained a notification: ${message.notification}");
         }
+
+        // Display the notification as a dialog or snackbar
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text(message.notification?.title ?? 'No Title'),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (message.data['imageUrl'] != null)
+                  Image.network(message.data['imageUrl']),
+                SizedBox(height: 10),
+                Text(
+                  message.notification?.body ?? 'No Body',
+                  style: TextStyle(color: Colors.white),
+                ),
+                // Add some spacing
+              ],
+            ),
+          ),
+        );
       });
 
       // Handle messages when the app is in the background but not terminated
@@ -159,14 +157,31 @@ class _HomeWidgetState extends ConsumerState<HomeWidget> {
         // Handle the notification click event
       });
 
+      // Get the FCM token and save it to Firestore
+      _firebaseMessaging.getToken().then((String? token) {
+        assert(token != null);
+        print("FCM Token: $token");
+
+        // Save the token to Firestore
+        // You need to write this part to save the token in the 'Students' collection
+      });
+
       FirebaseMessaging.instance.getInitialMessage().then((RemoteMessage? message) {
         if (message != null) {
           print('Notification caused app to open from terminated state: ${message.data}');
           // Handle the notification click event
         }
       });
+
+
+
     }
+
+    super.initState();
   }
+
+
+
 
   static List<String> imgList = [];
   final CarouselController carouselController = CarouselController();
@@ -359,10 +374,10 @@ class _HomeWidgetState extends ConsumerState<HomeWidget> {
                               (data != null) ?
                               data.studentModel!=null?
                               data.studentModel?.name?.toLowerCase()?.toTitleCase()
-                              :
+                                  :
                               data.facultyModel?.name?.toLowerCase()?.toTitleCase()
                                   :
-                          "To Tsec"}",
+                              "To Tsec"}",
                           style: TextStyle(color: Colors.white, fontSize: 19),
                         ),
                       )
@@ -371,72 +386,72 @@ class _HomeWidgetState extends ConsumerState<HomeWidget> {
 
                   //CAROUSEL DOESNT DISPLAY WHEN LOGGED OUT,
                   //ERROR: FETCHEVENTDATA FUNCTION GETS CALLED BUT FOR SOME REASON THE IMAGES ARENT BEING FETCHED
-               CarouselSlider(
-                      items: imgList
-                          .map(
-                            (item) => GestureDetector(
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 8.0),
-                              child: Container(
-                                width:
-                                MediaQuery.of(context).size.width * 0.6,
-                                height:
-                                MediaQuery.of(context).size.width * 0.4,
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                    image: CachedNetworkImageProvider(item),
-                                    fit: BoxFit.fill,
-                                    colorFilter: ColorFilter.mode(
-                                      Colors.white.withOpacity(1),
-                                      BlendMode.modulate,
-                                    ),
+                  CarouselSlider(
+                    items: imgList
+                        .map(
+                          (item) => GestureDetector(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 8.0),
+                            child: Container(
+                              width:
+                              MediaQuery.of(context).size.width * 0.6,
+                              height:
+                              MediaQuery.of(context).size.width * 0.4,
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  image: CachedNetworkImageProvider(item),
+                                  fit: BoxFit.fill,
+                                  colorFilter: ColorFilter.mode(
+                                    Colors.white.withOpacity(1),
+                                    BlendMode.modulate,
                                   ),
-                                  color: Colors.white,
-                                  borderRadius: const BorderRadius.all(
-                                    Radius.circular(20),
-                                  ),
+                                ),
+                                color: Colors.white,
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(20),
                                 ),
                               ),
                             ),
-                            onTap: () {
-                              GoRouter.of(context).pushNamed("details_page",
-                                  queryParameters: {
-                                    "Event Name":
-                                    eventList[_currentIndex].eventName,
-                                    "Event Time":
-                                    eventList[_currentIndex].eventTime,
-                                    "Event Date":
-                                    eventList[_currentIndex].eventDate,
-                                    "Event decription":
-                                    eventList[_currentIndex]
-                                        .eventDescription,
-                                    "Event registration url":
-                                    eventList[_currentIndex]
-                                        .eventRegistrationUrl,
-                                    "Event Image Url": item,
-                                    "Event Location":
-                                    eventList[_currentIndex]
-                                        .eventLocation,
-                                    "Committee Name":
-                                    eventList[_currentIndex]
-                                        .committeeName
-                                  });
-                            }),
-                      )
-                          .toList(),
-                      options: CarouselOptions(
-                        autoPlay: shouldLoop,
-                        enableInfiniteScroll: shouldLoop,
-                        enlargeCenterPage: true,
-                        viewportFraction: .7,
-                        onPageChanged: (index, reason) {
-                          setState(() {
-                            _currentIndex = index;
-                          });
-                        },
-                      ),
+                          ),
+                          onTap: () {
+                            GoRouter.of(context).pushNamed("details_page",
+                                queryParameters: {
+                                  "Event Name":
+                                  eventList[_currentIndex].eventName,
+                                  "Event Time":
+                                  eventList[_currentIndex].eventTime,
+                                  "Event Date":
+                                  eventList[_currentIndex].eventDate,
+                                  "Event decription":
+                                  eventList[_currentIndex]
+                                      .eventDescription,
+                                  "Event registration url":
+                                  eventList[_currentIndex]
+                                      .eventRegistrationUrl,
+                                  "Event Image Url": item,
+                                  "Event Location":
+                                  eventList[_currentIndex]
+                                      .eventLocation,
+                                  "Committee Name":
+                                  eventList[_currentIndex]
+                                      .committeeName
+                                });
+                          }),
+                    )
+                        .toList(),
+                    options: CarouselOptions(
+                      autoPlay: shouldLoop,
+                      enableInfiniteScroll: shouldLoop,
+                      enlargeCenterPage: true,
+                      viewportFraction: .7,
+                      onPageChanged: (index, reason) {
+                        setState(() {
+                          _currentIndex = index;
+                        });
+                      },
                     ),
+                  ),
 
 
 
@@ -513,15 +528,15 @@ class _HomeWidgetState extends ConsumerState<HomeWidget> {
                   //DISPLAY THIS TIMETABLE
                   if (_onlyUserLoggedIn)
                     Container(
-                        // height: MediaQuery.of(context).size.height * 2,
-                        // width: MediaQuery.of(context).size.width * 0.9,
-                        // color: Colors.red,
-                        // child: Expanded(
-                        //     child: Padding(
-                        //       padding: EdgeInsets.all(20.0),
-                        //       child: CardDisplay(),
-                        //     ))
-                        child: CardDisplay()
+                      // height: MediaQuery.of(context).size.height * 2,
+                      // width: MediaQuery.of(context).size.width * 0.9,
+                      // color: Colors.red,
+                      // child: Expanded(
+                      //     child: Padding(
+                      //       padding: EdgeInsets.all(20.0),
+                      //       child: CardDisplay(),
+                      //     ))
+                      child: CardDisplay()
 
                       ,)
 
