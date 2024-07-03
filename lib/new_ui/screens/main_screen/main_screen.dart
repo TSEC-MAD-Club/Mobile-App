@@ -102,6 +102,39 @@ class _MainScreenState extends ConsumerState<MainScreen> {
         )
       };
     }
+
+    ///////////////////////////////////////////////////////////////////////
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      print("Received a message while in the foreground!");
+      print("Message data: ${message.data}");
+
+      if (message.notification != null) {
+        print("Message also contained a notification: ${message.notification}");
+      }
+
+      // Display the notification as a dialog or snackbar
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text(message.notification?.title ?? 'No Title'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (message.data['imageUrl'] != null)
+                Image.network(message.data['imageUrl']),
+              SizedBox(height: 10),
+              Text(
+                message.notification?.body ?? 'No Body',
+                style: TextStyle(color: Colors.white),
+              ),
+              // Add some spacing
+            ],
+          ),
+        ),
+      );
+    });
+
+
     super.initState();
   }
 

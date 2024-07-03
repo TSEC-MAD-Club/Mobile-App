@@ -73,11 +73,11 @@ class _RailwayConcessionScreenState
 
   String futurePassMessage(concessionDetails) {
     if (canIssuePass(concessionDetails, lastPassIssued, duration)) {
-      return "⚠️ You can tap above to apply for the Pass";
+      return "⚠️ NOTE: You can tap above to apply for the Pass";
     }
 
-    if (lastPassIssued == null) {
-      return "⚠️ You need to wait until your request is granted";
+    if (status=="unserviced" || lastPassIssued==null) {
+      return "⚠️ NOTE: You need to wait until your request is granted";
     }
 
     DateTime today = DateTime.now();
@@ -85,7 +85,7 @@ class _RailwayConcessionScreenState
     DateTime futurePass = lastPass.add(duration == "Monthly" ? const Duration(days: 27) : const Duration(days: 87));
     int diff = futurePass.difference(today).inDays;
 
-    return "⚠️ You will be able to apply for a new pass only after $diff days";
+    return "⚠️ NOTE: You will be able to apply for a new pass only after $diff days";
   }
 
 
@@ -372,6 +372,8 @@ class _RailwayConcessionScreenState
         SnackBar(content: Text("Please add the photo of your previous pass")),
       );
     }
+    ref.read(concessionProvider.notifier).getConcessionData();
+    ref.read(concessionRequestProvider.notifier).getConcessionRequestData();
   }
 
   Widget buildImagePicker(String type, File? selectedPhoto, bool editMode) {
@@ -471,11 +473,33 @@ class _RailwayConcessionScreenState
           children: [
             SizedBox(height: 20),
             StatusStepper(concessionStatus: concessionDetails?.status == null ? "" : concessionDetails!.status),
-            SizedBox(height: 10),
-            if(concessionRequestData!=null && concessionRequestData.statusMessage!=null && concessionRequestData.statusMessage!="")
-            Container(
-              child: Text("why rejected?\n${concessionRequestData!.statusMessage}",style: TextStyle(color: Colors.white,),textAlign: TextAlign.center,),
-            ),
+            // SizedBox(height: 10),
+            if(concessionRequestData!=null && concessionRequestData.statusMessage!=null && concessionRequestData.status=="rejected" && concessionRequestData.statusMessage!="")
+              Container(
+                child: RichText(
+                  textAlign: TextAlign.center,
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text: "Reason: ",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20.0,
+                          color: Colors.red,
+                        ),
+                      ),
+                      TextSpan(
+                        text: "${concessionRequestData!.statusMessage}",
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontSize: 16.0,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
             Container(
               width: size.width * 0.7,
               child: InkWell(
@@ -505,7 +529,7 @@ class _RailwayConcessionScreenState
               alignment: Alignment.center,
               child: Text(
                 "${futurePassMessage(concessionDetails)}",
-                style: TextStyle(fontSize: 15, color: Colors.white),
+                style: TextStyle(fontSize: 15, color: Colors.yellow),
               ),
             ),
             SizedBox(
@@ -517,11 +541,10 @@ class _RailwayConcessionScreenState
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(height: 20),
-                    Text(
-                      "Ongoing Pass",
-                      style: TextStyle(fontSize: 18, color: Colors.white),
-                    ),
+                    concessionDetails.status == "serviced"
+                        ? Text("Ongoing Pass",
+                      style: TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold),
+                    ) : Text("Applied Pass", style: TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold),),
                     SizedBox(height: 10),
                     Container(
                       padding: EdgeInsets.all(10),

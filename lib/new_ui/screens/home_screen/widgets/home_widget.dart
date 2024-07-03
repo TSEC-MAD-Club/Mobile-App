@@ -111,7 +111,11 @@ class _HomeWidgetState extends ConsumerState<HomeWidget> {
       _firebaseMessaging.getToken().then((String? token) {
         assert(token != null);
         print("FCM Token: $token");
-
+        // var recentFetchStudentData =         FirebaseFirestore.instance
+        //     .collection('Students ')
+        //     .doc(userId);
+        //
+        // print("////// ${recentFetchStudentData} //////");
         // Save the token to Firestore
         FirebaseFirestore.instance
             .collection('Students ')
@@ -121,35 +125,35 @@ class _HomeWidgetState extends ConsumerState<HomeWidget> {
 
 
       // Handle messages when the app is in the foreground
-      FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-        print("Received a message while in the foreground!");
-        print("Message data: ${message.data}");
-
-        if (message.notification != null) {
-          print("Message also contained a notification: ${message.notification}");
-        }
-
-        // Display the notification as a dialog or snackbar
-        showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-            title: Text(message.notification?.title ?? 'No Title'),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                if (message.data['imageUrl'] != null)
-                  Image.network(message.data['imageUrl']),
-                SizedBox(height: 10),
-                Text(
-                  message.notification?.body ?? 'No Body',
-                  style: TextStyle(color: Colors.white),
-                ),
-                // Add some spacing
-              ],
-            ),
-          ),
-        );
-      });
+      // FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      //   print("Received a message while in the foreground!");
+      //   print("Message data: ${message.data}");
+      //
+      //   if (message.notification != null) {
+      //     print("Message also contained a notification: ${message.notification}");
+      //   }
+      //
+      //   // Display the notification as a dialog or snackbar
+      //   showDialog(
+      //     context: context,
+      //     builder: (context) => AlertDialog(
+      //       title: Text(message.notification?.title ?? 'No Title'),
+      //       content: Column(
+      //         mainAxisSize: MainAxisSize.min,
+      //         children: [
+      //           if (message.data['imageUrl'] != null)
+      //             Image.network(message.data['imageUrl']),
+      //           SizedBox(height: 10),
+      //           Text(
+      //             message.notification?.body ?? 'No Body',
+      //             style: TextStyle(color: Colors.white),
+      //           ),
+      //           // Add some spacing
+      //         ],
+      //       ),
+      //     ),
+      //   );
+      // });
 
       // Handle messages when the app is in the background but not terminated
       FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
