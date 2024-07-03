@@ -67,13 +67,13 @@ class _ConcessionStatusModalState extends ConsumerState<ConcessionStatusModal> {
         height: 45,
         width: size.width*0.7,
         decoration: BoxDecoration(
-          color: getColor(concessionDetails?.status),
+          color:  concessionDetails!= null ? getColor(concessionDetails!.status): Colors.green,
           borderRadius: BorderRadius.circular(20),
         ),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Text(
-            concessionDetails?.status != null ? " ${getStatusText(concessionDetails!.status)}" : "Can Apply for Pass",
+            concessionDetails!= null ? " ${getStatusText(concessionDetails!.status)}" : "Apply for New Pass",
             style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                   color: Colors.white,
                   fontWeight: FontWeight.w600,
