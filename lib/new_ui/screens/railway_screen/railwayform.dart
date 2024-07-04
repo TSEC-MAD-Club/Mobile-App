@@ -348,8 +348,8 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
       await ref
           .watch(concessionProvider.notifier)
           .applyConcession(details, idCardPhoto!, previousPassPhoto!, context);
+
       clearValues();
-      Navigator.pop(context);
     } else if (idCardPhotoTemp == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Please add the photo of your ID card")),
@@ -442,25 +442,7 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
           Navigator.pop(context);
         },),
       ),
-      body: currState != ""
-       ? Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const CircularProgressIndicator(),
-              const SizedBox(height: 40.0,),
-              SizedBox(
-                width: 300.0,
-                child: Text(
-                  currState,
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Colors.white),
-                ),
-              ),
-            ],
-          ),
-        )
-      : SingleChildScrollView(
+      body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [

@@ -42,6 +42,7 @@ class ConcessionProvider extends StateNotifier<String> {
     //     await _concessionService.getWaitingMessage();
     // _ref.read(concessionDetailsProvider.notifier).state = concessionDetails;
     state="Application processing...";
+    Navigator.pop(context);
 
     ConcessionDetailsModel concessionDetailsData =
         await _concessionService.applyConcession(concessionDetails);
