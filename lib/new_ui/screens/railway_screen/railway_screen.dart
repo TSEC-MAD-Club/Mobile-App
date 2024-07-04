@@ -372,6 +372,7 @@ class _RailwayConcessionScreenState
         SnackBar(content: Text("Please add the photo of your previous pass")),
       );
     }
+
     ref.read(concessionProvider.notifier).getConcessionData();
     ref.read(concessionRequestProvider.notifier).getConcessionRequestData();
   }
@@ -454,7 +455,7 @@ class _RailwayConcessionScreenState
         ? DateFormat('dd/MM/yyyy').format(lastPassIssued!)
         : '';
 
-
+    String currState = ref.watch(concessionProvider);
     bool buttonTrigger(ConcessionStatus){
       if(status == ConcessionStatus.rejected){
         return true;
@@ -467,7 +468,30 @@ class _RailwayConcessionScreenState
       }
     }
     return SingleChildScrollView(
-      child: Center(
+      child:
+      currState != ""
+          ? Container(
+        height: size.height*.7,
+            child: Center(
+                    child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const CircularProgressIndicator(),
+              const SizedBox(height: 40.0,),
+              SizedBox(
+                width: 300.0,
+                child: Text(
+                  currState,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Colors.white),
+                ),
+              ),
+            ],
+                    ),
+                  ),
+          )
+          :
+      Center(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
