@@ -82,7 +82,7 @@ class _RailwayConcessionScreenState
 
     DateTime today = DateTime.now();
     DateTime lastPass = lastPassIssued ?? DateTime.now();
-    DateTime futurePass = lastPass.add(duration == "Monthly" ? const Duration(days: 27) : const Duration(days: 87));
+    DateTime futurePass = lastPass.add(duration == "Monthly" ? const Duration(days: 30) : const Duration(days: 90));
     int diff = futurePass.difference(today).inDays;
 
     return "⚠️ NOTE: You will be able to apply for a new pass only after $diff days";
