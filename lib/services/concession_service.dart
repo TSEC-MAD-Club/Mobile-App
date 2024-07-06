@@ -80,8 +80,7 @@ class ConcessionService {
       print('concession requests are being fetched ');
       print(value.data());
       if (value.exists) {
-        print("11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111");
-        print("if");
+        print("Concession Request Present");
         var detailsMap = value.data() as Map<String, dynamic>;
         ConcessionRequestModel concessionRequestData =
         ConcessionRequestModel.fromJson(detailsMap);

@@ -1,11 +1,13 @@
 import 'package:easy_stepper/easy_stepper.dart';
 import 'package:flutter/material.dart';
+import 'package:tsec_app/models/concession_request_model/concession_request_model.dart';
 import 'package:tsec_app/new_ui/colors.dart';
 
 class StatusStepper extends StatelessWidget {
   final String concessionStatus;
+  final concessionRequestData;
 
-  StatusStepper({required this.concessionStatus});
+  StatusStepper({required this.concessionStatus,required this.concessionRequestData});
 
   @override
   Widget build(BuildContext context) {
@@ -15,6 +17,7 @@ class StatusStepper extends StatelessWidget {
       color: Colors.transparent,
       width: size.width * 0.9,
       child: EasyStepper(
+        enableStepTapping: false,
         finishedStepBorderColor: Colors.white,
         activeStepBorderColor: Colors.white,
         activeStepBorderType: BorderType.normal,
@@ -23,7 +26,7 @@ class StatusStepper extends StatelessWidget {
         activeStepBackgroundColor: Colors.white,
 
         lineStyle: LineStyle(
-            lineLength: size.width * 0.2,
+            lineLength: size.width * 0.1,
             finishedLineColor: Colors.white,
             lineType: LineType.normal,
             unreachedLineColor: Colors.grey.shade600,
@@ -41,6 +44,8 @@ class StatusStepper extends StatelessWidget {
           getFirstStep(),
           getMiddleStep(),
           getFinalStep(),
+          if(concessionRequestData != null)
+            getCollectedStep(),
         ],
       ),
     );
@@ -100,6 +105,25 @@ class StatusStepper extends StatelessWidget {
     );
   }
 
+  EasyStep getCollectedStep() {
+    if (concessionRequestData!.toJson().containsKey("passCollected")) {
+      print("HELLO");
+      return EasyStep(
+        customStep: getStatusCircle(0),
+        title: "Rejected",
+      );
+    } else if (concessionStatus == "serviced") {
+      return EasyStep(
+        customStep: getStatusCircle(0),
+        title: "Approved",
+      );
+    }
+    return EasyStep(
+      customStep: getStatusCircle(-1),
+      title: "Approval",
+    );
+  }
+
   EasyStep getMiddleStep() {
     if (concessionStatus == "unserviced") {
       return EasyStep(
@@ -133,7 +157,11 @@ class StatusStepper extends StatelessWidget {
   }
 
   int getActiveStep(){
-    if(concessionStatus == "serviced" || concessionStatus == "rejected") {return 2;}
+    if(concessionRequestData != null && concessionRequestData!.toJson().containsKey("passCollected")){
+      print("Returning 3");
+      return 3;
+    }
+    else if(concessionStatus == "serviced" || concessionStatus == "rejected") {return 2;}
     else if(concessionStatus == "unserviced") {return 1;}
     else {return 0;}
   }
