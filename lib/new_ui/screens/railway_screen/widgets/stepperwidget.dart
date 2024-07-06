@@ -5,12 +5,13 @@ import 'package:tsec_app/new_ui/colors.dart';
 
 class StatusStepper extends StatelessWidget {
   final String concessionStatus;
-  final concessionRequestData;
+  final ConcessionRequestModel? concessionRequestData;
 
   StatusStepper({required this.concessionStatus,required this.concessionRequestData});
 
   @override
   Widget build(BuildContext context) {
+    print("Inside Stepper ${concessionRequestData!.toJson()}");
     Size size = MediaQuery.of(context).size;
     return Container(
       alignment: Alignment.center,
@@ -106,21 +107,22 @@ class StatusStepper extends StatelessWidget {
   }
 
   EasyStep getCollectedStep() {
-    if (concessionRequestData!.toJson().containsKey("passCollected")) {
-      print("HELLO");
-      return EasyStep(
-        customStep: getStatusCircle(0),
-        title: "Rejected",
-      );
-    } else if (concessionStatus == "serviced") {
-      return EasyStep(
-        customStep: getStatusCircle(0),
-        title: "Approved",
-      );
+    if (concessionRequestData!=null && concessionRequestData?.passCollected != null ) {
+      if(concessionRequestData!.passCollected!['collected'] == 1) {
+        return EasyStep(
+          customStep: getStatusCircle(0),
+          title: "Collected",
+        );
+      }else{
+        return EasyStep(
+          customStep: getStatusCircle(1),
+          title: "Not Collected",
+        );
+      }
     }
     return EasyStep(
       customStep: getStatusCircle(-1),
-      title: "Approval",
+      title: "Collect",
     );
   }
 
@@ -157,7 +159,8 @@ class StatusStepper extends StatelessWidget {
   }
 
   int getActiveStep(){
-    if(concessionRequestData != null && concessionRequestData!.toJson().containsKey("passCollected")){
+    print(concessionRequestData!.toJson());
+    if(concessionRequestData!=null && concessionRequestData?.passCollected != null && concessionRequestData!.passCollected!['collected'] == 1){
       print("Returning 3");
       return 3;
     }

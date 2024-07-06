@@ -16,6 +16,7 @@ ConcessionRequestModel _$ConcessionRequestModelFromJson(
       time: const TimestampConverter()
           .fromJson(json['time'] as Timestamp),
       uid: json['uid'] as String,
+          passCollected: json['passCollected']
     );
 
 Map<String, dynamic> _$ConcessionRequestModelToJson(
@@ -27,4 +28,5 @@ Map<String, dynamic> _$ConcessionRequestModelToJson(
       'time': instance.time,
       'uid': instance.uid,
       'notificationTime': const TimestampConverter().toJson(instance.time),
+          'passCollected':instance.passCollected,
     };
