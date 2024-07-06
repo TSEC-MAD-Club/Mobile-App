@@ -208,99 +208,6 @@ class _NotesFilterBarState extends ConsumerState<NotesFilterBar>
                       children: [
                         SizedBox(
                           width: MediaQuery.of(context).size.width * 0.40,
-                          child: TextButton(
-                            onPressed: () async {
-                              DateTime? pickedDate = await showDatePicker(
-                                context: context,
-                                initialDate: widget.startDate,
-                                firstDate: DateTime(2000),
-                                lastDate: DateTime(2025),
-                              );
-                              if (pickedDate != null) {
-                                // setState(() {~
-                                //   startDate = pickedDate;
-                                // });
-                                widget.changeFilters(pickedDate, widget.endDate,
-                                    widget.latest, widget.subjects);
-                              } else {
-                                // print(
-                                //     "Date is not selected");
-                              }
-                            },
-                            child: Text(
-                              widget.startDate != null
-                                  ? DateFormat('d MMM y')
-                                      .format(widget.startDate!)
-                                  : "Start date",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .labelMedium!
-                                  .copyWith(
-                                    color: Colors.black,
-                                  ),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 20,
-                          child: Icon(
-                            Icons.arrow_right_alt_rounded,
-                            color: Colors.black,
-                          ),
-                        ),
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.40,
-                          child: TextButton(
-                            onPressed: () async {
-                              DateTime? pickedDate = await showDatePicker(
-                                context: context,
-                                initialDate: widget.endDate,
-                                firstDate: DateTime(2000),
-                                lastDate: DateTime(2025),
-                              );
-                              if (pickedDate != null) {
-                                if (widget.startDate != null &&
-                                    pickedDate.isBefore(widget.startDate!)) {
-                                  showSnackBar(context,
-                                      "Please select an appropriate date");
-                                  return;
-                                }
-                                // setState(() {
-                                //   endDate = pickedDate;
-                                // });
-
-                                widget.changeFilters(widget.startDate,
-                                    pickedDate, widget.latest, widget.subjects);
-                              } else {
-                                // print(
-                                //     "Date is not selected");
-                              }
-                            },
-                            child: Text(
-                              widget.endDate != null
-                                  ? DateFormat('d MMM y')
-                                      .format(widget.endDate!)
-                                  : "End date",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .labelMedium!
-                                  .copyWith(
-                                    color: Colors.black,
-                                  ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const Divider(
-                      thickness: 1,
-                      color: Colors.grey,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.40,
                           child:
                               customFilterButton("Latest", widget.latest, () {
                             widget.changeFilters(
@@ -368,6 +275,7 @@ class _NotesFilterBarState extends ConsumerState<NotesFilterBar>
                                               .toList();
                                         } else {
                                           tempSubjects.add(allSubjects[index]);
+                                          widget.subjects = tempSubjects;
                                         }
                                         debugPrint(
                                             "after change: all subjects ${allSubjects.length}");
