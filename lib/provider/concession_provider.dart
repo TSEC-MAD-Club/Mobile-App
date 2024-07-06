@@ -56,6 +56,8 @@ class ConcessionProvider extends StateNotifier<String> {
     concessionDetailsData.previousPassURL =
         await _concessionService.uploadPhoto(previousPassPhoto, "prevpass");
     await _concessionService.applyConcession(concessionDetailsData);
+    state="Applied successfully";
+    await Future.delayed(const Duration(seconds: 2));
     state="";
 
   }
