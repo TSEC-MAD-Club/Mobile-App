@@ -61,8 +61,10 @@ class _RailwayConcessionScreenState
       DateTime today = DateTime.now();
       DateTime lastPass = lastPassIssued;
       int diff = today.difference(lastPass).inDays;
-      bool retVal = (duration == "Monthly" && diff >= 30) ||
-          (duration == "Quarterly" && diff >= 90);
+
+      // eg: if lastPassIssued if 6th June, it expires on 5th June then allow user to apply for pass from 2nd,3rd,4th June, 3days prior to pass ends
+      bool retVal = (duration == "Monthly" && diff >= 26) ||
+          (duration == "Quarterly" && diff >= 86);
       // debugPrint(retVal.toString());
       // debugPrint(status);
       return retVal;
@@ -83,9 +85,12 @@ class _RailwayConcessionScreenState
 
     DateTime today = DateTime.now();
     DateTime lastPass = lastPassIssued ?? DateTime.now();
-    DateTime futurePass = lastPass.add(duration == "Monthly" ? const Duration(days: 30) : const Duration(days: 90));
+    DateTime futurePass = lastPass.add(duration == "Monthly" ? const Duration(days: 27) : const Duration(days: 87));
     int diff = futurePass.difference(today).inDays;
 
+    if (diff==1){
+      return "⚠️ NOTE: You will be able to apply for a new pass only after $diff day";
+    }
     return "⚠️ NOTE: You will be able to apply for a new pass only after $diff days";
   }
 
