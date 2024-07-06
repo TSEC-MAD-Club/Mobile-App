@@ -11,7 +11,6 @@ class StatusStepper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("Inside Stepper ${concessionRequestData!.toJson()}");
     Size size = MediaQuery.of(context).size;
     return Container(
       alignment: Alignment.center,
@@ -45,8 +44,7 @@ class StatusStepper extends StatelessWidget {
           getFirstStep(),
           getMiddleStep(),
           getFinalStep(),
-          if(concessionRequestData != null)
-            getCollectedStep(),
+          getCollectedStep(),
         ],
       ),
     );
@@ -108,7 +106,7 @@ class StatusStepper extends StatelessWidget {
 
   EasyStep getCollectedStep() {
     if (concessionRequestData!=null && concessionRequestData?.passCollected != null ) {
-      if(concessionRequestData!.passCollected!['collected'] == 1) {
+      if(concessionRequestData!.passCollected!['collected'] == "1") {
         return EasyStep(
           customStep: getStatusCircle(0),
           title: "Collected",
@@ -159,8 +157,7 @@ class StatusStepper extends StatelessWidget {
   }
 
   int getActiveStep(){
-    print(concessionRequestData!.toJson());
-    if(concessionRequestData!=null && concessionRequestData?.passCollected != null && concessionRequestData!.passCollected!['collected'] == 1){
+    if(concessionRequestData!=null && concessionRequestData?.passCollected != null && concessionRequestData!.passCollected!['collected'] == "1"){
       print("Returning 3");
       return 3;
     }
