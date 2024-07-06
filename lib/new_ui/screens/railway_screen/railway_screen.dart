@@ -473,6 +473,7 @@ class _RailwayConcessionScreenState
         return false;
       }
     }
+    print(concessionRequestData);
     return currState != ""
         ? Center(
             child: Column(
@@ -506,7 +507,7 @@ class _RailwayConcessionScreenState
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SizedBox(height: 20),
-          StatusStepper(concessionStatus: concessionDetails?.status == null ? "" : concessionDetails!.status),
+          StatusStepper(concessionStatus: concessionDetails?.status == null ? "" : concessionDetails!.status, concessionRequestData: concessionRequestData,),
           // SizedBox(height: 10),
           if(concessionRequestData!=null && concessionRequestData.statusMessage!=null && concessionRequestData.status=="rejected" && concessionRequestData.statusMessage!="")
             Container(

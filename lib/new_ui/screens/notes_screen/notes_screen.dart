@@ -100,6 +100,7 @@ class _NotesScreenState extends ConsumerState<NotesScreen> {
 
   void changeFilters(DateTime? startDate, DateTime? endDate, bool latest,
       List<String> subjects) {
+    print("Filtered Subjects = ${subjects}");
     setState(() {
       filterStartDate = startDate;
       filterEndDate = endDate;

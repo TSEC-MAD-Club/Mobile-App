@@ -78,14 +78,14 @@ class ConcessionService {
     try {
       var value = await concessionRequestCollection.doc(user!.uid).get();
       print('concession requests are being fetched ');
-      print(value.data());
+
       if (value.exists) {
-        print("11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111");
-        print("if");
+        print("Concession Request Present");
         var detailsMap = value.data() as Map<String, dynamic>;
+        print(detailsMap);
         ConcessionRequestModel concessionRequestData =
         ConcessionRequestModel.fromJson(detailsMap);
-
+        print("Concession Request Data Got = ${concessionRequestData.toJson()}");
         return concessionRequestData;
       } else {
 

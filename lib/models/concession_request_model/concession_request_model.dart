@@ -15,8 +15,11 @@ class ConcessionRequestModel {
   final DateTime time;
   @JsonKey(name: "uid")
   final String uid;
+  @JsonKey(name: "passCollected")
+  final Map<String,dynamic>? passCollected;
 
-  ConcessionRequestModel({
+  ConcessionRequestModel( {
+    this.passCollected,
     this.passNum,
     required this.status,
     required this.statusMessage,
@@ -24,8 +27,9 @@ class ConcessionRequestModel {
     required this.uid,
   });
 
-  factory ConcessionRequestModel.fromJson(Map<String, dynamic> json) =>
-      _$ConcessionRequestModelFromJson(json);
+  factory ConcessionRequestModel.fromJson(Map<String, dynamic> json) {
+    return _$ConcessionRequestModelFromJson(json);
+  }
 
   Map<String, dynamic> toJson() => _$ConcessionRequestModelToJson(this);
 }
