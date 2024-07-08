@@ -161,6 +161,15 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
       initialDate: _selectedDate ?? DateTime.now(),
       firstDate: DateTime(1990),
       lastDate: DateTime.now(),
+      builder: (BuildContext context, Widget? child) {
+        return Theme(
+          data: ThemeData.dark().copyWith(
+            // Change background color of calendar here
+              colorScheme: ColorScheme.dark()
+          ),
+          child: child!,
+        );
+      },
     );
 
     if (picked != null && picked != _selectedDate) {
@@ -179,7 +188,9 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
   List<String> genderList = ['Male', 'Female'];
 
   File? idCardPhoto;
+  File? idCardPhoto2;
   File? idCardPhotoTemp;
+  File? idCardPhotoTemp2;
   File? previousPassPhoto;
   File? previousPassPhotoTemp;
 
@@ -195,6 +206,8 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
         } else if (type == 'Previous Pass Photo') {
           // previousPassPhoto = File(pickedFile.path);
           previousPassPhotoTemp = File(pickedFile.path);
+        }else if(type == 'ID Card Back'){
+          idCardPhotoTemp2 = File(pickedFile.path);
         }
       });
     }
@@ -236,6 +249,8 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
         idCardPhotoTemp = null;
       } else if (type == 'Previous Pass Photo') {
         previousPassPhotoTemp = null;
+      }else if(type == 'ID Card Back'){
+        idCardPhotoTemp2 = null;
       }
     });
   }
@@ -340,6 +355,7 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
 
     if (_formKey.currentState!.validate() &&
         idCardPhotoTemp != null &&
+        idCardPhotoTemp2 != null &&
         previousPassPhotoTemp != null) {
       idCardPhoto = idCardPhotoTemp;
       previousPassPhoto = previousPassPhotoTemp;
@@ -347,7 +363,7 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
       ref.read(railwayConcessionOpenProvider.state).state = false;
       await ref
           .watch(concessionProvider.notifier)
-          .applyConcession(details, idCardPhoto!, previousPassPhoto!, context);
+          .applyConcession(details, idCardPhoto!, idCardPhotoTemp2! ,previousPassPhoto!, context);
 
       clearValues();
     } else if (idCardPhotoTemp == null) {
@@ -387,6 +403,14 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
                   children: [
                     Stack(
                       children: [
+                        Positioned(
+                          top: -8,
+                          right: -8,
+                          child: IconButton(
+                            icon: const Icon(Icons.cancel, color: Colors.white),
+                            onPressed: () => cancelSelection(type),
+                          ),
+                        ),
                         Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10.0),
@@ -404,7 +428,7 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
                                 top: -8,
                                 right: -8,
                                 child: IconButton(
-                                  icon: Icon(Icons.cancel, color: Colors.white),
+                                  icon: const Icon(Icons.cancel, color: Colors.white),
                                   onPressed: () => cancelSelection(type),
                                 ),
                               )
@@ -741,6 +765,8 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
                               children: [
                                 buildImagePicker(
                                     'ID Card Photo', idCardPhotoTemp, editMode),
+                                buildImagePicker(
+                                    'ID Card Back', idCardPhotoTemp2, editMode),
                                 SizedBox(height: 16),
                                 buildImagePicker('Previous Pass Photo',
                                     previousPassPhotoTemp, editMode),
