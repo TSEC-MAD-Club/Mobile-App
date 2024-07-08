@@ -161,6 +161,7 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
       initialDate: _selectedDate ?? DateTime.now(),
       firstDate: DateTime(1990),
       lastDate: DateTime.now(),
+
     );
 
     if (picked != null && picked != _selectedDate) {
@@ -179,7 +180,9 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
   List<String> genderList = ['Male', 'Female'];
 
   File? idCardPhoto;
+  File? idCardPhoto2;
   File? idCardPhotoTemp;
+  File? idCardPhotoTemp2;
   File? previousPassPhoto;
   File? previousPassPhotoTemp;
 
@@ -195,6 +198,8 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
         } else if (type == 'Previous Pass Photo') {
           // previousPassPhoto = File(pickedFile.path);
           previousPassPhotoTemp = File(pickedFile.path);
+        }else if(type == 'ID Card Photo2'){
+          idCardPhotoTemp2 = File(pickedFile.path);
         }
       });
     }
@@ -340,6 +345,7 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
 
     if (_formKey.currentState!.validate() &&
         idCardPhotoTemp != null &&
+        idCardPhotoTemp2 != null &&
         previousPassPhotoTemp != null) {
       idCardPhoto = idCardPhotoTemp;
       previousPassPhoto = previousPassPhotoTemp;
@@ -347,7 +353,7 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
       ref.read(railwayConcessionOpenProvider.state).state = false;
       await ref
           .watch(concessionProvider.notifier)
-          .applyConcession(details, idCardPhoto!, previousPassPhoto!, context);
+          .applyConcession(details, idCardPhoto!, idCardPhotoTemp2! ,previousPassPhoto!, context);
 
       clearValues();
     } else if (idCardPhotoTemp == null) {
@@ -741,6 +747,8 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
                               children: [
                                 buildImagePicker(
                                     'ID Card Photo', idCardPhotoTemp, editMode),
+                                buildImagePicker(
+                                    'ID Card Photo2', idCardPhotoTemp2, editMode),
                                 SizedBox(height: 16),
                                 buildImagePicker('Previous Pass Photo',
                                     previousPassPhotoTemp, editMode),

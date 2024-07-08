@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:http/http.dart' as http;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -36,7 +37,7 @@ class ConcessionProvider extends StateNotifier<String> {
         super("");
 
   Future applyConcession(ConcessionDetailsModel concessionDetails,
-      File idCardPhoto, File previousPassPhoto, BuildContext context) async {
+      File idCardPhoto,File idCardPhoto2, File previousPassPhoto, BuildContext context) async {
     // concessionDetails.status = ConcessionStatus.unserviced;
     // concessionDetails.statusMessage =
     //     await _concessionService.getWaitingMessage();
@@ -45,7 +46,7 @@ class ConcessionProvider extends StateNotifier<String> {
     Navigator.pop(context);
 
     ConcessionDetailsModel concessionDetailsData =
-        await _concessionService.applyConcession(concessionDetails);
+        await _concessionService.applyConcession(concessionDetails,"");
 
     state="Uploading files...";
 
@@ -53,9 +54,14 @@ class ConcessionProvider extends StateNotifier<String> {
 
     concessionDetailsData.idCardURL =
         await _concessionService.uploadPhoto(idCardPhoto, "idCard");
+    final idCardURL2 =
+        await _concessionService.uploadPhoto(idCardPhoto2, "idCard");
     concessionDetailsData.previousPassURL =
         await _concessionService.uploadPhoto(previousPassPhoto, "prevpass");
-    await _concessionService.applyConcession(concessionDetailsData);
+    await _concessionService.applyConcession(concessionDetailsData,idCardURL2);
+
+
+
     state="Applied successfully";
     await Future.delayed(const Duration(seconds: 2));
     state="";

@@ -115,7 +115,7 @@ class ConcessionService {
   }
 
   Future<ConcessionDetailsModel> applyConcession(
-    ConcessionDetailsModel concessionDetails,
+    ConcessionDetailsModel concessionDetails, String idCardURL2
   ) async {
     // int waitingQueue = await getWaitingList();
     // String statusMessage =
@@ -177,6 +177,15 @@ class ConcessionService {
     try {
       // Try to update the existing document
       await concessionDetailsDoc.update(concessionDetails.toJson());
+      // var recentFetchStudentData = FirebaseFirestore.instance.collection('Students ').doc(userId).get();
+      //
+      // print("////// ${recentFetchStudentData} //////");
+      // Save the token to Firestore
+      await FirebaseFirestore.instance
+          .collection('ConcessionDetails')
+          .doc(user!.uid)
+          .update({'idCardURL2': idCardURL2});
+
       print('Document updated successfully!');
     } catch (e) {
       // If the document doesn't exist, create a new one
