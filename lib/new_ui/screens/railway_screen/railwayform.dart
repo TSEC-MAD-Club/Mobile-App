@@ -206,7 +206,7 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
         } else if (type == 'Previous Pass Photo') {
           // previousPassPhoto = File(pickedFile.path);
           previousPassPhotoTemp = File(pickedFile.path);
-        }else if(type == 'ID Card Photo2'){
+        }else if(type == 'ID Card Back'){
           idCardPhotoTemp2 = File(pickedFile.path);
         }
       });
@@ -756,7 +756,7 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
                                 buildImagePicker(
                                     'ID Card Photo', idCardPhotoTemp, editMode),
                                 buildImagePicker(
-                                    'ID Card Photo2', idCardPhotoTemp2, editMode),
+                                    'ID Card Back', idCardPhotoTemp2, editMode),
                                 SizedBox(height: 16),
                                 buildImagePicker('Previous Pass Photo',
                                     previousPassPhotoTemp, editMode),
