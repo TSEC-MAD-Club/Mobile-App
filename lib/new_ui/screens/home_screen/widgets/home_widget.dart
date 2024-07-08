@@ -111,9 +111,7 @@ class _HomeWidgetState extends ConsumerState<HomeWidget> {
       _firebaseMessaging.getToken().then((String? token) {
         assert(token != null);
         print("FCM Token: $token");
-        // var recentFetchStudentData =         FirebaseFirestore.instance
-        //     .collection('Students ')
-        //     .doc(userId);
+        // var recentFetchStudentData = FirebaseFirestore.instance.collection('Students ').doc(userId).get();
         //
         // print("////// ${recentFetchStudentData} //////");
         // Save the token to Firestore
