@@ -161,7 +161,15 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
       initialDate: _selectedDate ?? DateTime.now(),
       firstDate: DateTime(1990),
       lastDate: DateTime.now(),
-
+      builder: (BuildContext context, Widget? child) {
+        return Theme(
+          data: ThemeData.dark().copyWith(
+            // Change background color of calendar here
+              colorScheme: ColorScheme.dark()
+          ),
+          child: child!,
+        );
+      },
     );
 
     if (picked != null && picked != _selectedDate) {
