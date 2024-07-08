@@ -71,7 +71,7 @@ class _GuideLinesScreenState extends State<GuideLinesScreen> {
                           padding: const EdgeInsets.symmetric(
                               horizontal: 30, vertical: 10),
                           child: Text(
-                            "- This would be a point from the Guidelines therefore Tryign to make it long so that it could be checked for overflow",
+                            "- ${guideline["text"]}",
                             style: TextStyle(color: Colors.white),
                           ),
                         );
