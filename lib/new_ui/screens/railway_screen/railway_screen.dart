@@ -14,6 +14,7 @@ import 'package:tsec_app/models/concession_details_model/concession_details_mode
 import 'package:tsec_app/models/concession_request_model/concession_request_model.dart';
 // import 'package:tsec_app/models/concession_request_model/concession_request_model.dart';
 import 'package:tsec_app/models/student_model/student_model.dart';
+import 'package:tsec_app/new_ui/screens/guidelines_screen/guidelinesscreen.dart';
 import 'package:tsec_app/new_ui/screens/railway_screen/railwayform.dart';
 import 'package:tsec_app/new_ui/screens/railway_screen/widgets/concession_status_modal.dart';
 import 'package:tsec_app/new_ui/screens/railway_screen/widgets/railway_dropdown_search.dart';
@@ -474,7 +475,7 @@ class _RailwayConcessionScreenState
         return false;
       }
     }
-    print(concessionRequestData);
+    print("Inside Build = ${concessionRequestData?.toJson()}");
     return currState != ""
         ? Center(
             child: Column(
@@ -645,15 +646,22 @@ class _RailwayConcessionScreenState
                           SizedBox(
                             height: 15,
                           ),
-                          Text(
+                          /*Text(
                             "Pass collected on ${DateFormat('dd/MM/yyyy').format((concessionRequestData.passCollected!['date'] as Timestamp).toDate())}",
                             style: TextStyle(fontSize: 13, color: Colors.grey),
-                          ),
+                          ),*/
                         ],
+
 
                       ],
                     ),
                   ),
+
+                  SizedBox(
+                    height: 15,
+                  ),
+                  InkWell(onTap: ()=> Navigator.push(context, MaterialPageRoute(builder: (context)=> GuideLinesScreen(),),),child: Text("View Guidelines",style: TextStyle(color: Colors.white),),),
+
                 ],
               ),
             )
