@@ -249,6 +249,8 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
         idCardPhotoTemp = null;
       } else if (type == 'Previous Pass Photo') {
         previousPassPhotoTemp = null;
+      }else if(type == 'ID Card Back'){
+        idCardPhotoTemp2 = null;
       }
     });
   }
@@ -401,6 +403,14 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
                   children: [
                     Stack(
                       children: [
+                        Positioned(
+                          top: -8,
+                          right: -8,
+                          child: IconButton(
+                            icon: const Icon(Icons.cancel, color: Colors.white),
+                            onPressed: () => cancelSelection(type),
+                          ),
+                        ),
                         Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10.0),
@@ -418,7 +428,7 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
                                 top: -8,
                                 right: -8,
                                 child: IconButton(
-                                  icon: Icon(Icons.cancel, color: Colors.white),
+                                  icon: const Icon(Icons.cancel, color: Colors.white),
                                   onPressed: () => cancelSelection(type),
                                 ),
                               )
