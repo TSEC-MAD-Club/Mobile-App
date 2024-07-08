@@ -82,7 +82,7 @@ class ConcessionService {
       if (value.exists) {
         print("Concession Request Present");
         var detailsMap = value.data() as Map<String, dynamic>;
-        print(detailsMap);
+        print("Deatils Map = ${detailsMap}");
         ConcessionRequestModel concessionRequestData =
         ConcessionRequestModel.fromJson(detailsMap);
         print("Concession Request Data Got = ${concessionRequestData.toJson()}");
