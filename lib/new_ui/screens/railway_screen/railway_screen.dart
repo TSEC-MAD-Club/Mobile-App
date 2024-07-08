@@ -26,6 +26,7 @@ import 'package:tsec_app/provider/railway_concession_provider.dart';
 import 'package:tsec_app/new_ui/screens/railway_screen/widgets/railway_text_field.dart';
 import 'package:tsec_app/utils/railway_enum.dart';
 import 'package:tsec_app/utils/station_list.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class RailwayConcessionScreen extends ConsumerStatefulWidget {
   const RailwayConcessionScreen({super.key});
@@ -62,7 +63,7 @@ class _RailwayConcessionScreenState
       DateTime lastPass = lastPassIssued;
       int diff = today.difference(lastPass).inDays;
 
-      // eg: if lastPassIssued if 6th June, it expires on 5th June then allow user to apply for pass from 2nd,3rd,4th June, 3days prior to pass ends
+      // eg: if lastPassIssued if 6th June, it expires on 5th July then allow user to apply for pass from 2nd,3rd,4th July, 3days prior to pass ends
       bool retVal = (duration == "Monthly" && diff >= 26) ||
           (duration == "Quarterly" && diff >= 86);
       // debugPrint(retVal.toString());
@@ -638,6 +639,18 @@ class _RailwayConcessionScreenState
                           "Class: ${travelClass}",
                           style: TextStyle(fontSize: 16, color: Colors.white),
                         ),
+
+                        if (concessionRequestData?.passCollected != null &&
+                            concessionRequestData!.passCollected!['collected'] == "1") ...[
+                          SizedBox(
+                            height: 15,
+                          ),
+                          Text(
+                            "Pass collected on ${DateFormat('dd/MM/yyyy').format((concessionRequestData.passCollected!['date'] as Timestamp).toDate())}",
+                            style: TextStyle(fontSize: 13, color: Colors.grey),
+                          ),
+                        ],
+
                       ],
                     ),
                   ),
