@@ -504,178 +504,227 @@ class _RailwayConcessionScreenState
             ),
           )
         :
-    Center(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          SizedBox(height: 20),
-          StatusStepper(concessionStatus: concessionDetails?.status == null ? "" : concessionDetails!.status, concessionRequestData: concessionRequestData,),
-          // SizedBox(height: 10),
-          if(concessionRequestData!=null && concessionRequestData.statusMessage!=null && concessionRequestData.status=="rejected" && concessionRequestData.statusMessage!="")
+    SingleChildScrollView(
+      child: Center(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(height: 20),
+            StatusStepper(concessionStatus: concessionDetails?.status == null ? "" : concessionDetails!.status, concessionRequestData: concessionRequestData,),
+            // SizedBox(height: 10),
+            if(concessionRequestData!=null && concessionRequestData.statusMessage!=null && concessionRequestData.status=="rejected" && concessionRequestData.statusMessage!="")
+              Container(
+                child: RichText(
+                  textAlign: TextAlign.center,
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text: "Reason: ",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20.0,
+                          color: Colors.red,
+                        ),
+                      ),
+                      TextSpan(
+                        text: "${concessionRequestData!.statusMessage}",
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontSize: 16.0,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+      
             Container(
-              child: RichText(
-                textAlign: TextAlign.center,
-                text: TextSpan(
-                  children: [
-                    TextSpan(
-                      text: "Reason: ",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20.0,
-                        color: Colors.red,
+              width: size.width * 0.7,
+              child: InkWell(
+                splashFactory: NoSplash.splashFactory,
+                splashColor: Colors.transparent,
+                onTap: () {
+                  if (canIssuePass(concessionDetails, concessionDetails?.lastPassIssued, concessionDetails?.duration)) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const RailwayForm(),
                       ),
-                    ),
-                    TextSpan(
-                      text: "${concessionRequestData!.statusMessage}",
-                      style: TextStyle(
-                        color: Colors.red,
-                        fontSize: 16.0,
-                      ),
-                    ),
-                  ],
+                    );
+                  }
+                },
+                child: ConcessionStatusModal(
+                  canIssuePass: canIssuePass,
+                  futurePassMessage: futurePassMessage,
                 ),
               ),
             ),
-    
-          Container(
-            width: size.width * 0.7,
-            child: InkWell(
-              splashFactory: NoSplash.splashFactory,
-              splashColor: Colors.transparent,
-              onTap: () {
-                if (canIssuePass(concessionDetails, concessionDetails?.lastPassIssued, concessionDetails?.duration)) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const RailwayForm(),
-                    ),
-                  );
-                }
-              },
-              child: ConcessionStatusModal(
-                canIssuePass: canIssuePass,
-                futurePassMessage: futurePassMessage,
+            SizedBox(
+              height: 15,
+            ),
+            Container(
+              width: size.width * 0.9,
+              alignment: Alignment.center,
+              child: Text(
+                futurePassMessage(concessionDetails),
+                style: TextStyle(fontSize: 15, color: Colors.yellow),
               ),
             ),
-          ),
-          SizedBox(
-            height: 15,
-          ),
-          Container(
-            width: size.width * 0.9,
-            alignment: Alignment.center,
-            child: Text(
-              "${futurePassMessage(concessionDetails)}",
-              style: TextStyle(fontSize: 15, color: Colors.yellow),
+            SizedBox(
+              height: 15,
             ),
-          ),
-          SizedBox(
-            height: 15,
-          ),
-          if (concessionDetails?.status != null && (concessionDetails!.status == 'serviced' || concessionDetails!.status == 'unserviced'))
-            Container(
-              width: size.width * 0.8,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  concessionDetails.status == "serviced"
-                      ? Text("Ongoing Pass",
-                    style: TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold),
-                  ) : Text("Applied Pass", style: TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold),),
-                  SizedBox(height: 10),
-                  Container(
-                    padding: EdgeInsets.all(10),
-                    width: MediaQuery.of(context).size.width * 0.9,
-                    decoration: BoxDecoration(
-                      color: Colors.black,
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(
-                        color: Colors.blue,
-                        width: 1,
+            if (concessionDetails?.status != null && (concessionDetails!.status == 'serviced' || concessionDetails!.status == 'unserviced'))
+              //Old UI Container
+              /*Container(
+                width: size.width * 0.8,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    concessionDetails.status == "serviced"
+                        ? Text("Ongoing Pass",
+                      style: TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold),
+                    ) : Text("Applied Pass", style: TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold),),
+                    SizedBox(height: 10),
+                    Container(
+                      padding: EdgeInsets.all(10),
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      decoration: BoxDecoration(
+                        color: Colors.black,
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(
+                          color: Colors.blue,
+                          width: 1,
+                        ),
                       ),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-    
-                        concessionDetails.status != "unserviced" ? Text(
-                            "Certificate Num: ${concessionRequestData != null
-                                ? concessionRequestData.passNum
-                                : "not assigned"}",
-                            style: TextStyle(
-                                fontSize: 16, color: Colors.white),
-                          ) : SizedBox(),
-                        concessionDetails.status != "unserviced" ? SizedBox(
-                            height: 15,
-                          ) : SizedBox(),
-                        concessionDetails.status != "unserviced" ? Text(
-                            "Date of Issue: $formattedDate",
-                            style: TextStyle(
-                                fontSize: 16, color: Colors.white),
-                          ) : SizedBox(),
-                        concessionDetails.status != "unserviced" ? SizedBox(
-                            height: 15,
-                          ) : SizedBox(),
-                        Text(
-                          "Travel Lane: ${travelLane}",
-                          style: TextStyle(fontSize: 16, color: Colors.white),
-                        ),
-                        SizedBox(height: 10),
-                        Text(
-                          "From: ${homeStation}",
-                          style: TextStyle(fontSize: 16, color: Colors.white),
-                        ),
-                        Text(
-                          "To: ${toStation}",
-                          style: TextStyle(fontSize: 16, color: Colors.white),
-                        ),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        Text(
-                          "Duration: ${duration}",
-                          style: TextStyle(fontSize: 16, color: Colors.white),
-                        ),
-                        Text(
-                          "Class: ${travelClass}",
-                          style: TextStyle(fontSize: 16, color: Colors.white),
-                        ),
-
-                        if (concessionRequestData?.passCollected != null &&
-                            concessionRequestData!.passCollected!['collected'] == "1") ...[
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          concessionDetails.status != "unserviced" ? Text(
+                              "Certificate Num: ${concessionRequestData != null
+                                  ? concessionRequestData.passNum
+                                  : "not assigned"}",
+                              style: TextStyle(
+                                  fontSize: 16, color: Colors.white),
+                            ) : SizedBox(),
+                          concessionDetails.status != "unserviced" ? SizedBox(
+                              height: 15,
+                            ) : SizedBox(),
+                          concessionDetails.status != "unserviced" ? Text(
+                              "Date of Issue: $formattedDate",
+                              style: TextStyle(
+                                  fontSize: 16, color: Colors.white),
+                            ) : SizedBox(),
+                          concessionDetails.status != "unserviced" ? SizedBox(
+                              height: 15,
+                            ) : SizedBox(),
+                          Text(
+                            "Travel Lane: ${travelLane}",
+                            style: TextStyle(fontSize: 16, color: Colors.white),
+                          ),
+                          SizedBox(height: 10),
+                          Text(
+                            "From: ${homeStation}",
+                            style: TextStyle(fontSize: 16, color: Colors.white),
+                          ),
+                          Text(
+                            "To: ${toStation}",
+                            style: TextStyle(fontSize: 16, color: Colors.white),
+                          ),
                           SizedBox(
                             height: 15,
                           ),
-                          /*Text(
-                            "Pass collected on ${DateFormat('dd/MM/yyyy').format((concessionRequestData.passCollected!['date'] as Timestamp).toDate())}",
-                            style: TextStyle(fontSize: 13, color: Colors.grey),
-                          ),*/
+                          Text(
+                            "Duration: ${duration}",
+                            style: TextStyle(fontSize: 16, color: Colors.white),
+                          ),
+                          Text(
+                            "Class: ${travelClass}",
+                            style: TextStyle(fontSize: 16, color: Colors.white),
+                          ),
+      
+                          if (concessionRequestData?.passCollected != null &&
+                              concessionRequestData!.passCollected!['collected'] == "1") ...[
+                            SizedBox(
+                              height: 15,
+                            ),
+                            Text(
+                              "Pass collected on ${DateFormat('dd/MM/yyyy').format((concessionRequestData.passCollected!['date'] as Timestamp).toDate())}",
+                              style: TextStyle(fontSize: 13, color: Colors.grey),
+                            ),
+                          ],
+      
+      
                         ],
-
-
-                      ],
+                      ),
                     ),
-                  ),
+      
+                    SizedBox(
+                      height: 15,
+                    ),
+                    InkWell(onTap: ()=> Navigator.push(context, MaterialPageRoute(builder: (context)=> GuideLinesScreen(),),),child: Text("View Guidelines",style: TextStyle(color: Colors.white),),),
+      
+                  ],
+                ),
+              )*/
 
-                  SizedBox(
-                    height: 15,
-                  ),
-                  InkWell(onTap: ()=> Navigator.push(context, MaterialPageRoute(builder: (context)=> GuideLinesScreen(),),),child: Text("View Guidelines",style: TextStyle(color: Colors.white),),),
+               Column(
+                 children: [
+                   SizedBox(
+                     height: 90,
+                     child: Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          Positioned(top: 50,child: Container(
+                            width: size.width,
+                            decoration: BoxDecoration(
+                              color: Colors.blue,
+                              border: Border.all(color: Colors.white),
+                              borderRadius: BorderRadius.only(topLeft: Radius.circular(size.width*0.1),topRight: Radius.circular(size.width*0.1),),
+                            ),
+                            child: const SizedBox(height: 50,),
+                          ),),
+                          Positioned(top: 20,child: Container(
+                            width: size.width*0.75,
+                            decoration: BoxDecoration(
+                              color: Colors.blue,
+                              borderRadius: BorderRadius.circular(size.width*0.05),
+                              border: Border.all(color: Colors.white),
+                              boxShadow: [
+                                BoxShadow(offset: Offset.fromDirection(1),spreadRadius: 2,color: Colors.black,blurRadius: 2)
+                              ],
+                            ),
+                            alignment: Alignment.center,
+                            height: 60,
+                            child: const Text("Text to be Displayed Here",style: TextStyle(color: Colors.white),),
+                          ),),
+                        ],
+                      ),
+                   ),
+                   Container(
+                     width: size.width,
+                     decoration: const BoxDecoration(
+                       color: Colors.blue,
+                       border: Border.symmetric(vertical: BorderSide(color: Colors.white),),
+                     ),
+                     child: Text("Center"),
+                   ),
+                 ],
+               )
 
-                ],
+
+      
+            else
+              Container(
+                width: size.width * 0.8,
+                height: size.height*0.3,
+                alignment: Alignment.center,
+                child: Text(
+                  "You Dont have any ongoing pass",
+                  style: TextStyle(fontSize: 18, color: Colors.white),
+                ),
               ),
-            )
-          else
-            Container(
-              width: size.width * 0.8,
-              height: size.height*0.3,
-              alignment: Alignment.center,
-              child: Text(
-                "You Dont have any ongoing pass",
-                style: TextStyle(fontSize: 18, color: Colors.white),
-              ),
-            ),
-        ],
+          ],
+        ),
       ),
     );
   }
