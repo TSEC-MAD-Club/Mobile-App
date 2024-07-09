@@ -14,6 +14,7 @@ import 'package:tsec_app/models/concession_details_model/concession_details_mode
 import 'package:tsec_app/models/concession_request_model/concession_request_model.dart';
 // import 'package:tsec_app/models/concession_request_model/concession_request_model.dart';
 import 'package:tsec_app/models/student_model/student_model.dart';
+import 'package:tsec_app/new_ui/colors.dart';
 import 'package:tsec_app/new_ui/screens/guidelines_screen/guidelinesscreen.dart';
 import 'package:tsec_app/new_ui/screens/railway_screen/railwayform.dart';
 import 'package:tsec_app/new_ui/screens/railway_screen/widgets/concession_status_modal.dart';
@@ -78,11 +79,11 @@ class _RailwayConcessionScreenState
 
   String futurePassMessage(concessionDetails) {
     if (canIssuePass(concessionDetails, lastPassIssued, duration)) {
-      return "⚠️ NOTE: You can tap above to apply for the Pass";
+      return "You can tap above to apply for the Pass";
     }
 
     if (status=="unserviced" || lastPassIssued==null) {
-      return "⚠️ NOTE: You need to wait until your request is granted";
+      return "You need to wait until your request is granted";
     }
 
     DateTime today = DateTime.now();
@@ -91,9 +92,9 @@ class _RailwayConcessionScreenState
     int diff = futurePass.difference(today).inDays;
 
     if (diff==1){
-      return "⚠️ NOTE: You will be able to apply for a new pass only after $diff day";
+      return "You will be able to apply for a new pass only after $diff day";
     }
-    return "⚠️ NOTE: You will be able to apply for a new pass only after $diff days";
+    return "You will be able to apply for a new pass only after $diff days";
   }
 
 
@@ -562,16 +563,16 @@ class _RailwayConcessionScreenState
             SizedBox(
               height: 15,
             ),
-            Container(
-              width: size.width * 0.9,
-              alignment: Alignment.center,
-              child: Text(
-                futurePassMessage(concessionDetails),
-                style: TextStyle(fontSize: 15, color: Colors.yellow),
-              ),
-            ),
+            // Container(
+            //   width: size.width * 0.9,
+            //   alignment: Alignment.center,
+            //   child: Text(
+            //     futurePassMessage(concessionDetails),
+            //     style: TextStyle(fontSize: 15, color: Colors.yellow),
+            //   ),
+            // ),
             SizedBox(
-              height: 15,
+              height: size.height * .075,
             ),
             if (concessionDetails?.status != null && (concessionDetails!.status == 'serviced' || concessionDetails!.status == 'unserviced'))
               //Old UI Container
@@ -674,11 +675,11 @@ class _RailwayConcessionScreenState
                      child: Stack(
                         alignment: Alignment.center,
                         children: [
-                          if (concessionDetails!.status == "serviced")
+                          if (concessionDetails!.status == "serviced" || concessionDetails!.status == 'unserviced')
                           Positioned(top: 50,child: Container(
                             width: size.width,
                             decoration: BoxDecoration(
-                              color: Colors.blue,
+                              color: oldDateSelectBlue,
                               border: Border.all(color: Colors.white),
                               borderRadius: BorderRadius.only(topLeft: Radius.circular(size.width*0.1),topRight: Radius.circular(size.width*0.1),),
                             ),
@@ -690,7 +691,7 @@ class _RailwayConcessionScreenState
                           Positioned(top: 20,child: Container(
                             width: size.width*0.75,
                             decoration: BoxDecoration(
-                              color: Colors.blue,
+                              color: oldDateSelectBlue,
                               borderRadius: BorderRadius.circular(size.width*0.05),
                               border: Border.all(color: Colors.white),
                               boxShadow: [
@@ -699,7 +700,27 @@ class _RailwayConcessionScreenState
                             ),
                             alignment: Alignment.center,
                             height: 60,
-                            child: const Text("Text to be Displayed Here",style: TextStyle(color: Colors.white),),
+                            child: Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child:
+                                (concessionDetails!.status == 'serviced')
+                                ? Text(
+                                  futurePassMessage(concessionDetails),
+                                  textAlign: TextAlign.justify,
+                                  style: const TextStyle(color: Colors.white),)
+                                : Row(
+                                  children: [
+                                    Image.asset('assets/images/icons/box_imp.png',width: 16,),
+                                    SizedBox(width: 10.0,),
+                                    Expanded(
+                                      child: Text(
+                                      futurePassMessage(concessionDetails),
+                                      style: const TextStyle(color: Colors.white),),
+                                    )
+                                  ],
+                                ),
+               
+                            ),
                           ),),
                         ],
                       ),
@@ -708,7 +729,7 @@ class _RailwayConcessionScreenState
                      width: size.width,
                      height: size.height*0.4,
                      decoration: const BoxDecoration(
-                       color: Colors.blue,
+                       color: oldDateSelectBlue,
                        border: Border.symmetric(vertical: BorderSide(color: Colors.white),),
                      ),
                      child: Padding(
@@ -720,8 +741,9 @@ class _RailwayConcessionScreenState
                             Text("Ongoing Pass",
                               style: TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold),
                             ),
-                            SizedBox(height: 15),
-                           Row(
+                            SizedBox(height: 30),
+                           concessionDetails.status != "unserviced"
+                           ? Row(
                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                              children: [
                                Column(
@@ -739,8 +761,11 @@ class _RailwayConcessionScreenState
                                  ],
                                )
                              ],
-                           ),
-                           const SizedBox(height: 15,),
+                           )
+                           : const SizedBox(),
+                           concessionDetails.status != "unserviced"
+                           ? const SizedBox(height: 35,)
+                           : const SizedBox(),
                            Row(
                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                              children: [
@@ -767,7 +792,7 @@ class _RailwayConcessionScreenState
                                )
                              ],
                            ),
-                           const SizedBox(height: 15,),
+                           const SizedBox(height: 35,),
                            Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -798,14 +823,47 @@ class _RailwayConcessionScreenState
 
 
             else
-              Container(
-                width: size.width * 0.8,
-                height: size.height*0.3,
-                alignment: Alignment.center,
-                child: Text(
-                  "You Dont have any ongoing pass",
-                  style: TextStyle(fontSize: 18, color: Colors.white),
-                ),
+              Column(
+                children: [
+                  SizedBox(height: 20.0,),
+                  Container(
+                    width: size.width*0.75,
+                    decoration: BoxDecoration(
+                      color: oldDateSelectBlue,
+                      borderRadius: BorderRadius.circular(size.width*0.05),
+                      border: Border.all(color: Colors.white),
+                      boxShadow: [
+                        BoxShadow(offset: Offset.fromDirection(2),spreadRadius: 2,color: Colors.black,blurRadius: 2)
+                      ],
+                    ),
+                    alignment: Alignment.center,
+                    height: 60,
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child:
+                        Row(
+                          children: [
+                            Image.asset('assets/images/icons/box_imp.png',width: 16,),
+                            SizedBox(width: 10.0,),
+                            Expanded(
+                              child: Text(
+                              futurePassMessage(concessionDetails),
+                              style: const TextStyle(color: Colors.white),),
+                            )
+                          ],
+                        ),
+                    ),
+                  ),
+                  Container(
+                    width: size.width * 0.8,
+                    height: size.height * 0.4,
+                    alignment: Alignment.center,
+                    child: Text(
+                      "You Dont have any ongoing pass",
+                      style: TextStyle(fontSize: 18, color: Colors.white),
+                    ),
+                  ),
+                ],
               ),
           ],
         ),
