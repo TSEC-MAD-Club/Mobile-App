@@ -10,7 +10,9 @@ class ScheduleCardModified extends StatelessWidget {
         required this.lectureName,
         required this.facultyName,
         required this.facultyImageurl,
-        required this.lectureBatch})
+        required this.lectureBatch,
+        required this.lectureRoomNo,
+      })
       : super(key: key);
   final Color? color;
   final Color? opacityColor;
@@ -20,6 +22,7 @@ class ScheduleCardModified extends StatelessWidget {
   final String facultyName;
   final String facultyImageurl;
   final String lectureBatch;
+  final String lectureRoomNo;
 
   @override
   Widget build(BuildContext context) {
@@ -133,14 +136,31 @@ class ScheduleCardModified extends StatelessWidget {
                     ),
                     FittedBox(
                       fit: BoxFit.scaleDown,
-                      child: Text(
-                        'Batch : $lectureBatch',
-                        style: TextStyle(
-                          color: _theme.textTheme.headlineMedium!.color,
-                          fontWeight: FontWeight.w300,
-                          fontSize: 17.0,
-                          letterSpacing: 1.0,
-                        ),
+                      child: Row(
+                        children: [
+                          Text(
+                            'Batch: $lectureBatch',
+                            style: TextStyle(
+                              color: _theme.textTheme.headlineMedium!.color,
+                              fontWeight: FontWeight.w300,
+                              fontSize: 15,
+                              letterSpacing: 1.0,
+                            ),
+                          ),
+                          SizedBox(width: 30,),
+                          lectureRoomNo!=""?
+                          Text(
+                            'Room: $lectureRoomNo',
+                            style: TextStyle(
+                              color: _theme.textTheme.headlineMedium!.color,
+                              fontWeight: FontWeight.w300,
+                              fontSize: 15,
+                              letterSpacing: 1.0,
+                            ),
+                          )
+                              :
+                          Container(),
+                        ],
                       ),
                     ),
                     const SizedBox(
