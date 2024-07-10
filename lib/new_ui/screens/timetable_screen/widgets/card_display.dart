@@ -78,7 +78,8 @@ class _CardDisplayState extends ConsumerState<CardDisplay> {
           } else if (checkOccasion(day, occasionList) != "") {
             return Center(child: Text("Happy ${checkOccasion(day, occasionList)}!",style: TextStyle(color: Colors.greenAccent)));
           } else {
-            List<TimetableModel> timeTableDay = getTimetablebyDay(data, dayStr);
+            List<String> respectiveRoomNo = [];
+            List<TimetableModel> timeTableDay = getTimetablebyDay(data, dayStr,respectiveRoomNo);
             if (timeTableDay.isEmpty) {
               return const Center(child: Text("No lectures Today ! "));
             } else {
@@ -89,6 +90,7 @@ class _CardDisplayState extends ConsumerState<CardDisplay> {
                     final color = labs ? colorList[1] : colorList[0];
                     final opacity = labs ? opacityList[1] : opacityList[0];
                     final lectureFacultyname = timeTableDay[index].lectureFacultyName;
+                    final lectureRoomNo = [index];
 
                     return ScheduleCardModified(
                       color,
@@ -99,6 +101,7 @@ class _CardDisplayState extends ConsumerState<CardDisplay> {
                       facultyName: !checkTimetable(lectureFacultyname) ? "---------" : lectureFacultyname,
                       facultyImageurl: checkTimetable(lectureFacultyname) ? getFacultyImagebyName(lectureFacultyname) : "",
                       lectureBatch: timeTableDay[index].lectureBatch,
+                      lectureRoomNo: respectiveRoomNo[index],
                     );
                   }),
                 ),
@@ -113,7 +116,7 @@ class _CardDisplayState extends ConsumerState<CardDisplay> {
         loading: () => const Center(child: CircularProgressIndicator()));
   }
 
-  List<TimetableModel> getTimetablebyDay(Map<String, dynamic> data, String day) {
+  List<TimetableModel> getTimetablebyDay(Map<String, dynamic> data, String day,List<String> respectiveRoomNo) {
     List<TimetableModel> timeTableDay = [];
     final daylist = data[day];
     for (final item in daylist) {
@@ -125,6 +128,11 @@ class _CardDisplayState extends ConsumerState<CardDisplay> {
         } else {
           item['lectureFacultyName'] = " ";
           timeTableDay.add(TimetableModel.fromJson(item));
+        }
+        if(item["lectureRoomNo"]!=null){
+          respectiveRoomNo.add(item["lectureRoomNo"]);
+        }else{
+          respectiveRoomNo.add("");
         }
       }
     }
