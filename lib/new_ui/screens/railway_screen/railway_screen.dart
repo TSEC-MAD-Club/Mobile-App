@@ -560,9 +560,9 @@ class _RailwayConcessionScreenState
                 ),
               ),
             ),
-            SizedBox(
-              height: 15,
-            ),
+            // SizedBox(
+            //   height: 5,
+            // ),
             // Container(
             //   width: size.width * 0.9,
             //   alignment: Alignment.center,
@@ -738,9 +738,33 @@ class _RailwayConcessionScreenState
                          mainAxisAlignment: MainAxisAlignment.start,
                          crossAxisAlignment: CrossAxisAlignment.start,
                          children: [
-                            Text("Ongoing Pass",
-                              style: TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold),
-                            ),
+                           Row(
+                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                             children: [
+                               Column(
+                                 children: [
+                                   Text("Ongoing Pass",
+                                     style: TextStyle(fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
+                                   ),
+                                  ]
+                               ),
+                               Column(
+                                   children: [
+                                     if (concessionRequestData?.passCollected != null &&
+                                         concessionRequestData!.passCollected!['collected'] == "1") ...[
+                                       Text(
+                                         "Collected on ${DateFormat('dd/MM/yyyy').format((concessionRequestData.passCollected!['date'] as Timestamp).toDate())}",
+                                         style: TextStyle(fontSize: 10, color: Colors.white, fontWeight: FontWeight.bold),
+                                       ),
+                                     ] else...[
+                                       Text(
+                                         "Pass not collected Yet", style: TextStyle(fontSize: 10, color: Colors.yellow, fontWeight: FontWeight.bold),
+                                       ),
+                                     ],
+                                   ]
+                               ),
+                             ],
+                           ),
                             SizedBox(height: 30),
                            concessionDetails.status != "unserviced"
                            ? Row(
@@ -810,7 +834,6 @@ class _RailwayConcessionScreenState
                                     Text(travelClass == "I" ? "First Class" : "Second Class", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),),
                                   ],
                                 ),
-                                //const SizedBox()
                               ],
                             ),
                          ],
