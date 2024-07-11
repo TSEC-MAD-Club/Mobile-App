@@ -884,11 +884,23 @@ class _RailwayConcessionScreenState
                     width: size.width * 0.8,
                     height: size.height * 0.4,
                     alignment: Alignment.center,
-                    child: Text(
-                      "You Dont have any ongoing pass",
-                      style: TextStyle(fontSize: 18, color: Colors.white),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Image.asset(
+                          'assets/images/railway.png',
+                          width: 300,
+                        ),
+                        SizedBox(height: 10),
+                        Text(
+                          "You don't have any ongoing pass",
+                          style: TextStyle(fontSize: 15, color: Colors.yellow, fontWeight: FontWeight.bold),
+                        ),
+                      ],
                     ),
                   ),
+
+
                 ],
               ),
           ],
