@@ -688,38 +688,41 @@ class _RailwayConcessionScreenState
                           else
                             Positioned(bottom: 20, child: Text("You don't have any ongoing pass",
                             style: TextStyle(color: Colors.white),),),
-                          Positioned(top: 20,child: Container(
-                            width: size.width*0.75,
-                            decoration: BoxDecoration(
-                              color: oldDateSelectBlue,
-                              borderRadius: BorderRadius.circular(size.width*0.05),
-                              border: Border.all(color: Colors.white),
-                              boxShadow: [
-                                BoxShadow(offset: Offset.fromDirection(2),spreadRadius: 2,color: Colors.black,blurRadius: 2)
-                              ],
-                            ),
-                            alignment: Alignment.center,
-                            height: 60,
-                            child: Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child:
-                                (concessionDetails!.status == 'serviced')
-                                ? Text(
-                                  futurePassMessage(concessionDetails),
-                                  textAlign: TextAlign.justify,
-                                  style: const TextStyle(color: Colors.white),)
-                                : Row(
-                                  children: [
-                                    Image.asset('assets/images/icons/box_imp.png',width: 16,),
-                                    SizedBox(width: 10.0,),
-                                    Expanded(
-                                      child: Text(
-                                      futurePassMessage(concessionDetails),
-                                      style: const TextStyle(color: Colors.white),),
-                                    )
-                                  ],
-                                ),
-               
+                          Positioned(top: 20,child: InkWell(
+                            onTap: ()=>Navigator.push(context, MaterialPageRoute(builder: (context)=> GuideLinesScreen(),),),
+                            child: Container(
+                              width: size.width*0.75,
+                              decoration: BoxDecoration(
+                                color: oldDateSelectBlue,
+                                borderRadius: BorderRadius.circular(size.width*0.05),
+                                border: Border.all(color: Colors.white),
+                                boxShadow: [
+                                  BoxShadow(offset: Offset.fromDirection(2),spreadRadius: 2,color: Colors.black,blurRadius: 2)
+                                ],
+                              ),
+                              alignment: Alignment.center,
+                              height: 60,
+                              child: Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child:
+                                  (concessionDetails!.status == 'serviced')
+                                  ? Text(
+                                    futurePassMessage(concessionDetails),
+                                    textAlign: TextAlign.justify,
+                                    style: const TextStyle(color: Colors.white),)
+                                  : Row(
+                                    children: [
+                                      Image.asset('assets/images/icons/box_imp.png',width: 16,),
+                                      SizedBox(width: 10.0,),
+                                      Expanded(
+                                        child: Text(
+                                        futurePassMessage(concessionDetails),
+                                        style: const TextStyle(color: Colors.white),),
+                                      )
+                                    ],
+                                  ),
+
+                              ),
                             ),
                           ),),
                         ],
@@ -752,10 +755,10 @@ class _RailwayConcessionScreenState
                                    children: [
                                      if (concessionRequestData?.passCollected != null &&
                                          concessionRequestData!.passCollected!['collected'] == "1") ...[
-                                       Text(
+                                       /*Text(
                                          "Collected on ${DateFormat('dd/MM/yyyy').format((concessionRequestData.passCollected!['date'] as Timestamp).toDate())}",
                                          style: TextStyle(fontSize: 10, color: Colors.white, fontWeight: FontWeight.bold),
-                                       ),
+                                       ),*/
                                      ] else...[
                                        Text(
                                          "Pass not collected Yet", style: TextStyle(fontSize: 10, color: Colors.yellow, fontWeight: FontWeight.bold),
