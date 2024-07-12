@@ -37,7 +37,7 @@ class _NotificationScreenState extends ConsumerState<NotificationScreen> {
           SliverToBoxAdapter(
             child: CustomAppBar(
               title: "Notifications",
-              image: Image.asset(ImageAssets.committes),
+              image: Image.asset(ImageAssets.notification),
             ),
           ),
         ],
@@ -95,6 +95,10 @@ class _NotificationScreenState extends ConsumerState<NotificationScreen> {
     _lastDate = notificationTime;
     return Center(
       child: Chip(
+        backgroundColor: Colors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20.0),
+        ),
         labelStyle: const TextStyle(fontSize: 12),
         label: Text(
           DateFormat("dd MMMM,yyyy").format(notificationTime),

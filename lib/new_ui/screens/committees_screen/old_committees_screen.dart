@@ -96,7 +96,7 @@ class _OldCommittessScreenState extends State<OldCommittessScreen> {
                             children: [
                               Text(
                                 data[_currentPage].name,
-                                style: Theme.of(context).textTheme.headlineSmall!.copyWith(fontSize: 4),
+                                style: Theme.of(context).textTheme.headlineSmall!.copyWith(fontSize: 20),
                                 textAlign: TextAlign.center,
                               ),
                               const SizedBox(height: 15),
@@ -123,6 +123,7 @@ class _OldCommittessScreenState extends State<OldCommittessScreen> {
       ),
     );
   }
+
 
   double _getScale(int index, double page) {
     return 1 - (lerpDouble(0, .4, index - page) ?? 0).abs();

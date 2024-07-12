@@ -8,7 +8,7 @@ class ImageAssets {
   static const tsecImg = "$_root/app_bar/tsec.png";
   static const tpo = "$_root/app_bar/tpo.png";
   static const notes = "$_root/app_bar/notes.png";
-
+  static const notification = "$_root/app_bar/notification.png";
   // icons
   static const _iconRoot = "$_root/icons";
 

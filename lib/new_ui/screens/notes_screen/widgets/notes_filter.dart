@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:tsec_app/models/subject_model/subject_model.dart';
 import 'package:tsec_app/models/user_model/user_model.dart';
+import 'package:tsec_app/new_ui/colors.dart';
 import 'package:tsec_app/provider/auth_provider.dart';
 import 'package:tsec_app/provider/subjects_provider.dart';
 import 'package:tsec_app/utils/custom_snackbar.dart';
@@ -146,7 +147,7 @@ class _NotesFilterBarState extends ConsumerState<NotesFilterBar>
           pinned: true,
           // toolbarHeight: _isFilterVisible ? 500 : 60,
           toolbarHeight: sizeAnimation.value,
-          surfaceTintColor: Colors.transparent,
+
           automaticallyImplyLeading: false,
           backgroundColor: Colors.transparent,
           title: AnimatedCrossFade(
@@ -192,9 +193,11 @@ class _NotesFilterBarState extends ConsumerState<NotesFilterBar>
 
             // Second child is the filter bar
             secondChild: Container(
+
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(18),
-                color: Theme.of(context).colorScheme.tertiary,
+                color: timePickerBorder,
+                border: Border.all(color: timePickerBorder, width: 1.0), // Change the color and width as needed
                 // boxShadow: isItDarkMode
                 //     ? shadowLightModeTextFields
                 //     : shadowDarkModeTextFields,
@@ -241,7 +244,7 @@ class _NotesFilterBarState extends ConsumerState<NotesFilterBar>
                         ? Column(
                             mainAxisSize: MainAxisSize.max,
                             children: [
-                              const Text("Subjects"),
+                              const Text("Subjects",style: TextStyle(color: Colors.white),),
                               SizedBox(
                                 height: 250,
                                 child: GridView.builder(
@@ -353,9 +356,7 @@ class _NotesFilterBarState extends ConsumerState<NotesFilterBar>
                           },
                           icon: Icon(
                             Icons.cancel_outlined,
-                            color: Theme.of(context)
-                                .colorScheme
-                                .onSecondaryContainer,
+                            color: Colors.white,
                             size: 30,
                           ),
                         ),
@@ -366,9 +367,7 @@ class _NotesFilterBarState extends ConsumerState<NotesFilterBar>
                           },
                           icon: Icon(
                             Icons.refresh,
-                            color: Theme.of(context)
-                                .colorScheme
-                                .onSecondaryContainer,
+                            color: Colors.white,
                             size: 30,
                           ),
                         ),

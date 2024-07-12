@@ -17,7 +17,7 @@ class CustomAppBar extends ConsumerWidget implements PreferredSizeWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return SafeArea(
       child: Container(
-        height: 235,
+        height: 200,
         decoration: BoxDecoration(
           color: commonbgLightblack,
           borderRadius: const BorderRadius.only(
