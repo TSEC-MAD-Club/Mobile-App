@@ -26,6 +26,7 @@ import 'package:tsec_app/provider/concession_provider.dart';
 import 'package:tsec_app/provider/concession_request_provider.dart';
 import 'package:tsec_app/provider/railway_concession_provider.dart';
 import 'package:tsec_app/new_ui/screens/railway_screen/widgets/railway_text_field.dart';
+import 'package:tsec_app/services/sharedprefsfordot.dart';
 import 'package:tsec_app/utils/railway_enum.dart';
 import 'package:tsec_app/utils/station_list.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -449,6 +450,7 @@ class _RailwayConcessionScreenState
       ref.read(concessionProvider.notifier).getConcessionData();
       ref.read(concessionRequestProvider.notifier).getConcessionRequestData();
     });
+
   }
   
 
@@ -460,6 +462,7 @@ class _RailwayConcessionScreenState
     bool editMode = ref.watch(railwayConcessionOpenProvider);
     ConcessionDetailsModel? concessionDetails = ref.watch(concessionDetailsProvider);
     ConcessionRequestModel? concessionRequestData = ref.watch(concessionRequestDetailProvider);
+    SharedPreferencesForDot.setRailwayKeyStatus(concessionRequestData?.status != null ? concessionRequestData!.status : "");
     String formattedDate = lastPassIssued != null
         ? DateFormat('dd/MM/yyyy').format(lastPassIssued!)
         : 'null';
