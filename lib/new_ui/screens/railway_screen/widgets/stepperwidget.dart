@@ -128,7 +128,7 @@ class StatusStepper extends StatelessWidget {
     if (concessionStatus == "unserviced") {
       return EasyStep(
         customStep: getStatusCircle(1),
-        title: "Under Review",
+        title: "Reviewing",
       );
     }
     else if(concessionStatus == "serviced" || concessionStatus == "rejected") {

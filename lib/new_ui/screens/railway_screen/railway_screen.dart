@@ -574,7 +574,7 @@ class _RailwayConcessionScreenState
             SizedBox(
               height: size.height * .075,
             ),
-            if (concessionDetails?.status != null && (concessionDetails!.status == 'serviced' || concessionDetails!.status == 'unserviced'))
+            if (concessionDetails!= null && concessionDetails.status != null && (concessionDetails!.status == 'serviced' || concessionDetails!.status == 'unserviced'))
               //Old UI Container
               /*Container(
                 width: size.width * 0.8,
@@ -704,13 +704,7 @@ class _RailwayConcessionScreenState
                               height: 60,
                               child: Padding(
                                 padding: const EdgeInsets.all(10.0),
-                                child:
-                                  (concessionDetails!.status == 'serviced')
-                                  ? Text(
-                                    futurePassMessage(concessionDetails),
-                                    textAlign: TextAlign.justify,
-                                    style: const TextStyle(color: Colors.white),)
-                                  : Row(
+                                child: Row(
                                     children: [
                                       Image.asset('assets/images/icons/box_imp.png',width: 16,),
                                       SizedBox(width: 10.0,),
@@ -852,32 +846,35 @@ class _RailwayConcessionScreenState
               Column(
                 children: [
                   SizedBox(height: 20.0,),
-                  Container(
-                    width: size.width*0.75,
-                    decoration: BoxDecoration(
-                      color: oldDateSelectBlue,
-                      borderRadius: BorderRadius.circular(size.width*0.05),
-                      border: Border.all(color: Colors.white),
-                      boxShadow: [
-                        BoxShadow(offset: Offset.fromDirection(2),spreadRadius: 2,color: Colors.black,blurRadius: 2)
-                      ],
-                    ),
-                    alignment: Alignment.center,
-                    height: 60,
-                    child: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child:
-                        Row(
-                          children: [
-                            Image.asset('assets/images/icons/box_imp.png',width: 16,),
-                            SizedBox(width: 10.0,),
-                            Expanded(
-                              child: Text(
-                              futurePassMessage(concessionDetails),
-                              style: const TextStyle(color: Colors.white),),
-                            )
-                          ],
-                        ),
+                  GestureDetector(
+                    onTap: ()=>Navigator.push(context, MaterialPageRoute(builder: (context)=> GuideLinesScreen(),),),
+                    child: Container(
+                      width: size.width*0.75,
+                      decoration: BoxDecoration(
+                        color: oldDateSelectBlue,
+                        borderRadius: BorderRadius.circular(size.width*0.05),
+                        border: Border.all(color: Colors.white),
+                        boxShadow: [
+                          BoxShadow(offset: Offset.fromDirection(2),spreadRadius: 2,color: Colors.black,blurRadius: 2)
+                        ],
+                      ),
+                      alignment: Alignment.center,
+                      height: 60,
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child:
+                          Row(
+                            children: [
+                              Image.asset('assets/images/icons/box_imp.png',width: 16,),
+                              SizedBox(width: 10.0,),
+                              Expanded(
+                                child: Text(
+                                futurePassMessage(concessionDetails),
+                                style: const TextStyle(color: Colors.white),),
+                              )
+                            ],
+                          ),
+                      ),
                     ),
                   ),
                   Container(

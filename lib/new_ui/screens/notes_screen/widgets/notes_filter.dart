@@ -193,10 +193,11 @@ class _NotesFilterBarState extends ConsumerState<NotesFilterBar>
 
             // Second child is the filter bar
             secondChild: Container(
+
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(18),
                 color: timePickerBorder,
-                
+                border: Border.all(color: timePickerBorder, width: 1.0), // Change the color and width as needed
                 // boxShadow: isItDarkMode
                 //     ? shadowLightModeTextFields
                 //     : shadowDarkModeTextFields,
