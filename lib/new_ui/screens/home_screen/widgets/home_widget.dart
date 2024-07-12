@@ -490,37 +490,44 @@ class _HomeWidgetState extends ConsumerState<HomeWidget> {
                   //DATE SELECTOR
                   if(_onlyUserLoggedIn)
                     Padding(
-                      padding: const EdgeInsets.all(15),
+                      padding: const EdgeInsets.fromLTRB(0, 7, 0, 20),
                       child: Container(
                         width: _size.width * 0.9,
                         // color: Colors.red,
-                        height: 85,
+                        height: 70,
                         // could have used _size but fuck it whore-licks
                         child: ClipRRect(
-                          borderRadius: BorderRadius.circular(15.0),
-                          child: DatePicker(
-                            DateTime.now(),
-                            width: 50,
-                            monthTextStyle: _theme.textTheme.headlineSmall!.copyWith(
-                              fontSize: 14,
-                              color: Colors.grey,
+                          borderRadius: BorderRadius.circular(10.0),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(color: timePickerBorder, width: 1.0), // Change the color and width as needed
+                              borderRadius: BorderRadius.circular(10.0),
+                            color: timePickerBg,
                             ),
-                            dayTextStyle: _theme.textTheme.headlineSmall!.copyWith(
-                              fontSize: 14,
-                              color: Colors.grey,
+                            child: DatePicker(
+                              DateTime.now(),
+                              width: 45,
+                              monthTextStyle: _theme.textTheme.headlineSmall!.copyWith(
+                                fontSize: 11,
+                                color: Colors.grey,
+                              ),
+                              dayTextStyle: _theme.textTheme.headlineSmall!.copyWith(
+                                fontSize: 11,
+                                color: Colors.grey,
+                              ),
+                              dateTextStyle: _theme.textTheme.titleSmall!.copyWith(
+                                fontSize: 11,
+                                color: Colors.grey,
+                              ),
+                              initialSelectedDate: DateTime.now(),
+                              selectionColor: oldDateSelectBlue,
+                              selectedTextColor: Colors.white,
+                              onDateChange: (selectedDate) {
+                                ref
+                                    .read(dayProvider.notifier)
+                                    .update((state) => selectedDate);
+                              },
                             ),
-                            dateTextStyle: _theme.textTheme.titleSmall!.copyWith(
-                              fontSize: 13,
-                              color: Colors.grey,
-                            ),
-                            initialSelectedDate: DateTime.now(),
-                            selectionColor: oldDateSelectBlue,
-                            selectedTextColor: Colors.white,
-                            onDateChange: (selectedDate) {
-                              ref
-                                  .read(dayProvider.notifier)
-                                  .update((state) => selectedDate);
-                            },
                           ),
                         ),
                       ),
