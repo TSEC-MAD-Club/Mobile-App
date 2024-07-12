@@ -10,6 +10,40 @@ import 'package:tsec_app/provider/auth_provider.dart';
 import 'package:tsec_app/new_ui/screens/profile_screen/profile_screen.dart';
 import 'package:tsec_app/provider/railway_concession_provider.dart';
 
+
+
+
+
+
+
+
+
+
+
+/////////////////////////     THIS SCREEN ISNT BEING USED  . HOME WIDGET IS BRING USWED ////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 class HomeScreen extends ConsumerStatefulWidget {
   String currentBottomNavPage;
   Function changeCurrentBottomNavPage;

@@ -8,6 +8,8 @@ const commonbgLLightblack = Color(0xff323232);
 const cardcolorblue  = Color(0xff0077b6);
 const oldDateSelectBlue  = Color(0xff2196F3);
 const cardlightblue = Color(0xff90e0ef);
+const timePickerBg = Color(0xff252526);
+const timePickerBorder = Color(0xff313334);
 // const commonbgwhite = Color(0xfff1f5f8);
 const greencontainercolor = Color(0xff2e9d59);
 //the red container uses a gradient, unsure of its start and end values
