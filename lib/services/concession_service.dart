@@ -8,6 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:tsec_app/models/concession_details_model/concession_details_model.dart';
 import 'package:tsec_app/models/concession_request_model/concession_request_model.dart';
+import 'package:tsec_app/services/sharedprefsfordot.dart';
 import 'package:tsec_app/utils/railway_enum.dart';
 // import 'package:tsec_app/utils/custom_snackbar.dart';
 
@@ -85,6 +86,17 @@ class ConcessionService {
         print("Deatils Map = ${detailsMap}");
         ConcessionRequestModel concessionRequestData =
         ConcessionRequestModel.fromJson(detailsMap);
+
+
+        if(SharedPreferencesForDot.getRailwayKeyStatus() == "Key Not Present") {
+          SharedPreferencesForDot.setRailwayKeyStatus(
+              concessionRequestData.status ?? "");
+        }else{
+          SharedPreferencesForDot.setRailwayDot(concessionRequestData.status ?? "");
+        }
+
+
+
         print("Concession Request Data Got = ${concessionRequestData.toJson()}");
         return concessionRequestData;
       } else {
