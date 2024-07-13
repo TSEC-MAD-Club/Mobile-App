@@ -289,6 +289,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.6"
+  dbus:
+    dependency: transitive
+    description:
+      name: dbus
+      sha256: "365c771ac3b0e58845f39ec6deebc76e3276aa9922b0cc60840712094d9047ac"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.7.10"
   dio:
     dependency: "direct main"
     description:
@@ -550,6 +558,30 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.4"
+  flutter_local_notifications:
+    dependency: "direct main"
+    description:
+      name: flutter_local_notifications
+      sha256: "0a9068149f0225e81642b03562e99776106edbd967816ee68bc16310d457c60e"
+      url: "https://pub.dev"
+    source: hosted
+    version: "17.2.1+1"
+  flutter_local_notifications_linux:
+    dependency: transitive
+    description:
+      name: flutter_local_notifications_linux
+      sha256: "33f741ef47b5f63cc7f78fe75eeeac7e19f171ff3c3df054d84c1e38bedb6a03"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.0.0+1"
+  flutter_local_notifications_platform_interface:
+    dependency: transitive
+    description:
+      name: flutter_local_notifications_platform_interface
+      sha256: "85f8d07fe708c1bdcf45037f2c0109753b26ae077e9d9e899d55971711a4ea66"
+      url: "https://pub.dev"
+    source: hosted
+    version: "7.2.0"
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
@@ -1229,6 +1261,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.10.0"
+  timezone:
+    dependency: transitive
+    description:
+      name: timezone
+      sha256: "2236ec079a174ce07434e89fcd3fcda430025eb7692244139a9cf54fdcf1fc7d"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.9.4"
   timing:
     dependency: transitive
     description:
@@ -1273,10 +1313,10 @@ packages:
     dependency: transitive
     description:
       name: url_launcher_ios
-      sha256: "7068716403343f6ba4969b4173cbf3b84fc768042124bc2c011e5d782b24fe89"
+      sha256: e43b677296fadce447e987a2f519dcf5f6d1e527dc35d01ffab4fff5b8a7063e
       url: "https://pub.dev"
     source: hosted
-    version: "6.3.0"
+    version: "6.3.1"
   url_launcher_linux:
     dependency: transitive
     description:
@@ -1321,10 +1361,10 @@ packages:
     dependency: transitive
     description:
       name: uuid
-      sha256: "814e9e88f21a176ae1359149021870e87f7cddaf633ab678a5d2b0bff7fd1ba8"
+      sha256: "83d37c7ad7aaf9aa8e275490669535c8080377cfa7a7004c24dfac53afffaa90"
       url: "https://pub.dev"
     source: hosted
-    version: "4.4.0"
+    version: "4.4.2"
   vector_math:
     dependency: transitive
     description:

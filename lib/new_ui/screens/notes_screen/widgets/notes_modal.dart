@@ -420,7 +420,8 @@ class _NotesModalState extends ConsumerState<NotesModal> {
                           Container(
                             height: 300,
                             decoration: BoxDecoration(
-                              color: commonbgLightblack,
+                              color: commonbgblack,
+                              border: Border.all(color: timePickerBorder, width: 1.0), // Change the color and width as needed
                               borderRadius: BorderRadius.circular(10), // Circular border radius
                             ),
                             child: attachments.isEmpty

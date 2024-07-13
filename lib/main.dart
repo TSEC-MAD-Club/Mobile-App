@@ -20,6 +20,8 @@ import "package:tsec_app/new_ui/screens/event_details_screen/event_details.dart"
 import 'package:tsec_app/new_ui/screens/profile_screen/profile_screen.dart';
 import 'package:tsec_app/screens/department_screen/department_screen.dart';
 import 'package:tsec_app/screens/departmentlist_screen/department_list.dart';
+import 'package:tsec_app/services/localnotificationservice.dart';
+import 'package:tsec_app/services/sharedprefsfordot.dart';
 import 'package:tsec_app/utils/department_enum.dart';
 import 'provider/app_state_provider.dart';
 import 'provider/shared_prefs_provider.dart';
@@ -39,6 +41,10 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
+  await SharedPreferencesForDot.initializeSharedPreferences();
+  await SharedPreferencesForDot.setNewNotificationDot();
+
+  await LocalNotificationService.localNotificationInit();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   initGetIt();

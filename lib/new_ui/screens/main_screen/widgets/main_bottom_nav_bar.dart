@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -10,6 +11,7 @@ import 'package:tsec_app/new_ui/screens/timetable_screen/timetable_screen.dart';
 import 'package:tsec_app/provider/auth_provider.dart';
 import 'package:tsec_app/new_ui/screens/profile_screen/profile_screen.dart';
 import 'package:tsec_app/provider/railway_concession_provider.dart';
+import 'package:tsec_app/services/sharedprefsfordot.dart';
 
 import '../../notes_screen/notes_screen.dart';
 
@@ -112,7 +114,12 @@ class _HomeScreenState extends ConsumerState<MainBottomNavBar> {
             ),
             BottomNavigationBarItem(
               backgroundColor: Colors.transparent,
-              icon: Icon(Icons.directions_railway_outlined),
+              icon: Stack(
+                children: [
+                  Icon(Icons.directions_railway_outlined),
+                  SharedPreferencesForDot.getRailwayDot() ? Positioned(right: 0,top: 0,child: Icon(Icons.circle,color: Colors.red,size: 10,),) : SizedBox(),
+                ],
+              ),
               activeIcon: Icon(Icons.directions_railway_filled),
               label: "Railway",
             ),

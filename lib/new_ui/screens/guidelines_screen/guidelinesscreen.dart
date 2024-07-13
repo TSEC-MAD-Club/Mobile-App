@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tsec_app/new_ui/screens/guidelines_screen/widgets/FAQCard.dart';
 import 'package:tsec_app/new_ui/screens/guidelines_screen/widgets/guidelines_card.dart';
+import 'package:tsec_app/services/localnotificationservice.dart';
 
 class GuideLinesScreen extends StatefulWidget {
   @override
@@ -309,7 +310,6 @@ class _GuideLinesScreenState extends State<GuideLinesScreen> {
                   SizedBox(
                     height: size.height * 0.03,
                   ),
-
                 ],
               ),
             )

@@ -151,7 +151,8 @@ class _NoteListState extends ConsumerState<NoteList> {
                               // margin: EdgeInsets.all(8),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(20),
-                                color: Color(0xff383838),
+                                border: Border.all(color: timePickerBorder, width: 1.0), // Change the color and width as needed
+                                color: timePickerBg,
                               ),
                               child: Padding(
                                 padding: const EdgeInsets.all(20,),
