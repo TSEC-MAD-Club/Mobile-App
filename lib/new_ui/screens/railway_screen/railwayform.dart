@@ -1,5 +1,7 @@
 // ignore_for_file: lines_longer_than_80_chars
 import 'dart:typed_data';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io';
@@ -21,6 +23,7 @@ import 'package:tsec_app/new_ui/screens/railway_screen/widgets/railway_text_fiel
 import 'package:tsec_app/utils/railway_enum.dart';
 import 'package:tsec_app/utils/station_list.dart';
 
+import '../../../models/user_model/user_model.dart';
 import '../../../provider/concession_request_provider.dart';
 
 class RailwayForm extends ConsumerStatefulWidget {
@@ -36,7 +39,6 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
   String? statusMessage;
   String? duration;
   DateTime? lastPassIssued;
-
   // String?
 
   bool canIssuePass(ConcessionDetailsModel? concessionDetails,
@@ -187,6 +189,9 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
   List<String> travelDurationList = ['Monthly', 'Quarterly'];
   List<String> genderList = ['Male', 'Female'];
 
+
+
+
   File? idCardPhoto;
   File? idCardPhoto2;
   File? idCardPhotoTemp;
@@ -232,6 +237,10 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
           idCardPhoto = imageFile;
           idCardPhotoTemp = imageFile;
         });
+      } else if (type == "idCard2") {
+        setState(() {
+          idCardPhotoTemp2 = imageFile;
+        });
       } else {
         setState(() {
           previousPassPhoto = imageFile;
@@ -255,9 +264,36 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
     });
   }
 
+  Future<String?> fetchUserIdCardURL2() async {
+    try {
+      User? user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        DocumentSnapshot document = await FirebaseFirestore.instance
+            .collection('ConcessionDetails')
+            .doc(user.uid)
+            .get();
+
+        if (document.exists) {
+          var data = document.data() as Map<String, dynamic>;
+            return data['idCardURL2'];
+        } else {
+          return 'Document does not exist';
+        }
+      } else {
+        return 'No user is currently signed in.';
+      }
+    } catch (e) {
+      return 'Error fetching document: $e';
+
+    }
+  }
+
   void fetchConcessionDetails() async {
     ConcessionDetailsModel? concessionDetails =
         ref.watch(concessionDetailsProvider);
+    var idcardurl2var = await fetchUserIdCardURL2();
+
+
 
     // debugPrint(
     //     "fetched concession details in railway concession UI: $concessionDetails");
@@ -288,6 +324,7 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
       idCardURL = concessionDetails.idCardURL;
       previousPassURL = concessionDetails.previousPassURL;
       getImageFileFromNetwork(concessionDetails.idCardURL, "idCard");
+      getImageFileFromNetwork(idcardurl2var!, "idCard2");
       getImageFileFromNetwork(
           concessionDetails.previousPassURL, "previousPass");
       //handle images
