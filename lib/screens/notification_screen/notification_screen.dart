@@ -54,7 +54,7 @@ class _NotificationScreenState extends ConsumerState<NotificationScreen> {
               final notifications = data.docs;
               return ListView.builder(itemCount: notifications.length, itemBuilder: (context, index){
                 final notif = NotificationModel.fromJson(notifications[index].data() as Map<String, dynamic>);
-                print(notif.attachments.toString());
+                //print(notif.attachments.toString());
                 final listTile = NotificationListItem(
                   notificationModel: notif,
                 );
