@@ -37,7 +37,7 @@ class ConcessionProvider extends StateNotifier<String> {
         super("");
 
   Future applyConcession(ConcessionDetailsModel concessionDetails,
-      File idCardPhoto,File idCardPhoto2, File previousPassPhoto, BuildContext context) async {
+      File idCardPhoto,File idCardPhotoTemp2, File previousPassPhoto, BuildContext context) async {
     // concessionDetails.status = ConcessionStatus.unserviced;
     // concessionDetails.statusMessage =
     //     await _concessionService.getWaitingMessage();
@@ -55,7 +55,7 @@ class ConcessionProvider extends StateNotifier<String> {
     concessionDetailsData.idCardURL =
         await _concessionService.uploadPhoto(idCardPhoto, "idCard");
     final idCardURL2 =
-        await _concessionService.uploadPhoto(idCardPhoto2, "idCard");
+        await _concessionService.uploadPhoto(idCardPhotoTemp2, "idCard2");
     concessionDetailsData.previousPassURL =
         await _concessionService.uploadPhoto(previousPassPhoto, "prevpass");
     await _concessionService.applyConcession(concessionDetailsData,idCardURL2);
