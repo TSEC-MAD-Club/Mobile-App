@@ -380,7 +380,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                             height: 45,
                           ),
                         ),
-                        (SharedPreferencesForDot.getNoOfNewNotification() - SharedPreferencesForDot.getNoOfNotification() != 0) ? Positioned(right: 0,top: 0,child: CircleAvatar(radius: 10,backgroundColor: Colors.red,child: Text("${SharedPreferencesForDot.getNoOfNewNotification() - SharedPreferencesForDot.getNoOfNotification()}"),),) : SizedBox(),
+                        (SharedPreferencesForDot.getNoOfNewNotification() - SharedPreferencesForDot.getNoOfNotification() != 0) ? Positioned(right: 0,top: 0,child: Container(alignment: Alignment.center,padding: EdgeInsets.all(6),decoration: BoxDecoration(color: Colors.red,shape: BoxShape.circle),child: Text("${SharedPreferencesForDot.getNoOfNewNotification() - SharedPreferencesForDot.getNoOfNotification()}",style: TextStyle(color: Colors.white,fontSize: 12),),),) : SizedBox(),
                       ],
                     ),
                   ),
