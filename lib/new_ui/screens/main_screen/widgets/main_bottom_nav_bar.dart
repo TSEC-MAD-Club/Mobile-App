@@ -117,7 +117,7 @@ class _HomeScreenState extends ConsumerState<MainBottomNavBar> {
               icon: Stack(
                 children: [
                   Icon(Icons.directions_railway_outlined),
-                  SharedPreferencesForDot.getRailwayDot() ? Positioned(right: 0,top: 0,child: Icon(Icons.circle,color: Colors.red,size: 10,),) : SizedBox(),
+                  SharedPreferencesForDot.getRailwayDot() ? Positioned(right: 0,top: 0,child: Icon(Icons.circle,color: oldDateSelectBlue,size: 10,),) : SizedBox(),
                 ],
               ),
               activeIcon: Icon(Icons.directions_railway_filled),
