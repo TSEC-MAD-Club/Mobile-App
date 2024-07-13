@@ -203,7 +203,9 @@ class _RailwayConcessionScreenState
   List<String> genderList = ['Male', 'Female'];
 
   File? idCardPhoto;
+  File? idCardPhoto2;
   File? idCardPhotoTemp;
+  File? idCardPhotoTemp2;
   File? previousPassPhoto;
   File? previousPassPhotoTemp;
 
@@ -260,6 +262,8 @@ class _RailwayConcessionScreenState
         idCardPhotoTemp = null;
       } else if (type == 'Previous Pass Photo') {
         previousPassPhotoTemp = null;
+      }else if(type == 'ID Card Back'){
+        idCardPhotoTemp2 = null;
       }
     });
   }
@@ -336,56 +340,58 @@ class _RailwayConcessionScreenState
     ref.read(railwayConcessionOpenProvider.state).state = false;
   }
 
-  Future saveChanges(WidgetRef ref) async {
-    StudentModel student = ref.watch(userModelProvider)!.studentModel!;
-
-    ConcessionDetailsModel details = ConcessionDetailsModel(
-      status: ConcessionStatus.unserviced,
-      statusMessage: "",
-      ageMonths: int.parse(_ageMonths),
-      ageYears: int.parse(_ageYears),
-      duration: duration ?? "Monthly",
-      branch: student.branch,
-      gender: gender ?? "Male",
-      firstName: firstNameController.text,
-      gradyear: student.gradyear,
-      middleName: middleNameController.text,
-      lastName: lastNameController.text,
-      idCardURL: idCardURL,
-      previousPassURL: previousPassURL,
-      from: homeStation,
-      to: toStation,
-      lastPassIssued: null,
-      address: addressController.text,
-      dob: _selectedDate ?? DateTime.now(),
-      phoneNum: int.parse(phoneNumController.text),
-      travelLane: travelLane ?? "Central",
-      type: travelClass ?? "I",
-    );
-
-    if (_formKey.currentState!.validate() &&
-        idCardPhotoTemp != null &&
-        previousPassPhotoTemp != null) {
-      idCardPhoto = idCardPhotoTemp;
-      previousPassPhoto = previousPassPhotoTemp;
-
-      ref.read(railwayConcessionOpenProvider.state).state = false;
-      // await ref
-      //     .watch(concessionProvider.notifier)
-      //     .applyConcession(details, idCardPhoto!, previousPassPhoto!, context);
-    } else if (idCardPhotoTemp == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Please add the photo of your ID card")),
-      );
-    } else if (previousPassPhotoTemp == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Please add the photo of your previous pass")),
-      );
-    }
-
-    ref.read(concessionProvider.notifier).getConcessionData();
-    ref.read(concessionRequestProvider.notifier).getConcessionRequestData();
-  }
+  // Future saveChanges(WidgetRef ref) async {
+  //   StudentModel student = ref.watch(userModelProvider)!.studentModel!;
+  //
+  //   ConcessionDetailsModel details = ConcessionDetailsModel(
+  //     status: ConcessionStatus.unserviced,
+  //     statusMessage: "",
+  //     ageMonths: int.parse(_ageMonths),
+  //     ageYears: int.parse(_ageYears),
+  //     duration: duration ?? "Monthly",
+  //     branch: student.branch,
+  //     gender: gender ?? "Male",
+  //     firstName: firstNameController.text,
+  //     gradyear: student.gradyear,
+  //     middleName: middleNameController.text,
+  //     lastName: lastNameController.text,
+  //     idCardURL: idCardURL,
+  //     previousPassURL: previousPassURL,
+  //     from: homeStation,
+  //     to: toStation,
+  //     lastPassIssued: null,
+  //     address: addressController.text,
+  //     dob: _selectedDate ?? DateTime.now(),
+  //     phoneNum: int.parse(phoneNumController.text),
+  //     travelLane: travelLane ?? "Central",
+  //     type: travelClass ?? "I",
+  //   );
+  //
+  //   if (_formKey.currentState!.validate() &&
+  //       idCardPhotoTemp != null &&
+  //       idCardPhotoTemp2 != null &&
+  //       previousPassPhotoTemp != null)
+  //   {
+  //     idCardPhoto = idCardPhotoTemp;
+  //     previousPassPhoto = previousPassPhotoTemp;
+  //
+  //     ref.read(railwayConcessionOpenProvider.state).state = false;
+  //     // await ref
+  //     //     .watch(concessionProvider.notifier)
+  //     //     .applyConcession(details, idCardPhoto!, previousPassPhoto!, context);
+  //   } else if (idCardPhotoTemp == null) {
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       SnackBar(content: Text("Please add the photo of your ID card")),
+  //     );
+  //   } else if (previousPassPhotoTemp == null) {
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       SnackBar(content: Text("Please add the photo of your previous pass")),
+  //     );
+  //   }
+  //
+  //   ref.read(concessionProvider.notifier).getConcessionData();
+  //   ref.read(concessionRequestProvider.notifier).getConcessionRequestData();
+  // }
 
   Widget buildImagePicker(String type, File? selectedPhoto, bool editMode) {
     // File? selectedFile =

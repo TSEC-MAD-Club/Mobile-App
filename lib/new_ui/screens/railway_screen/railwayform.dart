@@ -356,7 +356,8 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
     if (_formKey.currentState!.validate() &&
         idCardPhotoTemp != null &&
         idCardPhotoTemp2 != null &&
-        previousPassPhotoTemp != null) {
+        previousPassPhotoTemp != null)
+    {
       idCardPhoto = idCardPhotoTemp;
       previousPassPhoto = previousPassPhotoTemp;
 
@@ -370,7 +371,12 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Please add the photo of your ID card")),
       );
-    } else if (previousPassPhotoTemp == null) {
+    } else if (idCardPhotoTemp2 == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Please add the BACK photo of your ID card")),
+      );
+    }
+    else if (previousPassPhotoTemp == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Please add the photo of your previous pass")),
       );
