@@ -752,10 +752,10 @@ class _RailwayConcessionScreenState
                                    children: [
                                      if (concessionRequestData?.passCollected != null &&
                                          concessionRequestData!.passCollected!['collected'] == "1") ...[
-                                       /*Text(
+                                       Text(
                                          "Collected on ${DateFormat('dd/MM/yyyy').format((concessionRequestData.passCollected!['date'] as Timestamp).toDate())}",
                                          style: TextStyle(fontSize: 10, color: Colors.white, fontWeight: FontWeight.bold),
-                                       ),*/
+                                       ),
                                      ] else...[
                                        Text(
                                          "Pass not collected Yet", style: TextStyle(fontSize: 10, color: Colors.yellow, fontWeight: FontWeight.bold),
