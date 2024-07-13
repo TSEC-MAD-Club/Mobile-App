@@ -127,6 +127,13 @@ flutter:
           weight: 400
         - asset: assets/fonts/SF-Pro-Text-Semibold.otf
           weight: 600
+    - family: Montserrat
+      fonts:
+        - asset: assets/fonts/Montserrat-Regular.ttf
+          weight: 400
+    - family: Karla
+      fonts:
+        - asset: assets/fonts/Karla-VariableFont_wght.ttf          
     - family: Priego 
       fonts:
         - asset: assets/fonts/priego-extrabold.otf
