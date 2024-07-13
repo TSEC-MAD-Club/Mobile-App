@@ -31,6 +31,8 @@ import 'package:tsec_app/new_ui/screens/committees_screen/old_committees_screen.
 import 'package:tsec_app/screens/tpc_screen.dart';
 import 'package:url_launcher/link.dart';
 
+import '../../../services/sharedprefsfordot.dart';
+
 class MainScreen extends ConsumerStatefulWidget {
   const MainScreen({
     Key? key,
@@ -368,13 +370,18 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                       Navigator.push(context, MaterialPageRoute(builder: (
                           context) => NotificationScreen(),),);
                     },
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 6, 0, 0),
-                      child: Image.asset(
-                        'assets/images/new_app_bar/icon_bell.png',
-                        width: 45,
-                        height: 45,
-                      ),
+                    child: Stack(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 6, 0, 0),
+                          child: Image.asset(
+                            'assets/images/new_app_bar/icon_bell.png',
+                            width: 45,
+                            height: 45,
+                          ),
+                        ),
+                        (SharedPreferencesForDot.getNoOfNewNotification() - SharedPreferencesForDot.getNoOfNotification() != 0) ? Positioned(right: 0,top: 0,child: CircleAvatar(radius: 10,backgroundColor: Colors.red,child: Text("${SharedPreferencesForDot.getNoOfNewNotification() - SharedPreferencesForDot.getNoOfNotification()}"),),) : SizedBox(),
+                      ],
                     ),
                   ),
                 ),

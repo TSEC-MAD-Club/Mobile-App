@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:tsec_app/provider/notification_provider.dart';
 import 'package:tsec_app/screens/notification_screen/widgets/notification_list_item.dart';
 import 'package:tsec_app/services/notification_service.dart';
+import 'package:tsec_app/services/sharedprefsfordot.dart';
 import 'package:tsec_app/utils/custom_snackbar.dart';
 import 'package:tsec_app/utils/init_get_it.dart';
 import '../../models/notification_model/notification_model.dart';
@@ -28,6 +29,12 @@ class NotificationScreen extends ConsumerStatefulWidget {
 
 class _NotificationScreenState extends ConsumerState<NotificationScreen> {
   DateTime _lastDate = DateTime(2000);
+
+  @override
+  void initState() {
+    super.initState();
+    SharedPreferencesForDot.storeNoOfNotification(SharedPreferencesForDot.getNoOfNewNotification());
+  }
 
   @override
   Widget build(BuildContext context) {

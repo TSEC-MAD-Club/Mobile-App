@@ -1,4 +1,5 @@
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SharedPreferencesForDot{
 
@@ -8,12 +9,29 @@ class SharedPreferencesForDot{
     prefs = await SharedPreferences.getInstance();
   }
 
-  static int getNotificationNumber(){
-    return prefs.getInt("notificationNumber") ?? 0;
+  static setNewNotificationDot()async{
+    final getDocs = await FirebaseFirestore.instance.collection("notifications").get();
+    storeNoOfNewNotification(getDocs.docs.length);
   }
 
-  static storeNotificationNumber(int value){
-    prefs.setInt("notificationNumber", value);
+  static int getNoOfNotification(){
+    return prefs.getInt("noOfNotification") ?? 0;
+  }
+
+  static storeNoOfNotification(int value){
+    prefs.setInt("noOfNotification", value);
+  }
+
+  static int getNoOfNewNotification(){
+    return prefs.getInt("noOfNewNotification") ?? 0;
+  }
+
+  static storeNoOfNewNotification(int value){
+    prefs.setInt("noOfNewNotification", value);
+  }
+
+  static makeNotificationEqual(){
+
   }
 
   static String getRailwayKeyStatus(){
