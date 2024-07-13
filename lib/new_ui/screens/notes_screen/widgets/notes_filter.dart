@@ -49,7 +49,7 @@ class _NotesFilterBarState extends ConsumerState<NotesFilterBar>
           style: Theme.of(context)
               .textTheme
               .labelMedium!
-              .copyWith(color: activeButton ? Colors.white : Colors.black),
+              .copyWith(color: activeButton ? Colors.white : Colors.white),
         ),
         style: ButtonStyle(
           // shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -65,11 +65,9 @@ class _NotesFilterBarState extends ConsumerState<NotesFilterBar>
             (Set<MaterialState> states) {
               // Change color based on the selection
               if (activeButton) {
-                return Theme.of(context)
-                    .colorScheme
-                    .primaryContainer; // Selected color
+                return cardcolorblue; // Selected color
               }
-              return Colors.white; // Default color
+              return timePickerBorder; // Default color
             },
           ),
         ),
@@ -196,7 +194,7 @@ class _NotesFilterBarState extends ConsumerState<NotesFilterBar>
 
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(18),
-                color: timePickerBorder,
+                color: timePickerBg,
                 border: Border.all(color: timePickerBorder, width: 1.0), // Change the color and width as needed
                 // boxShadow: isItDarkMode
                 //     ? shadowLightModeTextFields
@@ -238,7 +236,7 @@ class _NotesFilterBarState extends ConsumerState<NotesFilterBar>
                     ),
                     const Divider(
                       thickness: 1,
-                      color: Colors.grey,
+                      color: timePickerBorder,
                     ),
                     user.isStudent && allSubjects.isNotEmpty
                         ? Column(
