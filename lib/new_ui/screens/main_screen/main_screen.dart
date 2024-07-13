@@ -452,7 +452,10 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                                   .of(context)
                                   .textTheme
                                   .headlineLarge!
-                                  .copyWith(fontSize: 20),
+                                  .copyWith(
+                                    fontSize: 20,
+                                    fontFamily: 'Karla'
+                                  ),
                             ),
                             SizedBox(height: 5,),
                             Text(
@@ -486,6 +489,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                             .headlineMedium!
                             .copyWith(
                           fontSize: 13,
+                          fontFamily: 'Montserrat',
                           color: currentPage == 0
                               ? Theme
                               .of(context)
@@ -532,6 +536,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                             .headlineMedium!
                             .copyWith(
                           fontSize: 13,
+                          fontFamily: 'Montserrat',
                           color: currentPage == 7
                               ? Theme
                               .of(context)
@@ -563,6 +568,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                             .headlineSmall!
                             .copyWith(
                           fontSize: 13,
+                          fontFamily: 'Montserrat',
                           color: currentPage == 6
                               ? Theme
                               .of(context)
@@ -598,6 +604,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                             .headlineSmall!
                             .copyWith(
                           fontSize: 13,
+                          fontFamily: 'Montserrat',
                           color: currentPage == 5
                               ? Theme
                               .of(context)
@@ -668,6 +675,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                             .headlineMedium!
                             .copyWith(
                           fontSize: 13,
+                          fontFamily: 'Montserrat',
                           color: Colors.white,
                         ),
                       ),
@@ -698,6 +706,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                                   .headlineMedium!
                                   .copyWith(
                                 fontSize: 13,
+                                fontFamily: 'Montserrat',
                                 color: currentPage == 4
                                     ? Theme
                                     .of(context)
@@ -721,6 +730,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                             .headlineSmall!
                             .copyWith(
                           fontSize: 13,
+                          fontFamily: 'Montserrat',
                           color: currentPage == 5
                               ? Theme
                               .of(context)
@@ -752,6 +762,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                             .headlineSmall!
                             .copyWith(
                           fontSize: 13,
+                          fontFamily: 'Montserrat',
                           color: currentPage == 5
                               ? Theme
                               .of(context)
