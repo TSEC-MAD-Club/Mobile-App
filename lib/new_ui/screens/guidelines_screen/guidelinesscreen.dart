@@ -310,14 +310,6 @@ class _GuideLinesScreenState extends State<GuideLinesScreen> {
                   SizedBox(
                     height: size.height * 0.03,
                   ),
-                  InkWell(
-                    onTap: LocalNotificationService.showNotification,
-                    child: Container(
-                      height: 100,
-                      width: 100,
-                      color: Colors.white,
-                    ),
-                  ),
                 ],
               ),
             )
