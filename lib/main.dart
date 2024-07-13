@@ -42,6 +42,7 @@ Future<void> main() async {
   await Firebase.initializeApp();
 
   await SharedPreferencesForDot.initializeSharedPreferences();
+  await SharedPreferencesForDot.setNewNotificationDot();
 
   await LocalNotificationService.localNotificationInit();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
