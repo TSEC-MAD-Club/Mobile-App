@@ -9,7 +9,7 @@ class FAQCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 10,vertical: 7),
+      margin: EdgeInsets.symmetric(horizontal: 1,vertical: 7),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         border: Border.all(color: Colors.white),
@@ -23,11 +23,11 @@ class FAQCard extends StatelessWidget {
           collapsedIconColor: Colors.white,
           collapsedTextColor: Colors.white,
           textColor: Colors.white,
-          title: Text(faqTitle),
+          title: Text(faqTitle, style: TextStyle(fontSize: 13, color: Color(0xFFFFFFDE)),),
           children: [
             Padding(
               padding: const EdgeInsets.all(15.0),
-              child: Text(faqContent,style: TextStyle(color: Colors.white),),
+              child: Text(faqContent,style: TextStyle(color: Colors.white, fontSize: 12),),
             ),
           ],
         ),

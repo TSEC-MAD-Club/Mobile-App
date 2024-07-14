@@ -17,10 +17,14 @@ class GuidelinesCard extends StatelessWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
-                child: Text(inputGuideline['title'], style: TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold),),
+                child: Text(
+                  inputGuideline['title'],
+                  style: TextStyle(fontSize: 16, color: Color(0xFFFFFFDE), fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
               if(inputGuideline['content'].runtimeType == String)
-                Text(inputGuideline['content'], style: TextStyle(fontSize: 14, color: Colors.white),),
+                Text(inputGuideline['content'], style: TextStyle(fontSize: 12, color: Colors.grey),),
                 if(inputGuideline.containsKey('points'))
                   ListView.builder(
                     shrinkWrap: true,
@@ -29,7 +33,7 @@ class GuidelinesCard extends StatelessWidget {
                     itemBuilder: (context, index) {
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text(inputGuideline['points'][index], style: TextStyle(fontSize: 14, color: Colors.white),),
+                        child: Text(inputGuideline['points'][index], style: TextStyle(fontSize: 12, color: Colors.grey),),
                       );
                     },
                   )
@@ -46,7 +50,10 @@ class GuidelinesCard extends StatelessWidget {
                       children: [
                         //sub title and then list of points
                         if(inputGuideline['content'].runtimeType != String)
-                          Text(inputGuideline['content'][index]['subtitle'], style: TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.bold),),
+                          Text(inputGuideline['content'][index]['subtitle'],
+                            style: TextStyle(fontSize: 14, color: Colors.white, fontWeight: FontWeight.bold,
+                            ),
+                          ),
                         if(inputGuideline['content'].runtimeType != String)
                           ListView.builder(
                             shrinkWrap: true,
@@ -59,12 +66,14 @@ class GuidelinesCard extends StatelessWidget {
                                   child: Text(
                                     inputGuideline['content'][index]['subPoints'][subindex]["words"],
                                     style: TextStyle(
-                                        fontSize: 12, color: Colors.white),),
+                                        fontSize: 12, color: Colors.grey),),
                                 );
                               }
                               else {
-                                return Container(
-                                    child: Image.network('https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png',));
+                                return Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Image.network(inputGuideline['content'][index]['subPoints'][subindex]["image"]));
+
                               }
                             },
                           )
