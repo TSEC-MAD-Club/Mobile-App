@@ -523,27 +523,33 @@ class _RailwayConcessionScreenState
             StatusStepper(concessionStatus: concessionDetails?.status == null ? "" : concessionDetails!.status, concessionRequestData: concessionRequestData,),
             // SizedBox(height: 10),
             if(concessionRequestData!=null && concessionRequestData.statusMessage!=null && concessionRequestData.status=="rejected" && concessionRequestData.statusMessage!="")
-              Container(
-                child: RichText(
-                  textAlign: TextAlign.center,
-                  text: TextSpan(
-                    children: [
-                      TextSpan(
-                        text: "Reason: ",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20.0,
-                          color: Colors.red,
+              FractionallySizedBox(
+                widthFactor: 0.9,
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
+                  decoration: BoxDecoration(
+                    color: Colors.red[50], // Light red background
+                    border: Border.all(
+                      color: Colors.red, // Red border
+                      width: 2.0,
+                    ),
+                    borderRadius: BorderRadius.circular(8.0), // Rounded corners
+                  ),
+                  child: RichText(
+                    textAlign: TextAlign.left,
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                          text: "🚨 Reason: ",
+                          style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20.0,color: Colors.red[900], // Dark red text
+                          ),
                         ),
-                      ),
-                      TextSpan(
-                        text: "${concessionRequestData!.statusMessage}",
-                        style: TextStyle(
-                          color: Colors.red,
-                          fontSize: 16.0,
+                        TextSpan(
+                          text: "${concessionDetails!.statusMessage}",
+                          style: TextStyle(color: Colors.red[700],fontSize: 16.0,),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -583,7 +589,7 @@ class _RailwayConcessionScreenState
             SizedBox(
               height: size.height * .075,
             ),
-            if (concessionDetails!= null && concessionDetails.status != null && (concessionDetails!.status == 'serviced' || concessionDetails!.status == 'unserviced'))
+            if (concessionDetails!= null && concessionDetails.status != null && (concessionDetails!.status == 'serviced' || concessionDetails!.status == 'unserviced' || concessionDetails!.status == 'rejected'))
               //Old UI Container
               /*Container(
                 width: size.width * 0.8,
@@ -684,7 +690,7 @@ class _RailwayConcessionScreenState
                      child: Stack(
                         alignment: Alignment.center,
                         children: [
-                          if (concessionDetails!.status == "serviced" || concessionDetails!.status == 'unserviced')
+                          if (concessionDetails!.status == "serviced" || concessionDetails!.status == 'unserviced' || concessionDetails!.status == 'rejected')
                           Positioned(top: 50,child: Container(
                             width: size.width,
                             decoration: BoxDecoration(
@@ -744,16 +750,29 @@ class _RailwayConcessionScreenState
                          mainAxisAlignment: MainAxisAlignment.start,
                          crossAxisAlignment: CrossAxisAlignment.start,
                          children: [
+
+                           //ROW FOR HEADER
                            Row(
                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                              children: [
                                Column(
                                  children: [
-                                   Text("Ongoing Pass",
-                                     style: TextStyle(fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
-                                   ),
+                                   if (concessionDetails!.status == 'unserviced')...[
+                                     Text("Requested Pass",
+                                       style: TextStyle(fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
+                                     ),
+                                   ] else if(concessionDetails!.status == 'rejected')...[
+                                        Text("Rejected Pass",
+                                        style: TextStyle(fontSize: 20, color: Colors.red[200], fontWeight: FontWeight.bold),
+                                        ),
+                                   ] else...[
+                                     Text("Ongoing Pass",
+                                       style: TextStyle(fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
+                                     ),
+                                   ]
                                   ]
                                ),
+                               if (concessionDetails!.status == 'serviced')
                                Column(
                                    children: [
                                      if (concessionRequestData?.passCollected != null &&
@@ -772,30 +791,32 @@ class _RailwayConcessionScreenState
                              ],
                            ),
                             SizedBox(height: 30),
-                           concessionDetails.status != "unserviced"
-                           ? Row(
-                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                             children: [
-                               Column(
-                                 crossAxisAlignment: CrossAxisAlignment.start,
-                                 children: [
-                                   Text("Certificate Number", style: TextStyle(color: Color(0xffe3e3e3), fontSize: 12),),
-                                    Text("${concessionRequestData != null ? concessionRequestData.passNum : "not assigned"}", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),),
-                                 ],
-                               ),
-                               Column(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                 children: [
-                                    Text("Date of Issue", style: TextStyle(color: Color(0xffe3e3e3), fontSize: 12),),
-                                    Text(formattedDate, style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),),
-                                 ],
-                               )
-                             ],
-                           )
-                           : const SizedBox(),
-                           concessionDetails.status != "unserviced"
-                           ? const SizedBox(height: 35,)
-                           : const SizedBox(),
+
+                           //ROW FOR CERTIFICATE NO AND DATE
+                           if (concessionDetails.status == "serviced")...[
+                             Row(
+                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                               children: [
+                                 Column(
+                                   crossAxisAlignment: CrossAxisAlignment.start,
+                                   children: [
+                                     Text("Certificate Number", style: TextStyle(color: Color(0xffe3e3e3), fontSize: 12),),
+                                     Text("${concessionRequestData != null ? concessionRequestData.passNum : "not assigned"}", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),),
+                                   ],
+                                 ),
+                                 Column(
+                                   crossAxisAlignment: CrossAxisAlignment.end,
+                                   children: [
+                                     Text("Date of Issue", style: TextStyle(color: Color(0xffe3e3e3), fontSize: 12),),
+                                     Text(formattedDate, style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),),
+                                   ],
+                                 )
+                               ],
+                             ),
+                             const SizedBox(height: 35),
+                           ],
+
+                           //ROW FOR LANE FROM AND TO
                            Row(
                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                              children: [
@@ -822,6 +843,8 @@ class _RailwayConcessionScreenState
                                )
                              ],
                            ),
+
+                           //ROW FOR DURATION AND CLASS
                            const SizedBox(height: 35,),
                            Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
