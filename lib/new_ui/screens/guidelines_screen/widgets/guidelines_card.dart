@@ -11,6 +11,9 @@ class GuidelinesCard extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: Card(
         color: commonbgLightblack,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0),
+          side: BorderSide(color: timePickerBorder, width: 1.0,),
+        ),
         child: Padding(
           padding: const EdgeInsets.all(10.0),
           child: Column(
@@ -65,15 +68,28 @@ class GuidelinesCard extends StatelessWidget {
                                   padding: const EdgeInsets.all(8.0),
                                   child: Text(
                                     inputGuideline['content'][index]['subPoints'][subindex]["words"],
-                                    style: TextStyle(
-                                        fontSize: 12, color: Colors.grey),),
-                                );
+                                    style: TextStyle(fontSize: 12, color: Colors.grey),),);
                               }
                               else {
                                 return Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Image.network(inputGuideline['content'][index]['subPoints'][subindex]["image"]));
-
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      border: Border.all(color: Colors.grey),
+                                      borderRadius: BorderRadius.circular(8.0),
+                                      color: Colors.grey, // Box background color
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(3.0),
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(8.0), // Image corner radius
+                                        child: Image.network(inputGuideline['content'][index]['subPoints'][subindex]["image"],
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                );
                               }
                             },
                           )
@@ -82,7 +98,6 @@ class GuidelinesCard extends StatelessWidget {
                   },
                 )
             ]
-
           ),
         ),
       ),

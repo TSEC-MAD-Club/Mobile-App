@@ -67,17 +67,8 @@ class _GuideLinesScreenState extends State<GuideLinesScreen> {
                   width: size.width * 0.75,
                   child: Text(
                     "Railway Guidelines",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w700,
-                      fontSize: 27,
-                      shadows: [
-                        Shadow(
-                          offset: Offset(1.0, 1.0),
-                          blurRadius: 3.0,
-                          color: Colors.blue,
-                        ),
-                      ],
+                    style: TextStyle(color: Colors.white,fontWeight: FontWeight.w700,fontSize: 27,
+                      shadows: [Shadow(offset: Offset(1.0, 1.0),blurRadius: 3.0,color: Colors.blue,),],
                     ),
                   ),
                 ),
@@ -141,38 +132,6 @@ class _GuideLinesScreenState extends State<GuideLinesScreen> {
                 return GuidelinesCard(inputGuideline: guideline);
               },
             ),
-            // SizedBox(
-            //   height: size.height * 0.01,
-            // ),
-            // Container(
-            //   width: size.width * 0.85,
-            //   child: Text(
-            //     "FAQ",
-            //     style: TextStyle(
-            //         color: Colors.white,
-            //         fontWeight: FontWeight.w700,
-            //         fontSize: 25),
-            //   ),
-            // ),
-            // SizedBox(
-            //   height: size.height * 0.01,
-            // ),
-            // ListView.builder(
-            //   padding: EdgeInsets.zero,
-            //   itemCount: faqs.length,
-            //   shrinkWrap: true,
-            //   physics: const NeverScrollableScrollPhysics(),
-            //   itemBuilder: (context, index) {
-            //     Map<String, dynamic> faq = faqs[index];
-            //     return FAQCard(
-            //       faqContent: faq["content"],
-            //       faqTitle: faq["title"],
-            //     );
-            //   },
-            // ),
-            // SizedBox(
-            //   height: size.height * 0.03,
-            // ),
           ],
         ),
       )
