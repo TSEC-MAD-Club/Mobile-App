@@ -102,13 +102,14 @@ class _NotificationScreenState extends ConsumerState<NotificationScreen> {
     _lastDate = notificationTime;
     return Center(
       child: Chip(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.transparent,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20.0),
         ),
         labelStyle: const TextStyle(fontSize: 12),
         label: Text(
           DateFormat("dd MMMM,yyyy").format(notificationTime),
+          style: TextStyle(color: Colors.white),
         ),
       ),
     );
