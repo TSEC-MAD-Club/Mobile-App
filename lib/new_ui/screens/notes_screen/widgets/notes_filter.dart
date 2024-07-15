@@ -9,6 +9,25 @@ import 'package:tsec_app/provider/subjects_provider.dart';
 import 'package:tsec_app/utils/custom_snackbar.dart';
 import 'package:tsec_app/utils/profile_details.dart';
 
+
+
+
+
+
+
+
+/////////////////////////// THIS IS DROPDOWN FOR NOTES PAGE WHERE U SEE AND SELECT ALL SEBJECTS ////////////////////////
+
+
+
+
+
+
+
+
+
+
+
 class NotesFilterBar extends ConsumerStatefulWidget {
   DateTime? startDate;
   String searchQuery;
@@ -132,9 +151,14 @@ class _NotesFilterBarState extends ConsumerState<NotesFilterBar>
     SemesterData semData = subjects.dataMap[
             "${calcGradYear(user.studentModel?.gradyear)}_${user.studentModel?.branch}"] ??
         SemesterData(even_sem: [], odd_sem: []);
+
         debugPrint(semData.even_sem.toString());
+        debugPrint(semData.odd_sem.toString());
+
+
     List<String> allSubjects =
         evenOrOddSem() == "even_sem" ? semData.even_sem : semData.odd_sem;
+    print("selected senm subjects ${allSubjects.toString()}");
     // debugPrint(allSubjects.toString());
     // debugPrint(
     //     "${user!.studentModel?.gradyear} ${user.studentModel?.branch} ${evenOrOddSem()}");
@@ -238,6 +262,11 @@ class _NotesFilterBarState extends ConsumerState<NotesFilterBar>
                       thickness: 1,
                       color: timePickerBorder,
                     ),
+
+
+
+
+                    //THIS IS FOR DROPDOWN
                     user.isStudent && allSubjects.isNotEmpty
                         ? Column(
                             mainAxisSize: MainAxisSize.max,

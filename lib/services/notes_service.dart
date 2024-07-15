@@ -29,7 +29,7 @@ class NotesService {
   final FirebaseStorage firebaseStorage;
   NotesService(this.firebaseAuth, this.firebaseFirestore, this.firebaseStorage);
   CollectionReference<Map<String, dynamic>> notesCollection =
-      FirebaseFirestore.instance.collection('Notes');
+  FirebaseFirestore.instance.collection('notes');
 
   Stream<User?> get userCurrentState => firebaseAuth.authStateChanges();
 
@@ -66,19 +66,21 @@ class NotesService {
 
   Future<List<NotesModel>> fetchNotes(UserModel? user) async {
     late QuerySnapshot<Map<String, dynamic>> querySnapshot;
+    print(debugPrint);
+    print(user);
     if (user == null) return [];
     if (user.isStudent) {
       // debugPrint(
       //     "${user.studentModel?.branch}, ${user.studentModel?.div}, ${calcGradYear(user.studentModel!.gradyear)}");
       querySnapshot = await notesCollection
           .where(
-            'target_classes',
-            arrayContains: {
-              "branch": user.studentModel?.branch,
-              "division": user.studentModel?.div,
-              "year": calcGradYear(user.studentModel!.gradyear),
-            },
-          )
+        'target_classes',
+        arrayContains: {
+          "branch": user.studentModel?.branch,
+          "division": user.studentModel?.div,
+          "year": calcGradYear(user.studentModel!.gradyear),
+        },
+      )
           .orderBy("time", descending: true)
           .get();
     } else {
@@ -89,7 +91,7 @@ class NotesService {
     List<NotesModel> reqNotes = [];
 
     for (QueryDocumentSnapshot<Map<String, dynamic>> document
-        in querySnapshot.docs) {
+    in querySnapshot.docs) {
       var noteData = document.data();
       NotesModel note = NotesModel.fromJson(noteData);
       note.id = document.id;
@@ -128,7 +130,7 @@ class NotesService {
         await notesDoc.update(note.toJson());
       } else {
         DocumentReference<Map<String, dynamic>> noteUploaded =
-            await notesCollection.add(note.toJson());
+        await notesCollection.add(note.toJson());
         note.id = noteUploaded.id;
       }
     } catch (e) {
