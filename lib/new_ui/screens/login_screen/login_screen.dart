@@ -73,22 +73,28 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       setState(() {
         loggedInButtonPressed = true;
       });
+      print("print1");
       UserCredential? userCredential = await ref
           .watch(authProvider.notifier)
           .signInUser(_emailTextEditingController.text.trim(),
               _passwordTextEditingController.text.trim(), context);
-
+      print("print2");
       if (userCredential == null) {
         setState(() {
           loggedInButtonPressed = false;
         });
         return;
       }
+      print("print3");
 
       await ref.watch(authProvider.notifier).getUserData(ref, context);
+      print("print4");
       UserModel? userModel = ref.watch(userModelProvider);
+      print("print5");
+      print("print6");
 
       if (userModel != null) {
+        print("print6");
         ref.watch(authProvider.notifier).setupFCMNotifications(ref,
             userModel.studentModel, FirebaseAuth.instance.currentUser!.uid);
 

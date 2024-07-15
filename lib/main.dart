@@ -37,6 +37,13 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   print("Handling a background message: ${message.messageId}");
 }
 
+
+var debugprint = "////////////////////////////////////////////////////////////////////////////////////////////////////////TESTING/////////////////////////////////////////////////////////////////////////";
+
+
+
+
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();

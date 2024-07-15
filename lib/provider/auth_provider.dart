@@ -113,7 +113,9 @@ class AuthProvider extends StateNotifier<bool> {
   Future getUserData(WidgetRef ref, BuildContext context) async {
     //this is being called on both splash and login screen
     final user = _ref.watch(firebaseAuthProvider).currentUser;
+    print("in getUserData");
     if (user?.uid != null) {
+    print("uid not null : ${user?.uid}");
       UserModel? userModel = await ref
           .watch(authProvider.notifier)
           .fetchUserDetails(user, context);

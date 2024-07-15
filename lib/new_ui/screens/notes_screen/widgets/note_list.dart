@@ -97,6 +97,8 @@ class _NoteListState extends ConsumerState<NoteList> {
   @override
   Widget build(BuildContext context) {
     List<NotesModel> allNotes = ref.watch(notesProvider);
+    UserModel? user = ref.read(userModelProvider);
+
     // allNotes = applyFilters(allNotes);
     // debugPrint("all notes are ${allNotes}");
     // List<NotesModel> allNotes = [];
@@ -118,8 +120,13 @@ class _NoteListState extends ConsumerState<NoteList> {
             }
             return newString;
           }).toList();
+          print(i);
+          print(attachments.toString());
+          print(widget.subjects.toString());
+          print(allNotes[i].professorName);
+          print(user?.facultyModel?.name);
 
-          if(widget.subjects.contains(allNotes[i].subject))
+          if(widget.subjects.contains(allNotes[i].subject) || user?.facultyModel?.name==allNotes[i].professorName)
             return Column(
             children: [
               SizedBox(height: 10),

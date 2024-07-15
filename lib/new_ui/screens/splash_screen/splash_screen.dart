@@ -69,6 +69,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
             return Scaffold(
               body: Center(
                 child: SizedBox(
+                  //SECOND SCREEN LOGO
                   child: Image.asset(ImageAssets.tsecapplogo),
                   height: 250,
                   width: 250,
