@@ -739,13 +739,13 @@ class _RailwayConcessionScreenState
                    ),
                    Container(
                      width: size.width,
-                     height: size.height*0.4,
+                     //height: size.height*0.4,
                      decoration: const BoxDecoration(
                        color: oldDateSelectBlue,
                        border: Border.symmetric(vertical: BorderSide(color: Colors.white),),
                      ),
                      child: Padding(
-                       padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 20),
+                       padding: const EdgeInsets.fromLTRB(20, 10, 20, 40),
                        child: Column(
                          mainAxisAlignment: MainAxisAlignment.start,
                          crossAxisAlignment: CrossAxisAlignment.start,
@@ -797,19 +797,23 @@ class _RailwayConcessionScreenState
                              Row(
                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                children: [
-                                 Column(
-                                   crossAxisAlignment: CrossAxisAlignment.start,
-                                   children: [
-                                     Text("Certificate Number", style: TextStyle(color: Color(0xffe3e3e3), fontSize: 12),),
-                                     Text("${concessionRequestData != null ? concessionRequestData.passNum : "not assigned"}", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),),
-                                   ],
+                                 Expanded(
+                                   child: Column(
+                                     crossAxisAlignment: CrossAxisAlignment.start,
+                                     children: [
+                                       Text("Certificate Number", style: TextStyle(color: Color(0xffe3e3e3), fontSize: 12),),
+                                       Text("${concessionRequestData != null ? concessionRequestData.passNum : "not assigned"}", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),),
+                                     ],
+                                   ),
                                  ),
-                                 Column(
-                                   crossAxisAlignment: CrossAxisAlignment.end,
-                                   children: [
-                                     Text("Date of Issue", style: TextStyle(color: Color(0xffe3e3e3), fontSize: 12),),
-                                     Text(formattedDate, style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),),
-                                   ],
+                                 Expanded(
+                                   child: Column(
+                                     crossAxisAlignment: CrossAxisAlignment.end,
+                                     children: [
+                                       Text("Date of Issue", style: TextStyle(color: Color(0xffe3e3e3), fontSize: 12),),
+                                       Text(formattedDate, style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),),
+                                     ],
+                                   ),
                                  )
                                ],
                              ),
@@ -820,26 +824,32 @@ class _RailwayConcessionScreenState
                            Row(
                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                              children: [
-                               Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text("Travel Lane", style: TextStyle(color: Color(0xffe3e3e3), fontSize: 12),),
-                                      Text("${travelLane}", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),),
-                                  ],
+                               Expanded(
+                                 child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text("Travel Lane", style: TextStyle(color: Color(0xffe3e3e3), fontSize: 12),),
+                                        Text("${travelLane}", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),),
+                                    ],
+                                  ),
+                               ),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text("From", style: TextStyle(color: Color(0xffe3e3e3), fontSize: 12),),
+                                      Text("${homeStation}", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),),
+                                    ],
+                                  ),
                                 ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text("From", style: TextStyle(color: Color(0xffe3e3e3), fontSize: 12),),
-                                    Text("${homeStation}", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),),
-                                  ],
-                                ),
-                               Column(
-                                 crossAxisAlignment: CrossAxisAlignment.end,
-                                 children: [
-                                    Text("To", style: TextStyle(color: Color(0xffe3e3e3), fontSize: 12),),
-                                    Text("Bandra", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),),
-                                 ],
+                               const Expanded(
+                                 child: Column(
+                                   crossAxisAlignment: CrossAxisAlignment.end,
+                                   children: [
+                                      Text("To", style: TextStyle(color: Color(0xffe3e3e3), fontSize: 12),),
+                                      Text("Bandra", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),),
+                                   ],
+                                 ),
                                )
                              ],
                            ),
@@ -849,19 +859,23 @@ class _RailwayConcessionScreenState
                            Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text("Duration of pass", style: TextStyle(color: Color(0xffe3e3e3), fontSize: 12),),
-                                    Text("${duration}", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),),
-                                  ],
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text("Duration of pass", style: TextStyle(color: Color(0xffe3e3e3), fontSize: 12),),
+                                      Text("${duration}", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),),
+                                    ],
+                                  ),
                                 ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    Text("Class", style: TextStyle(color: Color(0xffe3e3e3), fontSize: 12),),
-                                    Text(travelClass == "I" ? "First Class" : "Second Class", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),),
-                                  ],
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                      Text("Class", style: TextStyle(color: Color(0xffe3e3e3), fontSize: 12),),
+                                      Text(travelClass == "I" ? "First Class" : "Second Class", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),),
+                                    ],
+                                  ),
                                 ),
                               ],
                             ),
