@@ -119,7 +119,8 @@ class _NoteListState extends ConsumerState<NoteList> {
             return newString;
           }).toList();
 
-          return Column(
+          if(widget.subjects.contains(allNotes[i].subject))
+            return Column(
             children: [
               SizedBox(height: 10),
               i == 0 || allNotes[i].time != allNotes[i - 1].time
@@ -255,6 +256,8 @@ class _NoteListState extends ConsumerState<NoteList> {
               ),
             ],
           );
+          else
+            SizedBox();
         },
       ),
     )
