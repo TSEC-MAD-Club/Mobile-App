@@ -29,7 +29,7 @@ class NotesService {
   final FirebaseStorage firebaseStorage;
   NotesService(this.firebaseAuth, this.firebaseFirestore, this.firebaseStorage);
   CollectionReference<Map<String, dynamic>> notesCollection =
-  FirebaseFirestore.instance.collection('notes');
+  FirebaseFirestore.instance.collection('Notes');
 
   Stream<User?> get userCurrentState => firebaseAuth.authStateChanges();
 
@@ -65,20 +65,25 @@ class NotesService {
   }
 
   Future<List<NotesModel>> fetchNotes(UserModel? user) async {
-    late QuerySnapshot<Map<String, dynamic>> querySnapshot;
     print(debugPrint);
     print(user);
     if (user == null) return [];
+    late QuerySnapshot<Map<String, dynamic>> querySnapshot;
+
+    try{
     if (user.isStudent) {
       // debugPrint(
       //     "${user.studentModel?.branch}, ${user.studentModel?.div}, ${calcGradYear(user.studentModel!.gradyear)}");
+
+      final gradyear = calcGradYear(user.studentModel?.gradyear);
+      print(gradyear);
       querySnapshot = await notesCollection
           .where(
         'target_classes',
         arrayContains: {
           "branch": user.studentModel?.branch,
           "division": user.studentModel?.div,
-          "year": calcGradYear(user.studentModel!.gradyear),
+          "year": gradyear,
         },
       )
           .orderBy("time", descending: true)
@@ -87,6 +92,13 @@ class NotesService {
       querySnapshot = await notesCollection
           .where("professor_name", isEqualTo: user.facultyModel?.name)
           .get();
+    }
+
+    }catch(e){
+      print(calcGradYear(user.studentModel?.gradyear));
+      print(user.studentModel?.name);
+      print(user.facultyModel?.name);
+      print("Error in notes_service.dart in fetchnotes   ${e}");
     }
     List<NotesModel> reqNotes = [];
 
