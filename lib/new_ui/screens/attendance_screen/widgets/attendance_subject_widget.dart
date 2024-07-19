@@ -7,6 +7,8 @@ class AttendanceSubjectWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+
     return Card(
       child: Container(
         decoration: BoxDecoration(
@@ -27,25 +29,22 @@ class AttendanceSubjectWidget extends StatelessWidget {
                     style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(width: 5,),
-                  Text(
-                    '5/10',
-                    style: TextStyle(color: Colors.white, fontSize: 12),
-                  ),
-                  Expanded(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Text(
-                          '50%',
-                          style: TextStyle(color: Colors.white, fontSize: 16),
-                        ),
-                      ],
-                    ),
-                  ),
                 ],
               ),
               const SizedBox(height: 10,),
-              const Text("Not accepted", style: TextStyle(color: Colors.white, fontSize: 12),),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    '5/10',
+                    style: TextStyle(color: Colors.white, fontSize: 14),
+                  ),
+                  Text(
+                    '50%',
+                    style: TextStyle(color: Colors.white, fontSize: 14),
+                  ),
+                ],
+              ),
               const SizedBox(height: 10,),
               LinearProgressIndicator(
                 value: attendance,
@@ -56,24 +55,47 @@ class AttendanceSubjectWidget extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  // ElevatedButton(
-                  //   onPressed: (){},
-                  //   child: const Text('Present', style: TextStyle(color: Colors.white),),
-                  //   style: ElevatedButton.styleFrom(
-                  //     backgroundColor: Colors.green,
-                  //     shape:  RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                  //       ),
-                  //   ),
-                  // ElevatedButton(
-                  //   onPressed: (){},
-                  //   child: const Text('Absent', style: TextStyle(color: Colors.white),),
-                  //   style: ElevatedButton.styleFrom(
-                  //     backgroundColor: Colors.red,
-                  //     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                  //       ),
-                  //   ),
+                  ElevatedButton(
+                    onPressed: (){},
+                    child: const Text('Present', style: TextStyle(color: Colors.white),),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: commonbgL3ightblack,
+                      shape:  RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+                        ),
+                    ),
+                  ElevatedButton(
+                    onPressed: (){},
+                    child: Transform(
+                      alignment: Alignment.center,
+                      transform: Matrix4.identity()..scale(-1.0, 1.0, 1.0), // Flip horizontally
+                      child: Icon(Icons.refresh_outlined, color: Colors.white),
+                    )
+                    ,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: commonbgL3ightblack,
+                      shape:  RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+                        ),
+                    ),
+                  ElevatedButton(
+                    onPressed: (){},
+                    child: const Text('Absent', style: TextStyle(color: Colors.white),),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: commonbgL3ightblack,
+                      shape:  RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+                        ),
+                    ),
+
                 ],
-              )
+              ),
+              const SizedBox(height: 10,),
+              Center(
+                child: Container(
+                  height: 1,
+                  width: size.width*0.88,
+                  color: commonbgL4ightblack,
+                ),
+              ),
+              const SizedBox(height: 10,),
             ],
           ),
         ),
