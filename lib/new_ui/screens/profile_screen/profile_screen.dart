@@ -349,9 +349,57 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                       Icons.arrow_forward,
                       color: Colors.white,
                     ),
-                    onPressed: () async {
-                      bool changesSaved = await saveChanges(ref);
-                      if (changesSaved) GoRouter.of(context).go('/main');
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            content: SizedBox(
+                              height: 180,
+                              child: Container(
+                                padding: const EdgeInsets.all(20.0),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    RichText(
+                                      text: TextSpan(
+                                        text: 'Are you in division ',
+                                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                          color: Colors.white,
+                                        ),
+                                        children: [
+                                          TextSpan(text: div, style: const TextStyle(fontWeight: FontWeight.bold)),
+                                          const TextSpan(text: ' and batch '),
+                                          TextSpan(text: batch, style: const TextStyle(fontWeight: FontWeight.bold)),
+                                          const TextSpan(text: ' ? Please check your details once.'),
+                                        ],
+                                      ),
+                                    ),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: const Text("Cancel")
+                                        ),
+                                        TextButton(
+                                          onPressed: () async {
+                                            bool changesSaved = await saveChanges(ref);
+                                            if (changesSaved) GoRouter.of(context).go('/main');
+                                          },
+                                          child: const Text("Proceed")
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          );
+                        } 
+                      );
                     },
                   ),
                 ),
