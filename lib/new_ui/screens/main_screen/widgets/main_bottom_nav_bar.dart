@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tsec_app/models/user_model/user_model.dart';
 import 'package:tsec_app/new_ui/colors.dart';
+import 'package:tsec_app/new_ui/screens/attendance_screen/attendance_screen.dart';
 import 'package:tsec_app/new_ui/screens/erp_screen/erp_screen.dart';
 import 'package:tsec_app/new_ui/screens/home_screen/widgets/home_widget.dart';
 import 'package:tsec_app/new_ui/screens/railway_screen/railway_screen.dart';
@@ -55,6 +56,7 @@ class _HomeScreenState extends ConsumerState<MainBottomNavBar> {
         ),
         "notes": NotesScreen(),
         "timetable": const TimeTable(),
+        "attendance": const AttendanceScreen(),
         "concession": const RailwayConcessionScreen(),
         "profile": ProfilePage(
           justLoggedIn: false,
@@ -111,6 +113,12 @@ class _HomeScreenState extends ConsumerState<MainBottomNavBar> {
               activeIcon: Icon(Icons.notes),
               icon: Icon(Icons.notes_outlined),
               label: "Notes",
+            ),
+            BottomNavigationBarItem(
+              backgroundColor: Colors.transparent,
+              activeIcon: Icon(Icons.pentagon),
+              icon: Icon(Icons.pentagon_outlined),
+              label: "Attendance",
             ),
             BottomNavigationBarItem(
               backgroundColor: Colors.transparent,
