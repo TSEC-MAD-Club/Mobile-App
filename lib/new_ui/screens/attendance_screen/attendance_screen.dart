@@ -21,12 +21,12 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
   int totalLectures = 0;
   int attendedLectures = 0;
 
-  @override
+  /*@override
   void initState() {
     super.initState();
     _fetchAndSetAttendance();
 
-  }
+  }*/
 
   Future<void> _fetchAndSetAttendance() async {
     var attendanceData = await fetchAttendanceData();
@@ -112,11 +112,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                     }
                     var data = documentSnapshot.data() as Map<String, dynamic>;
                     List attendanceList = data['attendance'];
-                    List<Map<String, dynamic>> attendanceList2 = attendanceList.cast<Map<String, dynamic>>();
-
-
-
-
+                    //List<Map<String, dynamic>> attendanceList2 = attendanceList.cast<Map<String, dynamic>>();
 
                     return ListView.builder(
                       shrinkWrap: true,
@@ -201,8 +197,15 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                         int totalLectures = int.parse(totalLecturesController.text);
                                         int attendedLectures = int.parse(attendedLecturesController.text);
 
-                                        // Fetch the document to get the current data
-                                        DocumentSnapshot doc = await FirebaseFirestore.instance
+                                        Map<String,dynamic> updatedSubject = {
+                                          "subject_name":subjectName,
+                                          "total":totalLectures,
+                                          "present":attendedLectures
+                                        };
+
+                                        await AttendanceService.updateSubject(attendanceList,index,updatedSubject);
+
+                                        /*DocumentSnapshot doc = await FirebaseFirestore.instance
                                             .collection("Attendance")
                                             .doc(FirebaseAuth.instance.currentUser!.uid)
                                             .get();
@@ -227,17 +230,18 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                                 .doc(FirebaseAuth.instance.currentUser!.uid)
                                                 .update({'attendance': attendanceList});
                                           }
-                                        }
+                                        }*/
 
                                         Navigator.of(context).pop();
-                                            _fetchAndSetAttendance();
                                       },
                                       child: Text('Update', style: TextStyle(color: Colors.blue)),
                                     ),
                                     TextButton(
                                       onPressed: () async {
-                                        // Fetch the document to get the current data
-                                        DocumentSnapshot doc = await FirebaseFirestore.instance
+
+                                        await AttendanceService.deleteSubject(attendanceList, index);
+
+                                        /*DocumentSnapshot doc = await FirebaseFirestore.instance
                                             .collection("Attendance")
                                             .doc(FirebaseAuth.instance.currentUser!.uid)
                                             .get();
@@ -254,7 +258,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                               .doc(FirebaseAuth.instance.currentUser!.uid)
                                               .update({'attendance': attendanceList});
                                         }
-                                        _fetchAndSetAttendance();
+                                        _fetchAndSetAttendance();*/
                                         Navigator.of(context).pop();
                                       },
                                       child: Text('Delete', style: TextStyle(color: Colors.red)),
@@ -319,7 +323,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                         ElevatedButton(
                                           onPressed: () {
                                             AttendanceService.markPresent(attendanceList, index);
-                                            _fetchAndSetAttendance();
+                                            /*_fetchAndSetAttendance();*/
                                           },
                                           child: const Text('Present', style: TextStyle(color: Colors.white),),
                                           style: ElevatedButton.styleFrom(
@@ -331,7 +335,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                         ElevatedButton(
                                           onPressed: () {
                                             AttendanceService.markAbsent(attendanceList, index);
-                                            _fetchAndSetAttendance();
+                                            /*_fetchAndSetAttendance();*/
                                           },
                                           child: const Text('Absent', style: TextStyle(color: Colors.white),),
                                           style: ElevatedButton.styleFrom(
@@ -449,13 +453,18 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                     child: Text('Cancel', style: TextStyle(color: Colors.red)),
                   ),
                   TextButton(
-                    onPressed: () {
+                    onPressed: () async{
                       String subjectName = subjectNameController.text;
                       int totalLectures = int.parse(totalLecturesController.text);
                       int attendedLectures = int.parse(attendedLecturesController.text);
 
-                      // Define your action here to handle the input data
-                      FirebaseFirestore.instance
+                      Map<String,dynamic> updatedSubject = {
+                        "subject_name":subjectName,
+                        "total":totalLectures,
+                        "present":attendedLectures
+                      };
+                      await AttendanceService.addSubject(updatedSubject);
+                      /*FirebaseFirestore.instance
                           .collection("Attendance")
                           .doc(FirebaseAuth.instance.currentUser!.uid)
                           .set({
@@ -465,7 +474,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                           'present': attendedLectures
                         }])
                       }, SetOptions(merge: true));
-                      _fetchAndSetAttendance();
+                      _fetchAndSetAttendance();*/
                       Navigator.of(context).pop();
                     },
                     child: Text('Add', style: TextStyle(color: Colors.blue)),
