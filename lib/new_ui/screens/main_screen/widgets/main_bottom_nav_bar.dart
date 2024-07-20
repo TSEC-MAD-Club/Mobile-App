@@ -116,8 +116,8 @@ class _HomeScreenState extends ConsumerState<MainBottomNavBar> {
             ),
             BottomNavigationBarItem(
               backgroundColor: Colors.transparent,
-              activeIcon: Icon(Icons.pentagon),
-              icon: Icon(Icons.pentagon_outlined),
+              activeIcon: Icon(Icons.calendar_month),
+              icon: Icon(Icons.calendar_month_outlined),
               label: "Attendance",
             ),
             BottomNavigationBarItem(
