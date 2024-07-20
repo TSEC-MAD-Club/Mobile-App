@@ -231,6 +231,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                         }
 
                                         Navigator.of(context).pop();
+                                            _fetchAndSetAttendance();
                                       },
                                       child: Text('Update', style: TextStyle(color: Colors.blue)),
                                     ),
@@ -248,12 +249,13 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
 
                                           attendanceList.removeWhere((item) => item['subject_name'] == attendanceInfo['subject_name']);
 
+
                                           await FirebaseFirestore.instance
                                               .collection("Attendance")
                                               .doc(FirebaseAuth.instance.currentUser!.uid)
                                               .update({'attendance': attendanceList});
                                         }
-
+                                        _fetchAndSetAttendance();
                                         Navigator.of(context).pop();
                                       },
                                       child: Text('Delete', style: TextStyle(color: Colors.red)),
@@ -344,11 +346,17 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                     Center(
                                       child: Container(
                                         width: size.width * 0.88,
-                                        color: commonbgL4ightblack,
-                                        child: Text(getTextForCard(attendanceInfo['present'], attendanceInfo['total'])),
+                                        decoration: BoxDecoration(
+                                          border: Border.all(color: timePickerBorder, width: 1.0),
+                                          borderRadius: BorderRadius.circular(10.0),
+                                          color: timePickerBg,
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Text(getTextForCard(attendanceInfo['present'], attendanceInfo['total']),style: TextStyle(color: Colors.grey),),
+                                        ),
                                       ),
                                     ),
-                                    const SizedBox(height: 10,),
                                   ],
                                 ),
                               ),
