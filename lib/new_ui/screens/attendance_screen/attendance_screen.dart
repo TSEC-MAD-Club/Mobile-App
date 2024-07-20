@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -6,17 +8,39 @@ import 'package:tsec_app/new_ui/screens/attendance_screen/widgets/attendance_sub
 import 'package:tsec_app/new_ui/screens/attendance_screen/widgets/attendanceservice.dart';
 import 'package:tsec_app/provider/auth_provider.dart';
 
-//make this a consumer widget later
-class AttendanceScreen extends StatelessWidget {
+class AttendanceScreen extends StatefulWidget {
+  const AttendanceScreen({super.key});
+
+  @override
+  State<AttendanceScreen> createState() => _AttendanceScreenState();
+}
+
+class _AttendanceScreenState extends State<AttendanceScreen> {
   final FirebaseAuth auth = FirebaseAuth.instance;
   AttendanceService attendanceService = AttendanceService();
+  int totalLectures = 0;
+  int attendedLectures = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchAndSetAttendance();
+
+  }
+
+  Future<void> _fetchAndSetAttendance() async {
+    var attendanceData = await fetchAttendanceData();
+    setState(() {
+      totalLectures = attendanceData['totalLectures']!;
+      attendedLectures = attendanceData['attendedLectures']!;
+      print("init state");
+      print(totalLectures);
+      print(attendedLectures);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    var present = 8;
-    var totalLec = 10;
-    //put the attendance from a provider here
-    double attendance = present / totalLec;
     var size = MediaQuery.of(context).size;
     return Scaffold(
       body: SingleChildScrollView(
@@ -24,11 +48,6 @@ class AttendanceScreen extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
-              // const SizedBox(height: 20,),
-              // Text(
-              //   attendance < 0.75 ? 'Your attendance is low' : 'Your attendance is good',
-              //   style: TextStyle(color: Colors.white, fontSize: 20),
-              // ),
               const SizedBox(
                 height: 30,
               ),
@@ -45,12 +64,12 @@ class AttendanceScreen extends StatelessWidget {
                             style: TextStyle(color: Colors.white, fontSize: 4),
                           ),
                           Text(
-                            '${attendance * 100}%',
+                            '${((attendedLectures/totalLectures) * 100).toStringAsFixed(2)}%',
                             style: TextStyle(color: Colors.white, fontSize: 17),
                           ),
                           Text(
-                            '${present}/${totalLec}',
-                            style: TextStyle(color: Colors.white, fontSize: 14),
+                            '${attendedLectures}/${totalLectures}',
+                            style: TextStyle(color: Colors.white, fontSize: 13),
                           ),
                         ],
                       ),
@@ -60,7 +79,7 @@ class AttendanceScreen extends StatelessWidget {
                     width: 100,
                     height: 100,
                     child: CircularProgressIndicator(
-                      value: attendance,
+                      value: totalLectures==0?0:(attendedLectures/totalLectures),
                       backgroundColor: Colors.white,
                       valueColor:
                       AlwaysStoppedAnimation<Color>(oldDateSelectBlue),
@@ -88,116 +107,17 @@ class AttendanceScreen extends StatelessWidget {
                       return Center(child: CircularProgressIndicator());
                     }
                     var documentSnapshot = snapshot.data as DocumentSnapshot;
-                    // print("lllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll");
-                    if(documentSnapshot.data()==null){
+                    if(documentSnapshot.data()==null ){
                       return Center(child: Text("Please add Subject",style: TextStyle(color: Colors.white),));
                     }
                     var data = documentSnapshot.data() as Map<String, dynamic>;
                     List attendanceList = data['attendance'];
-                    // return ListView.builder(
-                    //   shrinkWrap: true,
-                    //   physics: NeverScrollableScrollPhysics(),
-                    //   itemCount: attendanceList.length,
-                    //   itemBuilder: (context, index) {
-                    //     var attendanceInfo = attendanceList[index];
-                    //     return Card(
-                    //         child: Container(
-                    //           decoration: BoxDecoration(
-                    //             border: Border.all(color: timePickerBorder, width: 1.0), // Change the color and width as needed
-                    //             borderRadius: BorderRadius.circular(10.0),
-                    //             color: timePickerBg,
-                    //           ),
-                    //           child: Padding(
-                    //             padding: const EdgeInsets.all(8.0),
-                    //             child: Column(
-                    //               crossAxisAlignment: CrossAxisAlignment.start,
-                    //               children: [
-                    //                 Row(
-                    //                   //crossAxisAlignment: CrossAxisAlignment.end,
-                    //                   children: [
-                    //                     Text(
-                    //                       attendanceInfo["subject_name"],
-                    //                       style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
-                    //                     ),
-                    //                     SizedBox(width: 5,),
-                    //                   ],
-                    //                 ),
-                    //                 const SizedBox(height: 10,),
-                    //                 Row(
-                    //                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //                   children: [
-                    //                     Text(
-                    //                       '${attendanceInfo['present']}/${attendanceInfo['total']}',
-                    //                       style: TextStyle(color: Colors.white, fontSize: 14),
-                    //                     ),
-                    //                     Text(
-                    //                       '${(attendanceInfo['present']/attendanceInfo['total'] *100).toInt()}%',
-                    //                       style: TextStyle(color: Colors.white, fontSize: 14),
-                    //                     ),
-                    //                   ],
-                    //                 ),
-                    //                 const SizedBox(height: 10,),
-                    //                 LinearProgressIndicator(
-                    //                   value: attendanceInfo['present']/attendanceInfo['total'],
-                    //                   backgroundColor: Colors.white,
-                    //                   valueColor: const AlwaysStoppedAnimation<Color>(Colors.blue),
-                    //                 ),
-                    //                 const SizedBox(height: 15,),
-                    //                 Row(
-                    //                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //                   children: [
-                    //                     ElevatedButton(
-                    //                       onPressed: (){
-                    //                         AttendanceService.markPresent(attendanceList, index);
-                    //                       },
-                    //                       child: const Text('Present', style: TextStyle(color: Colors.white),),
-                    //                       style: ElevatedButton.styleFrom(
-                    //                         backgroundColor: commonbgL3ightblack,
-                    //                         shape:  RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-                    //                       ),
-                    //                     ),
-                    //                     ElevatedButton(
-                    //                       onPressed: (){},
-                    //                       child: Transform(
-                    //                         alignment: Alignment.center,
-                    //                         transform: Matrix4.identity()..scale(-1.0, 1.0, 1.0), // Flip horizontally
-                    //                         child: Icon(Icons.refresh_outlined, color: Colors.white),
-                    //                       )
-                    //                       ,
-                    //                       style: ElevatedButton.styleFrom(
-                    //                         backgroundColor: commonbgL3ightblack,
-                    //                         shape:  RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-                    //                       ),
-                    //                     ),
-                    //                     ElevatedButton(
-                    //                       onPressed: (){
-                    //                         AttendanceService.markAbsent(attendanceList, index);
-                    //                       },
-                    //                       child: const Text('Absent', style: TextStyle(color: Colors.white),),
-                    //                       style: ElevatedButton.styleFrom(
-                    //                         backgroundColor: commonbgL3ightblack,
-                    //                         shape:  RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-                    //                       ),
-                    //                     ),
-                    //
-                    //                   ],
-                    //                 ),
-                    //                 const SizedBox(height: 10,),
-                    //                 Center(
-                    //                   child: Container(
-                    //                     height: 1,
-                    //                     width: size.width*0.88,
-                    //                     color: commonbgL4ightblack,
-                    //                   ),
-                    //                 ),
-                    //                 const SizedBox(height: 10,),
-                    //               ],
-                    //             ),
-                    //           ),
-                    //         )
-                    //     );
-                    //   },
-                    // );
+                    List<Map<String, dynamic>> attendanceList2 = attendanceList.cast<Map<String, dynamic>>();
+
+
+
+
+
                     return ListView.builder(
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
@@ -238,7 +158,7 @@ class AttendanceScreen extends StatelessWidget {
                                             contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                                           ),
                                         ),
-                                        SizedBox(height: 10),
+                                        SizedBox(height: 20),
                                         TextField(
                                           controller: attendedLecturesController,
                                           style: TextStyle(color: Colors.white),
@@ -254,7 +174,7 @@ class AttendanceScreen extends StatelessWidget {
                                           ),
                                           keyboardType: TextInputType.number,
                                         ),
-                                        SizedBox(height: 10),
+                                        SizedBox(height: 20),
                                         TextField(
                                           controller: totalLecturesController,
                                           style: TextStyle(color: Colors.white),
@@ -326,10 +246,8 @@ class AttendanceScreen extends StatelessWidget {
                                           var data = doc.data() as Map<String, dynamic>;
                                           List attendanceList = data['attendance'];
 
-                                          // Remove the subject to delete
                                           attendanceList.removeWhere((item) => item['subject_name'] == attendanceInfo['subject_name']);
 
-                                          // Update the document with the modified array
                                           await FirebaseFirestore.instance
                                               .collection("Attendance")
                                               .doc(FirebaseAuth.instance.currentUser!.uid)
@@ -391,7 +309,7 @@ class AttendanceScreen extends StatelessWidget {
                                     LinearProgressIndicator(
                                       value: attendanceInfo['present']/attendanceInfo['total'],
                                       backgroundColor: Colors.white,
-                                      valueColor: const AlwaysStoppedAnimation<Color>(Colors.blue),
+                                      valueColor: const AlwaysStoppedAnimation<Color>(oldDateSelectBlue),
                                     ),
                                     const SizedBox(height: 15,),
                                     Row(
@@ -400,6 +318,7 @@ class AttendanceScreen extends StatelessWidget {
                                         ElevatedButton(
                                           onPressed: () {
                                             AttendanceService.markPresent(attendanceList, index);
+                                            _fetchAndSetAttendance();
                                           },
                                           child: const Text('Present', style: TextStyle(color: Colors.white),),
                                           style: ElevatedButton.styleFrom(
@@ -407,21 +326,11 @@ class AttendanceScreen extends StatelessWidget {
                                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
                                           ),
                                         ),
-                                        ElevatedButton(
-                                          onPressed: () {},
-                                          child: Transform(
-                                            alignment: Alignment.center,
-                                            transform: Matrix4.identity()..scale(-1.0, 1.0, 1.0), // Flip horizontally
-                                            child: Icon(Icons.refresh_outlined, color: Colors.white),
-                                          ),
-                                          style: ElevatedButton.styleFrom(
-                                            backgroundColor: commonbgL3ightblack,
-                                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-                                          ),
-                                        ),
+
                                         ElevatedButton(
                                           onPressed: () {
                                             AttendanceService.markAbsent(attendanceList, index);
+                                            _fetchAndSetAttendance();
                                           },
                                           child: const Text('Absent', style: TextStyle(color: Colors.white),),
                                           style: ElevatedButton.styleFrom(
@@ -434,9 +343,9 @@ class AttendanceScreen extends StatelessWidget {
                                     const SizedBox(height: 10,),
                                     Center(
                                       child: Container(
-                                        height: 1,
                                         width: size.width * 0.88,
                                         color: commonbgL4ightblack,
+                                        child: Text(getTextForCard(attendanceInfo['present'], attendanceInfo['total'])),
                                       ),
                                     ),
                                     const SizedBox(height: 10,),
@@ -490,7 +399,7 @@ class AttendanceScreen extends StatelessWidget {
                             contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                           ),
                         ),
-                        SizedBox(height: 10),
+                        SizedBox(height: 20),
                         TextField(
                           style: TextStyle(color: Colors.white), // Set text color to white
                           controller: attendedLecturesController,
@@ -505,7 +414,7 @@ class AttendanceScreen extends StatelessWidget {
                           ),
                           keyboardType: TextInputType.number,
                         ),
-                        SizedBox(height: 10),
+                        SizedBox(height: 20),
                         TextField(
                           style: TextStyle(color: Colors.white), // Set text color to white
                           controller: totalLecturesController,
@@ -567,4 +476,77 @@ class AttendanceScreen extends StatelessWidget {
       ),
     );
   }
+}
+
+Future<Map<String, int>> fetchAttendanceData() async {
+  FirebaseAuth auth = FirebaseAuth.instance;
+
+  DocumentSnapshot documentSnapshot = await FirebaseFirestore.instance
+      .collection("Attendance")
+      .doc(auth.currentUser!.uid)
+      .get();
+
+  if (documentSnapshot.exists) {
+    var data = documentSnapshot.data() as Map<String, dynamic>;
+    List attendanceList = data['attendance'];
+    List<Map<String, dynamic>> attendanceList2 = attendanceList.cast<Map<String, dynamic>>();
+
+    return calculateAttendance(attendanceList2);
+  } else {
+    return {'totalLectures': 0, 'attendedLectures': 0};
+  }
+}
+
+Map<String, int> calculateAttendance(List<Map<String, dynamic>> attendanceList) {
+  int totalLectures = 0;
+  int attendedLectures = 0;
+
+  for (var attendanceInfo in attendanceList) {
+    totalLectures += (attendanceInfo['total'] as num?)?.toInt() ?? 0;
+    attendedLectures += (attendanceInfo['present'] as num?)?.toInt() ?? 0;
+  }
+
+  return {
+    'totalLectures': totalLectures,
+    'attendedLectures': attendedLectures,
+  };
+}
+
+
+String getTextForCard(int at,int tt){
+  double attended = at.toDouble();
+  double total = tt.toDouble();
+  int toAttend=0;
+
+
+  if (attended/total==0.75){
+    return "You are Just on track, well done Champ";
+  } else if(attended/total>0.75) {
+    while(1==1) {
+      double t=(attended)/(total+1);
+      if(t>=0.75){
+        print("yes of 1");
+        total++;
+        toAttend--;
+      } else {
+        break;
+      }
+    }
+  } else {
+    while(1==1) {
+      double t=(attended+1)/(total+1);
+      if(t<=0.75){
+        print("yes of 2");
+        total++;
+        attended++;
+        toAttend++;
+      } else {
+        break;
+      }
+    }
+  }
+
+
+
+  return "By attending next ${toAttend} lectures, you will be above 75%";
 }
