@@ -8,6 +8,7 @@ class AttendanceService{
 
   static markPresent(List attendanceList,int index){
     attendanceList[index]['present']++;
+    attendanceList[index]['total']++;
     print(attendanceList[index]['present']);
     firestore.doc(auth.currentUser!.uid).set({"attendance":attendanceList});
   }

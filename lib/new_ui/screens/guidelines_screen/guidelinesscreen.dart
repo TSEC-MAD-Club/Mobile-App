@@ -79,6 +79,9 @@ class _GuideLinesScreenState extends State<GuideLinesScreen> {
                       context: context,
                       builder: (BuildContext context) {
                         return AlertDialog(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
                           title: Text(
                             "FAQ",
                             style: TextStyle(color: Colors.white,fontWeight: FontWeight.w700,fontSize: 20,
