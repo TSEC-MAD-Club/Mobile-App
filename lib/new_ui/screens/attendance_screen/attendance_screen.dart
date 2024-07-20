@@ -237,7 +237,6 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                               'present': attendedLectures,
                                             };
 
-                                            // Update the document with the modified array
                                             await FirebaseFirestore.instance
                                                 .collection("Attendance")
                                                 .doc(FirebaseAuth.instance.currentUser!.uid)
@@ -482,7 +481,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                           'present': attendedLectures
                         }])
                       }, SetOptions(merge: true));
-
+                      _fetchAndSetAttendance();
                       Navigator.of(context).pop();
                     },
                     child: Text('Add', style: TextStyle(color: Colors.blue)),
