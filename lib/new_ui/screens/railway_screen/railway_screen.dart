@@ -554,6 +554,10 @@ class _RailwayConcessionScreenState
                 ),
               ),
 
+            SizedBox(
+              height: size.height*0.04,
+            ),
+
             Container(
               width: size.width * 0.7,
               child: InkWell(
@@ -739,7 +743,6 @@ class _RailwayConcessionScreenState
                    ),
                    Container(
                      width: size.width,
-                     //height: size.height*0.4,
                      decoration: const BoxDecoration(
                        color: oldDateSelectBlue,
                        border: Border.symmetric(vertical: BorderSide(color: Colors.white),),

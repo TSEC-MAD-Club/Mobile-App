@@ -56,7 +56,7 @@ class _HomeScreenState extends ConsumerState<MainBottomNavBar> {
         ),
         "notes": NotesScreen(),
         "timetable": const TimeTable(),
-        "attendance": const AttendanceScreen(),
+        "attendance": AttendanceScreen(),
         "concession": const RailwayConcessionScreen(),
         "profile": ProfilePage(
           justLoggedIn: false,

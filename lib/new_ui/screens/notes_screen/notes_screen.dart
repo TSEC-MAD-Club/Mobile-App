@@ -52,7 +52,7 @@ class _NotesScreenState extends ConsumerState<NotesScreen> {
       title: title!,
       // description: descriptionController.text,
       description: description!,
-      time: dmyDate(DateTime.now()),
+      time: DateTime.now(),
       subject: subject!,
       professorName: user.facultyModel!.name,
       targetClasses: [
