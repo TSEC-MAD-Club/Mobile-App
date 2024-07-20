@@ -65,27 +65,27 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                           ),
                           Text(
                             '${((attendedLectures/totalLectures) * 100).toStringAsFixed(2)}%',
-                            style: TextStyle(color: Colors.white, fontSize: 17),
+                            style: TextStyle(color: Colors.white, fontSize: 25),
                           ),
                           Text(
                             '${attendedLectures}/${totalLectures}',
-                            style: TextStyle(color: Colors.white, fontSize: 13),
+                            style: TextStyle(color: Colors.white, fontSize: 15),
                           ),
                         ],
                       ),
                     ),
                   ),
                   SizedBox(
-                    width: 100,
-                    height: 100,
+                    width: 150,
+                    height: 150,
                     child: CircularProgressIndicator(
                       value: totalLectures==0?0:(attendedLectures/totalLectures),
                       backgroundColor: Colors.white,
                       valueColor:
                       AlwaysStoppedAnimation<Color>(oldDateSelectBlue),
-                      strokeWidth: 3,
+                      strokeWidth: 5,
                       strokeAlign: BorderSide.strokeAlignInside,
-                      strokeCap: StrokeCap.butt,
+                        strokeCap: StrokeCap.round,
                     ),
                   ),
                 ],
@@ -107,9 +107,24 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                       return Center(child: CircularProgressIndicator());
                     }
                     var documentSnapshot = snapshot.data as DocumentSnapshot;
-                    if(documentSnapshot.data()==null ){
-                      return Center(child: Text("Please add Subject",style: TextStyle(color: Colors.white),));
+                    if (documentSnapshot.data() == null) {
+                      return Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Image.asset('assets/images/attendance.png',
+                              width: 250,
+                            ),
+                            SizedBox(height: 20),
+                            Text(
+                              "Please add Subject",
+                              style: TextStyle(color: Colors.white, fontSize: 18),
+                            ),
+                          ],
+                        ),
+                      );
                     }
+
                     var data = documentSnapshot.data() as Map<String, dynamic>;
                     List attendanceList = data['attendance'];
                     //List<Map<String, dynamic>> attendanceList2 = attendanceList.cast<Map<String, dynamic>>();
@@ -291,7 +306,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                       children: [
                                         Text(
                                           attendanceInfo["subject_name"],
-                                          style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+                                          style: TextStyle(color: Colors.white, fontSize: 25, fontWeight: FontWeight.bold),
                                         ),
                                         SizedBox(width: 5,),
                                       ],
@@ -306,7 +321,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                         ),
                                         Text(
                                           '${(attendanceInfo['present']/attendanceInfo['total'] *100).toInt()}%',
-                                          style: TextStyle(color: Colors.white, fontSize: 14),
+                                          style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
                                         ),
                                       ],
                                     ),
@@ -325,7 +340,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                             AttendanceService.markPresent(attendanceList, index);
                                             /*_fetchAndSetAttendance();*/
                                           },
-                                          child: const Text('Present', style: TextStyle(color: Colors.white),),
+                                          child: const Text('Present', style: TextStyle(color: Colors.white, fontSize: 12),),
                                           style: ElevatedButton.styleFrom(
                                             backgroundColor: commonbgL3ightblack,
                                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
@@ -337,7 +352,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                             AttendanceService.markAbsent(attendanceList, index);
                                             /*_fetchAndSetAttendance();*/
                                           },
-                                          child: const Text('Absent', style: TextStyle(color: Colors.white),),
+                                          child: const Text('Absent', style: TextStyle(color: Colors.white, fontSize: 12),),
                                           style: ElevatedButton.styleFrom(
                                             backgroundColor: commonbgL3ightblack,
                                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
@@ -349,14 +364,15 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                     Center(
                                       child: Container(
                                         width: size.width * 0.88,
-                                        decoration: BoxDecoration(
-                                          border: Border.all(color: timePickerBorder, width: 1.0),
-                                          borderRadius: BorderRadius.circular(10.0),
-                                          color: timePickerBg,
-                                        ),
+                                        alignment: Alignment.center,
+                                        // decoration: BoxDecoration(
+                                        //   border: Border.all(color: timePickerBorder, width: 1.0),
+                                        //   borderRadius: BorderRadius.circular(10.0),
+                                        //   color: timePickerBg,
+                                        // ),
                                         child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Text(getTextForCard(attendanceInfo['present'], attendanceInfo['total']),style: TextStyle(color: Colors.grey),),
+                                          padding: const EdgeInsets.all(2.0),
+                                          child: Text(getTextForCard(attendanceInfo['present'], attendanceInfo['total']),style: TextStyle(color: Colors.grey, fontSize: 10),),
                                         ),
                                       ),
                                     ),
@@ -536,7 +552,7 @@ String getTextForCard(int at,int tt){
 
 
   if (attended/total==0.75){
-    return "You are Just on track, well done Champ";
+    return "You are Just on track, keep it up !";
   } else if(attended/total>0.75) {
     while(1==1) {
       double t=(attended)/(total+1);
@@ -562,7 +578,9 @@ String getTextForCard(int at,int tt){
     }
   }
 
+  if (toAttend==0) {
+    return "You are on track, keep it up !";
+  }
 
-
-  return "By attending next ${toAttend} lectures, you will be above 75%";
+  return "Your presence in next ${toAttend} classes is crucial";
 }
