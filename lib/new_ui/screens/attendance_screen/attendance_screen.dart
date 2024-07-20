@@ -336,8 +336,8 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
                                         ElevatedButton(
-                                          onPressed: () {
-                                            AttendanceService.markPresent(attendanceList, index);
+                                          onPressed: () async{
+                                            await AttendanceService.markPresent(attendanceList, index);
                                             /*_fetchAndSetAttendance();*/
                                           },
                                           child: const Text('Present', style: TextStyle(color: Colors.white, fontSize: 12),),
@@ -348,8 +348,8 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                         ),
 
                                         ElevatedButton(
-                                          onPressed: () {
-                                            AttendanceService.markAbsent(attendanceList, index);
+                                          onPressed: () async{
+                                            await AttendanceService.markAbsent(attendanceList, index);
                                             /*_fetchAndSetAttendance();*/
                                           },
                                           child: const Text('Absent', style: TextStyle(color: Colors.white, fontSize: 12),),
@@ -385,6 +385,9 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                       },
                     );
                   }),
+              SizedBox(
+                height: 20,
+              ),
             ],
           ),
         ),
