@@ -354,12 +354,13 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                         context: context,
                         builder: (context) {
                           return AlertDialog(
+
                             content: SizedBox(
-                              height: 180,
                               child: Container(
-                                padding: const EdgeInsets.all(20.0),
+                                height: MediaQuery.of(context).size.height* 0.25,
+                                padding: const EdgeInsets.all(5.0),
                                 child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                                   children: [
                                     RichText(
                                       text: TextSpan(
@@ -375,23 +376,29 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                         ],
                                       ),
                                     ),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        TextButton(
-                                          onPressed: () {
-                                            Navigator.of(context).pop();
-                                          },
-                                          child: const Text("Cancel")
-                                        ),
-                                        TextButton(
-                                          onPressed: () async {
-                                            bool changesSaved = await saveChanges(ref);
-                                            if (changesSaved) GoRouter.of(context).go('/main');
-                                          },
-                                          child: const Text("Proceed")
-                                        ),
-                                      ],
+                                    Container(
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Container(
+                                            child: TextButton(
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                              },
+                                              child: const Text("Cancel")
+                                            ),
+                                          ),
+                                          Container(
+                                            child: TextButton(
+                                              onPressed: () async {
+                                                bool changesSaved = await saveChanges(ref);
+                                                if (changesSaved) GoRouter.of(context).go('/main');
+                                              },
+                                              child: const Text("Proceed")
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ],
                                 ),
