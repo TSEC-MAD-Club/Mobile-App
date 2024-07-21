@@ -21,6 +21,7 @@ import 'package:tsec_app/new_ui/screens/notes_screen/notes_screen.dart';
 import 'package:tsec_app/new_ui/screens/profile_screen/profile_screen.dart';
 import 'package:tsec_app/new_ui/screens/railway_screen/railway_screen.dart';
 import 'package:tsec_app/new_ui/screens/railway_screen/railwayform.dart';
+import 'package:tsec_app/new_ui/screens/launch_screen/launch_screen.dart';
 import 'package:tsec_app/new_ui/screens/timetable_screen/timetable_screen.dart';
 import 'package:tsec_app/provider/appbar_title_provider.dart';
 import 'package:tsec_app/provider/auth_provider.dart';
@@ -791,7 +792,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                       width: size.width,
                       padding: EdgeInsets.all(8),
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
+                        borderRadius: BorderRadius.circular(10),
                         color: Color(0xff383838),
                       ),
                       child: InkWell(
@@ -803,6 +804,8 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                               .headlineMedium!
                               .copyWith(
                             fontSize: 22,
+                            fontFamily: 'Montserrat',
+                            fontWeight: FontWeight.bold,
                             color: Theme
                                 .of(context)
                                 .colorScheme
