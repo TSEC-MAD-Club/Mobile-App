@@ -25,6 +25,7 @@ import 'package:tsec_app/new_ui/screens/launch_screen/launch_screen.dart';
 import 'package:tsec_app/new_ui/screens/timetable_screen/timetable_screen.dart';
 import 'package:tsec_app/provider/appbar_title_provider.dart';
 import 'package:tsec_app/provider/auth_provider.dart';
+import 'package:tsec_app/provider/notification_dot_provider.dart';
 import 'package:tsec_app/provider/railway_concession_provider.dart';
 import 'package:tsec_app/new_ui/screens/committees_screen/committees_screen.dart';
 import 'package:tsec_app/screens/departmentlist_screen/department_list.dart';
@@ -151,6 +152,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
 
 
     UserModel? data = ref.watch(userModelProvider);
+    final dotInfo =  ref.watch(sharedPreferencesForDotProvider);
 
     if(data!=null && data.facultyModel!=null){
       pages = [
@@ -385,15 +387,26 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                             height: 45,
                           ),
                         ),
-                        (SharedPreferencesForDot.getNoOfNewNotification() - SharedPreferencesForDot.getNoOfNotification() != 0) ?
-                        Positioned(right: 0,top: 0,
-                          child: Container(
-                            height: 17,
-                          width: 17,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(color: oldDateSelectBlue,shape: BoxShape.circle)
-                          ,child: Text("${SharedPreferencesForDot.getNoOfNewNotification() - SharedPreferencesForDot.getNoOfNotification()}",style: TextStyle(color: Colors.white,fontSize: 9),)
-                          ,),) : SizedBox(),
+                        dotInfo.when(data: (thing){
+                          return (thing.getNoOfNewNotification() - thing.getNoOfNotification() != 0) ?
+                          Positioned(right: 0,top: 0,
+                            child: Container(
+                              height: 17,
+                              width: 17,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(color: oldDateSelectBlue,shape: BoxShape.circle)
+                              ,child: Text("${thing.getNoOfNewNotification() - thing.getNoOfNotification()}",style: TextStyle(color: Colors.white,fontSize: 9),)
+                              ,),) :  SizedBox();
+                        }, error: (error, _)=>const Placeholder(), loading: ()=> const Placeholder(),)
+                        // (dotInfo.getNoOfNewNotification() - dotInfo.getNoOfNotification() != 0) ?
+                        // Positioned(right: 0,top: 0,
+                        //   child: Container(
+                        //     height: 17,
+                        //   width: 17,
+                        //   alignment: Alignment.center,
+                        //   decoration: BoxDecoration(color: oldDateSelectBlue,shape: BoxShape.circle)
+                        //   ,child: Text("${dotInfo.getNoOfNewNotification() - dotInfo.getNoOfNotification()}",style: TextStyle(color: Colors.white,fontSize: 9),)
+                        //   ,),) : SizedBox(),
                       ],
                     ),
                   ),
