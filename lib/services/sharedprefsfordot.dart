@@ -63,37 +63,3 @@ class SharedPreferencesForDot{
   }
 
 }
-
-class dotClass {
-  late SharedPreferences prefs;
-
-  Future<void> initializeSharedPreferences() async {
-    prefs = await SharedPreferences.getInstance();
-  }
-
-  Future<void> setNewNotificationDot() async {
-    final getDocs = await FirebaseFirestore.instance.collection("notifications").get();
-    storeNoOfNewNotification(getDocs.docs.length);
-  }
-
-  int getNoOfNotification() {
-    return prefs.getInt("noOfNotification") ?? 0;
-  }
-
-  void storeNoOfNotification(int value) {
-    prefs.setInt("noOfNotification", value);
-  }
-
-  int getNoOfNewNotification() {
-    return prefs.getInt("noOfNewNotification") ?? 0;
-  }
-
-  void storeNoOfNewNotification(int value) {
-    prefs.setInt("noOfNewNotification", value);
-  }
-
-  void makeNotificationEqual() {
-    // Add your implementation
-  }
-
-}
