@@ -28,9 +28,16 @@ class AttendanceService{
   }
 
   static addSubject(Map<String,dynamic> updatedSubject)async{
+    List attendanceList;
     final get = await firestore.doc(auth.currentUser!.uid).get();
-    final data = get.data() as Map<String,dynamic>;
-    List attendanceList = data['attendance'];
+    if(get.exists){
+      final data = get.data() as Map<String,dynamic>;
+      attendanceList = data['attendance'];
+    }else{
+      attendanceList = [];
+
+    }
+
     attendanceList.add(updatedSubject);
     await firestore.doc(auth.currentUser!.uid).set({"attendance":attendanceList});
   }
