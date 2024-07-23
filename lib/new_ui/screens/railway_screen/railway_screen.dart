@@ -546,7 +546,7 @@ class _RailwayConcessionScreenState
                         ),
                         TextSpan(
                           text: "${concessionDetails!.statusMessage}",
-                          style: TextStyle(color: Colors.red[700],fontSize: 16.0,),
+                          style: TextStyle(color: Colors.white,fontSize: 16.0,),
                         ),
                       ],
                     ),
@@ -694,20 +694,23 @@ class _RailwayConcessionScreenState
                      child: Stack(
                         alignment: Alignment.center,
                         children: [
+
+
                           if (concessionDetails!.status == "serviced" || concessionDetails!.status == 'unserviced' || concessionDetails!.status == 'rejected')
-                          Positioned(top: 50,child: Container(
+                          Positioned(top: 50,
+                            child: Container(
                             width: size.width,
                             decoration: BoxDecoration(
                               color: oldDateSelectBlue,
                               border: Border.all(color: Colors.white),
                               borderRadius: BorderRadius.only(topLeft: Radius.circular(size.width*0.1),topRight: Radius.circular(size.width*0.1),),
                             ),
-                            child: const SizedBox(height: 50,),
+                            child: const SizedBox(height: 50),
                           ),)
                           else
                             Positioned(bottom: 20, child: Text("You don't have any ongoing pass",
                             style: TextStyle(color: Colors.white),),),
-                          Positioned(top: 20,child: InkWell(
+                          Positioned(top: 15,child: InkWell(
                             onTap: ()=>Navigator.push(context, MaterialPageRoute(builder: (context)=> GuideLinesScreen(),),),
                             child: Container(
                               width: size.width*0.75,
@@ -738,11 +741,13 @@ class _RailwayConcessionScreenState
                               ),
                             ),
                           ),),
+
                         ],
                       ),
                    ),
                    Container(
                      width: size.width,
+                     height: size.height*0.4,
                      decoration: const BoxDecoration(
                        color: oldDateSelectBlue,
                        border: Border.symmetric(vertical: BorderSide(color: Colors.white),),
