@@ -341,7 +341,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                             await AttendanceService.markPresent(attendanceList, index);
                                             /*_fetchAndSetAttendance();*/
                                           },
-                                          child: const Text('Present', style: TextStyle(color: Colors.white, fontSize: 12),),
+                                          child: const Text('Present', style: TextStyle(color: Colors.white, fontSize: 15),),
                                           style: ElevatedButton.styleFrom(
                                             backgroundColor: commonbgL3ightblack,
                                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
@@ -353,7 +353,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                             await AttendanceService.markAbsent(attendanceList, index);
                                             /*_fetchAndSetAttendance();*/
                                           },
-                                          child: const Text('Absent', style: TextStyle(color: Colors.white, fontSize: 12),),
+                                          child: const Text('Absent', style: TextStyle(color: Colors.white, fontSize: 15),),
                                           style: ElevatedButton.styleFrom(
                                             backgroundColor: commonbgL3ightblack,
                                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
