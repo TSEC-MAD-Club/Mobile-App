@@ -46,90 +46,91 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              const SizedBox(
-                height: 30,
-              ),
-              Stack(
-                children: [
-                  Positioned.fill(
-                    child: Align(
-                      alignment: Alignment.center,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            '',
-                            style: TextStyle(color: Colors.white, fontSize: 4),
-                          ),
-                          Text(
-                            '${((attendedLectures/totalLectures) * 100).toStringAsFixed(2)}%',
-                            style: TextStyle(color: Colors.white, fontSize: 25),
-                          ),
-                          Text(
-                            '${attendedLectures}/${totalLectures}',
-                            style: TextStyle(color: Colors.white, fontSize: 15),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 150,
-                    height: 150,
-                    child: CircularProgressIndicator(
-                      value: totalLectures==0?0:(attendedLectures/totalLectures),
-                      backgroundColor: Colors.white,
-                      valueColor:
-                      AlwaysStoppedAnimation<Color>(oldDateSelectBlue),
-                      strokeWidth: 5,
-                      strokeAlign: BorderSide.strokeAlignInside,
-                        strokeCap: StrokeCap.round,
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              //put the subject attendance cards from here
-              const SizedBox(
-                height: 10,
-              ),
-              StreamBuilder(
-                  stream: FirebaseFirestore.instance
-                      .collection("Attendance")
-                      .doc(auth.currentUser!.uid)
-                      .snapshots(),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Center(child: CircularProgressIndicator());
-                    }
-                    var documentSnapshot = snapshot.data as DocumentSnapshot;
-                    if (documentSnapshot.data() == null) {
-                      return Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Image.asset('assets/images/attendance.png',
-                              width: 250,
-                            ),
-                            SizedBox(height: 20),
-                            Text(
-                              "Please add Subject",
-                              style: TextStyle(color: Colors.white, fontSize: 18),
-                            ),
-                          ],
+          child: StreamBuilder(
+              stream: FirebaseFirestore.instance
+                  .collection("Attendance")
+                  .doc(auth.currentUser!.uid)
+                  .snapshots(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
+                }
+                var documentSnapshot = snapshot.data as DocumentSnapshot;
+                if (documentSnapshot.data() == null) {
+                  return Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Image.asset('assets/images/attendance.png',
+                          width: 250,
                         ),
-                      );
-                    }
+                        SizedBox(height: 20),
+                        Text(
+                          "Please add Subject",
+                          style: TextStyle(color: Colors.white, fontSize: 18),
+                        ),
+                      ],
+                    ),
+                  );
+                }
 
-                    var data = documentSnapshot.data() as Map<String, dynamic>;
-                    List attendanceList = data['attendance'];
-                    //List<Map<String, dynamic>> attendanceList2 = attendanceList.cast<Map<String, dynamic>>();
+                var data = documentSnapshot.data() as Map<String, dynamic>;
+                List attendanceList = data['attendance'];
+                //List<Map<String, dynamic>> attendanceList2 = attendanceList.cast<Map<String, dynamic>>();
+                Map<String,dynamic> circularMap = calculateAttendance(attendanceList);
 
-                    return ListView.builder(
+                return Column(
+                  children: [
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    Stack(
+                      children: [
+                        Positioned.fill(
+                          child: Align(
+                            alignment: Alignment.center,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  '',
+                                  style: TextStyle(color: Colors.white, fontSize: 4),
+                                ),
+                                Text(
+                                  '${((circularMap["attendedLectures"]/circularMap["totalLectures"]) * 100).toStringAsFixed(2)}%',
+                                  style: TextStyle(color: Colors.white, fontSize: 25),
+                                ),
+                                Text(
+                                  '${(circularMap["attendedLectures"]/circularMap["totalLectures"]).toStringAsFixed(2)}',
+                                  style: TextStyle(color: Colors.white, fontSize: 15),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 150,
+                          height: 150,
+                          child: CircularProgressIndicator(
+                            value: circularMap["totalLectures"]==0 ?0:(circularMap["attendedLectures"]/circularMap["totalLectures"]),
+                            backgroundColor: Colors.white,
+                            valueColor:
+                            AlwaysStoppedAnimation<Color>(oldDateSelectBlue),
+                            strokeWidth: 5,
+                            strokeAlign: BorderSide.strokeAlignInside,
+                            strokeCap: StrokeCap.round,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    //put the subject attendance cards from here
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    ListView.builder(
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
                       itemCount: attendanceList.length,
@@ -383,13 +384,13 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                           ),
                         );
                       },
-                    );
-                  }),
-              SizedBox(
-                height: 20,
-              ),
-            ],
-          ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                  ],
+                );
+              }),
         ),
       ),
       floatingActionButton: FloatingActionButton(
@@ -532,7 +533,7 @@ Future<Map<String, int>> fetchAttendanceData() async {
   }
 }
 
-Map<String, int> calculateAttendance(List<Map<String, dynamic>> attendanceList) {
+Map<String, int> calculateAttendance(List attendanceList) {
   int totalLectures = 0;
   int attendedLectures = 0;
 
