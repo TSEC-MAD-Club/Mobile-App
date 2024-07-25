@@ -256,28 +256,31 @@ class ExpandedFacultyCard extends StatelessWidget {
                   spacing: 5,
                   runSpacing: 5,
                   children: [
-                    IconWithChipText(
-                      assetPath: 'assets/images/icons/qualifications.png',
-                      text: qualification,
-                    ),
-                    IconWithChipText(
-                      assetPath: 'assets/images/icons/experience.png',
-                      text: experience,
-                    ),
-                    Row(
-                      children: [
-                        const Icon(
-                          Icons.star,
-                          size: 22,
-                          color: Color(0xff1FAFA4),
-                        ),
-                        SizedBox(width: 5),
-                        ChipStyledText(
-                          text: specialization,
-                          width: size.width*.7,
-                        ),
-                      ],
-                    ),
+                    if (qualification.isNotEmpty && qualification.toLowerCase() != 'na')
+                      IconWithChipText(
+                        assetPath: 'assets/images/icons/qualifications.png',
+                        text: qualification,
+                      ),
+                    if (experience.isNotEmpty && experience.toLowerCase() != 'na')
+                      IconWithChipText(
+                        assetPath: 'assets/images/icons/experience.png',
+                        text: experience,
+                      ),
+                    if (specialization.isNotEmpty && specialization.toLowerCase() != 'na')
+                      Row(
+                        children: [
+                          const Icon(
+                            Icons.star,
+                            size: 22,
+                            color: Color(0xff1FAFA4),
+                          ),
+                          SizedBox(width: 5),
+                          ChipStyledText(
+                            text: specialization,
+                            width: size.width * .7,
+                          ),
+                        ],
+                      ),
                   ],
                 ),
               ),
