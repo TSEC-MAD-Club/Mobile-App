@@ -58,8 +58,7 @@ class _LaunchScreenState extends State<LaunchScreen> {
 
   void _navigateToLogin() {
     print('Navigating to LoginScreen');
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>MaintainanceScreen(),),);
-    /*context.go('/login');*/
+    context.go('/login');
   }
 
   Future<void> _checkAnswer() async {
