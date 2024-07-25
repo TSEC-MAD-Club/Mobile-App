@@ -1,52 +1,172 @@
 [
-    {
-        "area_of_specialization" : "Accreditation and Quality Initiatives, Project Management, SAS Platform, Python Programming and Machine Learning.",
-        "designation" : "Professor Emeritus",
-        "email" : "vichareoffice@yahoo.com",
-        "experience" : "35 Years in Teaching, 10+ in Industry",
-        "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Faids%2Fshirish_vichare.png?alt=media&token=d777ce1c-8bfd-43c8-96ff-c7001c8a9772",
-        "name" : "Dr. Shirish Vichare",
-        "phd_guide" : "na",
-        "qualification" : "B.Tech (IITB), M.S (USA), PhD (IITB)"
-      },
-      {
-        "area_of_specialization" : "Big Data Analytics, Software Project Management, Data Warehousing Mining and Business Intelligence, Software Engineering, Database technologies, Parallel Computer Architecture, Management Information System, Machine Learning",
-        "designation" : "Professor and Head of Department",
-        "email" : "Madhuri.rao@thadomal.org",
-        "experience" : "25 years",
-        "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Faids%2Fmadhuri-rao.png?alt=media&token=6174dbf7-78bf-4f36-a06f-1b7cc1768d4b",
-        "name" : "Dr. Madhuri Rao",
-        "phd_guide" : "na",
-        "qualification" : "Ph.D. , M.E (Comp. Engineering) , B.E (Computer)"
-      },
-      {
-        "area_of_specialization" : "Artificial Intelligence and Data science, Python programming, R Programming, Big data analytics, Cloud Computing and DevOPs.",
-        "designation" : "Assistant Professor",
-        "email" : "bhushan.jadhav@tsec.edu",
-        "experience" : "13 years",
-        "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Faids%2Fbhushan.jpg?alt=media&token=fbe34e2b-b5bd-439f-a67a-8882e4b81917",
-        "name" : "Dr. Bhushan Jadhav",
-        "phd_guide" : "na",
-        "qualification" : "Ph.D. (Technology) , M.E. (Computer Engg.) , B.E. (Computer Engg.)"
-      },
-      {
-        "area_of_specialization" : "Biomedical Engineering, Digital Logic Design.",
-        "designation" : "Assistant Professor",
-        "email" : "bharatijingale@gmail.com",
-        "experience" : "21 years",
-        "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Faids%2Fbharati_ingale.jpg?alt=media&token=12ce7b39-7836-4556-bc0e-6c81dca39687",
-        "name" : "Ms. Bharati Jayesh Ingale",
-        "phd_guide" : "na",
-        "qualification" : "Ph.D (Pursuing) M.Tech. IIT Bombay B.E (Biomedical Engg)"
-      },
-      {
-        "area_of_specialization" : "Computer Graphics, Data structures.",
-        "designation" : "Assistant Professor",
-        "email" : "meenu.bhatia@thadomal.org",
-        "experience" : "2.5 years",
-        "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Faids%2Fmeenu_bhatia.jpg?alt=media&token=c555d65d-75e5-4330-aedd-5a360436933b",
-        "name" : "Ms. Meenu Bhatia",
-        "phd_guide" : "na",
-        "qualification" : "M.E (Computer Engg.)"
-      }
+  {
+    "name": "Dr. Gopakumaran Trivikraman Thampi",
+    "designation": "Principal",
+    "qualification": "Ph.D (Technology)",
+    "experience": "37 Years",
+    "area_of_specialization": "Big Data Analytics, Cloud Computing, Internet of Things, Integration in Enterprises.",
+    "email": "gtthampi@yahoo.com, gtthampi@gmail.com",
+    "image": "na",
+    "phd_guide": "Mumbai University recognized guide in Information Technology and Mechanical Engineering."
+  },
+  {
+    "name": "Dr. Madhuri Rao",
+    "designation": "Professor and Head of Department",
+    "qualification": "Ph.D., M.E (Comp. Engineering), B.E (Computer)",
+    "experience": "27 Years",
+    "area_of_specialization": "Big Data Analytics, Software Project Management, Data Warehousing Mining and Business Intelligence, Software Engineering, Database technologies, Parallel Computer Architecture, Management Information System, Machine Learning, Blockchain, Deep Learning",
+    "email": "Madhuri.rao@thadomal.org",
+    "image": "na",
+    "phd_guide": "na"
+  },
+  {
+    "name": "Dr. Mita Bhowmick",
+    "designation": "Professor",
+    "qualification": "PhD (Technology) IIT Bombay",
+    "experience": "31 Years",
+    "area_of_specialization": "Neural Networks, AI in Healthcare, Digital Logic Design, Optical Tomography, Medical Imaging, Biomechanics and Artificial Organs, Biomedical Instrumentation.",
+    "email": "mita.bhowmick@thadomal.org",
+    "image": "na",
+    "phd_guide": "na"
+  },
+  {
+    "name": "Dr. Bhushan Jadhav",
+    "designation": "Assistant Professor",
+    "qualification": "Ph.D. (Technology), M.E. (Computer Engg.), B.E. (Computer Engg.)",
+    "experience": "15 Years",
+    "area_of_specialization": "Artificial Intelligence and Data science, Python programming, R Programming, Big data analytics, Cloud Computing and DevOps.",
+    "email": "bhushan.jadhav@thadomal.org",
+    "image": "na",
+    "phd_guide": "na"
+  },
+  {
+    "name": "Mr. Naveen Vaswani",
+    "designation": "Assistant Professor",
+    "qualification": "PhD (Pursuing)",
+    "experience": "18 Years",
+    "area_of_specialization": "Software Engineering, SOOAD, Structured and Object Oriented Programming, Data Mining, Artificial Intelligence, Computer Networks.",
+    "email": "naveen.vaswani@thadomal.org",
+    "image": "na",
+    "phd_guide": "na"
+  },
+  {
+    "name": "Ms. Sanober Sultana Shaikh",
+    "designation": "Assistant Professor",
+    "qualification": "Ph.D. (Pursuing)",
+    "experience": "17 Years",
+    "area_of_specialization": "Data Warehousing, Data Mining and Business Intelligence, Database Technologies, Quantum Computing",
+    "email": "sanober.shaikh@thadomal.org",
+    "image": "na",
+    "phd_guide": "na"
+  },
+  {
+    "name": "Mr. Sunil Shelke",
+    "designation": "Assistant Professor",
+    "qualification": "MS by Research (Computer Science and Engineering)",
+    "experience": "12 Years",
+    "area_of_specialization": "Algorithms, Discrete Mathematics, Computational Complexity Theory.",
+    "email": "sunil.shelke@thadomal.org",
+    "image": "na",
+    "phd_guide": "na"
+  },
+  {
+    "name": "Monica G. Tolani",
+    "designation": "Assistant Professor, Placement Officer, Dean AICTE/NBA, NAAC Executive and Dean Revenue Generation",
+    "qualification": "Ph.D. (Pursuing)",
+    "experience": "8.5 Years",
+    "area_of_specialization": "Artificial Intelligence, Databases, Data Mining, Big Data Analytics, Software Engineering, E-commerce & E-business, Machine Learning, Deep Learning, Python Programming.",
+    "email": "monica.tolani@thadomal.org",
+    "image": "na",
+    "phd_guide": "na"
+  },
+  {
+    "name": "Dr. Himani Deshpande",
+    "designation": "Assistant Professor, Dean Student Affairs",
+    "email": "himani.deshpande@thadomal.org",
+    "experience": "12 Years",
+    "area_of_specialization": "Machine Learning, Deep Learning, Data Structures, Operating System and Computer Organisation",
+    "image": "URL_to_image_if_available",
+    "phd_guide": "na",
+    "qualification": "Ph.D. (Computer)"
+  },
+  {
+    "name": "Ms. Meenu Bhatia",
+    "designation": "Assistant Professor",
+    "email": "meenu.bhatia@thadomal.org",
+    "experience": "4 Years & 6 Months",
+    "area_of_specialization": "Object Oriented Programming, Algorithm, Computer Graphics, Data structures, Operating Systems",
+    "image": "URL_to_image_if_available",
+    "phd_guide": "na",
+    "qualification": "M.E (Computer Engg.)"
+  },
+  {
+    "name": "Ms. Saloni V Dhuru",
+    "designation": "Assistant Professor",
+    "email": "saloni.dhuru@thadomal.org",
+    "experience": "4 Years & 7 Months",
+    "area_of_specialization": "Artificial Intelligence and Data Science, Machine Learning and Deep Learning, Database System",
+    "image": "URL_to_image_if_available",
+    "phd_guide": "na",
+    "qualification": "Ph.D. (Pursuing), M.E. (Computer), B.E. (Information Technology)"
+  },
+  {
+    "name": "Priyanka Patil",
+    "designation": "Assistant Professor",
+    "email": "patil.priya2501@gmail.com",
+    "experience": "5.1 Years",
+    "area_of_specialization": "Cybersecurity, Project Management, Digital Marketing, Digital Forensic, Data Mining and Business Intelligence",
+    "image": "URL_to_image_if_available",
+    "phd_guide": "na",
+    "qualification": "M.E (Computer Engineering)"
+  },
+  {
+    "name": "Ms. Susmita Das",
+    "designation": "Assistant Professor",
+    "email": "das.susmita63@gmail.com",
+    "experience": "9+ Years",
+    "area_of_specialization": "Computers, Computation, ML, AI, Analytic",
+    "image": "URL_to_image_if_available",
+    "phd_guide": "na",
+    "qualification": "M.E (Computer Engineering)"
+  },
+  {
+    "name": "Ms. Himani Joshi",
+    "designation": "Assistant Professor",
+    "email": "himani25joshi@gmail.com",
+    "experience": "6.7 Years (Since Aug, 2017)",
+    "area_of_specialization": "Soft Computing, Machine Learning, Deep Learning, Database Management Systems, Automata Theory, Data Structures",
+    "image": "URL_to_image_if_available",
+    "phd_guide": "na",
+    "qualification": "M.TECH (CSE)"
+  },
+  {
+    "name": "Ms. Vipra Dave",
+    "designation": "Assistant Professor",
+    "email": "vipratsec@gmail.com",
+    "experience": "4 years",
+    "area_of_specialization": "Semantics, Architecture, Database Systems, Human Interaction, Data Analysis, Analytics and Visualization, Agile Project Management",
+    "image": "URL_to_image_if_available",
+    "phd_guide": "na",
+    "qualification": "M.Tech (Computer)"
+  },
+  {
+    "name": "Mrs. Nilam Navil Ahmed Rais",
+    "designation": "Assistant Professor",
+    "email": "nil4386@gmail.com",
+    "experience": "13+ years",
+    "area_of_specialization": "Database Management Systems, Data Analytics and Visualization, Machine learning, Artificial Intelligence, Computer Graphics, Web Computing, Data Structure and Algorithms",
+    "image": "URL_to_image_if_available",
+    "phd_guide": "na",
+    "qualification": "M.E. (C. S. E.)"
+  },
+  {
+    "name": "Mr. Naufil Kazi",
+    "designation": "Assistant Professor",
+    "email": "naufilkazi26@gmail.com",
+    "experience": "3.5 years",
+    "area_of_specialization": "Artificial Intelligence, Machine Learning, Web Development, App Development and Blockchain",
+    "image": "URL_to_image_if_available",
+    "phd_guide": "na",
+    "qualification": "Ph.D. (Pursuing)"
+  }
 ]

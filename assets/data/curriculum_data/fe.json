@@ -1,0 +1,23 @@
+{
+  "1": {
+    "url": "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/syllabus%2FFE%20SEM%201.pdf?alt=media&token=991b935d-48d5-4042-845c-1894068af963",
+    "subjects": [
+      "Engineering Mathematics-I",
+      "Engineering Physics-I",
+      "Engineering Chemistry-I",
+      "Engineering Mechanics",
+      "Basic Electrical Engineering"
+    ]
+  },
+  "2": {
+    "url": "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/syllabus%2FFE%20SEM%202.pdf?alt=media&token=b6ed621c-e66c-4b27-b371-f237c9fb14a4",
+    "subjects": [
+      "Engineering Mathematics-II",
+      "Engineering Physics-II",
+      "Engineering Chemistry-II",
+      "Engineering Graphics",
+      "C Programming",
+      "Professional Communication and Ethics-I"
+    ]
+  }
+}

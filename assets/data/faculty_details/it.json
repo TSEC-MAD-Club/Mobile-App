@@ -1,217 +1,192 @@
-[ {
-  "area_of_specialization" : "Big Data Analytics, Cloud Computing, Internet of Things, Integration in Enterprises",
-  "designation" : "Professor & Principal",
-  "email" : "gtthampi@gmail.com",
-  "experience" : "32 yrs",
-  "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fit%2Fgtthampi.jpg?alt=media&token=68166533-c529-44c4-9db5-8b4e3738d2a4",
-  "name" : "Dr. G.T. Thampi",
-  "phd_guide" : "Mumbai University recognized guide in Information Technology & Mechanical Engineering",
-  "qualification" : "Ph.D (Technology)"
-}, {
-  "area_of_specialization" : "Big Data Analytics, Data Mining, Software Project Management, Software Engineering",
-  "designation" : "Professor and Head of Department , Examination Incharge",
-  "email" : "madhuri.rao@thadomal.org",
-  "experience" : "23 yrs",
-  "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fit%2Fmadhurirao.jpg?alt=media&token=58ec8eb9-756a-4278-b3dc-11ae22de4c02",
-  "name" : "Dr. Madhuri Rao",
-  "phd_guide" : "na",
-  "qualification" : "Ph.D (Technology)"
-}, {
-  "area_of_specialization" : "Advance and Parallel Compilers, Intelligent Systems, Generic system design and Analysis",
-  "designation" : "Associate Professor",
-  "email" : "archana.kale@tsec.edu",
-  "experience" : "26 yrs",
-  "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fit%2Farchanakale.jpg?alt=media&token=24db05eb-1bf6-45ee-8ba3-3ffd03a9445d",
-  "name" : "Ms. Archana Kale",
-  "phd_guide" : "na",
-  "qualification" : "Ph.D (Pursuing)"
-}, {
-  "area_of_specialization" : "Big Data Analytics, E-Commerce & E-Business, Image Processing, Image and Video Fusion.",
-  "designation" : "Associate Professor , Member of Counselor for Academic and Professional development Committee, Dean NBA-TSEC",
-  "email" : "anjali.malviya@tsec.edu",
-  "experience" : "25 yrs",
-  "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fit%2Fanjalimalviya.jpg?alt=media&token=a4f6c351-5d30-4c28-ad66-dbc89fa6c21a",
-  "name" : "Ms. Anjali Malviya",
-  "phd_guide" : "na",
-  "qualification" : "Ph.D ( Thesis Submitted)"
-}, {
-  "area_of_specialization" : "Digital signal and image processing,Soft computing.",
-  "designation" : "Associate Professor",
-  "email" : "arun.kulkarni@tesc.edu",
-  "experience" : "28 yrs",
-  "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fit%2Farunkulkarni.jpg?alt=media&token=eb09fee4-1764-4f4e-aa34-82a0c4b64520",
-  "name" : "Dr. Arun Kulkarni",
-  "phd_guide" : "na",
-  "qualification" : "Ph.D"
-}, {
-  "area_of_specialization" : "Information Security, Embeded Systems,AI",
-  "designation" : "Associate Professor",
-  "email" : "sampadapinge @gmail.com",
-  "experience" : "26 yrs",
-  "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fit%2Fsampadapinge.jpg?alt=media&token=91064b98-1595-41de-b9ca-cb76dfbb4019",
-  "name" : "Ms. Sampada Pinge",
-  "phd_guide" : "na",
-  "qualification" : "M.E.(EXTC)"
-}, {
-  "area_of_specialization" : "Data Mining, Pattern Recognition, Speech Recognition Technologies",
-  "designation" : "Assistant Professor, Member of Anti Ragging Squad committee",
-  "email" : "shanthi.therese@tsec.edu",
-  "experience" : "22 yrs",
-  "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fit%2Fshanthitherese.jpg?alt=media&token=751047c4-36b6-472d-ad0e-d045085ba799",
-  "name" : "Ms. Shanthi Therese",
-  "phd_guide" : "na",
-  "qualification" : "Ph.D. (Pursuing)"
-}, {
-  "area_of_specialization" : "Image Processing, Wireless Networks",
-  "designation" : "Associate Professor",
-  "email" : "gopal.pardesi@tsec.edu",
-  "experience" : "28 yrs",
-  "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fit%2Fgopalpardesi.jpg?alt=media&token=8aec2306-1469-4833-89c1-a99a9899bed3",
-  "name" : "Dr. Gopal Pardesi",
-  "phd_guide" : "na",
-  "qualification" : "Ph.D"
-}, {
-  "area_of_specialization" : "Electronics Circuit Design, DSIP, Electronics Communication And Information Coding",
-  "designation" : "Assistant Professor",
-  "email" : "israni_mukesh2002@yahoo.com",
-  "experience" : "22 yrs",
-  "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fit%2Fmukeshisrani.jpg?alt=media&token=7bc0460d-1da7-48d6-90a5-54b417afb13e",
-  "name" : "Mr. Mukesh Israni",
-  "phd_guide" : "na",
-  "qualification" : "Ph.D (Pursuing) "
-}, {
-  "area_of_specialization" : "Algorithms , Operating systems , Image Processing, Data Structures , Java,J2ME , Computer Networks, Information Systems.",
-  "designation" : "Assistant Professor, Member of Alumni committee , Member of E-Cell  committee",
-  "email" : "kumkum.saxena@tsec.edu",
-  "experience" : "17 yrs",
-  "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fit%2Fkumkumsaxena.jpg?alt=media&token=5d0dcdba-74c5-4e93-9954-265af51c0586",
-  "name" : "Ms. Kumkum Saxena",
-  "phd_guide" : "na",
-  "qualification" : "Ph.D (Pursuing)"
-}, {
-  "area_of_specialization" : "Robotics",
-  "designation" : "Assistant Professor",
-  "email" : "na",
-  "experience" : "20 yrs",
-  "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fit%2Fgeetakarande.jpg?alt=media&token=bf07fb42-40e7-4bff-9b3b-04e1787cfcc0",
-  "name" : "Ms. Geeta Karande",
-  "phd_guide" : "na",
-  "qualification" : "M.E(Extc)"
-}, {
-  "area_of_specialization" : "Data Communication, digital signal and image processing, Information security Wireless Networks.",
-  "designation" : "Assistant Professor",
-  "email" : "nagaveni.hebbar@tsec.edu",
-  "experience" : "16 yrs",
-  "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fit%2Fnagavenihebbar.jpg?alt=media&token=26cc6c36-1352-490b-bda4-4082d9b6625e",
-  "name" : "Ms. Nagaveni Hebbar",
-  "phd_guide" : "na",
-  "qualification" : "Ph.D Pursuing"
-}, {
-  "area_of_specialization" : "Software Testing, Optimization and Database, Machine Learning",
-  "designation" : "Assistant Professor",
-  "email" : "chetan78@gmail.com",
-  "experience" : "15 yrs",
-  "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fit%2Fchetanagarwal.jpg?alt=media&token=be4146ae-3cd8-47ed-9c5e-ac0a80ec3b75",
-  "name" : "Mr. Chetan Agarwal",
-  "phd_guide" : "na",
-  "qualification" : "Ph.D. (Pursuing)"
-}, {
-  "area_of_specialization" : "Networking, Multimedia Systems, Internet Programming, Databases",
-  "designation" : "Assistant Professor",
-  "email" : "reshma.malik@tsec.edu",
-  "experience" : "15 yrs",
-  "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fit%2Freshmamalik.jpg?alt=media&token=9eab63e2-c510-489a-9ff5-3e1b2aa7a4c5",
-  "name" : "Ms. Reshma Malik",
-  "phd_guide" : "na",
-  "qualification" : "M.E (Computer Engineering)"
-}, {
-  "area_of_specialization" : "Computer Network, Software Engg., Software Project Management.",
-  "designation" : "Assistant Professor",
-  "email" : "na",
-  "experience" : "15 yrs",
-  "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fit%2Fsanjaypandey.jpg?alt=media&token=bfe69aeb-5fcc-49ca-a81f-8cb9d3efead2",
-  "name" : "Mr. Sanjay K. Pandey",
-  "phd_guide" : "na",
-  "qualification" : "Ph.D. (Pursuing)"
-}, {
-  "area_of_specialization" : "Image Processing, Speech Processing, Bio-metrics.",
-  "designation" : "Assistant Professor",
-  "email" : "Sunita.rathod@tsec.edu",
-  "experience" : "14 yrs",
-  "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fit%2Fsunitarathod.jpg?alt=media&token=6157a8a2-07e7-498b-bdc3-30fb995d316e",
-  "name" : "Ms. Sunita D. Rathod",
-  "phd_guide" : "na",
-  "qualification" : "M.E.(Computer Engineering)"
-}, {
-  "area_of_specialization" : "Neural Network, Artificial Intelligence, Simulation, Modeling And Analysis Design",
-  "designation" : "Assistant Professor",
-  "email" : "nikhilesh.joshi@tsec.edu",
-  "experience" : "17 yrs",
-  "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fit%2Fnikhileshjoshi.jpg?alt=media&token=d8f54570-198e-4b89-8e67-b65fbcbafbe7",
-  "name" : "Mr. Nikhilesh Joshi",
-  "phd_guide" : "na",
-  "qualification" : "Ph.D (Pursuing)"
-}, {
-  "area_of_specialization" : "Image Processing , Data structures, Algorithms, operating system, Network security",
-  "designation" : "Assistant Professor",
-  "email" : "shachi_natu@yahoo.com",
-  "experience" : "14 yrs",
-  "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fit%2Fshachinatu.jpg?alt=media&token=fe274fe5-f5c6-4296-9bdf-1027c9708c33",
-  "name" : "Dr. Shachi Natu",
-  "phd_guide" : "na",
-  "qualification" : "Ph.D(Technology)."
-}, {
-  "area_of_specialization" : "Cloud Computing,Big data Analytics,Python Programming, Middleware Technologies, Computer Network, Unix and Linux Administration",
-  "designation" : "Assistant Professor",
-  "email" : "bhushan.jadhav@tsec.edu",
-  "experience" : "11 yrs",
-  "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fit%2Fbhushanjadhav.jpg?alt=media&token=28035d0d-9ada-4732-a512-f72dc8325bc3",
-  "name" : "Dr. Bhushan Jadhav",
-  "phd_guide" : "na",
-  "qualification" : "Ph.D"
-}, {
-  "area_of_specialization" : "Database, Data MINING AND Internet Technology.",
-  "designation" : "Assistant Professor",
-  "email" : "sanober.shaikh@tsec.edu",
-  "experience" : "12 yrs",
-  "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fit%2Fsanobershaikh.jpg?alt=media&token=cf288b35-f212-45dd-a1fe-d6f8355cebb2",
-  "name" : "Ms. Sanober Shaikh",
-  "phd_guide" : "na",
-  "qualification" : "Ph.D. (Pursuing)"
-}, {
-  "area_of_specialization" : "Data mining , Data structure and Algorithms , Machine Learning",
-  "designation" : "Assistant Professor",
-  "email" : "himani.deshpande@thadomal.org",
-  "experience" : "4.5 yrs",
-  "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fit%2Fhimanideshpande.jpg?alt=media&token=79759228-9181-4159-9323-8900ee1d8275",
-  "name" : "Ms. Himani Deshpande",
-  "phd_guide" : "na",
-  "qualification" : "Ph.D. (Pursuing)"
-}, {
-  "area_of_specialization" : "Database, Data Mining and Big Data Analytics, Software Engineering, E-Commerce & E-Business",
-  "designation" : "Assistant Professor",
-  "email" : "monica.tolani@thadomal.org",
-  "experience" : "3 yrs",
-  "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fit%2Fmonicatolani.jpg?alt=media&token=7165e5db-c0b6-48a5-9909-d5bf5e865ce4",
-  "name" : "Ms. Monica G. Tolani",
-  "phd_guide" : "na",
-  "qualification" : "Ph.D.(Pursuing)"
-}, {
-  "area_of_specialization" : "Advance Database Management Systemm, Data Mining and Business Intelligence, Web Programming",
-  "designation" : "Assistant Professor",
-  "email" : "vijal.jain@thadomal.org",
-  "experience" : "5.5 yrs",
-  "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fit%2Fvijaljain.jpg?alt=media&token=c7dc56b5-23c3-491b-9c4c-18665adbed14",
-  "name" : "Ms. Vijal Jain",
-  "phd_guide" : "na",
-  "qualification" : "Ph.D.(Pursuing)"
-}, {
-  "area_of_specialization" : "Wireless Networks, Image Processing",
-  "designation" : "Assistant Professor",
-  "email" : "darshan.ingle@thadomal.org",
-  "experience" : "8 yrs",
-  "image" : "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/faculty%2Fit%2Fdarshaningle.jpg?alt=media&token=cdde18b7-6e1a-4250-83fb-f34971fc30df",
-  "name" : "Dr. Darshan Ingle",
-  "phd_guide" : "na",
-  "qualification" : "Ph.D(Computer Science & Engineering)"
-} ]
+[
+  {
+    "name": "Dr. Mukesh Israni",
+    "designation": "Vice Principal and Associate Professor HoD(IT)",
+    "qualification": "PhD (Technology) in IT",
+    "experience": "27 Years",
+    "area_of_specialization": "Wireless Sensor Networks, Entrepreneurship and E Business.",
+    "email": "mukesh.israni@thadomal.org",
+    "image": "na",
+    "phd_guide": "na"
+  },
+  {
+    "name": "Dr. Arun Kulkarni",
+    "designation": "Professor",
+    "qualification": "Ph.D (Computer Science and Engineering)",
+    "experience": "31 Years",
+    "area_of_specialization": "Digital Signal & Image Processing, Soft Computing.",
+    "email": "arun.kulkarni@thadomal.org",
+    "image": "na",
+    "phd_guide": "na"
+  },
+  {
+    "name": "Ms. Archana Kale",
+    "designation": "Associate Professor",
+    "qualification": "Ph.D (Pursuing)",
+    "experience": "30 Years",
+    "area_of_specialization": "Generic System Analysis and Design, Parallelization, Intelligent Systems.",
+    "email": "archana.kale@thadomal.org",
+    "image": "na",
+    "phd_guide": "na"
+  },
+  {
+    "name": "Ms. Anjali Malviya",
+    "designation": "Associate Professor",
+    "qualification": "ME (Electronics)",
+    "experience": "28 Years",
+    "area_of_specialization": "Image Fusion, Data Analytics",
+    "email": "anjali.malviya@thadomal.org",
+    "image": "na",
+    "phd_guide": "na"
+  },
+  {
+    "name": "Ms. Sampada Pinge",
+    "designation": "Associate Professor",
+    "qualification": "M.E (Electronics)",
+    "experience": "28+ Years",
+    "area_of_specialization": "Internet of Things, Infrastructure Security, Neural Network.",
+    "email": "sampada.pinge@thadomal.org",
+    "image": "na",
+    "phd_guide": "na"
+  },
+  {
+    "name": "Dr. Shanthi Therese S.",
+    "designation": "Associate Professor",
+    "qualification": "Ph.D (Technology) in Computer Engineering",
+    "experience": "27 Years",
+    "area_of_specialization": "Automatic Speech Recognition, Data Mining and Business Intelligence Applications, Machine Learning",
+    "email": "shanthi.therese@thadomal.org",
+    "image": "na",
+    "phd_guide": "na"
+  },
+  {
+    "name": "Dr. Gopal Pardesi",
+    "designation": "Associate Professor, IQAC Coordinator",
+    "email": "gopal.pardesi@thadomal.org",
+    "experience": "31 Years",
+    "area_of_specialization": "Artificial Intelligence, Machine Learning",
+    "image": "URL_to_image_if_available",
+    "phd_guide": "na",
+    "qualification": "Ph.D (IT)"
+  },
+  {
+    "name": "Dr. Kumkum Saxena",
+    "designation": "Associate Professor, Department Coordinator(IT)",
+    "email": "kumkum.saxena@thadomal.org",
+    "experience": "23 Years",
+    "area_of_specialization": "Machine Learning, Image Processing, Advance Data Structures and Algorithms, Operating System, Computer Networks, Java, Information Systems, Automata Theory",
+    "image": "URL_to_image_if_available",
+    "phd_guide": "na",
+    "qualification": "PhD (Technology), M.E. (Computer), B.E. (Computer Science)"
+  },
+  {
+    "name": "Ms. Geeta Karande",
+    "designation": "Assistant Professor",
+    "email": "geeta.karande@thadomal.org",
+    "experience": "23 Years",
+    "area_of_specialization": "Robotics, Communication Engg.",
+    "image": "URL_to_image_if_available",
+    "phd_guide": "na",
+    "qualification": "M.E (Electronics and Telecommunication)"
+  },
+  {
+    "name": "Dr. Nagaveni Hebbar",
+    "designation": "Assistant Professor",
+    "qualification": "Ph.D (Electronics and Telecommunication)",
+    "experience": "21 Years",
+    "area_of_specialization": "Information Security, Wireless Technology and Digital Forensics.",
+    "email": "nagaveni.hebar@thadomal.org",
+    "image": "",
+    "phd_guide": "na"
+  },
+  {
+    "name": "Mr. Chetan Agarwal",
+    "designation": "Assistant Professor and Dean Academics",
+    "qualification": "Ph.D. (Pursuing)",
+    "experience": "19 Years",
+    "area_of_specialization": "Blockchain Technology",
+    "email": "chetan.agarwal@thadomal.org",
+    "image": "",
+    "phd_guide": "na"
+  },
+  {
+    "name": "Ms. Reshma Malik",
+    "designation": "Assistant Professor",
+    "qualification": "M.E (Computer Engineering)",
+    "experience": "19 Years",
+    "area_of_specialization": "Neural Networks and Fuzzy Systems, Management of Information System.",
+    "email": "reshma.malik@thadomal.org",
+    "image": "",
+    "phd_guide": "na"
+  },
+  {
+    "name": "Mr. Sanjay Pandey",
+    "designation": "Assistant Professor",
+    "qualification": "Ph.D (Pursuing)",
+    "experience": "19 Years",
+    "area_of_specialization": "Software Engg., Software Project Management, Computer Network.",
+    "email": "sanjay.pandey@thadomal.org",
+    "image": "",
+    "phd_guide": "na"
+  },
+  {
+    "name": "Ms. Sunita D. Rathod",
+    "designation": "Assistant Professor",
+    "qualification": "M.E.(Computer Engineering)",
+    "experience": "19 Years",
+    "area_of_specialization": "Programming, Web technology, Bio-metric.",
+    "email": "sunita.rathod@thadomal.org",
+    "image": "",
+    "phd_guide": "na"
+  },
+  {
+    "name": "Dr. Nikhilesh Joshi",
+    "designation": "Assistant Professor",
+    "qualification": "Ph.D (Technology)",
+    "experience": "21 Years",
+    "area_of_specialization": "Neural Network Image Processing",
+    "email": "jnikhilesh@gmail.com",
+    "image": "",
+    "phd_guide": "na"
+  },
+  {
+    "name": "Dr. Shachi Natu",
+    "designation": "Assistant Professor, Dean Academics",
+    "qualification": "Ph.D (Computer Engineering)",
+    "experience": "18 Years",
+    "area_of_specialization": "Image Processing, Machine Learning, Deep Learning, Natural Language Processing",
+    "email": "shachi.natu@thadomal.org",
+    "image": "",
+    "phd_guide": "na"
+  },
+  {
+    "name": "Dr. Darshan Ingle",
+    "designation": "Assistant Professor",
+    "qualification": "Ph.D (Computer Science & Engineering)",
+    "experience": "14 Years",
+    "area_of_specialization": "Python | Julia | R | Data Analytics | Machine Learning | NLP | Generative AI | Deep Learning | Stats | Tableau | PowerBI | Alteryx | Pyspark | Prompt Engineering.",
+    "email": "darshan.ingle@thadomal.org",
+    "image": "",
+    "phd_guide": "na"
+  },
+  {
+    "name": "Mrs. Anuradha Bharat Mistry",
+    "designation": "Assistant Professor",
+    "qualification": "M.Tech. (IITB)",
+    "experience": "21 Years",
+    "area_of_specialization": "Biomedical Instrumentation, Modelling and Simulation, Rehabilitation Engineering, Biomechanics.",
+    "email": "anuradha.mistry@thadomal.org",
+    "image": "",
+    "phd_guide": "na"
+  },
+  {
+    "name": "Ms. Sheetal A. Gondal",
+    "designation": "Assistant Professor",
+    "qualification": "M.E (Computer Engineering)",
+    "experience": "9 Years",
+    "area_of_specialization": "Database, Big Data Analytics, Software Engineering, C Programming, Project Management.",
+    "email": "sheetalgondal@gmail.com",
+    "image": "",
+    "phd_guide": "na"
+  }
+]

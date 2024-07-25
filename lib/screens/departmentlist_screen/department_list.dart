@@ -46,10 +46,6 @@ class DepartmentList extends StatelessWidget {
               department: DepartmentEnum.aids,
             ),
             DeptWidget(
-              image: "extc",
-              department: DepartmentEnum.extc,
-            ),
-            DeptWidget(
               image: "cs",
               department: DepartmentEnum.cs,
             ),
@@ -58,16 +54,17 @@ class DepartmentList extends StatelessWidget {
               department: DepartmentEnum.it,
             ),
             DeptWidget(
-              image: "biomed",
-              department: DepartmentEnum.biomed,
-            ),
-            DeptWidget(
-              image: "biotech",
-              department: DepartmentEnum.biotech,
-            ),
-            DeptWidget(
               image: "chem",
               department: DepartmentEnum.chem,
+            ),
+            DeptWidget(
+              image: "extc",
+              department: DepartmentEnum.extc,
+            ),
+            // ----------------------- TO BE TAKEN CARE AFTER APP LAUNCH - FK ----------------------------
+            DeptWidget(
+              image: "fe",
+              department: DepartmentEnum.fe,
             ),
           ],
         ),

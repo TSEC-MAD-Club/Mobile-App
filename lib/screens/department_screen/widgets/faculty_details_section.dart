@@ -180,11 +180,11 @@ class CollapsedFacultyCard extends StatelessWidget {
             softWrap: true,
             text: TextSpan(
               text: name,
-              style: Theme.of(context).textTheme.titleMedium,
+              style: Theme.of(context).textTheme.titleSmall?.copyWith(fontSize: 20, fontWeight: FontWeight.bold) ?? TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               children: [
                 TextSpan(
                   text: designation,
-                  style: Theme.of(context).textTheme.titleSmall,
+                  style: Theme.of(context).textTheme.titleSmall?.copyWith(fontSize: 10) ?? TextStyle(fontSize: 10),
                 ),
               ],
             ),
@@ -267,7 +267,7 @@ class ExpandedFacultyCard extends StatelessWidget {
                     Row(
                       children: [
                         const Icon(
-                          Icons.star_border_purple500_outlined,
+                          Icons.star,
                           size: 22,
                           color: Color(0xff1FAFA4),
                         ),
