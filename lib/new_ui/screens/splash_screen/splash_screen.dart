@@ -7,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:tsec_app/models/student_model/student_model.dart';
+import 'package:tsec_app/new_ui/screens/Maintainance_Screen/maintainance_screen.dart';
 import 'package:tsec_app/new_ui/screens/main_screen/main_screen.dart';
 import 'package:tsec_app/new_ui/screens/profile_screen/profile_screen.dart';
 import 'package:tsec_app/new_ui/screens/launch_screen/launch_screen.dart';
@@ -56,6 +57,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
   void initState() {
     super.initState();
     _fetchLaunchDate();
+    fetchMaintainanceStatus();
   }
 
   //check permissions
@@ -70,6 +72,17 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
     }
   }
 
+  bool navigateToMaintainance = false;
+  //MaintainanceScreen
+  final doc = FirebaseFirestore.instance.collection("Maintainance").doc("Maintainance");
+  fetchMaintainanceStatus()async{
+    final get = await doc.get();
+    final data = get.data() as Map<String,dynamic>;
+    setState(() {
+      navigateToMaintainance = data['underBreak'];
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     if (!_isLaunchDateFetched) {
@@ -78,6 +91,10 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
           child: CircularProgressIndicator(),
         ),
       );
+    }
+    print("Executed Build");
+    if(navigateToMaintainance){
+      return MaintainanceScreen();
     }
 
     if (_launchDate != null && DateTime.now().isBefore(_launchDate!)) {

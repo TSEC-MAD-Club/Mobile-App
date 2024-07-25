@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:bcrypt/bcrypt.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tsec_app/new_ui/colors.dart';
+import 'package:tsec_app/new_ui/screens/Maintainance_Screen/maintainance_screen.dart';
 // import 'package:tsec_app/new_ui/screens/login_screen/login_screen.dart';
 
 class LaunchScreen extends StatefulWidget {
@@ -57,7 +58,8 @@ class _LaunchScreenState extends State<LaunchScreen> {
 
   void _navigateToLogin() {
     print('Navigating to LoginScreen');
-    context.go('/login');
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>MaintainanceScreen(),),);
+    /*context.go('/login');*/
   }
 
   Future<void> _checkAnswer() async {
