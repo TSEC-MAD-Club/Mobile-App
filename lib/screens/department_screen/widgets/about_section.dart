@@ -82,8 +82,8 @@ class _AboutSectionState extends State<AboutSection> {
                                     .textTheme
                                     .titleLarge!
                                     .copyWith(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w500),
+                                        fontSize: 25,
+                                        fontWeight: FontWeight.bold),
                               ),
                             ),
                             collapsed: Text(about,
@@ -93,11 +93,11 @@ class _AboutSectionState extends State<AboutSection> {
                                 style: Theme.of(context)
                                     .textTheme
                                     .titleSmall!
-                                    .copyWith(fontSize: 14)),
+                                    .copyWith(fontSize: 12)),
                             expanded: Text(
                               about,
                               softWrap: true,
-                              style: Theme.of(context).textTheme.titleSmall,
+                              style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 12),
                             ),
                           ),
                         ),
@@ -129,8 +129,8 @@ class _AboutSectionState extends State<AboutSection> {
                                       .textTheme
                                       .titleLarge!
                                       .copyWith(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w500),
+                                          fontSize: 25,
+                                          fontWeight: FontWeight.bold),
                                 ),
                               ),
                               collapsed: Text(
@@ -141,12 +141,12 @@ class _AboutSectionState extends State<AboutSection> {
                                 style: Theme.of(context)
                                     .textTheme
                                     .titleSmall!
-                                    .copyWith(fontSize: 14),
+                                    .copyWith(fontSize: 12),
                               ),
                               expanded: Text(
                                 vision,
                                 softWrap: true,
-                                style: Theme.of(context).textTheme.titleSmall,
+                                style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 12),
                               ),
                             ),
                           ),
@@ -179,8 +179,8 @@ class _AboutSectionState extends State<AboutSection> {
                                       .textTheme
                                       .titleLarge!
                                       .copyWith(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w700),
+                                          fontSize: 25,
+                                          fontWeight: FontWeight.bold),
                                 ),
                               ),
                               collapsed: RichText(
@@ -192,7 +192,7 @@ class _AboutSectionState extends State<AboutSection> {
                                   style: Theme.of(context)
                                       .textTheme
                                       .titleSmall!
-                                      .copyWith(fontSize: 14),
+                                      .copyWith(fontSize: 12),
                                   children: [
                                     if (true)
                                       for (var i = 1; i <= 2; i++)
@@ -204,8 +204,8 @@ class _AboutSectionState extends State<AboutSection> {
                                               )
                                             : WidgetSpan(
                                                 child: Icon(
-                                                  Icons.check_box_outlined,
-                                                  size: 20,
+                                                  Icons.circle,
+                                                  size: 12,
                                                   color: Theme.of(context)
                                                       .colorScheme
                                                       .onSecondary,
@@ -217,25 +217,21 @@ class _AboutSectionState extends State<AboutSection> {
                               expanded: RichText(
                                 text: TextSpan(
                                   text: "",
-                                  style: Theme.of(context).textTheme.titleSmall,
+                                  style: Theme.of(context).textTheme.titleSmall?.copyWith(fontSize: 12),
                                   children: [
-                                    for (var i = 1;
-                                        i <= mission.length * 2;
-                                        i++)
-                                      i % 2 == 0
-                                          ? TextSpan(
-                                              text: " " +
-                                                  mission[i ~/ 2 - 1] +
-                                                  "\n")
-                                          : WidgetSpan(
-                                              child: Icon(
-                                                Icons.check_box_outlined,
-                                                size: 20,
-                                                color: Theme.of(context)
-                                                    .colorScheme
-                                                    .onSecondary,
-                                              ),
-                                            ),
+                                    for (var i = 0; i < mission.length; i++) ...[
+                                      WidgetSpan(
+                                        child: Icon(
+                                          Icons.circle,
+                                          size: 12,
+                                          color: Theme.of(context).colorScheme.onSecondary,
+                                        ),
+                                      ),
+                                      TextSpan(
+                                        text: " " + mission[i],
+                                      ),
+                                      if (i < mission.length - 1) TextSpan(text: "\n\n"),
+                                    ],
                                   ],
                                 ),
                               ),

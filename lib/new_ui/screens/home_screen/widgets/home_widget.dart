@@ -465,7 +465,7 @@ class _HomeWidgetState extends ConsumerState<HomeWidget> {
                   //departmentlist
                     Container(
                       width: _size.width,
-                      height: _size.height*1.18,
+                      height: _size.height,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                         child: DepartmentList(),

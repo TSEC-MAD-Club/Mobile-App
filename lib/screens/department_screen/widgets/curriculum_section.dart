@@ -81,7 +81,7 @@ class _CurriculumSectionState extends State<CurriculumSection> {
                     return _buildButton(sem: "${index + 1}");
                   },
                   separatorBuilder: (_, __) => const SizedBox(width: 20),
-                  itemCount: 8,
+                  itemCount: widget.department == DepartmentEnum.fe ? 2 : 8,
                 ),
               ),
               const SizedBox(

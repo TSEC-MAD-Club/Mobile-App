@@ -2,8 +2,6 @@ enum DepartmentEnum {
   aids,
   cs,
   it,
-  biomed,
-  biotech,
   chem,
   extc,
   fe;
@@ -16,10 +14,6 @@ enum DepartmentEnum {
         return "Computer Engineering";
       case DepartmentEnum.it:
         return "Information Technology";
-      case DepartmentEnum.biomed:
-        return "Biomedical Engineering";
-      case DepartmentEnum.biotech:
-        return "Bio-Tech Engineering";
       case DepartmentEnum.chem:
         return "Chemical Engineering";
       case DepartmentEnum.extc:
@@ -37,10 +31,6 @@ enum DepartmentEnum {
         return "cs";
       case DepartmentEnum.it:
         return "it";
-      case DepartmentEnum.biomed:
-        return "biomed";
-      case DepartmentEnum.biotech:
-        return "biotech";
       case DepartmentEnum.chem:
         return "chemical";
       case DepartmentEnum.extc:
