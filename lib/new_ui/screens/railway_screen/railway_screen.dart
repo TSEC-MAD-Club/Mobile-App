@@ -531,7 +531,7 @@ class _RailwayConcessionScreenState
                     color: Colors.red[50], // Light red background
                     border: Border.all(
                       color: Colors.red, // Red border
-                      width: 2.0,
+                      width: 1.0,
                     ),
                     borderRadius: BorderRadius.circular(8.0), // Rounded corners
                   ),
@@ -546,7 +546,7 @@ class _RailwayConcessionScreenState
                         ),
                         TextSpan(
                           text: "${concessionDetails!.statusMessage}",
-                          style: TextStyle(color: Colors.white,fontSize: 16.0,),
+                          style: TextStyle(color: Colors.black,fontSize: 16.0,),
                         ),
                       ],
                     ),
@@ -771,7 +771,7 @@ class _RailwayConcessionScreenState
                                      ),
                                    ] else if(concessionDetails!.status == 'rejected')...[
                                         Text("Rejected Pass",
-                                        style: TextStyle(fontSize: 20, color: Colors.red[200], fontWeight: FontWeight.bold),
+                                        style: TextStyle(fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
                                         ),
                                    ] else...[
                                      Text("Ongoing Pass",
