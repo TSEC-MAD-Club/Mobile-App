@@ -101,7 +101,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                   style: TextStyle(color: Colors.white, fontSize: 25),
                                 ),
                                 Text(
-                                  '${(circularMap["attendedLectures"]/circularMap["totalLectures"]).toStringAsFixed(2)}',
+                                  '${circularMap["attendedLectures"]}/${circularMap["totalLectures"]}',
                                   style: TextStyle(color: Colors.white, fontSize: 15),
                                 ),
                               ],
@@ -599,7 +599,6 @@ String getTextForCard(int at,int tt){
     while(1==1) {
       double t=(attended)/(total+1);
       if(t>=0.75){
-        print("yes of 1");
         total++;
         toAttend--;
       } else {
@@ -610,7 +609,6 @@ String getTextForCard(int at,int tt){
     while(1==1) {
       double t=(attended+1)/(total+1);
       if(t<=0.75){
-        print("yes of 2");
         total++;
         attended++;
         toAttend++;
@@ -620,7 +618,7 @@ String getTextForCard(int at,int tt){
     }
   }
 
-  if (toAttend==0) {
+  if (toAttend <= 0) {
     return "You are on track, keep it up !";
   }
 
