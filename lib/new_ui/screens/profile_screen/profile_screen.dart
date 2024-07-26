@@ -349,64 +349,71 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                       Icons.arrow_forward,
                       color: Colors.white,
                     ),
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          return AlertDialog(
+                    onPressed: () async {
+                      if(data.isStudent) {
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
 
-                            content: SizedBox(
-                              child: Container(
-                                height: MediaQuery.of(context).size.height* 0.25,
-                                padding: const EdgeInsets.all(5.0),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                  children: [
-                                    RichText(
-                                      text: TextSpan(
-                                        text: 'Are you in division ',
-                                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                          color: Colors.white,
+                              content: SizedBox(
+                                child: Container(
+                                  height: MediaQuery.of(context).size.height* 0.25,
+                                  padding: const EdgeInsets.all(5.0),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                    children: [
+                                      RichText(
+                                        text: TextSpan(
+                                          text: 'Are you in division ',
+                                          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                            color: Colors.white,
+                                          ),
+                                          children: [
+                                            TextSpan(text: div, style: const TextStyle(fontWeight: FontWeight.bold)),
+                                            const TextSpan(text: ' and batch '),
+                                            TextSpan(text: batch, style: const TextStyle(fontWeight: FontWeight.bold)),
+                                            const TextSpan(text: ' ? Please check your details once.'),
+                                          ],
                                         ),
-                                        children: [
-                                          TextSpan(text: div, style: const TextStyle(fontWeight: FontWeight.bold)),
-                                          const TextSpan(text: ' and batch '),
-                                          TextSpan(text: batch, style: const TextStyle(fontWeight: FontWeight.bold)),
-                                          const TextSpan(text: ' ? Please check your details once.'),
-                                        ],
                                       ),
-                                    ),
-                                    Container(
-                                      child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Container(
-                                            child: TextButton(
-                                              onPressed: () {
-                                                Navigator.of(context).pop();
-                                              },
-                                              child: const Text("Cancel")
+                                      Container(
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Container(
+                                              child: TextButton(
+                                                onPressed: () {
+                                                  Navigator.of(context).pop();
+                                                },
+                                                child: const Text("Cancel")
+                                              ),
                                             ),
-                                          ),
-                                          Container(
-                                            child: TextButton(
-                                              onPressed: () async {
-                                                bool changesSaved = await saveChanges(ref);
-                                                if (changesSaved) GoRouter.of(context).go('/main');
-                                              },
-                                              child: const Text("Proceed")
+                                            Container(
+                                              child: TextButton(
+                                                onPressed: () async {
+                                                  bool changesSaved = await saveChanges(ref);
+                                                  if (changesSaved) GoRouter.of(context).go('/main');
+                                                },
+                                                child: const Text("Proceed")
+                                              ),
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                          );
-                        } 
-                      );
+                            );
+                          } 
+                        );
+                      }
+                      else {
+                        bool changesSaved = await saveChanges(ref);
+                        if (changesSaved) GoRouter.of(context).go('/main');
+                      }
+                      
                     },
                   ),
                 ),
