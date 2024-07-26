@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:lottie/lottie.dart';
 import 'package:tsec_app/models/user_model/user_model.dart';
 import 'package:async/async.dart';
 import 'dart:async';
@@ -118,7 +119,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
             return Scaffold(
               body: Center(
                 child: SizedBox(
-                  child: Image.asset(ImageAssets.tsecapplogo),
+                  child: Lottie.asset("assets/animation/loadinglottie.json"),
                   height: 250,
                   width: 250,
                 ),

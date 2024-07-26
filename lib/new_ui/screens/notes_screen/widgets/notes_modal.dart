@@ -173,6 +173,7 @@ class _NotesModalState extends ConsumerState<NotesModal> {
 
   @override
   Widget build(BuildContext context) {
+    print("Inside NotesModal");
     UserModel user = ref.watch(userModelProvider)!;
 
     SubjectModel subjects = ref.read(subjectsProvider);
