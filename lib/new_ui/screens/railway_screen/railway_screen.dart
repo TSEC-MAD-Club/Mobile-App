@@ -746,7 +746,9 @@ class _RailwayConcessionScreenState
                       ),
                    ),
                    Container(
-
+                     constraints: BoxConstraints(
+                       minHeight: size.height*0.4, // Set the minimum height here
+                     ),
                      decoration: const BoxDecoration(
                        color: oldDateSelectBlue,
                        border: Border.symmetric(vertical: BorderSide(color: Colors.white),),
