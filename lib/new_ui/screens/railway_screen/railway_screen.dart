@@ -546,7 +546,7 @@ class _RailwayConcessionScreenState
                         ),
                         TextSpan(
                           text: "${concessionDetails!.statusMessage}",
-                          style: TextStyle(color: Colors.white,fontSize: 16.0,),
+                          style: TextStyle(color: Colors.black,fontSize: 16.0,),
                         ),
                       ],
                     ),
