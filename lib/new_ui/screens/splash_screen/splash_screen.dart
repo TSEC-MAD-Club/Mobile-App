@@ -119,6 +119,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
             return const Scaffold(
               body: Center(
                 child: CircularProgressIndicator(),
+                
                 // child: SizedBox(
                 //   child: Lottie.asset("assets/animation/loadinglottie.json"),
                 //   height: 250,
