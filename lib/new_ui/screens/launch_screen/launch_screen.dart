@@ -13,6 +13,7 @@ class LaunchScreen extends StatefulWidget {
 }
 
 class _LaunchScreenState extends State<LaunchScreen> {
+  int unlocked = 0;
   Timer? _timer;
   Duration _duration = Duration();
   DateTime? _launchDate;
@@ -30,8 +31,10 @@ class _LaunchScreenState extends State<LaunchScreen> {
           .collection('Launch')
           .doc('launch')
           .get();
+      final int unlockedData = snapshot.data()?['unlocked'] as int;
       Timestamp? timestamp = snapshot.data()?['date'] as Timestamp?;
       setState(() {
+        unlocked = unlockedData;
         _launchDate = timestamp?.toDate();
         if (_launchDate != null) {
           _startTimer();
@@ -56,8 +59,16 @@ class _LaunchScreenState extends State<LaunchScreen> {
     });
   }
 
-  void _navigateToLogin() {
-    print('Navigating to LoginScreen');
+  void _navigateToLogin() async{
+    DocumentSnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore.instance
+        .collection('Launch')
+        .doc('launch')
+        .get();
+    int unlockedData = snapshot.data()!["unlocked"];
+    Map<String,dynamic> map = {
+      "unlocked":++unlockedData
+    };
+    await FirebaseFirestore.instance.collection("Launch").doc('launch').update(map);
     context.go('/login');
   }
 
@@ -100,76 +111,90 @@ class _LaunchScreenState extends State<LaunchScreen> {
 
     return Scaffold(
       backgroundColor: commonbgblack,
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(5.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset(
-                'assets/images/devs-dark.png',
-                height: 250,
-                width: 250,
-              ),
-              Text(
-                "App Launch in",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  shadows: [
-                    Shadow(
-                      offset: Offset(1.0, 1.0),
-                      blurRadius: 4.0,
-                      color: Colors.blue,
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 10),
-              Text(
-                _launchDate == null
-                    ? 'Loading...'
-                    : '$days:${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}:${milliseconds.toString().padLeft(3, '0')}',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                ),
-              ),
-              SizedBox(height: 50),
-              Text(
-                r'$2a$10$2FYV.6fyPfD4mO7arFVI3eUC.98haCmPBgSmO21IV6.nYbByoW2Ii',
-                style: TextStyle(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            SizedBox(
+              height: 35,
+            ),
+            Row(
+              children: [
+                Spacer(),
+                Text("Student's Unlocked: $unlocked",style: TextStyle(
                   color: Colors.grey[600],
-                  fontSize: 8,
+                  fontSize: 15,
+                ),),
+                SizedBox(
+                  width: 15,
                 ),
-              ),
-              SizedBox(height: 10),
-              Container(
-                width: MediaQuery.of(context).size.width * 0.8,
-                child: TextField(
-                  controller: _controller,
-                  decoration: InputDecoration(
-                    filled: true,
-                    fillColor: commonbgLightblack,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                      borderSide: BorderSide(
-                        color: commonbgLightblack,
-                        width: 1.5,
-                      ),
-                    ),
-                    hintText: 'Code for pre access',
-                    hintStyle: TextStyle(color: Colors.grey[700], fontSize: 15),
+              ],
+            ),
+            SizedBox(
+              height: 60,
+            ),
+            Image.asset(
+              'assets/images/devs-dark.png',
+              height: 250,
+              width: 250,
+            ),
+            Text(
+              "App Launch in",
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                shadows: [
+                  Shadow(
+                    offset: Offset(1.0, 1.0),
+                    blurRadius: 4.0,
+                    color: Colors.blue,
                   ),
-                  style: TextStyle(color: Colors.white),
-                  onSubmitted: (value) {
-                    _checkAnswer();
-                  },
-                ),
+                ],
               ),
-            ],
-          ),
+            ),
+            SizedBox(height: 10),
+            Text(
+              _launchDate == null
+                  ? 'Loading...'
+                  : '$days:${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}:${milliseconds.toString().padLeft(3, '0')}',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+              ),
+            ),
+            SizedBox(height: 50),
+            Text(
+              r'$2a$10$2FYV.6fyPfD4mO7arFVI3eUC.98haCmPBgSmO21IV6.nYbByoW2Ii',
+              style: TextStyle(
+                color: Colors.grey[600],
+                fontSize: 8,
+              ),
+            ),
+            SizedBox(height: 10),
+            Container(
+              width: MediaQuery.of(context).size.width * 0.8,
+              child: TextField(
+                controller: _controller,
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: commonbgLightblack,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                    borderSide: BorderSide(
+                      color: commonbgLightblack,
+                      width: 1.5,
+                    ),
+                  ),
+                  hintText: 'Code for pre access',
+                  hintStyle: TextStyle(color: Colors.grey[700], fontSize: 15),
+                ),
+                style: TextStyle(color: Colors.white),
+                onSubmitted: (value) {
+                  _checkAnswer();
+                },
+              ),
+            ),
+          ],
         ),
       ),
     );
