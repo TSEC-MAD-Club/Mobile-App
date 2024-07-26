@@ -116,13 +116,14 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
               return MainScreen();
             }
           } else {
-            return Scaffold(
+            return const Scaffold(
               body: Center(
-                child: SizedBox(
-                  child: Lottie.asset("assets/animation/loadinglottie.json"),
-                  height: 250,
-                  width: 250,
-                ),
+                child: CircularProgressIndicator(),
+                // child: SizedBox(
+                //   child: Lottie.asset("assets/animation/loadinglottie.json"),
+                //   height: 250,
+                //   width: 250,
+                // ),
               ),
             );
           }
