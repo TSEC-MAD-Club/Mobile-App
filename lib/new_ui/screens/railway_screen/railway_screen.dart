@@ -528,10 +528,10 @@ class _RailwayConcessionScreenState
                 child: Container(
                   padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
                   decoration: BoxDecoration(
-                    color: Colors.red[50], // Light red background
+                    color: Colors.redAccent, // Light red background
                     border: Border.all(
-                      color: Colors.red, // Red border
-                      width: 1.0,
+                      // color: Colors.red.shade900, // Red border
+                      width: 2.0,
                     ),
                     borderRadius: BorderRadius.circular(8.0), // Rounded corners
                   ),
@@ -541,12 +541,12 @@ class _RailwayConcessionScreenState
                       children: [
                         TextSpan(
                           text: "🚨 Reason: ",
-                          style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20.0,color: Colors.red[900], // Dark red text
+                          style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20.0,color: Colors.white, // Dark red text
                           ),
                         ),
                         TextSpan(
                           text: "${concessionDetails!.statusMessage}",
-                          style: TextStyle(color: Colors.black,fontSize: 16.0,),
+                          style: TextStyle(color: Colors.white,fontSize: 16.0,),
                         ),
                       ],
                     ),
@@ -746,8 +746,7 @@ class _RailwayConcessionScreenState
                       ),
                    ),
                    Container(
-                     width: size.width,
-                     height: size.height*0.4,
+
                      decoration: const BoxDecoration(
                        color: oldDateSelectBlue,
                        border: Border.symmetric(vertical: BorderSide(color: Colors.white),),
