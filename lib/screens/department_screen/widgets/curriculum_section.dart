@@ -234,6 +234,7 @@ class _CurriculumSectionState extends State<CurriculumSection> {
     final isSelected = sem == _selectedSem;
 
     return InkWell(
+      splashFactory: NoSplash.splashFactory,
         borderRadius: BorderRadius.circular(8),
         onTap: () => setState(() => _selectedSem = sem),
         child: AnimatedContainer(
