@@ -71,7 +71,7 @@ class _AnnouncementScreenState extends ConsumerState<AnnouncementScreen> {
               return ListView.builder(
                 itemCount: announcements.length,
                 itemBuilder: (context, index) {
-                  final announcement = announcements[index];
+                  final announcement = announcements[(announcements.length-1) - index];
                   final listTile = AnnouncementListItem(
                     announcementModel: announcement,
                   );
