@@ -58,3 +58,5 @@ ios/Runner/GoogleService-Info.plist
 ios/firebase_app_id_file.json
 Session.vim
 TsecAppKey.jks
+keystore.jks
+keystore.properties
