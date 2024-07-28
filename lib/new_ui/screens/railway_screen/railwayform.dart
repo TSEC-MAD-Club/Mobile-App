@@ -272,7 +272,6 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
             .collection('ConcessionDetails')
             .doc(user.uid)
             .get();
-
         if (document.exists) {
           var data = document.data() as Map<String, dynamic>;
             return data['idCardURL2'];
@@ -364,6 +363,7 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
   }
 
   Future saveChanges(WidgetRef ref) async {
+    print("//////////////////////// AT LAS TOF SAVECHAANGES");
     StudentModel student = ref.watch(userModelProvider)!.studentModel!;
 
     ConcessionDetailsModel details = ConcessionDetailsModel(
@@ -397,11 +397,18 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
     {
       idCardPhoto = idCardPhotoTemp;
       previousPassPhoto = previousPassPhotoTemp;
-
+      print("//////////////////////// AT LAS TOF SAVECHAANGES7");
       ref.read(railwayConcessionOpenProvider.state).state = false;
       await ref
           .watch(concessionProvider.notifier)
           .applyConcession(details, idCardPhoto!, idCardPhotoTemp2! ,previousPassPhoto!, context);
+
+      print("//////////////////////// AT LAS TOF SAVECHAANGES8");
+
+      // ref.read(concessionProvider.notifier).getConcessionData();
+      // ref.read(concessionRequestProvider.notifier).getConcessionRequestData();
+
+      print("//////////////////////// AT LAS TOF SAVECHAANGES9");
 
       clearValues();
     } else if (idCardPhotoTemp == null) {
@@ -418,8 +425,7 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
         SnackBar(content: Text("Please add the photo of your previous pass")),
       );
     }
-    ref.read(concessionProvider.notifier).getConcessionData();
-    ref.read(concessionRequestProvider.notifier).getConcessionRequestData();
+
 
   }
 

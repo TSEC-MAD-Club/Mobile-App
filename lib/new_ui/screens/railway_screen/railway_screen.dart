@@ -528,9 +528,9 @@ class _RailwayConcessionScreenState
                 child: Container(
                   padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
                   decoration: BoxDecoration(
-                    color: Colors.red[50], // Light red background
+                    color: Colors.redAccent, // Light red background
                     border: Border.all(
-                      color: Colors.red, // Red border
+                      // color: Colors.red.shade900, // Red border
                       width: 2.0,
                     ),
                     borderRadius: BorderRadius.circular(8.0), // Rounded corners
@@ -541,12 +541,12 @@ class _RailwayConcessionScreenState
                       children: [
                         TextSpan(
                           text: "🚨 Reason: ",
-                          style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20.0,color: Colors.red[900], // Dark red text
+                          style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20.0,color: Colors.white, // Dark red text
                           ),
                         ),
                         TextSpan(
                           text: "${concessionDetails!.statusMessage}",
-                          style: TextStyle(color: Colors.red[700],fontSize: 16.0,),
+                          style: TextStyle(color: Colors.white,fontSize: 16.0,),
                         ),
                       ],
                     ),
@@ -694,20 +694,23 @@ class _RailwayConcessionScreenState
                      child: Stack(
                         alignment: Alignment.center,
                         children: [
+
+
                           if (concessionDetails!.status == "serviced" || concessionDetails!.status == 'unserviced' || concessionDetails!.status == 'rejected')
-                          Positioned(top: 50,child: Container(
+                          Positioned(top: 50,
+                            child: Container(
                             width: size.width,
                             decoration: BoxDecoration(
                               color: oldDateSelectBlue,
                               border: Border.all(color: Colors.white),
                               borderRadius: BorderRadius.only(topLeft: Radius.circular(size.width*0.1),topRight: Radius.circular(size.width*0.1),),
                             ),
-                            child: const SizedBox(height: 50,),
+                            child: const SizedBox(height: 50),
                           ),)
                           else
                             Positioned(bottom: 20, child: Text("You don't have any ongoing pass",
                             style: TextStyle(color: Colors.white),),),
-                          Positioned(top: 20,child: InkWell(
+                          Positioned(top: 15,child: InkWell(
                             onTap: ()=>Navigator.push(context, MaterialPageRoute(builder: (context)=> GuideLinesScreen(),),),
                             child: Container(
                               width: size.width*0.75,
@@ -738,11 +741,14 @@ class _RailwayConcessionScreenState
                               ),
                             ),
                           ),),
+
                         ],
                       ),
                    ),
                    Container(
-                     width: size.width,
+                     constraints: BoxConstraints(
+                       minHeight: size.height*0.4, // Set the minimum height here
+                     ),
                      decoration: const BoxDecoration(
                        color: oldDateSelectBlue,
                        border: Border.symmetric(vertical: BorderSide(color: Colors.white),),
@@ -766,7 +772,7 @@ class _RailwayConcessionScreenState
                                      ),
                                    ] else if(concessionDetails!.status == 'rejected')...[
                                         Text("Rejected Pass",
-                                        style: TextStyle(fontSize: 20, color: Colors.red[200], fontWeight: FontWeight.bold),
+                                        style: TextStyle(fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
                                         ),
                                    ] else...[
                                      Text("Ongoing Pass",

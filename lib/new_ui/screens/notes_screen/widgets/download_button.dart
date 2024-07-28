@@ -74,9 +74,10 @@ class _DownloadButtonState extends ConsumerState<DownloadButton> {
           _onButtonClick(widget.url);
         },
         child: _storageResult == null || _storageResult!.isDownloadInProgress
-            ? SizedBox(
-          height: 24,
-          width: 24,
+            ? Container(
+          padding: EdgeInsets.symmetric(vertical: 5),
+          alignment: Alignment.center,
+
           child: CircularProgressIndicator(
             value: _downloadPrecent <= 0 ? null : _downloadPrecent,
           ),

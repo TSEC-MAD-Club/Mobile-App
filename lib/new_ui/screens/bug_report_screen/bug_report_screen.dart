@@ -75,7 +75,7 @@ class _BugReportScreenState extends ConsumerState<BugReportScreen> {
                 "Please provide a detailed description of the bug. This will help us understand the issue better. Provide steps to reproduce the bug if possible.",
                 style: TextStyle(
                   fontSize: 16,
-                  color: Colors.grey
+                  color: Colors.white
                 ),
               ),
               const SizedBox(height: 20),

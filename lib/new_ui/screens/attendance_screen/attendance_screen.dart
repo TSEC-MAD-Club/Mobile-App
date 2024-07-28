@@ -101,7 +101,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                   style: TextStyle(color: Colors.white, fontSize: 25),
                                 ),
                                 Text(
-                                  '${(circularMap["attendedLectures"]/circularMap["totalLectures"]).toStringAsFixed(2)}',
+                                  '${circularMap["attendedLectures"]}/${circularMap["totalLectures"]}',
                                   style: TextStyle(color: Colors.white, fontSize: 15),
                                 ),
                               ],
@@ -341,7 +341,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                             await AttendanceService.markPresent(attendanceList, index);
                                             /*_fetchAndSetAttendance();*/
                                           },
-                                          child: const Text('Present', style: TextStyle(color: Colors.white, fontSize: 12),),
+                                          child: const Text('Present', style: TextStyle(color: Colors.white, fontSize: 15),),
                                           style: ElevatedButton.styleFrom(
                                             backgroundColor: commonbgL3ightblack,
                                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
@@ -353,7 +353,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                             await AttendanceService.markAbsent(attendanceList, index);
                                             /*_fetchAndSetAttendance();*/
                                           },
-                                          child: const Text('Absent', style: TextStyle(color: Colors.white, fontSize: 12),),
+                                          child: const Text('Absent', style: TextStyle(color: Colors.white, fontSize: 15),),
                                           style: ElevatedButton.styleFrom(
                                             backgroundColor: commonbgL3ightblack,
                                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
@@ -373,7 +373,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                         // ),
                                         child: Padding(
                                           padding: const EdgeInsets.all(2.0),
-                                          child: Text(getTextForCard(attendanceInfo['present'], attendanceInfo['total']),style: TextStyle(color: Colors.grey, fontSize: 10),),
+                                          child: Text(getTextForCard(attendanceInfo['present'], attendanceInfo['total']),style: TextStyle(color: Colors.grey, fontSize: 14),),
                                         ),
                                       ),
                                     ),
@@ -402,6 +402,8 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
               TextEditingController totalLecturesController = TextEditingController();
               TextEditingController attendedLecturesController = TextEditingController();
 
+              final _formKey = GlobalKey<FormState>();
+
               return AlertDialog(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15), // Increased corner radius
@@ -410,58 +412,90 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                   'Add Subject',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                 ),
-                content: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        TextField(
-                          style: TextStyle(color: Colors.white), // Set text color to white
-                          controller: subjectNameController,
-                          decoration: InputDecoration(
-                            focusColor: Colors.red,
-                            labelText: 'Subject Name',
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
+                content: Form(
+                  key: _formKey,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          TextFormField(
+                            validator: (val) {
+                              if (val == null || val.isEmpty) {
+                                return "Please enter some value";
+                              }
+                            },
+                            style: TextStyle(color: Colors.white), // Set text color to white
+                            controller: subjectNameController,
+                            decoration: InputDecoration(
+                              focusColor: Colors.red,
+                              labelText: 'Subject Name',
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              filled: true,
+                              fillColor: Colors.transparent,
+                              errorStyle: TextStyle(fontSize: 12),
+                              contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                             ),
-                            filled: true,
-                            fillColor: Colors.transparent,
-                            contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                           ),
-                        ),
-                        SizedBox(height: 20),
-                        TextField(
-                          style: TextStyle(color: Colors.white), // Set text color to white
-                          controller: attendedLecturesController,
-                          decoration: InputDecoration(
-                            labelText: 'Attended Lectures',
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            filled: true,
-                            fillColor: Colors.transparent,
-                            contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                          ),
-                          keyboardType: TextInputType.number,
-                        ),
-                        SizedBox(height: 20),
-                        TextField(
-                          style: TextStyle(color: Colors.white), // Set text color to white
-                          controller: totalLecturesController,
-                          decoration: InputDecoration(
-                            labelText: 'Total Lectures Till Now',
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            filled: true,
-                            fillColor: Colors.transparent,
-                            contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                          ),
-                          keyboardType: TextInputType.number,
-                        ),
+                          SizedBox(height: 20),
+                          TextFormField(
+                            validator: (val) {
+                              String totalLectures = totalLecturesController.text;
 
-                      ],
+                              if (val == null || val.isEmpty) {
+                                return "Please enter some value";
+                              }
+                              else if (totalLectures.isNotEmpty && int.parse(val) > int.parse(totalLectures)) {
+                                return "Please enter correct value";
+                              }
+
+                            },
+                            style: TextStyle(color: Colors.white), // Set text color to white
+                            controller: attendedLecturesController,
+                            decoration: InputDecoration(
+                              labelText: 'Attended Lectures',
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              filled: true,
+                              fillColor: Colors.transparent,
+                              errorStyle: TextStyle(fontSize: 12),
+                              contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                            ),
+                            keyboardType: TextInputType.number,
+                          ),
+                          SizedBox(height: 20),
+                          TextFormField(
+                            validator: (val) {
+                              String attendedLectures = attendedLecturesController.text;
+                              if (val == null || val.isEmpty) {
+                                return "Please enter some value";
+                              }
+                              else if ( attendedLectures.isNotEmpty && int.parse(val) < int.parse(attendedLectures)) {
+                                return "Please enter correct value";
+                              }
+
+                            },
+                            style: TextStyle(color: Colors.white), // Set text color to white
+                            controller: totalLecturesController,
+                            keyboardType: TextInputType.number,
+                            decoration: InputDecoration(
+                              labelText: 'Total Lectures Till Now',
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              filled: true,
+                              fillColor: Colors.transparent,
+                              contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                              errorStyle: TextStyle(fontSize: 12),
+                            ),
+                          ),
+                  
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -474,28 +508,32 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                   ),
                   TextButton(
                     onPressed: () async{
-                      String subjectName = subjectNameController.text;
-                      int totalLectures = int.parse(totalLecturesController.text);
-                      int attendedLectures = int.parse(attendedLecturesController.text);
 
-                      Map<String,dynamic> updatedSubject = {
-                        "subject_name":subjectName,
-                        "total":totalLectures,
-                        "present":attendedLectures
-                      };
-                      await AttendanceService.addSubject(updatedSubject);
-                      /*FirebaseFirestore.instance
-                          .collection("Attendance")
-                          .doc(FirebaseAuth.instance.currentUser!.uid)
-                          .set({
-                        'attendance': FieldValue.arrayUnion([{
-                          'subject_name': subjectName,
-                          'total': totalLectures,
-                          'present': attendedLectures
-                        }])
-                      }, SetOptions(merge: true));
-                      _fetchAndSetAttendance();*/
-                      Navigator.of(context).pop();
+                      if(_formKey.currentState!.validate()) {
+                        String subjectName = subjectNameController.text;
+                        int totalLectures = int.parse(totalLecturesController.text);
+                        int attendedLectures = int.parse(attendedLecturesController.text);
+
+                        Map<String,dynamic> updatedSubject = {
+                          "subject_name":subjectName,
+                          "total":totalLectures,
+                          "present":attendedLectures
+                        };
+                        await AttendanceService.addSubject(updatedSubject);
+                        /*FirebaseFirestore.instance
+                            .collection("Attendance")
+                            .doc(FirebaseAuth.instance.currentUser!.uid)
+                            .set({
+                          'attendance': FieldValue.arrayUnion([{
+                            'subject_name': subjectName,
+                            'total': totalLectures,
+                            'present': attendedLectures
+                          }])
+                        }, SetOptions(merge: true));
+                        _fetchAndSetAttendance();*/
+                        Navigator.of(context).pop();
+                      }
+                      
                     },
                     child: Text('Add', style: TextStyle(color: Colors.blue)),
                   ),
@@ -561,7 +599,6 @@ String getTextForCard(int at,int tt){
     while(1==1) {
       double t=(attended)/(total+1);
       if(t>=0.75){
-        print("yes of 1");
         total++;
         toAttend--;
       } else {
@@ -572,7 +609,6 @@ String getTextForCard(int at,int tt){
     while(1==1) {
       double t=(attended+1)/(total+1);
       if(t<=0.75){
-        print("yes of 2");
         total++;
         attended++;
         toAttend++;
@@ -582,7 +618,7 @@ String getTextForCard(int at,int tt){
     }
   }
 
-  if (toAttend==0) {
+  if (toAttend <= 0) {
     return "You are on track, keep it up !";
   }
 

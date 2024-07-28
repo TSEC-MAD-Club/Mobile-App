@@ -787,15 +787,15 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                       },
                     ),
                     SizedBox(height: 10,),
-                    Container(
-                      alignment: Alignment.center,
-                      width: size.width,
-                      padding: EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Color(0xff383838),
-                      ),
-                      child: InkWell(
+                    InkWell(
+                      child: Container(
+                        alignment: Alignment.center,
+                        width: size.width,
+                        padding: EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Color(0xff383838),
+                        ),
                         child: Text(
                           data != null ? 'Logout' : 'Login',
                           style: Theme
@@ -812,16 +812,16 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                                 .error,
                           ),
                         ),
-                        onTap: () {
-                          if (data != null) {
-                            ref.watch(authProvider.notifier).signout();
-                            GoRouter.of(context).go('/login');
-                            // Navigator.pop(context);
-                          } else {
-                            GoRouter.of(context).go('/login');
-                          }
-                        },
                       ),
+                      onTap: () {
+                        if (data != null) {
+                          ref.watch(authProvider.notifier).signout();
+                          GoRouter.of(context).go('/login');
+                          // Navigator.pop(context);
+                        } else {
+                          GoRouter.of(context).go('/login');
+                        }
+                      },
                     ),
                     const SizedBox(height: 10,),
                     Row(
@@ -841,9 +841,15 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                                 )
                               ]
                           ),
-                        )
+                        ),
                       ],
-                    )
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text("App Version : v13.0.0",style: TextStyle(color: Colors.grey.shade700,fontSize: 12 ),),
+                      ],
+                    ),
                   ],
                 ),
               ),

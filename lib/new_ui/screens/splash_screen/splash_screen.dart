@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:lottie/lottie.dart';
 import 'package:tsec_app/models/user_model/user_model.dart';
 import 'package:async/async.dart';
 import 'dart:async';
@@ -7,6 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:tsec_app/models/student_model/student_model.dart';
+import 'package:tsec_app/new_ui/screens/Maintainance_Screen/maintainance_screen.dart';
 import 'package:tsec_app/new_ui/screens/main_screen/main_screen.dart';
 import 'package:tsec_app/new_ui/screens/profile_screen/profile_screen.dart';
 import 'package:tsec_app/new_ui/screens/launch_screen/launch_screen.dart';
@@ -56,6 +58,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
   void initState() {
     super.initState();
     _fetchLaunchDate();
+    fetchMaintainanceStatus();
   }
 
   //check permissions
@@ -70,6 +73,17 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
     }
   }
 
+  bool navigateToMaintainance = false;
+  //MaintainanceScreen
+  final doc = FirebaseFirestore.instance.collection("Maintainance").doc("Maintainance");
+  fetchMaintainanceStatus()async{
+    final get = await doc.get();
+    final data = get.data() as Map<String,dynamic>;
+    setState(() {
+      navigateToMaintainance = data['underBreak'];
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     if (!_isLaunchDateFetched) {
@@ -78,6 +92,10 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
           child: CircularProgressIndicator(),
         ),
       );
+    }
+    print("Executed Build");
+    if(navigateToMaintainance){
+      return MaintainanceScreen();
     }
 
     if (_launchDate != null && DateTime.now().isBefore(_launchDate!)) {
@@ -98,13 +116,15 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
               return MainScreen();
             }
           } else {
-            return Scaffold(
+            return const Scaffold(
               body: Center(
-                child: SizedBox(
-                  child: Image.asset(ImageAssets.tsecapplogo),
-                  height: 250,
-                  width: 250,
-                ),
+                child: CircularProgressIndicator(),
+                
+                // child: SizedBox(
+                //   child: Lottie.asset("assets/animation/loadinglottie.json"),
+                //   height: 250,
+                //   width: 250,
+                // ),
               ),
             );
           }

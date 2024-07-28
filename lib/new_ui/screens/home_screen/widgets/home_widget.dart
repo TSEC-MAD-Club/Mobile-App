@@ -9,11 +9,13 @@ import 'package:go_router/go_router.dart';
 import 'package:tsec_app/models/event_model/event_model.dart';
 import 'package:tsec_app/models/user_model/user_model.dart';
 import 'package:tsec_app/new_ui/colors.dart';
+import 'package:tsec_app/new_ui/screens/AnnouncementScreen/announcementscreen.dart';
 import 'package:tsec_app/new_ui/screens/home_screen/widgets/container_icon_with_label.dart';
 // import 'package:tsec_app/new_ui/screens/home_screen/widgets/expanded_card.dart';
 import 'package:tsec_app/provider/auth_provider.dart';
 import 'package:tsec_app/provider/event_provider.dart';
 import 'package:url_launcher/url_launcher_string.dart';
+import 'package:shimmer_animation/shimmer_animation.dart';
 
 
 import 'package:flutter/material.dart';
@@ -366,7 +368,36 @@ class _HomeWidgetState extends ConsumerState<HomeWidget> {
                   //   ),
                   // ),
 
+                  Container(
+                    margin:EdgeInsets.symmetric(horizontal: 10),
+                    decoration: BoxDecoration(
+                      color: timePickerBg,
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(color: timePickerBorder, width: 1.0), // Change the color and width as needed
+                    ),
+                    child: Shimmer(
+                      duration: Duration(seconds: 2), //Default value
+                      interval: Duration(seconds: 0), //Default value: Duration(seconds: 0)
+                      color: Colors.blue.shade800, //Default value
 
+                      colorOpacity: 0.6, //Default value
+                      enabled: true, //Default value
+                      direction: ShimmerDirection.fromLTRB(),
+                      child: ListTile(
+                        iconColor: Colors.grey.shade400,
+                        contentPadding: EdgeInsets.symmetric(horizontal: 8),
+                        onTap:()=>Navigator.push(context, MaterialPageRoute(builder: (context)=>AnnouncementScreen(),),),
+                        title: Text("Announcement",style: TextStyle(color: Colors.white),),
+                        leading: Icon(Icons.announcement,),
+                        trailing: Icon(Icons.arrow_forward_ios,),
+                      ),
+                    ),
+                  ),
+
+                  SizedBox(
+                    height: 10,
+                  ),
+                  //Welcome Message
                   Container(
                       width: _size.width,
                       child: Padding(
@@ -465,7 +496,7 @@ class _HomeWidgetState extends ConsumerState<HomeWidget> {
                   //departmentlist
                     Container(
                       width: _size.width,
-                      height: _size.height*1.18,
+                      height: _size.height,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                         child: DepartmentList(),

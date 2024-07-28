@@ -1,38 +1,8 @@
 [
     {
         "description": "The main aim of Devs Club is to create an environment in the college where a group of students come together, collaborate and work on a real life applications using trending technologies, thereby helping the students boost their technical knowledge and application skills, and contribute towards increasing reputation of the college. Under the guidance of Dr. G.T. Thampi, Dr. Shachi Natu and Prof. Darakhshan Khan, MAD club is responsible for developing the official TSEC App and Web App.",
-        "name": "Developers Club-TSEC",
+        "name": "Developers Club TSEC",
         "image": "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/committees%2FDevs_club%20logo.png?alt=media&token=4d73670f-c753-48ee-92b4-84a1b53a462c"
-    },
-    {
-        "description": "This is the official social media cell of the institution which had laid its grounds in January 2019. The cell is responsible for handling the official social media handles and press releases. The cell aims to bring out students' extra-curricular skills, apart from the excellent academic records. The students may choose to enter the photography, design or content & editorial team, based on their interest. TSEC is active on leading social media platforms like Instagram and Facebook.",
-        "name": "TSEC-Monte Carlo Localizers",
-        "image": "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/committees%2Fmcl-tsec.jpg?alt=media&token=835cf7cc-e8e1-48ce-9f4d-7ef721ef6247"
-    },
-    {
-        "description": "NSS-TSEC is a social committee that is involved in many social activities. Under the guidance of Prof. Sachit Nalaskar and Prof. Gauri Shukla, NSS TSEC has conducted many activities like Blood Donation Drive, Nature Trail and a 10 day residential camp in one of the adopted villages in the outskirts of Mumbai.",
-        "name": "NSS-TSEC",
-        "image": "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/committees%2Fnss-tsec.png?alt=media&token=01df2d46-11e4-49f8-9dc9-d287caf31c5d"
-    },
-    {
-        "description": "TSEC CodeCell is a committee of Thadomal Shahani Engineering College which works towards nurturing interest and developing coding skills. We conduct various workshops and seminars for beginners, introducing them to various languages and algorithms, and for advanced coders, inculcating a regular coding habit to keep their programming skills sharp and helping students build their resume and expand their skill set.",
-        "name": "TSEC-CodeCell",
-        "image": "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/committees%2Ftsec_code_cell.png?alt=media&token=b3c4df91-1b74-4957-bd8b-e1762406b036"
-    },
-    {
-        "description": "TSEC CodeTantra is a technical committee of the Artificial Intelligence and Data Science Department of Thadomal Shahani Engineering College. Our vision is to inculcate programming skills in the minds of students with the help of workshops, hackathons and other competitive events.",
-        "name": "Tsec CodeTantra",
-        "image": "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/committees%2FTSEC%20Codetantra.jpg?alt=media&token=bb72197b-a698-45de-9104-8d269d666a23"
-    },
-    {
-        "description": "TSEC CodeStorm serves as a Campus Chapter of CodeChef and provides a proficient platform for coding and software development. The committee collocate various events to monitor applicability of existing standards, codes and best practices. It offers technical expertise to other strategic initiatives. The goal is to expand and surge opportunities for aspiring coders through our events and workshops. A Hackathon will the major event organised by us. It is a gathering where programmers collaboratively code in an extreme manner over a duration of time. The committee prompts coding interests by updating people with new technologies and their corporate applications based on trending technical platforms and frameworks every week. The committee organises various workshops and coding competitions to make students take a step ahead towards a glowing career.",
-        "name": "TSEC-CodeStorm",
-        "image": "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/committees%2FCodeStorm_logo.png?alt=media&token=5ce893a0-ecf4-4524-97c6-83bfa8f4d1d7"
-    },
-    {
-        "description": "CSI-TSEC is the student branch which comes under the CSI – Mumbai chapter and today it is one of the most vibrant amongst all the student branches. The Branch Counselor, Dr.Archana Patankar has helped this society progress at each step. Every year, CSI – TSEC conducts student activities including workshops, seminars, conferences, technical competitions, training programs and industrial visits which keeping the students involved in extra – curricular activities along with their academic curriculum and giving them a platform to show case their talent and develop their skills. In 2011, its annual festival 'RUBIX', had participants from many countries for the coding event 'Codezilla' making it the first event in TSEC to go global.",
-        "name": "CSI-TSEC",
-        "image": "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/committees%2Fcsi-tsec.jpg?alt=media&token=b0897ca6-b54c-4b26-81c1-71f3105de53d"
     },
     {
         "description": "Google Developer Student Clubs TSEC is a community groups for students interested in Google developer technologies. Students from all undergraduate programs with an interest in growing as a developer are welcome. By joining GDSC TSEC, students grow their knowledge in a peer-to-peer learning environment and build solutions for local businesses and their community.",
@@ -40,24 +10,59 @@
         "image": "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/committees%2FGdsc%20tsec.png?alt=media&token=fa302825-cfa7-400d-b927-1ad5a0e07982"
     },
     {
+        "description": "TSEC CodeCell is a committee of Thadomal Shahani Engineering College which works towards nurturing interest and developing coding skills. We conduct various workshops and seminars for beginners, introducing them to various languages and algorithms, and for advanced coders, inculcating a regular coding habit to keep their programming skills sharp and helping students build their resume and expand their skill set.",
+        "name": "TSEC CodeCell",
+        "image": "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/committees%2Ftsec_code_cell.png?alt=media&token=b3c4df91-1b74-4957-bd8b-e1762406b036"
+    },
+    {
+        "description": "CSI-TSEC is the student branch which comes under the CSI – Mumbai chapter and today it is one of the most vibrant amongst all the student branches. The Branch Counselor, Dr.Archana Patankar has helped this society progress at each step. Every year, CSI – TSEC conducts student activities including workshops, seminars, conferences, technical competitions, training programs and industrial visits which keeping the students involved in extra – curricular activities along with their academic curriculum and giving them a platform to show case their talent and develop their skills. In 2011, its annual festival 'RUBIX', had participants from many countries for the coding event 'Codezilla' making it the first event in TSEC to go global.",
+        "name": "CSI TSEC",
+        "image": "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/committees%2Fcsi-tsec.jpg?alt=media&token=b0897ca6-b54c-4b26-81c1-71f3105de53d"
+    },
+    {
+        "description": "TSEC CodeTantra is a technical committee of the Artificial Intelligence and Data Science Department of Thadomal Shahani Engineering College. Our vision is to inculcate programming skills in the minds of students with the help of workshops, hackathons and other competitive events.",
+        "name": "Tsec CodeTantra",
+        "image": "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/committees%2FTSEC%20Codetantra.jpg?alt=media&token=bb72197b-a698-45de-9104-8d269d666a23"
+    },
+    {
+        "description": "The IIC promotes innovation, IPR, and entrepreneurship in educational institutions. We organize innovation-related activities, reward innovations, and provide mentorship to student innovators. Our workshops and interactions with entrepreneurs provide valuable knowledge and skills. We work with the Ministry of Education's Innovation Cell to create an innovation culture. Our goal is to empower the next generation of creators and change-makers.",
+        "name": "IIC",
+        "image": "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/committees%2FIIC-LOGO.png?alt=media&token=c7e76b45-e2f8-47e1-b725-9b954976d46f"
+    },
+    {
+        "description": "NSS-TSEC is a social committee that is involved in many social activities. Under the guidance of Prof. Sachit Nalaskar and Prof. Gauri Shukla, NSS TSEC has conducted many activities like Blood Donation Drive, Nature Trail and a 10 day residential camp in one of the adopted villages in the outskirts of Mumbai.",
+        "name": "NSS TSEC",
+        "image": "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/committees%2Fnss-tsec.png?alt=media&token=01df2d46-11e4-49f8-9dc9-d287caf31c5d"
+    },
+    {
+        "description": "TSEC CodeStorm serves as a Campus Chapter of CodeChef and provides a proficient platform for coding and software development. The committee collocate various events to monitor applicability of existing standards, codes and best practices. It offers technical expertise to other strategic initiatives. The goal is to expand and surge opportunities for aspiring coders through our events and workshops. A Hackathon will the major event organised by us. It is a gathering where programmers collaboratively code in an extreme manner over a duration of time. The committee prompts coding interests by updating people with new technologies and their corporate applications based on trending technical platforms and frameworks every week. The committee organises various workshops and coding competitions to make students take a step ahead towards a glowing career.",
+        "name": "TSEC CodeStorm",
+        "image": "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/committees%2FCodeStorm_logo.png?alt=media&token=5ce893a0-ecf4-4524-97c6-83bfa8f4d1d7"
+    },
+    {
         "description": "Our aim is to kindle the young minds of our generation with the message of entrepreneurship.  Join us in this memorable journey and get ready to witness a year full of exciting events and enthralling endeavours. Our mission is to provide a pathway to the students in developing the entrepreneurs within them and also to bridge the gap between the students and Industry.",
-        "name": "TSEC - E-Cell",
+        "name": "TSEC E Cell",
         "image": "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/committees%2Ftsec_e_cell.png?alt=media&token=76f25a18-c191-4cf7-824f-fc52202ed7d5"
     },
     {
         "description": "IETE-TSEC is students forum of the Institution of Electronics and Telecommunication Engineers (IETE). It works under IETE’s Mumbai Chapter It is very active society presenting its inter-collegiate purely technical festivals \"Reflection\", Oscillations etc. Workshops, seminars and competitions conducted by IETE-TSEC provide an ideal platform to rejuvenate hidden skills and showcase talents various technical field.Its branch counselor, Mrs.Mani Roja has helped the society scale greater heights.",
-        "name": "IETE-TSEC",
+        "name": "IETE TSEC",
         "image": "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/committees%2Fiete-tsec.jpg?alt=media&token=e52eb59d-6d51-43d8-a041-7fcd79b48ef1"
     },
     {
         "description": "ISTE-TSEC, i.e., Indian Society for Technical Education - TSEC aims at upbringing the technical knowledge of the Engineering Students, delivered various successful Workshops, Seminars and Competitions, with a satisfying experience from the students. The festival saw participation from over 30 Engineering Colleges. Reflection 2011 was a grand success, under the supervision of Ms.Uttara Bhatt, and will now be followed by ASCENT 2012, one of the most awaited inter-colleges Technical Festival.",
-        "name": "ISTE-TSEC",
+        "name": "ISTE TSEC",
         "image": "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/committees%2Fiste-tsec.jpg?alt=media&token=408ace7c-f28a-4986-be04-40c18b706660"
     },
     {
         "description": "The Rotaract Club of Thadomal Shahani Engineering College falls under the Rotaract District 3141 of Mumbai.  It is an Institute based club of TSEC associated with Rotary Club of Bombay Airport. Rotaract is a club for adults ages 18-30 that meets twice a month to exchange ideas, plan activities and projects, and socialize.  While Rotary clubs serve as sponsors, Rotaract clubs decide how to organize and run their club and what projects and activities to carry out.",
-        "name": "TSEC-Rotaract Club",
+        "name": "TSEC Rotaract Club",
         "image": "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/committees%2Ftsec_rotaract_club.png?alt=media&token=897ea97b-613f-4eab-94f7-bd402d3ad95a"
+    },
+    {
+        "description": "TSEC Student Council is a student body of the college which is responsible for the cultural events of the college. In 2020, the Student Council organized a two-day cultural event called Legacy 2020. The auditions for National-level award wining Street Play, Fashion Show and Dance team are held by the Students' Council. Various events like Traditional Day, BE Farewell and Women's Day are organized by the Student's Council which is overlooked by Dr. Mani Roja M.Edinburgh and Dr. G.T. Thampi.",
+        "name": "TSEC Students Council",
+        "image": "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/committees%2FTSEC.jpg?alt=media&token=968be533-2e82-49fe-83c7-f2e3604f7dc7"
     },
     {
         "description": "This committee is the sole body responsible for encouraging various athletes, sportspersons and enthusiasts. Committee has become very active under the guidance of Dr Ashwini Kunte and Principal Dr.G.T.Thampi. The inter-collegiate festival “Yudh” has been hugely successful in making its mark amongst the best sporting events in Mumbai. The massive participation that this event receives explains its popularity in and outside college. Also Invictus is the intra level festival that the Sports committee organizes. In this event that unites every branch as the students across the four years vie for the best branch trophy and budding sportspersons are given recognition. The TSEC football, cricket, basketball badminton, throw ball, carom and chess teams that involve both girls and boys are managed by this committee.",
@@ -65,19 +70,13 @@
         "image": "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/committees%2Fsports_com.png?alt=media&token=f6ca8fdf-04c7-4062-a97e-4cacb1888e6c"
     },
     {
-        "description": "TSEC Student Council is a student body of the college which is responsible for the cultural events of the college. In 2020, the Student Council organized a two-day cultural event called Legacy 2020. The auditions for National-level award wining Street Play, Fashion Show and Dance team are held by the Students' Council. Various events like Traditional Day, BE Farewell and Women's Day are organized by the Student's Council which is overlooked by Dr. Mani Roja M.Edinburgh and Dr. G.T. Thampi.",
-        "name": "TSEC Students' Council",
-        "image": "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/committees%2FTSEC.jpg?alt=media&token=968be533-2e82-49fe-83c7-f2e3604f7dc7"
-    },
-    {
         "description": "IIChE-TSEC is the chemical technical society and conducts seminars, research paper presentation, and industrial visits with a vision of integrating textbook learning with industrial knowledge. Chemical Students can become a member of the society from second year. The society with the aid of Mrs.Usha Nambiar conducts its Annual Technical festival - Chemergence which draws participants from whole of India.",
-        "name": "IIChE-TSEC",
+        "name": "IIChE TSEC",
         "image": "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/committees%2Flogo-light.png?alt=media&token=89101db1-46fd-4650-8a04-477e570a8824"
     },
     {
-        "description": "The IIC promotes innovation, IPR, and entrepreneurship in educational institutions. We organize innovation-related activities, reward innovations, and provide mentorship to student innovators. Our workshops and interactions with entrepreneurs provide valuable knowledge and skills. We work with the Ministry of Education's Innovation Cell to create an innovation culture. Our goal is to empower the next generation of creators and change-makers.",
-        "name": "IIC",
-        "image": "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/committees%2FIIC-LOGO.png?alt=media&token=c7e76b45-e2f8-47e1-b725-9b954976d46f"
+        "description": "This is the official social media cell of the institution which had laid its grounds in January 2019. The cell is responsible for handling the official social media handles and press releases. The cell aims to bring out students' extra-curricular skills, apart from the excellent academic records. The students may choose to enter the photography, design or content & editorial team, based on their interest. TSEC is active on leading social media platforms like Instagram and Facebook.",
+        "name": "TSEC Monte Carlo Localizers",
+        "image": "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/committees%2Fmcl-tsec.jpg?alt=media&token=835cf7cc-e8e1-48ce-9f4d-7ef721ef6247"
     }
-    
 ]

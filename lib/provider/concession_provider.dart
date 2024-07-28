@@ -60,7 +60,7 @@ class ConcessionProvider extends StateNotifier<String> {
         await _concessionService.uploadPhoto(previousPassPhoto, "prevpass");
     await _concessionService.applyConcession(concessionDetailsData,idCardURL2);
 
-
+    await getConcessionData();
 
     state="Applied successfully";
     await Future.delayed(const Duration(seconds: 2));
