@@ -44,7 +44,7 @@ class _BugReportScreenState extends ConsumerState<BugReportScreen> {
         iconTheme: IconThemeData(color: Colors.white),),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
