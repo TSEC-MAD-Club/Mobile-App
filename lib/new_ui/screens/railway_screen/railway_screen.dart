@@ -838,7 +838,7 @@ class _RailwayConcessionScreenState
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text("Travel Lane", style: TextStyle(color: Color(0xffe3e3e3), fontSize: 12),),
-                                        Text("${travelLane}", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),),
+                                        Text("${travelLane==null ? "Loading..." : travelLane}", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),),
                                     ],
                                   ),
                                ),
@@ -847,7 +847,7 @@ class _RailwayConcessionScreenState
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text("From", style: TextStyle(color: Color(0xffe3e3e3), fontSize: 12),),
-                                      Text("${homeStation}", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),),
+                                      Text(homeStation == null || homeStation.isEmpty ? "Loading..." : homeStation, style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),),
                                     ],
                                   ),
                                 ),
@@ -873,7 +873,7 @@ class _RailwayConcessionScreenState
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text("Duration of pass", style: TextStyle(color: Color(0xffe3e3e3), fontSize: 12),),
-                                      Text("${duration}", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),),
+                                      Text(duration ?? "Loading...", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),),
                                     ],
                                   ),
                                 ),
@@ -882,7 +882,7 @@ class _RailwayConcessionScreenState
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
                                       Text("Class", style: TextStyle(color: Color(0xffe3e3e3), fontSize: 12),),
-                                      Text(travelClass == "I" ? "First Class" : "Second Class", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),),
+                                      Text(travelClass==null ? "Loading..." : travelClass == "I" ? "First Class" : "Second Class", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),),
                                     ],
                                   ),
                                 ),

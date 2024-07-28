@@ -1,12 +1,32 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:tsec_app/models/student_model/student_model.dart';
 import 'package:tsec_app/new_ui/colors.dart';
 import 'package:url_launcher/url_launcher.dart';
 // import '../models/announcement_model/announcement_model.dart';
+import '../../../models/user_model/user_model.dart';
 import 'announcementmodel.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tsec_app/provider/auth_provider.dart';
 
-class AnnouncementScreen extends StatelessWidget {
+class AnnouncementScreen extends ConsumerStatefulWidget {
+  @override
+  ConsumerState<AnnouncementScreen> createState() => _AnnouncementScreenState();
+}
+
+class _AnnouncementScreenState extends ConsumerState<AnnouncementScreen> {
   final DateTime _lastDate = DateTime.now();
+
+  late StudentModel studentModel;
+
+  @override
+  void initState() {
+    super.initState();
+    final UserModel? data = ref.read(userModelProvider);
+    setState(() {
+      studentModel = data!.studentModel!;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,14 +76,27 @@ class AnnouncementScreen extends StatelessWidget {
                     announcementModel: announcement,
                   );
 
-                  if (_lastDate.isSameDate(_parseTimestamp(announcement.startDate))) {
+
+                  //Condition if the Date has ended or deadline has crossed
+                  if(!announcement.endDate!.toDate().isAfter(DateTime.now(),)){
+                    return SizedBox();
+                  }
+
+                  //Condition if it is for all
+                  if(announcement.batch!.contains("All")) {
                     return listTile;
                   }
 
+                  //Condition if the student cannot see the Announcement
+                  if(studentModel.branch != announcement.branch || studentModel.batch != announcement.batch || studentModel.div != announcement.div || studentModel.gradyear != announcement.gradYear) {
+                    return SizedBox();
+                  }
+
+                  //The Announcement Belongs to Student
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      //_buildDateHeader(_parseTimestamp(announcement.startDate)),
+                      _buildDateHeader(_parseTimestamp(announcement.startDate)),
                       listTile,
                     ],
                   );
