@@ -29,6 +29,7 @@ class _BugReportScreenState extends ConsumerState<BugReportScreen> {
 
   @override
   Widget build(BuildContext context) {
+    bool iseEnabled = false;
     return Scaffold(
       appBar:  AppBar(shadowColor: Colors.transparent,
         backgroundColor: Colors.transparent,
@@ -59,7 +60,8 @@ class _BugReportScreenState extends ConsumerState<BugReportScreen> {
               const SizedBox(height: 20),
               // Add the form here
               TextFormField(
-                //maxLines: 3,
+                maxLines: 1,
+                readOnly: iseEnabled,
                 minLines: 1,
                 decoration: const InputDecoration(
                     hintText: 'Bug title',
@@ -80,6 +82,7 @@ class _BugReportScreenState extends ConsumerState<BugReportScreen> {
               ),
               const SizedBox(height: 20),
               TextFormField(
+                readOnly: iseEnabled,
                 maxLines: null,
                 minLines: 1,
                 decoration: const InputDecoration(
@@ -141,10 +144,14 @@ class _BugReportScreenState extends ConsumerState<BugReportScreen> {
                     }
                     else {
                     showSnackBar(context, 'Submitting...');
-                    await ref.read(bugreportNotifierProvider.notifier).addBugreport(titleController.text, descriptionController.text, images, ref.read(firebaseAuthProvider).currentUser!.uid);
                     titleController.clear();
                     descriptionController.clear();
-                    images.clear();
+                    setState(() {
+                      iseEnabled = true;
+                      images.clear();
+
+                    });
+                    await ref.read(bugreportNotifierProvider.notifier).addBugreport(titleController.text, descriptionController.text, images, ref.read(firebaseAuthProvider).currentUser!.uid);
                     showSnackBar(context, 'Submitted successfully'); }
                   }, color: Colors.green, child: Text('Submit'),),
                 ],
