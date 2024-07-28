@@ -17,14 +17,14 @@ class AnnouncementScreen extends ConsumerStatefulWidget {
 class _AnnouncementScreenState extends ConsumerState<AnnouncementScreen> {
   final DateTime _lastDate = DateTime.now();
 
-  late StudentModel studentModel;
+  late StudentModel? studentModel;
 
   @override
   void initState() {
     super.initState();
     final UserModel? data = ref.read(userModelProvider);
     setState(() {
-      studentModel = data!.studentModel!;
+      studentModel = data?.studentModel;
     });
   }
 
@@ -82,13 +82,17 @@ class _AnnouncementScreenState extends ConsumerState<AnnouncementScreen> {
                     return SizedBox();
                   }
 
+                  if(studentModel==null && announcement.batch!.contains("All")){
+                    return listTile;
+                  }
+
                   //Condition if it is for all
                   if(announcement.batch!.contains("All")) {
                     return listTile;
                   }
 
                   //Condition if the student cannot see the Announcement
-                  if(studentModel.branch != announcement.branch || studentModel.batch != announcement.batch || studentModel.div != announcement.div || studentModel.gradyear != announcement.gradYear) {
+                  if(studentModel!.branch != announcement.branch || studentModel!.batch != announcement.batch || studentModel!.div != announcement.div || studentModel!.gradyear != announcement.gradYear) {
                     return SizedBox();
                   }
 
