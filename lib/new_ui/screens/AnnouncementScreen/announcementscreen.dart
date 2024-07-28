@@ -86,24 +86,52 @@ class _AnnouncementScreenState extends ConsumerState<AnnouncementScreen> {
                     return listTile;
                   }
 
-                  //Condition if it is for all
-                  if(announcement.batch!.contains("All")) {
+                  //Condition for All Grad Year
+                  if(announcement.gradYear!.contains("All")) {
                     return listTile;
                   }
 
-                  //Condition if the student cannot see the Announcement
-                  if(studentModel!.branch != announcement.branch || studentModel!.batch != announcement.batch || studentModel!.div != announcement.div || studentModel!.gradyear != announcement.gradYear) {
-                    return SizedBox();
+                  //Condition for Student Matches Grad Year
+                  if(announcement.gradYear == studentModel!.gradyear){
+
+                    //Condition to match all Batches of that Grad Year
+                    if(announcement.branch!.contains("All")){
+                      return listTile;
+                    }
+
+                    //Student Belongs to the Same Branch
+                    if(announcement.branch == studentModel!.branch){
+
+                      //All Divisions of that branch
+                      if(announcement.div!.contains("All")){
+                        return listTile;
+                      }
+
+                      //Student is in the Same Division
+                      if(announcement.div == studentModel!.div){
+
+                        //All Batches of Same Division
+                        if(announcement.batch!.contains("All")){
+                          return listTile;
+                        }
+
+                        if(announcement.batch == studentModel!.batch){
+                          return listTile;
+                        }
+
+                      }
+                    }
                   }
 
-                  //The Announcement Belongs to Student
-                  return Column(
+                  return SizedBox();
+
+                  /*return Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       _buildDateHeader(_parseTimestamp(announcement.startDate)),
                       listTile,
                     ],
-                  );
+                  );*/
                 },
               );
             }
