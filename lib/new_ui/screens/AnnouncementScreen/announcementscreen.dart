@@ -114,37 +114,37 @@ class AnnouncementListItem extends StatelessWidget {
     DateTime endDate = announcementModel.endDate!.toDate();
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 10),
-      decoration: BoxDecoration(
-        color: timePickerBg,
-      ),
+
       child: Card(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 11.0,vertical: 8),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(announcementModel.title.toString(),style: TextStyle(fontSize: 22,fontWeight: FontWeight.w500),),
-              SizedBox(height: 5),
-              if(announcementModel.content != null)
-                Text(announcementModel.content.toString()),
-              /*Row(
-                children: [
-                  Text("From :- ${getDateString(startDate)}"),
-                  Spacer(),
-                  Text("Till :- ${getDateString(endDate)}"),
-                ],
-              ),*/
-              SizedBox(height: 5),
-              InkWell(splashFactory: NoSplash.splashFactory,onTap: ()=>launchUrl(Uri.parse(announcementModel.docURL.toString(),),),child: Row(
-                children: [
-                  Icon(Icons.link),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text("Check out this Link",style: TextStyle(color: Colors.blue,decoration: TextDecoration.underline),),
-                ],
-              ),),
-            ],
+        color: timePickerBg,
+        child: Container(
+          decoration: BoxDecoration(
+          color: timePickerBg,
+            border: Border.all(color: timePickerBorder),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 11.0,vertical: 8),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(announcementModel.title.toString(),style: TextStyle(fontSize: 22,fontWeight: FontWeight.w500,color: Colors.white),),
+                    if(announcementModel.docURL !=null || announcementModel.docURL !="")
+                    InkWell(splashFactory: NoSplash.splashFactory,onTap: ()=>launchUrl(Uri.parse(announcementModel.docURL.toString(),),)
+                      ,child:Icon(Icons.link,color: Colors.blue,),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 5),
+                if(announcementModel.content != null || announcementModel.content!="")
+                  Text(announcementModel.content.toString(),style: TextStyle(color: Colors.white),),
+                SizedBox(height: 5),
+
+              ],
+            ),
           ),
         ),
       ),

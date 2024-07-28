@@ -841,9 +841,15 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                                 )
                               ]
                           ),
-                        )
+                        ),
                       ],
-                    )
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text("App Version : v13.0.0",style: TextStyle(color: Colors.grey.shade700,fontSize: 12 ),),
+                      ],
+                    ),
                   ],
                 ),
               ),
