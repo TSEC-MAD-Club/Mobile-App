@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tsec_app/new_ui/screens/bug_report_screen/widgets/image_card.dart';
+import 'package:tsec_app/provider/auth_provider.dart';
 import 'package:tsec_app/provider/bug_report_provider.dart';
 import 'package:tsec_app/provider/firebase_provider.dart';
 import 'package:tsec_app/utils/custom_snackbar.dart';
@@ -99,12 +100,18 @@ class _BugReportScreenState extends ConsumerState<BugReportScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  OutlinedButton(onPressed: () async{
-                    var selected = await pickMultipleImages();
-                    images.addAll(selected);
-                    setState(() {
-                      //print(images.isEmpty);
-                    });
+                  OutlinedButton(
+                    onPressed: () async{
+                      if(ref.read(userModelProvider) != null) {
+                        var selected = await pickMultipleImages();
+                        images.addAll(selected);
+                        setState(() {
+                          //print(images.isEmpty);
+                        });
+                      }
+                      else {
+                        showSnackBar(context, 'You need to login to attach images.');
+                      }
                     }, child: Text('Pick images'))
                 ],
               ),
@@ -138,20 +145,29 @@ class _BugReportScreenState extends ConsumerState<BugReportScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   MaterialButton(onPressed: ()async{
-                    if(titleController.text.isEmpty || descriptionController.text.isEmpty || images.isEmpty){
+                    if(titleController.text.isEmpty || descriptionController.text.isEmpty){
                       showSnackBar(context, 'Please fill all fields');
                       return;
                     }
                     else {
                     showSnackBar(context, 'Submitting...');
+                    String titleText = titleController.text;
+                    String descriptionText = descriptionController.text;
                     titleController.clear();
                     descriptionController.clear();
                     setState(() {
                       iseEnabled = true;
-                      images.clear();
-
                     });
-                    await ref.read(bugreportNotifierProvider.notifier).addBugreport(titleController.text, descriptionController.text, images, ref.read(firebaseAuthProvider).currentUser!.uid);
+                    if(ref.read(userModelProvider) != null) {
+                      await ref.read(bugreportNotifierProvider.notifier).addBugreport(titleText, descriptionText, images, ref.read(firebaseAuthProvider).currentUser!.uid);
+                    }
+                    else {
+                      await ref.read(bugreportNotifierProvider.notifier).addBugreport(titleText, descriptionText, images, null);
+                    }
+                    setState(() {
+                      images.clear();
+                      //iseEnabled = false;
+                    });
                     showSnackBar(context, 'Submitted successfully'); }
                   }, color: Colors.green, child: Text('Submit'),),
                 ],
