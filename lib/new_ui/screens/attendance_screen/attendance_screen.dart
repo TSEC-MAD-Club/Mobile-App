@@ -183,101 +183,145 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                         text: attendanceInfo["present"]
                                             .toString());
 
+                                final _updateformKey = GlobalKey<FormState>();
+
                                 return AlertDialog(
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(15),
                                   ),
                                   title: Text('Update Subject'),
-                                  content: SingleChildScrollView(
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        TextField(
-                                          controller: subjectNameController,
-                                          style: TextStyle(color: Colors.white),
-                                          decoration: InputDecoration(
-                                            labelText: 'Subject Name',
-                                            labelStyle: TextStyle(
-                                                color: Colors.white70),
-                                            border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
+                                  content: Form(
+                                    key: _updateformKey,
+                                    child: SingleChildScrollView(
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          TextFormField(
+                                            validator: (val) {
+                                              if (val == null || val.isEmpty) {
+                                                return "Please enter some value";
+                                              }
+                                            },
+                                            controller: subjectNameController,
+                                            style: TextStyle(color: Colors.white),
+                                            decoration: InputDecoration(
+                                              labelText: 'Subject Name',
+                                              labelStyle: TextStyle(
+                                                  color: Colors.white70),
+                                              border: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                              ),
+                                              filled: true,
+                                              fillColor: Colors.transparent,
+                                              contentPadding:
+                                                  EdgeInsets.symmetric(
+                                                      horizontal: 15,
+                                                      vertical: 10),
+                                              errorStyle: TextStyle(fontSize: 12),
                                             ),
-                                            filled: true,
-                                            fillColor: Colors.transparent,
-                                            contentPadding:
-                                                EdgeInsets.symmetric(
-                                                    horizontal: 15,
-                                                    vertical: 10),
                                           ),
-                                        ),
-                                        SizedBox(height: 20),
-                                        TextField(
-                                          controller:
-                                              attendedLecturesController,
-                                          style: TextStyle(color: Colors.white),
-                                          decoration: InputDecoration(
-                                            labelText: 'Attended Lectures',
-                                            labelStyle: TextStyle(
-                                                color: Colors.white70),
-                                            border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
+                                          SizedBox(height: 20),
+                                          TextFormField(
+                                            validator: (val) {
+                                              String totalLectures =
+                                                  totalLecturesController.text;
+
+                                              if (val == null || val.isEmpty) {
+                                                return "Please enter some value";
+                                              } else if (totalLectures.isNotEmpty &&
+                                                  int.parse(val) > int.parse(totalLectures)) {
+                                                return "Please enter correct value";
+                                              }
+                                            },
+                                            controller:
+                                                attendedLecturesController,
+                                            style: TextStyle(color: Colors.white),
+                                            decoration: InputDecoration(
+                                              labelText: 'Attended Lectures',
+                                              labelStyle: TextStyle(
+                                                  color: Colors.white70),
+                                              border: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                              ),
+                                              filled: true,
+                                              errorStyle: TextStyle(fontSize: 12),
+                                              focusColor: Colors.red,
+                                              fillColor: Colors.transparent,
+                                              contentPadding:
+                                                  EdgeInsets.symmetric(
+                                                      horizontal: 15,
+                                                      vertical: 10),
                                             ),
-                                            filled: true,
-                                            fillColor: Colors.transparent,
-                                            contentPadding:
-                                                EdgeInsets.symmetric(
-                                                    horizontal: 15,
-                                                    vertical: 10),
+                                            keyboardType: TextInputType.number,
                                           ),
-                                          keyboardType: TextInputType.number,
-                                        ),
-                                        SizedBox(height: 20),
-                                        TextField(
-                                          controller: totalLecturesController,
-                                          style: TextStyle(color: Colors.white),
-                                          decoration: InputDecoration(
-                                            labelText:
-                                                'Total Lectures Till Now',
-                                            labelStyle: TextStyle(
-                                                color: Colors.white70),
-                                            border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
+                                          SizedBox(height: 20),
+                                          TextFormField(
+                                            validator: (val) {
+                                              String attendedLectures =
+                                                  attendedLecturesController.text;
+                                              if (val == null || val.isEmpty) {
+                                                return "Please enter some value";
+                                              } else if (attendedLectures.isNotEmpty &&
+                                                  int.parse(val) <
+                                                      int.parse(attendedLectures)) {
+                                                return "Please enter correct value";
+                                              }
+                                            },
+                                            controller: totalLecturesController,
+                                            style: TextStyle(color: Colors.white),
+                                            decoration: InputDecoration(
+                                              labelText:
+                                                  'Total Lectures Till Now',
+                                              labelStyle: TextStyle(
+                                                  color: Colors.white70),
+                                              border: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                              ),
+                                              filled: true,
+                                              errorStyle: TextStyle(fontSize: 12),
+                                              focusColor: Colors.red,
+                                              fillColor: Colors.transparent,
+                                              contentPadding:
+                                                  EdgeInsets.symmetric(
+                                                      horizontal: 15,
+                                                      vertical: 10),
                                             ),
-                                            filled: true,
-                                            fillColor: Colors.transparent,
-                                            contentPadding:
-                                                EdgeInsets.symmetric(
-                                                    horizontal: 15,
-                                                    vertical: 10),
+                                            keyboardType: TextInputType.number,
                                           ),
-                                          keyboardType: TextInputType.number,
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
                                   ),
                                   actions: <Widget>[
                                     TextButton(
                                       onPressed: () async {
-                                        String subjectName =
-                                            subjectNameController.text;
-                                        int totalLectures = int.parse(
-                                            totalLecturesController.text);
-                                        int attendedLectures = int.parse(
-                                            attendedLecturesController.text);
 
-                                        Map<String, dynamic> updatedSubject = {
-                                          "subject_name": subjectName,
-                                          "total": totalLectures,
-                                          "present": attendedLectures
-                                        };
+                                        if (_updateformKey.currentState!.validate()) 
+                                        {
+                                          String subjectName =
+                                              subjectNameController.text;
+                                          int totalLectures = int.parse(
+                                              totalLecturesController.text);
+                                          int attendedLectures = int.parse(
+                                              attendedLecturesController.text);
 
-                                        await AttendanceService.updateSubject(
-                                            attendanceList,
-                                            index,
-                                            updatedSubject);
+                                          Map<String, dynamic> updatedSubject = {
+                                            "subject_name": subjectName,
+                                            "total": totalLectures,
+                                            "present": attendedLectures
+                                          };
+
+                                          await AttendanceService.updateSubject(
+                                              attendanceList,
+                                              index,
+                                              updatedSubject);
+
+                                          Navigator.of(context).pop();
+                                        }
+                                        
 
                                         /*DocumentSnapshot doc = await FirebaseFirestore.instance
                                             .collection("Attendance")
@@ -306,13 +350,14 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                           }
                                         }*/
 
-                                        Navigator.of(context).pop();
+                                        
                                       },
                                       child: Text('Update',
                                           style: TextStyle(color: Colors.blue)),
                                     ),
                                     TextButton(
                                       onPressed: () async {
+
                                         await AttendanceService.deleteSubject(
                                             attendanceList, index);
 
