@@ -14,7 +14,7 @@ class BugreportNotifier extends StateNotifier<List<Bugreport>> {
   BugreportNotifier(this._reportServices) : super([]);
 
   // Add a new report
-  Future<void> addBugreport(String title, String description, List<File> imagePaths, String uid) async {
+  Future<void> addBugreport(String title, String description, List<File> imagePaths, String? uid) async {
     try {
       List<File> files = imagePaths;
       List<String> attachments = await _reportServices.getBugImages(files);

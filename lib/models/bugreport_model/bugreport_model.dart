@@ -4,8 +4,8 @@ class Bugreport {
   final List<String?> attachments;
   bool isResolved;
   DateTime reportTime;
-  String userUid;
-  Bugreport({required this.title, required this.description, required this.attachments, required this.isResolved, required this.reportTime, required this.userUid});
+  String? userUid;
+  Bugreport({required this.title, required this.description, required this.attachments, required this.isResolved, required this.reportTime, this.userUid});
 
   Map<String, dynamic> toJson(){
     return {
@@ -14,7 +14,7 @@ class Bugreport {
       'attachments': attachments,
       'isResolved': isResolved,
       'reportTime': reportTime.toIso8601String(),
-      'userUid': userUid,
+      'userUid': userUid ?? 'null',
     };
   }
 
@@ -25,7 +25,7 @@ class Bugreport {
         attachments: List<String?>.from(json['attachments']),
         isResolved: json['isResolved'],
         reportTime: DateTime.parse(json['reportTime']),
-        userUid: json['userUid'],
+        userUid: json['userUid'] ?? 'null[',
     );
   }
 }
