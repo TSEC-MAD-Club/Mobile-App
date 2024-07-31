@@ -196,7 +196,16 @@ class AnnouncementListItem extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(announcementModel.title.toString(),style: TextStyle(fontSize: 22,fontWeight: FontWeight.w500,color: Colors.white),),
+                    Expanded(
+                      child: Text(
+                        announcementModel.title.toString(),
+                        style: TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white
+                        ),
+                      )
+                    ),
                     if(announcementModel.docURL !=null || announcementModel.docURL !="")
                     InkWell(splashFactory: NoSplash.splashFactory,onTap: ()=>launchUrl(Uri.parse(announcementModel.docURL.toString(),),)
                       ,child:Icon(Icons.link,color: Colors.blue,),
