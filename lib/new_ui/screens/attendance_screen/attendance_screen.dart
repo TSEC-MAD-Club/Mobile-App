@@ -1,5 +1,5 @@
 import 'dart:ffi';
-
+import 'package:flutter/services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -184,7 +184,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                             .toString());
 
                                 final _updateformKey = GlobalKey<FormState>();
-
+                                bool isEnabled = true;
                                 return AlertDialog(
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(15),
@@ -202,12 +202,11 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                                 return "Please enter some value";
                                               }
                                             },
+                                            enabled: isEnabled,
                                             controller: subjectNameController,
                                             style: TextStyle(color: Colors.white),
                                             decoration: InputDecoration(
                                               labelText: 'Subject Name',
-                                              labelStyle: TextStyle(
-                                                  color: Colors.white70),
                                               border: OutlineInputBorder(
                                                 borderRadius:
                                                     BorderRadius.circular(10),
@@ -234,13 +233,14 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                                 return "Please enter correct value";
                                               }
                                             },
+                                            keyboardType: TextInputType.number,
+                                            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                                             controller:
                                                 attendedLecturesController,
                                             style: TextStyle(color: Colors.white),
+                                            enabled: isEnabled,
                                             decoration: InputDecoration(
                                               labelText: 'Attended Lectures',
-                                              labelStyle: TextStyle(
-                                                  color: Colors.white70),
                                               border: OutlineInputBorder(
                                                 borderRadius:
                                                     BorderRadius.circular(10),
@@ -254,10 +254,10 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                                       horizontal: 15,
                                                       vertical: 10),
                                             ),
-                                            keyboardType: TextInputType.number,
                                           ),
                                           SizedBox(height: 20),
                                           TextFormField(
+                                            enabled: isEnabled,
                                             validator: (val) {
                                               String attendedLectures =
                                                   attendedLecturesController.text;
@@ -269,13 +269,13 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                                 return "Please enter correct value";
                                               }
                                             },
+                                            keyboardType: TextInputType.number,
+                                            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                                             controller: totalLecturesController,
                                             style: TextStyle(color: Colors.white),
                                             decoration: InputDecoration(
                                               labelText:
                                                   'Total Lectures Till Now',
-                                              labelStyle: TextStyle(
-                                                  color: Colors.white70),
                                               border: OutlineInputBorder(
                                                 borderRadius:
                                                     BorderRadius.circular(10),
@@ -289,7 +289,6 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                                       horizontal: 15,
                                                       vertical: 10),
                                             ),
-                                            keyboardType: TextInputType.number,
                                           ),
                                         ],
                                       ),
@@ -297,31 +296,34 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                   ),
                                   actions: <Widget>[
                                     TextButton(
-                                      onPressed: () async {
+                                      onPressed: ()  {
+                                        if(isEnabled) {
+                                          isEnabled = false;
+                                          if (_updateformKey.currentState!
+                                              .validate()) {
+                                            String subjectName =
+                                                subjectNameController.text;
+                                            int totalLectures = int.parse(
+                                                totalLecturesController.text);
+                                            int attendedLectures = int.parse(
+                                                attendedLecturesController
+                                                    .text);
 
-                                        if (_updateformKey.currentState!.validate()) 
-                                        {
-                                          String subjectName =
-                                              subjectNameController.text;
-                                          int totalLectures = int.parse(
-                                              totalLecturesController.text);
-                                          int attendedLectures = int.parse(
-                                              attendedLecturesController.text);
+                                            Map<String, dynamic>
+                                                updatedSubject = {
+                                              "subject_name": subjectName,
+                                              "total": totalLectures,
+                                              "present": attendedLectures
+                                            };
 
-                                          Map<String, dynamic> updatedSubject = {
-                                            "subject_name": subjectName,
-                                            "total": totalLectures,
-                                            "present": attendedLectures
-                                          };
+                                            AttendanceService
+                                                .updateSubject(attendanceList,
+                                                    index, updatedSubject);
 
-                                          await AttendanceService.updateSubject(
-                                              attendanceList,
-                                              index,
-                                              updatedSubject);
-
-                                          Navigator.of(context).pop();
+                                            Navigator.of(context).pop();
+                                          }
                                         }
-                                        
+                                        isEnabled = false;
 
                                         /*DocumentSnapshot doc = await FirebaseFirestore.instance
                                             .collection("Attendance")
@@ -356,9 +358,9 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                           style: TextStyle(color: Colors.blue)),
                                     ),
                                     TextButton(
-                                      onPressed: () async {
+                                      onPressed: ()  {
 
-                                        await AttendanceService.deleteSubject(
+                                        AttendanceService.deleteSubject(
                                             attendanceList, index);
 
                                         /*DocumentSnapshot doc = await FirebaseFirestore.instance
@@ -615,6 +617,8 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                             style: TextStyle(color: Colors.white),
                             // Set text color to white
                             controller: attendedLecturesController,
+                            keyboardType: TextInputType.number,
+                            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                             decoration: InputDecoration(
                               labelText: 'Attended Lectures',
                               border: OutlineInputBorder(
@@ -626,18 +630,17 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                               contentPadding: EdgeInsets.symmetric(
                                   horizontal: 15, vertical: 10),
                             ),
-                            keyboardType: TextInputType.number,
                           ),
                           SizedBox(height: 20),
                           TextFormField(
                             validator: (val) {
-                              String attendedLectures =
-                                  attendedLecturesController.text;
+                              int attendedLectures =
+                                  int.parse(attendedLecturesController.text) ?? 0;
                               if (val == null || val.isEmpty) {
                                 return "Please enter some value";
-                              } else if (attendedLectures.isNotEmpty &&
+                              } else if (attendedLectures !=0 &&
                                   int.parse(val) <
-                                      int.parse(attendedLectures)) {
+                                      attendedLectures) {
                                 return "Please enter correct value";
                               }
                             },
@@ -645,6 +648,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                             // Set text color to white
                             controller: totalLecturesController,
                             keyboardType: TextInputType.number,
+                            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                             decoration: InputDecoration(
                               labelText: 'Total Lectures Till Now',
                               border: OutlineInputBorder(
@@ -670,7 +674,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                     child: Text('Cancel', style: TextStyle(color: Colors.red)),
                   ),
                   TextButton(
-                    onPressed: () async {
+                    onPressed: ()  {
                       if (_formKey.currentState!.validate()) {
                         String subjectName = subjectNameController.text;
                         int totalLectures =
@@ -683,7 +687,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                           "total": totalLectures,
                           "present": attendedLectures
                         };
-                        await AttendanceService.addSubject(updatedSubject);
+                        AttendanceService.addSubject(updatedSubject);
                         /*FirebaseFirestore.instance
                             .collection("Attendance")
                             .doc(FirebaseAuth.instance.currentUser!.uid)
