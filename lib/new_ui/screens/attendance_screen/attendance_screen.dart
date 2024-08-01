@@ -207,8 +207,6 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                             style: TextStyle(color: Colors.white),
                                             decoration: InputDecoration(
                                               labelText: 'Subject Name',
-                                              labelStyle: TextStyle(
-                                                  color: Colors.white70),
                                               border: OutlineInputBorder(
                                                 borderRadius:
                                                     BorderRadius.circular(10),
@@ -242,8 +240,6 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                             style: TextStyle(color: Colors.white),
                                             decoration: InputDecoration(
                                               labelText: 'Attended Lectures',
-                                              labelStyle: TextStyle(
-                                                  color: Colors.white70),
                                               border: OutlineInputBorder(
                                                 borderRadius:
                                                     BorderRadius.circular(10),
@@ -278,8 +274,6 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                             decoration: InputDecoration(
                                               labelText:
                                                   'Total Lectures Till Now',
-                                              labelStyle: TextStyle(
-                                                  color: Colors.white70),
                                               border: OutlineInputBorder(
                                                 borderRadius:
                                                     BorderRadius.circular(10),
