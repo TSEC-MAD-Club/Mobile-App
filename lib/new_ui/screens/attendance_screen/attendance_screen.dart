@@ -1,5 +1,5 @@
 import 'dart:ffi';
-
+import 'package:flutter/services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -42,6 +42,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
+    bool isEnabled = true;
     return Scaffold(
       body: StreamBuilder(
           stream: FirebaseFirestore.instance
@@ -234,6 +235,8 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                                 return "Please enter correct value";
                                               }
                                             },
+                                            keyboardType: TextInputType.number,
+                                            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                                             controller:
                                                 attendedLecturesController,
                                             style: TextStyle(color: Colors.white),
@@ -254,7 +257,6 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                                       horizontal: 15,
                                                       vertical: 10),
                                             ),
-                                            keyboardType: TextInputType.number,
                                           ),
                                           SizedBox(height: 20),
                                           TextFormField(
@@ -269,6 +271,8 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                                 return "Please enter correct value";
                                               }
                                             },
+                                            keyboardType: TextInputType.number,
+                                            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                                             controller: totalLecturesController,
                                             style: TextStyle(color: Colors.white),
                                             decoration: InputDecoration(
@@ -289,7 +293,6 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                                       horizontal: 15,
                                                       vertical: 10),
                                             ),
-                                            keyboardType: TextInputType.number,
                                           ),
                                         ],
                                       ),
@@ -615,6 +618,8 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                             style: TextStyle(color: Colors.white),
                             // Set text color to white
                             controller: attendedLecturesController,
+                            keyboardType: TextInputType.number,
+                            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                             decoration: InputDecoration(
                               labelText: 'Attended Lectures',
                               border: OutlineInputBorder(
@@ -626,18 +631,17 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                               contentPadding: EdgeInsets.symmetric(
                                   horizontal: 15, vertical: 10),
                             ),
-                            keyboardType: TextInputType.number,
                           ),
                           SizedBox(height: 20),
                           TextFormField(
                             validator: (val) {
-                              String attendedLectures =
-                                  attendedLecturesController.text;
+                              int attendedLectures =
+                                  int.parse(attendedLecturesController.text) ?? 0;
                               if (val == null || val.isEmpty) {
                                 return "Please enter some value";
-                              } else if (attendedLectures.isNotEmpty &&
+                              } else if (attendedLectures !=0 &&
                                   int.parse(val) <
-                                      int.parse(attendedLectures)) {
+                                      attendedLectures) {
                                 return "Please enter correct value";
                               }
                             },
@@ -645,6 +649,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                             // Set text color to white
                             controller: totalLecturesController,
                             keyboardType: TextInputType.number,
+                            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                             decoration: InputDecoration(
                               labelText: 'Total Lectures Till Now',
                               border: OutlineInputBorder(
