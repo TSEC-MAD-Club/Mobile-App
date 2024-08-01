@@ -42,7 +42,6 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    bool isEnabled = true;
     return Scaffold(
       body: StreamBuilder(
           stream: FirebaseFirestore.instance
@@ -185,7 +184,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                             .toString());
 
                                 final _updateformKey = GlobalKey<FormState>();
-
+                                bool isEnabled = true;
                                 return AlertDialog(
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(15),
@@ -203,6 +202,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                                 return "Please enter some value";
                                               }
                                             },
+                                            enabled: isEnabled,
                                             controller: subjectNameController,
                                             style: TextStyle(color: Colors.white),
                                             decoration: InputDecoration(
@@ -238,6 +238,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                             controller:
                                                 attendedLecturesController,
                                             style: TextStyle(color: Colors.white),
+                                            enabled: isEnabled,
                                             decoration: InputDecoration(
                                               labelText: 'Attended Lectures',
                                               border: OutlineInputBorder(
@@ -256,6 +257,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                           ),
                                           SizedBox(height: 20),
                                           TextFormField(
+                                            enabled: isEnabled,
                                             validator: (val) {
                                               String attendedLectures =
                                                   attendedLecturesController.text;
@@ -294,31 +296,34 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                   ),
                                   actions: <Widget>[
                                     TextButton(
-                                      onPressed: () async {
+                                      onPressed: ()  {
+                                        if(isEnabled) {
+                                          isEnabled = false;
+                                          if (_updateformKey.currentState!
+                                              .validate()) {
+                                            String subjectName =
+                                                subjectNameController.text;
+                                            int totalLectures = int.parse(
+                                                totalLecturesController.text);
+                                            int attendedLectures = int.parse(
+                                                attendedLecturesController
+                                                    .text);
 
-                                        if (_updateformKey.currentState!.validate()) 
-                                        {
-                                          String subjectName =
-                                              subjectNameController.text;
-                                          int totalLectures = int.parse(
-                                              totalLecturesController.text);
-                                          int attendedLectures = int.parse(
-                                              attendedLecturesController.text);
+                                            Map<String, dynamic>
+                                                updatedSubject = {
+                                              "subject_name": subjectName,
+                                              "total": totalLectures,
+                                              "present": attendedLectures
+                                            };
 
-                                          Map<String, dynamic> updatedSubject = {
-                                            "subject_name": subjectName,
-                                            "total": totalLectures,
-                                            "present": attendedLectures
-                                          };
+                                            AttendanceService
+                                                .updateSubject(attendanceList,
+                                                    index, updatedSubject);
 
-                                          await AttendanceService.updateSubject(
-                                              attendanceList,
-                                              index,
-                                              updatedSubject);
-
-                                          Navigator.of(context).pop();
+                                            Navigator.of(context).pop();
+                                          }
                                         }
-                                        
+                                        isEnabled = false;
 
                                         /*DocumentSnapshot doc = await FirebaseFirestore.instance
                                             .collection("Attendance")
@@ -353,9 +358,9 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                           style: TextStyle(color: Colors.blue)),
                                     ),
                                     TextButton(
-                                      onPressed: () async {
+                                      onPressed: ()  {
 
-                                        await AttendanceService.deleteSubject(
+                                        AttendanceService.deleteSubject(
                                             attendanceList, index);
 
                                         /*DocumentSnapshot doc = await FirebaseFirestore.instance
@@ -669,7 +674,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                     child: Text('Cancel', style: TextStyle(color: Colors.red)),
                   ),
                   TextButton(
-                    onPressed: () async {
+                    onPressed: ()  {
                       if (_formKey.currentState!.validate()) {
                         String subjectName = subjectNameController.text;
                         int totalLectures =
@@ -682,7 +687,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                           "total": totalLectures,
                           "present": attendedLectures
                         };
-                        await AttendanceService.addSubject(updatedSubject);
+                        AttendanceService.addSubject(updatedSubject);
                         /*FirebaseFirestore.instance
                             .collection("Attendance")
                             .doc(FirebaseAuth.instance.currentUser!.uid)
