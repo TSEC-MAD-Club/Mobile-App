@@ -117,7 +117,7 @@ List<String> calcBatchList(String? div, String? branch) {
   if (div == null) {
     return batches;
   }
-  if (branch == "Comps"){
+  if (branch == "Comps" || branch == "Extc"){
     for (int i = 1; i <= 4; i++) {
       batches.add("$div$i");
     }

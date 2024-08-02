@@ -89,29 +89,46 @@ class _EventDetailState extends ConsumerState<EventDetail> {
                           Expanded(
                             child: Container(),
                           ),
-                          (data == null ||
-                                  (widget.eventModel.eventRegistrationUrl
-                                          .isEmpty ||
-                                      widget.eventModel.eventRegistrationUrl ==
-                                          ""))
-                              ? const SizedBox()
-                              : ElevatedButton(
-                                  onPressed: () {
-                                    launchUrl();
-                                  },
-                                  child: const Text(
-                                    "Register",
-                                    style: TextStyle(color: Colors.white, fontSize: 14),
-                                  ),
-                                  style: ElevatedButton.styleFrom(
-                                      backgroundColor: Colors.blue,
-                                    padding: const EdgeInsets.only(
-                                        top: 0, bottom: 0, right: 20, left: 20),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(5),
-                                    ),
-                                  ),
-                                )
+                          // (data == null ||
+                          //         (widget.eventModel.eventRegistrationUrl
+                          //                 .isEmpty ||
+                          //             widget.eventModel.eventRegistrationUrl ==
+                          //                 ""))
+                          //     ? const SizedBox()
+                          //     : ElevatedButton(
+                          //         onPressed: () {
+                          //           launchUrl();
+                          //         },
+                          //         child: const Text(
+                          //           "Register",
+                          //           style: TextStyle(color: Colors.white, fontSize: 14),
+                          //         ),
+                          //         style: ElevatedButton.styleFrom(
+                          //             backgroundColor: Colors.blue,
+                          //           padding: const EdgeInsets.only(
+                          //               top: 0, bottom: 0, right: 20, left: 20),
+                          //           shape: RoundedRectangleBorder(
+                          //             borderRadius: BorderRadius.circular(5),
+                          //           ),
+                          //         ),
+                          //       )
+                          ElevatedButton(
+                            onPressed: () {
+                              launchUrl();
+                            },
+                            child: const Text(
+                              "Register",
+                              style: TextStyle(color: Colors.white, fontSize: 14),
+                            ),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.blue,
+                              padding: const EdgeInsets.only(
+                                  top: 0, bottom: 0, right: 20, left: 20),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     ),
