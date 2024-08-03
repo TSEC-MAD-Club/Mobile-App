@@ -29,7 +29,7 @@ class AnnouncementModel {
     div = json['div'];
     branch = json['branch'];
     batch = json['batch'];
-    docURL = json['docURL'];
+    docURL = json['docURL'] as String?;
     title = json['title'];
     gradYear = json["gradYear"];
   }

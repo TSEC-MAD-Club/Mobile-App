@@ -23,9 +23,7 @@ class _AnnouncementScreenState extends ConsumerState<AnnouncementScreen> {
   void initState() {
     super.initState();
     final UserModel? data = ref.read(userModelProvider);
-    setState(() {
-      studentModel = data?.studentModel;
-    });
+    studentModel = data?.studentModel;
   }
 
   @override
@@ -38,108 +36,111 @@ class _AnnouncementScreenState extends ConsumerState<AnnouncementScreen> {
         titleTextStyle: TextStyle(fontSize: 20),
         title: Text("Announcements"),
       ),
-      body: NestedScrollView(
-        headerSliverBuilder: (context, innerBoxIsScrolled) => [
-          SliverToBoxAdapter(
-            // You can add a header here if needed
-          ),
-        ],
-        body: StreamBuilder<DocumentSnapshot>(
-          stream: FirebaseFirestore.instance.collection('ImportantNotice').doc('Content').snapshots(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(child: CircularProgressIndicator());
-            } else if (snapshot.hasError) {
-              return Center(
-                child: Text(
-                  'Error: ${snapshot.error}',
-                  style: TextStyle(color: Colors.white),
-                ),
-              );
-            } else if (!snapshot.hasData || !snapshot.data!.exists) {
-              return Center(
-                child: Text(
-                  'No data available',
-                  style: TextStyle(color: Colors.white),
-                ),
-              );
-            } else {
-              final data = snapshot.data!.data() as Map<String, dynamic>?;
-              final List<dynamic> announcementsData = data?['content'] ?? [];
+      body: StreamBuilder<DocumentSnapshot>(
+        stream: FirebaseFirestore.instance.collection('ImportantNotice').doc('Content').snapshots(),
+        builder: (context, snapshot) {
+          // Loading Announcements
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          }
 
-              final announcements = announcementsData.map((json) => AnnouncementModel.fromJson(json)).toList();
-              return ListView.builder(
-                itemCount: announcements.length,
-                itemBuilder: (context, index) {
-                  final announcement = announcements[(announcements.length-1) - index];
-                  final listTile = AnnouncementListItem(
-                    announcementModel: announcement,
-                  );
+          // Has Error in fetching
+          if (snapshot.hasError) {
+            return Center(
+              child: Text(
+                'Error: ${snapshot.error}',
+                style: TextStyle(color: Colors.white),
+              ),
+            );
+          }
 
+          // No Announcement in collection
+          if (!snapshot.hasData || !snapshot.data!.exists) {
+            return Center(
+              child: Text(
+                'No Announcement Available',
+                style: TextStyle(color: Colors.white),
+              ),
+            );
+          }
 
-                  //Condition if the Date has ended or deadline has crossed
-                  if(!announcement.endDate!.toDate().isAfter(DateTime.now(),)){
-                    return SizedBox();
-                  }
+          final data = snapshot.data!.data() as Map<String, dynamic>?;
+          final List<dynamic> announcementsData = data?['content'] ?? [];
 
-                  if(studentModel==null && announcement.batch!.contains("All")){
-                    return listTile;
-                  }
-
-                  //Condition for All Grad Year
-                  if(announcement.gradYear!.contains("All")) {
-                    return listTile;
-                  }
-
-                  //Condition for Student Matches Grad Year
-                  if(announcement.gradYear == studentModel!.gradyear){
-
-                    //Condition to match all Batches of that Grad Year
-                    if(announcement.branch!.contains("All")){
-                      return listTile;
-                    }
-
-                    //Student Belongs to the Same Branch
-                    if(announcement.branch == studentModel!.branch){
-
-                      //All Divisions of that branch
-                      if(announcement.div!.contains("All")){
-                        return listTile;
-                      }
-
-                      //Student is in the Same Division
-                      if(announcement.div == studentModel!.div){
-
-                        //All Batches of Same Division
-                        if(announcement.batch!.contains("All")){
-                          return listTile;
-                        }
-
-                        if(announcement.batch == studentModel!.batch){
-                          return listTile;
-                        }
-
-                      }
-                    }
-                  }
-
-                  return SizedBox();
-
-                  /*return Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      _buildDateHeader(_parseTimestamp(announcement.startDate)),
-                      listTile,
-                    ],
-                  );*/
-                },
-              );
+          // Filter announcements based on conditions
+          final announcements = announcementsData
+              .map((json) => AnnouncementModel.fromJson(json))
+              .where((announcement) {
+            // Condition if the Date has ended or deadline has crossed
+            if (!announcement.endDate!.toDate().isAfter(DateTime.now())) {
+              return false;
             }
-          },
-        ),
+
+            // Condition when Student Didn't Logged in
+            if (studentModel == null && announcement.gradYear!.contains("All")) {
+              return true;
+            }
+
+            // Condition when Student Logged in
+            if (studentModel != null) {
+              // For All Gradyear
+              if (announcement.gradYear!.contains("All")) {
+                return true;
+              }
+              // Specific Gradyear
+              if (announcement.gradYear == studentModel!.gradyear) {
+                // all Branch
+                if (announcement.branch!.contains("All")) {
+                  return true;
+                }
+                // specific branch
+                if (announcement.branch == studentModel!.branch) {
+                  // All Division
+                  if (announcement.div!.contains("All")) {
+                    return true;
+                  }
+                  // specific div
+                  if (announcement.div == studentModel!.div) {
+                    // all batch
+                    if (announcement.batch!.contains("All")) {
+                      return true;
+                    }
+                    // specific batch
+                    if (announcement.batch == studentModel!.batch) {
+                      return true;
+                    }
+                  }
+                }
+              }
+            }
+
+            return false;
+          }).toList();
+
+          // Check if there are any announcements to display
+          if (announcements.isEmpty) {
+            return Center(
+              child: Text(
+                'No Announcement Available',
+                style: TextStyle(color: Colors.white),
+              ),
+            );
+          }
+
+          return ListView.builder(
+            itemCount: announcements.length,
+            itemBuilder: (context, index) {
+              final announcement = announcements[(announcements.length - 1) - index];
+              return AnnouncementListItem(
+                announcementModel: announcement,
+              );
+            },
+          );
+        },
       ),
     );
   }
+
 
   DateTime _parseTimestamp(dynamic timestamp) {
     if (timestamp is Timestamp) {
@@ -172,7 +173,7 @@ class AnnouncementListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    if(announcementModel.docURL == null || announcementModel.startDate==null || announcementModel.endDate==null){
+    if(announcementModel.startDate==null || announcementModel.endDate==null){
       return const SizedBox();
     }
     DateTime startDate = announcementModel.startDate!.toDate();
@@ -206,7 +207,7 @@ class AnnouncementListItem extends StatelessWidget {
                         ),
                       )
                     ),
-                    if(announcementModel.docURL !=null || announcementModel.docURL !="")
+                    if(announcementModel.docURL !=null && announcementModel.docURL !="")
                     InkWell(splashFactory: NoSplash.splashFactory,onTap: ()=>launchUrl(Uri.parse(announcementModel.docURL.toString(),),)
                       ,child:Icon(Icons.link,color: Colors.blue,),
                     ),
