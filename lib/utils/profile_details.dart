@@ -45,7 +45,7 @@ List<String> calcDivisionList(String gradyear, String branch) {
 }
 
 List<String> allYearList = ['FE', 'SE', 'TE', 'BE'];
-List<String> allBranchList = ['Comps', 'It', 'Aids', 'Extc', "Chemical"];
+List<String> allBranchList = ['Comps', 'It', 'Aids', 'Extc', "Chem"];
 
 Map<String, String> gradYearMapping = {};
 class MapsYear {
