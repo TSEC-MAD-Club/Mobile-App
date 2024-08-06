@@ -67,7 +67,7 @@ class _LaunchScreenState extends State<LaunchScreen> {
         .get();
     int unlockedData = snapshot.data()!["unlocked"];
     Map<String,dynamic> map = {
-      "unlocked": ++unlockedData
+      "unlocked": unlockedData
     };
     await FirebaseFirestore.instance.collection("Launch").doc('launch').update(map);
 
