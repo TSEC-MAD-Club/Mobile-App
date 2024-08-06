@@ -364,7 +364,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         ),
                       ),
                       Link(
-                        uri: Uri.parse("mailto:devsclubtsec@gmail.com"),
+                        uri: Uri.parse("mailto:devsclubtsec@gmail.com?subject=Request%20for%20Login%20Credentials&body=Dear%20Team,%0D%0A%0D%0AI%20want%20to%20request%20for%20TSEC%20App%20login%20Credentials.%0D%0A%0D%0AMy%20Details%20are:%0D%0AFull%20Name%20(Surname_First_Lastname):%0D%0AEmail:%0D%0APhone%20Number:%0D%0AGraduation%20Year:%0D%0ABranch:%0D%0ADiv%20(C2):%0D%0ABatch%20(C21):%0D%0A%0D%0AThank%20You."),
                         builder: (context, followLink) => GestureDetector(
                           onTap: () => followLink?.call(),
                           child: Text(
