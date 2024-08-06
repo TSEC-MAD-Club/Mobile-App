@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:tsec_app/new_ui/colors.dart';
 import 'package:tsec_app/new_ui/screens/Maintainance_Screen/maintainance_screen.dart';
 // import 'package:tsec_app/new_ui/screens/login_screen/login_screen.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class LaunchScreen extends StatefulWidget {
   @override
@@ -59,16 +60,25 @@ class _LaunchScreenState extends State<LaunchScreen> {
     });
   }
 
-  void _navigateToLogin() async{
+  void _navigateToLogin() async {
     DocumentSnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore.instance
         .collection('Launch')
         .doc('launch')
         .get();
     int unlockedData = snapshot.data()!["unlocked"];
     Map<String,dynamic> map = {
-      "unlocked":++unlockedData
+      "unlocked": ++unlockedData
     };
     await FirebaseFirestore.instance.collection("Launch").doc('launch').update(map);
+
+    // Launch URL
+    const url = 'https://tsecdevsclub.com/launchForm';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+
     context.go('/login');
   }
 
@@ -117,18 +127,21 @@ class _LaunchScreenState extends State<LaunchScreen> {
             SizedBox(
               height: 35,
             ),
-            Row(
-              children: [
-                Spacer(),
-                Text("Student's Unlocked: $unlocked",style: TextStyle(
-                  color: Colors.grey[600],
-                  fontSize: 15,
-                ),),
-                SizedBox(
-                  width: 15,
-                ),
-              ],
-            ),
+            // Row(
+            //   children: [
+            //     Spacer(),
+            //     SizedBox(
+            //       height: 10,
+            //     ),
+            //     Text("Student's Unlocked: $unlocked",style: TextStyle(
+            //       color: Colors.grey[600],
+            //       fontSize: 10,
+            //     ),),
+            //     SizedBox(
+            //       width: 15,
+            //     ),
+            //   ],
+            // ),
             SizedBox(
               height: 60,
             ),
@@ -193,6 +206,32 @@ class _LaunchScreenState extends State<LaunchScreen> {
                   _checkAnswer();
                 },
               ),
+            ),
+            SizedBox(height: 30),
+            Center(),
+            SizedBox(
+              height: 10,
+            ),
+            InkWell(
+              splashFactory: NoSplash.splashFactory,
+              onTap: () async {
+                const url = 'https://tsecdevsclub.com/launchDashboard';
+                if (await canLaunch(url)) {
+                  await launch(url);
+                } else {
+                  throw 'Could not launch $url';
+                }
+              },
+              child: Text(
+                "Student's Unlocked: $unlocked",
+                style: TextStyle(
+                  color: Colors.grey[600],
+                  fontSize: 10,
+                ),
+              ),
+            ),
+            SizedBox(
+              width: 15,
             ),
           ],
         ),
