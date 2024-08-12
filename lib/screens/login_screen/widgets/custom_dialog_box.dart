@@ -151,7 +151,7 @@ class _ChangePasswordDialogState extends ConsumerState<ChangePasswordDialog> {
                     child: ElevatedButton(
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
-                          ref.watch(authProvider.notifier).changePassword(
+                          ref.watch(authProvider.notifier).updatePassword(
                               _passwordTextEditingController.text.trim(),
                               context);
                           GoRouter.of(context).go('/main');

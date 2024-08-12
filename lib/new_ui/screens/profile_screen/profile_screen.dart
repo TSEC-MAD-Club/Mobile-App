@@ -15,6 +15,7 @@ import 'package:tsec_app/models/student_model/student_model.dart';
 import 'package:tsec_app/models/user_model/user_model.dart';
 import 'package:tsec_app/new_ui/colors.dart';
 import 'package:tsec_app/new_ui/screens/profile_screen/widgets/address_text_field.dart';
+import 'package:tsec_app/new_ui/screens/profile_screen/widgets/change_password_dialog.dart';
 import 'package:tsec_app/new_ui/screens/profile_screen/widgets/faculty_field.dart';
 import 'package:tsec_app/new_ui/screens/profile_screen/widgets/phone_no_field.dart';
 import 'package:tsec_app/new_ui/screens/profile_screen/widgets/profile_dropdown_field.dart';
@@ -788,6 +789,11 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                         ),
                                       ),
                               ),
+                              TextButton(onPressed: (){
+                                showDialog(context: context, builder: (contextOfDialog){
+                                  return ChangePasswordDialog(ctx1: context,);
+                                });
+                              }, child: Text("Change password", style: TextStyle(color: Colors.blueAccent),))
                             ],
                           ),
                         )
