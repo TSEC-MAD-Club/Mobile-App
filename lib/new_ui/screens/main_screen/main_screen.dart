@@ -881,8 +881,6 @@ class _MainScreenState extends ConsumerState<MainScreen> {
         case 1:
           return "Notes";
         case 2:
-          return "Attendance";
-        case 3:
           return "Profile";
         default:
           return "";
