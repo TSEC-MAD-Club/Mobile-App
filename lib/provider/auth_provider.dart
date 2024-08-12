@@ -106,8 +106,12 @@ class AuthProvider extends StateNotifier<bool> {
     return await _authService.fetchUserDetails(user, context);
   }
 
-  void changePassword(String password, BuildContext context) {
+  void updatePassword(String password, BuildContext context) {
     _authService.updatePassword(password, context);
+  }
+
+  void changePassword(String oldPass, String newPass, BuildContext context) {
+    _authService.changePassword(oldPass, newPass, context);
   }
 
   Future getUserData(WidgetRef ref, BuildContext context) async {

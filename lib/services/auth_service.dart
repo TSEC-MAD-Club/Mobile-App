@@ -60,6 +60,20 @@ class AuthService {
     await firebaseAuth.sendPasswordResetEmail(email: email);
   }
 
+  void changePassword(String oldPass, String newPass, BuildContext context){
+    User user = firebaseAuth.currentUser!;
+    final credential = EmailAuthProvider.credential(email: user.email!, password: oldPass);
+    user.reauthenticateWithCredential(credential).then((value) {
+      user.updatePassword(newPass).then((_) {
+        showSnackBar(context, "Password updated successfully");
+      }).catchError((error) {
+        showSnackBar(context, "An error occurred while updating password");
+      });
+    }).catchError((error) {
+      showSnackBar(context, "An error occurred while updating password");
+    });
+  }
+
   void updatePassword(String password, BuildContext context) async {
     User user = firebaseAuth.currentUser!;
     await user.updatePassword(password);
