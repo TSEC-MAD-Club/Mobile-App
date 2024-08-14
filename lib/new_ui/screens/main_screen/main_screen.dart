@@ -35,6 +35,9 @@ import 'package:url_launcher/link.dart';
 
 import '../../../services/sharedprefsfordot.dart';
 
+import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter/gestures.dart';
+
 class MainScreen extends ConsumerStatefulWidget {
   const MainScreen({
     Key? key,
@@ -829,17 +832,27 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                       children: [
                         Text.rich(
                           TextSpan(
-                              text: 'Made with ♥️ TSEC ',
-                              style: TextStyle(
-                                  fontSize: 10, color: Colors.white),
-                              children: [
-                                TextSpan(
-                                    text: 'Devs Club',
-                                    style: TextStyle(fontSize: 10,
-                                        color: Colors.blue,
-                                        fontWeight: FontWeight.w700)
-                                )
-                              ]
+                            text: 'Made with ♥️ TSEC ',
+                            style: TextStyle(fontSize: 10, color: Colors.white),
+                            children: [
+                              TextSpan(
+                                text: 'Devs Club',
+                                style: TextStyle(
+                                  fontSize: 10,
+                                  color: Colors.blue,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () async {
+                                    const url = 'https://tsecdevsclub.com';
+                                    if (await canLaunch(url)) {
+                                      await launch(url);
+                                    } else {
+                                      throw 'Could not launch $url';
+                                    }
+                                  },
+                              ),
+                            ],
                           ),
                         ),
                       ],
