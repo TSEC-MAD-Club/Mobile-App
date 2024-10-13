@@ -62,4 +62,53 @@ class SharedPreferencesForDot{
     return prefs.getBool("railwayDot") ?? false;
   }
 
+
+
+
+
+
+
+
+
+
+  // ShowCase Prefs
+  static bool isFirstHome(){
+    return prefs.getBool('firstHome') ?? false;
+  }
+
+  static firstHomeVisited(){
+    prefs.setBool('firstHome',true);
+  }
+
+  static bool isFirstRailway(){
+    return prefs.getBool('firstRailway') ?? false;
+  }
+
+  static void firstRailwayVisited() async{
+    await prefs.setBool('firstRailway',true);
+  }
+
+  static bool isFirstTimeTable(){
+    return prefs.getBool('firstTime') ?? false;
+  }
+
+  static void firstTimeTableVisited() async{
+    await prefs.setBool('firstTime',true);
+  }
+
+  static bool isFirstGuide(){
+    return prefs.getBool('firstGuide') ?? false;
+  }
+
+  static void firstTimeGuide() async{
+    await prefs.setBool('firstGuide',true);
+  }
+
+  static bool isNotesVisited(){
+    return prefs.getBool('notesVisited') ?? false;
+  }
+
+  static void visitNotes()async{
+    await prefs.setBool('notesVisited',true);
+  }
 }

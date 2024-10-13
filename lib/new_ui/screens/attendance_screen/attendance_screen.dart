@@ -3,10 +3,14 @@ import 'package:flutter/services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:showcaseview/showcaseview.dart';
 import 'package:tsec_app/new_ui/colors.dart';
 import 'package:tsec_app/new_ui/screens/attendance_screen/widgets/attendance_subject_widget.dart';
 import 'package:tsec_app/new_ui/screens/attendance_screen/widgets/attendanceservice.dart';
 import 'package:tsec_app/provider/auth_provider.dart';
+import 'package:tsec_app/services/sharedprefsfordot.dart';
+
+import '../../showcasekeys.dart';
 
 class AttendanceScreen extends StatefulWidget {
   const AttendanceScreen({super.key});
@@ -37,6 +41,18 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
       print(totalLectures);
       print(attendedLectures);
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    bool isNotesVisited = SharedPreferencesForDot.isNotesVisited();
+    if(!isNotesVisited) {
+      WidgetsBinding.instance.addPostFrameCallback(
+              (_) =>
+              ShowCaseWidget.of(context).startShowCase([addNotesFloatButton],),);
+      SharedPreferencesForDot.visitNotes();
+    }
   }
 
   @override
@@ -119,12 +135,16 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                       color: Colors.white, fontSize: 4),
                                 ),
                                 Text(
-                                  '${((circularMap["attendedLectures"] / circularMap["totalLectures"]) * 100).toStringAsFixed(2)}%',
+                                  circularMap["totalLectures"] != 0
+                                      ? '${((circularMap["attendedLectures"] / circularMap["totalLectures"]) * 100).toStringAsFixed(2)}%'
+                                      : "0%",
                                   style: TextStyle(
                                       color: Colors.white, fontSize: 25),
                                 ),
                                 Text(
-                                  '${circularMap["attendedLectures"]}/${circularMap["totalLectures"]}',
+                                  circularMap["totalLectures"] != 0
+                                      ? '${circularMap["attendedLectures"]}/${circularMap["totalLectures"]}'
+                                      : "0%",
                                   style: TextStyle(
                                       color: Colors.white, fontSize: 15),
                                 ),
@@ -204,7 +224,8 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                             },
                                             enabled: isEnabled,
                                             controller: subjectNameController,
-                                            style: TextStyle(color: Colors.white),
+                                            style:
+                                                TextStyle(color: Colors.white),
                                             decoration: InputDecoration(
                                               labelText: 'Subject Name',
                                               border: OutlineInputBorder(
@@ -217,7 +238,8 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                                   EdgeInsets.symmetric(
                                                       horizontal: 15,
                                                       vertical: 10),
-                                              errorStyle: TextStyle(fontSize: 12),
+                                              errorStyle:
+                                                  TextStyle(fontSize: 12),
                                             ),
                                           ),
                                           SizedBox(height: 20),
@@ -228,16 +250,23 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
 
                                               if (val == null || val.isEmpty) {
                                                 return "Please enter some value";
-                                              } else if (totalLectures.isNotEmpty &&
-                                                  int.parse(val) > int.parse(totalLectures)) {
+                                              } else if (totalLectures
+                                                      .isNotEmpty &&
+                                                  int.parse(val) >
+                                                      int.parse(
+                                                          totalLectures)) {
                                                 return "Please enter correct value";
                                               }
                                             },
                                             keyboardType: TextInputType.number,
-                                            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                                            inputFormatters: [
+                                              FilteringTextInputFormatter
+                                                  .digitsOnly
+                                            ],
                                             controller:
                                                 attendedLecturesController,
-                                            style: TextStyle(color: Colors.white),
+                                            style:
+                                                TextStyle(color: Colors.white),
                                             enabled: isEnabled,
                                             decoration: InputDecoration(
                                               labelText: 'Attended Lectures',
@@ -246,7 +275,8 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                                     BorderRadius.circular(10),
                                               ),
                                               filled: true,
-                                              errorStyle: TextStyle(fontSize: 12),
+                                              errorStyle:
+                                                  TextStyle(fontSize: 12),
                                               focusColor: Colors.red,
                                               fillColor: Colors.transparent,
                                               contentPadding:
@@ -260,19 +290,26 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                             enabled: isEnabled,
                                             validator: (val) {
                                               String attendedLectures =
-                                                  attendedLecturesController.text;
+                                                  attendedLecturesController
+                                                      .text;
                                               if (val == null || val.isEmpty) {
                                                 return "Please enter some value";
-                                              } else if (attendedLectures.isNotEmpty &&
+                                              } else if (attendedLectures
+                                                      .isNotEmpty &&
                                                   int.parse(val) <
-                                                      int.parse(attendedLectures)) {
+                                                      int.parse(
+                                                          attendedLectures)) {
                                                 return "Please enter correct value";
                                               }
                                             },
                                             keyboardType: TextInputType.number,
-                                            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                                            inputFormatters: [
+                                              FilteringTextInputFormatter
+                                                  .digitsOnly
+                                            ],
                                             controller: totalLecturesController,
-                                            style: TextStyle(color: Colors.white),
+                                            style:
+                                                TextStyle(color: Colors.white),
                                             decoration: InputDecoration(
                                               labelText:
                                                   'Total Lectures Till Now',
@@ -281,7 +318,8 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                                     BorderRadius.circular(10),
                                               ),
                                               filled: true,
-                                              errorStyle: TextStyle(fontSize: 12),
+                                              errorStyle:
+                                                  TextStyle(fontSize: 12),
                                               focusColor: Colors.red,
                                               fillColor: Colors.transparent,
                                               contentPadding:
@@ -296,8 +334,8 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                   ),
                                   actions: <Widget>[
                                     TextButton(
-                                      onPressed: ()  {
-                                        if(isEnabled) {
+                                      onPressed: () {
+                                        if (isEnabled) {
                                           isEnabled = false;
                                           if (_updateformKey.currentState!
                                               .validate()) {
@@ -316,9 +354,10 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                               "present": attendedLectures
                                             };
 
-                                            AttendanceService
-                                                .updateSubject(attendanceList,
-                                                    index, updatedSubject);
+                                            AttendanceService.updateSubject(
+                                                attendanceList,
+                                                index,
+                                                updatedSubject);
 
                                             Navigator.of(context).pop();
                                           }
@@ -351,15 +390,12 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                                 .update({'attendance': attendanceList});
                                           }
                                         }*/
-
-                                        
                                       },
                                       child: Text('Update',
                                           style: TextStyle(color: Colors.blue)),
                                     ),
                                     TextButton(
-                                      onPressed: ()  {
-
+                                      onPressed: () {
                                         AttendanceService.deleteSubject(
                                             attendanceList, index);
 
@@ -433,13 +469,17 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
-                                          '${attendanceInfo['present']}/${attendanceInfo['total']}',
+                                          attendanceInfo['total'] != 0
+                                              ? '${attendanceInfo['present']}/${attendanceInfo['total']}'
+                                              : "0%",
                                           style: TextStyle(
                                               color: Colors.white,
                                               fontSize: 14),
                                         ),
                                         Text(
-                                          '${(attendanceInfo['present'] / attendanceInfo['total'] * 100).toInt()}%',
+                                          attendanceInfo['total'] != 0
+                                              ? '${(attendanceInfo['present'] / attendanceInfo['total'] * 100).toInt()}%'
+                                              : "0%",
                                           style: TextStyle(
                                               color: Colors.white,
                                               fontSize: 20,
@@ -451,8 +491,10 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                       height: 10,
                                     ),
                                     LinearProgressIndicator(
-                                      value: attendanceInfo['present'] /
-                                          attendanceInfo['total'],
+                                      value: attendanceInfo['total']
+                                          ? attendanceInfo['present'] /
+                                              attendanceInfo['total']
+                                          : 0,
                                       backgroundColor: Colors.white,
                                       valueColor:
                                           const AlwaysStoppedAnimation<Color>(
@@ -548,174 +590,185 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
               ),
             );
           }),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              TextEditingController subjectNameController =
-                  TextEditingController();
-              TextEditingController totalLecturesController =
-                  TextEditingController();
-              TextEditingController attendedLecturesController =
-                  TextEditingController();
+      floatingActionButton: Showcase(
+        key: addNotesFloatButton,
+        description: 'Click here to add Notes',
+        descTextStyle: TextStyle(fontSize: 15),
+        child: FloatingActionButton(
+          onPressed: () {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                TextEditingController subjectNameController =
+                    TextEditingController();
+                TextEditingController totalLecturesController =
+                    TextEditingController();
+                TextEditingController attendedLecturesController =
+                    TextEditingController();
 
-              final _formKey = GlobalKey<FormState>();
+                final _formKey = GlobalKey<FormState>();
 
-              return AlertDialog(
-                shape: RoundedRectangleBorder(
-                  borderRadius:
-                      BorderRadius.circular(15), // Increased corner radius
-                ),
-                title: Text(
-                  'Add Subject',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                ),
-                content: Form(
-                  key: _formKey,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          TextFormField(
-                            validator: (val) {
-                              if (val == null || val.isEmpty) {
-                                return "Please enter some value";
-                              }
-                            },
-                            style: TextStyle(color: Colors.white),
-                            // Set text color to white
-                            controller: subjectNameController,
-                            decoration: InputDecoration(
-                              focusColor: Colors.red,
-                              labelText: 'Subject Name',
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
+                print("Clicked");
+                return AlertDialog(
+                  shape: RoundedRectangleBorder(
+                    borderRadius:
+                        BorderRadius.circular(15), // Increased corner radius
+                  ),
+                  title: Text(
+                    'Add Subject',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                  ),
+                  content: Form(
+                    key: _formKey,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            TextFormField(
+                              validator: (val) {
+                                if (val == null || val.isEmpty) {
+                                  return "Please enter some value";
+                                }
+                              },
+                              style: TextStyle(color: Colors.white),
+                              // Set text color to white
+                              controller: subjectNameController,
+                              decoration: InputDecoration(
+                                focusColor: Colors.red,
+                                labelText: 'Subject Name',
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                filled: true,
+                                fillColor: Colors.transparent,
+                                errorStyle: TextStyle(fontSize: 12),
+                                contentPadding: EdgeInsets.symmetric(
+                                    horizontal: 15, vertical: 10),
                               ),
-                              filled: true,
-                              fillColor: Colors.transparent,
-                              errorStyle: TextStyle(fontSize: 12),
-                              contentPadding: EdgeInsets.symmetric(
-                                  horizontal: 15, vertical: 10),
                             ),
-                          ),
-                          SizedBox(height: 20),
-                          TextFormField(
-                            validator: (val) {
-                              String totalLectures =
-                                  totalLecturesController.text;
+                            SizedBox(height: 20),
+                            TextFormField(
+                              validator: (val) {
+                                String totalLectures =
+                                    totalLecturesController.text;
 
-                              if (val == null || val.isEmpty) {
-                                return "Please enter some value";
-                              } else if (totalLectures.isNotEmpty &&
-                                  int.parse(val) > int.parse(totalLectures)) {
-                                return "Please enter correct value";
-                              }
-                            },
-                            style: TextStyle(color: Colors.white),
-                            // Set text color to white
-                            controller: attendedLecturesController,
-                            keyboardType: TextInputType.number,
-                            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                            decoration: InputDecoration(
-                              labelText: 'Attended Lectures',
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
+                                if (val == null || val.isEmpty) {
+                                  return "Please enter some value";
+                                } else if (totalLectures.isNotEmpty &&
+                                    int.parse(val) > int.parse(totalLectures)) {
+                                  return "Please enter correct value";
+                                }
+                              },
+                              style: TextStyle(color: Colors.white),
+                              // Set text color to white
+                              controller: attendedLecturesController,
+                              keyboardType: TextInputType.number,
+                              inputFormatters: [
+                                FilteringTextInputFormatter.digitsOnly
+                              ],
+                              decoration: InputDecoration(
+                                labelText: 'Attended Lectures',
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                filled: true,
+                                fillColor: Colors.transparent,
+                                errorStyle: TextStyle(fontSize: 12),
+                                contentPadding: EdgeInsets.symmetric(
+                                    horizontal: 15, vertical: 10),
                               ),
-                              filled: true,
-                              fillColor: Colors.transparent,
-                              errorStyle: TextStyle(fontSize: 12),
-                              contentPadding: EdgeInsets.symmetric(
-                                  horizontal: 15, vertical: 10),
                             ),
-                          ),
-                          SizedBox(height: 20),
-                          TextFormField(
-                            validator: (val) {
-                              int attendedLectures =
-                                  int.parse(attendedLecturesController.text) ?? 0;
-                              if (val == null || val.isEmpty) {
-                                return "Please enter some value";
-                              } else if (attendedLectures !=0 &&
-                                  int.parse(val) <
-                                      attendedLectures) {
-                                return "Please enter correct value";
-                              }
-                            },
-                            style: TextStyle(color: Colors.white),
-                            // Set text color to white
-                            controller: totalLecturesController,
-                            keyboardType: TextInputType.number,
-                            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                            decoration: InputDecoration(
-                              labelText: 'Total Lectures Till Now',
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
+                            SizedBox(height: 20),
+                            TextFormField(
+                              validator: (val) {
+                                int attendedLectures = int.parse(
+                                        attendedLecturesController.text) ??
+                                    0;
+                                if (val == null || val.isEmpty) {
+                                  return "Please enter some value";
+                                } else if (attendedLectures != 0 &&
+                                    int.parse(val) < attendedLectures) {
+                                  return "Please enter correct value";
+                                }
+                              },
+                              style: TextStyle(color: Colors.white),
+                              // Set text color to white
+                              controller: totalLecturesController,
+                              keyboardType: TextInputType.number,
+                              inputFormatters: [
+                                FilteringTextInputFormatter.digitsOnly
+                              ],
+                              decoration: InputDecoration(
+                                labelText: 'Total Lectures Till Now',
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                filled: true,
+                                fillColor: Colors.transparent,
+                                contentPadding: EdgeInsets.symmetric(
+                                    horizontal: 15, vertical: 10),
+                                errorStyle: TextStyle(fontSize: 12),
                               ),
-                              filled: true,
-                              fillColor: Colors.transparent,
-                              contentPadding: EdgeInsets.symmetric(
-                                  horizontal: 15, vertical: 10),
-                              errorStyle: TextStyle(fontSize: 12),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
-                actions: <Widget>[
-                  TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: Text('Cancel', style: TextStyle(color: Colors.red)),
-                  ),
-                  TextButton(
-                    onPressed: ()  {
-                      if (_formKey.currentState!.validate()) {
-                        String subjectName = subjectNameController.text;
-                        int totalLectures =
-                            int.parse(totalLecturesController.text);
-                        int attendedLectures =
-                            int.parse(attendedLecturesController.text);
-
-                        Map<String, dynamic> updatedSubject = {
-                          "subject_name": subjectName,
-                          "total": totalLectures,
-                          "present": attendedLectures
-                        };
-                        AttendanceService.addSubject(updatedSubject);
-                        /*FirebaseFirestore.instance
-                            .collection("Attendance")
-                            .doc(FirebaseAuth.instance.currentUser!.uid)
-                            .set({
-                          'attendance': FieldValue.arrayUnion([{
-                            'subject_name': subjectName,
-                            'total': totalLectures,
-                            'present': attendedLectures
-                          }])
-                        }, SetOptions(merge: true));
-                        _fetchAndSetAttendance();*/
+                  actions: <Widget>[
+                    TextButton(
+                      onPressed: () {
                         Navigator.of(context).pop();
-                      }
-                    },
-                    child: Text('Add', style: TextStyle(color: Colors.blue)),
-                  ),
-                ],
-              );
-            },
-          );
-        },
-        shape: CircleBorder(
-          side: BorderSide(
-              color: commonbgL4ightblack,
-              width: 0.5), // Customize the border color and width
+                      },
+                      child:
+                          Text('Cancel', style: TextStyle(color: Colors.red)),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          String subjectName = subjectNameController.text;
+                          int totalLectures =
+                              int.parse(totalLecturesController.text);
+                          int attendedLectures =
+                              int.parse(attendedLecturesController.text);
+
+                          Map<String, dynamic> updatedSubject = {
+                            "subject_name": subjectName,
+                            "total": totalLectures,
+                            "present": attendedLectures
+                          };
+                          AttendanceService.addSubject(updatedSubject);
+                          /*FirebaseFirestore.instance
+                              .collection("Attendance")
+                              .doc(FirebaseAuth.instance.currentUser!.uid)
+                              .set({
+                            'attendance': FieldValue.arrayUnion([{
+                              'subject_name': subjectName,
+                              'total': totalLectures,
+                              'present': attendedLectures
+                            }])
+                          }, SetOptions(merge: true));
+                          _fetchAndSetAttendance();*/
+                          Navigator.of(context).pop();
+                        }
+                      },
+                      child: Text('Add', style: TextStyle(color: Colors.blue)),
+                    ),
+                  ],
+                );
+              },
+            );
+          },
+          shape: CircleBorder(
+            side: BorderSide(
+                color: commonbgL4ightblack,
+                width: 0.5), // Customize the border color and width
+          ),
+          backgroundColor: commonbgLightblack,
+          child: Icon(Icons.add, color: Colors.blue),
         ),
-        backgroundColor: commonbgLightblack,
-        child: Icon(Icons.add, color: Colors.blue),
       ),
     );
   }
@@ -761,34 +814,37 @@ String getTextForCard(int at, int tt) {
   double total = tt.toDouble();
   int toAttend = 0;
 
-  if (attended / total == 0.75) {
-    return "You are Just on track, keep it up !";
-  } else if (attended / total > 0.75) {
-    while (1 == 1) {
-      double t = (attended) / (total + 1);
-      if (t >= 0.75) {
-        total++;
-        toAttend--;
-      } else {
-        break;
+  try {
+    if (attended / total == 0.75) {
+      return "You are Just on track, keep it up !";
+    } else if (attended / total > 0.75) {
+      while (1 == 1) {
+        double t = (attended) / (total + 1);
+        if (t >= 0.75) {
+          total++;
+          toAttend--;
+        } else {
+          break;
+        }
+      }
+    } else {
+      while (1 == 1) {
+        double t = (attended + 1) / (total + 1);
+        if (t <= 0.75) {
+          total++;
+          attended++;
+          toAttend++;
+        } else {
+          break;
+        }
       }
     }
-  } else {
-    while (1 == 1) {
-      double t = (attended + 1) / (total + 1);
-      if (t <= 0.75) {
-        total++;
-        attended++;
-        toAttend++;
-      } else {
-        break;
-      }
+
+    if (toAttend <= 0) {
+      return "You are on track, keep it up !";
     }
+  } catch (e) {
+    return "Your presence in next ${toAttend} classes is crucial";
   }
-
-  if (toAttend <= 0) {
-    return "You are on track, keep it up !";
-  }
-
   return "Your presence in next ${toAttend} classes is crucial";
 }

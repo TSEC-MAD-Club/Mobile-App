@@ -3,33 +3,25 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide CarouselController,CarouselView;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:showcaseview/showcaseview.dart';
 import 'package:tsec_app/models/event_model/event_model.dart';
 import 'package:tsec_app/models/user_model/user_model.dart';
 import 'package:tsec_app/new_ui/colors.dart';
 import 'package:tsec_app/new_ui/screens/AnnouncementScreen/announcementscreen.dart';
-import 'package:tsec_app/new_ui/screens/home_screen/widgets/container_icon_with_label.dart';
-// import 'package:tsec_app/new_ui/screens/home_screen/widgets/expanded_card.dart';
 import 'package:tsec_app/provider/auth_provider.dart';
 import 'package:tsec_app/provider/event_provider.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
 
 
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tsec_app/models/student_model/student_model.dart';
-import 'package:tsec_app/models/user_model/user_model.dart';
-import 'package:tsec_app/provider/auth_provider.dart';
 import 'package:tsec_app/screens/departmentlist_screen/department_list.dart';
 import 'package:tsec_app/new_ui/screens/timetable_screen/widgets/card_display.dart';
-import 'package:tsec_app/utils/notification_type.dart';
-import 'package:tsec_app/utils/timetable_util.dart';
 import 'package:date_picker_timeline/date_picker_timeline.dart';
-import 'package:tsec_app/widgets/custom_scaffold.dart';
-import 'package:intl/intl.dart';
+
+import '../../../showcasekeys.dart';
 
 extension StringExtension on String {
   String toTitleCase() {
@@ -49,6 +41,7 @@ class HomeWidget extends ConsumerStatefulWidget {
 }
 
 class _HomeWidgetState extends ConsumerState<HomeWidget> {
+
   List<EventModel> eventList = [];
   bool shouldLoop = true;
   late FirebaseMessaging _firebaseMessaging;
@@ -176,8 +169,6 @@ class _HomeWidgetState extends ConsumerState<HomeWidget> {
           // Handle the notification click event
         }
       });
-
-
 
     }
 
@@ -517,47 +508,51 @@ class _HomeWidgetState extends ConsumerState<HomeWidget> {
                     ),
 
 
-
                   //DATE SELECTOR
                   if(_onlyUserLoggedIn)
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 7, 0, 20),
-                      child: Container(
-                        width: _size.width * 0.9,
-                        // color: Colors.red,
-                        height: 70,
-                        // could have used _size but fuck it whore-licks
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(10.0),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              border: Border.all(color: timePickerBorder, width: 1.0), // Change the color and width as needed
-                              borderRadius: BorderRadius.circular(10.0),
-                            color: timePickerBg,
-                            ),
-                            child: DatePicker(
-                              DateTime.now(),
-                              width: 45,
-                              monthTextStyle: _theme.textTheme.headlineSmall!.copyWith(
-                                fontSize: 11,
-                                color: Colors.grey,
+                    Showcase(
+                      key: timeTableKey,
+                      description: 'Select date to view Timetable',
+                      descTextStyle: TextStyle(fontSize: 15),
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 7, 0, 20),
+                        child: Container(
+                          width: _size.width * 0.9,
+                          // color: Colors.red,
+                          height: 70,
+                          // could have used _size but fuck it whore-licks
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(10.0),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                border: Border.all(color: timePickerBorder, width: 1.0), // Change the color and width as needed
+                                borderRadius: BorderRadius.circular(10.0),
+                              color: timePickerBg,
                               ),
-                              dayTextStyle: _theme.textTheme.headlineSmall!.copyWith(
-                                fontSize: 11,
-                                color: Colors.grey,
+                              child: DatePicker(
+                                DateTime.now(),
+                                width: 45,
+                                monthTextStyle: _theme.textTheme.headlineSmall!.copyWith(
+                                  fontSize: 11,
+                                  color: Colors.grey,
+                                ),
+                                dayTextStyle: _theme.textTheme.headlineSmall!.copyWith(
+                                  fontSize: 11,
+                                  color: Colors.grey,
+                                ),
+                                dateTextStyle: _theme.textTheme.titleSmall!.copyWith(
+                                  fontSize: 11,
+                                  color: Colors.grey,
+                                ),
+                                initialSelectedDate: DateTime.now(),
+                                selectionColor: oldDateSelectBlue,
+                                selectedTextColor: Colors.white,
+                                onDateChange: (selectedDate) {
+                                  ref
+                                      .read(dayProvider.notifier)
+                                      .update((state) => selectedDate);
+                                },
                               ),
-                              dateTextStyle: _theme.textTheme.titleSmall!.copyWith(
-                                fontSize: 11,
-                                color: Colors.grey,
-                              ),
-                              initialSelectedDate: DateTime.now(),
-                              selectionColor: oldDateSelectBlue,
-                              selectedTextColor: Colors.white,
-                              onDateChange: (selectedDate) {
-                                ref
-                                    .read(dayProvider.notifier)
-                                    .update((state) => selectedDate);
-                              },
                             ),
                           ),
                         ),

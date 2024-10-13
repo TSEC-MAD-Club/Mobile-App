@@ -25,6 +25,7 @@ environment:
 
 
 dependencies:
+  showcaseview: ^3.0.0
   cached_network_image: ^3.2.3
   carousel_slider: ^4.1.1
   cloud_firestore: ^4.2.0
@@ -48,7 +49,7 @@ dependencies:
   json_annotation: ^4.6.0
   lottie: ^2.3.2
   open_file: ^3.2.1
-  path_provider: ^2.0.12
+  path_provider: ^2.1.4
   permission_handler: ^10.2.0
   shared_preferences: ^2.0.15
   textfield_search: ^0.10.0

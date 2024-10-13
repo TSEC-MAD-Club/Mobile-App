@@ -8,6 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:showcaseview/showcaseview.dart';
 import 'package:tsec_app/models/user_model/user_model.dart';
 import 'package:tsec_app/new_ui/colors.dart';
 import 'package:tsec_app/new_ui/screens/attendance_screen/attendance_screen.dart';
@@ -23,6 +24,7 @@ import 'package:tsec_app/new_ui/screens/railway_screen/railway_screen.dart';
 import 'package:tsec_app/new_ui/screens/railway_screen/railwayform.dart';
 import 'package:tsec_app/new_ui/screens/launch_screen/launch_screen.dart';
 import 'package:tsec_app/new_ui/screens/timetable_screen/timetable_screen.dart';
+import 'package:tsec_app/new_ui/showcasekeys.dart';
 import 'package:tsec_app/provider/appbar_title_provider.dart';
 import 'package:tsec_app/provider/auth_provider.dart';
 import 'package:tsec_app/provider/railway_concession_provider.dart';
@@ -30,7 +32,8 @@ import 'package:tsec_app/new_ui/screens/committees_screen/committees_screen.dart
 import 'package:tsec_app/screens/departmentlist_screen/department_list.dart';
 import 'package:tsec_app/screens/notification_screen/notification_screen.dart';
 import 'package:tsec_app/new_ui/screens/committees_screen/old_committees_screen.dart';
-import 'package:tsec_app/screens/tpc_screen.dart';
+import 'package:tsec_app/screens/tpc_screen/tpc_screen.dart';
+import 'package:tsec_app/services/auth_service.dart';
 import 'package:url_launcher/link.dart';
 
 import '../../../services/sharedprefsfordot.dart';
@@ -49,6 +52,7 @@ class MainScreen extends ConsumerStatefulWidget {
 
 class _MainScreenState extends ConsumerState<MainScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
 
   String currentBottomNavPage = "home";
   int currentPage = 0;
@@ -70,9 +74,6 @@ class _MainScreenState extends ConsumerState<MainScreen> {
   @override
   void initState() {
     UserModel? user = ref.read(userModelProvider);
-
-
-
 
     if (user != null && user.isStudent) {
       //student login
@@ -142,6 +143,26 @@ class _MainScreenState extends ConsumerState<MainScreen> {
       );
     });
 
+
+    bool isFirstHome = SharedPreferencesForDot.isFirstHome();
+    if(!isFirstHome) {
+      WidgetsBinding.instance.addPostFrameCallback((_) =>
+          ShowCaseWidget.of(context).startShowCase(
+              [notificationBellKey, logoutKey])
+      );
+      SharedPreferencesForDot.firstHomeVisited();
+    }
+
+    if(user!= null && user.isStudent){
+      bool isFirstTime = SharedPreferencesForDot.isFirstTimeTable();
+      if(!isFirstTime){
+        WidgetsBinding.instance.addPostFrameCallback((_) =>
+            ShowCaseWidget.of(context).startShowCase(
+                [timeTableKey])
+        );
+        SharedPreferencesForDot.firstTimeTableVisited();
+      }
+    }
 
     super.initState();
   }
@@ -351,18 +372,23 @@ class _MainScreenState extends ConsumerState<MainScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Flexible(
-                  flex: 1,
-                  child: GestureDetector(
-                    onTap: () {
-                      _scaffoldKey.currentState?.openDrawer();
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.all(0),
-                      child: Image.asset(
-                        'assets/images/new_app_bar/icon_ham.png',
-                        width: 39,
-                        height: 39,
+                Showcase(
+                  key: logoutKey,
+                  description: 'You can Login from the Drawer Panel',
+                  descTextStyle: TextStyle(fontSize: 15),
+                  child: Flexible(
+                    flex: 1,
+                    child: GestureDetector(
+                      onTap: () {
+                        _scaffoldKey.currentState?.openDrawer();
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(0),
+                        child: Image.asset(
+                          'assets/images/new_app_bar/icon_ham.png',
+                          width: 39,
+                          height: 39,
+                        ),
                       ),
                     ),
                   ),
@@ -371,33 +397,38 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                 Text(getTitle(data), style: TextStyle(
                     color: Colors.white, fontSize: size.width * 0.055),),
                 Spacer(),
-                Flexible(
-                  flex: 1,
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (
-                          context) => NotificationScreen(),),);
-                    },
-                    child: Stack(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 6, 0, 0),
-                          child: Image.asset(
-                            'assets/images/new_app_bar/icon_bell.png',
-                            width: 45,
-                            height: 45,
+                Showcase(
+                  key: notificationBellKey,
+                  descTextStyle: TextStyle(fontSize: 15),
+                  description: 'View Notification from here',
+                  child: Flexible(
+                    flex: 1,
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (
+                            context) => NotificationScreen(),),);
+                      },
+                      child: Stack(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 6, 0, 0),
+                            child: Image.asset(
+                              'assets/images/new_app_bar/icon_bell.png',
+                              width: 45,
+                              height: 45,
+                            ),
                           ),
-                        ),
-                        (SharedPreferencesForDot.getNoOfNewNotification() - SharedPreferencesForDot.getNoOfNotification() != 0) ?
-                        Positioned(right: 0,top: 0,
-                          child: Container(
-                            height: 17,
-                          width: 17,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(color: oldDateSelectBlue,shape: BoxShape.circle)
-                          ,child: Text("${SharedPreferencesForDot.getNoOfNewNotification() - SharedPreferencesForDot.getNoOfNotification()}",style: TextStyle(color: Colors.white,fontSize: 9),)
-                          ,),) : SizedBox(),
-                      ],
+                          (SharedPreferencesForDot.getNoOfNewNotification() - SharedPreferencesForDot.getNoOfNotification() != 0) ?
+                          Positioned(right: 0,top: 0,
+                            child: Container(
+                              height: 17,
+                            width: 17,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(color: oldDateSelectBlue,shape: BoxShape.circle)
+                            ,child: Text("${SharedPreferencesForDot.getNoOfNewNotification() - SharedPreferencesForDot.getNoOfNotification()}",style: TextStyle(color: Colors.white,fontSize: 9),)
+                            ,),) : SizedBox(),
+                        ],
+                      ),
                     ),
                   ),
                 ),
