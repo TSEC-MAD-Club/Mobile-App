@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:showcaseview/showcaseview.dart';
 import 'package:tsec_app/models/event_model/event_model.dart';
 import 'package:tsec_app/new_ui/router.dart';
 import 'package:tsec_app/new_ui/screens/home_screen/home_screen.dart';
@@ -170,16 +171,20 @@ class _TSECAppState extends ConsumerState<TSECApp> {
   @override
   Widget build(BuildContext context) {
     final _themeMode = ref.watch(themeProvider);
-    return MaterialApp.router(
-      debugShowCheckedModeBanner: false,
-      builder: (context, child) =>
-          MediaQuery(data: getTextScale(context), child: child!),
-      routeInformationProvider: _routes.routeInformationProvider,
-      routeInformationParser: _routes.routeInformationParser,
-      routerDelegate: _routes.routerDelegate,
-      title: 'TSEC App',
-      themeMode: ThemeMode.dark,
-      darkTheme: darkTheme,
+    return ShowCaseWidget(
+      builder: (context) => Builder(
+        builder: (context) => MaterialApp.router(
+            debugShowCheckedModeBanner: false,
+            builder: (context, child) =>
+                MediaQuery(data: getTextScale(context), child: child!),
+            routeInformationProvider: _routes.routeInformationProvider,
+            routeInformationParser: _routes.routeInformationParser,
+            routerDelegate: _routes.routerDelegate,
+            title: 'TSEC App',
+            themeMode: ThemeMode.dark,
+            darkTheme: darkTheme,
+          ),
+      ),
     );
   }
 }

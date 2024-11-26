@@ -1,9 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:showcaseview/showcaseview.dart';
 import 'package:tsec_app/new_ui/screens/guidelines_screen/widgets/FAQCard.dart';
 import 'package:tsec_app/new_ui/screens/guidelines_screen/widgets/guidelines_card.dart';
-import 'package:tsec_app/services/localnotificationservice.dart';
+
+import '../../../services/sharedprefsfordot.dart';
+import '../../showcasekeys.dart';
 
 class GuideLinesScreen extends StatefulWidget {
   @override
@@ -11,14 +14,23 @@ class GuideLinesScreen extends StatefulWidget {
 }
 
 class _GuideLinesScreenState extends State<GuideLinesScreen> {
+
   List guideLines = [];
   List faqs = [];
 
   @override
   void initState() {
+
     super.initState();
     setGuidelines();
     setFAQ();
+    bool isFirstRailway = SharedPreferencesForDot.isFirstGuide();
+    if(!isFirstRailway) {
+      WidgetsBinding.instance.addPostFrameCallback((_) =>
+          ShowCaseWidget.of(context).startShowCase([infoKey])
+      );
+      SharedPreferencesForDot.firstTimeGuide();
+    }
   }
 
   setGuidelines() {
@@ -72,53 +84,58 @@ class _GuideLinesScreenState extends State<GuideLinesScreen> {
                     ),
                   ),
                 ),
-                IconButton(
-                  icon: Icon(Icons.info_outline, color: Colors.white),
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          title: Text(
-                            "FAQ",
-                            style: TextStyle(color: Colors.white,fontWeight: FontWeight.w700,fontSize: 20,
-                              shadows: [Shadow(offset: Offset(1.0, 1.0),blurRadius: 3.0,color: Colors.blue,),
-                              ],
+                Showcase(
+                  key: infoKey,
+                  description: 'Click here to for more information',
+                  descTextStyle: TextStyle(fontSize: 15),
+                  child: IconButton(
+                    icon: Icon(Icons.info_outline, color: Colors.white),
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
                             ),
-                          ),
-                          content: Container(
-                            width: double.maxFinite,
-                            height: 400,
-                            child: ListView.builder(
-                              padding: EdgeInsets.zero,
-                              itemCount: faqs.length,
-                              itemBuilder: (context, index) {
-                                Map<String, dynamic> faq = faqs[index];
-                                return FAQCard(
-                                  faqContent: faq["content"],
-                                  faqTitle: faq["title"],
-                                );
-                              },
-                            ),
-                          ),
-                          actions: <Widget>[
-                            TextButton(
-                              child: Text(
-                                "Close",
-                                style: TextStyle(fontSize: 15),
+                            title: Text(
+                              "FAQ",
+                              style: TextStyle(color: Colors.white,fontWeight: FontWeight.w700,fontSize: 20,
+                                shadows: [Shadow(offset: Offset(1.0, 1.0),blurRadius: 3.0,color: Colors.blue,),
+                                ],
                               ),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
                             ),
-                          ],
-                        );
-                      },
-                    );
-                  },
+                            content: Container(
+                              width: double.maxFinite,
+                              height: 400,
+                              child: ListView.builder(
+                                padding: EdgeInsets.zero,
+                                itemCount: faqs.length,
+                                itemBuilder: (context, index) {
+                                  Map<String, dynamic> faq = faqs[index];
+                                  return FAQCard(
+                                    faqContent: faq["content"],
+                                    faqTitle: faq["title"],
+                                  );
+                                },
+                              ),
+                            ),
+                            actions: <Widget>[
+                              TextButton(
+                                child: Text(
+                                  "Close",
+                                  style: TextStyle(fontSize: 15),
+                                ),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    },
+                  ),
                 ),
               ],
             ),

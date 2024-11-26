@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:showcaseview/showcaseview.dart';
 import 'package:tsec_app/models/concession_details_model/concession_details_model.dart';
 import 'package:tsec_app/models/concession_request_model/concession_request_model.dart';
 // import 'package:tsec_app/models/concession_request_model/concession_request_model.dart';
@@ -21,6 +22,7 @@ import 'package:tsec_app/new_ui/screens/railway_screen/widgets/concession_status
 import 'package:tsec_app/new_ui/screens/railway_screen/widgets/railway_dropdown_search.dart';
 import 'package:tsec_app/new_ui/screens/railway_screen/widgets/railway_dropdown_field.dart';
 import 'package:tsec_app/new_ui/screens/railway_screen/widgets/stepperwidget.dart';
+import 'package:tsec_app/new_ui/showcasekeys.dart';
 import 'package:tsec_app/provider/auth_provider.dart';
 import 'package:tsec_app/provider/concession_provider.dart';
 import 'package:tsec_app/provider/concession_request_provider.dart';
@@ -457,6 +459,15 @@ class _RailwayConcessionScreenState
       ref.read(concessionRequestProvider.notifier).getConcessionRequestData();
     });
 
+    bool isFirstRailway = SharedPreferencesForDot.isFirstRailway();
+    print("Is Railway applied = $isFirstRailway");
+    if(!isFirstRailway) {
+      WidgetsBinding.instance.addPostFrameCallback((_) =>
+          ShowCaseWidget.of(context).startShowCase([seeGuidleinesKey])
+      );
+      SharedPreferencesForDot.firstRailwayVisited();
+    }
+
   }
   
 
@@ -712,32 +723,37 @@ class _RailwayConcessionScreenState
                             style: TextStyle(color: Colors.white),),),
                           Positioned(top: 15,child: InkWell(
                             onTap: ()=>Navigator.push(context, MaterialPageRoute(builder: (context)=> GuideLinesScreen(),),),
-                            child: Container(
-                              width: size.width*0.75,
-                              decoration: BoxDecoration(
-                                color: oldDateSelectBlue,
-                                borderRadius: BorderRadius.circular(size.width*0.05),
-                                border: Border.all(color: Colors.white),
-                                boxShadow: [
-                                  BoxShadow(offset: Offset.fromDirection(2),spreadRadius: 2,color: Colors.black,blurRadius: 2)
-                                ],
-                              ),
-                              alignment: Alignment.center,
-                              height: 60,
-                              child: Padding(
-                                padding: const EdgeInsets.all(10.0),
-                                child: Row(
-                                    children: [
-                                      Image.asset('assets/images/icons/box_imp.png',width: 16,),
-                                      SizedBox(width: 10.0,),
-                                      Expanded(
-                                        child: Text(
-                                        futurePassMessage(concessionDetails),
-                                        style: const TextStyle(color: Colors.white),),
-                                      )
-                                    ],
-                                  ),
+                            child: Showcase(
+                              key: seeGuidleinesKey,
+                              description: 'Click here to view guidelines',
+                              descTextStyle: TextStyle(fontSize: 15),
+                              child: Container(
+                                width: size.width*0.75,
+                                decoration: BoxDecoration(
+                                  color: oldDateSelectBlue,
+                                  borderRadius: BorderRadius.circular(size.width*0.05),
+                                  border: Border.all(color: Colors.white),
+                                  boxShadow: [
+                                    BoxShadow(offset: Offset.fromDirection(2),spreadRadius: 2,color: Colors.black,blurRadius: 2)
+                                  ],
+                                ),
+                                alignment: Alignment.center,
+                                height: 60,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: Row(
+                                      children: [
+                                        Image.asset('assets/images/icons/box_imp.png',width: 16,),
+                                        SizedBox(width: 10.0,),
+                                        Expanded(
+                                          child: Text(
+                                          futurePassMessage(concessionDetails),
+                                          style: const TextStyle(color: Colors.white),),
+                                        )
+                                      ],
+                                    ),
 
+                                ),
                               ),
                             ),
                           ),),
@@ -903,32 +919,37 @@ class _RailwayConcessionScreenState
                   SizedBox(height: 20.0,),
                   GestureDetector(
                     onTap: ()=>Navigator.push(context, MaterialPageRoute(builder: (context)=> GuideLinesScreen(),),),
-                    child: Container(
-                      width: size.width*0.75,
-                      decoration: BoxDecoration(
-                        color: oldDateSelectBlue,
-                        borderRadius: BorderRadius.circular(size.width*0.05),
-                        border: Border.all(color: Colors.white),
-                        boxShadow: [
-                          BoxShadow(offset: Offset.fromDirection(2),spreadRadius: 2,color: Colors.black,blurRadius: 2)
-                        ],
-                      ),
-                      alignment: Alignment.center,
-                      height: 60,
-                      child: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child:
-                          Row(
-                            children: [
-                              Image.asset('assets/images/icons/box_imp.png',width: 16,),
-                              SizedBox(width: 10.0,),
-                              Expanded(
-                                child: Text(
-                                futurePassMessage(concessionDetails),
-                                style: const TextStyle(color: Colors.white),),
-                              )
-                            ],
-                          ),
+                    child: Showcase(
+                      key: seeGuidleinesKey,
+                      description: 'Click here to view guidelines',
+                      descTextStyle: TextStyle(fontSize: 15),
+                      child: Container(
+                        width: size.width*0.75,
+                        decoration: BoxDecoration(
+                          color: oldDateSelectBlue,
+                          borderRadius: BorderRadius.circular(size.width*0.05),
+                          border: Border.all(color: Colors.white),
+                          boxShadow: [
+                            BoxShadow(offset: Offset.fromDirection(2),spreadRadius: 2,color: Colors.black,blurRadius: 2)
+                          ],
+                        ),
+                        alignment: Alignment.center,
+                        height: 60,
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child:
+                            Row(
+                              children: [
+                                Image.asset('assets/images/icons/box_imp.png',width: 16,),
+                                SizedBox(width: 10.0,),
+                                Expanded(
+                                  child: Text(
+                                  futurePassMessage(concessionDetails),
+                                  style: const TextStyle(color: Colors.white),),
+                                )
+                              ],
+                            ),
+                        ),
                       ),
                     ),
                   ),

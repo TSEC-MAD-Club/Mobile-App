@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:tsec_app/models/notification_model/notification_model.dart';
 import 'package:tsec_app/models/student_model/student_model.dart';
 import 'package:tsec_app/models/user_model/user_model.dart';
+import 'package:tsec_app/new_ui/screens/login_screen/ResetPasswordScreen.dart';
 import 'package:tsec_app/provider/auth_provider.dart';
 import 'package:tsec_app/provider/firebase_provider.dart';
 import 'package:tsec_app/provider/notification_provider.dart';
@@ -46,27 +47,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     super.dispose();
   }
 
-  Future forgotPassword() async {
-    if (_emailTextEditingController.text.trim() != "") {
-      try {
-        await ref
-            .watch(authProvider.notifier)
-            .resetPassword(_emailTextEditingController.text.trim(), context);
 
-        showSnackBar(context,
-            'Check your inbox and click on the link in password reset email');
-      } on FirebaseAuthException catch (e) {
-        if (e.code == 'user-not-found') {
-          showSnackBar(context, 'No user found corresponding to that email.');
-        } else
-          showSnackBar(context, e.message.toString());
-        return null;
-      }
-    } else {
-      showSnackBar(
-          context, 'Enter the email to reset password of that account');
-    }
-  }
 
   Future login() async {
     if (_formKey.currentState!.validate()) {
@@ -288,7 +269,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                 borderRadius: BorderRadius.circular(
                                     30), // Set the desired border radius
                                 onTap: () async {
-                                  forgotPassword();
+                                  //forgotPassword();
+                                  Navigator.push(context, MaterialPageRoute(builder: (context)=> ResetPasswordScreen(),),);
                                 },
                                 highlightShape:
                                     BoxShape.rectangle, // Custom shape
