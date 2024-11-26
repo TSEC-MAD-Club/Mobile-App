@@ -11,6 +11,7 @@ import 'package:tsec_app/provider/auth_provider.dart';
 import 'package:tsec_app/services/sharedprefsfordot.dart';
 
 import '../../showcasekeys.dart';
+import 'add_attendance.dart';
 
 class AttendanceScreen extends StatefulWidget {
   const AttendanceScreen({super.key});
@@ -183,11 +184,30 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                       itemCount: attendanceList.length,
                       itemBuilder: (context, index) {
                         var attendanceInfo = attendanceList[index];
+                        print(attendanceInfo);
 
                         return GestureDetector(
                           onTap: () {
                             // Show dialog with current values for modification
-                            showDialog(
+
+                            Navigator.push(context, PageRouteBuilder(
+                              pageBuilder: (context, animation, secondaryAnimation) =>
+                                  AddAttendanceScreen(isUpdate: true,index: index,attendanceList: attendanceList,updatedSubject: attendanceInfo,),
+                              transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                                const begin = Offset(0.0, 1.0); // Start from bottom
+                                const end = Offset.zero;        // Move to top (center)
+                                const curve = Curves.easeInOut;
+
+                                var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+                                var offsetAnimation = animation.drive(tween);
+
+                                return SlideTransition(
+                                  position: offsetAnimation,
+                                  child: child,
+                                );
+                              },
+                            ),);
+                           /* showDialog(
                               context: context,
                               builder: (BuildContext context) {
                                 TextEditingController subjectNameController =
@@ -364,7 +384,8 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                         }
                                         isEnabled = false;
 
-                                        /*DocumentSnapshot doc = await FirebaseFirestore.instance
+                                        */
+                            /*DocumentSnapshot doc = await FirebaseFirestore.instance
                                             .collection("Attendance")
                                             .doc(FirebaseAuth.instance.currentUser!.uid)
                                             .get();
@@ -390,6 +411,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                                 .update({'attendance': attendanceList});
                                           }
                                         }*/
+                            /*
                                       },
                                       child: Text('Update',
                                           style: TextStyle(color: Colors.blue)),
@@ -399,7 +421,8 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                         AttendanceService.deleteSubject(
                                             attendanceList, index);
 
-                                        /*DocumentSnapshot doc = await FirebaseFirestore.instance
+                                        */
+                            /*DocumentSnapshot doc = await FirebaseFirestore.instance
                                             .collection("Attendance")
                                             .doc(FirebaseAuth.instance.currentUser!.uid)
                                             .get();
@@ -417,6 +440,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                               .update({'attendance': attendanceList});
                                         }
                                         _fetchAndSetAttendance();*/
+                            /*
                                         Navigator.of(context).pop();
                                       },
                                       child: Text('Delete',
@@ -432,7 +456,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                   ],
                                 );
                               },
-                            );
+                            );*/
                           },
                           child: Card(
                             child: Container(
@@ -491,7 +515,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                       height: 10,
                                     ),
                                     LinearProgressIndicator(
-                                      value: attendanceInfo['total']
+                                      value: attendanceInfo['total'] != 0
                                           ? attendanceInfo['present'] /
                                               attendanceInfo['total']
                                           : 0,
@@ -596,7 +620,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
         descTextStyle: TextStyle(fontSize: 15),
         child: FloatingActionButton(
           onPressed: () {
-            showDialog(
+            /*showDialog(
               context: context,
               builder: (BuildContext context) {
                 TextEditingController subjectNameController =
@@ -740,7 +764,8 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                             "present": attendedLectures
                           };
                           AttendanceService.addSubject(updatedSubject);
-                          /*FirebaseFirestore.instance
+                          */
+            /*FirebaseFirestore.instance
                               .collection("Attendance")
                               .doc(FirebaseAuth.instance.currentUser!.uid)
                               .set({
@@ -751,6 +776,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                             }])
                           }, SetOptions(merge: true));
                           _fetchAndSetAttendance();*/
+            /*
                           Navigator.of(context).pop();
                         }
                       },
@@ -759,7 +785,25 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                   ],
                 );
               },
-            );
+            );*/
+
+            Navigator.push(context, PageRouteBuilder(
+              pageBuilder: (context, animation, secondaryAnimation) =>
+                  AddAttendanceScreen(isUpdate: false,),
+              transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                const begin = Offset(0.0, 1.0); // Start from bottom
+                const end = Offset.zero;        // Move to top (center)
+                const curve = Curves.easeInOut;
+
+                var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+                var offsetAnimation = animation.drive(tween);
+
+                return SlideTransition(
+                  position: offsetAnimation,
+                  child: child,
+                );
+              },
+            ),);
           },
           shape: CircleBorder(
             side: BorderSide(
