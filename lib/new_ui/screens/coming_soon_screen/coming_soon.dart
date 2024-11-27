@@ -6,7 +6,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:tsec_app/new_ui/screens/main_screen/widgets/common_basic_appbar.dart';
 
 class ComingSoon extends StatefulWidget {
-  const ComingSoon({Key? key}) : super(key: key);
+  const ComingSoon({super.key});
 
   @override
   _ComingSoonState createState() => _ComingSoonState();
@@ -14,25 +14,33 @@ class ComingSoon extends StatefulWidget {
 
 class _ComingSoonState extends State<ComingSoon> {
   int _current = 0;
-  final CarouselController _controller = CarouselController();
+  final CarouselSliderController _controller = CarouselSliderController();
+  late Timer _timer; // Declare the timer
 
   final List<String> imgList = [
     'assets/images/coming_soon/coming_soon_1.png',
     'assets/images/coming_soon/coming_soon_2.png',
-  ];  
+  ];
 
   @override
   void initState() {
     super.initState();
-    Timer.periodic(Duration(seconds: 3), (Timer timer) {
-      if (_current < imgList.length - 1) {
-        _current++;
-      } else {
-        _current = 0;
-      }
-
-      _controller.animateToPage(_current);
+    _timer = Timer.periodic(const Duration(seconds: 3), (Timer timer) {
+      setState(() {
+        if (_current < imgList.length - 1) {
+          _current++;
+        } else {
+          _current = 0;
+        }
+        _controller.animateToPage(_current);
+      });
     });
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel(); // Cancel the timer when the widget is disposed
+    super.dispose();
   }
 
   @override
@@ -55,12 +63,11 @@ class _ComingSoonState extends State<ComingSoon> {
               autoPlay: false,
             ),
           ),
-
           Positioned.fill(
             child: BackdropFilter(
               filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
               child: Container(
-                color: Colors.black.withOpacity(0.5), // Adjust the opacity as needed
+                color: Colors.black.withOpacity(0.5),
               ),
             ),
           ),
@@ -70,22 +77,14 @@ class _ComingSoonState extends State<ComingSoon> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // Text(
-                  //   "What are we working on 🤔",
-                  //   style: Theme.of(context)
-                  //       .textTheme
-                  //       .bodyLarge!
-                  //       .copyWith(color: Colors.white),
-                  // ),
-                  SizedBox(height: 0.0),
                   SizedBox(
                     width: MediaQuery.of(context).size.width * .75,
                     height: MediaQuery.of(context).size.width * .60,
                     child: Lottie.asset("assets/animation/coming_soon_lottie.json"),
                   ),
-                  SizedBox(height: 50.0),
+                  const SizedBox(height: 50.0),
                   Text(
-                    "Hold up!\nexciting updates are on the way!",
+                    "Hold up!\nExciting updates are on the way!",
                     textAlign: TextAlign.center,
                     style: Theme.of(context)
                         .textTheme

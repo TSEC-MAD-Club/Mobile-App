@@ -68,7 +68,7 @@ class _CustomScaffoldState extends ConsumerState<CustomScaffold>
         if (previous != next && next != null) {
           if (next.isForeground)
             showTopSnackBar(
-              context,
+              Overlay.of(context),
               _ForegroundNotificationSnackBar(
                 notificationModel: next.notificationModel!,
               ),
