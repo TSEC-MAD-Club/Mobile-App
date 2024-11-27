@@ -38,7 +38,7 @@ class NotificationDialog extends StatelessWidget {
           Text(
             notificationModel.message,
             style: const TextStyle(
-              color: Colors.white,
+              color: Color.fromARGB(255, 56, 43, 43),
             ),
           ),
           if (notificationModel.attachments != null) ...[

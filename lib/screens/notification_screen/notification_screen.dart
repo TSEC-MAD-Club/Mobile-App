@@ -21,7 +21,7 @@ extension DateOnlyCompare on DateTime {
 }
 
 class NotificationScreen extends ConsumerStatefulWidget {
-  const NotificationScreen({Key? key}) : super(key: key);
+  const NotificationScreen({super.key});
 
   @override
   _NotificationScreenState createState() => _NotificationScreenState();
@@ -33,7 +33,8 @@ class _NotificationScreenState extends ConsumerState<NotificationScreen> {
   @override
   void initState() {
     super.initState();
-    SharedPreferencesForDot.storeNoOfNotification(SharedPreferencesForDot.getNoOfNewNotification());
+    SharedPreferencesForDot.storeNoOfNotification(
+        SharedPreferencesForDot.getNoOfNewNotification());
   }
 
   @override
@@ -49,16 +50,19 @@ class _NotificationScreenState extends ConsumerState<NotificationScreen> {
           ),
         ],
         //body: Column(),
-        body: ref.watch(notificationListProvider).when(
-            data: (data){
-              final notifications = data.docs;
-              return ListView.builder(itemCount: notifications.length, itemBuilder: (context, index){
-                final notif = NotificationModel.fromJson(notifications[index].data() as Map<String, dynamic>);
+        body: ref.watch(notificationListProvider).when(data: (data) {
+          final notifications = data.docs;
+          return ListView.builder(
+              itemCount: notifications.length,
+              itemBuilder: (context, index) {
+                final notif = NotificationModel.fromJson(
+                    notifications[index].data() as Map<String, dynamic>);
                 //print(notif.attachments.toString());
                 final listTile = NotificationListItem(
                   notificationModel: notif,
                 );
-                if (_lastDate.isSameDate(notif.notificationTime)) return listTile;
+                if (_lastDate.isSameDate(notif.notificationTime))
+                  return listTile;
 
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -68,9 +72,16 @@ class _NotificationScreenState extends ConsumerState<NotificationScreen> {
                   ],
                 );
               });
-            },
-            error: (error, stacktrace){return Center(child: Text(error.toString(), style: TextStyle(color: Colors.white),),);},
-            loading: (){return Column();}),
+        }, error: (error, stacktrace) {
+          return Center(
+            child: Text(
+              error.toString(),
+              style: TextStyle(color: Colors.white),
+            ),
+          );
+        }, loading: () {
+          return Column();
+        }),
 
         /*body: FirestoreListView<NotificationModel>(
           query: locator<NotificationService>()
@@ -109,7 +120,7 @@ class _NotificationScreenState extends ConsumerState<NotificationScreen> {
         labelStyle: const TextStyle(fontSize: 12),
         label: Text(
           DateFormat("dd MMMM,yyyy").format(notificationTime),
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: const Color.fromARGB(255, 60, 41, 41)),
         ),
       ),
     );
