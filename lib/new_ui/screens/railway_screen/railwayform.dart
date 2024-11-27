@@ -41,6 +41,12 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
   DateTime? lastPassIssued;
   // String?
 
+  @override
+  void initState() {
+    super.initState();
+    fetchConcessionDetails();
+  }
+
   bool canIssuePass(ConcessionDetailsModel? concessionDetails,
       DateTime? lastPassIssued, String? duration) {
     if (concessionDetails?.status != null) {
@@ -80,7 +86,7 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    fetchConcessionDetails();
+    // fetchConcessionDetails();
     if (status == "rejected") {
       WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
         // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -289,7 +295,7 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
 
   void fetchConcessionDetails() async {
     ConcessionDetailsModel? concessionDetails =
-        ref.watch(concessionDetailsProvider);
+        ref.read(concessionDetailsProvider);
     var idcardurl2var = await fetchUserIdCardURL2();
 
 
