@@ -39,12 +39,12 @@ class RailwayDropdownSearch extends StatelessWidget {
           child: DropdownSearch<String>(
             validator: validator,
             selectedItem: val,
-            dropdownDecoratorProps: DropDownDecoratorProps(
+            decoratorProps: DropDownDecoratorProps(
               baseStyle: Theme.of(context)
                   .textTheme
                   .bodySmall!
                   .copyWith(color: Colors.white),
-              dropdownSearchDecoration: InputDecoration(
+              decoration: InputDecoration(
                 fillColor: Colors.white,
                 labelText: label,
                 labelStyle: TextStyle(color: Colors.grey),
@@ -82,9 +82,7 @@ class RailwayDropdownSearch extends StatelessWidget {
                   hintStyle: TextStyle(color: Colors.grey, fontSize: 16),
                 ),
               ),
-
-
-              itemBuilder: (context, item, isSelected) {
+              itemBuilder: (context, item, isDisabled, isSelected) {
                 return Padding(
                   padding: const EdgeInsets.all(15.0),
                   child: Container(
@@ -102,13 +100,18 @@ class RailwayDropdownSearch extends StatelessWidget {
                 );
               },
             ),
-            dropdownButtonProps: DropdownButtonProps(
-              icon: Icon(
-                Icons.keyboard_arrow_down_outlined,
+            suffixProps: DropdownSuffixProps(
+              dropdownButtonProps: DropdownButtonProps(
+                iconClosed: Icon(
+                  Icons.keyboard_arrow_down_outlined,
+                ),
+                iconOpened: Icon(
+                  Icons.keyboard_arrow_up_outlined,
+                ),
+                alignment: Alignment.bottomRight,
               ),
-              alignment: Alignment.bottomRight,
             ),
-            items: items,
+            items: (f, cs) => items,
             onChanged: onChanged,
           ),
         ),

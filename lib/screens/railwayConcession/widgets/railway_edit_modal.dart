@@ -680,20 +680,27 @@ class _RailwayEditModalState extends ConsumerState<RailwayEditModal> {
                                   children: [
                                     Expanded(
                                       child: DropdownSearch<String>(
-                                        dropdownButtonProps:
-                                            DropdownButtonProps(
-                                          icon: Icon(
-                                            Icons.keyboard_arrow_down_outlined,
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .inversePrimary,
+                                        suffixProps: DropdownSuffixProps(
+                                          dropdownButtonProps:
+                                              DropdownButtonProps(
+                                            iconClosed: Icon(
+                                              Icons
+                                                  .keyboard_arrow_down_outlined,
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .inversePrimary,
+                                            ),
+                                            iconOpened: Icon(
+                                              Icons.keyboard_arrow_up_outlined,
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .inversePrimary,
+                                            ),
+                                            alignment: Alignment.bottomRight,
                                           ),
-                                          alignment: Alignment.bottomRight,
                                         ),
-                                        dropdownDecoratorProps:
-                                            DropDownDecoratorProps(
-                                          dropdownSearchDecoration:
-                                              InputDecoration(
+                                        decoratorProps: DropDownDecoratorProps(
+                                          decoration: InputDecoration(
                                             labelText: "Station",
                                           ),
                                         ),
@@ -705,7 +712,7 @@ class _RailwayEditModalState extends ConsumerState<RailwayEditModal> {
                                             homeStation = newVal;
                                           }
                                         },
-                                        items: mumbaiRailwayStations,
+                                        items: (f, cs) => mumbaiRailwayStations,
                                         validator: (value) {
                                           if (value == null) {
                                             return 'Please enter your Home Station';
