@@ -47,10 +47,21 @@ android {
         coreLibraryDesugaringEnabled true
     }
 
+    kotlinOptions {
+        jvmTarget = '21'
+    }
+
+    java{
+        toolchain {
+            languageVersion.set(JavaLanguageVersion.of(21))
+        }
+    }
+
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "com.madclubtsec.tsec_application"
-        minSdkVersion 23
+        // minSdkVersion 23
+        minSdkVersion flutter.minSdkVersion
         targetSdkVersion 34
         namespace "com.madclubtsec.tsec_application.tsec_app"
         // versionCode flutterVersionCode.toInteger()
