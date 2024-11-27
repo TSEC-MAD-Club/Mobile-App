@@ -1,37 +1,17 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:showcaseview/showcaseview.dart';
-import 'package:tsec_app/models/event_model/event_model.dart';
 import 'package:tsec_app/new_ui/router.dart';
-import 'package:tsec_app/new_ui/screens/home_screen/home_screen.dart';
-import 'package:tsec_app/new_ui/screens/notes_screen/notes_screen.dart';
-import 'package:tsec_app/new_ui/screens/railway_screen/railway_screen.dart';
-import 'package:tsec_app/new_ui/screens/splash_screen/splash_screen.dart';
-import 'package:tsec_app/new_ui/screens/main_screen/main_screen.dart';
-import 'package:tsec_app/new_ui/screens/login_screen/login_screen.dart';
-import "package:tsec_app/new_ui/screens/event_details_screen/event_details.dart";
-import 'package:tsec_app/new_ui/screens/profile_screen/profile_screen.dart';
-import 'package:tsec_app/screens/department_screen/department_screen.dart';
-import 'package:tsec_app/screens/departmentlist_screen/department_list.dart';
 import 'package:tsec_app/services/localnotificationservice.dart';
 import 'package:tsec_app/services/sharedprefsfordot.dart';
-import 'package:tsec_app/utils/department_enum.dart';
-import 'provider/app_state_provider.dart';
 import 'provider/shared_prefs_provider.dart';
-import 'provider/theme_provider.dart';
 import 'utils/init_get_it.dart';
 import 'utils/themes.dart';
-import 'firebase_options.example.dart';
-import 'package:tsec_app/provider/auth_provider.dart';
-import 'package:tsec_app/models/user_model/user_model.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
@@ -82,7 +62,6 @@ class TSECApp extends ConsumerStatefulWidget {
 
 class _TSECAppState extends ConsumerState<TSECApp> {
   late final GoRouter _routes;
-  late FirebaseMessaging _firebaseMessaging;
 
   // @override
   // void initState() {
@@ -170,7 +149,7 @@ class _TSECAppState extends ConsumerState<TSECApp> {
 
   @override
   Widget build(BuildContext context) {
-    final _themeMode = ref.watch(themeProvider);
+    // final _themeMode = ref.watch(themeProvider);
     return ShowCaseWidget(
       builder: (context) => Builder(
         builder: (context) => MaterialApp.router(
