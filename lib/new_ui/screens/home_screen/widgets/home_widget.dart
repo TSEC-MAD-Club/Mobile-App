@@ -179,7 +179,7 @@ class _HomeWidgetState extends ConsumerState<HomeWidget> {
 
 
   static List<String> imgList = [];
-  final CarouselController carouselController = CarouselController();
+  final CarouselSliderController carouselController = CarouselSliderController();
 
   //static const _sidePadding = EdgeInsets.symmetric(horizontal: 15);
   static int _currentIndex = 0;
