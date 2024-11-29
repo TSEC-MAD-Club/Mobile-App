@@ -11,10 +11,11 @@ class ChangePasswordDialog extends ConsumerWidget {
 
   final TextEditingController newPasswordController = TextEditingController();
 
-  final TextEditingController confirmPasswordController = TextEditingController();
+  final TextEditingController confirmPasswordController =
+      TextEditingController();
 
-  String? validatePassword(){
-    if(newPasswordController.text != confirmPasswordController.text){
+  String? validatePassword() {
+    if (newPasswordController.text != confirmPasswordController.text) {
       return "Passwords do not match";
     }
     return null;
@@ -22,17 +23,22 @@ class ChangePasswordDialog extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final _formKey = GlobalKey<FormState>();
+    final formKey = GlobalKey<FormState>();
     return AlertDialog(
+      backgroundColor: Theme.of(context).colorScheme.primaryContainer,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15),
       ),
-      title: Text('Change Password'),
+      title: Text('Change Password',
+          style: Theme.of(context)
+              .textTheme
+              .headlineMedium
+              ?.copyWith(color: Theme.of(context).colorScheme.primary)),
       content: Container(
         //padding: const EdgeInsets.all(16),
         child: Form(
           autovalidateMode: AutovalidateMode.onUserInteraction,
-          key: _formKey,
+          key: formKey,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -55,7 +61,9 @@ class ChangePasswordDialog extends ConsumerWidget {
                   errorStyle: TextStyle(fontSize: 12),
                   focusColor: Colors.red,
                   fillColor: Colors.transparent,
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                   labelText: 'Old Password',
                 ),
               ),
@@ -65,7 +73,7 @@ class ChangePasswordDialog extends ConsumerWidget {
                   if (value == null || value.isEmpty) {
                     return 'Please enter some text';
                   }
-                  if(value != confirmPasswordController.text){
+                  if (value != confirmPasswordController.text) {
                     return "Passwords do not match";
                   }
                   return null;
@@ -77,10 +85,10 @@ class ChangePasswordDialog extends ConsumerWidget {
                     errorStyle: TextStyle(fontSize: 12),
                     focusColor: Colors.red,
                     fillColor: Colors.transparent,
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-                  labelText: 'New Password',
-                  errorText: validatePassword()
-                ),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10)),
+                    labelText: 'New Password',
+                    errorText: validatePassword()),
               ),
               const SizedBox(height: 16),
               TextFormField(
@@ -88,7 +96,7 @@ class ChangePasswordDialog extends ConsumerWidget {
                   if (value == null || value.isEmpty) {
                     return 'Please enter some text';
                   }
-                  if(value != newPasswordController.text){
+                  if (value != newPasswordController.text) {
                     return "Passwords do not match";
                   }
                   return null;
@@ -100,11 +108,11 @@ class ChangePasswordDialog extends ConsumerWidget {
                   errorStyle: TextStyle(fontSize: 12),
                   focusColor: Colors.red,
                   fillColor: Colors.transparent,
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10)),
                   labelText: 'Confirm Password',
                   errorText: validatePassword(),
                 ),
-
               ),
               const SizedBox(height: 16),
               Row(
@@ -114,16 +122,29 @@ class ChangePasswordDialog extends ConsumerWidget {
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
-                    child: Text('Cancel'),
+                    child: Text(
+                      'Cancel',
+                      style: Theme.of(context).textTheme.headlineMedium,
+                    ),
                   ),
                   TextButton(
                     onPressed: () {
-                      if(_formKey.currentState!.validate()){
-                        ref.watch(authProvider.notifier).changePassword(oldPasswordController.text, newPasswordController.text, ctx1);
+                      if (formKey.currentState!.validate()) {
+                        ref.watch(authProvider.notifier).changePassword(
+                            oldPasswordController.text,
+                            newPasswordController.text,
+                            ctx1);
                         Navigator.of(context).pop();
                       }
                     },
-                    child: Text('Change'),
+                    child: Text(
+                      'Change',
+                      style: Theme.of(context)
+                          .textTheme
+                          .headlineMedium
+                          ?.copyWith(
+                              color: Theme.of(context).colorScheme.primary),
+                    ),
                   ),
                 ],
               ),

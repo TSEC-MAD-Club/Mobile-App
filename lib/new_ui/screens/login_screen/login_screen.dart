@@ -19,7 +19,7 @@ import 'package:url_launcher/link.dart';
 // import 'widgets/custom_login_widget.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+  const LoginScreen({super.key});
 
   @override
   _LoginScreenState createState() => _LoginScreenState();
@@ -46,8 +46,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     _passwordTextEditingController.dispose();
     super.dispose();
   }
-
-
 
   Future login() async {
     if (_formKey.currentState!.validate()) {
@@ -149,8 +147,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     child: Column(
                       children: [
                         Padding(
-                          padding:
-                              const EdgeInsets.only(top: 30, left: 30, right: 30),
+                          padding: const EdgeInsets.only(
+                              top: 30, left: 30, right: 30),
                           child: DecoratedBox(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(18),
@@ -170,7 +168,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                 return null;
                               },
                               style: TextStyle(
-                                color: Theme.of(context).colorScheme.onSecondary,
+                                color:
+                                    Theme.of(context).colorScheme.onSecondary,
                               ),
                               decoration: InputDecoration(
                                 enabledBorder: OutlineInputBorder(
@@ -199,8 +198,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           height: 10,
                         ),
                         Padding(
-                          padding:
-                              const EdgeInsets.only(top: 30, left: 30, right: 30),
+                          padding: const EdgeInsets.only(
+                              top: 30, left: 30, right: 30),
                           child: DecoratedBox(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(18),
@@ -218,7 +217,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                               controller: _passwordTextEditingController,
                               obscureText: passwordVisible,
                               style: TextStyle(
-                                color: Theme.of(context).colorScheme.onSecondary,
+                                color:
+                                    Theme.of(context).colorScheme.onSecondary,
                               ),
                               decoration: InputDecoration(
                                 suffixIconColor:
@@ -236,8 +236,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                 ),
                                 enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
-                                    color:
-                                        Theme.of(context).colorScheme.onTertiary,
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onTertiary,
                                     width: 1.0,
                                   ),
                                   borderRadius: const BorderRadius.all(
@@ -249,7 +250,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                 ),
                                 filled: true,
                                 hintStyle: TextStyle(
-                                  color: Theme.of(context).colorScheme.onTertiary,
+                                  color:
+                                      Theme.of(context).colorScheme.onTertiary,
                                 ),
                                 hintText: "Password",
                                 fillColor: Color(0xff191B22),
@@ -270,11 +272,17 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                     30), // Set the desired border radius
                                 onTap: () async {
                                   //forgotPassword();
-                                  Navigator.push(context, MaterialPageRoute(builder: (context)=> ResetPasswordScreen(),),);
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          ResetPasswordScreen(),
+                                    ),
+                                  );
                                 },
                                 highlightShape:
                                     BoxShape.rectangle, // Custom shape
-              
+
                                 child: Container(
                                   height: 20,
                                   decoration: BoxDecoration(
@@ -312,7 +320,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                     padding: EdgeInsets.all(
                                         16), // Adjust padding as needed
                                   ),
-                                  child: Container(
+                                  child: SizedBox(
                                     width: double
                                         .infinity, // Set width to full width
                                     height: 30,
@@ -335,18 +343,19 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       ],
                     ),
                   ),
-              
+
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
                         "Need help signing in?  ",
                         style: TextStyle(
-                          color: Theme.of(context).colorScheme!.onSecondary,
+                          color: Theme.of(context).colorScheme.onSecondary,
                         ),
                       ),
                       Link(
-                        uri: Uri.parse("mailto:devsclubtsec@gmail.com?subject=Request%20for%20Login%20Credentials&body=Dear%20Team,%0D%0A%0D%0AI%20want%20to%20request%20for%20TSEC%20App%20login%20Credentials.%0D%0A%0D%0AMy%20Details%20are:%0D%0AFull%20Name%20(Surname_First_Lastname):%0D%0AEmail:%0D%0APhone%20Number:%0D%0AGraduation%20Year:%0D%0ABranch:%0D%0ADiv%20(C2):%0D%0ABatch%20(C21):%0D%0A%0D%0AThank%20You."),
+                        uri: Uri.parse(
+                            "mailto:devsclubtsec@gmail.com?subject=Request%20for%20Login%20Credentials&body=Dear%20Team,%0D%0A%0D%0AI%20want%20to%20request%20for%20TSEC%20App%20login%20Credentials.%0D%0A%0D%0AMy%20Details%20are:%0D%0AFull%20Name%20(Surname_First_Lastname):%0D%0AEmail:%0D%0APhone%20Number:%0D%0AGraduation%20Year:%0D%0ABranch:%0D%0ADiv%20(C2):%0D%0ABatch%20(C21):%0D%0A%0D%0AThank%20You."),
                         builder: (context, followLink) => GestureDetector(
                           onTap: () => followLink?.call(),
                           child: Text(

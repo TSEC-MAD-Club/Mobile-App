@@ -3,19 +3,22 @@ import 'package:tsec_app/new_ui/colors.dart';
 import 'package:tsec_app/new_ui/screens/attendance_screen/widgets/attendanceservice.dart';
 
 class AddAttendanceScreen extends StatefulWidget {
-
   int? index;
   final bool isUpdate;
   Map<String, dynamic>? updatedSubject;
   List<dynamic>? attendanceList;
-  AddAttendanceScreen({required this.isUpdate, this.updatedSubject,this.index,this.attendanceList});
+  AddAttendanceScreen(
+      {super.key,
+      required this.isUpdate,
+      this.updatedSubject,
+      this.index,
+      this.attendanceList});
 
   @override
   State<AddAttendanceScreen> createState() => _AddAttendanceScreenState();
 }
 
 class _AddAttendanceScreenState extends State<AddAttendanceScreen> {
-
   late TextEditingController subjectController;
   late TextEditingController totalLecturesController;
   late TextEditingController attendedLecturesController;
@@ -23,12 +26,20 @@ class _AddAttendanceScreenState extends State<AddAttendanceScreen> {
   @override
   void initState() {
     super.initState();
-    subjectController = TextEditingController(text: widget.isUpdate ? widget.updatedSubject!['subject_name']:"");
-    totalLecturesController = TextEditingController(text: widget.isUpdate ? widget.updatedSubject!['total'].toString():"");
-    attendedLecturesController = TextEditingController(text: widget.isUpdate ? widget.updatedSubject!['present'].toString():"");
+    subjectController = TextEditingController(
+        text: widget.isUpdate ? widget.updatedSubject!['subject_name'] : "");
+    totalLecturesController = TextEditingController(
+        text:
+            widget.isUpdate ? widget.updatedSubject!['total'].toString() : "");
+    attendedLecturesController = TextEditingController(
+        text: widget.isUpdate
+            ? widget.updatedSubject!['present'].toString()
+            : "");
   }
 
-  TextStyle inputTextFieldStyle = TextStyle(color: Colors.white,);
+  TextStyle inputTextFieldStyle = TextStyle(
+    color: Colors.white,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -39,152 +50,248 @@ class _AddAttendanceScreenState extends State<AddAttendanceScreen> {
         foregroundColor: Colors.white,
         centerTitle: true,
         actions: [
-          if (widget.isUpdate) IconButton(onPressed: (){
-            showDialog(context: context, builder: (context){
-              return AlertDialog(
-                title: Text("Are you sure you want to delete?",),
-                actions: [
-                  InkWell(
-                    onTap:(){
-                      Navigator.pop(context);
-                    },
-                    child: Container(
-                      alignment: Alignment.center,
-                      padding: EdgeInsets.symmetric(vertical: 5),
-                      width: size.width*0.3,
-                      decoration: BoxDecoration(
-                        color: commonbgL4ightblack,
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      child: Text("Cancel",style: TextStyle(color: Colors.white),),
-                    ),
-                  ),
-                  InkWell(
-                    onTap: () async{
-                      await AttendanceService.deleteSubject(widget.attendanceList!, widget.index!);
-                      Navigator.pop(context);
-                      Navigator.pop(context);
-                    },
-                    child: Container(
-                      alignment: Alignment.center,
-                      padding: EdgeInsets.symmetric(vertical: 5),
-                      width: size.width*0.3,
-                      decoration: BoxDecoration(
-                        color: Colors.red,
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      child: Text("Delete",style: TextStyle(color: Colors.white),),
-                    ),
-                  ),
-                ],
-              );
-            });
-          }, icon: Icon(Icons.delete,color: Colors.red,),) else SizedBox(),
+          if (widget.isUpdate)
+            IconButton(
+              onPressed: () {
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        backgroundColor:
+                            Theme.of(context).colorScheme.primaryContainer,
+                        title: Text("Are you sure you want to delete?",
+                            style: Theme.of(context).textTheme.headlineSmall!),
+                        actions: [
+                          InkWell(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: Container(
+                              alignment: Alignment.center,
+                              padding: EdgeInsets.symmetric(vertical: 5),
+                              width: size.width * 0.3,
+                              decoration: BoxDecoration(
+                                // color: Color(0xff191B22), // Background color
+                                borderRadius: BorderRadius.circular(5),
+                                // border: Border.all(
+                                //   color: Theme.of(context)
+                                //       .colorScheme
+                                //       .tertiary, // Border color
+                                //   width: 1.0,
+                                // ),
+                              ),
+                              child: Text("Cancel",
+                                  // style: TextStyle(color: Colors.white),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headlineMedium!
+                                      .copyWith(color: Colors.white)),
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () async {
+                              await AttendanceService.deleteSubject(
+                                  widget.attendanceList!, widget.index!);
+                              Navigator.pop(context);
+                              Navigator.pop(context);
+                            },
+                            child: Container(
+                              alignment: Alignment.center,
+                              padding: EdgeInsets.symmetric(vertical: 5),
+                              width: size.width * 0.3,
+                              decoration: BoxDecoration(
+                                // color: Color(0xff191B22), // Background color
+                                borderRadius: BorderRadius.circular(5),
+                                // border: Border.all(
+                                //   color: Theme.of(context)
+                                //       .colorScheme
+                                //       .primary, // Border color
+                                //   width: 1.0,
+                                // ),
+                              ),
+                              child: Text(
+                                "Delete",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headlineMedium!
+                                    .copyWith(
+                                      color: Colors.red,
+                                    ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      );
+                    });
+              },
+              icon: Icon(
+                Icons.delete,
+                color: Colors.red,
+              ),
+            )
+          else
+            SizedBox(),
         ],
       ),
       body: ListView(
         children: [
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20),
-            child: Text("Add a Subject",style: TextStyle(color: Colors.white,fontSize: 23,fontWeight: FontWeight.bold),),
+            child: Text(
+              "Add a Subject",
+              style: Theme.of(context).textTheme.headlineLarge,
+            ),
           ),
-
           SizedBox(
-            height: size.height*0.04,
+            height: size.height * 0.04,
           ),
-
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20),
-            child: Text("Subject Name: ",style: TextStyle(color: Colors.white,fontSize: 17,fontWeight: FontWeight.bold),),
+            child: Text(
+              "Subject Name: ",
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
           ),
-
           SizedBox(
-            height: size.height*0.01,
+            height: size.height * 0.01,
           ),
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 10),
+            // padding: EdgeInsets.symmetric(horizontal: 0),
             decoration: BoxDecoration(
-              color: commonbgL4ightblack,
-              borderRadius: BorderRadius.circular(5)
+              borderRadius: BorderRadius.circular(5),
             ),
             margin: EdgeInsets.symmetric(horizontal: 20),
             child: TextField(
-              style: inputTextFieldStyle,
+              // style: inputTextFieldStyle,
               controller: subjectController,
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.onSecondary,
+              ),
               decoration: InputDecoration(
-                border: InputBorder.none,
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: Color(0xff353F5A),
+                    width: 1.0,
+                  ),
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(18),
+                  ),
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(18.0),
+                ),
+                filled: true,
+                hintStyle: TextStyle(
+                  color: Color(0xff6B708C),
+                ),
+                // hintText: "Email",
+                fillColor: Color(0xff191B22),
               ),
             ),
           ),
-
-
           SizedBox(
-            height: size.height*0.04,
+            height: size.height * 0.04,
           ),
-
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20),
-            child: Text("Attended Lectures: ",style: TextStyle(color: Colors.white,fontSize: 17,fontWeight: FontWeight.bold),),
+            child: Text(
+              "Attended Lectures: ",
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
           ),
-
           SizedBox(
-            height: size.height*0.01,
+            height: size.height * 0.01,
           ),
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 10),
+            // padding: EdgeInsets.symmetric(horizontal: 10),
             decoration: BoxDecoration(
-                color: commonbgL4ightblack,
-                borderRadius: BorderRadius.circular(5)
+              borderRadius: BorderRadius.circular(18),
             ),
             margin: EdgeInsets.symmetric(horizontal: 20),
             child: TextField(
-              style: inputTextFieldStyle,
+              // style: inputTextFieldStyle,
               keyboardType: TextInputType.number,
               controller: attendedLecturesController,
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.onSecondary,
+              ),
               decoration: InputDecoration(
-                border: InputBorder.none,
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: Color(0xff353F5A),
+                    width: 1.0,
+                  ),
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(18),
+                  ),
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(18.0),
+                ),
+                filled: true,
+                hintStyle: TextStyle(
+                  color: Color(0xff6B708C),
+                ),
+                // hintText: "Email",
+                fillColor: Color(0xff191B22),
               ),
             ),
           ),
-
-
           SizedBox(
-            height: size.height*0.04,
+            height: size.height * 0.04,
           ),
-
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20),
-            child: Text("Total Lectures: ",style: TextStyle(color: Colors.white,fontSize: 17,fontWeight: FontWeight.bold),),
+            child: Text(
+              "Total Lectures: ",
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
           ),
-
           SizedBox(
-            height: size.height*0.01,
+            height: size.height * 0.01,
           ),
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 10),
+            // padding: EdgeInsets.symmetric(horizontal: 10),
             decoration: BoxDecoration(
-                color: commonbgL4ightblack,
-                borderRadius: BorderRadius.circular(5)
+              borderRadius: BorderRadius.circular(18),
             ),
             margin: EdgeInsets.symmetric(horizontal: 20),
             child: TextField(
-              style: inputTextFieldStyle,
+              // style: inputTextFieldStyle,
               keyboardType: TextInputType.number,
               controller: totalLecturesController,
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.onSecondary,
+              ),
               decoration: InputDecoration(
-                border: InputBorder.none,
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: Color(0xff353F5A),
+                    width: 1.0,
+                  ),
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(18),
+                  ),
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(18.0),
+                ),
+                filled: true,
+                hintStyle: TextStyle(
+                  color: Color(0xff6B708C),
+                ),
+                // hintText: "Email",
+                fillColor: Color(0xff191B22),
               ),
             ),
           ),
-
           SizedBox(
-            height: size.height*0.325,
+            height: size.height * 0.305,
           ),
-
           InkWell(
-            onTap: () async{
+            onTap: () async {
               bool isSubjectAdded = await addSubject();
-              if(isSubjectAdded){
+              if (isSubjectAdded) {
                 Navigator.pop(context);
                 showSnackBarMessage("Subject Added Successfully", Colors.green);
               }
@@ -196,10 +303,16 @@ class _AddAttendanceScreenState extends State<AddAttendanceScreen> {
               width: size.width,
               margin: EdgeInsets.symmetric(horizontal: 20),
               decoration: BoxDecoration(
-                color: cardcolorblue,
+                color: Theme.of(context).colorScheme.primary,
                 borderRadius: BorderRadius.circular(5),
               ),
-              child: Text("Send Mail",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
+              child: Text(
+                "Add Subject",
+                style: Theme.of(context)
+                    .textTheme
+                    .headlineSmall!
+                    .copyWith(color: Colors.black),
+              ),
             ),
           ),
         ],
@@ -207,45 +320,58 @@ class _AddAttendanceScreenState extends State<AddAttendanceScreen> {
     );
   }
 
-  Future<bool> addSubject() async{
-    if(totalLecturesController.text.isEmpty || attendedLecturesController.text.isEmpty || subjectController.text.isEmpty){
+  Future<bool> addSubject() async {
+    if (totalLecturesController.text.isEmpty ||
+        attendedLecturesController.text.isEmpty ||
+        subjectController.text.isEmpty) {
       showSnackBarMessage("Fields cannot be left blank", Colors.red);
       return false;
-    }
-    else if(totalLecturesController.text.contains(',') || totalLecturesController.text.contains('.') || attendedLecturesController.text.contains(',') || attendedLecturesController.text.contains('.')){
-      showSnackBarMessage("Attended and Total Lectures can only have Numeric Charachters", Colors.red);
+    } else if (totalLecturesController.text.contains(',') ||
+        totalLecturesController.text.contains('.') ||
+        attendedLecturesController.text.contains(',') ||
+        attendedLecturesController.text.contains('.')) {
+      showSnackBarMessage(
+          "Attended and Total Lectures can only have Numeric Charachters",
+          Colors.red);
       return false;
     }
     String subjectName = subjectController.text;
-    int totalLectures =
-    int.parse(totalLecturesController.text);
-    int attendedLectures =
-    int.parse(attendedLecturesController.text);
+    int totalLectures = int.parse(totalLecturesController.text);
+    int attendedLectures = int.parse(attendedLecturesController.text);
 
-    if(totalLectures.isNegative || attendedLectures.isNegative){
+    if (totalLectures.isNegative || attendedLectures.isNegative) {
       showSnackBarMessage("Lectures cannot be Negative", Colors.red);
       return false;
-    }else if(attendedLectures>totalLectures){
-      showSnackBarMessage("Attended Lectures cannot be greater than Total Lectures", Colors.red);
+    } else if (attendedLectures > totalLectures) {
+      showSnackBarMessage(
+          "Attended Lectures cannot be greater than Total Lectures",
+          Colors.red);
       return false;
-    }
-    else{
+    } else {
       Map<String, dynamic> updatedSubject = {
         "subject_name": subjectName,
         "total": totalLectures,
         "present": attendedLectures
       };
-      if(widget.isUpdate){
-        await AttendanceService.updateSubject(widget.attendanceList!, widget.index!, updatedSubject);
-      }else {
+      if (widget.isUpdate) {
+        await AttendanceService.updateSubject(
+            widget.attendanceList!, widget.index!, updatedSubject);
+      } else {
         await AttendanceService.addSubject(updatedSubject);
       }
       return true;
     }
-
   }
 
-  showSnackBarMessage(String text,Color color){
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(text,style: TextStyle(color: Colors.white),),backgroundColor: color,),);
+  showSnackBarMessage(String text, Color color) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          text,
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: color,
+      ),
+    );
   }
 }

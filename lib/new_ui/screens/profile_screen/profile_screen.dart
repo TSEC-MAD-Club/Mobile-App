@@ -33,7 +33,7 @@ import 'package:intl/intl.dart';
 
 class ProfilePage extends ConsumerStatefulWidget {
   bool justLoggedIn;
-  ProfilePage({Key? key, required this.justLoggedIn}) : super(key: key);
+  ProfilePage({super.key, required this.justLoggedIn});
 
   @override
   ConsumerState<ProfilePage> createState() => _ProfilePageState();
@@ -307,13 +307,14 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                   editProfileImage(data);
                 },
                 elevation: 2.0,
-                fillColor: Color(0xFFF5F6F9),
+                // fillColor: Color(0xFFF5F6F9),
+                fillColor: Theme.of(context).colorScheme.primary,
+                padding: EdgeInsets.all(3.0),
+                shape: CircleBorder(side: BorderSide(color: Colors.black)),
                 child: Icon(
                   Icons.edit,
                   color: Colors.black,
                 ),
-                padding: EdgeInsets.all(3.0),
-                shape: CircleBorder(side: BorderSide(color: Colors.black)),
               )),
         ],
       ),
@@ -336,7 +337,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
               scrolledUnderElevation: 0,
               actions: [
                 Padding(
-                  padding: const EdgeInsets.all(8),
+                  padding: const EdgeInsets.all(4),
                   child: TextButton(
                     style: TextButton.styleFrom(
                       // backgroundColor: Theme.of(context).colorScheme.background,
@@ -348,73 +349,106 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                     ),
                     child: Icon(
                       Icons.arrow_forward,
-                      color: Colors.white,
+                      color: Theme.of(context).colorScheme.primary,
                     ),
                     onPressed: () async {
-                      if(data.isStudent) {
+                      if (data.isStudent) {
                         showDialog(
-                          context: context,
-                          builder: (context) {
-                            return AlertDialog(
-
-                              content: SizedBox(
-                                child: Container(
-                                  height: MediaQuery.of(context).size.height* 0.25,
-                                  padding: const EdgeInsets.all(5.0),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                    children: [
-                                      RichText(
-                                        text: TextSpan(
-                                          text: 'Are you in division ',
-                                          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                            color: Colors.white,
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                backgroundColor: Theme.of(context)
+                                    .colorScheme
+                                    .primaryContainer,
+                                content: SizedBox(
+                                  child: Container(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.20,
+                                    padding: const EdgeInsets.all(5.0),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: [
+                                        RichText(
+                                          text: TextSpan(
+                                            text: 'Are you in division ',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyLarge
+                                                ?.copyWith(color: Colors.white),
+                                            children: [
+                                              TextSpan(
+                                                  text: div,
+                                                  style: const TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold)),
+                                              const TextSpan(
+                                                  text: ' and batch '),
+                                              TextSpan(
+                                                  text: batch,
+                                                  style: const TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold)),
+                                              const TextSpan(
+                                                  text:
+                                                      ' ? Please check your details once.'),
+                                            ],
                                           ),
-                                          children: [
-                                            TextSpan(text: div, style: const TextStyle(fontWeight: FontWeight.bold)),
-                                            const TextSpan(text: ' and batch '),
-                                            TextSpan(text: batch, style: const TextStyle(fontWeight: FontWeight.bold)),
-                                            const TextSpan(text: ' ? Please check your details once.'),
-                                          ],
                                         ),
-                                      ),
-                                      Container(
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Container(
-                                              child: TextButton(
-                                                onPressed: () {
-                                                  Navigator.of(context).pop();
-                                                },
-                                                child: const Text("Cancel")
+                                        Container(
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Container(
+                                                child: TextButton(
+                                                    onPressed: () {
+                                                      Navigator.of(context)
+                                                          .pop();
+                                                    },
+                                                    child: Text("Cancel",
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .headlineMedium!
+                                                            .copyWith(
+                                                                color: Theme.of(
+                                                                        context)
+                                                                    .colorScheme
+                                                                    .tertiary))),
                                               ),
-                                            ),
-                                            Container(
-                                              child: TextButton(
-                                                onPressed: () async {
-                                                  bool changesSaved = await saveChanges(ref);
-                                                  if (changesSaved) GoRouter.of(context).go('/main');
-                                                },
-                                                child: const Text("Proceed")
+                                              Container(
+                                                child: TextButton(
+                                                    onPressed: () async {
+                                                      bool changesSaved =
+                                                          await saveChanges(
+                                                              ref);
+                                                      if (changesSaved)
+                                                        GoRouter.of(context)
+                                                            .go('/main');
+                                                    },
+                                                    child: Text("Proceed",
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .headlineMedium!
+                                                            .copyWith(
+                                                                color: Theme.of(
+                                                                        context)
+                                                                    .colorScheme
+                                                                    .primary))),
                                               ),
-                                            ),
-                                          ],
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 ),
-                              ),
-                            );
-                          } 
-                        );
-                      }
-                      else {
+                              );
+                            });
+                      } else {
                         bool changesSaved = await saveChanges(ref);
                         if (changesSaved) GoRouter.of(context).go('/main');
                       }
-                      
                     },
                   ),
                 ),
@@ -425,7 +459,9 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            SizedBox(height: 50,),
+            SizedBox(
+              height: 50,
+            ),
             Stack(
               clipBehavior: Clip.none,
               alignment: Alignment.center,
@@ -435,9 +471,9 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                     // color: Theme.of(context).colorScheme.background,
                     color: commonbgblack,
                     borderRadius: BorderRadius.only(
-                      // topLeft: Radius.circular(25.0),
-                      // topRight: Radius.circular(25.0),
-                    ),
+                        // topLeft: Radius.circular(25.0),
+                        // topRight: Radius.circular(25.0),
+                        ),
                   ),
                   height: MediaQuery.of(context).size.height * .74,
                   child: SingleChildScrollView(
@@ -450,11 +486,13 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                             children: [
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Expanded(
                                     child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Container(
                                           // width: MediaQuery.of(context).size.width*0.6,
@@ -462,8 +500,10 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                             data.isStudent
                                                 ? data.studentModel!.name
                                                 : data.facultyModel!.name,
-                                            style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18,color: Colors.white),
-                                    
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 18,
+                                                color: Colors.white),
                                           ),
                                         ),
                                         data.isStudent
@@ -492,11 +532,9 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                         });
                                       },
                                       elevation: 2.0,
-                                      fillColor: Color(0xFFF5F6F9),
-                                      child: Icon(
-                                        Icons.edit,
-                                        color: Colors.black,
-                                      ),
+                                      // fillColor: Color(0xFFF5F6F9),
+                                      fillColor:
+                                          Theme.of(context).colorScheme.primary,
                                       constraints: BoxConstraints.tightFor(
                                         width: 50, // Set the width
                                         height: 50.0, // Set the height
@@ -504,53 +542,66 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                       shape: CircleBorder(
                                         side: BorderSide(color: Colors.black),
                                       ),
+                                      child: Icon(
+                                        Icons.edit,
+                                        color: Colors.black,
+                                      ),
                                     ),
                                     secondChild: !editMode
-                                      ? SizedBox()
-                                      : Row(children: [
-                                        RawMaterialButton(
-                                          onPressed: () {
-                                            clearValues(data);
-                                          },
-                                          elevation: 2.0,
-                                          fillColor: Color(0xFFF5F6F9),
-                                          child: Icon(
-                                            Icons.close,
-                                            color: Colors.black,
-                                          ),
-                                          constraints: BoxConstraints.tightFor(
-                                            width: 40, // Set the width
-                                            height: 40.0, // Set the height
-                                          ),
-                                          shape: CircleBorder(
-                                            side: BorderSide(color: Colors.black),
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: 5,
-                                        ),
-                                        RawMaterialButton(
-                                          onPressed: () async {
-                                            bool changesSaved =
-                                                await saveChanges(ref);
-                                            // if (changesSaved)
-                                            //   GoRouter.of(context).go('/main');
-                                          },
-                                          elevation: 2.0,
-                                          fillColor: Color(0xFFF5F6F9),
-                                          child: Icon(
-                                            Icons.check,
-                                            color: Colors.black,
-                                          ),
-                                          constraints: BoxConstraints.tightFor(
-                                            width: 40, // Set the width
-                                            height: 40.0, // Set the height
-                                          ),
-                                          shape: CircleBorder(
-                                            side: BorderSide(color: Colors.black),
-                                          ),
-                                        )
-                                      ]),
+                                        ? SizedBox()
+                                        : Row(children: [
+                                            RawMaterialButton(
+                                              onPressed: () {
+                                                clearValues(data);
+                                              },
+                                              elevation: 2.0,
+                                              fillColor: Color(0xFFF5F6F9),
+                                              constraints:
+                                                  BoxConstraints.tightFor(
+                                                width: 40, // Set the width
+                                                height: 40.0, // Set the height
+                                              ),
+                                              shape: CircleBorder(
+                                                side: BorderSide(
+                                                    color: Colors.black),
+                                              ),
+                                              child: Icon(
+                                                Icons.close,
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width: 5,
+                                            ),
+                                            RawMaterialButton(
+                                              onPressed: () async {
+                                                bool changesSaved =
+                                                    await saveChanges(ref);
+                                                // if (changesSaved)
+                                                //   GoRouter.of(context).go('/main');
+                                              },
+                                              elevation: 2.0,
+                                              // fillColor: Color(0xFFF5F6F9),
+                                              // fillColor: Color.fromARGB(
+                                              //     255, 32, 208, 138),
+                                              fillColor: Theme.of(context)
+                                                  .colorScheme
+                                                  .primary,
+                                              constraints:
+                                                  BoxConstraints.tightFor(
+                                                width: 40, // Set the width
+                                                height: 40.0, // Set the height
+                                              ),
+                                              shape: CircleBorder(
+                                                side: BorderSide(
+                                                    color: Colors.black),
+                                              ),
+                                              child: Icon(
+                                                Icons.check,
+                                                color: Colors.black,
+                                              ),
+                                            )
+                                          ]),
                                   )
                                 ],
                               ),
@@ -601,8 +652,8 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                                   await showDatePicker(
                                                 context: context,
                                                 initialDate: DateTime.now()
-                                                    .subtract(
-                                                        Duration(days: 20 * 365)),
+                                                    .subtract(Duration(
+                                                        days: 20 * 365)),
                                                 firstDate: DateTime(1960),
                                                 lastDate: DateTime(2010),
                                               );
@@ -656,8 +707,10 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                                     if (newValue != null) {
                                                       setState(() {
                                                         div = newValue;
-                                                        batchList = calcBatchList(
-                                                            newValue, branch);
+                                                        batchList =
+                                                            calcBatchList(
+                                                                newValue,
+                                                                branch);
                                                         batch = null;
                                                       });
                                                     }
@@ -708,7 +761,8 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                               ProfileField(
                                                 labelName: "Designation",
                                                 enabled: editMode,
-                                                controller: designationController,
+                                                controller:
+                                                    designationController,
                                                 // onChanged: (val) {
                                                 //   setState(() {
                                                 //     phoneNum = val;
@@ -761,7 +815,8 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                                 labelName: "Experience",
                                                 enabled: editMode,
                                                 // value: address,
-                                                controller: experienceController,
+                                                controller:
+                                                    experienceController,
                                                 validator: (value) {
                                                   if (value!.isEmpty) {
                                                     return 'Please enter a value';
@@ -789,11 +844,23 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                         ),
                                       ),
                               ),
-                              TextButton(onPressed: (){
-                                showDialog(context: context, builder: (contextOfDialog){
-                                  return ChangePasswordDialog(ctx1: context,);
-                                });
-                              }, child: Text("Change password", style: TextStyle(color: Colors.blueAccent),))
+                              TextButton(
+                                  onPressed: () {
+                                    showDialog(
+                                        context: context,
+                                        builder: (contextOfDialog) {
+                                          return ChangePasswordDialog(
+                                            ctx1: context,
+                                          );
+                                        });
+                                  },
+                                  child: Text(
+                                    "Change password",
+                                    style: TextStyle(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary),
+                                  ))
                             ],
                           ),
                         )
