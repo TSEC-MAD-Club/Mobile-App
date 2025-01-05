@@ -40,7 +40,8 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
 
   Future<void> _fetchLaunchDate() async {
     try {
-      DocumentSnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore.instance
+      DocumentSnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore
+          .instance
           .collection('Launch')
           .doc('launch')
           .get();
@@ -75,10 +76,11 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
 
   bool navigateToMaintainance = false;
   //MaintainanceScreen
-  final doc = FirebaseFirestore.instance.collection("Maintainance").doc("Maintainance");
-  fetchMaintainanceStatus()async{
+  final doc =
+      FirebaseFirestore.instance.collection("Maintainance").doc("Maintainance");
+  fetchMaintainanceStatus() async {
     final get = await doc.get();
-    final data = get.data() as Map<String,dynamic>;
+    final data = get.data() as Map<String, dynamic>;
     setState(() {
       navigateToMaintainance = data['underBreak'];
     });
@@ -94,7 +96,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
       );
     }
     print("Executed Build");
-    if(navigateToMaintainance){
+    if (navigateToMaintainance) {
       return MaintainanceScreen();
     }
 
@@ -119,7 +121,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
             return const Scaffold(
               body: Center(
                 child: CircularProgressIndicator(),
-                
+
                 // child: SizedBox(
                 //   child: Lottie.asset("assets/animation/loadinglottie.json"),
                 //   height: 250,
