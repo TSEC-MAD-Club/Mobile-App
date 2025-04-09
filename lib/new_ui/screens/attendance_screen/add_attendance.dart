@@ -286,7 +286,7 @@ class _AddAttendanceScreenState extends State<AddAttendanceScreen> {
             ),
           ),
           SizedBox(
-            height: size.height * 0.305,
+            height: size.height * 0.275,
           ),
           InkWell(
             onTap: () async {

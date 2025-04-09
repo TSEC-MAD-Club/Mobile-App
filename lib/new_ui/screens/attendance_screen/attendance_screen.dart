@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:tsec_app/new_ui/colors.dart';
 import 'package:tsec_app/new_ui/screens/attendance_screen/widgets/attendance_subject_widget.dart';
@@ -48,10 +49,12 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
   void initState() {
     super.initState();
     bool isNotesVisited = SharedPreferencesForDot.isNotesVisited();
-    if(!isNotesVisited) {
+    if (!isNotesVisited) {
       WidgetsBinding.instance.addPostFrameCallback(
-              (_) =>
-              ShowCaseWidget.of(context).startShowCase([addNotesFloatButton],),);
+        (_) => ShowCaseWidget.of(context).startShowCase(
+          [addNotesFloatButton],
+        ),
+      );
       SharedPreferencesForDot.visitNotes();
     }
   }
@@ -75,14 +78,24 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Image.asset(
-                      'assets/images/attendance.png',
-                      width: 250,
+                    // Image.asset(
+                    //   'assets/images/attendance.png',
+                    //   width: 250,
+                    // ),
+                    Lottie.asset(
+                      'assets/animation/attendance_lottie.json',
+                      width: 200,
+                      height: 200,
+                      fit: BoxFit.cover,
                     ),
-                    SizedBox(height: 20),
+                    SizedBox(height: 10),
                     Text(
-                      "Please add Subject",
-                      style: TextStyle(color: Colors.white, fontSize: 18),
+                      "No Subjects Added",
+                      style: Theme.of(context)
+                          .textTheme
+                          .headlineMedium
+                          ?.copyWith(
+                              color: Theme.of(context).colorScheme.primary),
                     ),
                   ],
                 ),
@@ -100,15 +113,22 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Image.asset(
-                      'assets/images/attendance.png',
-                      width: 250,
+                    // Image.asset(
+                    //   'assets/images/attendance.png',
+                    //   width: 250,
+                    // ),
+                    Lottie.asset(
+                      'assets/animation/attendance_lottie.json',
+                      width: 200,
+                      height: 200,
+                      fit: BoxFit.cover,
                     ),
                     SizedBox(height: 20),
-                    Text(
-                      "Please add Subject",
-                      style: TextStyle(color: Colors.white, fontSize: 18),
-                    ),
+                    Text("No Subjects Added",
+                        style: Theme.of(context).textTheme.headlineMedium
+                        // ?.copyWith(
+                        //     color: Theme.of(context).colorScheme.primary),
+                        ),
                   ],
                 ),
               );
@@ -190,24 +210,37 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                           onTap: () {
                             // Show dialog with current values for modification
 
-                            Navigator.push(context, PageRouteBuilder(
-                              pageBuilder: (context, animation, secondaryAnimation) =>
-                                  AddAttendanceScreen(isUpdate: true,index: index,attendanceList: attendanceList,updatedSubject: attendanceInfo,),
-                              transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                                const begin = Offset(0.0, 1.0); // Start from bottom
-                                const end = Offset.zero;        // Move to top (center)
-                                const curve = Curves.easeInOut;
+                            Navigator.push(
+                              context,
+                              PageRouteBuilder(
+                                pageBuilder:
+                                    (context, animation, secondaryAnimation) =>
+                                        AddAttendanceScreen(
+                                  isUpdate: true,
+                                  index: index,
+                                  attendanceList: attendanceList,
+                                  updatedSubject: attendanceInfo,
+                                ),
+                                transitionsBuilder: (context, animation,
+                                    secondaryAnimation, child) {
+                                  const begin =
+                                      Offset(0.0, 1.0); // Start from bottom
+                                  const end =
+                                      Offset.zero; // Move to top (center)
+                                  const curve = Curves.easeInOut;
 
-                                var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-                                var offsetAnimation = animation.drive(tween);
+                                  var tween = Tween(begin: begin, end: end)
+                                      .chain(CurveTween(curve: curve));
+                                  var offsetAnimation = animation.drive(tween);
 
-                                return SlideTransition(
-                                  position: offsetAnimation,
-                                  child: child,
-                                );
-                              },
-                            ),);
-                           /* showDialog(
+                                  return SlideTransition(
+                                    position: offsetAnimation,
+                                    child: child,
+                                  );
+                                },
+                              ),
+                            );
+                            /* showDialog(
                               context: context,
                               builder: (BuildContext context) {
                                 TextEditingController subjectNameController =
@@ -537,18 +570,18 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                                 attendanceList, index);
                                             /*_fetchAndSetAttendance();*/
                                           },
-                                          child: const Text(
-                                            'Present',
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 15),
-                                          ),
                                           style: ElevatedButton.styleFrom(
                                             backgroundColor:
                                                 commonbgL3ightblack,
                                             shape: RoundedRectangleBorder(
                                                 borderRadius:
                                                     BorderRadius.circular(5)),
+                                          ),
+                                          child: const Text(
+                                            'Present',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 15),
                                           ),
                                         ),
                                         ElevatedButton(
@@ -557,18 +590,18 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                                                 attendanceList, index);
                                             /*_fetchAndSetAttendance();*/
                                           },
-                                          child: const Text(
-                                            'Absent',
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 15),
-                                          ),
                                           style: ElevatedButton.styleFrom(
                                             backgroundColor:
                                                 commonbgL3ightblack,
                                             shape: RoundedRectangleBorder(
                                                 borderRadius:
                                                     BorderRadius.circular(5)),
+                                          ),
+                                          child: const Text(
+                                            'Absent',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 15),
                                           ),
                                         ),
                                       ],
@@ -787,23 +820,30 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
               },
             );*/
 
-            Navigator.push(context, PageRouteBuilder(
-              pageBuilder: (context, animation, secondaryAnimation) =>
-                  AddAttendanceScreen(isUpdate: false,),
-              transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                const begin = Offset(0.0, 1.0); // Start from bottom
-                const end = Offset.zero;        // Move to top (center)
-                const curve = Curves.easeInOut;
+            Navigator.push(
+              context,
+              PageRouteBuilder(
+                pageBuilder: (context, animation, secondaryAnimation) =>
+                    AddAttendanceScreen(
+                  isUpdate: false,
+                ),
+                transitionsBuilder:
+                    (context, animation, secondaryAnimation, child) {
+                  const begin = Offset(0.0, 1.0); // Start from bottom
+                  const end = Offset.zero; // Move to top (center)
+                  const curve = Curves.easeInOut;
 
-                var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-                var offsetAnimation = animation.drive(tween);
+                  var tween = Tween(begin: begin, end: end)
+                      .chain(CurveTween(curve: curve));
+                  var offsetAnimation = animation.drive(tween);
 
-                return SlideTransition(
-                  position: offsetAnimation,
-                  child: child,
-                );
-              },
-            ),);
+                  return SlideTransition(
+                    position: offsetAnimation,
+                    child: child,
+                  );
+                },
+              ),
+            );
           },
           shape: CircleBorder(
             side: BorderSide(
@@ -888,7 +928,7 @@ String getTextForCard(int at, int tt) {
       return "You are on track, keep it up !";
     }
   } catch (e) {
-    return "Your presence in next ${toAttend} classes is crucial";
+    return "Your presence in next $toAttend classes is crucial";
   }
-  return "Your presence in next ${toAttend} classes is crucial";
+  return "Your presence in next $toAttend classes is crucial";
 }

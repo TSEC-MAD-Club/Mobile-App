@@ -172,9 +172,8 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
       builder: (BuildContext context, Widget? child) {
         return Theme(
           data: ThemeData.dark().copyWith(
-            // Change background color of calendar here
-              colorScheme: ColorScheme.dark()
-          ),
+              // Change background color of calendar here
+              colorScheme: ColorScheme.dark()),
           child: child!,
         );
       },
@@ -195,9 +194,6 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
   List<String> travelDurationList = ['Monthly', 'Quarterly'];
   List<String> genderList = ['Male', 'Female'];
 
-
-
-
   File? idCardPhoto;
   File? idCardPhoto2;
   File? idCardPhotoTemp;
@@ -217,7 +213,7 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
         } else if (type == 'Previous Pass Photo') {
           // previousPassPhoto = File(pickedFile.path);
           previousPassPhotoTemp = File(pickedFile.path);
-        }else if(type == 'ID Card Back'){
+        } else if (type == 'ID Card Back') {
           idCardPhotoTemp2 = File(pickedFile.path);
         }
       });
@@ -232,8 +228,7 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
       final Directory tempDir = await getTemporaryDirectory();
       final String tempPath = tempDir.path;
 
-      final String fileName =
-          DateTime.now().millisecondsSinceEpoch.toString() + '.png';
+      final String fileName = '${DateTime.now().millisecondsSinceEpoch}.png';
 
       File imageFile = File('$tempPath/$fileName');
       await imageFile.writeAsBytes(bytes);
@@ -264,7 +259,7 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
         idCardPhotoTemp = null;
       } else if (type == 'Previous Pass Photo') {
         previousPassPhotoTemp = null;
-      }else if(type == 'ID Card Back'){
+      } else if (type == 'ID Card Back') {
         idCardPhotoTemp2 = null;
       }
     });
@@ -280,7 +275,7 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
             .get();
         if (document.exists) {
           var data = document.data() as Map<String, dynamic>;
-            return data['idCardURL2'];
+          return data['idCardURL2'];
         } else {
           return 'Document does not exist';
         }
@@ -289,7 +284,6 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
       }
     } catch (e) {
       return 'Error fetching document: $e';
-
     }
   }
 
@@ -297,8 +291,6 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
     ConcessionDetailsModel? concessionDetails =
         ref.read(concessionDetailsProvider);
     var idcardurl2var = await fetchUserIdCardURL2();
-
-
 
     // debugPrint(
     //     "fetched concession details in railway concession UI: $concessionDetails");
@@ -365,7 +357,6 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
     homeStation = concessionDetails?.from ?? "";
     idCardPhotoTemp = idCardPhoto;
     previousPassPhotoTemp = previousPassPhoto;
-
   }
 
   Future saveChanges(WidgetRef ref) async {
@@ -377,37 +368,35 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
       statusMessage: "",
       ageMonths: int.parse(_ageMonths),
       ageYears: int.parse(_ageYears),
-      duration: duration?.toUpperCase() ?? "Monthly".toUpperCase(),
-      branch: student.branch.toUpperCase(),
-      gender: gender?.toUpperCase() ?? "Male".toUpperCase(),
-      firstName: firstNameController.text.toUpperCase(),
-      gradyear: student.gradyear.toUpperCase(),
-      middleName: middleNameController.text.toUpperCase(),
-      lastName: lastNameController.text.toUpperCase(),
-      idCardURL: idCardURL.toUpperCase(),
-      previousPassURL: previousPassURL.toUpperCase(),
-      from: homeStation.toUpperCase(),
-      to: toStation.toUpperCase(),
+      duration: duration ?? "Monthly",
+      branch: student.branch,
+      gender: gender ?? "Male",
+      firstName: firstNameController.text,
+      gradyear: student.gradyear,
+      middleName: middleNameController.text,
+      lastName: lastNameController.text,
+      idCardURL: idCardURL,
+      previousPassURL: previousPassURL,
+      from: homeStation,
+      to: toStation,
       lastPassIssued: null,
-      address: addressController.text.toUpperCase(),
+      address: addressController.text,
       dob: _selectedDate ?? DateTime.now(),
       phoneNum: int.parse(phoneNumController.text),
-      travelLane: travelLane?.toUpperCase() ?? "Central".toUpperCase(),
-      type: travelClass?.toUpperCase() ?? "I".toUpperCase(),
+      travelLane: travelLane ?? "Central",
+      type: travelClass ?? "I",
     );
 
     if (_formKey.currentState!.validate() &&
         idCardPhotoTemp != null &&
         idCardPhotoTemp2 != null &&
-        previousPassPhotoTemp != null)
-    {
+        previousPassPhotoTemp != null) {
       idCardPhoto = idCardPhotoTemp;
       previousPassPhoto = previousPassPhotoTemp;
       print("//////////////////////// AT LAS TOF SAVECHAANGES7");
       ref.read(railwayConcessionOpenProvider.state).state = false;
-      await ref
-          .watch(concessionProvider.notifier)
-          .applyConcession(details, idCardPhoto!, idCardPhotoTemp2! ,previousPassPhoto!, context);
+      await ref.watch(concessionProvider.notifier).applyConcession(details,
+          idCardPhoto!, idCardPhotoTemp2!, previousPassPhoto!, context);
 
       print("//////////////////////// AT LAS TOF SAVECHAANGES8");
 
@@ -425,14 +414,11 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Please add the BACK photo of your ID card")),
       );
-    }
-    else if (previousPassPhotoTemp == null) {
+    } else if (previousPassPhotoTemp == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Please add the photo of your previous pass")),
       );
     }
-
-
   }
 
   Widget buildImagePicker(String type, File? selectedPhoto, bool editMode) {
@@ -445,7 +431,7 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            '$type',
+            type,
             style: TextStyle(color: Colors.grey),
           ),
           SizedBox(height: 8),
@@ -483,7 +469,8 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
                                 top: -8,
                                 right: -8,
                                 child: IconButton(
-                                  icon: const Icon(Icons.cancel, color: Colors.white),
+                                  icon: const Icon(Icons.cancel,
+                                      color: Colors.white),
                                   onPressed: () => cancelSelection(type),
                                 ),
                               )
@@ -509,17 +496,25 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
         shadowColor: Colors.transparent,
         backgroundColor: Colors.transparent,
         //toolbarHeight: 80,
-        title: Text("Railway Form",style: Theme.of(context)
-            .textTheme
-            .headlineLarge!
-            .copyWith(fontSize: 15, color: Colors.white),
+        title: Text(
+          "Railway Form",
+          style: Theme.of(context)
+              .textTheme
+              .headlineLarge!
+              .copyWith(fontSize: 15, color: Colors.white),
           maxLines: 1,
           overflow: TextOverflow.fade,
         ),
         centerTitle: true,
-        leading: IconButton(icon: Icon(Icons.arrow_back_ios,color: Colors.white,),onPressed: (){
-          Navigator.pop(context);
-        },),
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back_ios,
+            color: Colors.white,
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -568,7 +563,7 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
                               readOnly: false,
                               controller: middleNameController,
                               validator: (value) {
-                                if (value==null || value.isEmpty) {
+                                if (value == null || value.isEmpty) {
                                   return 'Please enter your Middle Name';
                                 }
                                 return null;
@@ -590,7 +585,8 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
                                 SizedBox(
-                                  width: MediaQuery.of(context).size.width * .45,
+                                  width:
+                                      MediaQuery.of(context).size.width * .45,
                                   child: RailwayDropdownField(
                                       editMode: editMode,
                                       label: "Gender",
@@ -611,7 +607,8 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
                                       }),
                                 ),
                                 SizedBox(
-                                  width: MediaQuery.of(context).size.width * .45,
+                                  width:
+                                      MediaQuery.of(context).size.width * .45,
                                   child: RailwayTextField(
                                     readOnly: true,
                                     editMode: editMode,
@@ -652,7 +649,8 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
                                 SizedBox(
-                                  width: MediaQuery.of(context).size.width * .45,
+                                  width:
+                                      MediaQuery.of(context).size.width * .45,
                                   child: RailwayTextField(
                                     editMode: editMode,
                                     label: "Branch",
@@ -661,7 +659,8 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
                                   ),
                                 ),
                                 SizedBox(
-                                  width: MediaQuery.of(context).size.width * .45,
+                                  width:
+                                      MediaQuery.of(context).size.width * .45,
                                   child: RailwayTextField(
                                     readOnly: true,
                                     editMode: editMode,
@@ -703,7 +702,8 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
                                 SizedBox(
-                                  width: MediaQuery.of(context).size.width * .45,
+                                  width:
+                                      MediaQuery.of(context).size.width * .45,
                                   child: RailwayDropdownField(
                                       editMode: editMode,
                                       label: "Class",
@@ -724,7 +724,8 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
                                       }),
                                 ),
                                 SizedBox(
-                                  width: MediaQuery.of(context).size.width * .45,
+                                  width:
+                                      MediaQuery.of(context).size.width * .45,
                                   child: RailwayDropdownField(
                                       editMode: editMode,
                                       label: "Duration",
@@ -768,7 +769,8 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
                                 SizedBox(
-                                  width: MediaQuery.of(context).size.width * .45,
+                                  width:
+                                      MediaQuery.of(context).size.width * .45,
                                   child: RailwayDropdownSearch(
                                     editMode: editMode,
                                     label: "From",
@@ -788,9 +790,11 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
                                   ),
                                 ),
                                 SizedBox(
-                                  width: MediaQuery.of(context).size.width * .45,
+                                  width:
+                                      MediaQuery.of(context).size.width * .45,
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         "To",
@@ -837,7 +841,7 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           SizedBox(
-                            width:MediaQuery.of(context).size.width * .43,
+                            width: MediaQuery.of(context).size.width * .43,
                             child: FilledButton(
                               onPressed: () {
                                 print("Cleared Section");
@@ -854,7 +858,8 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
                                     .secondaryContainer,
                               ),
                               child: Padding(
-                                padding: const EdgeInsets.fromLTRB(10, 12, 10, 12),
+                                padding:
+                                    const EdgeInsets.fromLTRB(10, 12, 10, 12),
                                 child: Text('Cancel',
                                     style: Theme.of(context)
                                         .textTheme
@@ -866,22 +871,23 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
                             ),
                           ),
                           SizedBox(
-                            width:MediaQuery.of(context).size.width * .43,
+                            width: MediaQuery.of(context).size.width * .43,
                             child: FilledButton(
                               onPressed: () {
                                 saveChanges(ref);
                               },
-
                               style: FilledButton.styleFrom(
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(
                                       7.0), // Set the border radius
                                 ),
-                                backgroundColor:
-                                    Theme.of(context).colorScheme.tertiaryContainer,
+                                backgroundColor: Theme.of(context)
+                                    .colorScheme
+                                    .tertiaryContainer,
                               ),
                               child: Padding(
-                                padding: const EdgeInsets.fromLTRB(10, 12, 10, 12),
+                                padding:
+                                    const EdgeInsets.fromLTRB(10, 12, 10, 12),
                                 child: Text('Confirm',
                                     style: Theme.of(context)
                                         .textTheme

@@ -43,15 +43,15 @@ import 'package:badges/badges.dart' as MyBadge;
 
 class MainScreen extends ConsumerStatefulWidget {
   const MainScreen({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   ConsumerState<MainScreen> createState() => _MainScreenState();
 }
 
 class _MainScreenState extends ConsumerState<MainScreen> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   String currentBottomNavPage = "home";
   int currentPage = 0;
@@ -465,480 +465,481 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                     backgroundColor: Colors.black,
                     child: Padding(
                       padding: const EdgeInsets.all(18.0),
-                      child: SingleChildScrollView(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox(
-                              height: 20,
-                            ),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                profilePic != null
-                                    ? CircleAvatar(
-                                        radius: 35,
-                                        backgroundImage:
-                                            MemoryImage(profilePic),
-                                        // backgroundImage: MemoryImage(_image!),
-                                      )
-                                    : const CircleAvatar(
-                                        radius: 35,
-                                        backgroundImage: AssetImage(
-                                            "assets/images/pfpholder.jpg"),
-                                      ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Expanded(
-                                    child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      userDetails != null
-                                          ? (userDetails.isStudent
-                                              ? userDetails.studentModel!.name
-                                              : userDetails.facultyModel!.name)
-                                          : "Tsecite",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headlineLarge!
-                                          .copyWith(
-                                              fontSize: 20,
-                                              fontFamily: 'Karla'),
-                                    ),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    Text(
-                                      userDetails != null
-                                          ? (userDetails.isStudent
-                                              ? '${userDetails.studentModel!.branch} ${userDetails.studentModel!.gradyear}'
-                                              : '${data?.facultyModel?.qualification}')
-                                          : 'anonymous',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headlineLarge!
-                                          .copyWith(fontSize: 12),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              profilePic != null
+                                  ? CircleAvatar(
+                                      radius: 35,
+                                      backgroundImage: MemoryImage(profilePic),
+                                      // backgroundImage: MemoryImage(_image!),
                                     )
+                                  : const CircleAvatar(
+                                      radius: 35,
+                                      backgroundImage: AssetImage(
+                                          "assets/images/pfpholder.jpg"),
+                                    ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Expanded(
+                                  child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    userDetails != null
+                                        ? (userDetails.isStudent
+                                            ? userDetails.studentModel!.name
+                                            : userDetails.facultyModel!.name)
+                                        : "Tsecite",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headlineLarge!
+                                        .copyWith(
+                                            fontSize: 20, fontFamily: 'Karla'),
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Text(
+                                    userDetails != null
+                                        ? (userDetails.isStudent
+                                            ? '${userDetails.studentModel!.branch} ${userDetails.studentModel!.gradyear}'
+                                            : '${data?.facultyModel?.qualification}')
+                                        : 'anonymous',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headlineLarge!
+                                        .copyWith(fontSize: 12),
+                                  )
+                                ],
+                              ))
+                            ],
+                          ),
+
+                          const SizedBox(
+                            height: 30,
+                          ),
+                          ListTile(
+                            contentPadding: EdgeInsets.zero,
+                            title: Text(
+                              'Home',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headlineMedium!
+                                  .copyWith(
+                                    fontSize: 13,
+                                    fontFamily: 'Montserrat',
+                                    color: currentPage == 0
+                                        ? Theme.of(context)
+                                            .colorScheme
+                                            .onSurface
+                                        : Colors.white,
+                                  ),
+                            ),
+                            onTap: () {
+                              setState(() {
+                                currentPage = 0;
+                                currentBottomNavPage = "home";
+                              });
+                              Navigator.pop(context);
+                            },
+                          ),
+                          /*ListTile(
+                            contentPadding: EdgeInsets.zero,
+                            title: Text(
+                              'Railway Concession',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headlineMedium!
+                                  .copyWith(
+                                fontSize: 13,
+                                color: currentPage == 3 ? Theme.of(context).colorScheme.onBackground : Colors.white,
+                              ),
+                            ),
+                            onTap: () {
+                              //page 3
+                              setState(() {
+                                currentPage = 3;
+                                Navigator.pop(context);
+                              });
+                            },
+                          ),*/
+                          ListTile(
+                            contentPadding: EdgeInsets.zero,
+                            title: Text(
+                              'Departments',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headlineMedium!
+                                  .copyWith(
+                                    fontSize: 13,
+                                    fontFamily: 'Montserrat',
+                                    color: currentPage == 7
+                                        ? Theme.of(context)
+                                            .colorScheme
+                                            .onSurface
+                                        : Colors.white,
+                                  ),
+                            ),
+                            onTap: () {
+                              ref.read(titleProvider.notifier).state =
+                                  'Departments';
+                              Navigator.pop(context);
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => DepartmentListScreen(),
+                                ),
+                              );
+                            },
+                          ),
+                          ListTile(
+                            contentPadding: EdgeInsets.zero,
+                            title: Text(
+                              'Committees',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headlineSmall!
+                                  .copyWith(
+                                    fontSize: 13,
+                                    fontFamily: 'Montserrat',
+                                    color: currentPage == 6
+                                        ? Theme.of(context)
+                                            .colorScheme
+                                            .onSurface
+                                        : Colors.white,
+                                  ),
+                            ),
+                            onTap: () {
+                              ref.read(titleProvider.notifier).state =
+                                  'Committees';
+                              /*setState(() {
+                                currentPage = 6;
+                              });*/
+                              Navigator.pop(context);
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  // builder: (context) => CommitteesScreen(),
+                                  builder: (context) => OldCommittessScreen(),
+                                ),
+                              );
+                            },
+                          ),
+                          ListTile(
+                            contentPadding: EdgeInsets.zero,
+                            title: Text(
+                              'Training and Placement Cell',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headlineSmall!
+                                  .copyWith(
+                                    fontSize: 13,
+                                    fontFamily: 'Montserrat',
+                                    color: currentPage == 5
+                                        ? Theme.of(context)
+                                            .colorScheme
+                                            .onSurface
+                                        : Colors.white,
+                                  ),
+                            ),
+                            onTap: () {
+                              ref.read(titleProvider.notifier).state =
+                                  'Training and Placement Cell';
+                              Navigator.pop(context);
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => TPCScreen(),
+                                ),
+                              );
+                            },
+                          ),
+
+                          // ListTile(
+                          //   contentPadding: EdgeInsets.zero,
+                          //   title: Text(
+                          //     'Profile',
+                          //     style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+                          //           fontSize: 22,
+                          //           color: currentPage == 5
+                          //               ? Theme.of(context).colorScheme.onBackground
+                          //               : Colors.white,
+                          //         ),
+                          //   ),
+                          //   onTap: () {
+                          //     setState(() {
+                          //       currentPage = 5;
+                          //     });
+                          //     Navigator.pop(context);
+                          //   },
+                          // ),
+                          /*ListTile(
+                            contentPadding: EdgeInsets.zero,
+                            title: Text(
+                              'Manage Account',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headlineMedium!
+                                  .copyWith(
+                                fontSize: 13,
+                                color: Colors.white,
+                              ),
+                            ),
+                            onTap: () {
+                              //page 4
+                              // setState(() {
+                              //   currentPage = 4;
+                              //   Navigator.pop(context);
+                              // });
+                            },
+                          ),*/
+                          ListTile(
+                            contentPadding: EdgeInsets.zero,
+                            title: Text(
+                              'About Us',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headlineMedium!
+                                  .copyWith(
+                                    fontSize: 13,
+                                    fontFamily: 'Montserrat',
+                                    color: Colors.white,
+                                  ),
+                            ),
+                            /////////////////////////////////////////////////////////////////////////
+                            onTap: () {
+                              ref.read(titleProvider.notifier).state =
+                                  'About Us';
+                              Navigator.pop(context);
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => AboutUs(),
+                                ),
+                              );
+                            },
+                          ),
+                          Link(
+                            uri: Uri.parse("mailto:devsclubtsec@gmail.com"),
+                            builder: (context, followLink) => ListTile(
+                              contentPadding: EdgeInsets.zero,
+                              title: Text(
+                                'Contact Us',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headlineMedium!
+                                    .copyWith(
+                                      fontSize: 13,
+                                      fontFamily: 'Montserrat',
+                                      color: currentPage == 4
+                                          ? Theme.of(context)
+                                              .colorScheme
+                                              .onSurface
+                                          : Colors.white,
+                                    ),
+                              ),
+                              onTap: () => followLink?.call(),
+                            ),
+                          ),
+
+                          ListTile(
+                            contentPadding: EdgeInsets.zero,
+                            title: Text(
+                              'Coming soon........',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headlineSmall!
+                                  .copyWith(
+                                    fontSize: 13,
+                                    fontFamily: 'Montserrat',
+                                    color: currentPage == 5
+                                        ? Theme.of(context)
+                                            .colorScheme
+                                            .onSurface
+                                        : Colors.white,
+                                  ),
+                            ),
+                            onTap: () {
+                              ref.read(titleProvider.notifier).state =
+                                  'Something cooking .....';
+                              Navigator.pop(context);
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ComingSoon(),
+                                ),
+                              );
+                            },
+                          ),
+                          ListTile(
+                            contentPadding: EdgeInsets.zero,
+                            title: Text(
+                              'Report a bug',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headlineSmall!
+                                  .copyWith(
+                                    fontSize: 13,
+                                    fontFamily: 'Montserrat',
+                                    color: currentPage == 5
+                                        ? Theme.of(context)
+                                            .colorScheme
+                                            .onSurface
+                                        : Colors.white,
+                                  ),
+                            ),
+                            onTap: () {
+                              Navigator.pop(context);
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => BugReportScreen(),
+                                ),
+                              );
+                            },
+                          ),
+                          // ListTile(
+                          //   contentPadding: EdgeInsets.zero,
+                          //   title: Text(
+                          //     'Daily Questions',
+                          //     style: Theme.of(context)
+                          //         .textTheme
+                          //         .headlineSmall!
+                          //         .copyWith(
+                          //           fontSize: 13,
+                          //           fontFamily: 'Montserrat',
+                          //           color: currentPage == 5
+                          //               ? Theme.of(context)
+                          //                   .colorScheme
+                          //                   .onBackground
+                          //               : Colors.white,
+                          //         ),
+                          //   ),
+                          //   trailing: Container(
+                          //     padding: EdgeInsets.symmetric(
+                          //         horizontal: 5, vertical: 5),
+                          //     decoration: BoxDecoration(
+                          //       gradient: LinearGradient(
+                          //         colors: [
+                          //           Colors.purple,
+                          //           Colors.blue,
+                          //         ],
+                          //       ),
+                          //       borderRadius: BorderRadius.circular(
+                          //         10,
+                          //       ),
+                          //     ),
+                          //     child: Text(
+                          //       "New",
+                          //       style: TextStyle(
+                          //           color: Colors.white, fontSize: 12),
+                          //     ),
+                          //   ),
+                          //   onTap: () {
+                          //     Navigator.pop(context);
+                          //     Navigator.push(
+                          //       context,
+                          //       MaterialPageRoute(
+                          //         builder: (context) => DailyQuestionScreen(),
+                          //       ),
+                          //     );
+                          //   },
+                          // ),
+                          Spacer(),
+                          // const SizedBox(
+                          //   height: 110,
+                          // ),
+                          InkWell(
+                            child: Container(
+                              alignment: Alignment.center,
+                              width: size.width,
+                              padding: EdgeInsets.all(8),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Color(0xff383838),
+                              ),
+                              child: Text(
+                                data != null ? 'Logout' : 'Login',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headlineMedium!
+                                    .copyWith(
+                                      fontSize: 22,
+                                      fontFamily: 'Montserrat',
+                                      fontWeight: FontWeight.bold,
+                                      color:
+                                          Theme.of(context).colorScheme.error,
+                                    ),
+                              ),
+                            ),
+                            onTap: () {
+                              if (data != null) {
+                                ref.watch(authProvider.notifier).signout();
+                                GoRouter.of(context).go('/login');
+                                // Navigator.pop(context);
+                              } else {
+                                GoRouter.of(context).go('/login');
+                              }
+                            },
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text.rich(
+                                TextSpan(
+                                  text: 'Made with ♥️ TSEC ',
+                                  style: TextStyle(
+                                      fontSize: 10, color: Colors.white),
+                                  children: [
+                                    TextSpan(
+                                      text: 'Devs Club',
+                                      style: TextStyle(
+                                        fontSize: 10,
+                                        color: Colors.blue,
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                      recognizer: TapGestureRecognizer()
+                                        ..onTap = () async {
+                                          const url =
+                                              'https://tsecdevsclub.com';
+                                          if (await canLaunch(url)) {
+                                            await launch(url);
+                                          } else {
+                                            throw 'Could not launch $url';
+                                          }
+                                        },
+                                    ),
                                   ],
-                                ))
-                              ],
-                            ),
-
-                            const SizedBox(
-                              height: 30,
-                            ),
-                            ListTile(
-                              contentPadding: EdgeInsets.zero,
-                              title: Text(
-                                'Home',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headlineMedium!
-                                    .copyWith(
-                                      fontSize: 13,
-                                      fontFamily: 'Montserrat',
-                                      color: currentPage == 0
-                                          ? Theme.of(context)
-                                              .colorScheme
-                                              .onBackground
-                                          : Colors.white,
-                                    ),
-                              ),
-                              onTap: () {
-                                setState(() {
-                                  currentPage = 0;
-                                  currentBottomNavPage = "home";
-                                });
-                                Navigator.pop(context);
-                              },
-                            ),
-                            /*ListTile(
-                              contentPadding: EdgeInsets.zero,
-                              title: Text(
-                                'Railway Concession',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headlineMedium!
-                                    .copyWith(
-                                  fontSize: 13,
-                                  color: currentPage == 3 ? Theme.of(context).colorScheme.onBackground : Colors.white,
                                 ),
                               ),
-                              onTap: () {
-                                //page 3
-                                setState(() {
-                                  currentPage = 3;
-                                  Navigator.pop(context);
-                                });
-                              },
-                            ),*/
-                            ListTile(
-                              contentPadding: EdgeInsets.zero,
-                              title: Text(
-                                'Departments',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headlineMedium!
-                                    .copyWith(
-                                      fontSize: 13,
-                                      fontFamily: 'Montserrat',
-                                      color: currentPage == 7
-                                          ? Theme.of(context)
-                                              .colorScheme
-                                              .onBackground
-                                          : Colors.white,
-                                    ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "App Version : v13.0.0",
+                                style: TextStyle(
+                                    color: Colors.grey.shade700, fontSize: 12),
                               ),
-                              onTap: () {
-                                ref.read(titleProvider.notifier).state =
-                                    'Departments';
-                                Navigator.pop(context);
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        DepartmentListScreen(),
-                                  ),
-                                );
-                              },
-                            ),
-                            ListTile(
-                              contentPadding: EdgeInsets.zero,
-                              title: Text(
-                                'Committees',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headlineSmall!
-                                    .copyWith(
-                                      fontSize: 13,
-                                      fontFamily: 'Montserrat',
-                                      color: currentPage == 6
-                                          ? Theme.of(context)
-                                              .colorScheme
-                                              .onBackground
-                                          : Colors.white,
-                                    ),
-                              ),
-                              onTap: () {
-                                ref.read(titleProvider.notifier).state =
-                                    'Committees';
-                                /*setState(() {
-                                  currentPage = 6;
-                                });*/
-                                Navigator.pop(context);
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    // builder: (context) => CommitteesScreen(),
-                                    builder: (context) => OldCommittessScreen(),
-                                  ),
-                                );
-                              },
-                            ),
-                            ListTile(
-                              contentPadding: EdgeInsets.zero,
-                              title: Text(
-                                'Training and Placement Cell',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headlineSmall!
-                                    .copyWith(
-                                      fontSize: 13,
-                                      fontFamily: 'Montserrat',
-                                      color: currentPage == 5
-                                          ? Theme.of(context)
-                                              .colorScheme
-                                              .onBackground
-                                          : Colors.white,
-                                    ),
-                              ),
-                              onTap: () {
-                                ref.read(titleProvider.notifier).state =
-                                    'Training and Placement Cell';
-                                Navigator.pop(context);
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => TPCScreen(),
-                                  ),
-                                );
-                              },
-                            ),
-
-                            // ListTile(
-                            //   contentPadding: EdgeInsets.zero,
-                            //   title: Text(
-                            //     'Profile',
-                            //     style: Theme.of(context).textTheme.headlineMedium!.copyWith(
-                            //           fontSize: 22,
-                            //           color: currentPage == 5
-                            //               ? Theme.of(context).colorScheme.onBackground
-                            //               : Colors.white,
-                            //         ),
-                            //   ),
-                            //   onTap: () {
-                            //     setState(() {
-                            //       currentPage = 5;
-                            //     });
-                            //     Navigator.pop(context);
-                            //   },
-                            // ),
-                            /*ListTile(
-                              contentPadding: EdgeInsets.zero,
-                              title: Text(
-                                'Manage Account',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headlineMedium!
-                                    .copyWith(
-                                  fontSize: 13,
-                                  color: Colors.white,
-                                ),
-                              ),
-                              onTap: () {
-                                //page 4
-                                // setState(() {
-                                //   currentPage = 4;
-                                //   Navigator.pop(context);
-                                // });
-                              },
-                            ),*/
-                            ListTile(
-                              contentPadding: EdgeInsets.zero,
-                              title: Text(
-                                'About Us',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headlineMedium!
-                                    .copyWith(
-                                      fontSize: 13,
-                                      fontFamily: 'Montserrat',
-                                      color: Colors.white,
-                                    ),
-                              ),
-                              /////////////////////////////////////////////////////////////////////////
-                              onTap: () {
-                                ref.read(titleProvider.notifier).state =
-                                    'About Us';
-                                Navigator.pop(context);
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => AboutUs(),
-                                  ),
-                                );
-                              },
-                            ),
-                            Link(
-                              uri: Uri.parse("mailto:devsclubtsec@gmail.com"),
-                              builder: (context, followLink) => ListTile(
-                                contentPadding: EdgeInsets.zero,
-                                title: Text(
-                                  'Contact Us',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headlineMedium!
-                                      .copyWith(
-                                        fontSize: 13,
-                                        fontFamily: 'Montserrat',
-                                        color: currentPage == 4
-                                            ? Theme.of(context)
-                                                .colorScheme
-                                                .onBackground
-                                            : Colors.white,
-                                      ),
-                                ),
-                                onTap: () => followLink?.call(),
-                              ),
-                            ),
-
-                            ListTile(
-                              contentPadding: EdgeInsets.zero,
-                              title: Text(
-                                'Coming soon........',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headlineSmall!
-                                    .copyWith(
-                                      fontSize: 13,
-                                      fontFamily: 'Montserrat',
-                                      color: currentPage == 5
-                                          ? Theme.of(context)
-                                              .colorScheme
-                                              .onBackground
-                                          : Colors.white,
-                                    ),
-                              ),
-                              onTap: () {
-                                ref.read(titleProvider.notifier).state =
-                                    'Something cooking .....';
-                                Navigator.pop(context);
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ComingSoon(),
-                                  ),
-                                );
-                              },
-                            ),
-                            ListTile(
-                              contentPadding: EdgeInsets.zero,
-                              title: Text(
-                                'Report a bug',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headlineSmall!
-                                    .copyWith(
-                                      fontSize: 13,
-                                      fontFamily: 'Montserrat',
-                                      color: currentPage == 5
-                                          ? Theme.of(context)
-                                              .colorScheme
-                                              .onBackground
-                                          : Colors.white,
-                                    ),
-                              ),
-                              onTap: () {
-                                Navigator.pop(context);
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => BugReportScreen(),
-                                  ),
-                                );
-                              },
-                            ),
-                            ListTile(
-                              contentPadding: EdgeInsets.zero,
-                              title: Text(
-                                'Daily Questions',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headlineSmall!
-                                    .copyWith(
-                                      fontSize: 13,
-                                      fontFamily: 'Montserrat',
-                                      color: currentPage == 5
-                                          ? Theme.of(context)
-                                              .colorScheme
-                                              .onBackground
-                                          : Colors.white,
-                                    ),
-                              ),
-                              trailing: Container(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 5, vertical: 5),
-                                decoration: BoxDecoration(
-                                  gradient: LinearGradient(
-                                    colors: [
-                                      Colors.purple,
-                                      Colors.blue,
-                                    ],
-                                  ),
-                                  borderRadius: BorderRadius.circular(
-                                    10,
-                                  ),
-                                ),
-                                child: Text(
-                                  "New",
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 12),
-                                ),
-                              ),
-                              onTap: () {
-                                Navigator.pop(context);
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => DailyQuestionScreen(),
-                                  ),
-                                );
-                              },
-                            ),
-                            InkWell(
-                              child: Container(
-                                alignment: Alignment.center,
-                                width: size.width,
-                                padding: EdgeInsets.all(8),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  color: Color(0xff383838),
-                                ),
-                                child: Text(
-                                  data != null ? 'Logout' : 'Login',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headlineMedium!
-                                      .copyWith(
-                                        fontSize: 22,
-                                        fontFamily: 'Montserrat',
-                                        fontWeight: FontWeight.bold,
-                                        color:
-                                            Theme.of(context).colorScheme.error,
-                                      ),
-                                ),
-                              ),
-                              onTap: () {
-                                if (data != null) {
-                                  ref.watch(authProvider.notifier).signout();
-                                  GoRouter.of(context).go('/login');
-                                  // Navigator.pop(context);
-                                } else {
-                                  GoRouter.of(context).go('/login');
-                                }
-                              },
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text.rich(
-                                  TextSpan(
-                                    text: 'Made with ♥️ TSEC ',
-                                    style: TextStyle(
-                                        fontSize: 10, color: Colors.white),
-                                    children: [
-                                      TextSpan(
-                                        text: 'Devs Club',
-                                        style: TextStyle(
-                                          fontSize: 10,
-                                          color: Colors.blue,
-                                          fontWeight: FontWeight.w700,
-                                        ),
-                                        recognizer: TapGestureRecognizer()
-                                          ..onTap = () async {
-                                            const url =
-                                                'https://tsecdevsclub.com';
-                                            if (await canLaunch(url)) {
-                                              await launch(url);
-                                            } else {
-                                              throw 'Could not launch $url';
-                                            }
-                                          },
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "App Version : v13.0.0",
-                                  style: TextStyle(
-                                      color: Colors.grey.shade700,
-                                      fontSize: 12),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                        ],
                       ),
                     ),
                   ),
