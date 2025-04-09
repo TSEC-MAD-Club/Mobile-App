@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tsec_app/new_ui/colors.dart';
 
 // Light mode colors
 const kLightModeDarkBlue = Color(0xFF136ABF);
@@ -85,7 +86,7 @@ const kLightBlack = Color(0xFF242526);
 //   ),
 // );
 
-late final darkTheme = ThemeData(
+final darkTheme = ThemeData(
   fontFamily: "Inter",
   colorScheme: ColorScheme.fromSeed(
     seedColor: Color(0xffB2D0FF),
@@ -101,6 +102,7 @@ late final darkTheme = ThemeData(
     onSecondary: Colors.white,
     tertiary: Color(0xffF1F1F1),
     onTertiary: Color(0xff6B708C),
+    onSurface: cardcolorblue,
     // tertiaryContainer: Color(0xff1B1B1B),
     tertiaryContainer: Color(0xff2E9D5A),
     error: Color(0xffFF4D4D),
@@ -193,28 +195,28 @@ TextButtonThemeData _getTextButtonTheme({
 }) {
   return TextButtonThemeData(
     style: ButtonStyle(
-      padding: MaterialStateProperty.all<EdgeInsets>(
+      padding: WidgetStateProperty.all<EdgeInsets>(
         const EdgeInsets.symmetric(vertical: 14, horizontal: 29),
       ),
-      backgroundColor: MaterialStateColor.resolveWith((states) {
-        if (states.contains(MaterialState.pressed))
+      backgroundColor: WidgetStateColor.resolveWith((states) {
+        if (states.contains(WidgetState.pressed))
           return darkColor;
-        else if (states.contains(MaterialState.disabled))
+        else if (states.contains(WidgetState.disabled))
           return kDisabledBlue;
-        else if (states.contains(MaterialState.hovered))
+        else if (states.contains(WidgetState.hovered))
           return Colors.transparent;
         else
           return lightColor;
       }),
-      foregroundColor: MaterialStateColor.resolveWith((states) {
-        if (states.contains(MaterialState.pressed)) return darkColor;
+      foregroundColor: WidgetStateColor.resolveWith((states) {
+        if (states.contains(WidgetState.pressed)) return darkColor;
         return kWhite;
       }),
-      shape: MaterialStateProperty.all<OutlinedBorder>(
+      shape: WidgetStateProperty.all<OutlinedBorder>(
         RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       ),
-      side: MaterialStateBorderSide.resolveWith((states) {
-        if (states.contains(MaterialState.pressed))
+      side: WidgetStateBorderSide.resolveWith((states) {
+        if (states.contains(WidgetState.pressed))
           return BorderSide(color: darkColor);
         return null;
       }),
@@ -223,7 +225,7 @@ TextButtonThemeData _getTextButtonTheme({
 }
 
 getTextScale(BuildContext context) {
-  return MediaQuery.of(context).copyWith(textScaleFactor: 1);
+  return MediaQuery.of(context).copyWith(textScaler: TextScaler.linear(1));
 }
 
 ElevatedButtonThemeData _getElevatedButtonTheme({
@@ -232,28 +234,28 @@ ElevatedButtonThemeData _getElevatedButtonTheme({
 }) {
   return ElevatedButtonThemeData(
     style: ButtonStyle(
-      padding: MaterialStateProperty.all<EdgeInsets>(
+      padding: WidgetStateProperty.all<EdgeInsets>(
         const EdgeInsets.symmetric(vertical: 14, horizontal: 29),
       ),
-      backgroundColor: MaterialStateColor.resolveWith((states) {
-        if (states.contains(MaterialState.pressed))
+      backgroundColor: WidgetStateColor.resolveWith((states) {
+        if (states.contains(WidgetState.pressed))
           return darkColor;
-        else if (states.contains(MaterialState.disabled))
+        else if (states.contains(WidgetState.disabled))
           return kDisabledBlue;
-        else if (states.contains(MaterialState.hovered))
+        else if (states.contains(WidgetState.hovered))
           return Colors.transparent;
         else
           return lightColor;
       }),
-      foregroundColor: MaterialStateColor.resolveWith((states) {
-        if (states.contains(MaterialState.pressed)) return darkColor;
+      foregroundColor: WidgetStateColor.resolveWith((states) {
+        if (states.contains(WidgetState.pressed)) return darkColor;
         return kWhite;
       }),
-      shape: MaterialStateProperty.all<OutlinedBorder>(
+      shape: WidgetStateProperty.all<OutlinedBorder>(
         RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       ),
-      side: MaterialStateBorderSide.resolveWith((states) {
-        if (states.contains(MaterialState.pressed))
+      side: WidgetStateBorderSide.resolveWith((states) {
+        if (states.contains(WidgetState.pressed))
           return BorderSide(color: darkColor);
         return null;
       }),
