@@ -1,3 +1,10 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'com.google.gms.google-services' // Only if you're using Firebase
+    id 'dev.flutter.flutter-gradle-plugin'
+}
+
 def localProperties = new Properties()
 def localPropertiesFile = rootProject.file('local.properties')
 if (localPropertiesFile.exists()) {
@@ -7,7 +14,7 @@ if (localPropertiesFile.exists()) {
 }
 
 def keystoreProperties = new Properties()
-def keystorePropertiesFile = rootProject.file('keystore.properties')
+def keystorePropertiesFile = rootProject.file('key.properties')
 if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 }
@@ -27,15 +34,16 @@ if (flutterVersionName == null) {
     flutterVersionName = '1.0'
 }
 
-apply plugin: 'com.android.application'
-// START: FlutterFire Configuration
-apply plugin: 'com.google.gms.google-services'
-// END: FlutterFire Configuration
-apply plugin: 'kotlin-android'
-apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
+//apply plugin: 'com.android.application'
+//// START: FlutterFire Configuration
+//apply plugin: 'com.google.gms.google-services'
+//// END: FlutterFire Configuration
+//apply plugin: 'kotlin-android'
+//apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
+
 
 android {
-    compileSdkVersion 34
+    compileSdkVersion 35
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
@@ -66,7 +74,7 @@ android {
         namespace "com.madclubtsec.tsec_application.tsec_app"
         // versionCode flutterVersionCode.toInteger()
         // versionName flutterVersionName
-        versionCode 21
+        versionCode 28
         versionName "13.0.0"
         multiDexEnabled true
     }
@@ -75,7 +83,10 @@ android {
         release {
             keyAlias keystoreProperties['keyAlias']
             keyPassword keystoreProperties['keyPassword']
-            storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
+            if (!keystoreProperties['storeFile']) {
+                throw new GradleException("storeFile is missing from keystore.properties")
+            }
+            storeFile file(keystoreProperties['storeFile'])
             storePassword keystoreProperties['storePassword']
         }
     }
@@ -97,6 +108,6 @@ flutter {
 dependencies {
     def multidex_version = "2.0.1"
     implementation "androidx.multidex:multidex:$multidex_version"
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.3'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.9.24"
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.1.5'
 }
