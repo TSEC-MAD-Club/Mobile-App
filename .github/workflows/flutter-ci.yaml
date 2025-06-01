@@ -35,8 +35,11 @@ jobs:
         shell: bash
         env:
           FIREBASE_OPTIONS: ${{ secrets.FIREBASE_OPTIONS }}
+          GOOGLE_JSON_DATA: ${{ secrets.GOOGLE_SERVICES }}
         run: |
           mv lib/firebase_options.example.dart lib/firebase_options.dart
+
+          echo $DATA > /home/runner/work/Mobile-App/Mobile-App/android/app/google-services.json
 
           flutter pub get
 
