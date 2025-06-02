@@ -179,24 +179,21 @@ class _MainScreenAppBarState extends ConsumerState<MainScreenAppBar> {
               ),
               data == null
                   ? const SizedBox()
-                  : Flexible(
-                      flex: 1,
-                      child: GestureDetector(
-                        onTap: () =>
-                            GoRouter.of(context).push("/notifications"),
-                        child: Container(
-                          padding: const EdgeInsets.all(5),
-                          decoration: BoxDecoration(
-                            color: Theme.of(context).colorScheme.secondary,
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          child: const IconTheme(
-                            data: IconThemeData(color: kLightModeLightBlue),
-                            child: Icon(Icons.notifications),
-                          ),
-                        ),
+                  : GestureDetector(
+                    onTap: () =>
+                        GoRouter.of(context).push("/notifications"),
+                    child: Container(
+                      padding: const EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.secondary,
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: const IconTheme(
+                        data: IconThemeData(color: kLightModeLightBlue),
+                        child: Icon(Icons.notifications),
                       ),
                     ),
+                  ),
             ],
           ),
           const SizedBox(height: 10),

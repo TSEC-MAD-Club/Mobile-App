@@ -17,6 +17,7 @@ import 'package:tsec_app/new_ui/screens/coming_soon_screen/coming_soon.dart';
 import 'package:tsec_app/new_ui/screens/about_us_screen/about_us.dart';
 import 'package:tsec_app/new_ui/screens/daily_question_screen/DailyQuestionScreen.dart';
 import 'package:tsec_app/new_ui/screens/erp_screen/erp_screen.dart';
+import 'package:tsec_app/new_ui/screens/home_screen/home_screen_shimmer_loader.dart';
 import 'package:tsec_app/new_ui/screens/home_screen/widgets/home_widget.dart';
 import 'package:tsec_app/new_ui/screens/main_screen/widgets/main_bottom_nav_bar.dart';
 import 'package:tsec_app/new_ui/screens/notes_screen/notes_screen.dart';
@@ -226,130 +227,6 @@ class _MainScreenState extends ConsumerState<MainScreen> {
       child: Scaffold(
         resizeToAvoidBottomInset: true,
         key: _scaffoldKey,
-        // appBar: currentBottomNavPage != "concession" || !concessionOpen
-        //     ? AppBar(
-        //         shadowColor: Colors.transparent,
-        //         backgroundColor: currentBottomNavPage != "profile"
-        //             ? Colors.transparent
-        //             : Theme.of(context).colorScheme.primary,
-        //         toolbarHeight: 80,
-        //         //leadingWidth: MediaQuery.of(context).size.width * 0.7,
-        //         title: Text(
-        //           currentPage < 5
-        //               ? (currentBottomNavPage == "home"
-        //                   ? "Home"
-        //                   : currentBottomNavPage == "attendance"
-        //                       ? "ERP"
-        //                       : currentBottomNavPage == "notes"
-        //                           ? "Notes"
-        //                           : currentBottomNavPage == "concession"
-        //                               ? "Railway Concession"
-        //                               : "")
-        //               : currentPage == 5
-        //                   ? "TPC"
-        //                   : currentPage == 6
-        //                       ? "Committees"
-        //                       : "Departments",
-        //           style: Theme.of(context)
-        //               .textTheme
-        //               .headlineLarge!
-        //               .copyWith(fontSize: 15, color: Colors.white),
-        //           maxLines: 1,
-        //           overflow: TextOverflow.fade,
-        //         ),
-        //         centerTitle: true,
-        //         leading: currentBottomNavPage != "profile"
-        //             ? profilePic != null
-        //                 ? GestureDetector(
-        //                     onTap: () {
-        //                       _scaffoldKey.currentState?.openDrawer();
-        //                     },
-        //                     child: CircleAvatar(
-        //                       radius: 20,
-        //                       backgroundImage: MemoryImage(profilePic),
-        //                       // backgroundImage: MemoryImage(_image!),
-        //                     ),
-        //                   )
-        //                 : InkWell(
-        //                     onTap: () {
-        //                       _scaffoldKey.currentState?.openDrawer();
-        //                     },
-        //                     child: CircleAvatar(radius: 15,backgroundColor: Colors.blue.shade400,child: Icon(Icons.menu,color: Colors.white,)),
-        //                   )
-        //
-        //             // SingleChildScrollView(
-        //             //   scrollDirection: Axis.horizontal,
-        //             //   child: Container(
-        //             //   padding: EdgeInsets.only(left: 10),
-        //             //     width: MediaQuery.of(context).size.width * .8,
-        //             //     child: Text(
-        //             //       currentPage == 0
-        //             //           ? (currentBottomNavPage == "home"
-        //             //               ? "Home"
-        //             //               : currentBottomNavPage == "attendance"
-        //             //                   ? "ERP"
-        //             //                   : currentBottomNavPage ==
-        //             //                           "timetable"
-        //             //                       ? "Schedule"
-        //             //                       : currentBottomNavPage ==
-        //             //                               "concession"
-        //             //                           ? "Railway Concession"
-        //             //                           : "")
-        //             //           : currentPage == 1
-        //             //               ? "TPC"
-        //             //               : currentPage == 2
-        //             //                   ? "Committees"
-        //             //                   : "Departments",
-        //             //       style: Theme.of(context)
-        //             //           .textTheme
-        //             //           .headlineLarge!
-        //             //           .copyWith(fontSize: 30),
-        //             //       maxLines: 1,
-        //             //       overflow: TextOverflow.fade,
-        //             //     ),
-        //             //   ),
-        //             // )
-        //             : Container(),
-        //         // title: Text("Yyay"),
-        //         actions: userDetails != null
-        //             ? [
-        //                 InkWell(
-        //                   child: CircleAvatar(
-        //                     backgroundColor: Colors.blue.shade400,
-        //                     child: Icon(Icons.notifications,color: Colors.white,),
-        //                   ),
-        //                   onTap: () {
-        //                     //Add the Notification Screen here
-        //                     //GoRouter.of(context).push('/notes');
-        //                     Navigator.push(context,MaterialPageRoute(builder: (context)=> NotificationScreen(),),);
-        //                   },
-        //                 ),
-        //                 SizedBox(
-        //                   width: 15,
-        //                 ),
-        //                 // Padding(
-        //                 //   padding: const EdgeInsets.all(8.0),
-        //                 //   child: Ink(
-        //                 //     decoration: const ShapeDecoration(
-        //                 //       color: Colors.white, // White background color
-        //                 //       shape: CircleBorder(), // Circular shape
-        //                 //     ),
-        //                 //     child: IconButton(
-        //                 //       icon: const Icon(
-        //                 //         Icons.event_note,
-        //                 //         color: Colors.black, // Black icon color
-        //                 //       ),
-        //                 //       onPressed: () {
-        //                 //         // Handle button click
-        //                 //       },
-        //                 //     ),
-        //                 //   ),
-        //                 // )
-        //               ]
-        //             : [],
-        //       )
-        //     : null,
-
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(kToolbarHeight),
           child: AppBar(
@@ -363,19 +240,16 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                   key: logoutKey,
                   description: 'You can Login from the Drawer Panel',
                   descTextStyle: TextStyle(fontSize: 15),
-                  child: Flexible(
-                    flex: 1,
-                    child: GestureDetector(
-                      onTap: () {
-                        _scaffoldKey.currentState?.openDrawer();
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.all(0),
-                        child: Image.asset(
-                          'assets/images/new_app_bar/icon_ham.png',
-                          width: 39,
-                          height: 39,
-                        ),
+                  child: GestureDetector(
+                    onTap: () {
+                      _scaffoldKey.currentState?.openDrawer();
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(0),
+                      child: Image.asset(
+                        'assets/images/new_app_bar/icon_ham.png',
+                        width: 39,
+                        height: 39,
                       ),
                     ),
                   ),
@@ -552,26 +426,6 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                               Navigator.pop(context);
                             },
                           ),
-                          /*ListTile(
-                            contentPadding: EdgeInsets.zero,
-                            title: Text(
-                              'Railway Concession',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headlineMedium!
-                                  .copyWith(
-                                fontSize: 13,
-                                color: currentPage == 3 ? Theme.of(context).colorScheme.onBackground : Colors.white,
-                              ),
-                            ),
-                            onTap: () {
-                              //page 3
-                              setState(() {
-                                currentPage = 3;
-                                Navigator.pop(context);
-                              });
-                            },
-                          ),*/
                           ListTile(
                             contentPadding: EdgeInsets.zero,
                             title: Text(
@@ -663,45 +517,6 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                               );
                             },
                           ),
-
-                          // ListTile(
-                          //   contentPadding: EdgeInsets.zero,
-                          //   title: Text(
-                          //     'Profile',
-                          //     style: Theme.of(context).textTheme.headlineMedium!.copyWith(
-                          //           fontSize: 22,
-                          //           color: currentPage == 5
-                          //               ? Theme.of(context).colorScheme.onBackground
-                          //               : Colors.white,
-                          //         ),
-                          //   ),
-                          //   onTap: () {
-                          //     setState(() {
-                          //       currentPage = 5;
-                          //     });
-                          //     Navigator.pop(context);
-                          //   },
-                          // ),
-                          /*ListTile(
-                            contentPadding: EdgeInsets.zero,
-                            title: Text(
-                              'Manage Account',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headlineMedium!
-                                  .copyWith(
-                                fontSize: 13,
-                                color: Colors.white,
-                              ),
-                            ),
-                            onTap: () {
-                              //page 4
-                              // setState(() {
-                              //   currentPage = 4;
-                              //   Navigator.pop(context);
-                              // });
-                            },
-                          ),*/
                           ListTile(
                             contentPadding: EdgeInsets.zero,
                             title: Text(
@@ -807,57 +622,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                               );
                             },
                           ),
-                          // ListTile(
-                          //   contentPadding: EdgeInsets.zero,
-                          //   title: Text(
-                          //     'Daily Questions',
-                          //     style: Theme.of(context)
-                          //         .textTheme
-                          //         .headlineSmall!
-                          //         .copyWith(
-                          //           fontSize: 13,
-                          //           fontFamily: 'Montserrat',
-                          //           color: currentPage == 5
-                          //               ? Theme.of(context)
-                          //                   .colorScheme
-                          //                   .onBackground
-                          //               : Colors.white,
-                          //         ),
-                          //   ),
-                          //   trailing: Container(
-                          //     padding: EdgeInsets.symmetric(
-                          //         horizontal: 5, vertical: 5),
-                          //     decoration: BoxDecoration(
-                          //       gradient: LinearGradient(
-                          //         colors: [
-                          //           Colors.purple,
-                          //           Colors.blue,
-                          //         ],
-                          //       ),
-                          //       borderRadius: BorderRadius.circular(
-                          //         10,
-                          //       ),
-                          //     ),
-                          //     child: Text(
-                          //       "New",
-                          //       style: TextStyle(
-                          //           color: Colors.white, fontSize: 12),
-                          //     ),
-                          //   ),
-                          //   onTap: () {
-                          //     Navigator.pop(context);
-                          //     Navigator.push(
-                          //       context,
-                          //       MaterialPageRoute(
-                          //         builder: (context) => DailyQuestionScreen(),
-                          //       ),
-                          //     );
-                          //   },
-                          // ),
                           Spacer(),
-                          // const SizedBox(
-                          //   height: 110,
-                          // ),
                           InkWell(
                             child: Container(
                               alignment: Alignment.center,
