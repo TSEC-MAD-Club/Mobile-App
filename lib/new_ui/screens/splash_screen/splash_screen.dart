@@ -9,6 +9,7 @@ import 'package:go_router/go_router.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:tsec_app/models/student_model/student_model.dart';
 import 'package:tsec_app/new_ui/screens/Maintainance_Screen/maintainance_screen.dart';
+import 'package:tsec_app/new_ui/screens/home_screen/home_screen_shimmer_loader.dart';
 import 'package:tsec_app/new_ui/screens/main_screen/main_screen.dart';
 import 'package:tsec_app/new_ui/screens/profile_screen/profile_screen.dart';
 import 'package:tsec_app/new_ui/screens/launch_screen/launch_screen.dart';
@@ -91,7 +92,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
     if (!_isLaunchDateFetched) {
       return Scaffold(
         body: Center(
-          child: CircularProgressIndicator(),
+          child: HomeScreenShimmerLoader(),
         ),
       );
     }
@@ -120,7 +121,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
           } else {
             return const Scaffold(
               body: Center(
-                child: CircularProgressIndicator(),
+                child: HomeScreenShimmerLoader(),
 
                 // child: SizedBox(
                 //   child: Lottie.asset("assets/animation/loadinglottie.json"),
