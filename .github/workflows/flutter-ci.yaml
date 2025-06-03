@@ -39,7 +39,7 @@ jobs:
         run: |
           mv lib/firebase_options.example.dart lib/firebase_options.dart
 
-          echo $DATA > /home/runner/work/Mobile-App/Mobile-App/android/app/google-services.json
+          echo $GOOGLE_JSON_DATA > /home/runner/work/Mobile-App/Mobile-App/android/app/google-services.json
 
           flutter pub get
 
