@@ -22,6 +22,17 @@ jobs:
     steps:
       - uses: actions/checkout@v1
 
+      - uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper/
+            ~/.pub-cache
+            build
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
       - uses: actions/setup-java@v1
         with:
           java-version: "21.x"
@@ -36,6 +47,7 @@ jobs:
         env:
           FIREBASE_OPTIONS: ${{ secrets.FIREBASE_OPTIONS }}
           GOOGLE_JSON_DATA: ${{ secrets.GOOGLE_SERVICES }}
+          GRADLE_OPTS: -Xmx4096m
         run: |
           mv lib/firebase_options.example.dart lib/firebase_options.dart
 
