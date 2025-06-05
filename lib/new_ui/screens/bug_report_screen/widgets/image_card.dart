@@ -22,19 +22,18 @@ class ImageCard extends StatelessWidget {
             ),
           ),
           Positioned(
-            top: -7,
-            right: -12,
-            child: ElevatedButton(
+              top: -7,
+              right: -12,
+              child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   shape: const CircleBorder(),
                   backgroundColor: Colors.black38, // Background color
                 ),
-              child: Icon(Icons.close, color: Colors.white),
-              onPressed: (){
+                child: Icon(Icons.close, color: Colors.white),
+                onPressed: () {
                   remImg(image);
-              },
-            )
-          ),
+                },
+              )),
         ],
       ),
     );
