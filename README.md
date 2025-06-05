@@ -7,7 +7,7 @@ Welcome to the **official TSEC App**, brought to you by the **Developers Club of
   <a href="https://play.google.com/store/apps/details?id=com.madclubtsec.tsec_application&pcampaignid=web_share">
     <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play" width="180"/>
   </a>
-  <a href="#">
+  <a href="https://apps.apple.com/in/app/tsec-app/id6446188102">
     <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download on the App Store" width="160"/>
   </a>
 </p>
