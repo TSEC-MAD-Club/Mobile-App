@@ -1,10 +1,8 @@
 import 'dart:typed_data';
 import 'dart:ui';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/cupertino.dart';
+// import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -15,16 +13,13 @@ import 'package:tsec_app/new_ui/screens/attendance_screen/attendance_screen.dart
 import 'package:tsec_app/new_ui/screens/bug_report_screen/bug_report_screen.dart';
 import 'package:tsec_app/new_ui/screens/coming_soon_screen/coming_soon.dart';
 import 'package:tsec_app/new_ui/screens/about_us_screen/about_us.dart';
-import 'package:tsec_app/new_ui/screens/daily_question_screen/DailyQuestionScreen.dart';
-import 'package:tsec_app/new_ui/screens/erp_screen/erp_screen.dart';
-import 'package:tsec_app/new_ui/screens/home_screen/home_screen_shimmer_loader.dart';
+
 import 'package:tsec_app/new_ui/screens/home_screen/widgets/home_widget.dart';
 import 'package:tsec_app/new_ui/screens/main_screen/widgets/main_bottom_nav_bar.dart';
 import 'package:tsec_app/new_ui/screens/notes_screen/notes_screen.dart';
 import 'package:tsec_app/new_ui/screens/profile_screen/profile_screen.dart';
 import 'package:tsec_app/new_ui/screens/railway_screen/railway_screen.dart';
-import 'package:tsec_app/new_ui/screens/railway_screen/railwayform.dart';
-import 'package:tsec_app/new_ui/screens/launch_screen/launch_screen.dart';
+
 import 'package:tsec_app/new_ui/screens/timetable_screen/timetable_screen.dart';
 import 'package:tsec_app/new_ui/showcasekeys.dart';
 import 'package:tsec_app/provider/appbar_title_provider.dart';
@@ -40,7 +35,6 @@ import '../../../services/sharedprefsfordot.dart';
 
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/gestures.dart';
-import 'package:badges/badges.dart' as MyBadge;
 
 class MainScreen extends ConsumerStatefulWidget {
   const MainScreen({
@@ -68,7 +62,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
   late List<Widget> pages;
   late Map<String, Widget> widgetMap;
 
-  late FirebaseMessaging _firebaseMessaging;
+  // late FirebaseMessaging _firebaseMessaging;
 
   @override
   void initState() {
@@ -397,7 +391,6 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                               ))
                             ],
                           ),
-
                           const SizedBox(
                             height: 30,
                           ),
@@ -565,7 +558,6 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                               onTap: () => followLink?.call(),
                             ),
                           ),
-
                           ListTile(
                             contentPadding: EdgeInsets.zero,
                             title: Text(

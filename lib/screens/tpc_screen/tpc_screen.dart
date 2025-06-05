@@ -3,13 +3,10 @@ import 'dart:convert';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shimmer_animation/shimmer_animation.dart';
 import 'package:tsec_app/new_ui/screens/main_screen/widgets/common_basic_appbar.dart';
 
 import '../../models/company_model/company_model.dart';
-import '../../utils/image_assets.dart';
-import '../../widgets/custom_app_bar.dart';
-import '../../widgets/custom_scaffold.dart';
-import 'internships.dart';
 
 class TPCScreen extends StatefulWidget {
   const TPCScreen({Key? key}) : super(key: key);
@@ -50,25 +47,51 @@ class _TPCScreenState extends State<TPCScreen> {
                 color: Theme.of(context).colorScheme.primaryContainer,
                 semanticContainer: true,
                 clipBehavior: Clip.antiAliasWithSaveLayer,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                elevation: 5,
+                margin: const EdgeInsets.all(10),
                 child: Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: Wrap(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(
-                          top: 15.0,
-                          left: 15.0,
-                          right: 15.0,
-                          bottom: 15,
-                        ),
-                        child: CachedNetworkImage(
-                          imageUrl: _companys[i].image,
-                          height: 40,
-                          width: 140,
-                          fit: BoxFit.scaleDown,
-                        ),
-                      ),
-                      Divider(color: Colors.grey.withOpacity(0.7)),
+                          padding: const EdgeInsets.only(
+                            top: 15.0,
+                            left: 15.0,
+                            right: 15.0,
+                            bottom: 15,
+                          ),
+                          // child: const TpcImageShimmer(),
+                          child: CachedNetworkImage(
+                            imageUrl: _companys[i].image,
+                            imageBuilder: (context, imageProvider) => Column(
+                              children: [
+                                Image(
+                                  image: imageProvider,
+                                  height: 50,
+                                  width: 140,
+                                  fit: BoxFit.scaleDown,
+                                ),
+                                const SizedBox(height: 20),
+                                Container(
+                                    color: Colors.grey.withOpacity(0.7),
+                                    height: 1.5,
+                                    width: double.infinity),
+                              ],
+                            ),
+                            placeholder: (context, url) => Column(
+                              children: const [
+                                TpcImageShimmer(),
+                                SizedBox(height: 20),
+                                TpcDividerShimmer(),
+                              ],
+                            ),
+                            errorWidget: (context, url, error) =>
+                                const Icon(Icons.error),
+                          )),
+                      // Divider(color: Colors.grey.withOpacity(0.7)),
                       Padding(
                         padding: const EdgeInsets.only(
                           top: 5.0,
@@ -80,9 +103,6 @@ class _TPCScreenState extends State<TPCScreen> {
                           child: FittedBox(
                             child: Text(_companys[i].name,
                                 textAlign: TextAlign.center,
-                                // style: const TextStyle(
-                                //   fontSize: 16,
-                                // ),
                                 style:
                                     Theme.of(context).textTheme.headlineMedium),
                             fit: BoxFit.scaleDown,
@@ -92,11 +112,6 @@ class _TPCScreenState extends State<TPCScreen> {
                     ],
                   ),
                 ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-                elevation: 5,
-                margin: const EdgeInsets.all(10),
               ),
             ),
           ),
@@ -137,6 +152,47 @@ class _TPCScreenState extends State<TPCScreen> {
             );
           },
         ),
+      ),
+    );
+  }
+}
+
+class TpcImageShimmer extends StatelessWidget {
+  const TpcImageShimmer({super.key});
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Shimmer(
+          color: Colors.grey,
+          colorOpacity: 0.5,
+          duration: const Duration(seconds: 3),
+          child: Container(
+            alignment: Alignment.center,
+            width: 50,
+            height: 50,
+            color: Colors.white12,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class TpcDividerShimmer extends StatelessWidget {
+  const TpcDividerShimmer({super.key});
+  @override
+  Widget build(BuildContext context) {
+    return Shimmer(
+      color: Colors.grey,
+      colorOpacity: 0.5,
+      duration: const Duration(seconds: 3),
+      child: Container(
+        alignment: Alignment.center,
+        width: double.infinity,
+        height: 1.5,
+        color: Colors.white12,
       ),
     );
   }
