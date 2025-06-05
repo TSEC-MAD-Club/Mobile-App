@@ -12,6 +12,7 @@ import 'package:showcaseview/showcaseview.dart';
 import 'package:tsec_app/models/user_model/user_model.dart';
 import 'package:tsec_app/new_ui/colors.dart';
 import 'package:tsec_app/new_ui/screens/attendance_screen/attendance_screen.dart';
+import 'package:tsec_app/new_ui/screens/attendance_screen/attendance_screen_2025.dart';
 import 'package:tsec_app/new_ui/screens/bug_report_screen/bug_report_screen.dart';
 import 'package:tsec_app/new_ui/screens/coming_soon_screen/coming_soon.dart';
 import 'package:tsec_app/new_ui/screens/about_us_screen/about_us.dart';
@@ -201,7 +202,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
           },
         ),
         const NotesScreen(),
-        AttendanceScreen(),
+        AttendanceScreen2025(),
         const RailwayConcessionScreen(),
         ProfilePage(justLoggedIn: false),
         const TPCScreen(),
@@ -397,7 +398,6 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                               ))
                             ],
                           ),
-
                           const SizedBox(
                             height: 30,
                           ),
@@ -565,7 +565,6 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                               onTap: () => followLink?.call(),
                             ),
                           ),
-
                           ListTile(
                             contentPadding: EdgeInsets.zero,
                             title: Text(
