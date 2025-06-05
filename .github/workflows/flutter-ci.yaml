@@ -32,7 +32,6 @@ jobs:
             ~/.gradle/caches
             ~/.gradle/wrapper/
             ~/.pub-cache
-            build
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
@@ -50,7 +49,7 @@ jobs:
         shell: bash
         env:
           FIREBASE_OPTIONS: ${{ github.event_name == 'pull_request' && 'FAKE_FIREBASE_OPTS' || secrets.FIREBASE_OPTIONS }}
-          GOOGLE_JSON_DATA: ${{ github.event_name == 'pull_request' && 'FAKE_GOOGLE_JSON' || secrets.GOOGLE_SERVICES }}
+          GOOGLE_JSON_DATA: ${{ github.event_name == 'pull_request' && '{}' || secrets.GOOGLE_SERVICES }}
           GRADLE_OPTS: -Xmx4096m
         run: |
           mv lib/firebase_options.example.dart lib/firebase_options.dart
