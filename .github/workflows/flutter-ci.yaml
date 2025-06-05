@@ -60,7 +60,7 @@ jobs:
             echo "Using Real Secrets..."
           fi
 
-          if [["$GOOGLE_JSON_DATA" == "FAKE_GOOGLE_JSON" ]]; then
+          if [["$GOOGLE_JSON_DATA" == "{}" ]]; then
             echo "Using Fake Secrets, Firebase won't work ..."
           fi
 
