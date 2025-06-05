@@ -49,13 +49,21 @@ jobs:
       - name: Setup project
         shell: bash
         env:
-          FIREBASE_OPTIONS: ${{ secrets.FIREBASE_OPTIONS }}
-          GOOGLE_JSON_DATA: ${{ secrets.GOOGLE_SERVICES }}
+          FIREBASE_OPTIONS: ${{ github.event_name == 'pull_request' && 'FAKE_FIREBASE_OPTS' || secrets.FIREBASE_OPTIONS }}
+          GOOGLE_JSON_DATA: ${{ github.event_name == 'pull_request' && 'FAKE_GOOGLE_JSON' || secrets.GOOGLE_SERVICES }}
           GRADLE_OPTS: -Xmx4096m
         run: |
           mv lib/firebase_options.example.dart lib/firebase_options.dart
 
           echo $GOOGLE_JSON_DATA > /home/runner/work/Mobile-App/Mobile-App/android/app/google-services.json
+
+          if [["$GOOGLE_JSON_DATA" != "FAKE_GOOGLE_JSON" ]]; then
+            echo "Using Real Secrets..."
+          fi
+
+          if [["$GOOGLE_JSON_DATA" == "FAKE_GOOGLE_JSON" ]]; then
+            echo "Using Fake Secrets, Firebase won't work ..."
+          fi
 
           flutter pub get
 
