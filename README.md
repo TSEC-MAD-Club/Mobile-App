@@ -2,6 +2,9 @@
 
 Welcome to the **official TSEC App**, brought to you by the **Developers Club of Thadomal Shahani Engineering College (TSEC)**. Our mission is to simplify and enhance your academic journey through technology.
 
+![image](https://github.com/user-attachments/assets/3d5e5809-686c-43d1-a7a6-61155a152848)
+
+
 <p align="left">
   <a href="https://play.google.com/store/apps/details?id=com.madclubtsec.tsec_application&pcampaignid=web_share">
     <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play" width="180" style="vertical-align: middle;"/>
