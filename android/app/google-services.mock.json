@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "1234567890",
+    "firebase_url": "https://mock.firebaseio.com",
+    "project_id": "mock-project-id",
+    "storage_bucket": "mock.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1234567890:android:abc123def456",
+        "android_client_info": {
+          "package_name": "com.example.mock"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "mock-api-key"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
