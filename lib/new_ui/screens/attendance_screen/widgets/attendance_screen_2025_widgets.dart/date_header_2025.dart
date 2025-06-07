@@ -28,7 +28,9 @@ class _DateHeader2025State extends State<DateHeader2025> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         DatePicker(
-          DateTime(2025, 5, 1),
+          DateTime.now().subtract(const Duration(days: 30)),
+          daysCount: 31,
+          isReversed: true,
           initialSelectedDate: DateTime.now(),
           monthTextStyle: theme.textTheme.headlineSmall!.copyWith(
             fontSize: 11,
