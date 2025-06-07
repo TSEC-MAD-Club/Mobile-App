@@ -6,29 +6,34 @@ CONTAINS THE SCROLLABLE DATE PICKER IN THE ATTENDANCE SCREEN
 
 import 'package:date_picker_timeline/date_picker_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tsec_app/new_ui/colors.dart';
 
-class DateHeader2025 extends StatefulWidget {
+import '../../../../../screens/main_screen/widget/card_display.dart';
+
+class DateHeader2025 extends ConsumerStatefulWidget {
   final double width;
   const DateHeader2025({super.key, required this.width});
 
   @override
-  State<DateHeader2025> createState() => _DateHeader2025State();
+  ConsumerState<DateHeader2025> createState() => _DateHeader2025State();
 }
 
-class _DateHeader2025State extends State<DateHeader2025> {
+class _DateHeader2025State extends ConsumerState<DateHeader2025> {
   List dates = List.generate(30, (count) => count + 1);
 
   @override
   Widget build(BuildContext context) {
-    DateTime _selectedValue = DateTime.now();
+    // DateTime _selectedValue = DateTime.now();
     var theme = Theme.of(context);
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         DatePicker(
-          DateTime(2025, 5, 1),
+          DateTime.now().subtract(const Duration(days: 30)),
+          daysCount: 31,
+          isReversed: true,
           initialSelectedDate: DateTime.now(),
           monthTextStyle: theme.textTheme.headlineSmall!.copyWith(
             fontSize: 11,
@@ -46,8 +51,10 @@ class _DateHeader2025State extends State<DateHeader2025> {
           selectedTextColor: Colors.white,
           onDateChange: (date) {
             // New date selected
+            // print(date.toIso8601String());
+            ref.read(dayProvider.notifier).update(((state) => date));
             setState(() {
-              _selectedValue = date;
+              // _selectedValue = date;
             });
           },
         ),
