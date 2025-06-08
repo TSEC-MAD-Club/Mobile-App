@@ -1,19 +1,21 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:tsec_app/new_ui/colors.dart';
+import 'package:tsec_app/new_ui/screens/home_screen/home_screen_shimmer_loader.dart';
 
 class ScheduleCardModified extends StatelessWidget {
   const ScheduleCardModified(
-      this.color, this.opacityColor,
-      {Key? key,
-        required this.lectureStartTime,
-        required this.lectureEndTime,
-        required this.lectureName,
-        required this.facultyName,
-        required this.facultyImageurl,
-        required this.lectureBatch,
-        required this.lectureRoomNo,
-      })
-      : super(key: key);
+    this.color,
+    this.opacityColor, {
+    Key? key,
+    required this.lectureStartTime,
+    required this.lectureEndTime,
+    required this.lectureName,
+    required this.facultyName,
+    required this.facultyImageurl,
+    required this.lectureBatch,
+    required this.lectureRoomNo,
+  }) : super(key: key);
   final Color? color;
   final Color? opacityColor;
   final String lectureStartTime;
@@ -147,19 +149,21 @@ class ScheduleCardModified extends StatelessWidget {
                               letterSpacing: 1.0,
                             ),
                           ),
-                          SizedBox(width: 30,),
-                          lectureRoomNo!=""?
-                          Text(
-                            'Room: $lectureRoomNo',
-                            style: TextStyle(
-                              color: _theme.textTheme.headlineMedium!.color,
-                              fontWeight: FontWeight.w300,
-                              fontSize: 15,
-                              letterSpacing: 1.0,
-                            ),
-                          )
-                              :
-                          Container(),
+                          SizedBox(
+                            width: 30,
+                          ),
+                          lectureRoomNo != ""
+                              ? Text(
+                                  'Room: $lectureRoomNo',
+                                  style: TextStyle(
+                                    color:
+                                        _theme.textTheme.headlineMedium!.color,
+                                    fontWeight: FontWeight.w300,
+                                    fontSize: 15,
+                                    letterSpacing: 1.0,
+                                  ),
+                                )
+                              : Container(),
                         ],
                       ),
                     ),
@@ -168,11 +172,18 @@ class ScheduleCardModified extends StatelessWidget {
                     ),
                     Row(
                       children: [
-                        CircleAvatar(
-                          radius: 14.0,
-                          backgroundImage: NetworkImage(facultyImageurl),
+                        SizedBox(
+                          width: 28,
+                          height: 28,
+                          child: ClipOval(
+                            child: CachedNetworkImage(
+                              imageUrl: facultyImageurl,
+                              fit: BoxFit.cover,
+                              placeholder: (context, url) =>
+                                  const ImageShimmer(),
+                            ),
+                          ),
                         ),
-
                         const SizedBox(
                           width: 12.0,
                         ),
