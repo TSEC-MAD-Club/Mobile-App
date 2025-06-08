@@ -292,10 +292,11 @@ packages:
   date_picker_timeline:
     dependency: "direct main"
     description:
-      name: date_picker_timeline
-      sha256: b99308cd224ca42900aa3ba2a75213c8deff6edee35fc18905a7834e8b0d7e70
-      url: "https://pub.dev"
-    source: hosted
+      path: "."
+      ref: "604a873"
+      resolved-ref: "604a8736685e9efb4e02aeb95e51862fe81ffb42"
+      url: "https://github.com/CosmicRaptor/DatePickerTimelineFlutter.git"
+    source: git
     version: "1.2.7"
   dbus:
     dependency: transitive
@@ -1373,6 +1374,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.11.1"
+  timeline_tile:
+    dependency: "direct main"
+    description:
+      name: timeline_tile
+      sha256: "85ec2023c67137397c2812e3e848b2fb20b410b67cd9aff304bb5480c376fc0c"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.0"
   timezone:
     dependency: transitive
     description:

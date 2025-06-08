@@ -29,7 +29,10 @@ dependencies:
   carousel_slider: ^5.0.0
   cloud_firestore: ^5.6.8
   cupertino_icons: ^1.0.8
-  date_picker_timeline: ^1.2.7
+  date_picker_timeline:
+    git:
+        url: https://github.com/CosmicRaptor/DatePickerTimelineFlutter.git
+        ref: 604a873
   expandable: ^5.0.1
   file_picker: ^10.1.9
   firebase_auth: ^5.5.4
@@ -71,6 +74,7 @@ dependencies:
   shimmer_animation: ^2.2.2
   showcaseview: ^4.0.1
   badges: ^3.1.2
+  timeline_tile: ^2.0.0
 
 dev_dependencies:
   build_runner: null

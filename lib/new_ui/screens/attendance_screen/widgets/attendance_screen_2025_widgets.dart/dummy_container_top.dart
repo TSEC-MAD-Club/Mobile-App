@@ -10,9 +10,10 @@ import 'package:flutter/material.dart';
 class Dummycontainertop extends StatefulWidget {
   final double width;
   final double height;
+  final String subjectName;
 
   const Dummycontainertop(
-      {super.key, required this.width, required this.height});
+      {super.key, required this.width, required this.height, required this.subjectName});
 
   @override
   State<Dummycontainertop> createState() => _DummycontainertopState();
@@ -47,7 +48,7 @@ class _DummycontainertopState extends State<Dummycontainertop> {
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  "MATHS",
+                  widget.subjectName,
                   style: TextStyle(color: Colors.white),
                 ),
               ),

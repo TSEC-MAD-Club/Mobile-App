@@ -4,24 +4,19 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tsec_app/models/occassion_model/occasion_model.dart';
-import 'package:tsec_app/models/student_model/student_model.dart';
 import 'package:tsec_app/models/timetable_model/timetable_model.dart';
 import 'package:tsec_app/models/user_model/user_model.dart';
 import 'package:tsec_app/new_ui/screens/home_screen/widgets/schedule_card.dart';
 import 'package:tsec_app/provider/auth_provider.dart';
 import 'package:tsec_app/provider/timetable_provider.dart';
 import 'package:tsec_app/provider/occasion_provider.dart';
-import 'package:tsec_app/screens/main_screen/widget/schedule_card.dart';
 
 import 'package:tsec_app/utils/faculty_details.dart';
 import 'package:tsec_app/utils/notification_type.dart';
 import 'package:tsec_app/new_ui/screens/home_screen/widgets/time_container.dart';
 import 'package:tsec_app/utils/timetable_util.dart';
 
-final dayProvider = StateProvider.autoDispose<DateTime>((ref) {
-  DateTime day = DateTime.now();
-  return day;
-});
+import '../../../../screens/main_screen/widget/card_display.dart';
 
 class ExpandedCard extends ConsumerStatefulWidget {
   const ExpandedCard({super.key});
@@ -60,8 +55,8 @@ class _ExpandedCardState extends ConsumerState<ExpandedCard> {
     DateTime day = ref.watch(dayProvider);
     String dayStr = getweekday(day.weekday);
 
-    double _height = MediaQuery.of(context).size.height;
-    double _width = MediaQuery.of(context).size.width;
+    // double _height = MediaQuery.of(context).size.height;
+    // double _width = MediaQuery.of(context).size.width;
 
     fetchOccasionDetails();
     var _theme = Theme.of(context);
@@ -113,8 +108,8 @@ class _ExpandedCardState extends ConsumerState<ExpandedCard> {
                             15.0), // Adjust the radius to control the roundness
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withOpacity(
-                                0.2), // Adjust the shadow color and opacity
+                            color: Colors.black.withValues(
+                                alpha: 0.2), // Adjust the shadow color and opacity
                             spreadRadius: 2, // Adjust the spread radius
                             blurRadius: 5, // Adjust the blur radius
                             offset:
