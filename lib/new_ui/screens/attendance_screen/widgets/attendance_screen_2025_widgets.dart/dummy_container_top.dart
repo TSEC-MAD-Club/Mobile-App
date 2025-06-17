@@ -13,7 +13,10 @@ class Dummycontainertop extends StatefulWidget {
   final String subjectName;
 
   const Dummycontainertop(
-      {super.key, required this.width, required this.height, required this.subjectName});
+      {super.key,
+      required this.width,
+      required this.height,
+      required this.subjectName});
 
   @override
   State<Dummycontainertop> createState() => _DummycontainertopState();
@@ -23,61 +26,50 @@ class _DummycontainertopState extends State<Dummycontainertop> {
   @override
   Widget build(BuildContext context) {
     return Row(
-      spacing: 5,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(
-          width: widget.width * 0.15,
-          child: Align(
-            alignment: Alignment.topCenter,
-            child: Container(
-              height: widget.width * 0.1,
-              width: widget.width * 0.1,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(100), color: Colors.blue),
-              child: Center(
-                  child: Text(
-                "L",
-                style: TextStyle(fontSize: 14, color: Colors.white),
-              )),
+        Container(
+          height: 40,
+          width: 40,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(50),
+            color: const Color(0xFF4A90E2),
+          ),
+          child: const Center(
+            child: Text(
+              "EG",
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
         ),
+        const SizedBox(width: 12),
         Expanded(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  widget.subjectName,
-                  style: TextStyle(color: Colors.white),
+              Text(
+                widget.subjectName.isEmpty ? "EG ACAD" : widget.subjectName,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  "Attend at least 2 more Lec(s)",
-                  style: TextStyle(color: Colors.white),
+              const SizedBox(height: 4),
+              const Text(
+                "Total Lec:3/3",
+                style: TextStyle(
+                  color: Colors.white70,
+                  fontSize: 14,
                 ),
-              )
+              ),
             ],
           ),
         ),
-        SizedBox(
-          width: widget.width * 0.15,
-          child: Stack(
-            alignment: Alignment.center, // This aligns children to center
-            children: [
-              CircularProgressIndicator(
-                value: 0.5,
-                color: Colors.blue,
-              ),
-              Text(
-                "50%",
-                style: TextStyle(color: Colors.white),
-              ),
-            ],
-          ),
-        )
       ],
     );
   }
