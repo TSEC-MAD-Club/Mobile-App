@@ -416,6 +416,7 @@ class _HomeWidgetState extends ConsumerState<HomeWidget> {
 
                   //CAROUSEL DOESNT DISPLAY WHEN LOGGED OUT,
                   //ERROR: FETCHEVENTDATA FUNCTION GETS CALLED BUT FOR SOME REASON THE IMAGES ARENT BEING FETCHED
+                  if (imgList.isNotEmpty)
                   CarouselSlider(
                     items: imgList
                         .map(
