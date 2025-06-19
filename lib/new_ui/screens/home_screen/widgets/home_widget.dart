@@ -11,6 +11,7 @@ import 'package:tsec_app/models/event_model/event_model.dart';
 import 'package:tsec_app/models/user_model/user_model.dart';
 import 'package:tsec_app/new_ui/colors.dart';
 import 'package:tsec_app/new_ui/screens/AnnouncementScreen/announcementscreen.dart';
+import 'package:tsec_app/new_ui/screens/home_screen/home_screen_shimmer_loader.dart';
 import 'package:tsec_app/provider/auth_provider.dart';
 import 'package:tsec_app/provider/event_provider.dart';
 import 'package:url_launcher/url_launcher_string.dart';
@@ -420,27 +421,21 @@ class _HomeWidgetState extends ConsumerState<HomeWidget> {
                     items: imgList
                         .map(
                           (item) => GestureDetector(
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 8.0),
-                                child: Container(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.6,
-                                  height:
-                                      MediaQuery.of(context).size.width * 0.4,
-                                  decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                      image: CachedNetworkImageProvider(item),
-                                      fit: BoxFit.fill,
-                                      colorFilter: ColorFilter.mode(
-                                        Colors.white.withOpacity(1),
-                                        BlendMode.modulate,
-                                      ),
-                                    ),
-                                    color: Colors.white,
-                                    borderRadius: const BorderRadius.all(
-                                      Radius.circular(20),
-                                    ),
+                              child: SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.6,
+                                height: MediaQuery.of(context).size.width * 0.4,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(20),
+                                  child: CachedNetworkImage(
+                                    imageUrl: item,
+                                    fit: BoxFit.fill,
+                                    placeholder: (context, url) {
+                                      return Center(
+                                        child: ImageShimmer(),
+                                      );
+                                    },
+                                    errorWidget: (context, url, error) =>
+                                        const Icon(Icons.error),
                                   ),
                                 ),
                               ),
@@ -563,18 +558,7 @@ class _HomeWidgetState extends ConsumerState<HomeWidget> {
                     ),
 
                   //DISPLAY THIS TIMETABLE
-                  if (_onlyUserLoggedIn)
-                    Container(
-                      // height: MediaQuery.of(context).size.height * 2,
-                      // width: MediaQuery.of(context).size.width * 0.9,
-                      // color: Colors.red,
-                      // child: Expanded(
-                      //     child: Padding(
-                      //       padding: EdgeInsets.all(20.0),
-                      //       child: CardDisplay(),
-                      //     ))
-                      child: CardDisplay(),
-                    )
+                  if (_onlyUserLoggedIn) CardDisplay()
                 ],
               ),
             ),

@@ -10,7 +10,7 @@ on:
       - "web/**"
       - "pubspec.yaml"
 
-  pull_request:
+  pull_request_target:
     branches: [main]
 
   workflow_dispatch:
@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout PR Code 
+      - name: Checkout PR Code
         uses: actions/checkout@v3
         with:
           ref: ${{ github.event.pull_request.head.ref }}
@@ -48,40 +48,18 @@ jobs:
       - name: Setup project
         shell: bash
         env:
-          FIREBASE_OPTIONS: ${{ github.event_name == 'pull_request' && 'FAKE_FIREBASE_OPTS' || secrets.FIREBASE_OPTIONS }}
-          GOOGLE_JSON_DATA: ${{ github.event_name == 'pull_request' && '{}' || secrets.GOOGLE_SERVICES }}
+          FIREBASE_OPTIONS: ${{ vars.FIREBASE_OPTIONS }}
+          GOOGLE_JSON_DATA: ${{ vars.GOOGLE_SERVICES }}
           GRADLE_OPTS: -Xmx4096m
         run: |
           mv lib/firebase_options.example.dart lib/firebase_options.dart
 
-
-          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
-            cp android/app/google-services.mock.json /home/runner/work/Mobile-App/Mobile-App/android/app/google-services.json
-          else
-            echo $GOOGLE_JSON_DATA > /home/runner/work/Mobile-App/Mobile-App/android/app/google-services.json
-          fi
-
+          echo "$GOOGLE_JSON_DATA" > /home/runner/work/Mobile-App/Mobile-App/android/app/google-services.json
 
           flutter pub get
-
           flutter pub run build_runner build --delete-conflicting-outputs
-
-      #      echo $GOOGLE_JSON_DATA > /home/runner/work/Mobile-App/Mobile-App/android/app/google-services.json
-
-      #- name: Lint and Analyze code
-      #  run: |
-      #    dart format .
-      #    flutter analyze .
-
-      # - name: Run Tests
-      #   run: flutter test
 
       - name: Build debug apk
         run: |
           flutter build apk --debug
           echo "Built apk for version ${APP_VERSION}"
-
-     # - uses: actions/upload-artifact@v2
-     #   with:
-     #     name: "TSEC App-nightly-v${{ env.APP_VERSION }}.apk"
-     #     path: build/app/outputs/flutter-apk/app-debug.apk
