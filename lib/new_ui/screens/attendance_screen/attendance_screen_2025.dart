@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tsec_app/new_ui/screens/attendance_screen/widgets/attendance_screen_2025_widgets.dart/date_header_2025.dart';
 import 'package:tsec_app/new_ui/screens/attendance_screen/widgets/attendance_screen_2025_widgets.dart/attendance_container.dart';
+import 'package:tsec_app/new_ui/screens/attendance_screen/widgets/attendance_screen_2025_widgets.dart/overall_attendance.dart';
 
 import '../../../models/occassion_model/occasion_model.dart';
 import '../../../models/timetable_model/timetable_model.dart';
@@ -51,7 +52,7 @@ class _AttendanceScreen2025State extends ConsumerState<AttendanceScreen2025> {
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: SingleChildScrollView(
+        child: Expanded(
             child: Column(
           children: [
             DateHeader2025(width: width),
@@ -79,11 +80,63 @@ class _AttendanceScreen2025State extends ConsumerState<AttendanceScreen2025> {
                     List<TimetableModel> timeTableDay =
                         getTimetablebyDay(data, dayStr, respectiveRoomNo, ref);
                     if (timeTableDay.isEmpty) {
-                      return const Center(child: Text("No lectures Today ! "));
+                      return Column(
+                        children: [
+                          const Center(
+                            child: Text("No lectures Today ! "),
+                          ),
+                          OverallAttendance(width: width),
+                          SizedBox(
+                            height: 20,
+                          )
+                        ],
+                      );
                     } else {
-                      return SingleChildScrollView(
-                        child: Column(
-                            children: makeTimetableWidgets(timeTableDay)),
+                      return Expanded(
+                        child: SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              SingleChildScrollView(
+                                scrollDirection: Axis.vertical,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      margin: const EdgeInsets.symmetric(
+                                          vertical: 10, horizontal: 16),
+                                      child: Text(
+                                        "TODAY'S LECTURES",
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18),
+                                      ),
+                                    ),
+                                    ...makeTimetableWidgets(timeTableDay),
+                                    SizedBox(
+                                      height: 15,
+                                    )
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                alignment: Alignment.topLeft,
+                                margin: const EdgeInsets.only(left: 16),
+                                child: Text(
+                                  "OVERALL ATTENDANCE",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18),
+                                ),
+                              ),
+                              OverallAttendance(width: width),
+                              SizedBox(
+                                height: 20,
+                              )
+                            ],
+                          ),
+                        ),
                       );
                     }
                   }

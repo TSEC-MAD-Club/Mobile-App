@@ -1,16 +1,14 @@
 /*
 THE CONTAINER CARD DESIGN FOR SUBJECT ATTENDANCE
-
 */
 
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:timeline_tile/timeline_tile.dart';
 import 'package:tsec_app/models/timetable_model/timetable_model.dart';
 import 'package:tsec_app/new_ui/screens/attendance_screen/widgets/attendance_screen_2025_widgets.dart/dummy_container_bottom.dart';
 import 'package:tsec_app/new_ui/screens/attendance_screen/widgets/attendance_screen_2025_widgets.dart/dummy_container_top.dart';
 
-class AttendanceContainer extends ConsumerStatefulWidget {
+class AttendanceContainer extends StatefulWidget {
   final double height;
   final double width;
   final TimetableModel timetable;
@@ -26,11 +24,10 @@ class AttendanceContainer extends ConsumerStatefulWidget {
       this.isLast});
 
   @override
-  ConsumerState<AttendanceContainer> createState() =>
-      _AttendanceContainerState();
+  State<AttendanceContainer> createState() => _AttendanceContainerState();
 }
 
-class _AttendanceContainerState extends ConsumerState<AttendanceContainer> {
+class _AttendanceContainerState extends State<AttendanceContainer> {
   @override
   Widget build(BuildContext context) {
     return TimelineTile(
@@ -59,12 +56,7 @@ class _AttendanceContainerState extends ConsumerState<AttendanceContainer> {
                   width: widget.width,
                   subjectName: widget.timetable.lectureName,
                 ),
-                DummyContainerBottom(
-                  width: widget.width,
-                  height: widget.height,
-                  lectureName: widget.timetable.lectureName,
-                  widgetRef: ref,
-                )
+                DummyContainerBottom(width: widget.width, height: widget.height)
               ],
             ),
           ),
