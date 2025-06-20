@@ -18,12 +18,8 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   print("Handling a background message: ${message.messageId}");
 }
 
-
-var debugprint = "////////////////////////////////////////////////////////////////////////////////////////////////////////TESTING/////////////////////////////////////////////////////////////////////////";
-
-
-
-
+var debugprint =
+    "////////////////////////////////////////////////////////////////////////////////////////////////////////TESTING/////////////////////////////////////////////////////////////////////////";
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -51,7 +47,6 @@ Future<void> main() async {
     );
   });
 }
-
 
 class TSECApp extends ConsumerStatefulWidget {
   const TSECApp({Key? key}) : super(key: key);
@@ -153,16 +148,16 @@ class _TSECAppState extends ConsumerState<TSECApp> {
     return ShowCaseWidget(
       builder: (context) => Builder(
         builder: (context) => MaterialApp.router(
-            debugShowCheckedModeBanner: false,
-            builder: (context, child) =>
-                MediaQuery(data: getTextScale(context), child: child!),
-            routeInformationProvider: _routes.routeInformationProvider,
-            routeInformationParser: _routes.routeInformationParser,
-            routerDelegate: _routes.routerDelegate,
-            title: 'TSEC App',
-            themeMode: ThemeMode.dark,
-            darkTheme: darkTheme,
-          ),
+          debugShowCheckedModeBanner: false,
+          builder: (context, child) =>
+              MediaQuery(data: getTextScale(context), child: child!),
+          routeInformationProvider: _routes.routeInformationProvider,
+          routeInformationParser: _routes.routeInformationParser,
+          routerDelegate: _routes.routerDelegate,
+          title: 'TSEC App',
+          themeMode: ThemeMode.dark,
+          darkTheme: darkTheme,
+        ),
       ),
     );
   }

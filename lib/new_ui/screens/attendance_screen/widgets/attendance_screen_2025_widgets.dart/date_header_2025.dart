@@ -3,11 +3,11 @@ CONTAINS THE SCROLLABLE DATE PICKER IN THE ATTENDANCE SCREEN
 
 */
 
-
 import 'package:date_picker_timeline/date_picker_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tsec_app/new_ui/colors.dart';
+import 'package:tsec_app/provider/attendance_date_provider.dart';
 
 import '../../../../../screens/main_screen/widget/card_display.dart';
 
@@ -52,6 +52,7 @@ class _DateHeader2025State extends ConsumerState<DateHeader2025> {
           onDateChange: (date) {
             // New date selected
             // print(date.toIso8601String());
+            ref.read(attendanceDateprovider.notifier).state = date;
             ref.read(dayProvider.notifier).update(((state) => date));
             setState(() {
               // _selectedValue = date;

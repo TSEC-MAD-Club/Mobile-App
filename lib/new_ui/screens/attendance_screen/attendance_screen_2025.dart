@@ -53,57 +53,55 @@ class _AttendanceScreen2025State extends ConsumerState<AttendanceScreen2025> {
         padding: const EdgeInsets.all(8.0),
         child: SingleChildScrollView(
             child: Column(
-              children: [
-                DateHeader2025(width: width),
-                data.when(
-                    data: (data) {
-                      if (data == null) {
-                        return const Center(
-                          child: Text(
-                            "Unable to fetch timetable. Please check if you have entered your details correctly in the profile section.",
-                            textAlign: TextAlign.center,
-                          ),
-                        );
-                      }
-                      if (data[dayStr] == null) {
-                        return const Center(
-                            child: Text("Happy Weekend !",
-                                style: TextStyle(color: Colors.greenAccent)));
-                      } else if (checkOccasion(day, occasionList) != "") {
-                        return Center(
-                            child: Text(
-                                "Happy ${checkOccasion(day, occasionList)}!",
-                                style: TextStyle(color: Colors.greenAccent)));
-                      } else {
-                        List<String> respectiveRoomNo = [];
-                        List<TimetableModel> timeTableDay =
-                            getTimetablebyDay(data, dayStr, respectiveRoomNo, ref);
-                        if (timeTableDay.isEmpty) {
-                          return const Center(child: Text("No lectures Today ! "));
-                        }
-                        else {
-                          return SingleChildScrollView(
-                            child: Column(
-                              children: makeTimetableWidgets(timeTableDay)
-                            ),
-                          );
-                        }
-                      }
-                    },
-                    error: ((error, stackTrace) {
-                      return Center(
-                          child: Text(
-                        error.toString(),
-                      ));
-                    }),
-                    loading: () =>
-                        const Center(child: CircularProgressIndicator())),
-              ],
-            )),
+          children: [
+            DateHeader2025(width: width),
+            data.when(
+                data: (data) {
+                  if (data == null) {
+                    return const Center(
+                      child: Text(
+                        "Unable to fetch timetable. Please check if you have entered your details correctly in the profile section.",
+                        textAlign: TextAlign.center,
+                      ),
+                    );
+                  }
+                  if (data[dayStr] == null) {
+                    return const Center(
+                        child: Text("Happy Weekend !",
+                            style: TextStyle(color: Colors.greenAccent)));
+                  } else if (checkOccasion(day, occasionList) != "") {
+                    return Center(
+                        child: Text(
+                            "Happy ${checkOccasion(day, occasionList)}!",
+                            style: TextStyle(color: Colors.greenAccent)));
+                  } else {
+                    List<String> respectiveRoomNo = [];
+                    List<TimetableModel> timeTableDay =
+                        getTimetablebyDay(data, dayStr, respectiveRoomNo, ref);
+                    if (timeTableDay.isEmpty) {
+                      return const Center(child: Text("No lectures Today ! "));
+                    } else {
+                      return SingleChildScrollView(
+                        child: Column(
+                            children: makeTimetableWidgets(timeTableDay)),
+                      );
+                    }
+                  }
+                },
+                error: ((error, stackTrace) {
+                  return Center(
+                      child: Text(
+                    error.toString(),
+                  ));
+                }),
+                loading: () =>
+                    const Center(child: CircularProgressIndicator())),
+          ],
+        )),
       ),
     );
   }
-  
+
   List<Widget> makeTimetableWidgets(List<TimetableModel> timeTableDay) {
     List<Widget> widgets = [];
     for (int i = 0; i < timeTableDay.length; i++) {
