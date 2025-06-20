@@ -56,7 +56,11 @@ class _AttendanceContainerState extends State<AttendanceContainer> {
                   width: widget.width,
                   subjectName: widget.timetable.lectureName,
                 ),
-                DummyContainerBottom(width: widget.width, height: widget.height)
+                DummyContainerBottom(
+                  width: widget.width,
+                  height: widget.height,
+                  lectureName: widget.timetable.lectureName,
+                )
               ],
             ),
           ),
