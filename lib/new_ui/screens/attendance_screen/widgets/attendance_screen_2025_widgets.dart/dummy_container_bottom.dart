@@ -6,156 +6,136 @@ CONTAINS THREE BUTTONS -> CAN (CANCEL), PRE(PRESENT), ABS(ABSENT)
 */
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tsec_app/new_ui/screens/attendance_screen/firebase_attendance_button_pressed_2025.dart';
+import 'package:tsec_app/provider/attendance_date_provider.dart';
 
-class DummyContainerBottom extends StatefulWidget {
+class DummyContainerBottom extends ConsumerStatefulWidget {
   final double width;
   final double height;
+  final String lectureName;
+  final int index;
 
-  const DummyContainerBottom(
-      {super.key, required this.width, required this.height});
+  const DummyContainerBottom({
+    super.key,
+    required this.width,
+    required this.height,
+    required this.lectureName,
+    required this.index,
+  });
 
   @override
-  State<DummyContainerBottom> createState() => _DummyContainerBottomState();
+  ConsumerState<DummyContainerBottom> createState() =>
+      _DummyContainerBottomState();
 }
 
-class _DummyContainerBottomState extends State<DummyContainerBottom> {
+class _DummyContainerBottomState extends ConsumerState<DummyContainerBottom> {
+  // int selected = -1;
+  Map selected = {};
   @override
   Widget build(BuildContext context) {
+    ref.watch(attendanceDateprovider);
+    selected = ref.watch(dateTimetablePreAbsCanProvider);
+
     return Align(
       alignment: Alignment.bottomRight,
       child: Row(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          SizedBox(
-            height: 40,
-            width: 40,
-          ),
-          Container(
-            margin: const EdgeInsets.only(left: 12),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                GestureDetector(
-                    child: Container(
-                  width: widget.width * 0.2,
-                  height: 30,
-                  decoration: BoxDecoration(
-                      color: const Color.fromARGB(234, 25, 25, 26),
-                      border: Border.all(color: Colors.grey),
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(10),
-                          bottomLeft: Radius.circular(10))),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    spacing: 5,
-                    children: [
-                      Icon(
-                        size: 18,
-                        Icons.error_outline_outlined,
-                        color: Colors.white,
-                      ),
-                      Text(
-                        "Can",
-                        style: TextStyle(
-                            color: Colors.white, fontWeight: FontWeight.w500),
-                      )
-                    ],
-                  ),
-                )),
-                GestureDetector(
-                    child: Container(
-                  width: widget.width * 0.2,
-                  height: 30,
-                  decoration: BoxDecoration(
-                    color: const Color.fromARGB(234, 25, 25, 26),
+          GestureDetector(
+              onTap: () {
+                ref
+                    .read(dateTimetablePreAbsCanProvider.notifier)
+                    .addEntry(widget.lectureName, 'Can');
+                FirebaseAttendance2025().pressedCancelled(
+                    ref.read(attendanceDateprovider), widget.lectureName);
+              },
+              child: Container(
+                width: widget.width * 0.2,
+                height: 30,
+                decoration: BoxDecoration(
+                    color: selected[widget.lectureName] == 'Can'
+                        ? const Color.fromARGB(44, 180, 180, 180)
+                        : Colors.transparent,
                     border: Border.all(color: Colors.grey),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    spacing: 5,
-                    children: [
-                      Icon(
-                        size: 18,
-                        Icons.check,
-                        color: Colors.white,
-                      ),
-                      Text(
-                        "Pre",
-                        style: TextStyle(
-                            color: Colors.white, fontWeight: FontWeight.w500),
-                      )
-                    ],
-                  ),
-                )),
-                GestureDetector(
-                    child: Container(
-                  width: widget.width * 0.2,
-                  height: 30,
-                  decoration: BoxDecoration(
-                      color: const Color.fromARGB(234, 25, 25, 26),
-                      border: Border.all(color: Colors.grey),
-                      borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(10),
-                          bottomRight: Radius.circular(10))),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    spacing: 5,
-                    children: [
-                      Icon(
-                        size: 18,
-                        Icons.cancel_outlined,
-                        color: Colors.white,
-                      ),
-                      Text(
-                        "Abs",
-                        style: TextStyle(
-                            color: Colors.white, fontWeight: FontWeight.w500),
-                      )
-                    ],
-                  ),
-                ))
-              ],
-            ),
-          ),
-          //use this conditionally !
-          // LastAttendedBadge(width: widget.width)
-        ],
-      ),
-    );
-  }
-}
-
-class LastAttendedBadge extends StatefulWidget {
-  final double width;
-  const LastAttendedBadge({super.key, required this.width});
-
-  @override
-  State<LastAttendedBadge> createState() => _LastAttendedBadgeState();
-}
-
-class _LastAttendedBadgeState extends State<LastAttendedBadge> {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: widget.width * 0.65,
-      height: 30,
-      decoration: BoxDecoration(
-          color: const Color.fromARGB(234, 25, 25, 26),
-          border: Border.all(color: Colors.grey),
-          borderRadius: BorderRadius.circular(10)),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        spacing: 5,
-        children: [
-          Icon(
-            size: 18,
-            Icons.calendar_month,
-            color: Colors.white,
-          ),
-          Text(
-            "Last Attended : 16:15 on 22.07.2024",
-            style: TextStyle(
-                color: Colors.white, fontWeight: FontWeight.w400, fontSize: 11),
-          )
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(10),
+                        bottomLeft: Radius.circular(10))),
+                child: Row(
+                  spacing: 5,
+                  children: [
+                    Icon(
+                      Icons.error_outline_outlined,
+                      color: Colors.white,
+                    ),
+                    Text("Can")
+                  ],
+                ),
+              )),
+          GestureDetector(
+              onTap: () {
+                // setState(() {
+                //   selected = 1;
+                // });
+                ref
+                    .read(dateTimetablePreAbsCanProvider.notifier)
+                    .addEntry(widget.lectureName, 'Pre');
+                FirebaseAttendance2025().pressedPresent(
+                    ref.read(attendanceDateprovider), widget.lectureName);
+              },
+              child: Container(
+                width: widget.width * 0.2,
+                height: 30,
+                decoration: BoxDecoration(
+                  color: selected[widget.lectureName] == 'Pre'
+                      ? const Color.fromARGB(44, 180, 180, 180)
+                      : Colors.transparent,
+                  border: Border.all(color: Colors.grey),
+                ),
+                child: Row(
+                  spacing: 5,
+                  children: [
+                    Icon(
+                      Icons.check,
+                      color: Colors.white,
+                    ),
+                    Text("Pre")
+                  ],
+                ),
+              )),
+          GestureDetector(
+              onTap: () {
+                // setState(() {
+                //   selected = 2;
+                // });
+                ref
+                    .read(dateTimetablePreAbsCanProvider.notifier)
+                    .addEntry(widget.lectureName, 'Abs');
+                FirebaseAttendance2025().pressedAbsent(
+                    ref.read(attendanceDateprovider), widget.lectureName);
+              },
+              child: Container(
+                width: widget.width * 0.2,
+                height: 30,
+                decoration: BoxDecoration(
+                    color: selected[widget.lectureName] == 'Abs'
+                        ? const Color.fromARGB(44, 180, 180, 180)
+                        : Colors.transparent,
+                    border: Border.all(color: Colors.grey),
+                    borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(10),
+                        bottomRight: Radius.circular(10))),
+                child: Row(
+                  spacing: 5,
+                  children: [
+                    Icon(
+                      Icons.cancel_outlined,
+                      color: Colors.white,
+                    ),
+                    Text("Abs")
+                  ],
+                ),
+              ))
         ],
       ),
     );

@@ -70,3 +70,6 @@ bool checkTimetable(String lectureFacultyName) {
   if (lectureFacultyName.isEmpty || lectureFacultyName == " ") return true;
   return true;
 }
+
+
+
