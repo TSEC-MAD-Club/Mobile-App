@@ -14,12 +14,14 @@ class DummyContainerBottom extends ConsumerStatefulWidget {
   final double width;
   final double height;
   final String lectureName;
+  final int index;
 
   const DummyContainerBottom({
     super.key,
     required this.width,
     required this.height,
     required this.lectureName,
+    required this.index,
   });
 
   @override
@@ -28,11 +30,13 @@ class DummyContainerBottom extends ConsumerStatefulWidget {
 }
 
 class _DummyContainerBottomState extends ConsumerState<DummyContainerBottom> {
-  int selected = -1;
-
+  // int selected = -1;
+  Map selected = {};
   @override
   Widget build(BuildContext context) {
     ref.watch(attendanceDateprovider);
+    selected = ref.watch(dateTimetablePreAbsCanProvider);
+
     return Align(
       alignment: Alignment.bottomRight,
       child: Row(
@@ -40,9 +44,9 @@ class _DummyContainerBottomState extends ConsumerState<DummyContainerBottom> {
         children: [
           GestureDetector(
               onTap: () {
-                setState(() {
-                  selected = 0;
-                });
+                ref
+                    .read(dateTimetablePreAbsCanProvider.notifier)
+                    .addEntry(widget.lectureName, 'Can');
                 FirebaseAttendance2025().pressedCancelled(
                     ref.read(attendanceDateprovider), widget.lectureName);
               },
@@ -50,7 +54,7 @@ class _DummyContainerBottomState extends ConsumerState<DummyContainerBottom> {
                 width: widget.width * 0.2,
                 height: 30,
                 decoration: BoxDecoration(
-                    color: selected == 0
+                    color: selected[widget.lectureName] == 'Can'
                         ? const Color.fromARGB(44, 180, 180, 180)
                         : Colors.transparent,
                     border: Border.all(color: Colors.grey),
@@ -70,9 +74,12 @@ class _DummyContainerBottomState extends ConsumerState<DummyContainerBottom> {
               )),
           GestureDetector(
               onTap: () {
-                setState(() {
-                  selected = 1;
-                });
+                // setState(() {
+                //   selected = 1;
+                // });
+                ref
+                    .read(dateTimetablePreAbsCanProvider.notifier)
+                    .addEntry(widget.lectureName, 'Pre');
                 FirebaseAttendance2025().pressedPresent(
                     ref.read(attendanceDateprovider), widget.lectureName);
               },
@@ -80,7 +87,7 @@ class _DummyContainerBottomState extends ConsumerState<DummyContainerBottom> {
                 width: widget.width * 0.2,
                 height: 30,
                 decoration: BoxDecoration(
-                  color: selected == 1
+                  color: selected[widget.lectureName] == 'Pre'
                       ? const Color.fromARGB(44, 180, 180, 180)
                       : Colors.transparent,
                   border: Border.all(color: Colors.grey),
@@ -98,9 +105,12 @@ class _DummyContainerBottomState extends ConsumerState<DummyContainerBottom> {
               )),
           GestureDetector(
               onTap: () {
-                setState(() {
-                  selected = 2;
-                });
+                // setState(() {
+                //   selected = 2;
+                // });
+                ref
+                    .read(dateTimetablePreAbsCanProvider.notifier)
+                    .addEntry(widget.lectureName, 'Abs');
                 FirebaseAttendance2025().pressedAbsent(
                     ref.read(attendanceDateprovider), widget.lectureName);
               },
@@ -108,7 +118,7 @@ class _DummyContainerBottomState extends ConsumerState<DummyContainerBottom> {
                 width: widget.width * 0.2,
                 height: 30,
                 decoration: BoxDecoration(
-                    color: selected == 2
+                    color: selected[widget.lectureName] == 'Abs'
                         ? const Color.fromARGB(44, 180, 180, 180)
                         : Colors.transparent,
                     border: Border.all(color: Colors.grey),

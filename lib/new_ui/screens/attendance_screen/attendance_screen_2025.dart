@@ -4,9 +4,11 @@ THE OLD ATTENDANCE SCREEN IS THE FILE NAMED 'attendance_screen.dart'
 */
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:tsec_app/new_ui/screens/attendance_screen/widgets/attendance_screen_2025_widgets.dart/date_header_2025.dart';
 import 'package:tsec_app/new_ui/screens/attendance_screen/widgets/attendance_screen_2025_widgets.dart/attendance_container.dart';
-import 'package:tsec_app/new_ui/screens/attendance_screen/widgets/attendance_screen_2025_widgets.dart/overall_attendance.dart';
+import 'package:tsec_app/new_ui/screens/attendance_screen/widgets/attendance_screen_2025_widgets.dart/overall_attendance_container.dart';
+import 'package:tsec_app/services/timetable_service.dart';
 
 import '../../../models/occassion_model/occasion_model.dart';
 import '../../../models/timetable_model/timetable_model.dart';
@@ -38,6 +40,12 @@ class _AttendanceScreen2025State extends ConsumerState<AttendanceScreen2025> {
           const CircularProgressIndicator();
         },
         error: (Object error, StackTrace? stackTrace) {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getTimeTablePreAbsCan(DateFormat('yyyy-MM-dd').format(DateTime.now()), ref);
   }
 
   @override
@@ -165,6 +173,7 @@ class _AttendanceScreen2025State extends ConsumerState<AttendanceScreen2025> {
           timetable: timeTableDay[i],
           isFirst: i == 0,
           isLast: i == timeTableDay.length - 1,
+          index: i,
         ),
       );
     }

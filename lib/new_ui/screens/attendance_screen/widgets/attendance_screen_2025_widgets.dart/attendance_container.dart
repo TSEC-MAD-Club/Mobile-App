@@ -14,6 +14,7 @@ class AttendanceContainer extends StatefulWidget {
   final TimetableModel timetable;
   final bool? isFirst;
   final bool? isLast;
+  final int? index;
 
   const AttendanceContainer(
       {super.key,
@@ -21,7 +22,8 @@ class AttendanceContainer extends StatefulWidget {
       required this.width,
       required this.timetable,
       this.isFirst,
-      this.isLast});
+      this.isLast,
+      required this.index});
 
   @override
   State<AttendanceContainer> createState() => _AttendanceContainerState();
@@ -60,6 +62,7 @@ class _AttendanceContainerState extends State<AttendanceContainer> {
                   width: widget.width,
                   height: widget.height,
                   lectureName: widget.timetable.lectureName,
+                  index: widget.index ?? 0,
                 )
               ],
             ),

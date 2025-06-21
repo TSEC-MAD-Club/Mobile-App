@@ -11,28 +11,22 @@ exact same function, only change is the action argument to helper function
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
+import 'package:tsec_app/new_ui/screens/attendance_screen/firebase_attendance_totalLects_2025.dart';
 
 class FirebaseAttendance2025 {
   Future<void> updateDateCollection(CollectionReference docref, String date,
       String subjectName, String action) async {
     DocumentSnapshot doc;
 
+    String actionTemp = "";
+
     try {
       doc = await docref.doc(date).get();
       if (doc.exists) {
         Map data = doc.data() as Map<String, dynamic>;
 
-        // String actionTemp = data[subjectName]; // Storing prev action stored
-
+        actionTemp = data[subjectName] ?? "ded"; // Storing prev action stored
         data[subjectName] = action; // New action
-
-        // if (action == 'Abs') {
-        //   FirebaseAttendanceTotallects2025()
-        //       .updateLectureAttended('Abs', subjectName);
-        // } else if (action == 'Pre') {
-        //   FirebaseAttendanceTotallects2025()
-        //       .updateLectureAttended('Pre', subjectName);
-        // }
 
         await docref.doc(date).set(data);
       } else {
@@ -40,6 +34,20 @@ class FirebaseAttendance2025 {
       }
     } catch (e) {
       rethrow;
+    }
+
+    if (actionTemp == "") {
+      // FIRST TIME CLICKING
+      if (action == "Pre") {
+        FirebaseAttendanceTotallects2025()
+            .updateLectureAttended("Pre", subjectName);
+      }
+    } else if (action == 'Pre' && actionTemp != 'Pre') {
+      FirebaseAttendanceTotallects2025()
+          .updateLectureAttended("Pre", subjectName);
+    } else if ((action == 'Abs' || action == 'Can') && actionTemp == 'Pre') {
+      FirebaseAttendanceTotallects2025()
+          .updateLectureAttended("Abs", subjectName);
     }
   }
 
