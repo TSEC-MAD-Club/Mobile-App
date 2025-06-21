@@ -97,9 +97,9 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
       );
     }
     print("Executed Build");
-    // if (navigateToMaintainance) {
-    //   return MaintainanceScreen();
-    // }
+    if (navigateToMaintainance) {
+      return MaintainanceScreen();
+    }
 
     if (_launchDate != null && DateTime.now().isBefore(_launchDate!)) {
       return LaunchScreen();
