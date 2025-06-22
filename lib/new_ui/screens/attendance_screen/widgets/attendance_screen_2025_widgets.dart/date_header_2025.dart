@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:tsec_app/new_ui/colors.dart';
-import 'package:tsec_app/provider/attendance_date_provider.dart';
+import 'package:tsec_app/provider/attendance_provider.dart';
 import 'package:tsec_app/services/timetable_service.dart';
 
 import '../../../../../screens/main_screen/widget/card_display.dart';

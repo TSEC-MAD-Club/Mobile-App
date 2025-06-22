@@ -4,6 +4,10 @@ final attendanceDateprovider = StateProvider<DateTime>((ref) {
   return DateTime.now();
 });
 
+final totalLecturesProvider = StateProvider<int>((ref) {
+  return 0;
+});
+
 class AttendanceDateProvider extends StateNotifier<Map> {
   AttendanceDateProvider() : super({});
 
