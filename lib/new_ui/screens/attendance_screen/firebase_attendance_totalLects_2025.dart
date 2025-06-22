@@ -42,6 +42,7 @@ class FirebaseAttendanceTotallects2025 {
     }
   }
 
+
   Future<void> updateTotalLects(String action, String subject) async {
     DocumentReference documentReference = FirebaseFirestore.instance
         .collection('AttendanceTest')
@@ -79,4 +80,5 @@ class FirebaseAttendanceTotallects2025 {
       documentReference.set(data);
     }
   }
+
 }

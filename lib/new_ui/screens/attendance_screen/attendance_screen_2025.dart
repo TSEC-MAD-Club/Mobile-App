@@ -162,7 +162,6 @@ class _AttendanceScreen2025State extends ConsumerState<AttendanceScreen2025> {
       ),
     );
   }
-
   List<Widget> makeTimetableWidgets(List<TimetableModel> timeTableDay) {
     List<Widget> widgets = [];
     for (int i = 0; i < timeTableDay.length; i++) {

@@ -12,22 +12,28 @@ exact same function, only change is the action argument to helper function
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 import 'package:tsec_app/new_ui/screens/attendance_screen/firebase_attendance_totalLects_2025.dart';
+
 import 'package:tsec_app/services/attendance_checker.dart';
 
 class FirebaseAttendance2025 {
   Future<void> attendanceUpdated(CollectionReference docref, String date,
+
       String subjectName, String action) async {
     DocumentSnapshot doc;
 
     String actionTemp = "";
 
+
     //UPDATING DATE COLLECTION
+
     try {
       doc = await docref.doc(date).get();
       if (doc.exists) {
         Map data = doc.data() as Map<String, dynamic>;
 
+
         actionTemp = data[subjectName] ?? ""; // Storing prev action stored
+
         data[subjectName] = action; // New action
 
         await docref.doc(date).set(data);
@@ -38,7 +44,9 @@ class FirebaseAttendance2025 {
       rethrow;
     }
 
+
     AttendanceChecker().updateLectureCount(action, actionTemp, subjectName);
+
   }
 
   Future<void> pressedCancelled(DateTime date, String subjectName) async {
@@ -50,7 +58,9 @@ class FirebaseAttendance2025 {
 
       CollectionReference dates = userDoc.collection('dates');
 
+
       await attendanceUpdated(
+
           dates, DateFormat('yyyy-MM-dd').format(date), subjectName, "Can");
     } catch (e) {
       rethrow;
@@ -65,7 +75,9 @@ class FirebaseAttendance2025 {
       DocumentReference userDoc = attendanceTest.doc('document-test');
       CollectionReference dates = userDoc.collection('dates');
 
+
       await attendanceUpdated(
+
           dates, DateFormat('yyyy-MM-dd').format(date), subjectName, "Pre");
     } catch (e) {
       rethrow;
@@ -80,7 +92,9 @@ class FirebaseAttendance2025 {
       DocumentReference userDoc = attendanceTest.doc('document-test');
       CollectionReference dates = userDoc.collection('dates');
 
+
       await attendanceUpdated(
+
           dates, DateFormat('yyyy-MM-dd').format(date), subjectName, "Abs");
     } catch (e) {
       rethrow;

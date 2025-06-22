@@ -20,6 +20,7 @@ class _OverallAttendanceState extends State<OverallAttendance> {
           boxShadow: [
             BoxShadow(
               color: Colors.black.withValues(alpha: 0.2),
+
               blurRadius: 8,
               offset: const Offset(0, 2),
             ),
@@ -76,6 +77,7 @@ class _OverallAttendanceState extends State<OverallAttendance> {
                 ),
                 Text(
                   '1' + '/' + '2',
+
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 28,
