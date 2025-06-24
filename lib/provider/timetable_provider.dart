@@ -23,7 +23,6 @@ final timeTableProvider =
   );
 }));
 
-
 class TimeTableProvider extends StateNotifier<Stream> {
   TimeTableService? _ttService;
   String? _d;
@@ -36,4 +35,3 @@ class TimeTableProvider extends StateNotifier<Stream> {
     state = _ttService!.getweekTimetable(_d);
   }
 }
-
