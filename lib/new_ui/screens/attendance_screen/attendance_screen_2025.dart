@@ -109,17 +109,6 @@ class _AttendanceScreen2025State extends ConsumerState<AttendanceScreen2025> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Container(
-                                      margin: const EdgeInsets.symmetric(
-                                          vertical: 10, horizontal: 16),
-                                      child: Text(
-                                        "TODAY'S LECTURES",
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 18),
-                                      ),
-                                    ),
                                     ...makeTimetableWidgets(timeTableDay),
                                     SizedBox(
                                       height: 15,

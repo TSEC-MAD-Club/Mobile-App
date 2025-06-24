@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tsec_app/provider/attendance_date_provider.dart';
 import 'package:tsec_app/provider/firebase_provider.dart';
@@ -44,9 +44,11 @@ Future<void> getTimeTablePreAbsCan(String date, WidgetRef ref) async {
   try {
     Map data = {};
 
+    final String? uid = FirebaseAuth.instance.currentUser?.uid ?? "default-uid";
+
     DocumentSnapshot documentSnapshot = await FirebaseFirestore.instance
         .collection('AttendanceTest')
-        .doc('document-test')
+        .doc(uid)
         .collection('dates')
         .doc(date)
         .get();

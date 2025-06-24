@@ -18,6 +18,10 @@ class AttendanceDateProvider extends StateNotifier<Map> {
     state = data;
   }
 
+  void clearState() {
+    state = {};
+  }
+
   Map get currentState => state;
 }
 

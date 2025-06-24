@@ -51,21 +51,23 @@ class _AttendanceContainerState extends State<AttendanceContainer> {
               borderRadius: BorderRadius.circular(20),
             ),
             elevation: 4,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Dummycontainertop(
-                  height: widget.height,
-                  width: widget.width,
-                  subjectName: widget.timetable.lectureName,
-                ),
-                DummyContainerBottom(
-                  width: widget.width,
-                  height: widget.height,
-                  lectureName: widget.timetable.lectureName,
-                  index: widget.index ?? 0,
-                )
-              ],
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Dummycontainertop(
+                    subjectName: widget.timetable.lectureName,
+                  ),
+                  DummyContainerBottom(
+                    width: widget.width,
+                    height: widget.height,
+                    lectureName: widget.timetable.lectureName,
+                    index: widget.index ?? 0,
+                  )
+                ],
+              ),
             ),
           ),
         ),
