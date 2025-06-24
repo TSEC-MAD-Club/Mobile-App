@@ -51,8 +51,9 @@ class _DummyContainerBottomState extends ConsumerState<DummyContainerBottom> {
                 await FirebaseAttendance2025().pressedCancelled(
                     ref.read(attendanceDateprovider), widget.lectureName);
                 await Future.delayed(const Duration(milliseconds: 400));
-                ref.read(attendanceTotalsProvider(widget.lectureName).notifier)
+                ref.read(attendanceTotalsPerLectureProvider(widget.lectureName).notifier)
                     .refresh();
+                ref.read(attendanceTotalsProvider.notifier).refresh();
               },
               child: Container(
                 width: widget.width * 0.2,
@@ -87,8 +88,9 @@ class _DummyContainerBottomState extends ConsumerState<DummyContainerBottom> {
                 await FirebaseAttendance2025().pressedPresent(
                     ref.read(attendanceDateprovider), widget.lectureName);
                 await Future.delayed(const Duration(milliseconds: 400));
-                ref.read(attendanceTotalsProvider(widget.lectureName).notifier)
+                ref.read(attendanceTotalsPerLectureProvider(widget.lectureName).notifier)
                     .refresh();
+                ref.read(attendanceTotalsProvider.notifier).refresh();
               },
               child: Container(
                 width: widget.width * 0.2,
@@ -121,8 +123,9 @@ class _DummyContainerBottomState extends ConsumerState<DummyContainerBottom> {
                 await FirebaseAttendance2025().pressedAbsent(
                     ref.read(attendanceDateprovider), widget.lectureName);
                 await Future.delayed(const Duration(milliseconds: 400));
-                ref.read(attendanceTotalsProvider(widget.lectureName).notifier)
+                ref.read(attendanceTotalsPerLectureProvider(widget.lectureName).notifier)
                     .refresh();
+                ref.read(attendanceTotalsProvider.notifier).refresh();
               },
               child: Container(
                 width: widget.width * 0.2,

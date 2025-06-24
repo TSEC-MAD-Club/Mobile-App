@@ -10,7 +10,7 @@ class Dummycontainertop extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final attendanceAsync = ref.watch(attendanceTotalsProvider(subjectName));
+    final attendanceAsync = ref.watch(attendanceTotalsPerLectureProvider(subjectName));
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
