@@ -1,101 +1,120 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class OverallAttendance extends StatefulWidget {
+import '../../attendance_totals_provider.dart';
+
+class OverallAttendance extends ConsumerWidget {
   final double width;
   const OverallAttendance({super.key, required this.width});
-  @override
-  State<OverallAttendance> createState() => _OverallAttendanceState();
-}
 
-class _OverallAttendanceState extends State<OverallAttendance> {
   @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      child: Container(
-        width: widget.width,
-        decoration: BoxDecoration(
-          color: const Color(0xFF2D2D2D),
-          borderRadius: BorderRadius.circular(12),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.2),
-              blurRadius: 8,
-              offset: const Offset(0, 2),
+  Widget build(BuildContext context, WidgetRef ref) {
+    final attendanceAsync = ref.watch(attendanceTotalsProvider);
+
+    return attendanceAsync.when(
+      loading: () => const Center(child: CircularProgressIndicator()),
+      error: (e, _) => const Center(child: Text("Error loading attendance", style: TextStyle(color: Colors.red))),
+      data: (data) {
+        int attend = 0;
+        int tot = 0;
+        data.attended.forEach((key, value){
+          attend += value;
+        });
+        data.total.forEach((key, value){
+          tot += value;
+        });
+        double percentage = tot > 0 ? attend / tot : 0.0;
+
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          child: Container(
+            width: width,
+            decoration: BoxDecoration(
+              color: const Color(0xFF2D2D2D),
+              borderRadius: BorderRadius.circular(12),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.2),
+                  blurRadius: 8,
+                  offset: const Offset(0, 2),
+                ),
+              ],
             ),
-          ],
-        ),
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(10, 30, 10, 30),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
-                width: widget.width * 0.30,
-                height: widget.width * 0.30,
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    CustomPaint(
-                      size: Size(widget.width * 0.5, widget.width * 0.5),
-                      painter: CircleProgressPainter(0.75), // 50%
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(10, 30, 10, 30),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: width * 0.30,
+                    height: width * 0.30,
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        CustomPaint(
+                          size: Size(width * 0.5, width * 0.5),
+                          painter: CircleProgressPainter(percentage),
+                        ),
+                        Container(
+                          width: width * 0.36,
+                          height: width * 0.36,
+                          decoration: const BoxDecoration(
+                            color: Color(0xFF2D2D2D),
+                            shape: BoxShape.circle,
+                          ),
+                        ),
+                        Text(
+                          "${(percentage * 100).round()}%",
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
                     ),
-
-                    Container(
-                      width: widget.width * 0.36,
-                      height: widget.width * 0.36,
-                      decoration: const BoxDecoration(
-                        color: Color(0xFF2D2D2D),
-                        shape: BoxShape.circle,
+                  ),
+                  const SizedBox(width: 15),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'LECTURES ATTENDED',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-
-                    // Percentage text
-                    const Text(
-                      "50%",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold,
+                      Text(
+                        '${attend}/${tot}',
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 28,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                  ],
-                ),
+                      Text(
+                        percentage >= 0.75 ? "Keep it up!" : "Needs improvement",
+                        style: const TextStyle(
+                          color: Color.fromARGB(255, 111, 111, 115),
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  )
+                ],
               ),
-              SizedBox(
-                width: 15,
-              ),
-              Column(spacing: 10, children: [
-                Text(
-                  'LECTURES ATTENDED',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  '30/40',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  'Keep it up!',
-                  style: TextStyle(
-                      color: const Color.fromARGB(255, 111, 111, 115),
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold),
-                ),
-              ])
-            ],
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }
+
 
 class CircleProgressPainter extends CustomPainter {
   final double percentage;

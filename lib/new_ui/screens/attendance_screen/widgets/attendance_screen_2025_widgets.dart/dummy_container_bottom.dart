@@ -7,6 +7,7 @@ CONTAINS THREE BUTTONS -> CAN (CANCEL), PRE(PRESENT), ABS(ABSENT)
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tsec_app/new_ui/screens/attendance_screen/attendance_totals_provider.dart';
 import 'package:tsec_app/new_ui/screens/attendance_screen/firebase_attendance_button_pressed_2025.dart';
 import 'package:tsec_app/provider/attendance_date_provider.dart';
 
@@ -38,17 +39,21 @@ class _DummyContainerBottomState extends ConsumerState<DummyContainerBottom> {
     selected = ref.watch(dateTimetablePreAbsCanProvider);
 
     return Align(
-      alignment: Alignment.bottomRight,
+      alignment: Alignment.bottomCenter,
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           GestureDetector(
-              onTap: () {
+              onTap: () async {
                 ref
                     .read(dateTimetablePreAbsCanProvider.notifier)
                     .addEntry(widget.lectureName, 'Can');
-                FirebaseAttendance2025().pressedCancelled(
+                await FirebaseAttendance2025().pressedCancelled(
                     ref.read(attendanceDateprovider), widget.lectureName);
+                await Future.delayed(const Duration(milliseconds: 400));
+                ref.read(attendanceTotalsPerLectureProvider(widget.lectureName).notifier)
+                    .refresh();
+                ref.read(attendanceTotalsProvider.notifier).refresh();
               },
               child: Container(
                 width: widget.width * 0.2,
@@ -73,15 +78,19 @@ class _DummyContainerBottomState extends ConsumerState<DummyContainerBottom> {
                 ),
               )),
           GestureDetector(
-              onTap: () {
+              onTap: () async {
                 // setState(() {
                 //   selected = 1;
                 // });
                 ref
                     .read(dateTimetablePreAbsCanProvider.notifier)
                     .addEntry(widget.lectureName, 'Pre');
-                FirebaseAttendance2025().pressedPresent(
+                await FirebaseAttendance2025().pressedPresent(
                     ref.read(attendanceDateprovider), widget.lectureName);
+                await Future.delayed(const Duration(milliseconds: 400));
+                ref.read(attendanceTotalsPerLectureProvider(widget.lectureName).notifier)
+                    .refresh();
+                ref.read(attendanceTotalsProvider.notifier).refresh();
               },
               child: Container(
                 width: widget.width * 0.2,
@@ -104,15 +113,19 @@ class _DummyContainerBottomState extends ConsumerState<DummyContainerBottom> {
                 ),
               )),
           GestureDetector(
-              onTap: () {
+              onTap: () async {
                 // setState(() {
                 //   selected = 2;
                 // });
                 ref
                     .read(dateTimetablePreAbsCanProvider.notifier)
                     .addEntry(widget.lectureName, 'Abs');
-                FirebaseAttendance2025().pressedAbsent(
+                await FirebaseAttendance2025().pressedAbsent(
                     ref.read(attendanceDateprovider), widget.lectureName);
+                await Future.delayed(const Duration(milliseconds: 400));
+                ref.read(attendanceTotalsPerLectureProvider(widget.lectureName).notifier)
+                    .refresh();
+                ref.read(attendanceTotalsProvider.notifier).refresh();
               },
               child: Container(
                 width: widget.width * 0.2,

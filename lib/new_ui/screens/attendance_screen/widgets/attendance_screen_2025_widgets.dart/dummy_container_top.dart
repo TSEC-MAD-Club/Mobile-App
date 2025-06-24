@@ -1,75 +1,36 @@
-/*
-
-THE CONTAINER IS DIVIDED IN 2 PARTS, THIS IS THE TOP PART,
-WHICH HAS THE  LECTURE ICON,LECTURE NAME, PERCENT INDICATOR
-
-*/
-
+// dummy_container_top.dart
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tsec_app/new_ui/screens/attendance_screen/attendance_totals_provider.dart';
 
-class Dummycontainertop extends StatefulWidget {
-  final double width;
-  final double height;
+class Dummycontainertop extends ConsumerWidget {
   final String subjectName;
 
-  const Dummycontainertop(
-
-      {super.key,
-      required this.width,
-      required this.height,
-      required this.subjectName});
+  const Dummycontainertop({super.key, required this.subjectName});
 
   @override
-  State<Dummycontainertop> createState() => _DummycontainertopState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final attendanceAsync = ref.watch(attendanceTotalsPerLectureProvider(subjectName));
 
-class _DummycontainertopState extends State<Dummycontainertop> {
-  @override
-  Widget build(BuildContext context) {
-    return Row(
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
-          height: 40,
-          width: 40,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(50),
-            color: const Color(0xFF4A90E2),
-          ),
-          child: const Center(
-            child: Text(
-              "EG",
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+        Text(
+          subjectName,
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
           ),
         ),
-        const SizedBox(width: 12),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                widget.subjectName.isEmpty ? "EG ACAD" : widget.subjectName,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              const SizedBox(height: 4),
-              const Text(
-                "Total Lec:3/3",
-                style: TextStyle(
-                  color: Colors.white70,
-                  fontSize: 14,
-                ),
-              ),
-            ],
-          ),
+        const SizedBox(height: 4),
+        attendanceAsync.when(
+          loading: () => const Text("Loading...", style: TextStyle(color: Colors.white70)),
+          error: (e, _) => const Text("Error", style: TextStyle(color: Colors.red)),
+          data: (data) {
+            final percent = data.total == 0 ? 0 : ((data.attended / data.total) * 100).round();
+            return Text("Total: ${data.attended}/${data.total} ($percent%)", style: const TextStyle(color: Colors.white70));
+          },
         ),
       ],
     );
