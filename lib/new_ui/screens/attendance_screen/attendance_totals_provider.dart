@@ -3,6 +3,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'firebase_attendance_totalLects_2025.dart';
 
+final fetchedAttendanceTotalsProvider = StateProvider<AttendanceTotals>((ref) {
+  return AttendanceTotals(attended: {}, total: {});
+});
+
 class AttendanceData {
   final int attended;
   final int total;

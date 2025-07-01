@@ -5,6 +5,7 @@ THE OLD ATTENDANCE SCREEN IS THE FILE NAMED 'attendance_screen.dart'
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:tsec_app/new_ui/screens/attendance_screen/widgets/attendance_screen_2025_widgets.dart/add_subject_dialog.dart';
 import 'package:tsec_app/new_ui/screens/attendance_screen/widgets/attendance_screen_2025_widgets.dart/date_header_2025.dart';
 import 'package:tsec_app/new_ui/screens/attendance_screen/widgets/attendance_screen_2025_widgets.dart/attendance_container.dart';
 import 'package:tsec_app/new_ui/screens/attendance_screen/widgets/attendance_screen_2025_widgets.dart/overall_attendance_container.dart';
@@ -16,6 +17,7 @@ import '../../../provider/occasion_provider.dart';
 import '../../../provider/timetable_provider.dart';
 import '../../../screens/main_screen/widget/card_display.dart';
 import '../../../utils/timetable_util.dart';
+import 'attendance_details_screen.dart';
 
 class AttendanceScreen2025 extends ConsumerStatefulWidget {
   const AttendanceScreen2025({super.key});
@@ -57,99 +59,124 @@ class _AttendanceScreen2025State extends ConsumerState<AttendanceScreen2025> {
     String dayStr = getweekday(day.weekday);
     fetchOccasionDetails();
 
-    return Scaffold(
-      body: Padding(
+    return Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Expanded(
-            child: Column(
-          children: [
-            DateHeader2025(width: width),
-            data.when(
-                data: (data) {
-                  if (data == null) {
-                    return const Center(
-                      child: Text(
-                        "Unable to fetch timetable. Please check if you have entered your details correctly in the profile section.",
-                        textAlign: TextAlign.center,
-                      ),
-                    );
-                  }
-                  if (data[dayStr] == null) {
-                    return const Center(
-                        child: Text("Happy Weekend !",
-                            style: TextStyle(color: Colors.greenAccent)));
-                  } else if (checkOccasion(day, occasionList) != "") {
-                    return Center(
-                        child: Text(
-                            "Happy ${checkOccasion(day, occasionList)}!",
-                            style: TextStyle(color: Colors.greenAccent)));
-                  } else {
-                    List<String> respectiveRoomNo = [];
-                    List<TimetableModel> timeTableDay =
-                        getTimetablebyDay(data, dayStr, respectiveRoomNo, ref);
-                    if (timeTableDay.isEmpty) {
-                      return Column(
-                        children: [
-                          const Center(
-                            child: Text("No lectures Today ! "),
-                          ),
-                          OverallAttendance(width: width),
-                          SizedBox(
-                            height: 20,
-                          )
-                        ],
-                      );
-                    } else {
-                      return Expanded(
-                        child: SingleChildScrollView(
-                          child: Column(
-                            children: [
-                              SingleChildScrollView(
-                                scrollDirection: Axis.vertical,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    ...makeTimetableWidgets(timeTableDay),
-                                    SizedBox(
-                                      height: 15,
-                                    )
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                alignment: Alignment.topLeft,
-                                margin: const EdgeInsets.only(left: 16),
-                                child: Text(
-                                  "OVERALL ATTENDANCE",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18),
-                                ),
-                              ),
-                              OverallAttendance(width: width),
-                              SizedBox(
-                                height: 20,
-                              )
-                            ],
-                          ),
-                        ),
-                      );
-                    }
-                  }
-                },
-                error: ((error, stackTrace) {
+        child: SingleChildScrollView(
+          child: Column(
+                    children: [
+          DateHeader2025(width: width),
+          data.when(
+              data: (data) {
+                if (data == null) {
+                  return const Center(
+                    child: Text(
+                      "Unable to fetch timetable. Please check if you have entered your details correctly in the profile section.",
+                      textAlign: TextAlign.center,
+                    ),
+                  );
+                }
+                if (data[dayStr] == null) {
+                  return const SizedBox();
+                } else if (checkOccasion(day, occasionList) != "") {
                   return Center(
                       child: Text(
-                    error.toString(),
-                  ));
-                }),
-                loading: () =>
-                    const Center(child: CircularProgressIndicator())),
-          ],
-        )),
-      ),
-    );
+                          "Happy ${checkOccasion(day, occasionList)}!",
+                          style: TextStyle(color: Colors.greenAccent)));
+                } else {
+                  List<String> respectiveRoomNo = [];
+                  List<TimetableModel> timeTableDay =
+                      getTimetablebyDay(data, dayStr, respectiveRoomNo, ref);
+                  if (timeTableDay.isEmpty) {
+                    return Column(
+                      children: [
+                        const Center(
+                          child: Text("No lectures Today ! "),
+                        ), 
+                        SizedBox(
+                          height: 20,
+                        )
+                      ],
+                    );
+                  } else {
+                    return Column(
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            ...makeTimetableWidgets(timeTableDay),
+                            SizedBox(
+                              height: 15,
+                            )
+                          ],
+                        ),
+                      ],
+                    );
+                  }
+                }
+              },
+              error: ((error, stackTrace) {
+                return Center(
+                    child: Text(
+                  error.toString(),
+                ));
+              }),
+              loading: () =>
+                  const Center(child: CircularProgressIndicator())),
+          
+          SizedBox(
+            height: 20,
+          ),
+          
+          TextButton(onPressed: (){
+            showDialog(context: context, builder:
+            (BuildContext context) {
+                return const AddSubjectDialog();
+              });
+          }, child:
+          Padding(
+            padding: const EdgeInsets.only(left: 8.0),
+            child: Row(
+              children: [
+                Text(
+                  "Lecture not displayed?",
+                  style: TextStyle(
+                    color: Colors.blue,
+                    fontSize: 16,
+                  ),
+                ),
+              ],
+            ),
+          )
+          ),
+          
+          Padding(
+            padding: const EdgeInsets.only(left: 14.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "OVERALL ATTENDANCE",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18),
+                ),
+                IconButton(onPressed: (){
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => const AttendanceDetailsScreen())
+                  );
+                }, icon: Icon(Icons.arrow_forward_ios))
+              ],
+            ),
+          ),
+          OverallAttendance(width: width),
+          SizedBox(
+            height: 20,
+          )
+                    ],
+                  ),
+        ),
+      );
   }
   List<Widget> makeTimetableWidgets(List<TimetableModel> timeTableDay) {
     List<Widget> widgets = [];

@@ -10,6 +10,7 @@ import 'package:intl/intl.dart';
 import 'package:tsec_app/new_ui/colors.dart';
 import 'package:tsec_app/provider/attendance_date_provider.dart';
 import 'package:tsec_app/services/timetable_service.dart';
+import 'package:tsec_app/utils/profile_details.dart';
 
 import '../../../../../screens/main_screen/widget/card_display.dart';
 
@@ -24,6 +25,17 @@ class DateHeader2025 extends ConsumerStatefulWidget {
 class _DateHeader2025State extends ConsumerState<DateHeader2025> {
   List dates = List.generate(30, (count) => count + 1);
 
+  DateTime getStartDate() {
+    DateTime now = DateTime.now();
+    if (evenOrOddSem() == "odd_sem") {
+      // Odd semester starts in July
+      return DateTime(now.year, 7, 1);
+    } else {
+      // Even semester starts in January
+      return DateTime(now.year, 1, 1);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     // DateTime _selectedValue = DateTime.now();
@@ -35,8 +47,9 @@ class _DateHeader2025State extends ConsumerState<DateHeader2025> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           DatePicker(
-            DateTime.now().subtract(const Duration(days: 30)),
-            daysCount: 31,
+            // DateTime.now().subtract(const Duration(days: 30)),
+            getStartDate(),
+            daysCount: DateTime.now().difference(getStartDate()).inDays + 1,
             isReversed: true,
             initialSelectedDate: DateTime.now(),
             monthTextStyle: theme.textTheme.headlineSmall!.copyWith(
