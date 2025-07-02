@@ -6,7 +6,6 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:showcaseview/showcaseview.dart';
 import 'package:tsec_app/models/user_model/user_model.dart';
 import 'package:tsec_app/new_ui/colors.dart';
 import 'package:tsec_app/new_ui/screens/attendance_screen/attendance_screen.dart';
@@ -82,7 +81,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
         ),
         "notes": const NotesScreen(),
         "timetable": const TimeTable(),
-        "attendance": AttendanceScreen(),
+        "attendance": AttendanceScreen2025(),
         "concession": const RailwayConcessionScreen(),
         "profile": ProfilePage(
           justLoggedIn: false,
@@ -136,22 +135,22 @@ class _MainScreenState extends ConsumerState<MainScreen> {
       );
     });
 
-    bool isFirstHome = SharedPreferencesForDot.isFirstHome();
-    if (!isFirstHome) {
-      WidgetsBinding.instance.addPostFrameCallback((_) =>
-          ShowCaseWidget.of(context)
-              .startShowCase([notificationBellKey, logoutKey]));
-      SharedPreferencesForDot.firstHomeVisited();
-    }
-
-    if (user != null && user.isStudent) {
-      bool isFirstTime = SharedPreferencesForDot.isFirstTimeTable();
-      if (!isFirstTime) {
-        WidgetsBinding.instance.addPostFrameCallback(
-            (_) => ShowCaseWidget.of(context).startShowCase([timeTableKey]));
-        SharedPreferencesForDot.firstTimeTableVisited();
-      }
-    }
+    // bool isFirstHome = SharedPreferencesForDot.isFirstHome();
+    // if (!isFirstHome) {
+    //   WidgetsBinding.instance.addPostFrameCallback((_) =>
+    //       ShowCaseWidget.of(context)
+    //           .startShowCase([notificationBellKey, logoutKey]));
+    //   SharedPreferencesForDot.firstHomeVisited();
+    // }
+    //
+    // if (user != null && user.isStudent) {
+    //   bool isFirstTime = SharedPreferencesForDot.isFirstTimeTable();
+    //   if (!isFirstTime) {
+    //     WidgetsBinding.instance.addPostFrameCallback(
+    //         (_) => ShowCaseWidget.of(context).startShowCase([timeTableKey]));
+    //     SharedPreferencesForDot.firstTimeTableVisited();
+    //   }
+    // }
 
     super.initState();
   }
@@ -174,7 +173,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
         ),
         const NotesScreen(),
         ProfilePage(justLoggedIn: false),
-        AttendanceScreen(),
+        AttendanceScreen2025(),
         const RailwayConcessionScreen(),
         const TPCScreen(),
         const CommitteesScreen(),
@@ -231,11 +230,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Showcase(
-                key: logoutKey,
-                description: 'You can Login from the Drawer Panel',
-                descTextStyle: TextStyle(fontSize: 15),
-                child: GestureDetector(
+              GestureDetector(
                   onTap: () {
                     _scaffoldKey.currentState?.openDrawer();
                   },
@@ -248,7 +243,6 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                     ),
                   ),
                 ),
-              ),
               Spacer(),
               Text(
                 getTitle(data),
@@ -256,13 +250,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                     color: Colors.white, fontSize: size.width * 0.055),
               ),
               Spacer(),
-              Showcase(
-                key: notificationBellKey,
-                descTextStyle: TextStyle(fontSize: 15),
-                description: 'View Notification from here',
-                child: Flexible(
-                  flex: 1,
-                  child: GestureDetector(
+              GestureDetector(
                     onTap: () {
                       Navigator.push(
                         context,
@@ -306,9 +294,6 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                       ],
                     ),
                   ),
-                ),
-              ),
-    
               // Second image and other widgets here
             ],
           ),

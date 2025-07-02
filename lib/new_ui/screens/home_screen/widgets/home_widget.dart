@@ -6,7 +6,6 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart' hide CarouselController, CarouselView;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:showcaseview/showcaseview.dart';
 import 'package:tsec_app/models/event_model/event_model.dart';
 import 'package:tsec_app/models/user_model/user_model.dart';
 import 'package:tsec_app/new_ui/colors.dart';
@@ -502,11 +501,7 @@ class _HomeWidgetState extends ConsumerState<HomeWidget> {
 
                   //DATE SELECTOR
                   if (_onlyUserLoggedIn)
-                    Showcase(
-                      key: timeTableKey,
-                      description: 'Select date to view Timetable',
-                      descTextStyle: TextStyle(fontSize: 15),
-                      child: Padding(
+                    Padding(
                         padding: const EdgeInsets.fromLTRB(0, 7, 0, 20),
                         child: SizedBox(
                           width: size.width * 0.9,
@@ -555,7 +550,6 @@ class _HomeWidgetState extends ConsumerState<HomeWidget> {
                           ),
                         ),
                       ),
-                    ),
 
                   //DISPLAY THIS TIMETABLE
                   if (_onlyUserLoggedIn) CardDisplay()

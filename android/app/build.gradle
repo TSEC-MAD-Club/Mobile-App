@@ -16,6 +16,7 @@ if (localPropertiesFile.exists()) {
 def keystoreProperties = new Properties()
 def keystorePropertiesFile = rootProject.file('key.properties')
 if (keystorePropertiesFile.exists()) {
+    println "Using keystore properties from: ${keystorePropertiesFile.absolutePath}"
     keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 }
 
@@ -81,22 +82,16 @@ android {
 
     signingConfigs {
         release {
-            if (keystoreProperties['storeFile']) {
                 keyAlias keystoreProperties['keyAlias']
                 keyPassword keystoreProperties['keyPassword']
                 storeFile file(keystoreProperties['storeFile'])
                 storePassword keystoreProperties['storePassword']
-            } else {
-                println("Skipping release signingConfig: storeFile missing")
-            }
         }
     }
 
     buildTypes {
         release {
-            if (keystoreProperties['storeFile']) {
-                signingConfig signingConfigs.release
-            }
+            signingConfig signingConfigs.release
             minifyEnabled true
             shrinkResources true
         }

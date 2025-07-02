@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:showcaseview/showcaseview.dart';
 import 'package:tsec_app/new_ui/screens/guidelines_screen/widgets/FAQCard.dart';
 import 'package:tsec_app/new_ui/screens/guidelines_screen/widgets/guidelines_card.dart';
 
@@ -24,13 +23,13 @@ class _GuideLinesScreenState extends State<GuideLinesScreen> {
     super.initState();
     setGuidelines();
     setFAQ();
-    bool isFirstRailway = SharedPreferencesForDot.isFirstGuide();
-    if(!isFirstRailway) {
-      WidgetsBinding.instance.addPostFrameCallback((_) =>
-          ShowCaseWidget.of(context).startShowCase([infoKey])
-      );
-      SharedPreferencesForDot.firstTimeGuide();
-    }
+    // bool isFirstRailway = SharedPreferencesForDot.isFirstGuide();
+    // if(!isFirstRailway) {
+    //   WidgetsBinding.instance.addPostFrameCallback((_) =>
+    //       ShowCaseWidget.of(context).startShowCase([infoKey])
+    //   );
+    //   SharedPreferencesForDot.firstTimeGuide();
+    // }
   }
 
   setGuidelines() {
@@ -84,11 +83,7 @@ class _GuideLinesScreenState extends State<GuideLinesScreen> {
                     ),
                   ),
                 ),
-                Showcase(
-                  key: infoKey,
-                  description: 'Click here to for more information',
-                  descTextStyle: TextStyle(fontSize: 15),
-                  child: IconButton(
+                IconButton(
                     icon: Icon(Icons.info_outline, color: Colors.white),
                     onPressed: () {
                       showDialog(
@@ -136,7 +131,6 @@ class _GuideLinesScreenState extends State<GuideLinesScreen> {
                       );
                     },
                   ),
-                ),
               ],
             ),
             SizedBox(

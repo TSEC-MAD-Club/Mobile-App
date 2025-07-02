@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:showcaseview/showcaseview.dart';
 import 'package:tsec_app/models/concession_details_model/concession_details_model.dart';
 import 'package:tsec_app/models/concession_request_model/concession_request_model.dart';
 // import 'package:tsec_app/models/concession_request_model/concession_request_model.dart';
@@ -459,13 +458,13 @@ class _RailwayConcessionScreenState
       ref.read(concessionRequestProvider.notifier).getConcessionRequestData();
     });
 
-    bool isFirstRailway = SharedPreferencesForDot.isFirstRailway();
-    print("Is Railway applied = $isFirstRailway");
-    if (!isFirstRailway) {
-      WidgetsBinding.instance.addPostFrameCallback(
-          (_) => ShowCaseWidget.of(context).startShowCase([seeGuidleinesKey]));
-      SharedPreferencesForDot.firstRailwayVisited();
-    }
+    // bool isFirstRailway = SharedPreferencesForDot.isFirstRailway();
+    // print("Is Railway applied = $isFirstRailway");
+    // if (!isFirstRailway) {
+    //   WidgetsBinding.instance.addPostFrameCallback(
+    //       (_) => ShowCaseWidget.of(context).startShowCase([seeGuidleinesKey]));
+    //   SharedPreferencesForDot.firstRailwayVisited();
+    // }
   }
 
   @override
@@ -769,12 +768,7 @@ class _RailwayConcessionScreenState
                                       builder: (context) => GuideLinesScreen(),
                                     ),
                                   ),
-                                  child: Showcase(
-                                    key: seeGuidleinesKey,
-                                    description:
-                                        'Click here to view guidelines',
-                                    descTextStyle: TextStyle(fontSize: 15),
-                                    child: Container(
+                                  child: Container(
                                       width: size.width * 0.75,
                                       decoration: BoxDecoration(
                                         color: oldDateSelectBlue,
@@ -814,7 +808,6 @@ class _RailwayConcessionScreenState
                                         ),
                                       ),
                                     ),
-                                  ),
                                 ),
                               ),
                             ],
@@ -1102,11 +1095,7 @@ class _RailwayConcessionScreenState
                               builder: (context) => GuideLinesScreen(),
                             ),
                           ),
-                          child: Showcase(
-                            key: seeGuidleinesKey,
-                            description: 'Click here to view guidelines',
-                            descTextStyle: TextStyle(fontSize: 15),
-                            child: Container(
+                          child: Container(
                               width: size.width * 0.75,
                               decoration: BoxDecoration(
                                 color: oldDateSelectBlue,
@@ -1145,7 +1134,6 @@ class _RailwayConcessionScreenState
                                 ),
                               ),
                             ),
-                          ),
                         ),
                         Container(
                           width: size.width * 0.8,
