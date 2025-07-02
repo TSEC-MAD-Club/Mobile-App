@@ -9,6 +9,7 @@ import 'package:tsec_app/new_ui/screens/attendance_screen/widgets/attendance_scr
 import 'package:tsec_app/new_ui/screens/attendance_screen/widgets/attendance_screen_2025_widgets.dart/date_header_2025.dart';
 import 'package:tsec_app/new_ui/screens/attendance_screen/widgets/attendance_screen_2025_widgets.dart/attendance_container.dart';
 import 'package:tsec_app/new_ui/screens/attendance_screen/widgets/attendance_screen_2025_widgets.dart/overall_attendance_container.dart';
+import 'package:tsec_app/provider/attendance_date_provider.dart';
 import 'package:tsec_app/services/timetable_service.dart';
 
 import '../../../models/occassion_model/occasion_model.dart';
@@ -50,6 +51,10 @@ class _AttendanceScreen2025State extends ConsumerState<AttendanceScreen2025> {
     getTimeTablePreAbsCan(DateFormat('yyyy-MM-dd').format(DateTime.now()), ref);
   }
 
+  void callSetState() {
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     height = MediaQuery.sizeOf(context).height;
@@ -86,6 +91,7 @@ class _AttendanceScreen2025State extends ConsumerState<AttendanceScreen2025> {
                   List<String> respectiveRoomNo = [];
                   List<TimetableModel> timeTableDay =
                       getTimetablebyDay(data, dayStr, respectiveRoomNo, ref);
+                  Future<Map<String, dynamic>?>? savedAttendance = getLoggedAttendance(day);
                   if (timeTableDay.isEmpty) {
                     return Column(
                       children: [
@@ -103,10 +109,41 @@ class _AttendanceScreen2025State extends ConsumerState<AttendanceScreen2025> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            ...makeTimetableWidgets(timeTableDay),
+                            FutureBuilder(future: savedAttendance, builder: (context, snapshot) {
+                              if (snapshot.connectionState == ConnectionState.waiting) {
+                                print("Loading historical attendance data...");
+                                return Column(
+                                  children: makeTimetableWidgets(timeTableDay),
+                                );
+                              } else if (snapshot.hasError) {
+                                print("Error fetching historical attendance data: ${snapshot.error}");
+                                return Column(
+                                  children: makeTimetableWidgets(timeTableDay),
+                                );
+                              } else if (snapshot.hasData && snapshot.data != null) {
+                                final savedData = snapshot.data!;
+                                print("Historical attendance data fetched successfully: $savedData");
+                                for (final key in savedData.keys) {
+                                  print(key);
+                                  final alreadyExists = timeTableDay.any((item) => item.lectureName == key);
+                                  if (!alreadyExists){
+                                    timeTableDay.add(
+                                        TimetableModel(lectureName: key, lectureStartTime: "lectureStartTime", lectureEndTime: "lectureEndTime", lectureFacultyName: "lectureFacultyName", lectureBatch: "lectureBatch")
+                                    );
+                                  }
+                                }
+                                print("Final timetable for the day: $timeTableDay");
+                                return Column(
+                                  children: makeTimetableWidgets(timeTableDay),
+                                );
+                              }
+                              return Column(
+                                children: makeTimetableWidgets(timeTableDay),
+                              );
+                            }),
                             SizedBox(
                               height: 15,
-                            )
+                            ),
                           ],
                         ),
                       ],
@@ -130,7 +167,7 @@ class _AttendanceScreen2025State extends ConsumerState<AttendanceScreen2025> {
           TextButton(onPressed: (){
             showDialog(context: context, builder:
             (BuildContext context) {
-                return const AddSubjectDialog();
+                return AddSubjectDialog(f: callSetState,);
               });
           }, child:
           Padding(
@@ -179,7 +216,9 @@ class _AttendanceScreen2025State extends ConsumerState<AttendanceScreen2025> {
       );
   }
   List<Widget> makeTimetableWidgets(List<TimetableModel> timeTableDay) {
+    print("--------------------------------------------------------");
     List<Widget> widgets = [];
+    print("Number of lectures for the day: ${timeTableDay.length}");
     for (int i = 0; i < timeTableDay.length; i++) {
       widgets.add(
         AttendanceContainer(

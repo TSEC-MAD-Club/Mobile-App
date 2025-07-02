@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 
 final attendanceDateprovider = StateProvider<DateTime>((ref) {
   return DateTime.now();
@@ -29,3 +32,18 @@ final dateTimetablePreAbsCanProvider =
     StateNotifierProvider<AttendanceDateProvider, Map>((ref) {
   return AttendanceDateProvider();
 });
+
+Future<Map<String, dynamic>?>? getLoggedAttendance (DateTime date) {
+  final String formattedDate = DateFormat('yyyy-MM-dd').format(date);
+  final firestore = FirebaseFirestore.instance;
+  final uid = FirebaseAuth.instance.currentUser!.uid;
+  final snapshot =  firestore
+      .collection("AttendanceTest")
+      .doc(uid)
+      .collection("dates")
+      .doc(formattedDate)
+      .get()
+      .then((value) => value.data());
+  return snapshot;
+
+}

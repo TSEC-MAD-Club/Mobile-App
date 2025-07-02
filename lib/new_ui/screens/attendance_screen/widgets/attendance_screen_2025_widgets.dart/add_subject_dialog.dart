@@ -12,7 +12,8 @@ import '../../attendance_totals_provider.dart';
 import '../../firebase_attendance_button_pressed_2025.dart';
 
 class AddSubjectDialog extends ConsumerStatefulWidget {
-  const AddSubjectDialog({super.key});
+  final Function f;
+  const AddSubjectDialog({super.key, required this.f});
 
   @override
   ConsumerState<AddSubjectDialog> createState() => _AddSubjectDialogState();
@@ -102,6 +103,7 @@ class _AddSubjectDialogState extends ConsumerState<AddSubjectDialog> {
                       ref.read(attendanceTotalsPerLectureProvider(selectedSubject).notifier)
                           .refresh();
                       ref.read(attendanceTotalsProvider.notifier).refresh();
+                      widget.f();
                       if (context.mounted) {
                         Navigator.of(context).pop();
                       }
@@ -135,6 +137,7 @@ class _AddSubjectDialogState extends ConsumerState<AddSubjectDialog> {
                         ref.read(attendanceTotalsPerLectureProvider(selectedSubject).notifier)
                             .refresh();
                         ref.read(attendanceTotalsProvider.notifier).refresh();
+                        widget.f();
                         if (context.mounted) {
                           Navigator.of(context).pop();
                         }
@@ -168,6 +171,7 @@ class _AddSubjectDialogState extends ConsumerState<AddSubjectDialog> {
                         ref.read(attendanceTotalsPerLectureProvider(selectedSubject).notifier)
                             .refresh();
                         ref.read(attendanceTotalsProvider.notifier).refresh();
+                        widget.f();
                         if (context.mounted) {
                           Navigator.of(context).pop();
                         }
