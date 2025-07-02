@@ -41,7 +41,15 @@ class _AttendanceDetailsScreenState extends ConsumerState<AttendanceDetailsScree
         centerTitle: true,
       ),
       body: SafeArea(
-          child: Padding(
+          child: getAttendedMap().isEmpty && getTotalMap().isEmpty
+              ? Center(
+                  child: Text(
+                    "No attendance data available",
+                    style: TextStyle(color: Colors.white, fontSize: 18),
+                  ),
+                )
+              :
+          Padding(
             padding: const EdgeInsets.all(8.0),
             child: SingleChildScrollView(
               child: Column(
