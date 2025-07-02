@@ -1,934 +1,934 @@
-import 'dart:ffi';
-import 'package:flutter/services.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
-import 'package:showcaseview/showcaseview.dart';
-import 'package:tsec_app/new_ui/colors.dart';
-import 'package:tsec_app/new_ui/screens/attendance_screen/widgets/attendance_subject_widget.dart';
-import 'package:tsec_app/new_ui/screens/attendance_screen/widgets/attendanceservice.dart';
-import 'package:tsec_app/provider/auth_provider.dart';
-import 'package:tsec_app/services/sharedprefsfordot.dart';
-
-import '../../showcasekeys.dart';
-import 'add_attendance.dart';
-
-class AttendanceScreen extends StatefulWidget {
-  const AttendanceScreen({super.key});
-
-  @override
-  State<AttendanceScreen> createState() => _AttendanceScreenState();
-}
-
-class _AttendanceScreenState extends State<AttendanceScreen> {
-  final FirebaseAuth auth = FirebaseAuth.instance;
-  AttendanceService attendanceService = AttendanceService();
-  int totalLectures = 0;
-  int attendedLectures = 0;
-
-  /*@override
-  void initState() {
-    super.initState();
-    _fetchAndSetAttendance();
-
-  }*/
-
-  Future<void> _fetchAndSetAttendance() async {
-    var attendanceData = await fetchAttendanceData();
-    setState(() {
-      totalLectures = attendanceData['totalLectures']!;
-      attendedLectures = attendanceData['attendedLectures']!;
-      print("init state");
-      print(totalLectures);
-      print(attendedLectures);
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    bool isNotesVisited = SharedPreferencesForDot.isNotesVisited();
-    if (!isNotesVisited) {
-      WidgetsBinding.instance.addPostFrameCallback(
-        (_) => ShowCaseWidget.of(context).startShowCase(
-          [addNotesFloatButton],
-        ),
-      );
-      SharedPreferencesForDot.visitNotes();
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
-    return Scaffold(
-      body: StreamBuilder(
-          stream: FirebaseFirestore.instance
-              .collection("Attendance")
-              .doc(auth.currentUser!.uid)
-              .snapshots(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(child: CircularProgressIndicator());
-            }
-            var documentSnapshot = snapshot.data as DocumentSnapshot;
-            if (documentSnapshot.data() == null) {
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    // Image.asset(
-                    //   'assets/images/attendance.png',
-                    //   width: 250,
-                    // ),
-                    Lottie.asset(
-                      'assets/animation/attendance_lottie.json',
-                      width: 200,
-                      height: 200,
-                      fit: BoxFit.cover,
-                    ),
-                    SizedBox(height: 10),
-                    Text(
-                      "No Subjects Added",
-                      style: Theme.of(context)
-                          .textTheme
-                          .headlineMedium
-                          ?.copyWith(
-                              color: Theme.of(context).colorScheme.primary),
-                    ),
-                  ],
-                ),
-              );
-            }
-
-            var data = documentSnapshot.data() as Map<String, dynamic>;
-            List attendanceList = data['attendance'];
-            //List<Map<String, dynamic>> attendanceList2 = attendanceList.cast<Map<String, dynamic>>();
-            Map<String, dynamic> circularMap =
-                calculateAttendance(attendanceList);
-
-            if (attendanceList.isEmpty) {
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    // Image.asset(
-                    //   'assets/images/attendance.png',
-                    //   width: 250,
-                    // ),
-                    Lottie.asset(
-                      'assets/animation/attendance_lottie.json',
-                      width: 200,
-                      height: 200,
-                      fit: BoxFit.cover,
-                    ),
-                    SizedBox(height: 20),
-                    Text("No Subjects Added",
-                        style: Theme.of(context).textTheme.headlineMedium
-                        // ?.copyWith(
-                        //     color: Theme.of(context).colorScheme.primary),
-                        ),
-                  ],
-                ),
-              );
-            }
-
-            return SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  children: [
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    Stack(
-                      children: [
-                        Positioned.fill(
-                          child: Align(
-                            alignment: Alignment.center,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  '',
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 4),
-                                ),
-                                Text(
-                                  circularMap["totalLectures"] != 0
-                                      ? '${((circularMap["attendedLectures"] / circularMap["totalLectures"]) * 100).toStringAsFixed(2)}%'
-                                      : "0%",
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 25),
-                                ),
-                                Text(
-                                  circularMap["totalLectures"] != 0
-                                      ? '${circularMap["attendedLectures"]}/${circularMap["totalLectures"]}'
-                                      : "0%",
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 15),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 150,
-                          height: 150,
-                          child: CircularProgressIndicator(
-                            value: circularMap["totalLectures"] == 0
-                                ? 0
-                                : (circularMap["attendedLectures"] /
-                                    circularMap["totalLectures"]),
-                            backgroundColor: Colors.white,
-                            valueColor: AlwaysStoppedAnimation<Color>(
-                                oldDateSelectBlue),
-                            strokeWidth: 5,
-                            strokeAlign: BorderSide.strokeAlignInside,
-                            strokeCap: StrokeCap.round,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    //put the subject attendance cards from here
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    ListView.builder(
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      itemCount: attendanceList.length,
-                      itemBuilder: (context, index) {
-                        var attendanceInfo = attendanceList[index];
-                        print(attendanceInfo);
-
-                        return GestureDetector(
-                          onTap: () {
-                            // Show dialog with current values for modification
-
-                            Navigator.push(
-                              context,
-                              PageRouteBuilder(
-                                pageBuilder:
-                                    (context, animation, secondaryAnimation) =>
-                                        AddAttendanceScreen(
-                                  isUpdate: true,
-                                  index: index,
-                                  attendanceList: attendanceList,
-                                  updatedSubject: attendanceInfo,
-                                ),
-                                transitionsBuilder: (context, animation,
-                                    secondaryAnimation, child) {
-                                  const begin =
-                                      Offset(0.0, 1.0); // Start from bottom
-                                  const end =
-                                      Offset.zero; // Move to top (center)
-                                  const curve = Curves.easeInOut;
-
-                                  var tween = Tween(begin: begin, end: end)
-                                      .chain(CurveTween(curve: curve));
-                                  var offsetAnimation = animation.drive(tween);
-
-                                  return SlideTransition(
-                                    position: offsetAnimation,
-                                    child: child,
-                                  );
-                                },
-                              ),
-                            );
-                            /* showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                TextEditingController subjectNameController =
-                                    TextEditingController(
-                                        text: attendanceInfo["subject_name"]);
-                                TextEditingController totalLecturesController =
-                                    TextEditingController(
-                                        text:
-                                            attendanceInfo["total"].toString());
-                                TextEditingController
-                                    attendedLecturesController =
-                                    TextEditingController(
-                                        text: attendanceInfo["present"]
-                                            .toString());
-
-                                final _updateformKey = GlobalKey<FormState>();
-                                bool isEnabled = true;
-                                return AlertDialog(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(15),
-                                  ),
-                                  title: Text('Update Subject'),
-                                  content: Form(
-                                    key: _updateformKey,
-                                    child: SingleChildScrollView(
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          TextFormField(
-                                            validator: (val) {
-                                              if (val == null || val.isEmpty) {
-                                                return "Please enter some value";
-                                              }
-                                            },
-                                            enabled: isEnabled,
-                                            controller: subjectNameController,
-                                            style:
-                                                TextStyle(color: Colors.white),
-                                            decoration: InputDecoration(
-                                              labelText: 'Subject Name',
-                                              border: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                              ),
-                                              filled: true,
-                                              fillColor: Colors.transparent,
-                                              contentPadding:
-                                                  EdgeInsets.symmetric(
-                                                      horizontal: 15,
-                                                      vertical: 10),
-                                              errorStyle:
-                                                  TextStyle(fontSize: 12),
-                                            ),
-                                          ),
-                                          SizedBox(height: 20),
-                                          TextFormField(
-                                            validator: (val) {
-                                              String totalLectures =
-                                                  totalLecturesController.text;
-
-                                              if (val == null || val.isEmpty) {
-                                                return "Please enter some value";
-                                              } else if (totalLectures
-                                                      .isNotEmpty &&
-                                                  int.parse(val) >
-                                                      int.parse(
-                                                          totalLectures)) {
-                                                return "Please enter correct value";
-                                              }
-                                            },
-                                            keyboardType: TextInputType.number,
-                                            inputFormatters: [
-                                              FilteringTextInputFormatter
-                                                  .digitsOnly
-                                            ],
-                                            controller:
-                                                attendedLecturesController,
-                                            style:
-                                                TextStyle(color: Colors.white),
-                                            enabled: isEnabled,
-                                            decoration: InputDecoration(
-                                              labelText: 'Attended Lectures',
-                                              border: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                              ),
-                                              filled: true,
-                                              errorStyle:
-                                                  TextStyle(fontSize: 12),
-                                              focusColor: Colors.red,
-                                              fillColor: Colors.transparent,
-                                              contentPadding:
-                                                  EdgeInsets.symmetric(
-                                                      horizontal: 15,
-                                                      vertical: 10),
-                                            ),
-                                          ),
-                                          SizedBox(height: 20),
-                                          TextFormField(
-                                            enabled: isEnabled,
-                                            validator: (val) {
-                                              String attendedLectures =
-                                                  attendedLecturesController
-                                                      .text;
-                                              if (val == null || val.isEmpty) {
-                                                return "Please enter some value";
-                                              } else if (attendedLectures
-                                                      .isNotEmpty &&
-                                                  int.parse(val) <
-                                                      int.parse(
-                                                          attendedLectures)) {
-                                                return "Please enter correct value";
-                                              }
-                                            },
-                                            keyboardType: TextInputType.number,
-                                            inputFormatters: [
-                                              FilteringTextInputFormatter
-                                                  .digitsOnly
-                                            ],
-                                            controller: totalLecturesController,
-                                            style:
-                                                TextStyle(color: Colors.white),
-                                            decoration: InputDecoration(
-                                              labelText:
-                                                  'Total Lectures Till Now',
-                                              border: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                              ),
-                                              filled: true,
-                                              errorStyle:
-                                                  TextStyle(fontSize: 12),
-                                              focusColor: Colors.red,
-                                              fillColor: Colors.transparent,
-                                              contentPadding:
-                                                  EdgeInsets.symmetric(
-                                                      horizontal: 15,
-                                                      vertical: 10),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  actions: <Widget>[
-                                    TextButton(
-                                      onPressed: () {
-                                        if (isEnabled) {
-                                          isEnabled = false;
-                                          if (_updateformKey.currentState!
-                                              .validate()) {
-                                            String subjectName =
-                                                subjectNameController.text;
-                                            int totalLectures = int.parse(
-                                                totalLecturesController.text);
-                                            int attendedLectures = int.parse(
-                                                attendedLecturesController
-                                                    .text);
-
-                                            Map<String, dynamic>
-                                                updatedSubject = {
-                                              "subject_name": subjectName,
-                                              "total": totalLectures,
-                                              "present": attendedLectures
-                                            };
-
-                                            AttendanceService.updateSubject(
-                                                attendanceList,
-                                                index,
-                                                updatedSubject);
-
-                                            Navigator.of(context).pop();
-                                          }
-                                        }
-                                        isEnabled = false;
-
-                                        */
-                            /*DocumentSnapshot doc = await FirebaseFirestore.instance
-                                            .collection("Attendance")
-                                            .doc(FirebaseAuth.instance.currentUser!.uid)
-                                            .get();
-
-                                        if (doc.exists) {
-                                          var data = doc.data() as Map<String, dynamic>;
-                                          List attendanceList = data['attendance'];
-
-                                          // Find the index of the subject to update
-                                          int indexToUpdate = attendanceList.indexWhere((item) => item['subject_name'] == attendanceInfo['subject_name']);
-
-                                          if (indexToUpdate != -1) {
-                                            // Update the specific item
-                                            attendanceList[indexToUpdate] = {
-                                              'subject_name': subjectName,
-                                              'total': totalLectures,
-                                              'present': attendedLectures,
-                                            };
-
-                                            await FirebaseFirestore.instance
-                                                .collection("Attendance")
-                                                .doc(FirebaseAuth.instance.currentUser!.uid)
-                                                .update({'attendance': attendanceList});
-                                          }
-                                        }*/
-                            /*
-                                      },
-                                      child: Text('Update',
-                                          style: TextStyle(color: Colors.blue)),
-                                    ),
-                                    TextButton(
-                                      onPressed: () {
-                                        AttendanceService.deleteSubject(
-                                            attendanceList, index);
-
-                                        */
-                            /*DocumentSnapshot doc = await FirebaseFirestore.instance
-                                            .collection("Attendance")
-                                            .doc(FirebaseAuth.instance.currentUser!.uid)
-                                            .get();
-
-                                        if (doc.exists) {
-                                          var data = doc.data() as Map<String, dynamic>;
-                                          List attendanceList = data['attendance'];
-
-                                          attendanceList.removeWhere((item) => item['subject_name'] == attendanceInfo['subject_name']);
-
-
-                                          await FirebaseFirestore.instance
-                                              .collection("Attendance")
-                                              .doc(FirebaseAuth.instance.currentUser!.uid)
-                                              .update({'attendance': attendanceList});
-                                        }
-                                        _fetchAndSetAttendance();*/
-                            /*
-                                        Navigator.of(context).pop();
-                                      },
-                                      child: Text('Delete',
-                                          style: TextStyle(color: Colors.red)),
-                                    ),
-                                    TextButton(
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                      child: Text('Cancel',
-                                          style: TextStyle(color: Colors.grey)),
-                                    ),
-                                  ],
-                                );
-                              },
-                            );*/
-                          },
-                          child: Card(
-                            child: Container(
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                    color: timePickerBorder, width: 1.0),
-                                borderRadius: BorderRadius.circular(10.0),
-                                color: timePickerBg,
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Text(
-                                          attendanceInfo["subject_name"],
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 25,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        SizedBox(
-                                          width: 5,
-                                        ),
-                                      ],
-                                    ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          attendanceInfo['total'] != 0
-                                              ? '${attendanceInfo['present']}/${attendanceInfo['total']}'
-                                              : "0%",
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 14),
-                                        ),
-                                        Text(
-                                          attendanceInfo['total'] != 0
-                                              ? '${(attendanceInfo['present'] / attendanceInfo['total'] * 100).toInt()}%'
-                                              : "0%",
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ],
-                                    ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    LinearProgressIndicator(
-                                      value: attendanceInfo['total'] != 0
-                                          ? attendanceInfo['present'] /
-                                              attendanceInfo['total']
-                                          : 0,
-                                      backgroundColor: Colors.white,
-                                      valueColor:
-                                          const AlwaysStoppedAnimation<Color>(
-                                              oldDateSelectBlue),
-                                    ),
-                                    const SizedBox(
-                                      height: 15,
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        ElevatedButton(
-                                          onPressed: () async {
-                                            await AttendanceService.markPresent(
-                                                attendanceList, index);
-                                            /*_fetchAndSetAttendance();*/
-                                          },
-                                          style: ElevatedButton.styleFrom(
-                                            backgroundColor:
-                                                commonbgL3ightblack,
-                                            shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(5)),
-                                          ),
-                                          child: const Text(
-                                            'Present',
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 15),
-                                          ),
-                                        ),
-                                        ElevatedButton(
-                                          onPressed: () async {
-                                            await AttendanceService.markAbsent(
-                                                attendanceList, index);
-                                            /*_fetchAndSetAttendance();*/
-                                          },
-                                          style: ElevatedButton.styleFrom(
-                                            backgroundColor:
-                                                commonbgL3ightblack,
-                                            shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(5)),
-                                          ),
-                                          child: const Text(
-                                            'Absent',
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 15),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    Center(
-                                      child: Container(
-                                        width: size.width * 0.88,
-                                        alignment: Alignment.center,
-                                        // decoration: BoxDecoration(
-                                        //   border: Border.all(color: timePickerBorder, width: 1.0),
-                                        //   borderRadius: BorderRadius.circular(10.0),
-                                        //   color: timePickerBg,
-                                        // ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(2.0),
-                                          child: Text(
-                                            getTextForCard(
-                                                attendanceInfo['present'],
-                                                attendanceInfo['total']),
-                                            style: TextStyle(
-                                                color: Colors.grey,
-                                                fontSize: 14),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                  ],
-                ),
-              ),
-            );
-          }),
-      floatingActionButton: Showcase(
-        key: addNotesFloatButton,
-        description: 'Click here to add Notes',
-        descTextStyle: TextStyle(fontSize: 15),
-        child: FloatingActionButton(
-          onPressed: () {
-            /*showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                TextEditingController subjectNameController =
-                    TextEditingController();
-                TextEditingController totalLecturesController =
-                    TextEditingController();
-                TextEditingController attendedLecturesController =
-                    TextEditingController();
-
-                final _formKey = GlobalKey<FormState>();
-
-                print("Clicked");
-                return AlertDialog(
-                  shape: RoundedRectangleBorder(
-                    borderRadius:
-                        BorderRadius.circular(15), // Increased corner radius
-                  ),
-                  title: Text(
-                    'Add Subject',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                  ),
-                  content: Form(
-                    key: _formKey,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                      child: SingleChildScrollView(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            TextFormField(
-                              validator: (val) {
-                                if (val == null || val.isEmpty) {
-                                  return "Please enter some value";
-                                }
-                              },
-                              style: TextStyle(color: Colors.white),
-                              // Set text color to white
-                              controller: subjectNameController,
-                              decoration: InputDecoration(
-                                focusColor: Colors.red,
-                                labelText: 'Subject Name',
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                filled: true,
-                                fillColor: Colors.transparent,
-                                errorStyle: TextStyle(fontSize: 12),
-                                contentPadding: EdgeInsets.symmetric(
-                                    horizontal: 15, vertical: 10),
-                              ),
-                            ),
-                            SizedBox(height: 20),
-                            TextFormField(
-                              validator: (val) {
-                                String totalLectures =
-                                    totalLecturesController.text;
-
-                                if (val == null || val.isEmpty) {
-                                  return "Please enter some value";
-                                } else if (totalLectures.isNotEmpty &&
-                                    int.parse(val) > int.parse(totalLectures)) {
-                                  return "Please enter correct value";
-                                }
-                              },
-                              style: TextStyle(color: Colors.white),
-                              // Set text color to white
-                              controller: attendedLecturesController,
-                              keyboardType: TextInputType.number,
-                              inputFormatters: [
-                                FilteringTextInputFormatter.digitsOnly
-                              ],
-                              decoration: InputDecoration(
-                                labelText: 'Attended Lectures',
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                filled: true,
-                                fillColor: Colors.transparent,
-                                errorStyle: TextStyle(fontSize: 12),
-                                contentPadding: EdgeInsets.symmetric(
-                                    horizontal: 15, vertical: 10),
-                              ),
-                            ),
-                            SizedBox(height: 20),
-                            TextFormField(
-                              validator: (val) {
-                                int attendedLectures = int.parse(
-                                        attendedLecturesController.text) ??
-                                    0;
-                                if (val == null || val.isEmpty) {
-                                  return "Please enter some value";
-                                } else if (attendedLectures != 0 &&
-                                    int.parse(val) < attendedLectures) {
-                                  return "Please enter correct value";
-                                }
-                              },
-                              style: TextStyle(color: Colors.white),
-                              // Set text color to white
-                              controller: totalLecturesController,
-                              keyboardType: TextInputType.number,
-                              inputFormatters: [
-                                FilteringTextInputFormatter.digitsOnly
-                              ],
-                              decoration: InputDecoration(
-                                labelText: 'Total Lectures Till Now',
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                filled: true,
-                                fillColor: Colors.transparent,
-                                contentPadding: EdgeInsets.symmetric(
-                                    horizontal: 15, vertical: 10),
-                                errorStyle: TextStyle(fontSize: 12),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  actions: <Widget>[
-                    TextButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      child:
-                          Text('Cancel', style: TextStyle(color: Colors.red)),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          String subjectName = subjectNameController.text;
-                          int totalLectures =
-                              int.parse(totalLecturesController.text);
-                          int attendedLectures =
-                              int.parse(attendedLecturesController.text);
-
-                          Map<String, dynamic> updatedSubject = {
-                            "subject_name": subjectName,
-                            "total": totalLectures,
-                            "present": attendedLectures
-                          };
-                          AttendanceService.addSubject(updatedSubject);
-                          */
-            /*FirebaseFirestore.instance
-                              .collection("Attendance")
-                              .doc(FirebaseAuth.instance.currentUser!.uid)
-                              .set({
-                            'attendance': FieldValue.arrayUnion([{
-                              'subject_name': subjectName,
-                              'total': totalLectures,
-                              'present': attendedLectures
-                            }])
-                          }, SetOptions(merge: true));
-                          _fetchAndSetAttendance();*/
-            /*
-                          Navigator.of(context).pop();
-                        }
-                      },
-                      child: Text('Add', style: TextStyle(color: Colors.blue)),
-                    ),
-                  ],
-                );
-              },
-            );*/
-
-            Navigator.push(
-              context,
-              PageRouteBuilder(
-                pageBuilder: (context, animation, secondaryAnimation) =>
-                    AddAttendanceScreen(
-                  isUpdate: false,
-                ),
-                transitionsBuilder:
-                    (context, animation, secondaryAnimation, child) {
-                  const begin = Offset(0.0, 1.0); // Start from bottom
-                  const end = Offset.zero; // Move to top (center)
-                  const curve = Curves.easeInOut;
-
-                  var tween = Tween(begin: begin, end: end)
-                      .chain(CurveTween(curve: curve));
-                  var offsetAnimation = animation.drive(tween);
-
-                  return SlideTransition(
-                    position: offsetAnimation,
-                    child: child,
-                  );
-                },
-              ),
-            );
-          },
-          shape: CircleBorder(
-            side: BorderSide(
-                color: commonbgL4ightblack,
-                width: 0.5), // Customize the border color and width
-          ),
-          backgroundColor: commonbgLightblack,
-          child: Icon(Icons.add, color: Colors.blue),
-        ),
-      ),
-    );
-  }
-}
-
-Future<Map<String, int>> fetchAttendanceData() async {
-  FirebaseAuth auth = FirebaseAuth.instance;
-
-  DocumentSnapshot documentSnapshot = await FirebaseFirestore.instance
-      .collection("Attendance")
-      .doc(auth.currentUser!.uid)
-      .get();
-
-  if (documentSnapshot.exists) {
-    var data = documentSnapshot.data() as Map<String, dynamic>;
-    List attendanceList = data['attendance'];
-    List<Map<String, dynamic>> attendanceList2 =
-        attendanceList.cast<Map<String, dynamic>>();
-
-    return calculateAttendance(attendanceList2);
-  } else {
-    return {'totalLectures': 0, 'attendedLectures': 0};
-  }
-}
-
-Map<String, int> calculateAttendance(List attendanceList) {
-  int totalLectures = 0;
-  int attendedLectures = 0;
-
-  for (var attendanceInfo in attendanceList) {
-    totalLectures += (attendanceInfo['total'] as num?)?.toInt() ?? 0;
-    attendedLectures += (attendanceInfo['present'] as num?)?.toInt() ?? 0;
-  }
-
-  return {
-    'totalLectures': totalLectures,
-    'attendedLectures': attendedLectures,
-  };
-}
-
-String getTextForCard(int at, int tt) {
-  double attended = at.toDouble();
-  double total = tt.toDouble();
-  int toAttend = 0;
-
-  try {
-    if (attended / total == 0.75) {
-      return "You are Just on track, keep it up !";
-    } else if (attended / total > 0.75) {
-      while (1 == 1) {
-        double t = (attended) / (total + 1);
-        if (t >= 0.75) {
-          total++;
-          toAttend--;
-        } else {
-          break;
-        }
-      }
-    } else {
-      while (1 == 1) {
-        double t = (attended + 1) / (total + 1);
-        if (t <= 0.75) {
-          total++;
-          attended++;
-          toAttend++;
-        } else {
-          break;
-        }
-      }
-    }
-
-    if (toAttend <= 0) {
-      return "You are on track, keep it up !";
-    }
-  } catch (e) {
-    return "Your presence in next $toAttend classes is crucial";
-  }
-  return "Your presence in next $toAttend classes is crucial";
-}
+// import 'dart:ffi';
+// import 'package:flutter/services.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:flutter/material.dart';
+// import 'package:lottie/lottie.dart';
+// import 'package:showcaseview/showcaseview.dart';
+// import 'package:tsec_app/new_ui/colors.dart';
+// import 'package:tsec_app/new_ui/screens/attendance_screen/widgets/attendance_subject_widget.dart';
+// import 'package:tsec_app/new_ui/screens/attendance_screen/widgets/attendanceservice.dart';
+// import 'package:tsec_app/provider/auth_provider.dart';
+// import 'package:tsec_app/services/sharedprefsfordot.dart';
+//
+// import '../../showcasekeys.dart';
+// import 'add_attendance.dart';
+//
+// class AttendanceScreen extends StatefulWidget {
+//   const AttendanceScreen({super.key});
+//
+//   @override
+//   State<AttendanceScreen> createState() => _AttendanceScreenState();
+// }
+//
+// class _AttendanceScreenState extends State<AttendanceScreen> {
+//   final FirebaseAuth auth = FirebaseAuth.instance;
+//   AttendanceService attendanceService = AttendanceService();
+//   int totalLectures = 0;
+//   int attendedLectures = 0;
+//
+//   /*@override
+//   void initState() {
+//     super.initState();
+//     _fetchAndSetAttendance();
+//
+//   }*/
+//
+//   Future<void> _fetchAndSetAttendance() async {
+//     var attendanceData = await fetchAttendanceData();
+//     setState(() {
+//       totalLectures = attendanceData['totalLectures']!;
+//       attendedLectures = attendanceData['attendedLectures']!;
+//       print("init state");
+//       print(totalLectures);
+//       print(attendedLectures);
+//     });
+//   }
+//
+//   @override
+//   void initState() {
+//     super.initState();
+//     bool isNotesVisited = SharedPreferencesForDot.isNotesVisited();
+//     if (!isNotesVisited) {
+//       WidgetsBinding.instance.addPostFrameCallback(
+//         (_) => ShowCaseWidget.of(context).startShowCase(
+//           [addNotesFloatButton],
+//         ),
+//       );
+//       SharedPreferencesForDot.visitNotes();
+//     }
+//   }
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     var size = MediaQuery.of(context).size;
+//     return Scaffold(
+//       body: StreamBuilder(
+//           stream: FirebaseFirestore.instance
+//               .collection("Attendance")
+//               .doc(auth.currentUser!.uid)
+//               .snapshots(),
+//           builder: (context, snapshot) {
+//             if (snapshot.connectionState == ConnectionState.waiting) {
+//               return Center(child: CircularProgressIndicator());
+//             }
+//             var documentSnapshot = snapshot.data as DocumentSnapshot;
+//             if (documentSnapshot.data() == null) {
+//               return Center(
+//                 child: Column(
+//                   mainAxisAlignment: MainAxisAlignment.center,
+//                   children: <Widget>[
+//                     // Image.asset(
+//                     //   'assets/images/attendance.png',
+//                     //   width: 250,
+//                     // ),
+//                     Lottie.asset(
+//                       'assets/animation/attendance_lottie.json',
+//                       width: 200,
+//                       height: 200,
+//                       fit: BoxFit.cover,
+//                     ),
+//                     SizedBox(height: 10),
+//                     Text(
+//                       "No Subjects Added",
+//                       style: Theme.of(context)
+//                           .textTheme
+//                           .headlineMedium
+//                           ?.copyWith(
+//                               color: Theme.of(context).colorScheme.primary),
+//                     ),
+//                   ],
+//                 ),
+//               );
+//             }
+//
+//             var data = documentSnapshot.data() as Map<String, dynamic>;
+//             List attendanceList = data['attendance'];
+//             //List<Map<String, dynamic>> attendanceList2 = attendanceList.cast<Map<String, dynamic>>();
+//             Map<String, dynamic> circularMap =
+//                 calculateAttendance(attendanceList);
+//
+//             if (attendanceList.isEmpty) {
+//               return Center(
+//                 child: Column(
+//                   mainAxisAlignment: MainAxisAlignment.center,
+//                   children: <Widget>[
+//                     // Image.asset(
+//                     //   'assets/images/attendance.png',
+//                     //   width: 250,
+//                     // ),
+//                     Lottie.asset(
+//                       'assets/animation/attendance_lottie.json',
+//                       width: 200,
+//                       height: 200,
+//                       fit: BoxFit.cover,
+//                     ),
+//                     SizedBox(height: 20),
+//                     Text("No Subjects Added",
+//                         style: Theme.of(context).textTheme.headlineMedium
+//                         // ?.copyWith(
+//                         //     color: Theme.of(context).colorScheme.primary),
+//                         ),
+//                   ],
+//                 ),
+//               );
+//             }
+//
+//             return SingleChildScrollView(
+//               child: Padding(
+//                 padding: const EdgeInsets.all(8.0),
+//                 child: Column(
+//                   children: [
+//                     const SizedBox(
+//                       height: 30,
+//                     ),
+//                     Stack(
+//                       children: [
+//                         Positioned.fill(
+//                           child: Align(
+//                             alignment: Alignment.center,
+//                             child: Column(
+//                               mainAxisAlignment: MainAxisAlignment.center,
+//                               children: [
+//                                 Text(
+//                                   '',
+//                                   style: TextStyle(
+//                                       color: Colors.white, fontSize: 4),
+//                                 ),
+//                                 Text(
+//                                   circularMap["totalLectures"] != 0
+//                                       ? '${((circularMap["attendedLectures"] / circularMap["totalLectures"]) * 100).toStringAsFixed(2)}%'
+//                                       : "0%",
+//                                   style: TextStyle(
+//                                       color: Colors.white, fontSize: 25),
+//                                 ),
+//                                 Text(
+//                                   circularMap["totalLectures"] != 0
+//                                       ? '${circularMap["attendedLectures"]}/${circularMap["totalLectures"]}'
+//                                       : "0%",
+//                                   style: TextStyle(
+//                                       color: Colors.white, fontSize: 15),
+//                                 ),
+//                               ],
+//                             ),
+//                           ),
+//                         ),
+//                         SizedBox(
+//                           width: 150,
+//                           height: 150,
+//                           child: CircularProgressIndicator(
+//                             value: circularMap["totalLectures"] == 0
+//                                 ? 0
+//                                 : (circularMap["attendedLectures"] /
+//                                     circularMap["totalLectures"]),
+//                             backgroundColor: Colors.white,
+//                             valueColor: AlwaysStoppedAnimation<Color>(
+//                                 oldDateSelectBlue),
+//                             strokeWidth: 5,
+//                             strokeAlign: BorderSide.strokeAlignInside,
+//                             strokeCap: StrokeCap.round,
+//                           ),
+//                         ),
+//                       ],
+//                     ),
+//                     const SizedBox(
+//                       height: 20,
+//                     ),
+//                     //put the subject attendance cards from here
+//                     const SizedBox(
+//                       height: 10,
+//                     ),
+//                     ListView.builder(
+//                       shrinkWrap: true,
+//                       physics: NeverScrollableScrollPhysics(),
+//                       itemCount: attendanceList.length,
+//                       itemBuilder: (context, index) {
+//                         var attendanceInfo = attendanceList[index];
+//                         print(attendanceInfo);
+//
+//                         return GestureDetector(
+//                           onTap: () {
+//                             // Show dialog with current values for modification
+//
+//                             Navigator.push(
+//                               context,
+//                               PageRouteBuilder(
+//                                 pageBuilder:
+//                                     (context, animation, secondaryAnimation) =>
+//                                         AddAttendanceScreen(
+//                                   isUpdate: true,
+//                                   index: index,
+//                                   attendanceList: attendanceList,
+//                                   updatedSubject: attendanceInfo,
+//                                 ),
+//                                 transitionsBuilder: (context, animation,
+//                                     secondaryAnimation, child) {
+//                                   const begin =
+//                                       Offset(0.0, 1.0); // Start from bottom
+//                                   const end =
+//                                       Offset.zero; // Move to top (center)
+//                                   const curve = Curves.easeInOut;
+//
+//                                   var tween = Tween(begin: begin, end: end)
+//                                       .chain(CurveTween(curve: curve));
+//                                   var offsetAnimation = animation.drive(tween);
+//
+//                                   return SlideTransition(
+//                                     position: offsetAnimation,
+//                                     child: child,
+//                                   );
+//                                 },
+//                               ),
+//                             );
+//                             /* showDialog(
+//                               context: context,
+//                               builder: (BuildContext context) {
+//                                 TextEditingController subjectNameController =
+//                                     TextEditingController(
+//                                         text: attendanceInfo["subject_name"]);
+//                                 TextEditingController totalLecturesController =
+//                                     TextEditingController(
+//                                         text:
+//                                             attendanceInfo["total"].toString());
+//                                 TextEditingController
+//                                     attendedLecturesController =
+//                                     TextEditingController(
+//                                         text: attendanceInfo["present"]
+//                                             .toString());
+//
+//                                 final _updateformKey = GlobalKey<FormState>();
+//                                 bool isEnabled = true;
+//                                 return AlertDialog(
+//                                   shape: RoundedRectangleBorder(
+//                                     borderRadius: BorderRadius.circular(15),
+//                                   ),
+//                                   title: Text('Update Subject'),
+//                                   content: Form(
+//                                     key: _updateformKey,
+//                                     child: SingleChildScrollView(
+//                                       child: Column(
+//                                         mainAxisSize: MainAxisSize.min,
+//                                         children: [
+//                                           TextFormField(
+//                                             validator: (val) {
+//                                               if (val == null || val.isEmpty) {
+//                                                 return "Please enter some value";
+//                                               }
+//                                             },
+//                                             enabled: isEnabled,
+//                                             controller: subjectNameController,
+//                                             style:
+//                                                 TextStyle(color: Colors.white),
+//                                             decoration: InputDecoration(
+//                                               labelText: 'Subject Name',
+//                                               border: OutlineInputBorder(
+//                                                 borderRadius:
+//                                                     BorderRadius.circular(10),
+//                                               ),
+//                                               filled: true,
+//                                               fillColor: Colors.transparent,
+//                                               contentPadding:
+//                                                   EdgeInsets.symmetric(
+//                                                       horizontal: 15,
+//                                                       vertical: 10),
+//                                               errorStyle:
+//                                                   TextStyle(fontSize: 12),
+//                                             ),
+//                                           ),
+//                                           SizedBox(height: 20),
+//                                           TextFormField(
+//                                             validator: (val) {
+//                                               String totalLectures =
+//                                                   totalLecturesController.text;
+//
+//                                               if (val == null || val.isEmpty) {
+//                                                 return "Please enter some value";
+//                                               } else if (totalLectures
+//                                                       .isNotEmpty &&
+//                                                   int.parse(val) >
+//                                                       int.parse(
+//                                                           totalLectures)) {
+//                                                 return "Please enter correct value";
+//                                               }
+//                                             },
+//                                             keyboardType: TextInputType.number,
+//                                             inputFormatters: [
+//                                               FilteringTextInputFormatter
+//                                                   .digitsOnly
+//                                             ],
+//                                             controller:
+//                                                 attendedLecturesController,
+//                                             style:
+//                                                 TextStyle(color: Colors.white),
+//                                             enabled: isEnabled,
+//                                             decoration: InputDecoration(
+//                                               labelText: 'Attended Lectures',
+//                                               border: OutlineInputBorder(
+//                                                 borderRadius:
+//                                                     BorderRadius.circular(10),
+//                                               ),
+//                                               filled: true,
+//                                               errorStyle:
+//                                                   TextStyle(fontSize: 12),
+//                                               focusColor: Colors.red,
+//                                               fillColor: Colors.transparent,
+//                                               contentPadding:
+//                                                   EdgeInsets.symmetric(
+//                                                       horizontal: 15,
+//                                                       vertical: 10),
+//                                             ),
+//                                           ),
+//                                           SizedBox(height: 20),
+//                                           TextFormField(
+//                                             enabled: isEnabled,
+//                                             validator: (val) {
+//                                               String attendedLectures =
+//                                                   attendedLecturesController
+//                                                       .text;
+//                                               if (val == null || val.isEmpty) {
+//                                                 return "Please enter some value";
+//                                               } else if (attendedLectures
+//                                                       .isNotEmpty &&
+//                                                   int.parse(val) <
+//                                                       int.parse(
+//                                                           attendedLectures)) {
+//                                                 return "Please enter correct value";
+//                                               }
+//                                             },
+//                                             keyboardType: TextInputType.number,
+//                                             inputFormatters: [
+//                                               FilteringTextInputFormatter
+//                                                   .digitsOnly
+//                                             ],
+//                                             controller: totalLecturesController,
+//                                             style:
+//                                                 TextStyle(color: Colors.white),
+//                                             decoration: InputDecoration(
+//                                               labelText:
+//                                                   'Total Lectures Till Now',
+//                                               border: OutlineInputBorder(
+//                                                 borderRadius:
+//                                                     BorderRadius.circular(10),
+//                                               ),
+//                                               filled: true,
+//                                               errorStyle:
+//                                                   TextStyle(fontSize: 12),
+//                                               focusColor: Colors.red,
+//                                               fillColor: Colors.transparent,
+//                                               contentPadding:
+//                                                   EdgeInsets.symmetric(
+//                                                       horizontal: 15,
+//                                                       vertical: 10),
+//                                             ),
+//                                           ),
+//                                         ],
+//                                       ),
+//                                     ),
+//                                   ),
+//                                   actions: <Widget>[
+//                                     TextButton(
+//                                       onPressed: () {
+//                                         if (isEnabled) {
+//                                           isEnabled = false;
+//                                           if (_updateformKey.currentState!
+//                                               .validate()) {
+//                                             String subjectName =
+//                                                 subjectNameController.text;
+//                                             int totalLectures = int.parse(
+//                                                 totalLecturesController.text);
+//                                             int attendedLectures = int.parse(
+//                                                 attendedLecturesController
+//                                                     .text);
+//
+//                                             Map<String, dynamic>
+//                                                 updatedSubject = {
+//                                               "subject_name": subjectName,
+//                                               "total": totalLectures,
+//                                               "present": attendedLectures
+//                                             };
+//
+//                                             AttendanceService.updateSubject(
+//                                                 attendanceList,
+//                                                 index,
+//                                                 updatedSubject);
+//
+//                                             Navigator.of(context).pop();
+//                                           }
+//                                         }
+//                                         isEnabled = false;
+//
+//                                         */
+//                             /*DocumentSnapshot doc = await FirebaseFirestore.instance
+//                                             .collection("Attendance")
+//                                             .doc(FirebaseAuth.instance.currentUser!.uid)
+//                                             .get();
+//
+//                                         if (doc.exists) {
+//                                           var data = doc.data() as Map<String, dynamic>;
+//                                           List attendanceList = data['attendance'];
+//
+//                                           // Find the index of the subject to update
+//                                           int indexToUpdate = attendanceList.indexWhere((item) => item['subject_name'] == attendanceInfo['subject_name']);
+//
+//                                           if (indexToUpdate != -1) {
+//                                             // Update the specific item
+//                                             attendanceList[indexToUpdate] = {
+//                                               'subject_name': subjectName,
+//                                               'total': totalLectures,
+//                                               'present': attendedLectures,
+//                                             };
+//
+//                                             await FirebaseFirestore.instance
+//                                                 .collection("Attendance")
+//                                                 .doc(FirebaseAuth.instance.currentUser!.uid)
+//                                                 .update({'attendance': attendanceList});
+//                                           }
+//                                         }*/
+//                             /*
+//                                       },
+//                                       child: Text('Update',
+//                                           style: TextStyle(color: Colors.blue)),
+//                                     ),
+//                                     TextButton(
+//                                       onPressed: () {
+//                                         AttendanceService.deleteSubject(
+//                                             attendanceList, index);
+//
+//                                         */
+//                             /*DocumentSnapshot doc = await FirebaseFirestore.instance
+//                                             .collection("Attendance")
+//                                             .doc(FirebaseAuth.instance.currentUser!.uid)
+//                                             .get();
+//
+//                                         if (doc.exists) {
+//                                           var data = doc.data() as Map<String, dynamic>;
+//                                           List attendanceList = data['attendance'];
+//
+//                                           attendanceList.removeWhere((item) => item['subject_name'] == attendanceInfo['subject_name']);
+//
+//
+//                                           await FirebaseFirestore.instance
+//                                               .collection("Attendance")
+//                                               .doc(FirebaseAuth.instance.currentUser!.uid)
+//                                               .update({'attendance': attendanceList});
+//                                         }
+//                                         _fetchAndSetAttendance();*/
+//                             /*
+//                                         Navigator.of(context).pop();
+//                                       },
+//                                       child: Text('Delete',
+//                                           style: TextStyle(color: Colors.red)),
+//                                     ),
+//                                     TextButton(
+//                                       onPressed: () {
+//                                         Navigator.of(context).pop();
+//                                       },
+//                                       child: Text('Cancel',
+//                                           style: TextStyle(color: Colors.grey)),
+//                                     ),
+//                                   ],
+//                                 );
+//                               },
+//                             );*/
+//                           },
+//                           child: Card(
+//                             child: Container(
+//                               decoration: BoxDecoration(
+//                                 border: Border.all(
+//                                     color: timePickerBorder, width: 1.0),
+//                                 borderRadius: BorderRadius.circular(10.0),
+//                                 color: timePickerBg,
+//                               ),
+//                               child: Padding(
+//                                 padding: const EdgeInsets.all(8.0),
+//                                 child: Column(
+//                                   crossAxisAlignment: CrossAxisAlignment.start,
+//                                   children: [
+//                                     Row(
+//                                       children: [
+//                                         Text(
+//                                           attendanceInfo["subject_name"],
+//                                           style: TextStyle(
+//                                               color: Colors.white,
+//                                               fontSize: 25,
+//                                               fontWeight: FontWeight.bold),
+//                                         ),
+//                                         SizedBox(
+//                                           width: 5,
+//                                         ),
+//                                       ],
+//                                     ),
+//                                     const SizedBox(
+//                                       height: 10,
+//                                     ),
+//                                     Row(
+//                                       mainAxisAlignment:
+//                                           MainAxisAlignment.spaceBetween,
+//                                       children: [
+//                                         Text(
+//                                           attendanceInfo['total'] != 0
+//                                               ? '${attendanceInfo['present']}/${attendanceInfo['total']}'
+//                                               : "0%",
+//                                           style: TextStyle(
+//                                               color: Colors.white,
+//                                               fontSize: 14),
+//                                         ),
+//                                         Text(
+//                                           attendanceInfo['total'] != 0
+//                                               ? '${(attendanceInfo['present'] / attendanceInfo['total'] * 100).toInt()}%'
+//                                               : "0%",
+//                                           style: TextStyle(
+//                                               color: Colors.white,
+//                                               fontSize: 20,
+//                                               fontWeight: FontWeight.bold),
+//                                         ),
+//                                       ],
+//                                     ),
+//                                     const SizedBox(
+//                                       height: 10,
+//                                     ),
+//                                     LinearProgressIndicator(
+//                                       value: attendanceInfo['total'] != 0
+//                                           ? attendanceInfo['present'] /
+//                                               attendanceInfo['total']
+//                                           : 0,
+//                                       backgroundColor: Colors.white,
+//                                       valueColor:
+//                                           const AlwaysStoppedAnimation<Color>(
+//                                               oldDateSelectBlue),
+//                                     ),
+//                                     const SizedBox(
+//                                       height: 15,
+//                                     ),
+//                                     Row(
+//                                       mainAxisAlignment:
+//                                           MainAxisAlignment.spaceBetween,
+//                                       children: [
+//                                         ElevatedButton(
+//                                           onPressed: () async {
+//                                             await AttendanceService.markPresent(
+//                                                 attendanceList, index);
+//                                             /*_fetchAndSetAttendance();*/
+//                                           },
+//                                           style: ElevatedButton.styleFrom(
+//                                             backgroundColor:
+//                                                 commonbgL3ightblack,
+//                                             shape: RoundedRectangleBorder(
+//                                                 borderRadius:
+//                                                     BorderRadius.circular(5)),
+//                                           ),
+//                                           child: const Text(
+//                                             'Present',
+//                                             style: TextStyle(
+//                                                 color: Colors.white,
+//                                                 fontSize: 15),
+//                                           ),
+//                                         ),
+//                                         ElevatedButton(
+//                                           onPressed: () async {
+//                                             await AttendanceService.markAbsent(
+//                                                 attendanceList, index);
+//                                             /*_fetchAndSetAttendance();*/
+//                                           },
+//                                           style: ElevatedButton.styleFrom(
+//                                             backgroundColor:
+//                                                 commonbgL3ightblack,
+//                                             shape: RoundedRectangleBorder(
+//                                                 borderRadius:
+//                                                     BorderRadius.circular(5)),
+//                                           ),
+//                                           child: const Text(
+//                                             'Absent',
+//                                             style: TextStyle(
+//                                                 color: Colors.white,
+//                                                 fontSize: 15),
+//                                           ),
+//                                         ),
+//                                       ],
+//                                     ),
+//                                     const SizedBox(
+//                                       height: 10,
+//                                     ),
+//                                     Center(
+//                                       child: Container(
+//                                         width: size.width * 0.88,
+//                                         alignment: Alignment.center,
+//                                         // decoration: BoxDecoration(
+//                                         //   border: Border.all(color: timePickerBorder, width: 1.0),
+//                                         //   borderRadius: BorderRadius.circular(10.0),
+//                                         //   color: timePickerBg,
+//                                         // ),
+//                                         child: Padding(
+//                                           padding: const EdgeInsets.all(2.0),
+//                                           child: Text(
+//                                             getTextForCard(
+//                                                 attendanceInfo['present'],
+//                                                 attendanceInfo['total']),
+//                                             style: TextStyle(
+//                                                 color: Colors.grey,
+//                                                 fontSize: 14),
+//                                           ),
+//                                         ),
+//                                       ),
+//                                     ),
+//                                   ],
+//                                 ),
+//                               ),
+//                             ),
+//                           ),
+//                         );
+//                       },
+//                     ),
+//                     SizedBox(
+//                       height: 20,
+//                     ),
+//                   ],
+//                 ),
+//               ),
+//             );
+//           }),
+//       floatingActionButton: Showcase(
+//         key: addNotesFloatButton,
+//         description: 'Click here to add Notes',
+//         descTextStyle: TextStyle(fontSize: 15),
+//         child: FloatingActionButton(
+//           onPressed: () {
+//             /*showDialog(
+//               context: context,
+//               builder: (BuildContext context) {
+//                 TextEditingController subjectNameController =
+//                     TextEditingController();
+//                 TextEditingController totalLecturesController =
+//                     TextEditingController();
+//                 TextEditingController attendedLecturesController =
+//                     TextEditingController();
+//
+//                 final _formKey = GlobalKey<FormState>();
+//
+//                 print("Clicked");
+//                 return AlertDialog(
+//                   shape: RoundedRectangleBorder(
+//                     borderRadius:
+//                         BorderRadius.circular(15), // Increased corner radius
+//                   ),
+//                   title: Text(
+//                     'Add Subject',
+//                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+//                   ),
+//                   content: Form(
+//                     key: _formKey,
+//                     child: Padding(
+//                       padding: const EdgeInsets.symmetric(horizontal: 10.0),
+//                       child: SingleChildScrollView(
+//                         child: Column(
+//                           mainAxisSize: MainAxisSize.min,
+//                           children: [
+//                             TextFormField(
+//                               validator: (val) {
+//                                 if (val == null || val.isEmpty) {
+//                                   return "Please enter some value";
+//                                 }
+//                               },
+//                               style: TextStyle(color: Colors.white),
+//                               // Set text color to white
+//                               controller: subjectNameController,
+//                               decoration: InputDecoration(
+//                                 focusColor: Colors.red,
+//                                 labelText: 'Subject Name',
+//                                 border: OutlineInputBorder(
+//                                   borderRadius: BorderRadius.circular(10),
+//                                 ),
+//                                 filled: true,
+//                                 fillColor: Colors.transparent,
+//                                 errorStyle: TextStyle(fontSize: 12),
+//                                 contentPadding: EdgeInsets.symmetric(
+//                                     horizontal: 15, vertical: 10),
+//                               ),
+//                             ),
+//                             SizedBox(height: 20),
+//                             TextFormField(
+//                               validator: (val) {
+//                                 String totalLectures =
+//                                     totalLecturesController.text;
+//
+//                                 if (val == null || val.isEmpty) {
+//                                   return "Please enter some value";
+//                                 } else if (totalLectures.isNotEmpty &&
+//                                     int.parse(val) > int.parse(totalLectures)) {
+//                                   return "Please enter correct value";
+//                                 }
+//                               },
+//                               style: TextStyle(color: Colors.white),
+//                               // Set text color to white
+//                               controller: attendedLecturesController,
+//                               keyboardType: TextInputType.number,
+//                               inputFormatters: [
+//                                 FilteringTextInputFormatter.digitsOnly
+//                               ],
+//                               decoration: InputDecoration(
+//                                 labelText: 'Attended Lectures',
+//                                 border: OutlineInputBorder(
+//                                   borderRadius: BorderRadius.circular(10),
+//                                 ),
+//                                 filled: true,
+//                                 fillColor: Colors.transparent,
+//                                 errorStyle: TextStyle(fontSize: 12),
+//                                 contentPadding: EdgeInsets.symmetric(
+//                                     horizontal: 15, vertical: 10),
+//                               ),
+//                             ),
+//                             SizedBox(height: 20),
+//                             TextFormField(
+//                               validator: (val) {
+//                                 int attendedLectures = int.parse(
+//                                         attendedLecturesController.text) ??
+//                                     0;
+//                                 if (val == null || val.isEmpty) {
+//                                   return "Please enter some value";
+//                                 } else if (attendedLectures != 0 &&
+//                                     int.parse(val) < attendedLectures) {
+//                                   return "Please enter correct value";
+//                                 }
+//                               },
+//                               style: TextStyle(color: Colors.white),
+//                               // Set text color to white
+//                               controller: totalLecturesController,
+//                               keyboardType: TextInputType.number,
+//                               inputFormatters: [
+//                                 FilteringTextInputFormatter.digitsOnly
+//                               ],
+//                               decoration: InputDecoration(
+//                                 labelText: 'Total Lectures Till Now',
+//                                 border: OutlineInputBorder(
+//                                   borderRadius: BorderRadius.circular(10),
+//                                 ),
+//                                 filled: true,
+//                                 fillColor: Colors.transparent,
+//                                 contentPadding: EdgeInsets.symmetric(
+//                                     horizontal: 15, vertical: 10),
+//                                 errorStyle: TextStyle(fontSize: 12),
+//                               ),
+//                             ),
+//                           ],
+//                         ),
+//                       ),
+//                     ),
+//                   ),
+//                   actions: <Widget>[
+//                     TextButton(
+//                       onPressed: () {
+//                         Navigator.of(context).pop();
+//                       },
+//                       child:
+//                           Text('Cancel', style: TextStyle(color: Colors.red)),
+//                     ),
+//                     TextButton(
+//                       onPressed: () {
+//                         if (_formKey.currentState!.validate()) {
+//                           String subjectName = subjectNameController.text;
+//                           int totalLectures =
+//                               int.parse(totalLecturesController.text);
+//                           int attendedLectures =
+//                               int.parse(attendedLecturesController.text);
+//
+//                           Map<String, dynamic> updatedSubject = {
+//                             "subject_name": subjectName,
+//                             "total": totalLectures,
+//                             "present": attendedLectures
+//                           };
+//                           AttendanceService.addSubject(updatedSubject);
+//                           */
+//             /*FirebaseFirestore.instance
+//                               .collection("Attendance")
+//                               .doc(FirebaseAuth.instance.currentUser!.uid)
+//                               .set({
+//                             'attendance': FieldValue.arrayUnion([{
+//                               'subject_name': subjectName,
+//                               'total': totalLectures,
+//                               'present': attendedLectures
+//                             }])
+//                           }, SetOptions(merge: true));
+//                           _fetchAndSetAttendance();*/
+//             /*
+//                           Navigator.of(context).pop();
+//                         }
+//                       },
+//                       child: Text('Add', style: TextStyle(color: Colors.blue)),
+//                     ),
+//                   ],
+//                 );
+//               },
+//             );*/
+//
+//             Navigator.push(
+//               context,
+//               PageRouteBuilder(
+//                 pageBuilder: (context, animation, secondaryAnimation) =>
+//                     AddAttendanceScreen(
+//                   isUpdate: false,
+//                 ),
+//                 transitionsBuilder:
+//                     (context, animation, secondaryAnimation, child) {
+//                   const begin = Offset(0.0, 1.0); // Start from bottom
+//                   const end = Offset.zero; // Move to top (center)
+//                   const curve = Curves.easeInOut;
+//
+//                   var tween = Tween(begin: begin, end: end)
+//                       .chain(CurveTween(curve: curve));
+//                   var offsetAnimation = animation.drive(tween);
+//
+//                   return SlideTransition(
+//                     position: offsetAnimation,
+//                     child: child,
+//                   );
+//                 },
+//               ),
+//             );
+//           },
+//           shape: CircleBorder(
+//             side: BorderSide(
+//                 color: commonbgL4ightblack,
+//                 width: 0.5), // Customize the border color and width
+//           ),
+//           backgroundColor: commonbgLightblack,
+//           child: Icon(Icons.add, color: Colors.blue),
+//         ),
+//       ),
+//     );
+//   }
+// }
+//
+// Future<Map<String, int>> fetchAttendanceData() async {
+//   FirebaseAuth auth = FirebaseAuth.instance;
+//
+//   DocumentSnapshot documentSnapshot = await FirebaseFirestore.instance
+//       .collection("Attendance")
+//       .doc(auth.currentUser!.uid)
+//       .get();
+//
+//   if (documentSnapshot.exists) {
+//     var data = documentSnapshot.data() as Map<String, dynamic>;
+//     List attendanceList = data['attendance'];
+//     List<Map<String, dynamic>> attendanceList2 =
+//         attendanceList.cast<Map<String, dynamic>>();
+//
+//     return calculateAttendance(attendanceList2);
+//   } else {
+//     return {'totalLectures': 0, 'attendedLectures': 0};
+//   }
+// }
+//
+// Map<String, int> calculateAttendance(List attendanceList) {
+//   int totalLectures = 0;
+//   int attendedLectures = 0;
+//
+//   for (var attendanceInfo in attendanceList) {
+//     totalLectures += (attendanceInfo['total'] as num?)?.toInt() ?? 0;
+//     attendedLectures += (attendanceInfo['present'] as num?)?.toInt() ?? 0;
+//   }
+//
+//   return {
+//     'totalLectures': totalLectures,
+//     'attendedLectures': attendedLectures,
+//   };
+// }
+//
+// String getTextForCard(int at, int tt) {
+//   double attended = at.toDouble();
+//   double total = tt.toDouble();
+//   int toAttend = 0;
+//
+//   try {
+//     if (attended / total == 0.75) {
+//       return "You are Just on track, keep it up !";
+//     } else if (attended / total > 0.75) {
+//       while (1 == 1) {
+//         double t = (attended) / (total + 1);
+//         if (t >= 0.75) {
+//           total++;
+//           toAttend--;
+//         } else {
+//           break;
+//         }
+//       }
+//     } else {
+//       while (1 == 1) {
+//         double t = (attended + 1) / (total + 1);
+//         if (t <= 0.75) {
+//           total++;
+//           attended++;
+//           toAttend++;
+//         } else {
+//           break;
+//         }
+//       }
+//     }
+//
+//     if (toAttend <= 0) {
+//       return "You are on track, keep it up !";
+//     }
+//   } catch (e) {
+//     return "Your presence in next $toAttend classes is crucial";
+//   }
+//   return "Your presence in next $toAttend classes is crucial";
+// }

@@ -5,7 +5,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:showcaseview/showcaseview.dart';
 import 'package:tsec_app/new_ui/router.dart';
 import 'package:tsec_app/services/localnotificationservice.dart';
 import 'package:tsec_app/services/sharedprefsfordot.dart';
@@ -145,9 +144,7 @@ class _TSECAppState extends ConsumerState<TSECApp> {
   @override
   Widget build(BuildContext context) {
     // final _themeMode = ref.watch(themeProvider);
-    return ShowCaseWidget(
-      builder: (context) => Builder(
-        builder: (context) => MaterialApp.router(
+    return MaterialApp.router(
           debugShowCheckedModeBanner: false,
           builder: (context, child) =>
               MediaQuery(data: getTextScale(context), child: child!),
@@ -157,8 +154,6 @@ class _TSECAppState extends ConsumerState<TSECApp> {
           title: 'TSEC App',
           themeMode: ThemeMode.dark,
           darkTheme: darkTheme,
-        ),
-      ),
-    );
+        );
   }
 }

@@ -49,13 +49,13 @@ class _AttendanceDetailsScreenState extends ConsumerState<AttendanceDetailsScree
                   ),
                 )
               :
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: SingleChildScrollView(
+          SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
               child: Column(
                 children: [
                   Card(
-                    color: commonbgLLightblack,
+                    color: const Color(0xFF2D2D2D),
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Column(
@@ -85,7 +85,7 @@ class _AttendanceDetailsScreenState extends ConsumerState<AttendanceDetailsScree
                   ),
                   const SizedBox(height: 16,),
                   Card(
-                    color: commonbgLLightblack,
+                    color: const Color(0xFF2D2D2D),
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Column(
@@ -115,7 +115,7 @@ class _AttendanceDetailsScreenState extends ConsumerState<AttendanceDetailsScree
                   ),
                   const SizedBox(height: 16,),
                   Card(
-                    color: commonbgLLightblack,
+                    color: const Color(0xFF2D2D2D),
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Column(
