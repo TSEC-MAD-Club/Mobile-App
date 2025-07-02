@@ -75,6 +75,7 @@ dependencies:
   showcaseview: ^4.0.1
   badges: ^3.1.2
   timeline_tile: ^2.0.0
+  pie_chart: ^5.4.0
 
 dev_dependencies:
   build_runner: null

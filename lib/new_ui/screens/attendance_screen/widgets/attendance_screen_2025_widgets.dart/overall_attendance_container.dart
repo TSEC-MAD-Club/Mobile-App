@@ -15,6 +15,9 @@ class OverallAttendance extends ConsumerWidget {
       loading: () => const Center(child: CircularProgressIndicator()),
       error: (e, _) => const Center(child: Text("Error loading attendance", style: TextStyle(color: Colors.red))),
       data: (data) {
+        Future((){
+          ref.read(fetchedAttendanceTotalsProvider.notifier).state = data;
+        });
         int attend = 0;
         int tot = 0;
         data.attended.forEach((key, value){

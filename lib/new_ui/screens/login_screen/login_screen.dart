@@ -1,18 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:tsec_app/models/notification_model/notification_model.dart';
-import 'package:tsec_app/models/student_model/student_model.dart';
 import 'package:tsec_app/models/user_model/user_model.dart';
 import 'package:tsec_app/new_ui/screens/login_screen/ResetPasswordScreen.dart';
 import 'package:tsec_app/provider/auth_provider.dart';
-import 'package:tsec_app/provider/firebase_provider.dart';
-import 'package:tsec_app/provider/notification_provider.dart';
-import 'package:tsec_app/utils/custom_snackbar.dart';
 import 'package:tsec_app/utils/form_validity.dart';
-import 'package:tsec_app/utils/notification_type.dart';
 import 'package:url_launcher/link.dart';
 
 // import 'widgets/custom_app_bar_for_login.dart';
@@ -94,9 +87,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   Widget build(BuildContext context) {
     return GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
-        child: SafeArea(
-          child: Scaffold(
-            body: SingleChildScrollView(
+        child: Scaffold(
+          body: SafeArea(
+            child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[

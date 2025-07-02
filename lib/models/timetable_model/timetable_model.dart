@@ -22,4 +22,9 @@ class TimetableModel {
       _$TimetableModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$TimetableModelToJson(this);
+
+  @override
+  String toString() {
+    return 'TimetableModel(lectureName: $lectureName, lectureStartTime: $lectureStartTime, lectureEndTime: $lectureEndTime, lectureFacultyName: $lectureFacultyName, lectureBatch: $lectureBatch)';
+  }
 }

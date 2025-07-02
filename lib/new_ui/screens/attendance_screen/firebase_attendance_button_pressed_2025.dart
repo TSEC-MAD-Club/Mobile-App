@@ -41,8 +41,10 @@ class FirebaseAttendance2025 {
     if (actionTemp == "") {
       // FIRST TIME CLICKING
       FirebaseAttendanceTotallects2025()
-          ..updateLectureAttended(action, subjectName)
-          ..updateTotalAttendance(subjectName);
+          .updateLectureAttended(action, subjectName);
+          if(action != "Can") {
+            FirebaseAttendanceTotallects2025().updateTotalAttendance(subjectName);
+          }
       return;
     }
     final from = actionTemp;

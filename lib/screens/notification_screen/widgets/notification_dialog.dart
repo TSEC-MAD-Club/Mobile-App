@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:open_file/open_file.dart';
+import 'package:tsec_app/new_ui/colors.dart';
 import 'package:tsec_app/utils/custom_snackbar.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
@@ -19,6 +20,7 @@ class NotificationDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dialog(
+      backgroundColor: commonbgblack,
       child: ListView(
         padding: const EdgeInsets.all(16),
         shrinkWrap: true,
@@ -38,7 +40,7 @@ class NotificationDialog extends StatelessWidget {
           Text(
             notificationModel.message,
             style: const TextStyle(
-              color: Color.fromARGB(255, 56, 43, 43),
+              color: Colors.white,
             ),
           ),
           if (notificationModel.attachments != null) ...[
