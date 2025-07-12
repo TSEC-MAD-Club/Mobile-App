@@ -1,6 +1,7 @@
 // ignore_for_file: lines_longer_than_80_chars
 import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:edge_detection_plus/edge_detection_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:http/http.dart' as http;
@@ -10,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:tsec_app/models/concession_details_model/concession_details_model.dart';
 import 'package:tsec_app/models/student_model/student_model.dart';
 import 'package:tsec_app/new_ui/colors.dart';
@@ -202,22 +204,56 @@ class _RailwayForm extends ConsumerState<RailwayForm> {
   File? previousPassPhotoTemp;
 
   void pickImage(String type) async {
-    final picker = ImagePicker();
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
-    if (pickedFile != null) {
-      setState(() {
-        if (type == 'ID Card Photo') {
-          // idCardPhoto = File(pickedFile.path);
-          idCardPhotoTemp = File(pickedFile.path);
-        } else if (type == 'Previous Pass Photo') {
-          // previousPassPhoto = File(pickedFile.path);
-          previousPassPhotoTemp = File(pickedFile.path);
-        } else if (type == 'ID Card Back') {
-          idCardPhotoTemp2 = File(pickedFile.path);
-        }
-      });
+    bool isCameraGranted = await Permission.camera.request().isGranted;
+    if (!isCameraGranted) {
+      isCameraGranted = await Permission.camera.request() == PermissionStatus.granted;
     }
+
+    if (!isCameraGranted) {
+      // Have not permission to camera
+      return;
+    }
+
+    final Directory tempDir = await getTemporaryDirectory();
+    final String tempPath = tempDir.path;
+    final String fileName = '${DateTime.now().millisecondsSinceEpoch}.png';
+    final String fullPath = '$tempPath/$fileName';
+    final picked = await EdgeDetectionPlus.detectEdge(fullPath);
+
+    if (picked) {
+      final File imageFile = File('$tempPath/$fileName');
+      if (type == 'ID Card Photo') {
+        setState(() {
+          idCardPhotoTemp = imageFile;
+        });
+      } else if (type == 'Previous Pass Photo') {
+        setState(() {
+          previousPassPhotoTemp = imageFile;
+        });
+      } else if (type == 'ID Card Back') {
+        setState(() {
+          idCardPhotoTemp2 = imageFile;
+        });
+      }
+    }
+    // final picker = ImagePicker();
+    // final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    //
+    // if (pickedFile != null) {
+    //   final picked = await EdgeDetectionPlus.detectEdgeFromGallery(pickedFile.path);
+    //   setState(() {
+    //     if (type == 'ID Card Photo') {
+    //       // idCardPhoto = File(pickedFile.path);
+    //       idCardPhotoTemp = File(pickedFile.path);
+    //     } else if (type == 'Previous Pass Photo') {
+    //       // previousPassPhoto = File(pickedFile.path);
+    //       previousPassPhotoTemp = File(pickedFile.path);
+    //     } else if (type == 'ID Card Back') {
+    //       idCardPhotoTemp2 = File(pickedFile.path);
+    //     }
+    //   });
+    // }
   }
 
   Future getImageFileFromNetwork(String url, String type) async {

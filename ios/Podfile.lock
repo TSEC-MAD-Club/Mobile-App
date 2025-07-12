@@ -1229,6 +1229,9 @@ PODS:
   - DKPhotoGallery/Resource (0.0.19):
     - SDWebImage
     - SwiftyGif
+  - edge_detection_plus (1.1.3):
+    - Flutter
+    - WeScan
   - file_picker (0.0.1):
     - DKImagePickerController/PhotoGallery
     - Flutter
@@ -1521,9 +1524,11 @@ PODS:
   - webview_flutter_wkwebview (0.0.1):
     - Flutter
     - FlutterMacOS
+  - WeScan (3.0.0)
 
 DEPENDENCIES:
   - cloud_firestore (from `.symlinks/plugins/cloud_firestore/ios`)
+  - edge_detection_plus (from `.symlinks/plugins/edge_detection_plus/ios`)
   - file_picker (from `.symlinks/plugins/file_picker/ios`)
   - Firebase/Auth
   - Firebase/Core
@@ -1542,6 +1547,7 @@ DEPENDENCIES:
   - sqflite_darwin (from `.symlinks/plugins/sqflite_darwin/darwin`)
   - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
   - webview_flutter_wkwebview (from `.symlinks/plugins/webview_flutter_wkwebview/darwin`)
+  - WeScan (from `.symlinks/plugins/edge_detection_plus/ios/WeScan-3.0.0`)
 
 SPEC REPOS:
   trunk:
@@ -1579,6 +1585,8 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   cloud_firestore:
     :path: ".symlinks/plugins/cloud_firestore/ios"
+  edge_detection_plus:
+    :path: ".symlinks/plugins/edge_detection_plus/ios"
   file_picker:
     :path: ".symlinks/plugins/file_picker/ios"
   firebase_auth:
@@ -1609,6 +1617,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/url_launcher_ios/ios"
   webview_flutter_wkwebview:
     :path: ".symlinks/plugins/webview_flutter_wkwebview/darwin"
+  WeScan:
+    :path: ".symlinks/plugins/edge_detection_plus/ios/WeScan-3.0.0"
 
 SPEC CHECKSUMS:
   abseil: a05cc83bf02079535e17169a73c5be5ba47f714b
@@ -1616,6 +1626,7 @@ SPEC CHECKSUMS:
   cloud_firestore: 18eb885c872cd34af2a59c2a7cdc7aa576d8c315
   DKImagePickerController: 946cec48c7873164274ecc4624d19e3da4c1ef3c
   DKPhotoGallery: b3834fecb755ee09a593d7c9e389d8b5d6deed60
+  edge_detection_plus: 0a2d5578e3f04709e235c3959d7df7a783586499
   file_picker: a0560bc09d61de87f12d246fc47d2119e6ef37be
   Firebase: 1fe1c0a7d9aaea32efe01fbea5f0ebd8d70e53a2
   firebase_auth: 4d9603c196d22f71e80cf518b71939c4f2117088
@@ -1657,7 +1668,8 @@ SPEC CHECKSUMS:
   SwiftyGif: 706c60cf65fa2bc5ee0313beece843c8eb8194d4
   url_launcher_ios: 694010445543906933d732453a59da0a173ae33d
   webview_flutter_wkwebview: 1821ceac936eba6f7984d89a9f3bcb4dea99ebb2
+  WeScan: f50277f7304d146d9ebc4ebdc1b587df84dcdd8b
 
-PODFILE CHECKSUM: dc8159b888beeca6a3fc8b12f0509264d4542b07
+PODFILE CHECKSUM: e0a847b0b72b2adf975d68efe3899d19b623baca
 
 COCOAPODS: 1.16.2
