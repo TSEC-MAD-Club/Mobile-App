@@ -50,10 +50,12 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Photo Library Usage</string>
 	<key>NSCameraUsageDescription</key>
-	<string>Photo Library Usage</string>
+    <string>This app uses the camera to scan documents.</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>This app allows you to pick images from your photo library.</string>
+    <key>NSPhotoLibraryAddUsageDescription</key>
+    <string>This app saves scanned documents to your photo library.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Microphone Usage</string>
 	<key>CADisableMinimumFrameDurationOnPhone</key>

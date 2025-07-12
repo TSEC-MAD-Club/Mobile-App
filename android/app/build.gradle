@@ -71,12 +71,12 @@ android {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "com.madclubtsec.tsec_application"
         minSdkVersion 30
-        targetSdkVersion 34
+        targetSdkVersion 35
         namespace "com.madclubtsec.tsec_application.tsec_app"
         // versionCode flutterVersionCode.toInteger()
         // versionName flutterVersionName
-        versionCode 28
-        versionName "13.0.0"
+        versionCode 30
+        versionName "13.0.1"
         multiDexEnabled true
     }
 
