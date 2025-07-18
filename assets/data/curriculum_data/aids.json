@@ -23,21 +23,23 @@
   "3": {
     "url": "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/syllabus%2Faids_sem3_sem4_rev.pdf?alt=media&token=7e80f748-0838-4145-abe9-7a331aface34",
     "subjects": [
-      "Engineering Mathematics-III",
+      "Mathematics for Computer Engineering",
       "Discrete Structures and Graph Theory",
-      "Data Structure",
-      "Digital Logic & Computer Architecture ",
-      "Computer Graphics"
+      "Analysis of Algorithm",
+      "Computer Organization and Architecture",
+      "Full Stack Java Programming",
+      "Entrepreneurship Development",
+      "Environmental Science for Engineers"
     ]
   },
   "4": {
     "url": "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/syllabus%2Faids_sem3_sem4_rev.pdf?alt=media&token=7e80f748-0838-4145-abe9-7a331aface34",
     "subjects": [
-      "Engineering Mathematics-IV",
-      "Analysis of Algorithm",
+      "Computational Theory ",
       "Database Management System",
       "Operating System",
-      "Microprocessor"
+      "Business Model Development",
+      "Design Thinking"
     ]
   },
   "5": {

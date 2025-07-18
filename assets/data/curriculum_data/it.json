@@ -23,23 +23,22 @@
   "3": {
     "url": "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/syllabus%2FIT%20SEM%203%20AND%204.pdf?alt=media&token=d27b3b8d-14ae-4c51-93e2-ad6f4f2cccc5",
     "subjects": [
-      "Engineering Mathematics-III",
-      "Data Structures and Analysis",
-      "Database Management System",
-      "Principle of Communication",
-      "Paradigms and Computer Programming Fundamentals",
-      "Java Lab"
+      "Applied Mathematics Thinking-I",
+      "Advance Data Structure & Analysis",
+      "Database Management System & Application",
+      "Automata Theory",
+      "Entrepreneurship Development",
+      "Environmental Science"
     ]
   },
   "4": {
     "url": "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/syllabus%2FIT%20SEM%203%20AND%204.pdf?alt=media&token=d27b3b8d-14ae-4c51-93e2-ad6f4f2cccc5",
     "subjects": [
-      "Engineering Mathematics-IV",
-      "Computer Network and Network Design",
+      "Applied Mathematics Thinking-II",
       "Operating System",
-      "Automata Theory",
-      "Computer Organization and Architecture",
-      "Python Lab"
+      "Computer Network and Network Design",
+      "Business Model Development",
+      "Design Thinking"
     ]
   },
   "5": {
