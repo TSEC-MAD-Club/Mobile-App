@@ -23,21 +23,22 @@
   "3": {
     "url": "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/syllabus%2Fchemical_sem3_rev.pdf?alt=media&token=1a11ddb3-9884-42d8-931a-5cc7d84f72b4",
     "subjects": [
-      "Engineering Mathematics-III ",
-      "Industrial and Engineering Chemistry I ",
-      "Fluid Flow Operations ",
+      "Chemical Engineering Mathematics",
+      "Fluid Flow",
+      "Process Calculations",
       "Chemical Engineering Thermodynamics I",
-      "Process Calculations"
+      "Entrepreneurship Development",
+      "Environmental Science"
     ]
   },
   "4": {
     "url": "https://firebasestorage.googleapis.com/v0/b/tsec-app.appspot.com/o/syllabus%2Fchemical_sem4_rev.pdf?alt=media&token=65a3ba7a-c123-4405-9581-e5990e39f943",
     "subjects": [
-      "Engineering Mathematics-IV ",
-      "Industrial and Engineering Chemistry II",
-      "Numerical Method in Chemical Engineering ",
+      "Chemical Engineering Thermodynamics II",
       "Solid Fluid Mechanical Operations ",
-      "Chemical Engineering Thermodynamics II"
+      "Heat Transfer Operations ",
+      "Business Model Development",
+      "Design Thinking"
     ]
   },
   "5": {
