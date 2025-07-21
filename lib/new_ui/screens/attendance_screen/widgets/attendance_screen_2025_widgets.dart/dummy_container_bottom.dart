@@ -50,7 +50,7 @@ class _DummyContainerBottomState extends ConsumerState<DummyContainerBottom> {
                     .addEntry(widget.lectureName, 'Can');
                 await FirebaseAttendance2025().pressedCancelled(
                     ref.read(attendanceDateprovider), widget.lectureName);
-                await Future.delayed(const Duration(milliseconds: 400));
+                // await Future.delayed(const Duration(milliseconds: 400));
                 ref.read(attendanceTotalsPerLectureProvider(widget.lectureName).notifier)
                     .refresh();
                 ref.read(attendanceTotalsProvider.notifier).refresh();
