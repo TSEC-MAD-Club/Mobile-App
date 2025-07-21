@@ -51,6 +51,7 @@ class AttendanceNotifier extends StateNotifier<AsyncValue<AttendanceData>> {
 
   Future<void> refresh() async {
     state = const AsyncValue.loading(); // Make sure to reset loading state
+    await Future.delayed(const Duration(seconds: 2));
     await loadData(); // Should fetch new values from Firebase
   }
 }
@@ -125,6 +126,7 @@ class AttendanceTotalsNotifier extends StateNotifier<AsyncValue<AttendanceTotals
 
   Future<void> refresh() async {
     state = const AsyncValue.loading(); // Reset loading state
+    await Future.delayed(const Duration(seconds: 2));
     await loadData(); // Fetch new values from Firebase
   }
 }
