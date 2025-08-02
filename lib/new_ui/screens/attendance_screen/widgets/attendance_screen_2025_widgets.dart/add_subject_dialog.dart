@@ -19,10 +19,14 @@ class AddSubjectDialog extends ConsumerStatefulWidget {
   ConsumerState<AddSubjectDialog> createState() => _AddSubjectDialogState();
 }
 
+final firebaseAttendance = Provider<FirebaseAttendance2025>((ref) {
+  return FirebaseAttendance2025(ref);
+});
+
 class _AddSubjectDialogState extends ConsumerState<AddSubjectDialog> {
   List<String> subjectsList = [];
   String selectedSubject = "";
-
+  
   @override
   void initState() {
     SubjectModel subjects = ref.read(subjectsProvider);
@@ -97,7 +101,7 @@ class _AddSubjectDialogState extends ConsumerState<AddSubjectDialog> {
                       ref
                           .read(dateTimetablePreAbsCanProvider.notifier)
                           .addEntry(selectedSubject, 'Can');
-                      await FirebaseAttendance2025().pressedCancelled(
+                      await ref.read(firebaseAttendance).pressedCancelled(
                           ref.read(attendanceDateprovider), selectedSubject);
                       await Future.delayed(const Duration(milliseconds: 400));
                       ref.read(attendanceTotalsPerLectureProvider(selectedSubject).notifier)
@@ -131,7 +135,7 @@ class _AddSubjectDialogState extends ConsumerState<AddSubjectDialog> {
                         ref
                             .read(dateTimetablePreAbsCanProvider.notifier)
                             .addEntry(selectedSubject, 'Pre');
-                        await FirebaseAttendance2025().pressedPresent(
+                        await ref.read(firebaseAttendance).pressedPresent(
                             ref.read(attendanceDateprovider), selectedSubject);
                         await Future.delayed(const Duration(milliseconds: 400));
                         ref.read(attendanceTotalsPerLectureProvider(selectedSubject).notifier)
@@ -165,7 +169,7 @@ class _AddSubjectDialogState extends ConsumerState<AddSubjectDialog> {
                         ref
                             .read(dateTimetablePreAbsCanProvider.notifier)
                             .addEntry(selectedSubject, 'Abs');
-                        await FirebaseAttendance2025().pressedAbsent(
+                        await ref.read(firebaseAttendance).pressedAbsent(
                             ref.read(attendanceDateprovider), selectedSubject);
                         await Future.delayed(const Duration(milliseconds: 400));
                         ref.read(attendanceTotalsPerLectureProvider(selectedSubject).notifier)

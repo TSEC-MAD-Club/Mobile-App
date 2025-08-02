@@ -10,6 +10,8 @@ import 'package:tsec_app/new_ui/screens/attendance_screen/widgets/attendance_scr
 import 'package:tsec_app/new_ui/screens/attendance_screen/widgets/attendance_screen_2025_widgets.dart/attendance_container.dart';
 import 'package:tsec_app/new_ui/screens/attendance_screen/widgets/attendance_screen_2025_widgets.dart/overall_attendance_container.dart';
 import 'package:tsec_app/provider/attendance_date_provider.dart';
+import 'package:tsec_app/provider/attendance_provider_overall_local.dart';
+import 'package:tsec_app/provider/attendance_provider_total_local.dart';
 import 'package:tsec_app/services/timetable_service.dart';
 
 import '../../../models/occassion_model/occasion_model.dart';
@@ -45,10 +47,24 @@ class _AttendanceScreen2025State extends ConsumerState<AttendanceScreen2025> {
         error: (Object error, StackTrace? stackTrace) {});
   }
 
+
+  Future<void> loadLocalData() async{
+
+    //setting overall attendance provider
+    Map<String,int> data = await loadPreAbsCanDataOverall();
+    ref.read(attendanceOverallLocalProvider.notifier).setState(data);
+
+    //setting total attendance provider
+    Map<String,int> data1 = await loadPreAbsCanDataTotal();
+    ref.read(attendanceTotalLocalProvider.notifier).setState(data1);
+  }
+
+
   @override
-  void initState() {
+  void initState(){
     super.initState();
     getTimeTablePreAbsCan(DateFormat('yyyy-MM-dd').format(DateTime.now()), ref);
+    loadLocalData();
   }
 
   void callSetState() {
@@ -59,6 +75,7 @@ class _AttendanceScreen2025State extends ConsumerState<AttendanceScreen2025> {
   Widget build(BuildContext context) {
     height = MediaQuery.sizeOf(context).height;
     width = MediaQuery.sizeOf(context).width;
+
     final data = ref.watch(counterStreamProvider);
     DateTime day = ref.watch(dayProvider);
     String dayStr = getweekday(day.weekday);

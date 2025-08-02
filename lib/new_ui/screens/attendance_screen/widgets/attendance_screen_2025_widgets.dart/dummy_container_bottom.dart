@@ -30,6 +30,10 @@ class DummyContainerBottom extends ConsumerStatefulWidget {
       _DummyContainerBottomState();
 }
 
+final firebaseAttendance = Provider<FirebaseAttendance2025>((ref) {
+  return FirebaseAttendance2025(ref);
+});
+
 class _DummyContainerBottomState extends ConsumerState<DummyContainerBottom> {
   // int selected = -1;
   Map selected = {};
@@ -44,16 +48,16 @@ class _DummyContainerBottomState extends ConsumerState<DummyContainerBottom> {
         mainAxisSize: MainAxisSize.min,
         children: [
           GestureDetector(
-              onTap: () async {
+              onTap: () async { // CANCEL BUTTON
                 ref
                     .read(dateTimetablePreAbsCanProvider.notifier)
                     .addEntry(widget.lectureName, 'Can');
-                await FirebaseAttendance2025().pressedCancelled(
+                await ref.read(firebaseAttendance).pressedCancelled(
                     ref.read(attendanceDateprovider), widget.lectureName);
-                // await Future.delayed(const Duration(milliseconds: 400));
-                ref.read(attendanceTotalsPerLectureProvider(widget.lectureName).notifier)
-                    .refresh();
-                ref.read(attendanceTotalsProvider.notifier).refresh();
+                // await Future.delayed(const Duration(milliseconds: 2000));
+                // ref.read(attendanceTotalsPerLectureProvider(widget.lectureName).notifier)
+                //     .refresh();
+                // ref.read(attendanceTotalsProvider.notifier).refresh();
               },
               child: Container(
                 width: widget.width * 0.2,
@@ -78,19 +82,16 @@ class _DummyContainerBottomState extends ConsumerState<DummyContainerBottom> {
                 ),
               )),
           GestureDetector(
-              onTap: () async {
-                // setState(() {
-                //   selected = 1;
-                // });
+              onTap: () async { //PRESENT BUTTON
                 ref
                     .read(dateTimetablePreAbsCanProvider.notifier)
                     .addEntry(widget.lectureName, 'Pre');
-                await FirebaseAttendance2025().pressedPresent(
-                    ref.read(attendanceDateprovider), widget.lectureName);
-                await Future.delayed(const Duration(milliseconds: 400));
-                ref.read(attendanceTotalsPerLectureProvider(widget.lectureName).notifier)
-                    .refresh();
-                ref.read(attendanceTotalsProvider.notifier).refresh();
+                await ref.read(firebaseAttendance).pressedPresent(
+                    ref.read(attendanceDateprovider), widget.lectureName); // this is quick
+                // await Future.delayed(const Duration(milliseconds: 2000));
+               // await ref.read(attendanceTotalsPerLectureProvider(widget.lectureName).notifier)
+               //      .refresh();
+               // await ref.read(attendanceTotalsProvider.notifier).refresh();
               },
               child: Container(
                 width: widget.width * 0.2,
@@ -113,19 +114,19 @@ class _DummyContainerBottomState extends ConsumerState<DummyContainerBottom> {
                 ),
               )),
           GestureDetector(
-              onTap: () async {
+              onTap: () async { // ABS BUTTON
                 // setState(() {
                 //   selected = 2;
                 // });
                 ref
                     .read(dateTimetablePreAbsCanProvider.notifier)
                     .addEntry(widget.lectureName, 'Abs');
-                await FirebaseAttendance2025().pressedAbsent(
+                await ref.read(firebaseAttendance).pressedAbsent(
                     ref.read(attendanceDateprovider), widget.lectureName);
-                await Future.delayed(const Duration(milliseconds: 400));
-                ref.read(attendanceTotalsPerLectureProvider(widget.lectureName).notifier)
-                    .refresh();
-                ref.read(attendanceTotalsProvider.notifier).refresh();
+                // await Future.delayed(const Duration(milliseconds:2000));
+                // await ref.read(attendanceTotalsPerLectureProvider(widget.lectureName).notifier)
+                //     .refresh();
+                //  await ref.read(attendanceTotalsProvider.notifier).refresh();
               },
               child: Container(
                 width: widget.width * 0.2,
