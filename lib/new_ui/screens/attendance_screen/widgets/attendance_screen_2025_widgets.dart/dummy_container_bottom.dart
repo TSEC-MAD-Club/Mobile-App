@@ -37,6 +37,7 @@ final firebaseAttendance = Provider<FirebaseAttendance2025>((ref) {
 class _DummyContainerBottomState extends ConsumerState<DummyContainerBottom> {
   // int selected = -1;
   Map selected = {};
+
   @override
   Widget build(BuildContext context) {
     ref.watch(attendanceDateprovider);
@@ -48,7 +49,8 @@ class _DummyContainerBottomState extends ConsumerState<DummyContainerBottom> {
         mainAxisSize: MainAxisSize.min,
         children: [
           GestureDetector(
-              onTap: () async { // CANCEL BUTTON
+              onTap: () async {
+                // CANCEL BUTTON
                 ref
                     .read(dateTimetablePreAbsCanProvider.notifier)
                     .addEntry(widget.lectureName, 'Can');
@@ -82,16 +84,17 @@ class _DummyContainerBottomState extends ConsumerState<DummyContainerBottom> {
                 ),
               )),
           GestureDetector(
-              onTap: () async { //PRESENT BUTTON
+              onTap: () async {
+                //PRESENT BUTTON
                 ref
                     .read(dateTimetablePreAbsCanProvider.notifier)
                     .addEntry(widget.lectureName, 'Pre');
                 await ref.read(firebaseAttendance).pressedPresent(
-                    ref.read(attendanceDateprovider), widget.lectureName); // this is quick
+                    ref.read(attendanceDateprovider), widget.lectureName);
                 // await Future.delayed(const Duration(milliseconds: 2000));
-               // await ref.read(attendanceTotalsPerLectureProvider(widget.lectureName).notifier)
-               //      .refresh();
-               // await ref.read(attendanceTotalsProvider.notifier).refresh();
+                // await ref.read(attendanceTotalsPerLectureProvider(widget.lectureName).notifier)
+                //      .refresh();
+                // await ref.read(attendanceTotalsProvider.notifier).refresh();
               },
               child: Container(
                 width: widget.width * 0.2,
@@ -114,7 +117,8 @@ class _DummyContainerBottomState extends ConsumerState<DummyContainerBottom> {
                 ),
               )),
           GestureDetector(
-              onTap: () async { // ABS BUTTON
+              onTap: () async {
+                // ABS BUTTON
                 // setState(() {
                 //   selected = 2;
                 // });

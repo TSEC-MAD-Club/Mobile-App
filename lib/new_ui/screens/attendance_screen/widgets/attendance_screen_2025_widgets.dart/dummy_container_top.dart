@@ -14,7 +14,6 @@ class Dummycontainertop extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final attendanceAsync =
         ref.watch(attendanceTotalsPerLectureProvider(subjectName));
-
     ref.watch(attendanceTotalLocalProvider);
     ref.watch(attendanceOverallLocalProvider);
 

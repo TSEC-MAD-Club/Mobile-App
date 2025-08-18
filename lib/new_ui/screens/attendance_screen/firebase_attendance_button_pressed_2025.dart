@@ -27,6 +27,7 @@ class FirebaseAttendance2025 {
   // UPDATES THE DATE DOCUMENT INSIDE "DATES" SUB COLLECTION IN FIRE,
   //CREATES DATE DOCUMENT IF FIRST TIME CLICKING ON THE DATE
   // ACCORDINGLY CALLS THE FUNCTION IF ATTENDANCE HAS TO BE SUBTRACTED, ADDED ETC.
+
   Future<void> updateDateCollection(CollectionReference docref, String date,
       String subjectName, String action) async {
     DocumentSnapshot doc;
@@ -53,8 +54,20 @@ class FirebaseAttendance2025 {
       // FIRST TIME CLICKING
       FirebaseAttendanceTotallects2025()
           .updateLectureAttended(action, subjectName);
+
+      if (action == "Pre") {
+        // updating local state to +1
+        _ref
+            .read(attendanceOverallLocalProvider.notifier)
+            .updateValue(subjectName, "+");
+      }
+
       if (action != "Can") {
         FirebaseAttendanceTotallects2025().updateTotalAttendance(subjectName);
+
+        _ref
+            .read(attendanceTotalLocalProvider.notifier)
+            .updateValue(subjectName, "+");
       }
       return;
     }
