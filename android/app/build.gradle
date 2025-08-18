@@ -82,10 +82,13 @@ android {
 
     signingConfigs {
         release {
+            //DO NOT PUSH THE IF TO CODE BASE, ONLY FOR DEV PURPOSES.
+//            if (keystoreProperties['storeFile'] != null) {
                 keyAlias keystoreProperties['keyAlias']
                 keyPassword keystoreProperties['keyPassword']
                 storeFile file(keystoreProperties['storeFile'])
                 storePassword keystoreProperties['storePassword']
+//            }
         }
     }
 

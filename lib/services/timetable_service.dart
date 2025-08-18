@@ -62,3 +62,73 @@ Future<void> getTimeTablePreAbsCan(String date, WidgetRef ref) async {
     rethrow;
   }
 }
+
+
+//THIS FUNCTION LOADS THE OVERALL ATTENDANCE FROM FIREBASE AND RETURNS IT
+Future<Map<String, int>> loadPreAbsCanDataOverall() async {
+
+  try{
+
+    final String? uid = FirebaseAuth.instance.currentUser?.uid ??
+        "default-uid";
+    DocumentReference documentReference = FirebaseFirestore.instance
+        .collection('AttendanceTest')
+        .doc(uid)
+        .collection('overallAttendance')
+        .doc('overall-attendance');
+
+    DocumentSnapshot documentSnapshot = await documentReference.get();
+
+    if (documentSnapshot.exists) {
+      Map<String, dynamic> temp = documentSnapshot.data() as Map<String, dynamic>;
+
+      //PARSING THE Map<String, dynamic> to Map<String,int>
+      final Map<String, int> data = temp.map(
+            (key, value) => MapEntry(key, (value as num).toInt()),
+      );
+
+      return data;
+
+    }
+
+    return {};
+
+  }catch(e) {
+    rethrow;
+  }
+
+}
+
+//THIS FUNCTION LOADS THE TOTAL ATTENDANCE FROM FIREBASE AND RETURNS IT
+Future<Map<String,int>> loadPreAbsCanDataTotal() async {
+
+  try{
+
+    final String? uid = FirebaseAuth.instance.currentUser?.uid ??
+        "default-uid";
+    DocumentReference documentReference = FirebaseFirestore.instance
+        .collection('AttendanceTest')
+        .doc(uid)
+        .collection('overallAttendance')
+        .doc('totalAttendance');
+
+    DocumentSnapshot documentSnapshot = await documentReference.get();
+
+    if (documentSnapshot.exists) {
+      Map<String, dynamic> temp = documentSnapshot.data() as Map<String, dynamic>;
+
+      //parsing the Map<String, dynamic> to Map<String,int>
+      final Map<String, int> data = temp.map(
+            (key, value) => MapEntry(key, (value as num).toInt()),
+      );
+
+      return data;
+    }
+
+    return {};
+
+  }catch(e) {
+    rethrow;
+  }
+
+}
