@@ -11,7 +11,6 @@ import 'package:tsec_app/new_ui/colors.dart';
 import 'package:tsec_app/new_ui/screens/attendance_screen/attendance_screen.dart';
 import 'package:tsec_app/new_ui/screens/attendance_screen/attendance_screen_2025.dart';
 import 'package:tsec_app/new_ui/screens/bug_report_screen/bug_report_screen.dart';
-import 'package:tsec_app/new_ui/screens/coming_soon_screen/coming_soon.dart';
 import 'package:tsec_app/new_ui/screens/about_us_screen/about_us.dart';
 
 import 'package:tsec_app/new_ui/screens/home_screen/widgets/home_widget.dart';
@@ -543,35 +542,6 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                             ),
                             onTap: () => followLink?.call(),
                           ),
-                        ),
-                        ListTile(
-                          contentPadding: EdgeInsets.zero,
-                          title: Text(
-                            'Coming soon........',
-                            style: Theme.of(context)
-                                .textTheme
-                                .headlineSmall!
-                                .copyWith(
-                                  fontSize: 13,
-                                  fontFamily: 'Montserrat',
-                                  color: currentPage == 5
-                                      ? Theme.of(context)
-                                          .colorScheme
-                                          .onSurface
-                                      : Colors.white,
-                                ),
-                          ),
-                          onTap: () {
-                            ref.read(titleProvider.notifier).state =
-                                'Something cooking .....';
-                            Navigator.pop(context);
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => ComingSoon(),
-                              ),
-                            );
-                          },
                         ),
                         ListTile(
                           contentPadding: EdgeInsets.zero,

@@ -55,7 +55,7 @@ class _HomeScreenState extends ConsumerState<MainBottomNavBar> {
             });
           },
         ),
-        "notes": NotesScreen(),
+        //"notes": NotesScreen(),
         "timetable": const TimeTable(),
         "attendance": AttendanceScreen2025(),
         "concession": const RailwayConcessionScreen(),
@@ -109,12 +109,12 @@ class _HomeScreenState extends ConsumerState<MainBottomNavBar> {
             label: "Home",
           ),
           if(user.isStudent) ...[
-            BottomNavigationBarItem(
-              backgroundColor: Colors.transparent,
-              activeIcon: Icon(Icons.notes),
-              icon: Icon(Icons.notes_outlined),
-              label: "Notes",
-            ),
+            // BottomNavigationBarItem(
+            //   backgroundColor: Colors.transparent,
+            //   activeIcon: Icon(Icons.notes),
+            //   icon: Icon(Icons.notes_outlined),
+            //   label: "Notes",
+            // ),
             BottomNavigationBarItem(
               backgroundColor: Colors.transparent,
               activeIcon: Icon(Icons.calendar_month),
