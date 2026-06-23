@@ -679,9 +679,9 @@ class _MainScreenState extends ConsumerState<MainScreen> {
       switch (currentPage) {
         case 0:
           return "Home";
+        // case 1:
+        //   return "Notes";
         case 1:
-          return "Notes";
-        case 2:
           return "Profile";
         default:
           return "";
@@ -690,13 +690,13 @@ class _MainScreenState extends ConsumerState<MainScreen> {
       switch (currentPage) {
         case 0:
           return "Home";
+        // case 1:
+        //   return "Notes";
         case 1:
-          return "Notes";
-        case 2:
           return "Attendance";
-        case 3:
+        case 2:
           return "Railway";
-        case 4:
+        case 3:
           return "Profile";
         default:
           return "";
