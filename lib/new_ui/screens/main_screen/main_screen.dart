@@ -15,7 +15,7 @@ import 'package:tsec_app/new_ui/screens/about_us_screen/about_us.dart';
 
 import 'package:tsec_app/new_ui/screens/home_screen/widgets/home_widget.dart';
 import 'package:tsec_app/new_ui/screens/main_screen/widgets/main_bottom_nav_bar.dart';
-import 'package:tsec_app/new_ui/screens/notes_screen/notes_screen.dart';
+//import 'package:tsec_app/new_ui/screens/notes_screen/notes_screen.dart';
 import 'package:tsec_app/new_ui/screens/profile_screen/profile_screen.dart';
 import 'package:tsec_app/new_ui/screens/railway_screen/railway_screen.dart';
 
@@ -78,7 +78,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
             });
           },
         ),
-        "notes": const NotesScreen(),
+        //"notes": const NotesScreen(),
         "timetable": const TimeTable(),
         "attendance": AttendanceScreen2025(),
         "concession": const RailwayConcessionScreen(),
@@ -96,7 +96,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
             });
           },
         ),
-        "notes": const NotesScreen(),
+        //"notes": const NotesScreen(),
         "profile": ProfilePage(
           justLoggedIn: false,
         )
@@ -170,7 +170,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
             });
           },
         ),
-        const NotesScreen(),
+        //const NotesScreen(),
         ProfilePage(justLoggedIn: false),
         AttendanceScreen2025(),
         const RailwayConcessionScreen(),
@@ -193,7 +193,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
             });
           },
         ),
-        const NotesScreen(),
+        //const NotesScreen(),
         AttendanceScreen2025(),
         const RailwayConcessionScreen(),
         ProfilePage(justLoggedIn: false),
