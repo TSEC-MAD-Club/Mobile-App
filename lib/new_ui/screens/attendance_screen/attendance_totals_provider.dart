@@ -27,7 +27,15 @@ class AttendanceNotifier extends StateNotifier<AsyncValue<AttendanceData>> {
         FirebaseAttendanceTotallects2025.getAttendedLectures(subjectName),
         FirebaseAttendanceTotallects2025.getTotalLectures(subjectName),
       ]);
-      state = AsyncValue.data(AttendanceData(attended: results[0], total: results[1]));
+      
+      int att = results[0];
+      int tot = results[1];
+      
+      if (att > tot) {
+        tot = att;
+      }
+      
+      state = AsyncValue.data(AttendanceData(attended: att, total: tot));
     } catch (e, st) {
       state = AsyncValue.error(e, st);
     }
@@ -77,6 +85,31 @@ class AttendanceTotalsNotifier extends StateNotifier<AsyncValue<AttendanceTotals
     try {
       final attended = await getTotalAttended();
       final total = await getTotalLectures();
+      
+      bool needsRepair = false;
+      final String? uid = FirebaseAuth.instance.currentUser?.uid;
+      
+      // Sanitize data: if attended > total due to previous race conditions, fix it
+      for (final key in attended.keys) {
+        int att = attended[key] ?? 0;
+        int tot = total[key] ?? 0;
+        
+        if (att > tot) {
+          total[key] = att;
+          needsRepair = true;
+        }
+      }
+      
+      // Write the repaired total back to Firestore to fix the corruption permanently
+      if (needsRepair && uid != null) {
+        await FirebaseFirestore.instance
+            .collection('AttendanceTest')
+            .doc(uid)
+            .collection('overallAttendance')
+            .doc('totalAttendance')
+            .set(total);
+      }
+
       state = AsyncValue.data(AttendanceTotals(attended: attended, total: total));
     } catch (e, st) {
       state = AsyncValue.error(e, st);

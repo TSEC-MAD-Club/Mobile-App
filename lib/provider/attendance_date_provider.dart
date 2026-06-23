@@ -47,3 +47,33 @@ Future<Map<String, dynamic>?>? getLoggedAttendance (DateTime date) {
   return snapshot;
 
 }
+
+/// Tracks local-only pending attendance changes before they are submitted.
+/// Key = subject name, Value = action ("Pre", "Abs", "Can").
+class PendingAttendanceNotifier extends StateNotifier<Map<String, String>> {
+  PendingAttendanceNotifier() : super({});
+
+  void setPending(String subject, String action) {
+    state = {...state, subject: action};
+  }
+
+  void removePending(String subject) {
+    if (!state.containsKey(subject)) return;
+    final newState = Map<String, String>.from(state);
+    newState.remove(subject);
+    state = newState;
+  }
+
+  void clearAll() {
+    state = {};
+  }
+
+  bool get hasPendingChanges => state.isNotEmpty;
+}
+
+final pendingAttendanceProvider =
+    StateNotifierProvider<PendingAttendanceNotifier, Map<String, String>>(
+        (ref) => PendingAttendanceNotifier());
+
+/// Loading flag while the batch apply is in progress.
+final isSubmittingAttendanceProvider = StateProvider<bool>((ref) => false);

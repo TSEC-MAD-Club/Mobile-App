@@ -3,12 +3,12 @@ BOTTOM DESIGN PART FOR CONTAINER BEING THE ATTENDANCE SCREEN
 
 CONTAINS THREE BUTTONS -> CAN (CANCEL), PRE(PRESENT), ABS(ABSENT)
 
+Button taps now only update local pending state.
+Firebase writes are deferred until the user taps "Apply Changes".
 */
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tsec_app/new_ui/screens/attendance_screen/attendance_totals_provider.dart';
-import 'package:tsec_app/new_ui/screens/attendance_screen/firebase_attendance_button_pressed_2025.dart';
 import 'package:tsec_app/provider/attendance_date_provider.dart';
 
 class DummyContainerBottom extends ConsumerStatefulWidget {
@@ -31,35 +31,54 @@ class DummyContainerBottom extends ConsumerStatefulWidget {
 }
 
 class _DummyContainerBottomState extends ConsumerState<DummyContainerBottom> {
-  // int selected = -1;
   Map selected = {};
+
+  /// Returns the effective selection for this subject:
+  /// pending change if exists, otherwise the saved (committed) value.
+  String? _effectiveSelection() {
+    final pending = ref.watch(pendingAttendanceProvider);
+    if (pending.containsKey(widget.lectureName)) {
+      return pending[widget.lectureName];
+    }
+    final saved = ref.watch(dateTimetablePreAbsCanProvider);
+    return saved[widget.lectureName];
+  }
+
+  void _selectAction(String action) {
+    // Check what the original saved state was for this subject
+    final saved = ref.read(dateTimetablePreAbsCanProvider);
+    final originalAction = saved[widget.lectureName];
+
+    if (originalAction == action) {
+      // User reverted back to the original saved state, so remove from pending
+      ref
+          .read(pendingAttendanceProvider.notifier)
+          .removePending(widget.lectureName);
+    } else {
+      // User selected a new state, so add/update pending
+      ref
+          .read(pendingAttendanceProvider.notifier)
+          .setPending(widget.lectureName, action);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    ref.watch(attendanceDateprovider);
-    selected = ref.watch(dateTimetablePreAbsCanProvider);
+    final currentSelection = _effectiveSelection();
 
     return Align(
       alignment: Alignment.bottomCenter,
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
+          // ─── Cancel Button ───
           GestureDetector(
-              onTap: () async {
-                ref
-                    .read(dateTimetablePreAbsCanProvider.notifier)
-                    .addEntry(widget.lectureName, 'Can');
-                await FirebaseAttendance2025().pressedCancelled(
-                    ref.read(attendanceDateprovider), widget.lectureName);
-                // await Future.delayed(const Duration(milliseconds: 400));
-                ref.read(attendanceTotalsPerLectureProvider(widget.lectureName).notifier)
-                    .refresh();
-                ref.read(attendanceTotalsProvider.notifier).refresh();
-              },
+              onTap: () => _selectAction('Can'),
               child: Container(
                 width: widget.width * 0.2,
                 height: 30,
                 decoration: BoxDecoration(
-                    color: selected[widget.lectureName] == 'Can'
+                    color: currentSelection == 'Can'
                         ? const Color.fromARGB(44, 180, 180, 180)
                         : Colors.transparent,
                     border: Border.all(color: Colors.grey),
@@ -77,26 +96,14 @@ class _DummyContainerBottomState extends ConsumerState<DummyContainerBottom> {
                   ],
                 ),
               )),
+          // ─── Present Button ───
           GestureDetector(
-              onTap: () async {
-                // setState(() {
-                //   selected = 1;
-                // });
-                ref
-                    .read(dateTimetablePreAbsCanProvider.notifier)
-                    .addEntry(widget.lectureName, 'Pre');
-                await FirebaseAttendance2025().pressedPresent(
-                    ref.read(attendanceDateprovider), widget.lectureName);
-                await Future.delayed(const Duration(milliseconds: 400));
-                ref.read(attendanceTotalsPerLectureProvider(widget.lectureName).notifier)
-                    .refresh();
-                ref.read(attendanceTotalsProvider.notifier).refresh();
-              },
+              onTap: () => _selectAction('Pre'),
               child: Container(
                 width: widget.width * 0.2,
                 height: 30,
                 decoration: BoxDecoration(
-                  color: selected[widget.lectureName] == 'Pre'
+                  color: currentSelection == 'Pre'
                       ? const Color.fromARGB(44, 180, 180, 180)
                       : Colors.transparent,
                   border: Border.all(color: Colors.grey),
@@ -112,26 +119,14 @@ class _DummyContainerBottomState extends ConsumerState<DummyContainerBottom> {
                   ],
                 ),
               )),
+          // ─── Absent Button ───
           GestureDetector(
-              onTap: () async {
-                // setState(() {
-                //   selected = 2;
-                // });
-                ref
-                    .read(dateTimetablePreAbsCanProvider.notifier)
-                    .addEntry(widget.lectureName, 'Abs');
-                await FirebaseAttendance2025().pressedAbsent(
-                    ref.read(attendanceDateprovider), widget.lectureName);
-                await Future.delayed(const Duration(milliseconds: 400));
-                ref.read(attendanceTotalsPerLectureProvider(widget.lectureName).notifier)
-                    .refresh();
-                ref.read(attendanceTotalsProvider.notifier).refresh();
-              },
+              onTap: () => _selectAction('Abs'),
               child: Container(
                 width: widget.width * 0.2,
                 height: 30,
                 decoration: BoxDecoration(
-                    color: selected[widget.lectureName] == 'Abs'
+                    color: currentSelection == 'Abs'
                         ? const Color.fromARGB(44, 180, 180, 180)
                         : Colors.transparent,
                     border: Border.all(color: Colors.grey),
@@ -154,3 +149,4 @@ class _DummyContainerBottomState extends ConsumerState<DummyContainerBottom> {
     );
   }
 }
+

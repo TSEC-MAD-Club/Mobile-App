@@ -69,6 +69,7 @@ class _DateHeader2025State extends ConsumerState<DateHeader2025> {
             onDateChange: (date) {
               // New date selected
               // print(date.toIso8601String());
+              ref.read(pendingAttendanceProvider.notifier).clearAll();
               ref.read(attendanceDateprovider.notifier).state = date;
               getTimeTablePreAbsCan(
                   DateFormat('yyyy-MM-dd').format(date).toString(), ref);
