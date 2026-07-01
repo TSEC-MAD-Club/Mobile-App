@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    timetable_widget_info.xml
+    Place in:  res/xml/timetable_widget_info.xml
+
+    minWidth / minHeight:
+      Android widget grid cell = 70dp × 70dp  (with gaps).
+      4 × 3 cell default  →  280dp × 210dp
+-->
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:minWidth="250dp"
+    android:minHeight="200dp"
+    android:minResizeWidth="200dp"
+    android:minResizeHeight="150dp"
+    android:targetCellWidth="4"
+    android:targetCellHeight="4"
+    android:updatePeriodMillis="1800000"
+    android:initialLayout="@layout/widget_timetable"
+    android:resizeMode="horizontal|vertical"
+    android:widgetCategory="home_screen"
+    android:description="@string/widget_description" />

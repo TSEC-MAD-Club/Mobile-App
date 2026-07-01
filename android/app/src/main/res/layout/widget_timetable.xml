@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    widget_timetable.xml
+    Root layout for the Today's Schedule home-screen widget.
+    Matches the dark navy card UI shown in the screenshot.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widget_root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/bg_widget_container"
+    android:padding="14dp"
+    android:clipToPadding="false">
+
+    <!-- ── Header row: calendar icon + "Today's Schedule" + day chip ── -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="10dp">
+
+        <!-- Calendar icon (use system icon; replace with your own drawable if desired) -->
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:src="@android:drawable/ic_menu_today"
+            android:tint="#AABBCC"
+            android:layout_marginEnd="6dp" />
+
+        <TextView
+            android:id="@+id/widget_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Today's Schedule"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif-medium" />
+
+        <!-- Day abbreviation chip (e.g. "Tu") -->
+        <TextView
+            android:id="@+id/widget_day_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_day_chip"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="3dp"
+            android:textColor="#FFFFFF"
+            android:textSize="11sp"
+            android:layout_marginEnd="6dp" />
+
+        <!-- Date label (e.g. "10 April") -->
+        <TextView
+            android:id="@+id/widget_date_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#AABBCC"
+            android:textSize="11sp" />
+
+    </LinearLayout>
+
+    <!-- ── Lecture rows (containers; rows added programmatically) ── -->
+    <FrameLayout android:id="@+id/lecture_row_1"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_marginBottom="6dp"/>
+
+    <FrameLayout android:id="@+id/lecture_row_2"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_marginBottom="6dp"/>
+
+    <FrameLayout android:id="@+id/lecture_row_3"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_marginBottom="6dp"/>
+
+    <FrameLayout android:id="@+id/lecture_row_4"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_marginBottom="6dp"/>
+
+    <FrameLayout android:id="@+id/lecture_row_5"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_marginBottom="6dp"/>
+
+    <!-- Empty state -->
+    <TextView
+        android:id="@+id/widget_empty_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="16dp"
+        android:text="No classes today 🎉"
+        android:textColor="#AABBCC"
+        android:textSize="13sp"
+        android:visibility="gone" />
+
+    <!-- Footer branding -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:layout_marginTop="6dp"
+        android:text="&lt;/&gt; TSEC"
+        android:textColor="#5B9BF8"
+        android:textSize="10sp" />
+
+</LinearLayout>

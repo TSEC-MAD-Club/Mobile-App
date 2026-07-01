@@ -46,6 +46,8 @@ if (flutterVersionName == null) {
 android {
     compileSdkVersion 35
 
+    ndkVersion "28.2.13676358"
+
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
@@ -60,7 +62,7 @@ android {
         jvmTarget = "21"
     }
 
-     java {
+    java {
         toolchain {
             languageVersion.set(JavaLanguageVersion.of(21))
         }
@@ -82,18 +84,19 @@ android {
 
     signingConfigs {
         release {
-                keyAlias keystoreProperties['keyAlias']
-                keyPassword keystoreProperties['keyPassword']
-                storeFile file(keystoreProperties['storeFile'])
-                storePassword keystoreProperties['storePassword']
+//            keyAlias keystoreProperties['keyAlias']
+//            keyPassword keystoreProperties['keyPassword']
+//            storeFile file(keystoreProperties['storeFile'])
+//            storePassword keystoreProperties['storePassword']
         }
     }
 
     buildTypes {
         release {
-            signingConfig signingConfigs.release
-            minifyEnabled true
-            shrinkResources true
+            signingConfig signingConfigs.debug
+
+//            minifyEnabled true
+//            shrinkResources true
         }
     }
 
