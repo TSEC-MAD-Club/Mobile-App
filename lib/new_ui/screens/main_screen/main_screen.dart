@@ -11,12 +11,11 @@ import 'package:tsec_app/new_ui/colors.dart';
 import 'package:tsec_app/new_ui/screens/attendance_screen/attendance_screen.dart';
 import 'package:tsec_app/new_ui/screens/attendance_screen/attendance_screen_2025.dart';
 import 'package:tsec_app/new_ui/screens/bug_report_screen/bug_report_screen.dart';
-import 'package:tsec_app/new_ui/screens/coming_soon_screen/coming_soon.dart';
 import 'package:tsec_app/new_ui/screens/about_us_screen/about_us.dart';
 
 import 'package:tsec_app/new_ui/screens/home_screen/widgets/home_widget.dart';
 import 'package:tsec_app/new_ui/screens/main_screen/widgets/main_bottom_nav_bar.dart';
-import 'package:tsec_app/new_ui/screens/notes_screen/notes_screen.dart';
+//import 'package:tsec_app/new_ui/screens/notes_screen/notes_screen.dart';
 import 'package:tsec_app/new_ui/screens/profile_screen/profile_screen.dart';
 import 'package:tsec_app/new_ui/screens/railway_screen/railway_screen.dart';
 
@@ -79,7 +78,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
             });
           },
         ),
-        "notes": const NotesScreen(),
+        //"notes": const NotesScreen(),
         "timetable": const TimeTable(),
         "attendance": AttendanceScreen2025(),
         "concession": const RailwayConcessionScreen(),
@@ -97,7 +96,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
             });
           },
         ),
-        "notes": const NotesScreen(),
+        //"notes": const NotesScreen(),
         "profile": ProfilePage(
           justLoggedIn: false,
         )
@@ -171,7 +170,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
             });
           },
         ),
-        const NotesScreen(),
+        //const NotesScreen(),
         ProfilePage(justLoggedIn: false),
         AttendanceScreen2025(),
         const RailwayConcessionScreen(),
@@ -194,7 +193,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
             });
           },
         ),
-        const NotesScreen(),
+        //const NotesScreen(),
         AttendanceScreen2025(),
         const RailwayConcessionScreen(),
         ProfilePage(justLoggedIn: false),
@@ -547,35 +546,6 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                         ListTile(
                           contentPadding: EdgeInsets.zero,
                           title: Text(
-                            'Coming soon........',
-                            style: Theme.of(context)
-                                .textTheme
-                                .headlineSmall!
-                                .copyWith(
-                                  fontSize: 13,
-                                  fontFamily: 'Montserrat',
-                                  color: currentPage == 5
-                                      ? Theme.of(context)
-                                          .colorScheme
-                                          .onSurface
-                                      : Colors.white,
-                                ),
-                          ),
-                          onTap: () {
-                            ref.read(titleProvider.notifier).state =
-                                'Something cooking .....';
-                            Navigator.pop(context);
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => ComingSoon(),
-                              ),
-                            );
-                          },
-                        ),
-                        ListTile(
-                          contentPadding: EdgeInsets.zero,
-                          title: Text(
                             'Report a bug',
                             style: Theme.of(context)
                                 .textTheme
@@ -709,9 +679,9 @@ class _MainScreenState extends ConsumerState<MainScreen> {
       switch (currentPage) {
         case 0:
           return "Home";
+        // case 1:
+        //   return "Notes";
         case 1:
-          return "Notes";
-        case 2:
           return "Profile";
         default:
           return "";
@@ -720,13 +690,13 @@ class _MainScreenState extends ConsumerState<MainScreen> {
       switch (currentPage) {
         case 0:
           return "Home";
+        // case 1:
+        //   return "Notes";
         case 1:
-          return "Notes";
-        case 2:
           return "Attendance";
-        case 3:
+        case 2:
           return "Railway";
-        case 4:
+        case 3:
           return "Profile";
         default:
           return "";

@@ -11,6 +11,8 @@ import 'package:tsec_app/new_ui/screens/attendance_screen/widgets/attendance_scr
 import 'package:tsec_app/new_ui/screens/attendance_screen/widgets/attendance_screen_2025_widgets.dart/overall_attendance_container.dart';
 import 'package:tsec_app/provider/attendance_date_provider.dart';
 import 'package:tsec_app/services/timetable_service.dart';
+import 'package:tsec_app/new_ui/screens/attendance_screen/firebase_attendance_button_pressed_2025.dart';
+import 'package:tsec_app/new_ui/screens/attendance_screen/attendance_totals_provider.dart';
 
 import '../../../models/occassion_model/occasion_model.dart';
 import '../../../models/timetable_model/timetable_model.dart';
@@ -160,6 +162,9 @@ class _AttendanceScreen2025State extends ConsumerState<AttendanceScreen2025> {
               loading: () =>
                   const Center(child: CircularProgressIndicator())),
           
+          // ─── Apply Changes Button ───
+          _buildApplyChangesButton(),
+
           SizedBox(
             height: 20,
           ),
@@ -232,5 +237,113 @@ class _AttendanceScreen2025State extends ConsumerState<AttendanceScreen2025> {
       );
     }
     return widgets;
+  }
+
+  /// Builds the "Apply Changes" button, only visible when there are pending changes.
+  Widget _buildApplyChangesButton() {
+    final pendingChanges = ref.watch(pendingAttendanceProvider);
+    final isSubmitting = ref.watch(isSubmittingAttendanceProvider);
+
+    if (pendingChanges.isEmpty) {
+      return const SizedBox.shrink();
+    }
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+      child: SizedBox(
+        width: double.infinity,
+        height: 48,
+        child: ElevatedButton(
+          onPressed: isSubmitting
+              ? null
+              : () async {
+                  ref.read(isSubmittingAttendanceProvider.notifier).state = true;
+
+                  try {
+                    final date = ref.read(attendanceDateprovider);
+                    final changes =
+                        Map<String, String>.from(ref.read(pendingAttendanceProvider));
+
+                    await FirebaseAttendance2025()
+                        .applyAllChanges(date, changes);
+
+                    // Update local committed state with the new changes
+                    for (final entry in changes.entries) {
+                      ref
+                          .read(dateTimetablePreAbsCanProvider.notifier)
+                          .addEntry(entry.key, entry.value);
+                    }
+
+                    // Refresh per-lecture totals for each changed subject
+                    for (final subject in changes.keys) {
+                      ref
+                          .read(attendanceTotalsPerLectureProvider(subject)
+                              .notifier)
+                          .refresh();
+                    }
+                    // Refresh overall totals
+                    ref.read(attendanceTotalsProvider.notifier).refresh();
+
+                    // Clear pending changes
+                    ref.read(pendingAttendanceProvider.notifier).clearAll();
+
+                    if (mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Attendance saved successfully!'),
+                          backgroundColor: Colors.green,
+                          duration: Duration(seconds: 2),
+                        ),
+                      );
+                    }
+                  } catch (e) {
+                    if (mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Failed to save: $e'),
+                          backgroundColor: Colors.red,
+                          duration: const Duration(seconds: 3),
+                        ),
+                      );
+                    }
+                  } finally {
+                    ref.read(isSubmittingAttendanceProvider.notifier).state =
+                        false;
+                  }
+                },
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.green,
+            foregroundColor: Colors.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            elevation: 2,
+          ),
+          child: isSubmitting
+              ? const SizedBox(
+                  height: 24,
+                  width: 24,
+                  child: CircularProgressIndicator(
+                    color: Colors.white,
+                    strokeWidth: 2.5,
+                  ),
+                )
+              : Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(Icons.check_circle_outline, size: 20),
+                    const SizedBox(width: 8),
+                    Text(
+                      'Apply Changes (${pendingChanges.length})',
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
+                ),
+        ),
+      ),
+    );
   }
 }

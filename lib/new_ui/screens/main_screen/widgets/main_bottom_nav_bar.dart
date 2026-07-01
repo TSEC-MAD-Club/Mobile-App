@@ -15,7 +15,7 @@ import 'package:tsec_app/new_ui/screens/profile_screen/profile_screen.dart';
 import 'package:tsec_app/provider/railway_concession_provider.dart';
 import 'package:tsec_app/services/sharedprefsfordot.dart';
 
-import '../../notes_screen/notes_screen.dart';
+//import '../../notes_screen/notes_screen.dart';
 
 class MainBottomNavBar extends ConsumerStatefulWidget {
   String currentBottomNavPage;
@@ -55,7 +55,7 @@ class _HomeScreenState extends ConsumerState<MainBottomNavBar> {
             });
           },
         ),
-        "notes": NotesScreen(),
+        //"notes": NotesScreen(),
         "timetable": const TimeTable(),
         "attendance": AttendanceScreen2025(),
         "concession": const RailwayConcessionScreen(),
@@ -73,7 +73,7 @@ class _HomeScreenState extends ConsumerState<MainBottomNavBar> {
             });
           },
         ),
-        "notes": NotesScreen(),
+        //"notes": NotesScreen(),
         "profile": ProfilePage(
           justLoggedIn: false,
         )
@@ -109,12 +109,12 @@ class _HomeScreenState extends ConsumerState<MainBottomNavBar> {
             label: "Home",
           ),
           if(user.isStudent) ...[
-            BottomNavigationBarItem(
-              backgroundColor: Colors.transparent,
-              activeIcon: Icon(Icons.notes),
-              icon: Icon(Icons.notes_outlined),
-              label: "Notes",
-            ),
+            // BottomNavigationBarItem(
+            //   backgroundColor: Colors.transparent,
+            //   activeIcon: Icon(Icons.notes),
+            //   icon: Icon(Icons.notes_outlined),
+            //   label: "Notes",
+            // ),
             BottomNavigationBarItem(
               backgroundColor: Colors.transparent,
               activeIcon: Icon(Icons.calendar_month),
@@ -142,12 +142,12 @@ class _HomeScreenState extends ConsumerState<MainBottomNavBar> {
 
           if(user.facultyModel != null)
             ... [
-            BottomNavigationBarItem(
-              backgroundColor: Colors.transparent,
-              icon: Icon(Icons.file_open_outlined),
-              activeIcon: Icon(Icons.file_open_sharp),
-              label: "Notes",
-            ),
+            // BottomNavigationBarItem(
+            //   backgroundColor: Colors.transparent,
+            //   icon: Icon(Icons.file_open_outlined),
+            //   activeIcon: Icon(Icons.file_open_sharp),
+            //   label: "Notes",
+            // ),
             BottomNavigationBarItem(
             backgroundColor: Colors.transparent,
             icon: Icon(Icons.person_outlined),

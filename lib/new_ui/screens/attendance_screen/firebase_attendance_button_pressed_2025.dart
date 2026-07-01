@@ -40,10 +40,10 @@ class FirebaseAttendance2025 {
 
     if (actionTemp == "") {
       // FIRST TIME CLICKING
-      FirebaseAttendanceTotallects2025()
+      await FirebaseAttendanceTotallects2025()
           .updateLectureAttended(action, subjectName);
           if(action != "Can") {
-            FirebaseAttendanceTotallects2025().updateTotalAttendance(subjectName);
+            await FirebaseAttendanceTotallects2025().updateTotalAttendance(subjectName);
           }
       return;
     }
@@ -53,25 +53,25 @@ class FirebaseAttendance2025 {
 
     // From Pre
     if (from == "Pre" && to == "Abs") {
-      attendanceService.decrementAttended(subjectName); // attended--
+      await attendanceService.decrementAttended(subjectName); // attended--
     } else if (from == "Pre" && to == "Can") {
-      attendanceService.decrementTotalAttendance(subjectName);     // total--
-      attendanceService.decrementAttended(subjectName); // attended--
+      await attendanceService.decrementTotalAttendance(subjectName);     // total--
+      await attendanceService.decrementAttended(subjectName); // attended--
     }
 
     // From Abs
     else if (from == "Abs" && to == "Pre") {
-      attendanceService.updateLectureAttended("Pre", subjectName); // attended++
+      await attendanceService.updateLectureAttended("Pre", subjectName); // attended++
     } else if (from == "Abs" && to == "Can") {
-      attendanceService.decrementTotalAttendance(subjectName);     // total--
+      await attendanceService.decrementTotalAttendance(subjectName);     // total--
     }
 
     // From Can
     else if (from == "Can" && to == "Pre") {
-      attendanceService.updateTotalAttendance(subjectName);     // total++
-      attendanceService.updateLectureAttended("Pre", subjectName); // attended++
+      await attendanceService.updateTotalAttendance(subjectName);     // total++
+      await attendanceService.updateLectureAttended("Pre", subjectName); // attended++
     } else if (from == "Can" && to == "Abs") {
-      attendanceService.updateTotalAttendance(subjectName);     // total++
+      await attendanceService.updateTotalAttendance(subjectName);     // total++
     }
 
   }
@@ -121,6 +121,31 @@ class FirebaseAttendance2025 {
 
       await updateDateCollection(
           dates, DateFormat('yyyy-MM-dd').format(date), subjectName, "Abs");
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  /// Applies all pending attendance changes in a single batch.
+  /// [changes] is a Map of subjectName -> action ("Pre", "Abs", "Can").
+  Future<void> applyAllChanges(
+      DateTime date, Map<String, String> changes) async {
+    if (changes.isEmpty) return;
+
+    try {
+      CollectionReference attendanceTest =
+          FirebaseFirestore.instance.collection("AttendanceTest");
+
+      final String? uid =
+          FirebaseAuth.instance.currentUser?.uid ?? "default-uid";
+      DocumentReference userDoc = attendanceTest.doc(uid);
+      CollectionReference dates = userDoc.collection('dates');
+      final String dateStr = DateFormat('yyyy-MM-dd').format(date);
+
+      for (final entry in changes.entries) {
+        await updateDateCollection(
+            dates, dateStr, entry.key, entry.value);
+      }
     } catch (e) {
       rethrow;
     }

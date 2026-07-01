@@ -25,7 +25,7 @@ class FirebaseAttendanceTotallects2025 {
             break;
         }
 
-        documentReference.set(data);
+        await documentReference.set(data);
       } else {
         Map<String, int> data = {};
 
@@ -38,7 +38,7 @@ class FirebaseAttendanceTotallects2025 {
             break;
         }
 
-        documentReference.set(data);}
+        await documentReference.set(data);}
     } catch (e) {
       rethrow;
     }
@@ -58,11 +58,11 @@ class FirebaseAttendanceTotallects2025 {
       if (totalSnapshot.exists) {
         Map data = totalSnapshot.data() as Map;
         data[subject] = (data[subject] ?? 0) + 1;
-        totalReference.set(data);
+        await totalReference.set(data);
       } else {
         Map<String, int> data = {};
             data[subject] = 1;
-          totalReference.set(data);
+          await totalReference.set(data);
         }
       } catch (e) {
       rethrow;

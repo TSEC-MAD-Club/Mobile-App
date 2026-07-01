@@ -4,33 +4,13 @@ import 'package:pie_chart/pie_chart.dart';
 import 'package:tsec_app/new_ui/colors.dart';
 import 'package:tsec_app/new_ui/screens/attendance_screen/attendance_totals_provider.dart';
 
-class AttendanceDetailsScreen extends ConsumerStatefulWidget {
+class AttendanceDetailsScreen extends ConsumerWidget {
   const AttendanceDetailsScreen({super.key});
 
   @override
-  ConsumerState<AttendanceDetailsScreen> createState() => _AttendanceDetailsScreenState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final attendanceAsync = ref.watch(attendanceTotalsProvider);
 
-class _AttendanceDetailsScreenState extends ConsumerState<AttendanceDetailsScreen> {
-
-  late final AttendanceTotals totals;
-
-  @override
-  void initState() {
-    totals = ref.read(fetchedAttendanceTotalsProvider);
-    super.initState();
-  }
-
-  Map<String, double> getAttendedMap() {
-    return totals.attended.map((key, value) => MapEntry(key, value.toDouble()));
-  }
-
-  Map<String, double> getTotalMap() {
-    return totals.total.map((key, value) => MapEntry(key, value.toDouble()));
-  }
-
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: commonbgLightblack,
@@ -41,125 +21,150 @@ class _AttendanceDetailsScreenState extends ConsumerState<AttendanceDetailsScree
         centerTitle: true,
       ),
       body: SafeArea(
-          child: getAttendedMap().isEmpty && getTotalMap().isEmpty
-              ? Center(
-                  child: Text(
-                    "No attendance data available",
-                    style: TextStyle(color: Colors.white, fontSize: 18),
-                  ),
-                )
-              :
-          SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                children: [
-                  Card(
-                    color: const Color(0xFF2D2D2D),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        children: [
-                          Row(
-                            children: [
-                              Text(
-                                "Attended: ",
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 16,),
-                          PieChart(
-                            dataMap: getAttendedMap(),
-                            chartValuesOptions: ChartValuesOptions(
-                              showChartValues: false
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 16,),
-                  Card(
-                    color: const Color(0xFF2D2D2D),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        children: [
-                          Row(
-                            children: [
-                              Text(
-                                "Total Lectures: ",
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 16,),
-                          PieChart(
-                            dataMap: getTotalMap(),
-                            chartValuesOptions: ChartValuesOptions(
-                              showChartValues: false
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 16,),
-                  Card(
-                    color: const Color(0xFF2D2D2D),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        children: [
-                          Row(
-                            children: [
-                              Text(
-                                "Attendance insights: ",
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 8,),
-                          ListView.builder(itemBuilder: (context, index) {
-                            String subject = totals.attended.keys.elementAt(index);
-                            int attended = totals.attended[subject] ?? 0;
-                            int total = totals.total[subject] ?? 0;
-              
-                            return Column(
-                              children: [
-                                attendanceItem(subject, attended, total),
-                                if (index < totals.attended.length - 1)
-                                  Divider(color: Colors.grey[700]),
-
-                              ],
-                            );
-                          },
-                            itemCount: totals.attended.length,
-                            shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
-                          ),
-                        ],
-                      ),
-                    ),
-                  )
-                ],
-              ),
+        child: attendanceAsync.when(
+          loading: () => const Center(child: CircularProgressIndicator()),
+          error: (e, _) => Center(
+            child: Text(
+              "Error loading attendance",
+              style: TextStyle(color: Colors.red, fontSize: 18),
             ),
-          )
+          ),
+          data: (totals) {
+            // Also update the cached provider so other consumers stay in sync
+            Future(() {
+              ref.read(fetchedAttendanceTotalsProvider.notifier).state = totals;
+            });
 
+            final attendedMap = totals.attended
+                .map((key, value) => MapEntry(key, value.toDouble()));
+            final totalMap = totals.total
+                .map((key, value) => MapEntry(key, value.toDouble()));
+
+            if (attendedMap.isEmpty && totalMap.isEmpty) {
+              return Center(
+                child: Text(
+                  "No attendance data available",
+                  style: TextStyle(color: Colors.white, fontSize: 18),
+                ),
+              );
+            }
+
+            return SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    Card(
+                      color: const Color(0xFF2D2D2D),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                Text(
+                                  "Attended: ",
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 16),
+                            PieChart(
+                              dataMap: attendedMap,
+                              chartValuesOptions: ChartValuesOptions(
+                                showChartValues: false,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    Card(
+                      color: const Color(0xFF2D2D2D),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                Text(
+                                  "Total Lectures: ",
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 16),
+                            PieChart(
+                              dataMap: totalMap,
+                              chartValuesOptions: ChartValuesOptions(
+                                showChartValues: false,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    Card(
+                      color: const Color(0xFF2D2D2D),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                Text(
+                                  "Attendance insights: ",
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 8),
+                            ListView.builder(
+                              itemBuilder: (context, index) {
+                                String subject =
+                                    totals.attended.keys.elementAt(index);
+                                int attended =
+                                    totals.attended[subject] ?? 0;
+                                int total = totals.total[subject] ?? 0;
+
+                                return Column(
+                                  children: [
+                                    attendanceItem(
+                                        subject, attended, total),
+                                    if (index <
+                                        totals.attended.length - 1)
+                                      Divider(color: Colors.grey[700]),
+                                  ],
+                                );
+                              },
+                              itemCount: totals.attended.length,
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                            ),
+                          ],
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            );
+          },
+        ),
       ),
     );
   }
