@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.widget.Toast
 
 /**
  * TimetableWidgetReceiver
@@ -27,13 +28,23 @@ import android.content.Intent
 class TimetableWidgetReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
-        if (intent.action == ACTION_REFRESH_WIDGET) {
-            val manager = AppWidgetManager.getInstance(context)
-            val ids = manager.getAppWidgetIds(
-                ComponentName(context, TimetableWidget::class.java)
-            )
-            for (id in ids) {
-                TimetableWidget.updateAppWidget(context, manager, id)
+        when (intent.action) {
+            ACTION_REFRESH_WIDGET -> {
+                val manager = AppWidgetManager.getInstance(context)
+                val ids = manager.getAppWidgetIds(
+                    ComponentName(context, TimetableWidget::class.java)
+                )
+                for (id in ids) {
+                    TimetableWidget.updateAppWidget(context, manager, id)
+                }
+            }
+            // NEW — fired by tapping the refresh icon on the widget itself.
+            // forceFetch = true skips the "is cached data older than 1hr"
+            // check, so it always hits Firestore right away instead of
+            // waiting on the normal schedule.
+            ACTION_MANUAL_REFRESH -> {
+                Toast.makeText(context, "Refreshing timetable…", Toast.LENGTH_SHORT).show()
+                TimetableRefreshWorker.runOnce(context, forceFetch = true)
             }
         }
     }
@@ -41,5 +52,7 @@ class TimetableWidgetReceiver : BroadcastReceiver() {
     companion object {
         const val ACTION_REFRESH_WIDGET =
             "com.madclubtsec.tsec_application.tsec_app.REFRESH_TIMETABLE_WIDGET"
+        const val ACTION_MANUAL_REFRESH =
+            "com.madclubtsec.tsec_application.tsec_app.MANUAL_REFRESH_TIMETABLE_WIDGET"
     }
 }

@@ -1,4 +1,3 @@
-
 /**
  * TimetableWidget – Home screen widget that shows today's class schedule.
  *
@@ -115,6 +114,20 @@ class TimetableWidget : AppWidgetProvider() {
                 PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
             )
             views.setOnClickPendingIntent(R.id.widget_root, rootPendingIntent)
+
+            // ── Manual refresh button ────────────────────────────────────
+            // Separate tap target from widget_root above — Android lets a
+            // child view's own click target "win" over a parent's, so
+            // tapping this icon specifically triggers an immediate re-fetch
+            // instead of just opening the app.
+            val refreshIntent = Intent(context, TimetableWidgetReceiver::class.java).apply {
+                action = TimetableWidgetReceiver.ACTION_MANUAL_REFRESH
+            }
+            val refreshPendingIntent = PendingIntent.getBroadcast(
+                context, appWidgetId, refreshIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            )
+            views.setOnClickPendingIntent(R.id.widget_refresh_button, refreshPendingIntent)
 
             appWidgetManager.updateAppWidget(appWidgetId, views)
             // Tell the factory to re-read SharedPreferences and rebuild rows.

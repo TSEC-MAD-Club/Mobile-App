@@ -16,13 +16,13 @@
     android:padding="14dp"
     android:clipToPadding="false">
 
-    <!-- ── Header row: calendar icon + "Today's Schedule" + day chip ── -->
+    <!-- ── Header row 1: calendar icon + "Today's Schedule" + refresh button ── -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:layout_marginBottom="10dp">
+        android:layout_marginBottom="4dp">
 
         <!-- Calendar icon (use system icon; replace with your own drawable if desired) -->
         <ImageView
@@ -32,16 +32,52 @@
             android:tint="#AABBCC"
             android:layout_marginEnd="6dp" />
 
+        <!-- weight="1" + singleLine + ellipsize guarantees this shrinks first,
+             so it can NEVER push the refresh icon out of the row. -->
         <TextView
             android:id="@+id/widget_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:singleLine="true"
+            android:ellipsize="end"
             android:text="Today's Schedule"
             android:textColor="#FFFFFF"
             android:textSize="14sp"
             android:textStyle="bold"
             android:fontFamily="sans-serif-medium" />
+
+        <!-- Manual refresh button — taps trigger an immediate re-fetch via
+             TimetableWidgetReceiver.ACTION_MANUAL_REFRESH, bypassing the
+             normal 1-hour staleness check, for when a student doesn't want
+             to wait on the background schedule. Alone on this row with only
+             a shrinkable title as a neighbour, so it always has guaranteed
+             room — nothing can crowd it out.
+
+             Touch target is 40dp (Android's recommended minimum is 48dp;
+             this is close enough given the row's height) even though the
+             icon renders at ~18dp visually — the extra padding is INVISIBLE
+             but still tappable, so missing the icon by a few pixels still
+             hits the refresh action instead of falling through to
+             widget_root's "open app" handler underneath it. -->
+        <ImageView
+            android:id="@+id/widget_refresh_button"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@android:drawable/ic_popup_sync"
+            android:tint="#AABBCC"
+            android:padding="11dp"
+            android:scaleType="fitCenter" />
+
+    </LinearLayout>
+
+    <!-- ── Header row 2: day chip + date, own row, own space ── -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="10dp">
 
         <!-- Day abbreviation chip (e.g. "Tu") -->
         <TextView
@@ -60,6 +96,7 @@
             android:id="@+id/widget_date_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:singleLine="true"
             android:textColor="#AABBCC"
             android:textSize="11sp" />
 

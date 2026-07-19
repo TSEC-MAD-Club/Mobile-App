@@ -5,9 +5,12 @@ import android.content.ComponentName
 import android.content.Context
 import androidx.work.Constraints
 import androidx.work.CoroutineWorker
+import androidx.work.Data
 import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.ExistingWorkPolicy
 import androidx.work.NetworkType
 import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.OutOfQuotaPolicy
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
@@ -51,7 +54,8 @@ class TimetableRefreshWorker(
 
         val now = System.currentTimeMillis()
         val lastFetch = prefs.getLong(TimetableData.KEY_LAST_FETCH, 0L)
-        val isStale = (now - lastFetch) > REFRESH_INTERVAL_MS
+        val forceFetch = inputData.getBoolean(KEY_FORCE_FETCH, false)
+        val isStale = forceFetch || (now - lastFetch) > REFRESH_INTERVAL_MS
 
         if (isStale) {
             val fetchResult = fetchAndCache(prefs, doc, batch, now)
@@ -107,6 +111,8 @@ class TimetableRefreshWorker(
 
     companion object {
         private const val WORK_NAME = "timetable_refresh_worker"
+        private const val MANUAL_REFRESH_WORK_NAME = "timetable_manual_refresh"
+        private const val KEY_FORCE_FETCH = "force_fetch"
         private val REFRESH_INTERVAL_MS = TimeUnit.MINUTES.toMillis(60)
 
         /**
@@ -130,10 +136,46 @@ class TimetableRefreshWorker(
             )
         }
 
-        /** For a debug button / testing — runs once, immediately. */
-        fun runOnce(context: Context) {
-            WorkManager.getInstance(context).enqueue(
-                OneTimeWorkRequestBuilder<TimetableRefreshWorker>().build()
+        /**
+         * For a debug button / testing, and for the widget's own manual
+         * refresh icon — runs ASAP instead of waiting on WorkManager's
+         * normal scheduling window.
+         *
+         * Two things make this actually "immediate" instead of just another
+         * queued job that might sit for a few seconds:
+         *
+         *  - setExpedited(...) tells Android this is a user-initiated action
+         *    that should run right away, not whenever the scheduler gets
+         *    around to it. RUN_AS_NON_EXPEDITED_WORK_REQUEST is a safe
+         *    fallback — if the app is out of "expedited quota" for the
+         *    moment, it just quietly runs as normal work instead of
+         *    crashing or throwing.
+         *
+         *  - enqueueUniqueWork(..., REPLACE, ...) means spamming the button
+         *    doesn't queue up N separate jobs that all eventually fire at
+         *    once (which is what made it look like it "took 18 taps" —
+         *    really it was 18 queued jobs finally being released together).
+         *    Each new tap now cancels whatever's still pending and replaces
+         *    it with a fresh one.
+         *
+         * @param forceFetch true = always hit Firestore now, ignoring the
+         *   1-hour staleness check (used by the refresh button so tapping
+         *   it never feels like a no-op).
+         */
+        fun runOnce(context: Context, forceFetch: Boolean = false) {
+            val inputData = Data.Builder()
+                .putBoolean(KEY_FORCE_FETCH, forceFetch)
+                .build()
+
+            val request = OneTimeWorkRequestBuilder<TimetableRefreshWorker>()
+                .setInputData(inputData)
+                .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
+                .build()
+
+            WorkManager.getInstance(context).enqueueUniqueWork(
+                MANUAL_REFRESH_WORK_NAME,
+                ExistingWorkPolicy.REPLACE,
+                request
             )
         }
 
