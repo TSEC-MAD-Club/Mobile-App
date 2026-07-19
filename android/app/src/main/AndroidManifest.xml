@@ -87,5 +87,11 @@
             </intent-filter>
         </receiver>
 
+        <!-- ③ RemoteViewsService that supplies the scrollable lecture list -->
+        <service
+            android:name=".TimetableRemoteViewsService"
+            android:permission="android.permission.BIND_REMOTEVIEWS"
+            android:exported="false" />
+
     </application>
 </manifest>

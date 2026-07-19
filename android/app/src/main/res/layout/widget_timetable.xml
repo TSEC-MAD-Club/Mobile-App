@@ -3,11 +3,14 @@
     widget_timetable.xml
     Root layout for the Today's Schedule home-screen widget.
     Matches the dark navy card UI shown in the screenshot.
+
+    NOTE: root height is now match_parent (was wrap_content) so the ListView
+    can flex to fill whatever size the user resizes the widget to.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/widget_root"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/bg_widget_container"
     android:padding="14dp"
@@ -62,32 +65,24 @@
 
     </LinearLayout>
 
-    <!-- ── Lecture rows (containers; rows added programmatically) ── -->
-    <FrameLayout android:id="@+id/lecture_row_1"
-        android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:layout_marginBottom="6dp"/>
+    <!-- ── Scrollable lecture list (rows supplied by TimetableRemoteViewsFactory) ── -->
+    <ListView
+        android:id="@+id/lecture_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:divider="@null"
+        android:dividerHeight="6dp"
+        android:scrollbars="none"
+        android:listSelector="@android:color/transparent"
+        android:clipToPadding="false" />
 
-    <FrameLayout android:id="@+id/lecture_row_2"
-        android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:layout_marginBottom="6dp"/>
-
-    <FrameLayout android:id="@+id/lecture_row_3"
-        android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:layout_marginBottom="6dp"/>
-
-    <FrameLayout android:id="@+id/lecture_row_4"
-        android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:layout_marginBottom="6dp"/>
-
-    <FrameLayout android:id="@+id/lecture_row_5"
-        android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:layout_marginBottom="6dp"/>
-
-    <!-- Empty state -->
+    <!-- Empty state (shown automatically by setEmptyView when the list has 0 items) -->
     <TextView
         android:id="@+id/widget_empty_text"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:gravity="center"
         android:padding="16dp"
         android:text="No classes today 🎉"

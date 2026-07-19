@@ -1,11 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
     timetable_widget_info.xml
-    Place in:  res/xml/timetable_widget_info.xml
 
-    minWidth / minHeight:
-      Android widget grid cell = 70dp × 70dp  (with gaps).
-      4 × 3 cell default  →  280dp × 210dp
+    previewLayout now points at widget_preview.xml (static, hardcoded sample
+    data) instead of widget_timetable.xml (the real, empty-until-placed
+    layout). That's what makes the widget picker thumbnail actually show
+    lectures instead of a blank navy card.
+
+    initialLayout is unchanged — it's still the real dynamic layout, which
+    TimetableWidget.updateAppWidget() fills in immediately once the widget
+    is placed.
+
+    NOTE: android:previewLayout only takes effect on Android 12 (API 31)+,
+    AND only on launchers that actually support live-rendering it (some
+    OEM launchers, e.g. OnePlus/OxygenOS, don't and just fall back to the
+    generic app icon). android:previewImage below is a static PNG that
+    works everywhere, on every OS version and every launcher — it's the
+    reliable one. Both are kept together: launchers that support
+    previewLayout get the live version, everything else falls back to
+    the PNG automatically.
 -->
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
     android:minWidth="250dp"
@@ -16,6 +29,42 @@
     android:targetCellHeight="4"
     android:updatePeriodMillis="1800000"
     android:initialLayout="@layout/widget_timetable"
+    android:previewLayout="@layout/widget_preview"
+    android:previewImage="@drawable/widget_preview_image"
     android:resizeMode="horizontal|vertical"
     android:widgetCategory="home_screen"
     android:description="@string/widget_description" />
+
+<!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--&lt;!&ndash;-->
+<!--    timetable_widget_info.xml-->
+
+<!--    previewLayout now points at widget_preview.xml (static, hardcoded sample-->
+<!--    data) instead of widget_timetable.xml (the real, empty-until-placed-->
+<!--    layout). That's what makes the widget picker thumbnail actually show-->
+<!--    lectures instead of a blank navy card.-->
+
+<!--    initialLayout is unchanged — it's still the real dynamic layout, which-->
+<!--    TimetableWidget.updateAppWidget() fills in immediately once the widget-->
+<!--    is placed.-->
+
+<!--    NOTE: android:previewLayout only takes effect on Android 12 (API 31)+.-->
+<!--    On older Android versions the OS falls back to a generic placeholder /-->
+<!--    auto-generated screenshot regardless of what's here — that's a platform-->
+<!--    limitation, not something fixable from this file. If you need a preview-->
+<!--    on older OS versions too, you'd need to also supply a static PNG via-->
+<!--    android:previewImage.-->
+<!--&ndash;&gt;-->
+<!--<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    android:minWidth="250dp"-->
+<!--    android:minHeight="200dp"-->
+<!--    android:minResizeWidth="200dp"-->
+<!--    android:minResizeHeight="150dp"-->
+<!--    android:targetCellWidth="4"-->
+<!--    android:targetCellHeight="4"-->
+<!--    android:updatePeriodMillis="1800000"-->
+<!--    android:initialLayout="@layout/widget_timetable"-->
+<!--    android:previewLayout="@layout/widget_preview"-->
+<!--    android:resizeMode="horizontal|vertical"-->
+<!--    android:widgetCategory="home_screen"-->
+<!--    android:description="@string/widget_description" />-->

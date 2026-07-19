@@ -35,6 +35,32 @@ class TimetableWidgetHelper {
     }
   }
 
+  /// NEW — call this once, right after login / whenever the student's
+  /// year-branch-div-batch is (re)computed — e.g. inside
+  /// AuthProvider.updateStudentTimeTableData() in auth_provider.dart,
+  /// alongside where NotificationType.makeTopic() already runs there:
+  ///
+  ///   String studentYear = studentmodel.gradyear.toString();
+  ///   String studentBranch = studentmodel.branch.toString();
+  ///   String studentDiv = studentmodel.div.toString();
+  ///   String studentBatch = studentmodel.batch.toString();
+  ///   await TimetableWidgetHelper.saveStudentIdentity(
+  ///       "$studentYear-$studentBranch-$studentDiv", studentBatch);
+  ///
+  /// This is the ONLY thing the native TimetableRefreshWorker needs from
+  /// Flutter now — it reads doc + batch and fetches/filters the lecture
+  /// data itself via Retrofit, with no dependency on the app being open.
+  static Future<void> saveStudentIdentity(
+      String yearBranchDivTopic, String batch) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('timetable_student_doc', yearBranchDivTopic);
+      await prefs.setString('timetable_student_batch', batch);
+    } catch (_) {
+      // Non-critical — native side just won't have identity to fetch yet.
+    }
+  }
+
   static bool _android = false;
   static bool _androidChecked = false;
 

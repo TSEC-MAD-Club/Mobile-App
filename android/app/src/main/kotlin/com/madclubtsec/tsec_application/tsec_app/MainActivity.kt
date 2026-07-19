@@ -25,6 +25,14 @@ class MainActivity : FlutterActivity() {
                     else -> result.notImplemented()
                 }
             }
+
+        // NEW — safe to call on every app start: ExistingPeriodicWorkPolicy.KEEP
+        // means this is a no-op if already scheduled (e.g. widget was placed
+        // first). Covers the case where the widget is placed before the
+        // student's identity has ever been saved to SharedPreferences —
+        // TimetableRefreshWorker just no-ops each run until KEY_STUDENT_DOC
+        // exists.
+        TimetableRefreshWorker.schedule(applicationContext)
     }
 
     companion object {

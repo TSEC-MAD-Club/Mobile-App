@@ -111,4 +111,20 @@ dependencies {
     implementation "androidx.multidex:multidex:$multidex_version"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.9.24"
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.1.5'
+
+    // Retrofit — REST client for the widget's own network calls
+    implementation "com.squareup.retrofit2:retrofit:2.11.0"
+    implementation "com.squareup.retrofit2:converter-scalars:2.11.0" // raw String responses
+
+    // WorkManager — schedules the background refresh, survives app kill/reboot
+    implementation "androidx.work:work-runtime-ktx:2.9.0"
+
+    // Lets us `.await()` a Firebase Task (like getIdToken()) inside a CoroutineWorker
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.8.1"
+
+    // Needed so native Kotlin code (TimetableRefreshWorker.kt) can see
+    // FirebaseAuth directly — the Flutter firebase_auth plugin doesn't
+    // expose it to plain Kotlin source automatically.
+    implementation platform('com.google.firebase:firebase-bom:33.1.2')
+    implementation 'com.google.firebase:firebase-auth-ktx'
 }
