@@ -1,0 +1,22 @@
+{
+  "project_info": {
+    "project_number": "123",
+    "project_id": "dummy"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:123:android:123",
+        "android_client_info": {
+          "package_name": "com.madclubtsec.tsec_application"
+        }
+      },
+      "api_key": [
+        {
+          "current_key": "dummy"
+        }
+      ]
+    }
+  ],
+  "configuration_version": "1"
+}
