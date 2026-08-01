@@ -8,6 +8,7 @@ import 'package:tsec_app/utils/faculty_details.dart';
 import 'package:tsec_app/models/timetable_model/timetable_model.dart';
 import 'package:tsec_app/provider/timetable_provider.dart';
 import 'package:tsec_app/utils/timetable_util.dart';
+import 'package:tsec_app/utils/timetable_widget_helper.dart'; // ← ADDED for home screen widget
 
 final dayProvider = StateProvider.autoDispose<DateTime>((ref) {
   DateTime day = DateTime.now();
@@ -75,6 +76,23 @@ class _CardDisplayState extends ConsumerState<CardDisplay> {
           } else {
             List<String> respectiveRoomNo = [];
             List<TimetableModel> timeTableDay = getTimetablebyDay(data, dayStr,respectiveRoomNo, ref);
+
+            // ── WIDGET INTEGRATION (only saves for today, not other days) ──
+            if (day.year == DateTime.now().year &&
+                day.month == DateTime.now().month &&
+                day.day == DateTime.now().day) {
+              final widgetData = List.generate(timeTableDay.length, (i) => {
+                'lectureName':        timeTableDay[i].lectureName,
+                'lectureStartTime':   timeTableDay[i].lectureStartTime,
+                'lectureEndTime':     timeTableDay[i].lectureEndTime,
+                'lectureFacultyName': timeTableDay[i].lectureFacultyName,
+                'lectureBatch':       timeTableDay[i].lectureBatch,
+                'lectureRoomNo':      i < respectiveRoomNo.length ? respectiveRoomNo[i] : '',
+              });
+              TimetableWidgetHelper.saveTodayTimetable(widgetData);
+            }
+            // ─────────────────────────────────────────────────────────────
+
             if (timeTableDay.isEmpty) {
               return const Center(child: Text("No lectures Today ! "));
             } else {

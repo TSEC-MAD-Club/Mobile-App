@@ -11,7 +11,7 @@ on:
       - "pubspec.yaml"
     branches: [main] 
 
-  pull_request_target:
+  pull_request:
     branches: [main]
 
   workflow_dispatch:
