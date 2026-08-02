@@ -19,6 +19,7 @@ import 'package:tsec_app/provider/subjects_provider.dart';
 import 'package:tsec_app/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:tsec_app/utils/notification_type.dart';
+import 'package:tsec_app/utils/timetable_widget_helper.dart';
 
 final authProvider = StateNotifierProvider<AuthProvider, bool>(((ref) {
   return AuthProvider(ref: ref, authService: ref.watch(authServiceProvider));
@@ -160,6 +161,13 @@ class AuthProvider extends StateNotifier<bool> {
       String studentBranch = studentmodel.branch.toString();
       String studentDiv = studentmodel.div.toString();
       String studentBatch = studentmodel.batch.toString();
+
+
+      // ADD THIS — saves student identity so the native widget can fetch
+      // the timetable on its own, without Flutter needing to be open.
+      await TimetableWidgetHelper.saveStudentIdentity(
+          "$studentYear-$studentBranch-$studentDiv", studentBatch);
+
 
       ref.read(notificationTypeProvider.notifier).state = NotificationTypeC(
           notification: "All",

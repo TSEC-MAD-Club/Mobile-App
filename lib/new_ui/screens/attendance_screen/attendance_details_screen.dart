@@ -3,13 +3,27 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pie_chart/pie_chart.dart';
 import 'package:tsec_app/new_ui/colors.dart';
 import 'package:tsec_app/new_ui/screens/attendance_screen/attendance_totals_provider.dart';
-
+import 'package:tsec_app/models/subject_model/subject_model.dart';
+import 'package:tsec_app/models/user_model/user_model.dart';
+import 'package:tsec_app/provider/auth_provider.dart';
+import 'package:tsec_app/provider/subjects_provider.dart';
+import 'package:tsec_app/utils/profile_details.dart';
 class AttendanceDetailsScreen extends ConsumerWidget {
   const AttendanceDetailsScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final attendanceAsync = ref.watch(attendanceTotalsProvider);
+
+    SubjectModel subjects = ref.watch(subjectsProvider);
+    UserModel? user = ref.watch(userModelProvider);
+    List<String> validSubjects = [];
+    if (user != null && user.studentModel != null) {
+      SemesterData semData = subjects.dataMap[
+          "${calcGradYear(user.studentModel?.gradyear)}_${user.studentModel?.branch}"] ??
+          SemesterData(even_sem: [], odd_sem: []);
+      validSubjects = evenOrOddSem() == "even_sem" ? semData.even_sem : semData.odd_sem;
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -35,10 +49,13 @@ class AttendanceDetailsScreen extends ConsumerWidget {
               ref.read(fetchedAttendanceTotalsProvider.notifier).state = totals;
             });
 
-            final attendedMap = totals.attended
-                .map((key, value) => MapEntry(key, value.toDouble()));
-            final totalMap = totals.total
-                .map((key, value) => MapEntry(key, value.toDouble()));
+            final filteredAttended = totals.attended.entries.where((e) => validSubjects.isEmpty || validSubjects.contains(e.key));
+            final filteredTotal = totals.total.entries.where((e) => validSubjects.isEmpty || validSubjects.contains(e.key));
+
+            final attendedMap = Map.fromEntries(filteredAttended
+                .map((e) => MapEntry(e.key, e.value.toDouble())));
+            final totalMap = Map.fromEntries(filteredTotal
+                .map((e) => MapEntry(e.key, e.value.toDouble())));
 
             if (attendedMap.isEmpty && totalMap.isEmpty) {
               return Center(
@@ -133,28 +150,30 @@ class AttendanceDetailsScreen extends ConsumerWidget {
                               ],
                             ),
                             const SizedBox(height: 8),
-                            ListView.builder(
-                              itemBuilder: (context, index) {
-                                String subject =
-                                    totals.attended.keys.elementAt(index);
-                                int attended =
-                                    totals.attended[subject] ?? 0;
-                                int total = totals.total[subject] ?? 0;
+                            Builder(builder: (context) {
+                              List<String> filteredSubjectKeys = validSubjects.isEmpty 
+                                  ? totals.attended.keys.toList() 
+                                  : totals.attended.keys.where((k) => validSubjects.contains(k)).toList();
 
-                                return Column(
-                                  children: [
-                                    attendanceItem(
-                                        subject, attended, total),
-                                    if (index <
-                                        totals.attended.length - 1)
-                                      Divider(color: Colors.grey[700]),
-                                  ],
-                                );
-                              },
-                              itemCount: totals.attended.length,
-                              shrinkWrap: true,
-                              physics: NeverScrollableScrollPhysics(),
-                            ),
+                              return ListView.builder(
+                                itemBuilder: (context, index) {
+                                  String subject = filteredSubjectKeys[index];
+                                  int attended = totals.attended[subject] ?? 0;
+                                  int total = totals.total[subject] ?? 0;
+
+                                  return Column(
+                                    children: [
+                                      attendanceItem(subject, attended, total),
+                                      if (index < filteredSubjectKeys.length - 1)
+                                        Divider(color: Colors.grey[700]),
+                                    ],
+                                  );
+                                },
+                                itemCount: filteredSubjectKeys.length,
+                                shrinkWrap: true,
+                                physics: NeverScrollableScrollPhysics(),
+                              );
+                            }),
                           ],
                         ),
                       ),

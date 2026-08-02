@@ -92,7 +92,7 @@ class StatusStepper extends StatelessWidget {
         customStep: getStatusCircle(2),
         title: "Rejected",
       );
-    } else if (concessionStatus == "serviced") {
+    } else if (concessionStatus == "serviced" || concessionStatus == "downloaded") {
       return EasyStep(
         customStep: getStatusCircle(0),
         title: "Approved",
@@ -131,7 +131,7 @@ class StatusStepper extends StatelessWidget {
         title: "Reviewing",
       );
     }
-    else if(concessionStatus == "serviced" || concessionStatus == "rejected") {
+    else if(concessionStatus == "serviced" || concessionStatus == "rejected" || concessionStatus == "downloaded") {
       return EasyStep(
         customStep: getStatusCircle(0),
         title: "Reviewed",
@@ -144,7 +144,7 @@ class StatusStepper extends StatelessWidget {
   }
 
   EasyStep getFirstStep() {
-    if (concessionStatus == "unserviced" || concessionStatus == "rejected" || concessionStatus == "serviced") {
+    if (concessionStatus == "unserviced" || concessionStatus == "rejected" || concessionStatus == "serviced" || concessionStatus == "downloaded") {
       return EasyStep(
         customStep: getStatusCircle(0),
         title: "Applied",
@@ -161,7 +161,7 @@ class StatusStepper extends StatelessWidget {
       print("Returning 3");
       return 3;
     }
-    else if(concessionStatus == "serviced" || concessionStatus == "rejected") {return 2;}
+    else if(concessionStatus == "serviced" || concessionStatus == "rejected" || concessionStatus == "downloaded") {return 2;}
     else if(concessionStatus == "unserviced") {return 1;}
     else {return 0;}
   }

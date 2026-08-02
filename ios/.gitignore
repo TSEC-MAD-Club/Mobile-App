@@ -32,3 +32,4 @@ ios/Podfile.lock
 !default.pbxuser
 !default.perspectivev3
 pubspec.lock
+GoogleService-Info.plist

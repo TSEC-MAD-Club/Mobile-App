@@ -9,6 +9,7 @@ on:
       - "ios/**"
       - "web/**"
       - "pubspec.yaml"
+    branches: [main] 
 
   pull_request:
     branches: [main]
@@ -18,6 +19,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
+    permissions:
+      contents: write 
 
     steps:
       - name: Checkout Code
@@ -46,21 +50,37 @@ jobs:
       - name: Setup project
         shell: bash
         env:
-          FIREBASE_OPTIONS: ${{ vars.FIREBASE_OPTIONS }}
-          GOOGLE_JSON_DATA: ${{ vars.GOOGLE_SERVICES }}
+          FIREBASE_OPTIONS: ${{ secrets.FIREBASE_OPTIONS }}
+          GOOGLE_JSON_DATA: ${{ secrets.GOOGLE_SERVICES }}
+          GOOGLE_JSON_BASE64: ${{ secrets.GOOGLE_JSON_BASE64 }}
           GRADLE_OPTS: -Xmx4096m
         run: |
           mv lib/firebase_options.example.dart lib/firebase_options.dart
-
-          if [ -z "$GOOGLE_JSON_DATA" ]; then
+          if [ -z "$GOOGLE_JSON_BASE64" ]; then
             cp android/app/google-services.mock.json android/app/google-services.json
           else
-            echo "$GOOGLE_JSON_DATA" > android/app/google-services.json
+            echo "$GOOGLE_JSON_BASE64" | base64 --decode > android/app/google-services.json
           fi
           flutter pub get
           flutter pub run build_runner build --delete-conflicting-outputs
-
-      - name: Build debug apk
+      - name: Extract Flutter Version
+        id: get_version
+        shell: bash
         run: |
-          flutter build apk --debug
-          echo "Built apk for version ${APP_VERSION}"
+          VERSION=$(grep '^version: ' pubspec.yaml | sed 's/version: //' | cut -d'+' -f1 | tr -d '\r')
+          echo "APP_VERSION=$VERSION" >> $GITHUB_ENV
+      - name: Build Release APK
+        run: |
+          flutter build apk --release
+          echo "Built production apk for version ${{ env.APP_VERSION }}"
+      - name: Create Automated Release
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: v${{ env.APP_VERSION }}
+          name: Release v${{ env.APP_VERSION }}
+          draft: false
+          prerelease: false
+          files: build/app/outputs/flutter-apk/*.apk 
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
