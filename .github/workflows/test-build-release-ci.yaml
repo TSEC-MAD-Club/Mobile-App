@@ -25,12 +25,9 @@ jobs:
 
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v3
-        with:
-          ref: ${{ github.event.pull_request.head.ref || github.ref_name }}
-          repository: ${{ github.event.pull_request.head.repo.full_name || github.repository }}
+        uses: actions/checkout@v4
 
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         with:
           path: |
             ~/.gradle/caches
@@ -40,9 +37,10 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      - uses: actions/setup-java@v1
+      - uses: actions/setup-java@v4
         with:
-          java-version: "21.x"
+          distribution: 'temurin'
+          java-version: "21"
 
       - uses: subosito/flutter-action@v2
         with:
@@ -58,7 +56,11 @@ jobs:
           GRADLE_OPTS: -Xmx4096m
         run: |
           mv lib/firebase_options.example.dart lib/firebase_options.dart
-          echo "$GOOGLE_JSON_BASE64" | base64 --decode > /home/runner/work/Mobile-App/Mobile-App/android/app/google-services.json
+          if [ -z "$GOOGLE_JSON_BASE64" ]; then
+            cp android/app/google-services.mock.json android/app/google-services.json
+          else
+            echo "$GOOGLE_JSON_BASE64" | base64 --decode > android/app/google-services.json
+          fi
           flutter pub get
           flutter pub run build_runner build --delete-conflicting-outputs
       - name: Extract Flutter Version
