@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tsec_app/models/subject_model/subject_model.dart';
+import 'package:tsec_app/models/user_model/user_model.dart';
+import 'package:tsec_app/provider/auth_provider.dart';
+import 'package:tsec_app/provider/subjects_provider.dart';
+import 'package:tsec_app/utils/profile_details.dart';
 
 import '../../attendance_totals_provider.dart';
 
@@ -11,6 +16,17 @@ class OverallAttendance extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final attendanceAsync = ref.watch(attendanceTotalsProvider);
 
+    SubjectModel subjects = ref.watch(subjectsProvider);
+    UserModel? user = ref.watch(userModelProvider);
+    List<String> validSubjects = [];
+    if (user != null && user.studentModel != null) {
+      SemesterData semData = subjects.dataMap[
+              "${calcGradYear(user.studentModel?.gradyear)}_${user.studentModel?.branch}"] ??
+          SemesterData(even_sem: [], odd_sem: []);
+      validSubjects =
+          evenOrOddSem() == "even_sem" ? semData.even_sem : semData.odd_sem;
+    }
+
     return attendanceAsync.when(
       loading: () => const Center(child: CircularProgressIndicator()),
       error: (e, _) => const Center(child: Text("Error loading attendance", style: TextStyle(color: Colors.red))),
@@ -21,10 +37,14 @@ class OverallAttendance extends ConsumerWidget {
         int attend = 0;
         int tot = 0;
         data.attended.forEach((key, value){
-          attend += value;
+          if (validSubjects.isEmpty || validSubjects.contains(key)) {
+            attend += value;
+          }
         });
         data.total.forEach((key, value){
-          tot += value;
+          if (validSubjects.isEmpty || validSubjects.contains(key)) {
+            tot += value;
+          }
         });
         double percentage = tot > 0 ? attend / tot : 0.0;
 
