@@ -64,5 +64,34 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+
+        <!-- ① Timetable widget provider -->
+        <receiver
+            android:name=".TimetableWidget"
+            android:exported="true"
+            android:label="TSEC Timetable">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/timetable_widget_info" />
+        </receiver>
+
+        <!-- ② Broadcast receiver so Flutter can trigger an instant widget redraw -->
+        <receiver
+            android:name=".TimetableWidgetReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.madclubtsec.tsec_application.tsec_app.REFRESH_TIMETABLE_WIDGET" />
+            </intent-filter>
+        </receiver>
+
+        <!-- ③ RemoteViewsService that supplies the scrollable lecture list -->
+        <service
+            android:name=".TimetableRemoteViewsService"
+            android:permission="android.permission.BIND_REMOTEVIEWS"
+            android:exported="false" />
+
     </application>
 </manifest>

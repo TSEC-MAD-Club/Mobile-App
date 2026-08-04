@@ -1,0 +1,86 @@
+name: CI
+
+on:
+  push:
+    paths:
+      - ".github/workflows/**"
+      - "lib/**"
+      - "android/**"
+      - "ios/**"
+      - "web/**"
+      - "pubspec.yaml"
+    branches: [main] 
+
+  pull_request:
+    branches: [main]
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write 
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper/
+            ~/.pub-cache
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: "21"
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.32.1"
+          channel: "stable"
+
+      - name: Setup project
+        shell: bash
+        env:
+          FIREBASE_OPTIONS: ${{ secrets.FIREBASE_OPTIONS }}
+          GOOGLE_JSON_DATA: ${{ secrets.GOOGLE_SERVICES }}
+          GOOGLE_JSON_BASE64: ${{ secrets.GOOGLE_JSON_BASE64 }}
+          GRADLE_OPTS: -Xmx4096m
+        run: |
+          mv lib/firebase_options.example.dart lib/firebase_options.dart
+          if [ -z "$GOOGLE_JSON_BASE64" ]; then
+            cp android/app/google-services.mock.json android/app/google-services.json
+          else
+            echo "$GOOGLE_JSON_BASE64" | base64 --decode > android/app/google-services.json
+          fi
+          flutter pub get
+          flutter pub run build_runner build --delete-conflicting-outputs
+      - name: Extract Flutter Version
+        id: get_version
+        shell: bash
+        run: |
+          VERSION=$(grep '^version: ' pubspec.yaml | sed 's/version: //' | cut -d'+' -f1 | tr -d '\r')
+          echo "APP_VERSION=$VERSION" >> $GITHUB_ENV
+      - name: Build Release APK
+        run: |
+          flutter build apk --release
+          echo "Built production apk for version ${{ env.APP_VERSION }}"
+      - name: Create Automated Release
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: v${{ env.APP_VERSION }}
+          name: Release v${{ env.APP_VERSION }}
+          draft: false
+          prerelease: false
+          files: build/app/outputs/flutter-apk/*.apk 
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
