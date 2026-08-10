@@ -67,8 +67,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
       if (userModel != null) {
         print("print6");
-        ref.watch(authProvider.notifier).setupFCMNotifications(ref,
-            userModel.studentModel, FirebaseAuth.instance.currentUser!.uid);
+        final currentUser = FirebaseAuth.instance.currentUser;
+        if (currentUser != null) {
+          ref.watch(authProvider.notifier).setupFCMNotifications(ref,
+              userModel.studentModel, currentUser.uid);
+        }
 
         // if (studentModel.updateCount != null &&
         //     studentModel.updateCount! > 0) {
