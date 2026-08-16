@@ -171,6 +171,7 @@ class ScheduleCardModified extends StatelessWidget {
                       height: 10.0,
                     ),
                     Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         SizedBox(
                           width: 28,
@@ -187,14 +188,18 @@ class ScheduleCardModified extends StatelessWidget {
                         const SizedBox(
                           width: 12.0,
                         ),
-                        Text(
-                          facultyName,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 12.0,
-                            fontWeight: FontWeight.w300,
+                        Expanded(
+                          child: Text(
+                            facultyName,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 12.0,
+                              fontWeight: FontWeight.w300,
+                            ),
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ],

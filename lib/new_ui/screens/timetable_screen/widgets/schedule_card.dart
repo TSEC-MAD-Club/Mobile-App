@@ -93,7 +93,7 @@ class ScheduleCard extends StatelessWidget {
                         child: Text(
                           facultyName,
                           overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
+                          maxLines: 2,
                           style: Theme.of(context)
                               .textTheme
                               .headlineMedium!
