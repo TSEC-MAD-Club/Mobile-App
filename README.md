@@ -18,7 +18,7 @@ Welcome to the **official TSEC App**, brought to you by the **Developers Club of
 
 ## 📌 About This App
 
-The **TSEC App** is your all-in-one companion for staying updated and organized throughout your college life. Whether you're checking your timetable or exploring events on campus, this app has you covered.
+The **TSEC App** is your all-in-one companion for staying updated and organized throughout your college life. Whether you're checking your timetable or exploring events on campus, this app has you covered
 
 ### 🎓 Key Features
 
