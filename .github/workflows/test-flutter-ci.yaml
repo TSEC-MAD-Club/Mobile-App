@@ -1,0 +1,64 @@
+name: CI
+
+on:
+  push:
+    paths:
+      - ".github/workflows/**"
+      - "lib/**"
+      - "android/**"
+      - "ios/**"
+      - "web/**"
+      - "pubspec.yaml"
+
+  pull_request_target:
+    branches: [main]
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout PR Code
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+
+      - uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper/
+            ~/.pub-cache
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - uses: actions/setup-java@v1
+        with:
+          java-version: "21.x"
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.32.1"
+          channel: "stable"
+
+      - name: Setup project
+        shell: bash
+        env:
+          FIREBASE_OPTIONS: ${{ secrets.FIREBASE_OPTIONS }}
+          GOOGLE_JSON_DATA: ${{ secrets.GOOGLE_SERVICES }}
+          GOOGLE_JSON_BASE64: ${{ secrets.GOOGLE_JSON_BASE64 }}
+          GRADLE_OPTS: -Xmx4096m
+        run: |
+          mv lib/firebase_options.example.dart lib/firebase_options.dart
+          echo "$GOOGLE_JSON_BASE64" | base64 --decode > /home/runner/work/Mobile-App/Mobile-App/android/app/google-services.json
+          flutter pub get
+          flutter pub run build_runner build --delete-conflicting-outputs
+
+      - name: Build debug apk
+        run: |
+          flutter build apk --debug
+          echo "Built apk for version ${APP_VERSION}"
