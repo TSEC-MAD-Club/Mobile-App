@@ -113,7 +113,7 @@ class TimetableRefreshWorker(
         private const val WORK_NAME = "timetable_refresh_worker"
         private const val MANUAL_REFRESH_WORK_NAME = "timetable_manual_refresh"
         private const val KEY_FORCE_FETCH = "force_fetch"
-        private val REFRESH_INTERVAL_MS = TimeUnit.MINUTES.toMillis(60)
+        private val REFRESH_INTERVAL_MS = TimeUnit.MINUTES.toMillis(300)
 
         /**
          * Call from TimetableWidgetReceiver.onEnabled() (first widget placed)
