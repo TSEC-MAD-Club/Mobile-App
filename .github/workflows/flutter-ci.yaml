@@ -1,8 +1,7 @@
-name: PR Check
+name: CI
 
 on:
-  pull_request:
-    branches: [main]
+  push:
     paths:
       - ".github/workflows/**"
       - "lib/**"
@@ -10,6 +9,9 @@ on:
       - "ios/**"
       - "web/**"
       - "pubspec.yaml"
+
+  pull_request:
+    branches: [main]
 
   workflow_dispatch:
 
