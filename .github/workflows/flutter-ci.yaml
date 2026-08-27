@@ -56,9 +56,9 @@ jobs:
             echo "$GOOGLE_JSON_DATA" > android/app/google-services.json
           fi
           flutter pub get
-          flutter pub run build_runner build --delete-conflicting-outputs
+          dart run build_runner build --delete-conflicting-outputs
 
       - name: Build debug apk
         run: |
           flutter build apk --debug
-          echo "Built apk for version ${APP_VERSION}"
+          echo "Debug APK build complete"
