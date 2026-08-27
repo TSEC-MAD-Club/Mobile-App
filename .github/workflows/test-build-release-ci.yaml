@@ -1,4 +1,4 @@
-name: CI
+name: Build & Release
 
 on:
   push:
@@ -10,9 +10,6 @@ on:
       - "web/**"
       - "pubspec.yaml"
     branches: [main] 
-
-  pull_request:
-    branches: [main]
 
   workflow_dispatch:
 
