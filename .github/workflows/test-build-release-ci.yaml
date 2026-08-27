@@ -75,7 +75,7 @@ jobs:
           echo "Built production apk for version ${{ env.APP_VERSION }}"
       - name: Create Automated Release
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           tag_name: v${{ env.APP_VERSION }}
           name: Release v${{ env.APP_VERSION }}
